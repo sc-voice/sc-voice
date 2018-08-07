@@ -1,0 +1,33 @@
+{
+  "name": "js-pootl",
+  "version": "0.1.9",
+  "description": "SuttaCentral Javascript/Pootl utilities",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "should": "^11.2.0"
+  },
+  "scripts": {
+    "test": "npm run test:verbose",
+    "test:test": "mocha -w -R min --inline-diffs -g TEST",
+    "test:verbose": "mocha --inline-diffs",
+    "test:watch": "mocha -w --inline-diffs"
+  },
+  "repository": {
+    "tag": "git"
+  },
+  "bin": {},
+  "keywords": [
+    "SuttaCentral",
+    "translation",
+    "Javascript",
+    "Pootl"
+  ],
+  "author": "Karl Lew",
+  "homepage": "https://github.com/suttacentral/translation",
+  "license": "MIT"
+}
