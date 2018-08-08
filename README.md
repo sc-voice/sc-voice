@@ -2,19 +2,22 @@
 
 SuttaCentral voice assistance for vision-impaired. Includes:
 
-* Javascript API for [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
+* Javascript adapter for [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
 * Javascript utilites for parsing SuttaCentral Pootl translations
 
 ### Directory structure
 
-**local** contains local content not archived in git
+* **src** contains Javascript source code
+* **test** contains Javascript unit tests
+* **scripts** contains miscellaneous scripts
+* **local** contains local content not archived in git
 
-### Watson
+### Text-to-Speech
 The [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
 is used to convert sutta text to speech. To use Watson, you will need an IBM Cloud Watson account.
 
 ### Installation
-With a Linux console:
+With a Linux console, install the software:
 
 ```
 git clone git@github.com:sc-karl/js-pootl.git
