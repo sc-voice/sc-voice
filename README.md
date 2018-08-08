@@ -2,18 +2,18 @@
 
 SuttaCentral voice assistance for vision-impaired. Includes:
 
-* Javscript utilites for managing SuttaCentral Pootl translations
-* 
+* Javascript API for [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
+* Javascript utilites for parsing SuttaCentral Pootl translations
 
-# Directory structure
+### Directory structure
 
 **local** contains local content not archived in git
 
-# Watson
+### Watson
 The [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
 is used to convert sutta text to speech. To use Watson, you will need an IBM Cloud Watson account.
 
-# Installation
+### Installation
 With a Linux console:
 
 ```
@@ -25,8 +25,8 @@ cd js-pootl
 To enable Watson translation, first copy your Watson JSON credentials, then
 do the following:
 
-* `cat > local/watson-credentials.json`
-* _paste credentials_
-* ENTER
-* CTRL-D
+1. `cat > local/watson-credentials.json`
+1. _paste credentials_
+1. ENTER
+1. CTRL-D
 
