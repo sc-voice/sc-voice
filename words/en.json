@@ -1,0 +1,128 @@
+{
+    "_symbols": {
+        "!": {
+            "name": "exclamation mark",
+            "cuddle": "left",
+            "endSegment": true
+        },
+        "\"": {
+            "name": "quotation mark"
+        },
+        "#": {
+            "name": "number sign"
+        },
+        "$": {
+            "name": "dollar sign"
+        },
+        "%": {
+            "name": "percent"
+        },
+        "&": {
+            "name": "ampersand"
+        },
+        "'": {
+            "name": "apostrophe"
+        },
+        "(": {
+            "name": "left parenthesis",
+            "cuddle": "right"
+        },
+        ")": {
+            "name": "right parenthesis",
+            "cuddle": "left"
+        },
+        "*": {
+            "name": "asterisk"
+        },
+        "+": {
+            "name": "plus sign"
+        },
+        ",": {
+            "name": "comma",
+            "cuddle": "left"
+        },
+        "-": {
+            "name": "hyphen minus"
+        },
+        ".": {
+            "name": "full stop",
+            "endSegment": true,
+            "cuddle": "left"
+        },
+        "/": {
+            "name": "solidus"
+        },
+
+
+        ":": {
+            "name": "colon"
+        },
+        ";": {
+            "name": "semicolon"
+        },
+        "<": {
+            "name": "less-than sign"
+        },
+        "=": {
+            "name": "equals sign"
+        },
+        ">": {
+            "name": "greater-than sign"
+        },
+        "?": {
+            "name": "question mark",
+            "endSegment": true,
+            "cuddle": "left"
+        },
+        "@": {
+            "name": "commercial at"
+        },
+
+        "[": {
+            "name": "left square bracket",
+            "cuddle": "right"
+        },
+        "]": {
+            "name": "right square bracket"
+        },
+
+        "\u2018": {
+            "name": "left single quote",
+            "cuddle": "right"
+        },
+        "\u2019": {
+            "name": "right single quote",
+            "cuddle": "left"
+        },
+        "\u201C": {
+            "name": "left double quote",
+            "cuddle": "right"
+        },
+        "\u201D": { 
+            "name": "right double quote",
+            "cuddle": "left"
+        }
+    },
+
+    "bhikku": "bhikkhu",
+    "bikkhu": "bhikkhu",
+    "bhikkus": "bhikkhus",
+    "bikkhus": "bhikkhus",
+    "bhikkhu":{
+        "ipa":"b\u026aku\u02D0(.)"
+    },
+    "bhikkhus":{
+        "ipa":"b\u026aku\u02D0z(.)"
+    },
+    "supreme": {
+        "ipa":"s\u0259\u02c8pri\u02d0m"
+    },
+    "tath\u0101gata": "tathagata",
+    "tath\u0101gatas": "tathagatas",
+    "tathagata": {
+        "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259(.)"
+    },
+    "tathagatas": {
+        "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259z(.)"
+    }
+}

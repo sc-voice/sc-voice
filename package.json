@@ -6,7 +6,9 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "watson-developer-cloud": "^3.8.0"
+  },
   "devDependencies": {
     "mocha": "^5.2.0",
     "should": "^11.2.0"
