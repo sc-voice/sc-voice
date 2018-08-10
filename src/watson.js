@@ -17,7 +17,7 @@
             this.voice = opts.voice || 'en-GB_KateVoice';
             this.language = this.voice.split('-')[0];
             this.mj = new MerkleJson({
-                hashTag: 'signature',
+                hashTag: 'guid',
             });
             var wordpath = path.join(__dirname, `../words/${this.language}.json`);
             if (!fs.existsSync(wordpath)) {

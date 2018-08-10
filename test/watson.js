@@ -21,7 +21,7 @@
     it("TESTTESTsignature(text) returns signature that identifies synthesized speech", function() {
         var watson = new Watson();
         var sig = watson.signature('hello world');
-        var hash = watson.mj.hash(sig);
+        var guid = watson.mj.hash(sig);
         should.deepEqual(sig, {
             api: 'watson/text-to-speech/v1',
             audioMIME: 'audio/ogg',
@@ -31,7 +31,7 @@
                 rate: '-10%',
             },
             text: 'hello world',
-            signature: hash,
+            guid,
         });
     });
     it("TESTTESTtextToSpeech returns textToSpeech API instance", function(done) {
