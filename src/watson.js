@@ -1,6 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
+    const { MerkleJson } = require('merkle-json');
     const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 
     class Watson {
@@ -15,6 +16,9 @@
             this.credentials = credentials;
             this.voice = opts.voice || 'en-GB_KateVoice';
             this.language = this.voice.split('-')[0];
+            this.mj = new MerkleJson({
+                hashTag: 'signature',
+            });
             var wordpath = path.join(__dirname, `../words/${this.language}.json`);
             if (!fs.existsSync(wordpath)) {
                 var wordpath = path.join(__dirname, `../words/en.json`);
@@ -154,6 +158,18 @@
 
         segmentSSML(text) {
             return this.segment(this.tokensSSML(text));
+        }
+
+        signature(text) {
+            var json = {
+                api: 'watson/text-to-speech/v1',
+                audioMIME: this.audioMIME,
+                voice: this.voice,
+                prosody: this.prosody,
+                text,
+            }
+            json[this.mj.hashTag] = this.mj.hash(json);
+            return json;
         }
 
         synthesize(text, opts={}) {

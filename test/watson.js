@@ -18,6 +18,22 @@
             },
         });
     });
+    it("TESTTESTsignature(text) returns signature that identifies synthesized speech", function() {
+        var watson = new Watson();
+        var sig = watson.signature('hello world');
+        var hash = watson.mj.hash(sig);
+        should.deepEqual(sig, {
+            api: 'watson/text-to-speech/v1',
+            audioMIME: 'audio/ogg',
+            voice: 'en-GB_KateVoice',
+            prosody: {
+                pitch: '-30%',
+                rate: '-10%',
+            },
+            text: 'hello world',
+            signature: hash,
+        });
+    });
     it("TESTTESTtextToSpeech returns textToSpeech API instance", function(done) {
         var watson = new Watson();
         var tts = watson.textToSpeech;
