@@ -136,8 +136,8 @@
             'Why', 'is', 'that', '?',
         ]);
     });
-    it("TESTTESTsythesize(text) creates wav file", function() {
-        return;
+    it("TESTTESTsythesize(text) creates sound file", function(done) {
+        this.timeout(3*1000);
         var watson = new Watson();
         //watson.voice = "en-US_MichaelVoice";
         var segments = [
@@ -165,8 +165,7 @@
             `full enlightenment, I say.`,
             `</prosody>`,
         ];
-        var xsegments = [
-            `<prosody rate="-10%" pitch="-30%">`,
+        var segments = [
             `has awakened to`,
             //`<phoneme alphabet="ipa" ph="so͞oˈprēm"></phoneme>"`,
             //`<phoneme alphabet="ipa" ph="suˈpriːm"></phoneme>"`,
@@ -174,10 +173,17 @@
             //`<phoneme alphabet="ipa" ph="sjuˈpriːm"></phoneme>"`,
             `<phoneme alphabet="ipa" ph="səˈpriːm"></phoneme>"`,
             `full enlightenment, I say.`,
-            `</prosody>`,
         ];
         var text = segments.join(' ');
-        watson.synthesize(text);
+        var cache = true;
+        (async function() {
+            var result = await watson.synthesize(text, { cache });
+            should(result).properties(['file','signature','stats']);
+            should(result.stats.size).greaterThan(5000); 
+            var suffix = result.file.substring(result.file.length-4);
+            should(suffix).equal('.ogg');
+            done();
+        })();
     });
 
 })

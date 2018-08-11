@@ -1,8 +1,10 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
+    const winston = require('winston');
     const { MerkleJson } = require('merkle-json');
     const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+    const SoundStore = require('./sound-store');
 
     class Watson {
         constructor(opts={}) {
@@ -16,6 +18,8 @@
             this.credentials = credentials;
             this.voice = opts.voice || 'en-GB_KateVoice';
             this.language = this.voice.split('-')[0];
+            this.hits = 0;
+            this.misses = 0;
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
@@ -23,6 +27,7 @@
             if (!fs.existsSync(wordpath)) {
                 var wordpath = path.join(__dirname, `../words/en.json`);
             }
+            this.store = new SoundStore();
             this.words = JSON.parse(fs.readFileSync(wordpath));
             var symbols = this.words._symbols;
             var symAcc= Object.keys(symbols).reduce((acc,text) => {
@@ -173,21 +178,54 @@
         }
 
         synthesize(text, opts={}) {
-            var synthesizeParams = {
-              text,
-              accept: this.audioMIME,
-              voice: this.voice,
-            };
+            return new Promise((resolve, reject) => {
+                var signature = this.signature(text);
+                var cache = opts.cache == null ? true : opts.cache;
+                var rate = this.prosody.rate;
+                var pitch = this.prosody.pitch;
+                var synthesizeParams = {
+                  text: `<prosody rate="${rate}" pitch="${pitch}">${text}</prosody>`,
+                  accept: this.audioMIME,
+                  voice: this.voice,
+                };
+                var ERROR_SIZE = 1000;
 
-            var output = Object.assign({}, this.output, opts.output);
-            var outpath = path.join(output.path, output.file);
-            var ostream = fs.createWriteStream(outpath);
+                var outpath = this.store.signaturePath(signature);
+                var stats = fs.existsSync(outpath) && fs.statSync(outpath);
+                if (cache && stats && stats.size > ERROR_SIZE) {
+                    this.hits++;
+                    resolve({
+                        file: outpath,
+                        stats,
+                        signature,
+                    });
+                } else {
+                    this.misses++;
+                    var ostream = fs.createWriteStream(outpath);
 
-            this.textToSpeech.synthesize(synthesizeParams)
-            .on('error', function(error) {
-                console.log(error);
-            })
-            .pipe(ostream);
+                    this.textToSpeech.synthesize(synthesizeParams)
+                    .on('error', function(error) {
+                        console.log(`synthesize() error:`, error.stack);
+                        reject(error);
+                    })
+                    .on('end', () => {
+                        var hitPct = (100*this.hits/(this.hits+this.misses)).toFixed(1);
+                        var stats = fs.existsSync(outpath) && fs.statSync(outpath);
+                        if (stats && stats.size <= ERROR_SIZE) {
+                            var err = fs.readFileSync(outpath).toString();
+                            console.log(`synthesize() failed ${outpath}`, stats.size, err);
+                            reject(new Error(err));
+                        }
+                        console.log(`synthesize() ${outpath} cache:${cache} ${stats.size}B hits:${hitPct}%`);
+                        resolve({
+                            file: outpath,
+                            stats,
+                            signature,
+                        });
+                    })
+                    .pipe(ostream);
+                }
+            });
         }
     }
 

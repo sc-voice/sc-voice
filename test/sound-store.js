@@ -18,6 +18,7 @@
         var store = new SoundStore();
         var guid = mj.hash("hello world");
         var expectedPath = path.join(local, 'sounds', guid.substring(0,2), guid)+'.ogg';
+        should(fs.existsSync(path.dirname(expectedPath))).equal(true);
         var signature = {
             guid,
         };

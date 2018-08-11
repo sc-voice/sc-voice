@@ -23,7 +23,9 @@
                 throw e;
             }
             var folder = guid.substr(0,this.folderPrefix);
-            return path.join(this.storePath, folder, `${guid}${suffix}`);
+            var folderPath = path.join(this.storePath, folder);
+            fs.existsSync(folderPath) || fs.mkdirSync(folderPath);
+            return path.join(folderPath, `${guid}${suffix}`);
         }
 
     }
