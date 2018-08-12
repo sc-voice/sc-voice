@@ -77,16 +77,16 @@
         // words with information
         should(watson.wordSSML('bhikkhu'))
         .equal('<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>'+
-            '<break strength="x-weak"></break>');
+            watson.break(1));
     });
     it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
         var watson = new Watson();
         var text = "Bhikkhus, the Tathagata, too, accomplished and fully enlightened";
         var tokens = watson.tokensSSML(text);
         should.deepEqual(tokens, [
-            `<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme><break strength="x-weak"></break>`,
+            `<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>` + watson.break(1),
             ',', 'the',
-            `<phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme><break strength="x-weak"></break>`,
+            `<phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme>` + watson.break(1),
             ',', 'too', ',', 'accomplished', 'and', 'fully', 'enlightened',
         ]);
     });
@@ -115,8 +115,8 @@
         ];
         var ssml = watson.segmentSSML(segments.join(' '));
         should.deepEqual(ssml, [
-            '<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme><break strength="x-weak"></break>, '+
-                'he does not conceive earth to be \u2018mine,\u2019 he does not delight in earth.',
+            '<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>' + watson.break(1) +
+                ', he does not conceive earth to be \u2018mine,\u2019 he does not delight in earth.',
             'Why is that?',
             'Because delight is the root of suffering.',
         ]);
@@ -136,52 +136,42 @@
             'Why', 'is', 'that', '?',
         ]);
     });
-    it("TESTTESTsythesize(text) creates sound file", function(done) {
+    it("TESTTESTsynthesizeSSML(ssml) returns sound file", function(done) {
+        var cache = true; 
         this.timeout(3*1000);
         var watson = new Watson();
-        //watson.voice = "en-US_MichaelVoice";
         var segments = [
-            `<prosody rate="-10%" pitch="-30%">`,
-            `<phoneme alphabet="ipa" ph="ˈbɪkuːz">Bhikkhus</phoneme><break strength="x-weak"></break>,`,
-            `the <phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme><break strength="x-weak"></break>,`,
-            `too, accomplished and fully enlightened, directly knows earth as earth.`,
-            `Having directly known earth as earth, he does not conceive himself as earth,`,
-            `he does not conceive himself in earth,`,
-            `he does not conceive himself apart from earth,`,
-            `he does not conceive earth to be ‘mine,’ he does not delight in earth.`,
-            `Why is that?`,
-            `Because he has understood that delight is the root of suffering,`,
-            `and that with being as condition there is birth,`,
-            `and that for whatever has come to be there is ageing and death.`,
-            `Therefore,`,
-            `<phoneme alphabet="ipa" ph="ˈbɪkuːz">Bhikkhus</phoneme><break strength="x-weak"></break>,`,
-            `through the complete destruction, fading away, cessation,`,
-            `giving up, and relinquishing of cravings,`,
-            `the <phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme><break strength="x-weak"></break>`,
-            `has awakened to`,
-            //`<phoneme alphabet="ipa" ph="so͞oˈprēm"></phoneme>"`,
-            //`<phoneme alphabet="ipa" ph="suˈpriːm"></phoneme>"`,
-            `<phoneme alphabet="ipa" ph="səˈpriːm"></phoneme>"`,
-            `full enlightenment, I say.`,
-            `</prosody>`,
-        ];
-        var segments = [
-            `has awakened to`,
-            //`<phoneme alphabet="ipa" ph="so͞oˈprēm"></phoneme>"`,
-            //`<phoneme alphabet="ipa" ph="suˈpriːm"></phoneme>"`,
-            //`<phoneme alphabet="ipa" ph="suhpreem"></phoneme>"`,
-            //`<phoneme alphabet="ipa" ph="sjuˈpriːm"></phoneme>"`,
-            `<phoneme alphabet="ipa" ph="səˈpriːm"></phoneme>"`,
+            `<phoneme alphabet="ipa" ph="səˈpriːm"></phoneme>`,
             `full enlightenment, I say.`,
         ];
-        var text = segments.join(' ');
-        var cache = true;
+        var ssml = segments.join(' ');
         (async function() {
-            var result = await watson.synthesize(text, { cache });
-            should(result).properties(['file','signature','stats']);
+            var result = await watson.synthesizeSSML(ssml, { cache });
+            should(result).properties(['file','signature','stats','hits', 'misses']);
             should(result.stats.size).greaterThan(5000); 
             var suffix = result.file.substring(result.file.length-4);
             should(suffix).equal('.ogg');
+            done();
+        })();
+    });
+    it("TESTTESTsynthesizeSSML(ssml) returns sound file", function(done) {
+        this.timeout(3*1000);
+        (async function() {
+            var cache = true; 
+            var watson = new Watson();
+            var text = [
+                "Tomatoes are",
+                "red.",
+                "Tomatoes are red. Broccoli is green"
+            ];
+            var result = await watson.synthesizeText(text, {cache});
+            /*
+            should(result.length).equal(3);
+            should(result[0].stats.size).greaterThan(10000);
+            should(result[1].stats.size).greaterThan(10000);
+            should(result[0].signature.text).match(/Tomatoes are red/);
+            should(result[1].signature.text).match(/Broccoli is green/);
+            */
             done();
         })();
     });

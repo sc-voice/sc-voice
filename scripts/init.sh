@@ -1,6 +1,37 @@
 #!/bin/bash
 
 echo -e "INIT\t: $0 START: `date`"
+
+type python
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: Python detected (consult AWS CLI for required version)"
+else
+    echo -e "ERROR\t: Python not installed. See AWS CLI documentation"
+    echo -e "ERROR\t: https://docs.aws.amazon.com/cli/latest/userguide/awscli-install-bundle.html"
+    echo -e "ERROR\t: Install correct version of Python per AWS CLI instructions"
+    exit -1
+fi
+
+type aws
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: AWS CLI detected. No action taken"
+else
+    pushd ~
+    BIN="`pwd`/bin"
+    echo $PATH | grep -E "~/bin|$BIN"
+    RC=$?; if [ "$RC" == "0" ]; then
+        echo -e "INIT\t: AWS CLI $BIN will installed in $BIN"
+        curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+        unzip awscli-bundle.zip
+        ./awscli-bundle/install -b ~/bin/aws
+    else
+        echo -e "INIT\t: $BIN cannot be used for installing AWS CLI for Polly"
+        echo -e "ERROR\t: Install AWS CLI manually and rerun this script"
+        exit 0
+    fi
+    popd
+fi
+
 if [ -e node_modules ]; then
     echo -e "INIT\t: node_modules exist. no action required"
 else
@@ -24,6 +55,16 @@ else
     unzip master.zip
     mv translation-master/mn .
     rm -rf master.zip translation-master
+    popd
+fi
+
+if [ -e local/awscli-bundle ]; then
+    echo -e "INIT\t: awscli-bundle folder exists. no action required"
+else
+    echo -e "INIT\t: Installing AWS CLI... "
+    pushd local
+    curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+    unzip awscli-bundle.zip
     popd
 fi
 

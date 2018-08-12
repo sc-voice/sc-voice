@@ -43,7 +43,7 @@
                 pitch: "-30%",
                 rate: "-10%",
             };
-            this.pause1 = `<break strength="x-weak"></break>`;
+            this.breaks = opts.breaks || [0,0.1,0.2,0.4,0.8];
             this.service_url = opts.service_url || "https://stream.watsonplatform.net/text-to-speech/api/v1";
             this.output = opts.output || {
                 path: path.join(__dirname, '../local/audio'),
@@ -78,6 +78,10 @@
             return value;
         }
 
+        break(index) {
+            return `<break time="${index}s"></break>`;
+        }
+
         wordInfo(word) {
             word = word && word.toLowerCase();
             var wordValue = word && this.words[word];
@@ -95,7 +99,7 @@
                     var pauses = ipa.split('(.)');
                     ipa = pauses.map(x => {
                         return x && `<phoneme alphabet="ipa" ph="${x}">${word}</phoneme>` || '';
-                    }).join(this.pause1);
+                    }).join(this.break(1));
                     return ipa;
                 } else {
                     return `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>`;
@@ -118,8 +122,8 @@
         }
 
         tokensSSML(text) {
-            var tokens = this.tokenize(text);
-            var tokensSSML = this.tokenize(text).map(token => {
+            var tokens = text instanceof Array ? text : this.tokenize(text);
+            var tokensSSML = tokens.map(token => {
                 return this.wordSSML(token) || token;
             });
             return tokensSSML;
@@ -177,17 +181,17 @@
             return json;
         }
 
-        synthesize(text, opts={}) {
+        synthesizeSSML(ssml, opts={}) {
             return new Promise((resolve, reject) => {
-                var signature = this.signature(text);
                 var cache = opts.cache == null ? true : opts.cache;
                 var rate = this.prosody.rate;
                 var pitch = this.prosody.pitch;
                 var synthesizeParams = {
-                  text: `<prosody rate="${rate}" pitch="${pitch}">${text}</prosody>`,
+                  text: `<prosody rate="${rate}" pitch="${pitch}">${ssml}</prosody>`,
                   accept: this.audioMIME,
                   voice: this.voice,
                 };
+                var signature = this.signature(synthesizeParams.text);
                 var ERROR_SIZE = 1000;
 
                 var outpath = this.store.signaturePath(signature);
@@ -198,6 +202,9 @@
                         file: outpath,
                         stats,
                         signature,
+                        hits: this.hits,
+                        misses: this.misses,
+                        cached: true,
                     });
                 } else {
                     this.misses++;
@@ -216,16 +223,33 @@
                             console.log(`synthesize() failed ${outpath}`, stats.size, err);
                             reject(new Error(err));
                         }
-                        console.log(`synthesize() ${outpath} cache:${cache} ${stats.size}B hits:${hitPct}%`);
+                        //console.log(`synthesize() ${outpath} cache:${cache} ${stats.size}B hits:${hitPct}%`);
+                        var jsonPath = this.store.signaturePath(signature, ".json");
+                        fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2));
                         resolve({
                             file: outpath,
                             stats,
+                            hits: this.hits,
+                            misses: this.misses,
                             signature,
+                            cached: false,
                         });
                     })
                     .pipe(ostream);
                 }
             });
+        }
+
+        synthesizeText(text, opts={}) {
+            if (typeof text === 'string') {
+                var promises = this.segmentSSML(text).map(ssml => this.synthesizeSSML(ssml, opts));
+            } else if (text instanceof Array) {
+                var textArray = text;
+                var promises = textArray.map(t => this.synthesizeText(t));
+            } else {
+                return Promise.reject(new Error("synthesizeText(text?) expected string or Array"));
+            }
+            return Promise.all(promises);
         }
     }
 

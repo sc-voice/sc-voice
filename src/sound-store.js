@@ -15,9 +15,8 @@
             fs.existsSync(this.storePath) || fs.mkdirSync(this.storePath);
         }
 
-        signaturePath(signature) {
+        signaturePath(signature, suffix='.ogg') {
             var guid = signature.guid;
-            var suffix = ".ogg";
             if (typeof guid !== 'string') {
                 var e = new Error(`SoundStore.assetPath() invalid guid:${guid}`);
                 throw e;
