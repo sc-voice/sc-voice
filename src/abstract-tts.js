@@ -170,35 +170,62 @@
             json[this.mj.hashTag] = this.mj.hash(json);
             return json;
         }
+        
+        synthesizeResponse(resolve, reject, request) {
+            var hitPct = (100*this.hits/(this.hits+this.misses)).toFixed(1);
+            var outpath = request.outpath;
+            var stats = fs.existsSync(outpath) && fs.statSync(outpath);
+            if (stats && stats.size <= this.ERROR_SIZE) {
+                var err = fs.readFileSync(outpath).toString();
+                console.log(`synthesize() failed ${outpath}`, stats.size, err);
+                reject(new Error(err));
+            }
+            resolve(this.createResponse(request, stats));
+        }
 
-        synthesizeSSML(ssml, opts={}) {
+        createResponse(request, stats) {
+            var signature = request.signature;
+            var jsonPath = this.store.signaturePath(signature, ".json");
+            fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2));
+            return {
+                file: request.outpath,
+                stats,
+                hits: this.hits,
+                misses: this.misses,
+                signature,
+                cached: false,
+            };
+        }
+
+        synthesizeSSML(ssmlFragment, opts={}) {
             return new Promise((resolve, reject) => {
-                var cache = opts.cache == null ? true : opts.cache;
-                var rate = this.prosody.rate || "0%";
-                var pitch = this.prosody.pitch || "0%";
-                var synthesizeParams = {
-                  text: `<prosody rate="${rate}" pitch="${pitch}">${ssml}</prosody>`,
-                  accept: this.audioMIME,
-                  voice: this.voice,
-                };
-                var signature = this.signature(synthesizeParams.text);
-
-                var outpath = this.store.signaturePath(signature);
-                var stats = fs.existsSync(outpath) && fs.statSync(outpath);
-                if (cache && stats && stats.size > this.ERROR_SIZE) {
-                    this.hits++;
-                    resolve({
-                        file: outpath,
-                        stats,
+                try {
+                    var cache = opts.cache == null ? true : opts.cache;
+                    var rate = this.prosody.rate || "0%";
+                    var pitch = this.prosody.pitch || "0%";
+                    var ssml = `<prosody rate="${rate}" pitch="${pitch}">${ssmlFragment}</prosody>`;
+                    var signature = this.signature(ssml);
+                    var outpath = this.store.signaturePath(signature);
+                    var request = {
+                        ssml,
                         signature,
-                        hits: this.hits,
-                        misses: this.misses,
-                        cached: true,
-                    });
-                } else {
-                    this.misses++;
+                        outpath,
+                    };
 
-                    this.serviceSynthesize(resolve, reject, synthesizeParams, outpath, signature);
+                    var stats = fs.existsSync(outpath) && fs.statSync(outpath);
+                    if (cache && stats && stats.size > this.ERROR_SIZE) {
+                        this.hits++;
+                        resolve(this.createResponse(request, stats));
+                    } else {
+                        this.misses++;
+
+                        this.serviceSynthesize(resolve, error => {
+                            console.log(`synthesize() error:`, error.stack);
+                            reject(error);
+                        }, request);
+                    }
+                } catch (e) {
+                    reject(e);
                 }
             });
         }
@@ -234,7 +261,7 @@
             });
         }
 
-        serviceSynthesize(resolve, reject, synthesizeParms) {
+        serviceSynthesize(resolve, reject, request) {
             reject (new Error(ABSTRACT_METHOD));
         }
 

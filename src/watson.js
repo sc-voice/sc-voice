@@ -30,33 +30,16 @@
             return this._textToSpeech;
         }
 
-        serviceSynthesize(resolve, reject, serviceParams, outpath, signature) {
+        serviceSynthesize(resolve, reject, request) {
             var ostream = fs.createWriteStream(outpath);
+            var serviceParams = {
+                text: request.ssml,
+                accept: request.audioMIME,
+                voice: request.voice,
+            };
             this.textToSpeech.synthesize(serviceParams)
-            .on('error', function(error) {
-                console.log(`synthesize() error:`, error.stack);
-                reject(error);
-            })
-            .on('end', () => {
-                var hitPct = (100*this.hits/(this.hits+this.misses)).toFixed(1);
-                var stats = fs.existsSync(outpath) && fs.statSync(outpath);
-                if (stats && stats.size <= this.ERROR_SIZE) {
-                    var err = fs.readFileSync(outpath).toString();
-                    console.log(`synthesize() failed ${outpath}`, stats.size, err);
-                    reject(new Error(err));
-                }
-                //console.log(`synthesize() ${outpath} cache:${cache} ${stats.size}B hits:${hitPct}%`);
-                var jsonPath = this.store.signaturePath(signature, ".json");
-                fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2));
-                resolve({
-                    file: outpath,
-                    stats,
-                    hits: this.hits,
-                    misses: this.misses,
-                    signature,
-                    cached: false,
-                });
-            })
+            .on('error', error => reject(error) )
+            .on('end', () => this.synthesizeResponse(resolve, reject, request) )
             .pipe(ostream);
         }
     }
