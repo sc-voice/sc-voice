@@ -3,6 +3,7 @@
     const fs = require('fs');
     const path = require('path');
     const Watson = require("../src/watson");
+    const AbstractTTS = require("../src/abstract-tts");
     const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 
     it("TESTTESTconstructor reads credentials", function() {
@@ -40,102 +41,6 @@
         should(tts).instanceOf(TextToSpeechV1);
         done();
     });
-    it("TESTTESTwordInfo(word) returns information about a word", function() {
-        var watson = new Watson();
-        var bhikkhu = {
-            ipa: "b\u026aku\u02D0(.)",
-        };
-        var bhikkhus = {
-            ipa: "b\u026aku\u02D0z(.)",
-        };
-
-        // no information
-        should.deepEqual(watson.wordInfo('asdf'), null);
-
-        // singular variations
-        should.deepEqual(watson.wordInfo('Bhikkhu'), bhikkhu);
-        should.deepEqual(watson.wordInfo('Bikkhu'), bhikkhu);
-        should.deepEqual(watson.wordInfo('Bhikku'), bhikkhu);
-        should.deepEqual(watson.wordInfo('bhikkhu'), bhikkhu);
-        should.deepEqual(watson.wordInfo('bikkhu'), bhikkhu);
-        should.deepEqual(watson.wordInfo('bhikku'), bhikkhu);
-
-        // plural variations
-        should.deepEqual(watson.wordInfo('Bhikkhus'), bhikkhus);
-        should.deepEqual(watson.wordInfo('Bikkhus'), bhikkhus);
-        should.deepEqual(watson.wordInfo('Bhikkus'), bhikkhus);
-        should.deepEqual(watson.wordInfo('bhikkhus'), bhikkhus);
-        should.deepEqual(watson.wordInfo('bikkhus'), bhikkhus);
-        should.deepEqual(watson.wordInfo('bhikkus'), bhikkhus);
-    });
-    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
-        var watson = new Watson();
-
-        // words without information
-        should(watson.wordSSML('meditation')).equal('meditation');
-
-        // words with information
-        should(watson.wordSSML('bhikkhu'))
-        .equal('<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>'+
-            watson.break(1));
-    });
-    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
-        var watson = new Watson();
-        var text = "Bhikkhus, the Tathagata, too, accomplished and fully enlightened";
-        var tokens = watson.tokensSSML(text);
-        should.deepEqual(tokens, [
-            `<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>` + watson.break(1),
-            ',', 'the',
-            `<phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme>` + watson.break(1),
-            ',', 'too', ',', 'accomplished', 'and', 'fully', 'enlightened',
-        ]);
-    });
-    it("TESTTESTsegment(tokens) returns array of segments", function() {
-        var watson = new Watson();
-        var tokens = [
-            'a', '<b/>', ',', '(', 'c', 'd', ')', 'e', '.', 
-            'f', 'g', '?', 
-            'h', 'i', '!', 
-            'j', '\u2018', 'k', ',', '\u2019', 'l',
-        ];
-        var segments = watson.segment(tokens);
-        should.deepEqual(segments, [
-            'a <b/>, (c d) e.',
-            'f g?',
-            'h i!',
-            'j \u2018k,\u2019 l',
-        ]);
-    });
-    it("TESTTESTsegmentSSML(text) returns array of SSML text segments", function() {
-        var watson = new Watson();
-        var segments = [
-            'Bhikkhus, he does not conceive earth to be \u2018mine,\u2019 he does not delight in earth.',
-            'Why is that?',
-            'Because delight is the root of suffering.',
-        ];
-        var ssml = watson.segmentSSML(segments.join(' '));
-        should.deepEqual(ssml, [
-            '<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>' + watson.break(1) +
-                ', he does not conceive earth to be \u2018mine,\u2019 he does not delight in earth.',
-            'Why is that?',
-            'Because delight is the root of suffering.',
-        ]);
-    });
-    it("TESTTESTtokenize(text) returns array of tokens", function() {
-        var watson = new Watson();
-        var segments = [
-            'he does not conceive earth',
-            'to be \u2018mine,\u2019.',
-            'Why is that?',
-        ];
-        var text = segments.join(' ');
-        var tokens = watson.tokenize(text);
-        should.deepEqual(tokens, [
-            'he', 'does', 'not', 'conceive', 'earth', 
-            'to', 'be', '\u2018', 'mine', ',', '\u2019', '.', 
-            'Why', 'is', 'that', '?',
-        ]);
-    });
     it("TESTTESTsynthesizeSSML(ssml) returns sound file", function(done) {
         var cache = true; 
         this.timeout(3*1000);
@@ -165,13 +70,15 @@
                 "Tomatoes are red. Broccoli is green"
             ];
             var result = await watson.synthesizeText(text, {cache});
-            /*
-            should(result.length).equal(3);
-            should(result[0].stats.size).greaterThan(10000);
-            should(result[1].stats.size).greaterThan(10000);
-            should(result[0].signature.text).match(/Tomatoes are red/);
-            should(result[1].signature.text).match(/Broccoli is green/);
-            */
+            should(result.length).equal(4);
+            should(result[0].stats.size).greaterThan(1000);
+            should(result[1].stats.size).greaterThan(1000);
+            should(result[2].stats.size).greaterThan(1000);
+            should(result[3].stats.size).greaterThan(1000);
+            should(result[0].signature.text).match(/Tomatoes are/);
+            should(result[1].signature.text).match(/red/);
+            should(result[2].signature.text).match(/Tomatoes are red/);
+            should(result[3].signature.text).match(/Broccoli is green/);
             done();
         })();
     });

@@ -2,6 +2,14 @@
 
 echo -e "INIT\t: $0 START: `date`"
 
+type ffmpeg
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: ffmpeg detected (OK)"
+else
+    echo -e "INIT\t: installing ffmpeg (requires sudo)"
+    sudo apt-get install ffmpeg
+fi
+
 type python
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: Python detected (consult AWS CLI for required version)"
@@ -14,7 +22,7 @@ fi
 
 type aws
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: AWS CLI detected. No action taken"
+    echo -e "INIT\t: AWS CLI detected (OK)"
 else
     pushd ~
     BIN="`pwd`/bin"
@@ -33,21 +41,21 @@ else
 fi
 
 if [ -e node_modules ]; then
-    echo -e "INIT\t: node_modules exist. no action required"
+    echo -e "INIT\t: node_modules exist (OK)"
 else
     echo -e "INIT\t: npm install..."
     npm install
 fi
 
 if [ -e local/watson ]; then
-    echo -e "INIT\t: watson folder exists. no action required"
+    echo -e "INIT\t: watson folder exists (OK)"
 else
     echo -e "INIT\t: creating local/watson"
     mkdir -p local/watson
 fi
 
 if [ -e local/mn ]; then
-    echo -e "INIT\t: mn folder exists. no action required"
+    echo -e "INIT\t: mn folder exists (OK)"
 else
     pushd local
     echo -e "INIT\t: loading SuttaCentral translation content (translation.zip)..."
@@ -59,7 +67,7 @@ else
 fi
 
 if [ -e local/awscli-bundle ]; then
-    echo -e "INIT\t: awscli-bundle folder exists. no action required"
+    echo -e "INIT\t: awscli-bundle folder exists (OK)"
 else
     echo -e "INIT\t: Installing AWS CLI... "
     pushd local
