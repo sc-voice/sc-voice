@@ -17,8 +17,8 @@
     it("TESTTESTsignaturePath(signature) returns file path of sound signature", function() {
         var store = new SoundStore();
         var guid = mj.hash("hello world");
-        var expectedPath = path.join(local, 'sounds', guid.substring(0,2), guid)+'.ogg';
-        should(fs.existsSync(path.dirname(expectedPath))).equal(true);
+        var dirPath = path.join(local, 'sounds', guid.substring(0,2), guid);
+        var expectedPath = `${dirPath}.ogg`;
         var signature = {
             guid,
         };

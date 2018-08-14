@@ -219,6 +219,8 @@
                     } else {
                         this.misses++;
 
+                        var ostream = fs.createWriteStream(request.outpath);
+                        request.ostream = ostream;
                         this.serviceSynthesize(resolve, error => {
                             console.log(`synthesize() error:`, error.stack);
                             reject(error);

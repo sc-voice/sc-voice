@@ -31,7 +31,7 @@
         }
 
         serviceSynthesize(resolve, reject, request) {
-            var ostream = fs.createWriteStream(request.outpath);
+            var ostream = request.ostream;
             var serviceParams = {
                 text: request.ssml,
                 accept: request.audioMIME,
