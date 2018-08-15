@@ -34,8 +34,8 @@
             var ostream = request.ostream;
             var serviceParams = {
                 text: request.ssml,
-                accept: request.audioMIME,
-                voice: request.voice,
+                accept: request.audioMIME || this.audioMIME,
+                voice: request.voice || this.voice,
             };
             this.textToSpeech.synthesize(serviceParams)
             .on('error', error => reject(error) )

@@ -253,9 +253,13 @@
                         result = await Promise.all(promises);
                     }
                     if (result) {
-                        var files = result.map(r => r.file);
-                        var inputs = `file '${files.join("'\nfile '")}'\n`;
-                        resolve(result);
+                        if (result.length === 1) {
+                            resolve(result[0]);
+                        } else {
+                            var files = result.map(r => r.file);
+                            var concatResult = await that.ffmpegConcat(files);
+                            resolve(concatResult);
+                        }
                     } else {
                         reject(new Error("synthesizeText(text?) expected string or Array"));
                     }
