@@ -5,6 +5,7 @@
     const { MerkleJson } = require('merkle-json');
     const SoundStore = require('./sound-store');
     const ABSTRACT_METHOD = "abstract method must be overridden and implemented by base class";
+    const { exec } = require('child_process');
 
     class AbstractTTS {
         constructor(opts={}) {
@@ -160,15 +161,15 @@
         }
 
         signature(text) {
-            var json = {
+            var signature = {
                 api: this.api,
                 audioMIME: this.audioMIME,
                 voice: this.voice,
                 prosody: this.prosody,
                 text,
-            }
-            json[this.mj.hashTag] = this.mj.hash(json);
-            return json;
+            };
+            signature[this.mj.hashTag] = this.mj.hash(signature);
+            return signature;
         }
         
         synthesizeResponse(resolve, reject, request) {
@@ -180,21 +181,21 @@
                 console.log(`synthesize() failed ${outpath}`, stats.size, err);
                 reject(new Error(err));
             }
-            resolve(this.createResponse(request, stats));
+            resolve(this.createResponse(request, false));
         }
 
-        createResponse(request, stats) {
+        createResponse(request, cached = false) {
             var signature = request.signature;
             var jsonPath = this.store.signaturePath(signature, ".json");
             fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2));
-            return {
+            var response = {
                 file: request.outpath,
-                stats,
                 hits: this.hits,
                 misses: this.misses,
                 signature,
                 cached: false,
             };
+            return response;
         }
 
         synthesizeSSML(ssmlFragment, opts={}) {
@@ -215,7 +216,7 @@
                     var stats = fs.existsSync(outpath) && fs.statSync(outpath);
                     if (cache && stats && stats.size > this.ERROR_SIZE) {
                         this.hits++;
-                        resolve(this.createResponse(request, stats));
+                        resolve(this.createResponse(request, true));
                     } else {
                         this.misses++;
 
@@ -254,7 +255,6 @@
                     if (result) {
                         var files = result.map(r => r.file);
                         var inputs = `file '${files.join("'\nfile '")}'\n`;
-                        console.log('inputs\n'+inputs);
                         resolve(result);
                     } else {
                         reject(new Error("synthesizeText(text?) expected string or Array"));
@@ -265,6 +265,52 @@
 
         serviceSynthesize(resolve, reject, request) {
             reject (new Error(ABSTRACT_METHOD));
+        }
+
+        ffmpegConcat(files, opts = {}) {
+            return new Promise((resolve, reject) => {
+                var inputs = `file '${files.join("'\nfile '")}'\n`;
+                var signature = {
+                    api: "ffmegConcat",
+                    files,
+                }
+                signature[this.mj.hashTag] = this.mj.hash(signature);
+                var outpath = this.store.signaturePath(signature, ".ogg");
+                var stats = fs.existsSync(outpath) && fs.statSync(outpath);
+                var cache = opts.cache == null ? true : opts.cache;
+                var request = {
+                    signature,
+                    outpath,
+                    files,
+                };
+                if (cache && stats && stats.size > this.ERROR_SIZE) {
+                    this.hits++;
+                    resolve(this.createResponse(request, true));
+                } else {
+                    var inpath = this.store.signaturePath(signature, ".txt");
+                    fs.writeFileSync(inpath, inputs);
+                    var cmd = `bash -c "ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`;
+                    exec(cmd, (err, stdout, stderr) => {
+                        if (err) {
+                            console.log(err.stack);
+                            reject(err);
+                            return;
+                        }
+
+                        //console.log(`stdout: ${stdout}`);
+                        //console.log(`stderr: ${stderr}`);
+                        var stats = fs.existsSync(outpath) && fs.statSync(outpath);
+                        if (stats && stats.size <= this.ERROR_SIZE) {
+                            var err = fs.readFileSync(outpath).toString();
+                            console.log(`ffmpegConcat() failed ${outpath}`, stats.size, err);
+                            reject(new Error(err));
+                        } else {
+                            resolve(this.createResponse(request, false));
+                        }
+                    });
+                }
+            });
+
         }
 
     }

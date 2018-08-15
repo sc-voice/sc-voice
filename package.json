@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "merkle-json": "^1.1.2",
+    "tmp": "0.0.33",
     "watson-developer-cloud": "^3.8.0",
     "winston": "^3.0.0"
   },

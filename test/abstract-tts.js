@@ -118,12 +118,17 @@
     it("TESTTESTffmpegConcat(files) returns sound file", function(done) {
         var abstractTTS = new AbstractTTS();
         var files = [
+            path.join(__dirname, 'data/1d4e09ef9cd91470da56c84c2da481b0.ogg'),
             path.join(__dirname, 'data/0e4a11bcb634a4eb72d2004a74f39728.ogg'),
-            path.join(__dirname, '1d4e09ef9cd91470da56c84c2da481b0.ogg'),
         ];
         (async function() {
-            should(fs.existsSync(files[0]));
-            should(fs.existsSync(files[1]));
+            should(fs.existsSync(files[0])).equal(true);
+            should(fs.existsSync(files[1])).equal(true);
+            var cache = true;
+            var result = await abstractTTS.ffmpegConcat(files, { cache });
+            should(result).properties(['file','cached','hits','misses']);
+            should(fs.existsSync(result.file)).equal(true);
+
             done();
         })();
     });

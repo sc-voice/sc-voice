@@ -52,8 +52,8 @@
         var ssml = segments.join(' ');
         (async function() {
             var result = await watson.synthesizeSSML(ssml, { cache });
-            should(result).properties(['file','signature','stats','hits', 'misses']);
-            should(result.stats.size).greaterThan(5000); 
+            should(result).properties(['file','signature','hits', 'misses']);
+            should(fs.statSync(result.file).size).greaterThan(1000);
             var suffix = result.file.substring(result.file.length-4);
             should(suffix).equal('.ogg');
             done();
@@ -71,10 +71,10 @@
             ];
             var result = await watson.synthesizeText(text, {cache});
             should(result.length).equal(4);
-            should(result[0].stats.size).greaterThan(1000);
-            should(result[1].stats.size).greaterThan(1000);
-            should(result[2].stats.size).greaterThan(1000);
-            should(result[3].stats.size).greaterThan(1000);
+            should(fs.statSync(result[0].file).size).greaterThan(1000);
+            should(fs.statSync(result[1].file).size).greaterThan(1000);
+            should(fs.statSync(result[2].file).size).greaterThan(1000);
+            should(fs.statSync(result[3].file).size).greaterThan(1000);
             should(result[0].signature.text).match(/Tomatoes are/);
             should(result[1].signature.text).match(/red/);
             should(result[2].signature.text).match(/Tomatoes are red/);
@@ -91,8 +91,8 @@
             return snsutta[key] || `(not found:${key}`;
         };
         var html = '<html>${sn(1.6,2,1)}</html>';
-        console.log(`template: ${html}`);
-        console.log("HTML:", eval("`" + html + "`"));
+        should(`${html}`).equal('<html>${sn(1.6,2,1)}</html>');
+        should(eval("`" + html + "`")).equal('<html>How many sleep while others wake?</html>');
         done();
     });
 
