@@ -82,5 +82,18 @@
             done();
         })();
     });
+    it("TESTTESTsegment references in HTML templates", function(done) {
+        var snsutta = {
+            "sn1.6:2.1": "How many sleep while others wake?",
+        };
+        var sn = (s,a,b) => {
+            var key = `sn${s}:${a}.${b}`;
+            return snsutta[key] || `(not found:${key}`;
+        };
+        var html = '<html>${sn(1.6,2,1)}</html>';
+        console.log(`template: ${html}`);
+        console.log("HTML:", eval("`" + html + "`"));
+        done();
+    });
 
 })
