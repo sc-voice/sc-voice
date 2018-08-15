@@ -41,7 +41,7 @@
         should(tts).instanceOf(TextToSpeechV1);
         done();
     });
-    it("TESTTESTsynthesizeSSML(ssml) returns sound file", function(done) {
+    it("synthesizeSSML(ssml) returns sound file", function(done) {
         var cache = true; 
         this.timeout(3*1000);
         var watson = new Watson();
@@ -59,8 +59,7 @@
             done();
         })();
     });
-    it("TESESTsynthesizeText(ssml) returns sound file", function(done) {
-    done();return;
+    it("synthesizeText(ssml) returns sound file", function(done) {
         this.timeout(3*1000);
         (async function() {
             var cache = true; 
@@ -71,15 +70,13 @@
                 "Tomatoes are red. Broccoli is green"
             ];
             var result = await watson.synthesizeText(text, {cache});
-            should(result.length).equal(4);
-            should(fs.statSync(result[0].file).size).greaterThan(1000);
-            should(fs.statSync(result[1].file).size).greaterThan(1000);
-            should(fs.statSync(result[2].file).size).greaterThan(1000);
-            should(fs.statSync(result[3].file).size).greaterThan(1000);
-            should(result[0].signature.text).match(/Tomatoes are/);
-            should(result[1].signature.text).match(/red/);
-            should(result[2].signature.text).match(/Tomatoes are red/);
-            should(result[3].signature.text).match(/Broccoli is green/);
+            should(result).properties(['file','hits','misses','signature','cached']);
+            should(result.signature.files.length).equal(4);
+            should(fs.statSync(result.signature.files[0]).size).greaterThan(1000); // Tomatoes are
+            should(fs.statSync(result.signature.files[1]).size).greaterThan(1000); // red.
+            should(fs.statSync(result.signature.files[2]).size).greaterThan(1000); // Tomatoes are red.
+            should(fs.statSync(result.signature.files[3]).size).greaterThan(1000); // Broccoli is green.
+            should(fs.statSync(result.file).size).greaterThan(5000);
             done();
         })();
     });
