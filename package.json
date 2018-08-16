@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "aws-sdk": "^2.294.0",
+    "compression": "^1.7.3",
+    "express": "^4.16.3",
     "merkle-json": "^1.1.2",
     "tmp": "0.0.33",
     "watson-developer-cloud": "^3.8.0",

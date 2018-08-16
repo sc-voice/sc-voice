@@ -1,0 +1,33 @@
+<html>
+<body>
+    <audio id="broccoli" > <source 
+        src="/sounds/0d/0d9a4d390fdc510cdb08723a4d620bbe.ogg" 
+        type="audio/ogg"></audio>
+    <audio id="tomato" ><source 
+        src="/sounds/d5/d505e284744eede6d5234daa0c79b804.ogg"
+        type="audio/ogg"></audio>
+<script>
+    function play(id) {
+        var audio = document.getElementById(id);
+        console.log(id);
+        audio.play();
+    }
+</script>
+<style>
+.audio-result {
+    padding: 1em;
+}
+.audio-result:hover {
+    cursor: pointer;
+    background-color: #eee;
+}
+</style>
+<div class="audio-result" onclick="play('broccoli')"> 
+    Broccoli...
+</div>
+<div class="audio-result" onclick="play('tomato')"> 
+    Tomatoes...
+</div>
+
+</body>
+</html>
