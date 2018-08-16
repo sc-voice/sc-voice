@@ -1,68 +1,53 @@
-(typeof describe === 'function') && describe("watson", function() {
+(typeof describe === 'function') && describe("Polly", function() {
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const Watson = require("../src/watson");
-    const AbstractTTS = require("../src/abstract-tts");
-    const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+    const {
+        Polly,
+    } = require("../index");
+
 
     // Service results are normally cached. To bypass the cache, change
     // the following value to false. You can clear the cache by
     // deleting local/sounds
-    var cache = true; 
+    var cache = false; 
 
-    // Watson testing is normally disabled, since AWS Polly is currently the
-    // preferred service.
-    const TEST_WATSON = false;
-    if (!TEST_WATSON) {
-        return;
-    }
-
-    it("constructor reads credentials", function() {
-        var watson = new Watson();
-        var cred = fs.readFileSync(path.join(__dirname,'../local/watson/credentials.json'));
-        should(watson).properties({
-            credentials: JSON.parse(cred),
+    it("constructor", function() {
+        var polly = new Polly();
+        should(polly).properties({
             language: 'en',
-            voice: 'en-GB_KateVoice', // clarity of enunciation
+            voice: 'Amy',
             prosody: {
-                rate: "-10%", // deliberate
-                pitch: "-30%", // mature resonance
+                rate: "-10%", // Slow Amy
             },
         });
     });
     it("signature(text) returns signature that identifies synthesized speech", function() {
-        var watson = new Watson();
-        var sig = watson.signature('hello world');
-        var guid = watson.mj.hash(sig);
+        var polly = new Polly();
+        var sig = polly.signature('hello world');
+        var guid = polly.mj.hash(sig);
         should.deepEqual(sig, {
-            api: 'watson/text-to-speech/v1',
-            audioFormat: 'audio/ogg',
-            voice: 'en-GB_KateVoice',
+            api: 'aws-polly',
+            apiVersion: 'v4',
+            audioFormat: 'ogg_vorbis',
+            voice: 'Amy',
             prosody: {
-                pitch: '-30%',
                 rate: '-10%',
             },
             text: 'hello world',
             guid,
         });
     });
-    it("textToSpeech returns textToSpeech API instance", function(done) {
-        var watson = new Watson();
-        var tts = watson.textToSpeech;
-        should(tts).instanceOf(TextToSpeechV1);
-        done();
-    });
     it("synthesizeSSML(ssml) returns sound file", function(done) {
         this.timeout(3*1000);
-        var watson = new Watson();
+        var polly = new Polly();
         var segments = [
             `<phoneme alphabet="ipa" ph="səˈpriːm"></phoneme>`,
             `full enlightenment, I say.`,
         ];
         var ssml = segments.join(' ');
         (async function() {
-            var result = await watson.synthesizeSSML(ssml, { cache });
+            var result = await polly.synthesizeSSML(ssml, { cache });
             should(result).properties(['file','signature','hits', 'misses']);
             should(fs.statSync(result.file).size).greaterThan(1000);
             var suffix = result.file.substring(result.file.length-4);
@@ -73,13 +58,14 @@
     it("synthesizeText(ssml) returns sound file", function(done) {
         this.timeout(3*1000);
         (async function() {
-            var watson = new Watson();
+            var polly = new Polly();
+            polly.prosody.rate = "-20%";
             var text = [
                 "Tomatoes are",
                 "red.",
                 "Tomatoes are red. Broccoli is green"
             ];
-            var result = await watson.synthesizeText(text, {cache});
+            var result = await polly.synthesizeText(text, {cache});
             should(result).properties(['file','hits','misses','signature','cached']);
             should(result.signature.files.length).equal(4);
             should(fs.statSync(result.signature.files[0]).size).greaterThan(1000); // Tomatoes are
@@ -89,19 +75,6 @@
             should(fs.statSync(result.file).size).greaterThan(5000);
             done();
         })();
-    });
-    it("segment references in HTML templates", function(done) {
-        var snsutta = {
-            "sn1.6:2.1": "How many sleep while others wake?",
-        };
-        var sn = (s,a,b) => {
-            var key = `sn${s}:${a}.${b}`;
-            return snsutta[key] || `(not found:${key}`;
-        };
-        var html = '<html>${sn(1.6,2,1)}</html>';
-        should(`${html}`).equal('<html>${sn(1.6,2,1)}</html>');
-        should(eval("`" + html + "`")).equal('<html>How many sleep while others wake?</html>');
-        done();
     });
 
 })

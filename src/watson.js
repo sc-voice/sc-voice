@@ -18,9 +18,8 @@
             this.credentials = credentials;
             this.voice = opts.voice || 'en-GB_KateVoice';
             this.prosody.pitch = "-30%";
-            this.language = this.voice.split('-')[0];
-            this.service_url = opts.service_url || "https://stream.watsonplatform.net/text-to-speech/api/v1";
-            this.api = opts.api || 'watson/text-to-speech/v1';
+            this.apiVersion = opts.apiVersion || 'v1';
+            this.api = opts.api || `watson/text-to-speech`;
         }
 
         get textToSpeech() {
@@ -31,10 +30,10 @@
         }
 
         serviceSynthesize(resolve, reject, request) {
-            var ostream = request.ostream;
+            var ostream = fs.createWriteStream(request.outpath);
             var serviceParams = {
                 text: request.ssml,
-                accept: request.audioMIME || this.audioMIME,
+                accept: request.audioFormat || this.audioFormat,
                 voice: request.voice || this.voice,
             };
             this.textToSpeech.synthesize(serviceParams)

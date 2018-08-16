@@ -10,7 +10,8 @@
         var guid = tts.mj.hash(sig);
         should.deepEqual(sig, {
             api: null,
-            audioMIME: 'audio/ogg',
+            apiVersion: null,
+            audioFormat: 'audio/ogg',
             voice: null,
             prosody: {
                 rate: '-10%',

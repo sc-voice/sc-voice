@@ -25,6 +25,10 @@ cd js-pootl
 ./scripts/init.sh
 ```
 
+### Amazon AWS Polly
+To enable AWS Polly, you will need to [configure your credentials](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html#getting-started-nodejs-credentials)
+
+### Watson
 To enable Watson translation, first copy your Watson JSON credentials, then
 do the following:
 

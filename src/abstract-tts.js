@@ -9,10 +9,13 @@
 
     class AbstractTTS {
         constructor(opts={}) {
+            this.language = opts.language || 'en';
             this.hits = 0;
             this.misses = 0;
             this.voice = null;
-            this.api = null;
+            this.api = opts.api || null;
+            this.apiVersion = opts.apiVersion || null;
+            this.audioSuffix = opts.audioSuffix || ".ogg";
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
@@ -20,7 +23,7 @@
             if (!fs.existsSync(wordpath)) {
                 var wordpath = path.join(__dirname, `../words/en.json`);
             }
-            this.store = new SoundStore();
+            this.store = opts.store || new SoundStore();
             Object.defineProperty(this, 'credentials', {
                 writable: true,
             });
@@ -36,15 +39,11 @@
                 return acc;
             }, { text: '' });
             this.symbolPat = new RegExp(`[${symAcc.text}]`);
-            this.audioMIME = opts.audioMIME || 'audio/ogg';
+            this.audioFormat = opts.audioFormat || 'audio/ogg';
             this.prosody = opts.prosody || {
                 rate: "-10%",
             };
             this.breaks = opts.breaks || [0,0.1,0.2,0.4,0.8];
-            this.output = opts.output || {
-                path: path.join(__dirname, '../local/audio'),
-                file: 'output.ogg',
-            };
         }
 
         get ERROR_SIZE() { return 1000 }
@@ -163,7 +162,8 @@
         signature(text) {
             var signature = {
                 api: this.api,
-                audioMIME: this.audioMIME,
+                apiVersion: this.apiVersion,
+                audioFormat: this.audioFormat,
                 voice: this.voice,
                 prosody: this.prosody,
                 text,
@@ -220,8 +220,6 @@
                     } else {
                         this.misses++;
 
-                        var ostream = fs.createWriteStream(request.outpath);
-                        request.ostream = ostream;
                         this.serviceSynthesize(resolve, error => {
                             console.log(`synthesize() error:`, error.stack);
                             reject(error);
@@ -243,7 +241,7 @@
                         result = await Promise.all(promises);
                     } else if (text instanceof Array) {
                         var textArray = text;
-                        //var promises = textArray.map(t => that.synthesizeText(t));
+                        //var promises = textArray.map(t => that.synthesizeText(t, opts));
                         var promises = textArray.reduce((acc, t) => {
                             that.segmentSSML(t).forEach(ssml => {
                                 acc.push(that.synthesizeSSML(ssml, opts));
@@ -279,7 +277,7 @@
                     files,
                 }
                 signature[this.mj.hashTag] = this.mj.hash(signature);
-                var outpath = this.store.signaturePath(signature, ".ogg");
+                var outpath = this.store.signaturePath(signature, this.audioSuffix);
                 var stats = fs.existsSync(outpath) && fs.statSync(outpath);
                 var cache = opts.cache == null ? true : opts.cache;
                 var request = {
