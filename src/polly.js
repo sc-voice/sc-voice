@@ -18,6 +18,7 @@
                signatureVersion: this.apiVersion,
                region: this.region,
             };
+            opts.prosody == null && (this.prosody.rate = "-20%");
             this.polly = opts.polly || new AWS.Polly(this.pollyConfig);
         }
 

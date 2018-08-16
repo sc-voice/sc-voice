@@ -10,7 +10,7 @@
     // Service results are normally cached. To bypass the cache, change
     // the following value to false. You can clear the cache by
     // deleting local/sounds
-    var cache = false; 
+    var cache = true; 
 
     it("constructor", function() {
         var polly = new Polly();
@@ -18,7 +18,7 @@
             language: 'en',
             voice: 'Amy',
             prosody: {
-                rate: "-10%", // Slow Amy
+                rate: "-20%", // Slow Amy
             },
         });
     });
@@ -32,7 +32,7 @@
             audioFormat: 'ogg_vorbis',
             voice: 'Amy',
             prosody: {
-                rate: '-10%',
+                rate: '-20%',
             },
             text: 'hello world',
             guid,
@@ -55,11 +55,21 @@
             done();
         })();
     });
-    it("synthesizeText(ssml) returns sound file", function(done) {
+    it("synthesizeText(text) returns sound file for text", function(done) {
         this.timeout(3*1000);
         (async function() {
             var polly = new Polly();
-            polly.prosody.rate = "-20%";
+            var text = "Tomatoes are red. Broccoli is green."
+            var result = await polly.synthesizeText(text, {cache});
+            should(result).properties(['file','hits','misses','signature','cached']);
+            should(fs.statSync(result.file).size).greaterThan(5000);
+            done();
+        })();
+    });
+    it("synthesizeText([text]) returns sound file for array of text", function(done) {
+        this.timeout(3*1000);
+        (async function() {
+            var polly = new Polly();
             var text = [
                 "Tomatoes are",
                 "red.",

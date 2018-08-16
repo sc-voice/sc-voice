@@ -17,7 +17,7 @@
             }
             this.credentials = credentials;
             this.voice = opts.voice || 'en-GB_KateVoice';
-            this.prosody.pitch = "-30%";
+            opts.prosody == null && (this.prosody.pitch = "-30%");
             this.apiVersion = opts.apiVersion || 'v1';
             this.api = opts.api || `watson/text-to-speech`;
         }
