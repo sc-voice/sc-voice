@@ -1,26 +1,33 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
+    const SegDoc = require('./seg-doc');
 
     const S_MSGCTXT = 1;
-    const S_MSGID = 2;
-    const S_MSGSTR1 = 3;
-    const S_MSGSTRN = 4;
+    const S_MSGID1 = 2;
+    const S_MSGIDN = 3;
+    const S_MSGSTR1 = 4;
+    const S_MSGSTRN = 5;
 
     class PoParser {
         constructor(opts={}) {
+            this.msgctxt = new RegExp(/^msgctxt .*/);
+            this.msgid = new RegExp(/^msgid .*/);
+            this.msgstr = new RegExp(/^msgstr .*/);
+            this.msgquote = new RegExp(/^".*/);
+            this.blankline = new RegExp(/^$/);
+            this.json_ctxt = opts.json_ctxt || 'scid';
+            this.json_id = opts.json_id || 'pli';
+            this.json_str = opts.json_str || 'en';
         }
 
         parseLines(lines) {
+            var that = this;
             return new Promise((resolve, reject) => {
-                var poInfo = {
-                    segments: [],
-                    idMap : {},
-                };
+                var segDoc = new SegDoc();
                 function add(segment) {
                     if (segment) {
-                        poInfo.segments.push(segment.text);
-                        poInfo.idMap[segment.id] = segment.text;
+                        segDoc.segments.push(segment);
                     }
                     return null;
                 }
@@ -30,23 +37,40 @@
                     lines.forEach(line => {
                         switch (state) {
                             case S_MSGCTXT:
-                                if (line.startsWith('msgctxt')) {
+                                if (that.msgctxt.test(line)) {
                                     segment = {
-                                        id: line.split('"')[1],
+                                        [that.json_ctxt]: line.split('"')[1],
                                     };
+                                    state = S_MSGID1;
+                                }
+                                break;
+                            case S_MSGID1:
+                                if (that.msgid.test(line)) {
+                                    segment[that.json_id] = line.substring(7, line.length-1);
+                                    state = S_MSGIDN;
+                                }
+                                break;
+                            case S_MSGIDN:
+                                if (that.msgquote.test(line)) {
+                                    segment[that.json_id] && (segment[that.json_id] += " ");
+                                    segment[that.json_id] += line.substring(1, line.length-1);
+                                } else if (that.msgstr.test(line)) {
+                                    segment[that.json_str] = line.substring(8, line.length-1);
+                                    state = S_MSGSTRN;
+                                } else {
                                     state = S_MSGSTR1;
                                 }
                                 break;
                             case S_MSGSTR1:
-                                if (line.startsWith('msgstr')) {
-                                    segment.text = line.substring(8, line.length-1);
+                                if (that.msgstr.test(line)) {
+                                    segment[that.json_str] = line.substring(8, line.length-1);
                                     state = S_MSGSTRN;
                                 }
                                 break;
                             case S_MSGSTRN:
-                                if (line.startsWith('"')) {
-                                    segment.text && (segment.text += " ");
-                                    segment.text += line.substring(1, line.length-1);
+                                if (that.msgquote.test(line)) {
+                                    segment[that.json_str] && (segment[that.json_str] += " ");
+                                    segment[that.json_str] += line.substring(1, line.length-1);
                                 } else {
                                     state = S_MSGCTXT;
                                     segment = add(segment);
@@ -57,7 +81,7 @@
                         }
                     });
                     segment = add(segment);
-                    resolve(poInfo);
+                    resolve(segDoc);
                 } catch(e){reject(e);} })();
             });
         }

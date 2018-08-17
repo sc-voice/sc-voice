@@ -1,7 +1,9 @@
 module.exports = {
+    AbstractTTS: require("./src/abstract-tts"),
+    PoParser: require('./src/po-parser'),
+    Polly: require("./src/polly"),
+    SegDoc: require('./src/seg-doc'),
     SoundStore: require("./src/sound-store"),
     Watson: require("./src/watson"),
-    Polly: require("./src/polly"),
-    PoParser: require('./src/po-parser'),
-    AbstractTTS: require("./src/abstract-tts"),
+
 };
