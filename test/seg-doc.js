@@ -16,28 +16,28 @@
         en:'c1 bc ac',
     }]
 
-    it("TESTTESTfind(pat) returns array of segment indexes", function() {
+    it("TESTTESTfindIndexes(pat) returns array of segment indexes", function() {
         var segDoc = new SegDoc({segments});
-        should.deepEqual(segDoc.find('not found'),[]);
+        should.deepEqual(segDoc.findIndexes('not found'),[]);
 
         // search string
-        should.deepEqual(segDoc.find('a1'),[0]);
-        should.deepEqual(segDoc.find('ab'),[0,1]);
-        should.deepEqual(segDoc.find('bc'),[1,2]);
-        should.deepEqual(segDoc.find('ac'),[0,2]);
+        should.deepEqual(segDoc.findIndexes('a1'),[0]);
+        should.deepEqual(segDoc.findIndexes('ab'),[0,1]);
+        should.deepEqual(segDoc.findIndexes('bc'),[1,2]);
+        should.deepEqual(segDoc.findIndexes('ac'),[0,2]);
 
         // search RegExp
-        should.deepEqual(segDoc.find(/a1/),[0]);
-        should.deepEqual(segDoc.find(/ab/),[0,1]);
-        should.deepEqual(segDoc.find(/bc/),[1,2]);
-        should.deepEqual(segDoc.find(/ac/),[0,2]);
-        should.deepEqual(segDoc.find(/a1 ab|ab bc/),[0,1]);
+        should.deepEqual(segDoc.findIndexes(/a1/),[0]);
+        should.deepEqual(segDoc.findIndexes(/ab/),[0,1]);
+        should.deepEqual(segDoc.findIndexes(/bc/),[1,2]);
+        should.deepEqual(segDoc.findIndexes(/ac/),[0,2]);
+        should.deepEqual(segDoc.findIndexes(/a1 ab|ab bc/),[0,1]);
 
         // search prop
         var prop = 'scid';
-        should.deepEqual(segDoc.find(/^s:1.1/,{prop}),[0]); // segment
-        should.deepEqual(segDoc.find(/^s:1.*/,{prop}),[0,1]); // section
-        should.deepEqual(segDoc.find(/^s:2.*/,{prop}),[2]); // section
+        should.deepEqual(segDoc.findIndexes(/^s:1.1/,{prop}),[0]); // segment
+        should.deepEqual(segDoc.findIndexes(/^s:1.*/,{prop}),[0,1]); // section
+        should.deepEqual(segDoc.findIndexes(/^s:2.*/,{prop}),[2]); // section
 
         var result = segDoc.segments.filter(seg => /ab/.test(seg.en));
         should.deepEqual(result, [{

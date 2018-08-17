@@ -20,6 +20,7 @@
             this.symbols = json.symbols;
             this.words = json.words;
             this.altMap = null;
+            this.alphabet = new RegExp(json.alphabet || '[a-z]*', "iu");
             var symAcc= Object.keys(this.symbols).reduce((acc,text) => {
                 if (text === ']') {
                     text = '\\' + text;
@@ -32,6 +33,10 @@
 
         isWord(token) {
             return !this.symbolPat.test(token);
+        }
+
+        isForeignWord(token) {
+            return !this.symbolPat.test(token) && !this.alphabet.test(token);
         }
 
         tokenize(text) {

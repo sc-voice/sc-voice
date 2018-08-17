@@ -5,13 +5,24 @@
             this.segments = json.segments || [];
         }
 
-        find(pat, opts={}) {
+        findIndexes(pat, opts={}) {
             if (!(pat instanceof RegExp)) {
                 pat = new RegExp(pat);
             }
             var prop = opts.prop || 'en';
             return this.segments.reduce((acc, seg, i) => {
                 pat.test(seg[prop]) && acc.push(i);
+                return acc;
+            },[]);
+        }
+
+        findSegments(pat, opts={}) {
+            if (!(pat instanceof RegExp)) {
+                pat = new RegExp(pat);
+            }
+            var prop = opts.prop || 'en';
+            return this.segments.reduce((acc, seg, i) => {
+                pat.test(seg[prop]) && acc.push(seg);
                 return acc;
             },[]);
         }

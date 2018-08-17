@@ -5,6 +5,7 @@
     const {
         PoParser,
         SegDoc,
+        Words,
     } = require("../index");
 
     it("TESTTESTparse(lines)", function(done) {
@@ -40,12 +41,41 @@
             done();
         } catch(e) {done(e)} })();
     });
+    it("TESTTESTparse(filePath) creates a SegDoc", function(done) {
+        (async function() { try {
+            var parser = new PoParser();
+            var fname = path.join(__dirname, '../local/mn/en/mn001.po');
+            var segDoc = await parser.parse(fname);
+            should(segDoc).instanceOf(SegDoc);
+            should(segDoc.segments.length).equal(334);
+            var segments = segDoc.findSegments(/mn1:172-194.25/,{prop:'scid'});
+            should(segments.length).equal(1);
+            should(segments[0]).properties({
+                en: 'Why is that?',
+                scid: 'mn1:172-194.25',
+            });
+            done();
+        } catch(e) {done(e)} })();
+    });
     it("TESTTESTparse(filePath)", function(done) {
         var parser = new PoParser();
         var fname = path.join(__dirname, '../local/mn/en/mn001.po');
+        var words = new Words();
+        var normalPat
+        var normalPat = new RegExp("^[ a-zA-Z.<>/:;,?!\"'"+
+            "\u2026\u2010\u2011\u2012\u2013\u2014\u2015\u201b\u201c\u201d\u2018\u2019-]*$",
+            "u");
         (async function() { try {
-            var poInfo = await parser.parse(fname);
-            //console.log(JSON.stringify(poInfo, null, 2));
+            var segDoc = await parser.parse(fname);
+            true && segDoc.segments.forEach(seg => {
+                if (seg.en && !words.isWord(seg) && !normalPat.test(seg.en)) {
+                    console.log(`${seg.scid}\t${seg.en}`);
+                }
+            });
+            should(segDoc.segments.length).equal(334);
+            var text = 'hello\u2026';
+            console.log('\u2026', normalPat, text);
+            should(normalPat.test(text)).equal(true);
             done();
         } catch(e) {done(e)} })();
     });

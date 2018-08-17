@@ -1,4 +1,5 @@
 {
+    "alphabet": "^[a-z]*$",
     "symbols": {
         "!": {
             "name": "exclamation mark",
