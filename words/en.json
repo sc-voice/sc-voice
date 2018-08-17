@@ -1,5 +1,5 @@
 {
-    "_symbols": {
+    "symbols": {
         "!": {
             "name": "exclamation mark",
             "cuddle": "left",
@@ -104,25 +104,27 @@
         }
     },
 
-    "bhikku": "bhikkhu",
-    "bikkhu": "bhikkhu",
-    "bhikkus": "bhikkhus",
-    "bikkhus": "bhikkhus",
-    "bhikkhu":{
-        "ipa":"b\u026aku\u02D0(.)"
-    },
-    "bhikkhus":{
-        "ipa":"b\u026aku\u02D0z(.)"
-    },
-    "supreme": {
-        "ipa":"s\u0259\u02c8pri\u02d0m"
-    },
-    "tath\u0101gata": "tathagata",
-    "tath\u0101gatas": "tathagatas",
-    "tathagata": {
-        "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259(.)"
-    },
-    "tathagatas": {
-        "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259z(.)"
+    "words": {
+        "bhikku": "bhikkhu",
+        "bikkhu": "bhikkhu",
+        "bhikkus": "bhikkhus",
+        "bikkhus": "bhikkhus",
+        "bhikkhu":{
+            "ipa":"b\u026aku\u02D0(.)"
+        },
+        "bhikkhus":{
+            "ipa":"b\u026aku\u02D0z(.)"
+        },
+        "supreme": {
+            "ipa":"s\u0259\u02c8pri\u02d0m"
+        },
+        "tath\u0101gata": "tathagata",
+        "tath\u0101gatas": "tathagatas",
+        "tathagata": {
+            "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259(.)"
+        },
+        "tathagatas": {
+            "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259z(.)"
+        }
     }
 }

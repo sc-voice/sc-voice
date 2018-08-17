@@ -4,6 +4,7 @@
     const winston = require('winston');
     const { MerkleJson } = require('merkle-json');
     const SoundStore = require('./sound-store');
+    const Words = require('./words');
     const ABSTRACT_METHOD = "abstract method must be overridden and implemented by base class";
     const { exec } = require('child_process');
 
@@ -19,26 +20,15 @@
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
-            var wordpath = path.join(__dirname, `../words/${this.language}.json`);
-            if (!fs.existsSync(wordpath)) {
-                var wordpath = path.join(__dirname, `../words/en.json`);
-            }
             this.store = opts.store || new SoundStore();
             Object.defineProperty(this, 'credentials', {
                 writable: true,
             });
             Object.defineProperty(this, 'words', {
-                value: JSON.parse(fs.readFileSync(wordpath)),
+                value: new Words(null, {
+                    language: this.language,
+                }),
             });
-            var symbols = this.words._symbols;
-            var symAcc= Object.keys(symbols).reduce((acc,text) => {
-                if (text === ']') {
-                    text = '\\' + text;
-                }
-                acc.text += text;
-                return acc;
-            }, { text: '' });
-            this.symbolPat = new RegExp(`[${symAcc.text}]`);
             this.audioFormat = opts.audioFormat || 'audio/ogg';
             this.prosody = opts.prosody || {
                 rate: "-10%",
@@ -74,7 +64,7 @@
 
         wordInfo(word) {
             word = word && word.toLowerCase();
-            var wordValue = word && this.words[word];
+            var wordValue = word && this.words.words[word];
             if (typeof wordValue === 'string') { // synonym
                 wordValue = this.wordInfo(wordValue);
             }
@@ -100,15 +90,7 @@
         }
 
         tokenize(text) {
-            return text.split(' ').reduce((acc,t) => {
-                for (var matches;  (matches = this.symbolPat.exec(t)); ) {
-                    matches.index && acc.push(t.substring(0, matches.index));
-                    acc.push(t.substring(matches.index,matches.index+1));
-                    t = t.substring(matches.index+1);
-                }
-                t && acc.push(t);
-                return acc;
-            }, []);
+            return this.words.tokenize(text);
         }
 
         tokensSSML(text) {
@@ -120,9 +102,9 @@
         }
 
         segment(tokens) {
-            var symbols = this.words._symbols;
+            var symbols = this.words.symbols;
             var acc = tokens.reduce((acc,token) => {
-                if (token.length === 1 && this.symbolPat.test(token)) {
+                if (token.length === 1 && !this.words.isWord(token)) {
                     var symbol = symbols[token];
                     if (symbol == null) {
                         throw new Error(`undefined symbol: ${token}`);

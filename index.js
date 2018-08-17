@@ -5,5 +5,6 @@ module.exports = {
     SegDoc: require('./src/seg-doc'),
     SoundStore: require("./src/sound-store"),
     Watson: require("./src/watson"),
+    Words: require('./src/words'),
 
 };

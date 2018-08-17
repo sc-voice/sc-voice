@@ -4,7 +4,7 @@
     const path = require('path');
     const AbstractTTS = require("../src/abstract-tts");
 
-    it("signature(text) returns signature that identifies synthesized speech", function() {
+    it("TESTTESTsignature(text) returns signature that identifies synthesized speech", function() {
         var tts = new AbstractTTS();
         var sig = tts.signature('hello world');
         var guid = tts.mj.hash(sig);
@@ -59,7 +59,7 @@
         .equal('<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>'+
             tts.break(1));
     });
-    it("tokensSSML(text) returns array of SSML tokens", function() {
+    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();
         var text = "Bhikkhus, the Tathagata, too, accomplished and fully enlightened";
         var tokens = tts.tokensSSML(text);
@@ -70,7 +70,7 @@
             ',', 'too', ',', 'accomplished', 'and', 'fully', 'enlightened',
         ]);
     });
-    it("segment(tokens) returns array of segments", function() {
+    it("TESTTESTsegment(tokens) returns array of segments", function() {
         var tts = new AbstractTTS();
         var tokens = [
             'a', '<b/>', ',', '(', 'c', 'd', ')', 'e', '.', 
@@ -101,7 +101,7 @@
             'Because delight is the root of suffering.',
         ]);
     });
-    it("tokenize(text) returns array of tokens", function() {
+    it("TESTTESTtokenize(text) returns array of tokens", function() {
         var tts = new AbstractTTS();
         var segments = [
             'he does not conceive earth',

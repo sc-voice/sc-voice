@@ -38,6 +38,15 @@
         should.deepEqual(segDoc.find(/^s:1.1/,{prop}),[0]); // segment
         should.deepEqual(segDoc.find(/^s:1.*/,{prop}),[0,1]); // section
         should.deepEqual(segDoc.find(/^s:2.*/,{prop}),[2]); // section
+
+        var result = segDoc.segments.filter(seg => /ab/.test(seg.en));
+        should.deepEqual(result, [{
+            scid: 's:1.1',
+            en:'a1 ab ac',
+        },{
+            scid: 's:1.2',
+            en:'b1 ab bc',
+        }]);
     });
 
 })
