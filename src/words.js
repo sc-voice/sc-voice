@@ -19,7 +19,7 @@
             } 
             this.symbols = json.symbols;
             this.words = json.words;
-            this.alternates = {};
+            this.altMap = null;
             var symAcc= Object.keys(this.symbols).reduce((acc,text) => {
                 if (text === ']') {
                     text = '\\' + text;
@@ -59,6 +59,29 @@
         }
 
         alternates(word) {
+            if (this.altMap == null) {
+                this.altMap = {};
+                Object.keys(this.words).forEach(key => {
+                    var value = this.words[key];
+                    if (value == null) {
+                        // undefined word
+                    } else if (typeof value === 'string') { // key is alternate
+                        let keyAlts = this.altMap[value];
+                        if (keyAlts) {
+                            keyAlts.push(key); // key is alternate
+                        } else {
+                            this.altMap[value] = [value,key];
+                        }
+                    } else { // key is canonical
+                        let keyAlts = this.altMap[key];
+                        if (keyAlts == null) {
+                            this.altMap[key] = [key];
+                        }
+                    }
+                });
+            }
+
+            return this.altMap[word] || [word];
         }
 
     }

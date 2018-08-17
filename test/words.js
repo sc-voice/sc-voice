@@ -34,5 +34,14 @@
         should(words.isWord('123')).equal(true);
         should(words.isWord('1.23')).equal(false);
     });
+    it("TESTTESTisWord(token) return true if token is a word", function() {
+        var words = new Words();
+        should.deepEqual(words.alternates('asdf'), ['asdf']);
+        should.deepEqual(words.alternates('bhikkhu'), [
+            'bhikkhu', 
+            'bhikku',
+            'bikkhu',
+        ]);
+    });
 
 })
