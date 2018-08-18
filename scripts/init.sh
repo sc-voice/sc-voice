@@ -2,6 +2,14 @@
 
 echo -e "INIT\t: $0 START: `date`"
 
+type ispell
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: ispell detected (OK)"
+else
+    echo -e "INIT\t: installing ispell (requires sudo)"
+    sudo apt-get install ispell
+fi
+
 type ffmpeg
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: ffmpeg detected (OK)"
@@ -54,15 +62,14 @@ else
     mkdir -p local/watson
 fi
 
-if [ -e local/mn ]; then
+if [ -e local/sc ]; then
     echo -e "INIT\t: mn folder exists (OK)"
 else
     pushd local
     echo -e "INIT\t: loading SuttaCentral translation content (translation.zip)..."
     curl https://codeload.github.com/suttacentral/translation/zip/master -o master.zip
     unzip master.zip
-    mv translation-master/mn .
-    rm -rf master.zip translation-master
+    mv translation-master sc
     popd
 fi
 

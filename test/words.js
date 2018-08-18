@@ -48,10 +48,20 @@
         should(words.isForeignWord('Brahm\u0101')).equal(true);
         should(words.isForeignWord('brahm\u0101')).equal(true);
     });
-    it("TESTTESTisWord(token) return true if token is a word", function() {
+    it("TESTTESTalternates(word) returns array of alternate spellings", function() {
         var words = new Words();
         should.deepEqual(words.alternates('asdf'), ['asdf']);
         should.deepEqual(words.alternates('bhikkhu'), [
+            'bhikkhu', 
+            'bhikku',
+            'bikkhu',
+        ]);
+        should.deepEqual(words.alternates('Bhikkhu'), [
+            'bhikkhu', 
+            'bhikku',
+            'bikkhu',
+        ]);
+        should.deepEqual(words.alternates('bhikku'), [
             'bhikkhu', 
             'bhikku',
             'bikkhu',

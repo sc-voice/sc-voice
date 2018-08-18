@@ -1,5 +1,6 @@
 {
     "alphabet": "^[a-z]*$",
+    "wordEnd": "([^a-zA-Z].*)?$",
     "symbols": {
         "!": {
             "name": "exclamation mark",
@@ -108,24 +109,27 @@
     "words": {
         "bhikku": "bhikkhu",
         "bikkhu": "bhikkhu",
-        "bhikkus": "bhikkhus",
-        "bikkhus": "bhikkhus",
         "bhikkhu":{
             "ipa":"b\u026aku\u02D0(.)"
         },
+        "bhikkus": "bhikkhus",
+        "bikkhus": "bhikkhus",
         "bhikkhus":{
             "ipa":"b\u026aku\u02D0z(.)"
+        },
+        "earth": {
+            "ipa": "\u025c:r\u03b8(.)"
         },
         "supreme": {
             "ipa":"s\u0259\u02c8pri\u02d0m"
         },
+        "tathagata": "tath\u0101gata", 
         "tath\u0101gata": {
             "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259(.)"
         },
+        "tathagatas": "tath\u0101gatas",
         "tath\u0101gatas": {
             "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259z(.)"
-        },
-        "tathagata": "tath\u0101gata", 
-        "tathagatas": "tath\u0101gatas"
+        }
     }
 }

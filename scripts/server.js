@@ -5,7 +5,6 @@ const winston = require("winston");
 const compression = require("compression");
 const express = require('express');
 const app = module.exports = express();
-const OyaReactor = require("../index").OyaReactor;
 
 global.__appdir = path.dirname(__dirname);
 

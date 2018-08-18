@@ -48,5 +48,26 @@
             en:'b1 ab bc',
         }]);
     });
+    it("TESTTESTcreatePattern(text) creates a pattern for finding text", function() {
+        var segDoc = new SegDoc({segments});
+        var pat = segDoc.createPattern("bhikkhu");
+        console.log(pat);
+        should(pat.test('asfd bhikkhu asdf')).equal(true); // canonical spelling
+        should(pat.test('asfd bikkhu asdf')).equal(true); // alternate spelling
+        should(pat.test('asfd bhikku asdf')).equal(true); // alternate spelling
+        should(pat.test('asfd biku asdf')).equal(false); // invalid spelling
+        should(pat.test('asfd bhikkhus asdf')).equal(false); // plural
+
+        var pat = segDoc.createPattern("Tathagata");
+        should(pat.test('asfd Tathagata asdf')).equal(true); // alternate spelling
+        should(pat.test('asfd tathagata asdf')).equal(true); // alternate spelling
+        should(pat.test('asfd Tath\u0101gata asdf')).equal(true); // case
+        should(pat.test('asfd tath\u0101gata asdf')).equal(true); // canonical spelling
+
+        var pat = segDoc.createPattern("bhikku tathagata");
+        should(pat.test('asfd bhikkhu tathagata asdf')).equal(true); // alternate spelling
+        should(pat.test('asfd Bikkhu Tathagata asdf')).equal(true); // alternate spelling
+
+    });
 
 })

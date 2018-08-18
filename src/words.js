@@ -19,6 +19,7 @@
             } 
             this.symbols = json.symbols;
             this.words = json.words;
+            this.wordEnd = json.wordEnd;
             this.altMap = null;
             this.alphabet = new RegExp(json.alphabet || '[a-z]*', "iu");
             var symAcc= Object.keys(this.symbols).reduce((acc,text) => {
@@ -64,6 +65,7 @@
         }
 
         alternates(word) {
+            word = word.toLowerCase();
             if (this.altMap == null) {
                 this.altMap = {};
                 Object.keys(this.words).forEach(key => {
@@ -74,8 +76,10 @@
                         let keyAlts = this.altMap[value];
                         if (keyAlts) {
                             keyAlts.push(key); // key is alternate
+                            this.altMap[key] = keyAlts;
                         } else {
-                            this.altMap[value] = [value,key];
+                            this.altMap[value] = 
+                            this.altMap[key] = [value,key];
                         }
                     } else { // key is canonical
                         let keyAlts = this.altMap[key];
