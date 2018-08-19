@@ -1,16 +1,11 @@
 # sc-voice
 
-SuttaCentral voice assistance for vision-impaired. Includes:
+Javascript implemenation for SuttaCentral voice assistance for vision-impaired. Includes:
 
-* Javascript adapter for [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
-* Javascript utilites for parsing SuttaCentral Pootl translations
-
-### Text-to-Speech
-`sc-voice` includes TTS adapters for multiple services:
-
-* [Amazon AWS Polly Text-to-Speech](https://aws.amazon.com/polly/) 
-* [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
-* _future adapters will be added as necessary_
+* TTS adapter for [Amazon AWS Polly Text-to-Speech](https://aws.amazon.com/polly/) 
+* TTS adapter for [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
+* utilites for parsing SuttaCentral Pootl translations
+* romanized search for Pali terms (e.g., Mulapariyayasutta vs. Mūlapariyāyasutta)
 
 ### Installation
 With a Linux console, install the software:
