@@ -7,12 +7,18 @@ Javascript implemenation for SuttaCentral voice assistance for vision-impaired. 
 * utilites for parsing SuttaCentral Pootl translations
 * romanized search for Pali terms (e.g., Mulapariyayasutta vs. Mūlapariyāyasutta)
 
+### Prerequisites
+
+* Linux (tested on Ubuntu 16.04.5 LTS/xenial)
+* AWS Polly account (recommended)
+* IBM Watson Text-to-Speech account (optional)
+
 ### Installation
 With a Linux console, install the software:
 
 ```
-git clone git@github.com:sc-karl/js-pootl.git
-cd js-pootl
+git clone git@github.com:sc-karl/sc-voice.git
+cd sc-voice
 ./scripts/init.sh
 ```
 
