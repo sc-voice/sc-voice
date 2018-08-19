@@ -24,11 +24,11 @@ cd sc-voice
 
 As part of installation you will need to configure one TTS service adapter.
 
-##### Amazon AWS Polly
+##### Configure Amazon AWS Polly (recommended)
 The [Amazon AWS Polly Text-to-Speech](https://aws.amazon.com/polly/) service can be used to convert sutta text to speech.
 To enable AWS Polly, you will need to [configure your credentials](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html#getting-started-nodejs-credentials)
 
-##### Watson
+##### Configure Watson (optional)
 The [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
 can be used to convert sutta text to speech. To use Watson, you will need an IBM Cloud Watson account.
 To enable Watson translation, first copy your Watson JSON credentials, then
