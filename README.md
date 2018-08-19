@@ -46,5 +46,6 @@ do the following:
 * **test** contains Javascript unit tests
 * **scripts** contains miscellaneous scripts
 * **local** contains local content not archived in git
+* **words** contains language lexicons for search and speech.
 
 
