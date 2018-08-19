@@ -1,6 +1,6 @@
 # sc-voice
 
-Javascript implemenation for SuttaCentral voice assistance for vision-impaired. Includes:
+Javascript implemenation of SuttaCentral voice assistance for vision-impaired. Includes:
 
 * TTS adapter for [Amazon AWS Polly Text-to-Speech](https://aws.amazon.com/polly/) 
 * TTS adapter for [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
