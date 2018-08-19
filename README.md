@@ -39,6 +39,13 @@ do the following:
 1. ENTER
 1. CTRL-D
 
+##### Testing
+The unit tests require AWS Polly. Tests for IBM Watson are disabled by default (see `test/watson.js`).
+
+```json
+npm run test
+```
+
 ### Other
 #### Directory structure
 
