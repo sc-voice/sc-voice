@@ -22,6 +22,8 @@ cd sc-voice
 ./scripts/init.sh
 ```
 
+As part of installation you will need to configure one TTS service adapter.
+
 ##### Amazon AWS Polly
 The [Amazon AWS Polly Text-to-Speech](https://aws.amazon.com/polly/) service can be used to convert sutta text to speech.
 To enable AWS Polly, you will need to [configure your credentials](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html#getting-started-nodejs-credentials)
