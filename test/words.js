@@ -1,4 +1,4 @@
-(typeof describe === 'function') && describe("seg-doc", function() {
+(typeof describe === 'function') && describe("words", function() {
     const should = require("should");
     const fs = require('fs');
     const path = require('path');

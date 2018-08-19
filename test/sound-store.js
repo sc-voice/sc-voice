@@ -1,4 +1,4 @@
-(typeof describe === 'function') && describe("SoundStore", function() {
+(typeof describe === 'function') && describe("sound-store", function() {
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
