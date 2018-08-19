@@ -4,7 +4,7 @@
     const path = require('path');
     const AbstractTTS = require("../src/abstract-tts");
 
-    it("TESTTESTsignature(text) returns signature that identifies synthesized speech", function() {
+    it("signature(text) returns signature that identifies synthesized speech", function() {
         var tts = new AbstractTTS();
         var sig = tts.signature('hello world');
         var guid = tts.mj.hash(sig);
@@ -59,7 +59,7 @@
         .equal('<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>'+
             tts.break(1));
     });
-    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
+    it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();
         var text = "Bhikkhus, the Tathagata, too, accomplished and fully enlightened";
         var tokens = tts.tokensSSML(text);
@@ -70,7 +70,7 @@
             ',', 'too', ',', 'accomplished', 'and', 'fully', 'enlightened',
         ]);
     });
-    it("TESTTESTsegment(tokens) returns array of segments", function() {
+    it("segment(tokens) returns array of segments", function() {
         var tts = new AbstractTTS();
         var tokens = [
             'a', '<b/>', ',', '(', 'c', 'd', ')', 'e', '.', 
@@ -86,7 +86,7 @@
             'j \u2018k,\u2019 l',
         ]);
     });
-    it("TESTTESTsegmentSSML(text) returns array of SSML text segments", function() {
+    it("segmentSSML(text) returns array of SSML text segments", function() {
         var tts = new AbstractTTS();
         var segments = [
             'Bhikkhus, he does not conceive water to be \u2018mine,\u2019 he does not delight in water.',
@@ -101,7 +101,7 @@
             'Because delight is the root of suffering.',
         ]);
     });
-    it("TESTTESTtokenize(text) returns array of tokens", function() {
+    it("tokenize(text) returns array of tokens", function() {
         var tts = new AbstractTTS();
         var segments = [
             'he does not conceive earth',

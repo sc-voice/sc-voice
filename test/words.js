@@ -4,14 +4,14 @@
     const path = require('path');
     const Words = require("../src/words");
 
-    it("TESTTESTWords() is default constructor", function() {
+    it("Words() is default constructor", function() {
         var words = new Words();
         should(words.language).equal('en');
 
         // default constuctor reads in words/en.json
         should(words.canonical('bhikku')).equal('bhikkhu');
     });
-    it("TESTTESTllookup() returns word information", function() {
+    it("llookup() returns word information", function() {
         var words = new Words();
         var bhikkhu = {
             word: 'bhikkhu',
@@ -22,7 +22,7 @@
         should.deepEqual(words.lookup('bikkhu'), bhikkhu);
         should.deepEqual(words.lookup('bhikku'), bhikkhu);
     });
-    it("TESTTESTisWord(token) return true if token is a word", function() {
+    it("isWord(token) return true if token is a word", function() {
         var words = new Words();
 
         // strings with symbols
@@ -34,7 +34,7 @@
         should(words.isWord('123')).equal(true);
         should(words.isWord('1.23')).equal(false);
     });
-    it("TESTTESTisForeignWord(token) return true if token is a word in foreign alphabet", function() {
+    it("isForeignWord(token) return true if token is a word in foreign alphabet", function() {
         var words = new Words();
         // punctuation
         should(words.isForeignWord('!')).equal(false);
@@ -48,7 +48,7 @@
         should(words.isForeignWord('Brahm\u0101')).equal(true);
         should(words.isForeignWord('brahm\u0101')).equal(true);
     });
-    it("TESTTESTalternates(word) returns array of alternate spellings", function() {
+    it("alternates(word) returns array of alternate spellings", function() {
         var words = new Words();
         should.deepEqual(words.alternates('asdf'), ['asdf']);
         should.deepEqual(words.alternates('bhikkhu'), [
@@ -67,7 +67,7 @@
             'bikkhu',
         ]);
     });
-    it("TESTTESTromanize(text) returns romanized text", function() {
+    it("romanize(text) returns romanized text", function() {
         var words = new Words();
         should(words.romanize("abc")).equal('abc');
         should(words.romanize("Abc")).equal('abc');

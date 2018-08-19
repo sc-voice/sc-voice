@@ -8,7 +8,7 @@
         Words,
     } = require("../index");
 
-    it("TESTTESTparse(lines)", function(done) {
+    it("parse(lines)", function(done) {
         var parser = new PoParser();
         var lines = [
             'msgctxt "mn1:1.1"',
@@ -41,7 +41,7 @@
             done();
         } catch(e) {done(e)} })();
     });
-    it("TESTTESTparse(filePath) creates a SegDoc", function(done) {
+    it("parse(filePath) creates a SegDoc", function(done) {
         (async function() { try {
             var parser = new PoParser();
             var fname = path.join(__dirname, '../local/sc/mn/en/mn001.po');
@@ -57,7 +57,7 @@
             done();
         } catch(e) {done(e)} })();
     });
-    it("TESTTESTparse(filePath)", function(done) {
+    it("parse(filePath)", function(done) {
         done(); returns;
         var parser = new PoParser();
         var fname = path.join(__dirname, '../local/sc/mn/en/mn001.po');
@@ -80,7 +80,7 @@
             done();
         } catch(e) {done(e)} })();
     });
-    it("TESTTESTfiles(opts) returns source file list", (done) => {
+    it("files(opts) returns source file list", (done) => {
         (async function() { try {
             var parser = new PoParser();
             var files = await parser.files();

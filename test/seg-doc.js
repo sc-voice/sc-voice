@@ -16,7 +16,7 @@
         en:'c1 bc ac',
     }]
 
-    it("TESTTESTfindIndexes(pat) returns array of segment indexes", function() {
+    it("findIndexes(pat) returns array of segment indexes", function() {
         var segDoc = new SegDoc({segments});
         should.deepEqual(segDoc.findIndexes('not found'),[]);
 
@@ -48,7 +48,7 @@
             en:'b1 ab bc',
         }]);
     });
-    it("TESTTESTcreatePattern(text) creates a pattern for finding text", function() {
+    it("createPattern(text) creates a pattern for finding text", function() {
         var segDoc = new SegDoc({segments});
         var pat = segDoc.createPattern("bhikkhu");
         should(pat.test('asfd bhikkhu asdf')).equal(true); // canonical spelling
