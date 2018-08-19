@@ -70,6 +70,7 @@ else
     curl https://codeload.github.com/suttacentral/translation/zip/master -o master.zip
     unzip master.zip
     mv translation-master sc
+    rm sc/README.md
     popd
 fi
 

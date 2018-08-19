@@ -80,5 +80,20 @@
             done();
         } catch(e) {done(e)} })();
     });
+    it("TESTTESTfiles(opts) returns source file list", (done) => {
+        (async function() { try {
+            var parser = new PoParser();
+            var files = await parser.files();
+            should(fs.statSync(files[0]).isFile()).equal(true);
+            should(fs.statSync(files[1]).isFile()).equal(true);
+            should(fs.statSync(files[files.length-1]).isFile()).equal(true);
+            should(files[0]).match(/.*\/en\/[^\/]*\.po$/);
+            should(files[1]).match(/.*\/en\/[^\/]*\.po$/);
+            should(files[files.length-1]).match(/.*\/en\/[^\/]*\.po$/);
+            should(files.length).equal(191);
+            done();
+        } catch(e) {done(e)} })();
+
+    });
 
 })

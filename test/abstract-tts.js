@@ -1,4 +1,4 @@
-(typeof describe === 'function') && describe("tts", function() {
+(typeof describe === 'function') && describe("abstract-tts", function() {
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
@@ -86,17 +86,17 @@
             'j \u2018k,\u2019 l',
         ]);
     });
-    it("segmentSSML(text) returns array of SSML text segments", function() {
+    it("TESTTESTsegmentSSML(text) returns array of SSML text segments", function() {
         var tts = new AbstractTTS();
         var segments = [
-            'Bhikkhus, he does not conceive earth to be \u2018mine,\u2019 he does not delight in earth.',
+            'Bhikkhus, he does not conceive water to be \u2018mine,\u2019 he does not delight in water.',
             'Why is that?',
             'Because delight is the root of suffering.',
         ];
         var ssml = tts.segmentSSML(segments.join(' '));
         should.deepEqual(ssml, [
             '<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>' + tts.break(1) +
-                ', he does not conceive earth to be \u2018mine,\u2019 he does not delight in earth.',
+                ', he does not conceive water to be \u2018mine,\u2019 he does not delight in water.',
             'Why is that?',
             'Because delight is the root of suffering.',
         ]);

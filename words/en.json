@@ -1,6 +1,25 @@
 {
     "alphabet": "^[a-z]*$",
     "wordEnd": "([^a-zA-Z].*)?$",
+    "romanize": {
+        "\u0101": "a",
+        "\u1e0d": "d",
+        "\u1e25": "h",
+        "\u012b": "i",
+        "\u1e37": "l",
+        "\u1e39": "l",
+        "\u1e41": "m",
+        "\u1e43": "m",
+        "\u1e47": "n",
+        "\u1e45": "n",
+        "\u00f1": "n",
+        "\u1e5b": "r",
+        "\u1e5d": "r",
+        "\u1e63": "s",
+        "\u015b": "s",
+        "\u1e6d": "t",
+        "\u016b": "u"
+    },
     "symbols": {
         "!": {
             "name": "exclamation mark",

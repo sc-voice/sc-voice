@@ -67,5 +67,24 @@
             'bikkhu',
         ]);
     });
+    it("TESTTESTromanize(text) returns romanized text", function() {
+        var words = new Words();
+        should(words.romanize("abc")).equal('abc');
+        should(words.romanize("Abc")).equal('abc');
+        should(words.romanize("Tath\u0101gata")).equal('tathagata');
+        should(words.romanize("Ukkaṭṭhā")).equal('ukkattha');
+        should(words.romanize("Bhikkhū")).equal('bhikkhu');
+        should(words.romanize("tassā’ti")).equal(`tassa${Words.U_RSQUOTE}ti`);
+        should(words.romanize("saññatvā")).equal(`sannatva`);
+        should(words.romanize("pathaviṃ")).equal(`pathavim`);
+        should(words.romanize("viññāṇañcāyatanato")).equal(`vinnanancayatanato`);
+        should(words.romanize("diṭṭhato")).equal(`ditthato`);
+        should(words.romanize("khīṇāsavo")).equal(`khinasavo`);
+        should(words.romanize("pavaḍḍhanti")).equal(`pavaddhanti`);
+        should(words.romanize("ĀḌḤĪḶḸṂṆÑṄṚṜṢŚṬŪṁ")).equal(`adhillmnnnrrsstum`);
+        should(words.romanize("‘Nandī dukkhassa mūlan’ti—"))
+            .equal(`${Words.U_LSQUOTE}nandi dukkhassa mulan${Words.U_RSQUOTE}ti${Words.U_EMDASH}`);
+
+    });
 
 })

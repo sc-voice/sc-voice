@@ -19,6 +19,7 @@
             } 
             this.symbols = json.symbols;
             this.words = json.words;
+            this._romanize = json.romanize;
             this.wordEnd = json.wordEnd;
             this.altMap = null;
             this.alphabet = new RegExp(json.alphabet || '[a-z]*', "iu");
@@ -32,12 +33,34 @@
             this.symbolPat = new RegExp(`[${symAcc.text}]`);
         }
 
+        static get U_LSQUOTE() { return '\u2018'; }
+        static get U_RSQUOTE() { return '\u2019'; }
+        static get U_LDQUOTE() { return '\u201C'; }
+        static get U_RDQUOTE() { return '\u201D'; }
+        static get U_ENDASH() { return '\u2013'; }
+        static get U_EMDASH() { return '\u2014'; }
+
         isWord(token) {
             return !this.symbolPat.test(token);
         }
 
         isForeignWord(token) {
             return !this.symbolPat.test(token) && !this.alphabet.test(token);
+        }
+
+        romanize(text) {
+            if (this.romanizePats == null) {
+                var srcChars = Object.keys(this._romanize);
+                this.romanizePats = srcChars.map(c => ({
+                    rep: this._romanize[c],
+                    pat: new RegExp(c, "gui"),
+                }));
+            }
+            var result = text.toLowerCase();
+            this.romanizePats.forEach((pat,i) => {
+                result = result.replace(pat.pat, pat.rep);
+            });
+            return result;
         }
 
         tokenize(text) {

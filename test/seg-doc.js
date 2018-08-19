@@ -51,7 +51,6 @@
     it("TESTTESTcreatePattern(text) creates a pattern for finding text", function() {
         var segDoc = new SegDoc({segments});
         var pat = segDoc.createPattern("bhikkhu");
-        console.log(pat);
         should(pat.test('asfd bhikkhu asdf')).equal(true); // canonical spelling
         should(pat.test('asfd bikkhu asdf')).equal(true); // alternate spelling
         should(pat.test('asfd bhikku asdf')).equal(true); // alternate spelling

@@ -94,6 +94,27 @@
             return this.parseLines(lines);
         }
 
+        files(opts={}) {
+            return new Promise((resolve, reject) => { try {
+                var language = opts.language || 'en';
+                var suffix = opts.suffix || '\\.po';
+                var filePattern = opts.filePattern || new RegExp(`.*/${language}/[^/]*${suffix}$`);
+                var files = [];
+                function visit(apath) {
+                    var stats = fs.statSync(apath);
+                    if (stats.isDirectory()) {
+                        fs.readdirSync(apath).forEach(file => 
+                            visit(path.join(apath, file)));
+                    } else if (stats.isFile()) {
+                        filePattern.test(apath) && files.push(apath);
+                    }
+                }
+                var root = opts.root || path.join(__dirname, '../local/sc');
+                visit(root);
+                resolve(files);
+            } catch(e) {reject(e);} });
+        }
+
     }
 
     module.exports = exports.PoParser = PoParser;
