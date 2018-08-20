@@ -11,7 +11,7 @@
         // default constuctor reads in words/en.json
         should(words.canonical('bhikku')).equal('bhikkhu');
     });
-    it("llookup() returns word information", function() {
+    it("lookup() returns word information", function() {
         var words = new Words();
         var bhikkhu = {
             word: 'bhikkhu',
@@ -31,7 +31,7 @@
 
         // strings without symbols
         should(words.isWord('abc')).equal(true);
-        should(words.isWord('123')).equal(true);
+        should(words.isWord('123')).equal(false);
         should(words.isWord('1.23')).equal(false);
     });
     it("isForeignWord(token) return true if token is a word in foreign alphabet", function() {
@@ -85,6 +85,24 @@
         should(words.romanize("‘Nandī dukkhassa mūlan’ti—"))
             .equal(`${Words.U_LSQUOTE}nandi dukkhassa mulan${Words.U_RSQUOTE}ti${Words.U_EMDASH}`);
 
+    });
+    it("TESTTESTtokenize(text) returns array of tokens", function() {
+        var words = new Words();
+        var segments = [
+            'he does not conceive earth',
+            'to be \u2018mine,\u2019.',
+            'Why is that?',
+            'Abhayarājakumārasutta',
+            `abc${Words.U_EMDASH}def`,
+        ];
+        var text = segments.join(' ');
+        var tokens = words.tokenize(text);
+        should.deepEqual(tokens, [
+            'he', 'does', 'not', 'conceive', 'earth', 
+            'to', 'be', '\u2018', 'mine', ',', '\u2019', '.', 
+            'Why', 'is', 'that', '?', 'Abhayar\u0101jakum\u0101rasutta',
+            `abc`, Words.U_EMDASH, `def`,
+        ]);
     });
 
 })

@@ -21,10 +21,10 @@
             this.json_str = opts.json_str || 'en';
         }
 
-        parseLines(lines) {
+        parseLines(lines, opts={}) {
             var that = this;
             return new Promise((resolve, reject) => {
-                var segDoc = new SegDoc();
+                var segDoc = new SegDoc({}, opts);
                 function add(segment) {
                     if (segment) {
                         segDoc.segments.push(segment);
@@ -86,12 +86,12 @@
             });
         }
 
-        parse(filePath) {
+        parse(filePath, opts) {
             if (!fs.existsSync(filePath)) {
-                reject(new Error(`file not found:${filePath}`));
+                return Promise.reject(new Error(`file not found:${filePath}`));
             }
             var lines = fs.readFileSync(filePath).toString().split('\n');;
-            return this.parseLines(lines);
+            return this.parseLines(lines, opts);
         }
 
         files(opts={}) {
