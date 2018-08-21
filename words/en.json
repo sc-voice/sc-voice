@@ -1,6 +1,22 @@
 {
     "alphabet": "^[a-z]*$",
     "wordEnd": "([^a-zA-Z].*)?$",
+    "ipa": {
+        "pli": {
+            "a": "\u0250",
+            "\u0101": "\u02c8\u0251\u0303\u02d0",
+            "\u012b": "i\u02d0",
+            "\u00f1": "\u014b",
+            "\u1e6d\u1e6dh": "\u0288\u0306\u0288\u02b0",
+            "gh": "g\u02b0",
+            "i": "\u026a",
+            "ng": "\u014bg",
+            "\u1e45g": "\u014bg",
+            "th": "\u0288\u02b0",
+            "t": "\u0288",
+            "u": "\u028A"
+        }
+    },
     "romanize": {
         "\u0101": "a",
         "\u1e0d": "d",
@@ -134,6 +150,7 @@
     },
 
     "words": {
+        "abhibhu":"abhibh\u016b",
         "bhikku": "bhikkhu",
         "bikkhu": "bhikkhu",
         "bhikkhu":{

@@ -19,7 +19,8 @@
             } 
             this.symbols = json.symbols;
             this.words = json.words;
-            this._romanize = json.romanize;
+            this._ipa = json.ipa || {};
+            this._romanize = json.romanize || {};
             this.wordEnd = json.wordEnd;
             this.altMap = null;
             this.alphabet = new RegExp(json.alphabet || '[a-z]*', "iu");
@@ -118,6 +119,37 @@
             }
 
             return this.altMap[word] || [word];
+        }
+
+        u16(text,minCode=0) {
+            var result = "";
+            for (var i=0; i < text.length; i++) {
+                var code = text.charCodeAt(i);
+                var c = text.charAt(i);
+                if (code > minCode) {
+                    var hex  = '000' + code.toString(16);
+                    c = `\\u${hex.substring(hex.length-4)}`;
+                }
+                result += c;
+            }
+            return result;
+        }
+
+        ipa(text,language='pli') {
+            var map = this._ipa[language];
+            if (map == null) {
+                return text;
+            }
+            var result = String(text);
+            var keys = Object.keys(map);
+            var pats = keys.map(key => {
+                var value = map[key];
+                if (value) {
+                    var pat = new RegExp(`${key}`,"iug");
+                    result = result.replace(pat, value);
+                }
+            });
+            return result;
         }
 
     }

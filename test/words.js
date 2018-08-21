@@ -48,7 +48,7 @@
         should(words.isForeignWord('Brahm\u0101')).equal(true);
         should(words.isForeignWord('brahm\u0101')).equal(true);
     });
-    it("alternates(word) returns array of alternate spellings", function() {
+    it("TESTTESTalternates(word) returns array of alternate spellings", function() {
         var words = new Words();
         should.deepEqual(words.alternates('asdf'), ['asdf']);
         should.deepEqual(words.alternates('bhikkhu'), [
@@ -65,6 +65,15 @@
             'bhikkhu', 
             'bhikku',
             'bikkhu',
+        ]);
+
+        should.deepEqual(words.alternates('abhibh\u016b'), [
+            'abhibh\u016b', 
+            'abhibhu',
+        ]);
+        should.deepEqual(words.alternates('abhibhu'), [
+            'abhibh\u016b', 
+            'abhibhu',
         ]);
     });
     it("romanize(text) returns romanized text", function() {
@@ -104,5 +113,42 @@
             `abc`, Words.U_EMDASH, `def`,
         ]);
     });
+    it("TESTTESTu16(word, minCode) return Unicode-16 string escape", function() {
+        var words = new Words();
+        should(words.u16('a\u0123b',0x7f)).equal('a\\u0123b');
+        should(words.u16('a\u0123b')).equal('\\u0061\\u0123\\u0062');
+    });
+    it("TESTTESTipa(word, language) return IPA for word", function() {
+        var words = new Words();
+
+        var ipa = words.ipa('aṭṭhakanāgarasutta');
+        //console.log(words.u16(ipa));
+        should(ipa).equal('ɐʈ̆ʈʰɐkɐnˈɑ̃ːgɐrɐsʊʈʈɐ');
+        return;
+
+        var ipa = words.ipa('aggaññasutta');
+        //console.log(words.u16(ipa));
+        should(ipa).equal('ɐggɐŋŋɐsʊʈʈɐ');
+
+        var ipa = words.ipa('ānanda');
+        //console.log(words.u16(ipa));
+        should(ipa).equal('ˈɑ̃ːnɐndɐ');
+
+        var ipa = words.ipa('aṅgaka');
+        //console.log(words.u16(ipa));
+        should(ipa).equal('ɐŋgɐkɐ');
+
+        var ipa = words.ipa('anīgha');
+        //console.log(words.u16(ipa));
+        //should(ipa).equal('ɐniːgʰɐ');
+
+        //var ipa = words.ipa('anāthapiṇḍika');
+        //console.log(words.u16(ipa));
+        //should(ipa).equal('ɐn__t__p_nd_k_');
+        var ipa = words.u16(words.ipa('anāthapiṇḍika'));
+        var expected = words.u16('ɐnˈɑ̃ːʈʰɐpɪndɪkɐ');
+        should(ipa).equal(expected);
+    });
+
 
 })
