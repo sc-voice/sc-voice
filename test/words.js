@@ -4,6 +4,20 @@
     const path = require('path');
     const Words = require("../src/words");
 
+    var words = new Words();
+
+    function ipaCompare(word,b) {
+        var a = words.ipa(word);
+        var autf = Words.utf16(a);
+        var butf = Words.utf16(b);
+        if (autf !== butf) {
+            console.log(autf, autf.length);
+            console.log(butf, butf.length);
+        }
+        should(autf).equal(butf);
+        should(a).equal(b);
+    }
+
     it("Words() is default constructor", function() {
         var words = new Words();
         should(words.language).equal('en');
@@ -115,56 +129,23 @@
     });
     it("TESTTESTutf16(word, minCode) return Unicode-16 string escape", function() {
         var words = new Words();
-        should(words.utf16('a\u0123\u0abcb',0x7f)).equal('a\\u0123\\u0ABCb');
-        should(words.utf16('a\u0123\u0abcb')).equal('\\u0061\\u0123\\u0ABC\\u0062');
+        should(Words.utf16('a\u0123\u0abcb',0x7f)).equal('a\\u0123\\u0ABCb');
+        should(Words.utf16('a\u0123\u0abcb')).equal('\\u0061\\u0123\\u0ABC\\u0062');
     });
     it("TESTTESTipa(word, language) return IPA for word", function() {
-        var words = new Words();
-
-        var ipa = words.ipa('a');
-        //console.log(words.utf16(ipa));
-        should(ipa).equal('\u0250');
-
-        var ipa = words.ipa('aa');
-        console.log(words.utf16(ipa));
-        should(ipa).equal('a\u0306\u0250');
-
-        var ipa = words.ipa('\u016b'); // u+macron
-        //console.log(words.utf16(ipa));
-        should(ipa).equal('\u0288\u028a\u02b0');
-
-        var ipa = words.ipa('bh'); 
-        console.log(words.utf16(ipa));
-        should(ipa).equal('b\u02b0');
-
-        var ipa = words.ipa('gh');
-        //console.log(words.utf16(ipa));
-        should(ipa).equal('g\u02b0');
-
-        var ipa = words.ipa('aṭṭhakanāgarasutta');
-        //console.log(words.utf16(ipa));
-        should(ipa).equal('ɐʈ̆ʈʰɐkɐnˈɑ̃ːgɐrɐsʊʈʈɐ');
-
-        var ipa = words.ipa('aggaññasutta');
-        //console.log(words.utf16(ipa));
-        should(ipa).equal('ɐggɐŋŋɐsʊʈʈɐ');
-
-        var ipa = words.ipa('ānanda');
-        //console.log(words.utf16(ipa));
-        should(ipa).equal('ˈɑ̃ːnɐndɐ');
-
-        var ipa = words.ipa('aṅgaka');
-        //console.log(words.utf16(ipa));
-        should(ipa).equal('ɐŋgɐkɐ');
-
-        var ipa = words.ipa('anīgha');
-        //console.log(words.utf16(ipa));
-        should(ipa).equal('ɐniːgʰɐ');
-
-        var ipa = words.utf16(words.ipa('anāthapiṇḍika'));
-        //console.log(words.utf16(ipa));
-        var expected = words.utf16('ɐnˈɑ̃ːʈʰɐpɪndɪkɐ');
-        should(ipa).equal(expected);
+        ipaCompare('a', '\u0250');
+        ipaCompare('aa', 'a\u0306\u0250');
+        ipaCompare('\u016b', '\u0288\u028a\u02b0'); // u-macron
+        ipaCompare('bh', 'b\u02b0');
+        ipaCompare('dh', 'd\u02b0');
+        ipaCompare('gh', 'g\u02b0');
+        ipaCompare('dvedhāvitakka', 'dvedʰɑːvɪʈɐkkɐ');
+        ipaCompare('aṭṭhakanāgarasutta', 'ɐʈ̆ʈʰɐkɐn\u0251\u02d0gɐrɐsʊʈʈɐ');
+        ipaCompare('aggaññasutta', 'ɐggɐŋŋɐsʊʈʈɐ');
+        ipaCompare('ānanda', '\u0251\u02d0nɐndɐ');
+        ipaCompare('aṅgaka', 'ɐŋgɐkɐ');
+        ipaCompare('anīgha', 'ɐniːgʰɐ');
+        ipaCompare('anāthapiṇḍika', 'ɐn\u0251ːʈʰɐpɪndɪkɐ');
     });
 
 

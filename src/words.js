@@ -121,7 +121,7 @@
             return this.altMap[word] || [word];
         }
 
-        utf16(text,minCode=0) {
+        static utf16(text,minCode=0) {
             var result = "";
             for (var i=0; i < text.length; i++) {
                 var code = text.charCodeAt(i);
@@ -149,7 +149,7 @@
                 return a.localeCompare(b);
             });
             var pats = keys.map(key => {
-                var value = this.utf16(map[key]).toUpperCase();
+                var value = Words.utf16(map[key]).toUpperCase();
                 var pat = new RegExp(`${key}`,"ug");
                 result = result.replace(pat, value);
             });
