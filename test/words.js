@@ -142,14 +142,16 @@
         ipaCompare('gh', 'g\u02b0');
         ipaCompare('dvedhāvitakka', 'dvedʰɑːvɪʈɐkkɐ');
         ipaCompare('aṭṭhakanāgarasutta', 'ɐ\u02c8ʈ̆ʈʰɐkɐn\u0251\u02d0gɐ\u027aɐsʊʈʈɐ');
-        ipaCompare('aggaññasutta', 'ɐ\u02c8ggɐŋŋɐsʊʈʈɐ');
+        ipaCompare('aggaññasutta', 'ɐ\u02c8ggɐ\u0272\u0272ɐsʊʈʈɐ');
         ipaCompare('ānanda', '\u0251\u02d0nɐndɐ');
         ipaCompare('aṅgaka', 'ɐ\u02c8ŋgɐkɐ');
         ipaCompare('anīgha', 'ɐ\u02c8niːgʰɐ');
         ipaCompare('anāthapiṇḍika', 'ɐ\u02c8n\u0251ːʈʰɐpɪndɪkɐ');
         ipaCompare('Bhāradvāja', 'bʰɑː\u027aɐdvɑːʝɐ');
-        ipaCompare('Cūḷataṇhāsaṅkhayasutta', 'kʊːʟ̈ɐʈɐŋʰɑːsɐŋkʰajɐsʊʈʈɐ');
-        ipaCompare('Cūḷaassapurasutta', 'kʊːʟ̈ɐɐssɐpʊɺɐsʊʈʈɐ');
+        ipaCompare('Cūḷataṇhāsaṅkhayasutta', 'cʊːʟ̈ɐʈɐŋʰɑːsɐŋkʰajɐsʊʈʈɐ');
+        ipaCompare('Cūḷaassapurasutta', 'cʊːʟ̈ɐɐssɐpʊɺɐsʊʈʈɐ');
+        ipaCompare('Saccavibhaṅgasutta','sɐʈʃɐvɪbʰɐŋgɐsʊʈʈɐ');
+        ipaCompare('Pañcālacaṇḍa','pɐɲcɑːlɐcɐndɐ');
     });
 
 
