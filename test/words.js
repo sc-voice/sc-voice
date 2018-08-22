@@ -113,40 +113,57 @@
             `abc`, Words.U_EMDASH, `def`,
         ]);
     });
-    it("TESTTESTu16(word, minCode) return Unicode-16 string escape", function() {
+    it("TESTTESTutf16(word, minCode) return Unicode-16 string escape", function() {
         var words = new Words();
-        should(words.u16('a\u0123b',0x7f)).equal('a\\u0123b');
-        should(words.u16('a\u0123b')).equal('\\u0061\\u0123\\u0062');
+        should(words.utf16('a\u0123\u0abcb',0x7f)).equal('a\\u0123\\u0ABCb');
+        should(words.utf16('a\u0123\u0abcb')).equal('\\u0061\\u0123\\u0ABC\\u0062');
     });
     it("TESTTESTipa(word, language) return IPA for word", function() {
         var words = new Words();
 
+        var ipa = words.ipa('a');
+        //console.log(words.utf16(ipa));
+        should(ipa).equal('\u0250');
+
+        var ipa = words.ipa('aa');
+        console.log(words.utf16(ipa));
+        should(ipa).equal('a\u0306\u0250');
+
+        var ipa = words.ipa('\u016b'); // u+macron
+        //console.log(words.utf16(ipa));
+        should(ipa).equal('\u0288\u028a\u02b0');
+
+        var ipa = words.ipa('bh'); 
+        console.log(words.utf16(ipa));
+        should(ipa).equal('b\u02b0');
+
+        var ipa = words.ipa('gh');
+        //console.log(words.utf16(ipa));
+        should(ipa).equal('g\u02b0');
+
         var ipa = words.ipa('aṭṭhakanāgarasutta');
-        //console.log(words.u16(ipa));
+        //console.log(words.utf16(ipa));
         should(ipa).equal('ɐʈ̆ʈʰɐkɐnˈɑ̃ːgɐrɐsʊʈʈɐ');
-        return;
 
         var ipa = words.ipa('aggaññasutta');
-        //console.log(words.u16(ipa));
+        //console.log(words.utf16(ipa));
         should(ipa).equal('ɐggɐŋŋɐsʊʈʈɐ');
 
         var ipa = words.ipa('ānanda');
-        //console.log(words.u16(ipa));
+        //console.log(words.utf16(ipa));
         should(ipa).equal('ˈɑ̃ːnɐndɐ');
 
         var ipa = words.ipa('aṅgaka');
-        //console.log(words.u16(ipa));
+        //console.log(words.utf16(ipa));
         should(ipa).equal('ɐŋgɐkɐ');
 
         var ipa = words.ipa('anīgha');
-        //console.log(words.u16(ipa));
-        //should(ipa).equal('ɐniːgʰɐ');
+        //console.log(words.utf16(ipa));
+        should(ipa).equal('ɐniːgʰɐ');
 
-        //var ipa = words.ipa('anāthapiṇḍika');
-        //console.log(words.u16(ipa));
-        //should(ipa).equal('ɐn__t__p_nd_k_');
-        var ipa = words.u16(words.ipa('anāthapiṇḍika'));
-        var expected = words.u16('ɐnˈɑ̃ːʈʰɐpɪndɪkɐ');
+        var ipa = words.utf16(words.ipa('anāthapiṇḍika'));
+        //console.log(words.utf16(ipa));
+        var expected = words.utf16('ɐnˈɑ̃ːʈʰɐpɪndɪkɐ');
         should(ipa).equal(expected);
     });
 

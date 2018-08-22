@@ -121,13 +121,13 @@
             return this.altMap[word] || [word];
         }
 
-        u16(text,minCode=0) {
+        utf16(text,minCode=0) {
             var result = "";
             for (var i=0; i < text.length; i++) {
                 var code = text.charCodeAt(i);
                 var c = text.charAt(i);
                 if (code > minCode) {
-                    var hex  = '000' + code.toString(16);
+                    var hex  = '000' + code.toString(16).toUpperCase();
                     c = `\\u${hex.substring(hex.length-4)}`;
                 }
                 result += c;
@@ -141,15 +141,20 @@
                 return text;
             }
             var result = String(text);
-            var keys = Object.keys(map);
-            var pats = keys.map(key => {
-                var value = map[key];
-                if (value) {
-                    var pat = new RegExp(`${key}`,"iug");
-                    result = result.replace(pat, value);
+            var keys = Object.keys(map).sort((a,b) => {
+                var c = a.length - b.length;
+                if (c) {
+                    return -c;
                 }
+                return a.localeCompare(b);
             });
-            return result;
+            var pats = keys.map(key => {
+                var value = this.utf16(map[key]).toUpperCase();
+                var pat = new RegExp(`${key}`,"ug");
+                result = result.replace(pat, value);
+            });
+            result = result.replace(/U/g,'u');
+            return eval(`"${result}"`);
         }
 
     }
