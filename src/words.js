@@ -136,6 +136,7 @@
         }
 
         ipa(text,language='pli') {
+            text = text.toLowerCase();
             var map = this._ipa[language];
             if (map == null) {
                 return text;
