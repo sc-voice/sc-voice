@@ -2,8 +2,18 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const AbstractTTS = require("../src/abstract-tts");
+    const {
+        AbstractTTS,
+        Words,
+    } = require("../index");
 
+    it("TESTTESTAbstractTTS(opts) can be customized", function() {
+        var words = new Words();
+        var tts = new AbstractTTS({
+            words,
+        });
+        should(tts.words).equal(words);
+    });
     it("signature(text) returns signature that identifies synthesized speech", function() {
         var tts = new AbstractTTS();
         var sig = tts.signature('hello world');

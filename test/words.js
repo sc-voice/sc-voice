@@ -136,17 +136,17 @@
         ipaCompare('ba', 'b\u0250');
         ipaCompare('a', '\u0250\u02c8');
         ipaCompare('\u016b', '\u028a\u02D0'); // u-macron
-        ipaCompare('dvedhāvitakka', 'dvedhɑvɪtɐkkɐ');
+        ipaCompare('dvedhāvitakka', 'dvedh\u0308ɑvɪtɐkkɐ');
         ipaCompare('aṭṭhakanāgarasutta', 'ɐ\u02c8ʈ̆ʈʰɐkɐn\u0251gɐ\u027aɐsʊʈtɐ');
         ipaCompare('aggaññasutta', 'ɐ\u02c8ggɐ\u0272\u0272ɐsʊʈtɐ');
         ipaCompare('ānanda', '\u0251nɐndɐ');
         ipaCompare('aṅgaka', 'ɐ\u02c8ŋgɐkɐ');
-        ipaCompare('anīgha', 'ɐ\u02c8niːghɐ');
-        ipaCompare('anāthapiṇḍika', 'ɐˈnɑthɐpɪŋdɪkɐ');
-        ipaCompare('Bhāradvāja', 'bhɑ\u027aɐdvɑʝɐ');
-        ipaCompare('Cūḷataṇhāsaṅkhayasutta', 'cʊːʟ̈ɐtɐŋhɑsɐŋkhajɐsʊʈtɐ');
+        ipaCompare('anīgha', 'ɐ\u02c8niːgh\u0308ɐ');
+        ipaCompare('anāthapiṇḍika', 'ɐˈnɑth\u0308ɐpɪŋdɪkɐ');
+        ipaCompare('Bhāradvāja', 'bh\u0308ɑ\u027aɐdvɑʝɐ');
+        ipaCompare('Cūḷataṇhāsaṅkhayasutta', 'cʊːʟ̈ɐtɐŋh\u0308ɑsɐŋkh\u0308ajɐsʊʈtɐ');
         ipaCompare('Cūḷaassapurasutta', 'cʊːʟ̈ɐɐssɐpʊɺɐsʊʈtɐ');
-        ipaCompare('Saccavibhaṅgasutta','sɐccɐvɪbhɐŋgɐsʊʈtɐ');
+        ipaCompare('Saccavibhaṅgasutta','sɐccɐvɪbh\u0308ɐŋgɐsʊʈtɐ');
         ipaCompare('Pañcālacaṇḍa','pɐɲcɑlɐcɐ\u014bdɐ');
     });
     it("TESTTESTadd(word, language) return IPA for word", function() {

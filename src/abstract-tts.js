@@ -25,7 +25,7 @@
                 writable: true,
             });
             Object.defineProperty(this, 'words', {
-                value: new Words(null, {
+                value: opts.words || new Words(null, {
                     language: this.language,
                 }),
             });
@@ -169,7 +169,7 @@
         createResponse(request, cached = false) {
             var signature = request.signature;
             var jsonPath = this.store.signaturePath(signature, ".json");
-            fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2));
+            fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2)+'\n');
             var response = {
                 file: request.outpath,
                 hits: this.hits,
