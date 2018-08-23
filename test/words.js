@@ -149,6 +149,39 @@
         ipaCompare('Saccavibhaṅgasutta','sɐccɐvɪbhɐŋgɐsʊʈtɐ');
         ipaCompare('Pañcālacaṇḍa','pɐɲcɑlɐcɐ\u014bdɐ');
     });
+    it("TESTTESTadd(word, language) return IPA for word", function() {
+        var filePath = path.join(__dirname, 'data/en.json');
+        var words = new Words(null, { filePath });
 
+        // add an english alternate
+        should(words.lookup('centre')).equal(null);
+        should(words.lookup('center')).equal(null);
+        words.add('center', {
+            alternates: ['centre'],
+        });
+        should.deepEqual(words.lookup('centre'), {
+            word: 'center',
+        });
+        should.deepEqual(words.lookup('center'), {
+            word: 'center',
+        });
+        should.deepEqual(words.alternates('centre'), [
+            'center', 'centre',
+        ]);
+
+        var pali = 'Mūlapariyāyasutta';
+        var paliRoman = words.romanize(pali);
+        words.add(pali, {
+            language: 'pli',
+        });
+        should.deepEqual(words.lookup(pali), {
+            ipa: words.ipa(pali),
+            word: pali.toLowerCase(),
+        });
+        should.deepEqual(words.lookup(paliRoman), {
+            ipa: words.ipa(pali),
+            word: pali.toLowerCase(),
+        });
+    });
 
 })

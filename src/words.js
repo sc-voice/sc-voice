@@ -6,12 +6,13 @@
         constructor(json, opts={}) {
             this.language = opts.language || 'en';
             if (json == null) {
-                var wordpath = path.join(__dirname, `../words/${this.language}.json`);
-                if (!fs.existsSync(wordpath)) {
-                    var wordpath = path.join(__dirname, `../words/en.json`);
+                var filePath = opts.filePath 
+                    || path.join(__dirname, `../words/${this.language}.json`);
+                if (!fs.existsSync(filePath)) {
+                    var filePath = path.join(__dirname, `../words/en.json`);
                 }
-                json = fs.existsSync(wordpath)
-                    ? JSON.parse(fs.readFileSync(wordpath))
+                json = fs.existsSync(filePath)
+                    ? JSON.parse(fs.readFileSync(filePath))
                     : {
                         symbols: {},
                         words: {},
@@ -85,11 +86,43 @@
         }
 
         lookup(word) {
+            word = word.toLowerCase();
             var value = this.words[word];
             if (typeof value === 'string') {
                 value = this.lookup(value);
             }
             return value && Object.assign({ word }, value) || null;
+        }
+
+        add(word, opts={}) {
+            word = word.toLowerCase();
+            var value = this.words[word];
+            var language = opts.language || this.language;
+            if (value == null) {
+                var def = {};
+                if (opts.ipa) {
+                    def.ipa = opts.ipa;
+                } else if (language !== this.language) {
+                    def.ipa = this.ipa(word, opts.language);
+                }
+            } else if (typeof value == 'string') {
+                var def = this.words[value];
+            } else {
+                var def = value;
+            }
+            var alternates = opts.alternates || [word];;
+            if (value == null) {
+                alternates.forEach(alt => {
+                    alt !== word && (this.words[alt] = word);
+                    if (language !== this.language) {
+                        var roman = this.romanize(alt);
+                        roman !== word && (this.words[roman] = word);
+                    }
+                });
+                this.words[word] = def;
+            } else if (typeof value === 'string') {
+            } else {
+            }
         }
 
         alternates(word) {
