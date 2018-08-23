@@ -68,5 +68,47 @@
         should(pat.test('asfd Bikkhu Tathagata asdf')).equal(true); // alternate spelling
 
     });
+    it("TESTTESTindexOf(scid) returns segment index", function() {
+        var segDoc = new SegDoc({segments});
+        should(segDoc.indexOf(0)).equal(0);
+        should(segDoc.indexOf(2)).equal(2);
+        should(segDoc.indexOf(-2)).equal(-2);
+        should(segDoc.indexOf("s:1.2")).equal(1);
+        should.throws(() => segDoc.indexOf("nonsense"));
+        should.throws(() => segDoc.indexOf("s:1.*"));
+    });
+    it("TESTTESTexcerpt(range) returns segments in range", function() {
+        var segDoc = new SegDoc({segments});
+
+        // excerpt all
+        should.deepEqual(segDoc.excerpt(), segments);
+
+        // excerpt first 2
+        should.deepEqual(segDoc.excerpt({
+            end: 2,
+        }),[
+            segments[0],
+            segments[1],
+        ]);
+
+        // excerpt lsst 2
+        should.deepEqual(segDoc.excerpt({
+            start: -2,
+            prop: 'en',
+        }),[
+            segments[1].en,
+            segments[2].en,
+        ]);
+
+        // excerpt by scid
+        should.deepEqual(segDoc.excerpt({
+            start: "s:1.1",
+            end: "s:2.1",
+            prop: 'en',
+        }),[
+            segments[0].en,
+            segments[1].en,
+        ]);
+    });
 
 })

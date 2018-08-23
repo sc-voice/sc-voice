@@ -43,6 +43,36 @@
             return new RegExp(`${pat}${wordEnd}`, "iu");
         }
 
+        indexOf(segid,opts={}) {
+            var prop = opts.prop || "scid";
+            if (typeof segid === "number") {
+                return segid;
+            } else if (typeof segid === "string") {
+                var findOpts = Object.assign({
+                    prop,
+                }, opts);
+                var indexes = this.findIndexes(segid, findOpts);
+                if (indexes.length < 1) {
+                    throw new Error(`Segment not found for segid:${segid}`);
+                } else if (indexes.length > 1) {
+                    throw new Error(`Ambiguous match for segid:${segid} matches:${indexes.length}`);
+                }
+                return indexes[0];
+            } else {
+                throw new Error("invalid segid");
+            }
+        }
+
+        excerpt(range={}) {
+            var start = this.indexOf(range.start || 0);
+            var end = this.indexOf(range.end || this.segments.length);
+            var segments = this.segments.slice(start, end);
+            if (range.prop != null) {
+                return segments.map(seg => seg[range.prop]);
+            }
+            return segments;
+        }
+
     }
 
     module.exports = exports.SegDoc = SegDoc;
