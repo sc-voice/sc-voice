@@ -80,20 +80,21 @@
             ',', 'too', ',', 'accomplished', 'and', 'fully', 'enlightened',
         ]);
     });
-    it("segment(tokens) returns array of segments", function() {
+    it("TESTTESTsegment(tokens) returns array of segments", function() {
         var tts = new AbstractTTS();
         var tokens = [
             'a', '<b/>', ',', '(', 'c', 'd', ')', 'e', '.', 
             'f', 'g', '?', 
             'h', 'i', '!', 
             'j', '\u2018', 'k', ',', '\u2019', 'l',
+            '5', 'm',
         ];
         var segments = tts.segment(tokens);
         should.deepEqual(segments, [
             'a <b/>, (c d) e.',
             'f g?',
             'h i!',
-            'j \u2018k,\u2019 l',
+            'j \u2018k,\u2019 l 5 m',
         ]);
     });
     it("segmentSSML(text) returns array of SSML text segments", function() {

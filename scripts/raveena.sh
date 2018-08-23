@@ -16,8 +16,9 @@ var words = new Words();
     var files = await parser.files({
         root: path.join(__dirname, '../local/sc/mn/'),
     });
+    var nResults = 5;
     var segDocs = await Promise.all(
-        files.slice(1,21).map(file => parser.parse(file))
+        files.slice(1,nResults+1).map(file => parser.parse(file))
     );
     var paliOpts = {
         language: 'pli',
@@ -26,22 +27,23 @@ var words = new Words();
         var excerpt = segDoc.excerpt({
             start:1,
             end:2,
-            prop: "pli",
         });
-        excerpt[0].split(' ').forEach(word => words.add(word, paliOpts));
-        return `${i+1}: ${excerpt[0]}.`;
+        excerpt[0].pli.split(' ').forEach(word => words.add(word, paliOpts));
+        return `${i+1}: ${excerpt[0].pli}${Words.U_EMDASH}${excerpt[0].en}.`;
     });
-    var text = 'Hello, this is Raveena.\n';
-    var mn = 'Majjhima Nikāya';
-    mn.split(' ').forEach(word => words.add(word, paliOpts));
-    text += `The first 20 suttas in the ${mn} are:\n`;
+    var text = `SuttaCentral found ${nResults} suttas.\n`;
+    //var mn = 'Majjhima Nikāya';
+    //mn.split(' ').forEach(word => words.add(word, paliOpts));
+    //text += `The first 20 suttas in the ${mn} are:\n`;
     text += lines.join('\n');
     console.log(text);
 
     var speak = 1;
     if (speak) {
         var polly = new Polly({
-            words
+            words,
+            //voice: 'Raveena',
+            //prosody: { rate: "+5%", },
         });
         var cache = false;
         var result = await polly.synthesizeText(text, {cache});

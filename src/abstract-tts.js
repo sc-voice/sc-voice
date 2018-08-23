@@ -104,7 +104,7 @@
         segment(tokens) {
             var symbols = this.words.symbols;
             var acc = tokens.reduce((acc,token) => {
-                if (token.length === 1 && !this.words.isWord(token)) {
+                if (token.length === 1 && !this.words.isWord(token) && isNaN(token)) {
                     var symbol = symbols[token];
                     if (symbol == null) {
                         throw new Error(`undefined symbol: ${token}`);
