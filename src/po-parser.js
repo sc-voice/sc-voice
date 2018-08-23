@@ -96,9 +96,17 @@
 
         files(opts={}) {
             return new Promise((resolve, reject) => { try {
+                if (typeof opts === 'string') {
+                    throw new Error("expected options object");
+                    var language
+                } 
                 var language = opts.language || 'en';
                 var suffix = opts.suffix || '\\.po';
-                var filePattern = opts.filePattern || new RegExp(`.*/${language}/[^/]*${suffix}$`);
+                var filePattern = opts.filePattern || `.*/${language}/[^/]*${suffix}$`;
+                if (!(filePattern instanceof RegExp)) {
+                    filePattern = new RegExp(filePattern);
+                }
+                var root = opts.root || path.join(__dirname, '../local/sc');
                 var files = [];
                 function visit(apath) {
                     var stats = fs.statSync(apath);
@@ -109,7 +117,6 @@
                         filePattern.test(apath) && files.push(apath);
                     }
                 }
-                var root = opts.root || path.join(__dirname, '../local/sc');
                 visit(root);
                 resolve(files);
             } catch(e) {reject(e);} });
