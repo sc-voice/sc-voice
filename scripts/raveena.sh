@@ -31,7 +31,7 @@ var words = new Words();
         excerpt[0].split(' ').forEach(word => words.add(word, paliOpts));
         return `${i+1}: ${excerpt[0]}.`;
     });
-    var text = 'Hello, this is Roweena.\n';
+    var text = 'Hello, this is Raveena.\n';
     var mn = 'Majjhima Nikāya';
     mn.split(' ').forEach(word => words.add(word, paliOpts));
     text += `The first 20 suttas in the ${mn} are:\n`;
