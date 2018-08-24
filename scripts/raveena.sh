@@ -17,8 +17,9 @@ var words = new Words();
         root: path.join(__dirname, '../local/sc/mn/'),
     });
     var nResults = 5;
+    var start = 10;
     var segDocs = await Promise.all(
-        files.slice(1,nResults+1).map(file => parser.parse(file))
+        files.slice(start,start+nResults).map(file => parser.parse(file))
     );
     var paliOpts = {
         language: 'pli',
@@ -29,7 +30,7 @@ var words = new Words();
             end:2,
         });
         excerpt[0].pli.split(' ').forEach(word => words.add(word, paliOpts));
-        return `${i+1}: ${excerpt[0].pli}${Words.U_EMDASH}${excerpt[0].en}.`;
+        return `${start+i}: ${excerpt[0].pli}${Words.U_EMDASH}${excerpt[0].en}.`;
     });
     var text = `SuttaCentral found ${nResults} suttas.\n`;
     //var mn = 'Majjhima Nikāya';
@@ -42,8 +43,9 @@ var words = new Words();
     if (speak) {
         var polly = new Polly({
             words,
+            voice: 'Salli',
             //voice: 'Raveena',
-            //prosody: { rate: "+5%", },
+            prosody: { rate: "-5%", },
         });
         var cache = false;
         var result = await polly.synthesizeText(text, {cache});

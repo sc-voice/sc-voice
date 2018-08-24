@@ -4,6 +4,7 @@
     "ipa": {
         "pli": {
             "a": "\u0250",
+            "a$": "a\u0308",
             "^a": "\u0250\u02c8",
             "\u0101": "\u0251",
             "aya": "aj\u0250\u02cc",
@@ -30,7 +31,7 @@
             "nu": "nu",
             "\u1e45g": "\u014bg",
             "\u1e45k": "\u014bk",
-            "sutta": "\u02ccsutt\u0250",
+            "sutta": "\u02ccsutta\u0308",
             "r": "\u027a",
             "tt": "t.t",
             "unused-th": "\u0288\u02b0",
