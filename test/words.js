@@ -133,23 +133,25 @@
         should(Words.utf16('a\u0123\u0abcb')).equal('\\u0061\\u0123\\u0ABC\\u0062');
     });
     it("TESTTESTipa(word, language) return IPA for word", function() {
-        ipaCompare('ba', 'b\u0250');
-        ipaCompare('a', '\u0250\u02c8');
-        ipaCompare('\u016b', '\u028a\u02D0'); // u-macron
-        ipaCompare('dvedhāvitakka', 'dved\u02b0ɑvɪtɐk.kɐ');
-        ipaCompare('aṭṭhakanāgarasutta', 'ɐ\u02c8ʈ̆ʈʰɐkɐn\u0251gɐ\u027aɐ\u02ccsuttɐ');
-        ipaCompare('aggaññasutta', 'ɐ\u02c8ggɐ\u0272\u0272ɐ\u02ccsuttɐ');
-        ipaCompare('ānanda', '\u0251nɐndɐ');
-        ipaCompare('Dhamma', 'd\u02b0\u0250mma'); // SlowAmy can't say "dh"
-        ipaCompare('aṅgaka', 'ɐ\u02c8ŋgɐkɐ');
-        ipaCompare('anīgha', 'ɐ\u02c8niːg\u02b0ɐ');
-        ipaCompare('anāthapiṇḍika', 'ɐˈnɑthɐpɪŋdɪkɐ');
-        ipaCompare('Bhāradvāja', 'b\u02b0ɑ\u027aɐdvɑʝɐ');
-        ipaCompare('Cūḷataṇhāsaṅkhayasutta', 'cʊːʟ̈ɐtɐŋhɑsɐ\u1e45k\u02b0ajɐ\u02cc\u02ccsuttɐ');
-        ipaCompare('Cūḷaassapurasutta', 'cʊːʟ̈ɐɐssɐpuɺɐ\u02ccsuttɐ');
-        ipaCompare('Saccavibhaṅgasutta','sɐccɐvɪb\u02b0ɐŋgɐ\u02ccsuttɐ');
-        ipaCompare('Pañcālacaṇḍa','pɐɲcɑlɐcɐ\u014bdɐ');
-        ipaCompare('Ākaṅkheyyasutta','ɑk\u0250\u1e45k\u02b0ejjɐ\u02ccsuttɐ');
+        var aend = `\u0061\u0308`;
+        var sutta = `\u02ccsutt${aend}`;
+        ipaCompare(`bab`, `b\u0250b`);
+        ipaCompare(`a`, `\u0250\u02c8`);
+        ipaCompare(`\u016b`, `\u028a\u02D0`); // u-macron
+        ipaCompare(`dvedhāvitakka`, `dved\u02b0ɑvɪtɐk.k${aend}`);
+        ipaCompare(`aṭṭhakanāgarasutta`, `ɐ\u02c8ʈ̆ʈʰɐkɐn\u0251gɐ\u027aɐ${sutta}`);
+        ipaCompare(`aggaññasutta`, `ɐ\u02c8ggɐ\u0272\u0272ɐ${sutta}`);
+        ipaCompare(`ānanda`, `\u0251nɐnd${aend}`);
+        ipaCompare(`Dhamma`, `d\u02b0\u0250mm${aend}`); // SlowAmy can`t say "dh"
+        ipaCompare(`aṅgaka`, `ɐ\u02c8ŋgɐk${aend}`);
+        ipaCompare(`anīgha`, `ɐ\u02c8niːg\u02b0${aend}`);
+        ipaCompare(`anāthapiṇḍika`, `ɐˈnɑthɐpɪŋdɪk${aend}`);
+        ipaCompare(`Bhāradvāja`, `b\u02b0ɑ\u027aɐdvɑʝ${aend}`);
+        ipaCompare(`Cūḷataṇhāsaṅkhayasutta`, `cʊːʟ̈ɐtɐŋhɑsɐ\u1e45k\u02b0ajɐ\u02cc${sutta}`);
+        ipaCompare(`Cūḷaassapurasutta`, `cʊːʟ̈ɐɐssɐpuɺɐ${sutta}`);
+        ipaCompare(`Saccavibhaṅgasutta`,`sɐccɐvɪb\u02b0ɐŋgɐ${sutta}`);
+        ipaCompare(`Pañcālacaṇḍa`,`pɐɲcɑlɐcɐ\u014bd${aend}`);
+        ipaCompare(`Ākaṅkheyyasutta`,`ɑk\u0250\u1e45k\u02b0ejjɐ${sutta}`);
     });
     it("TESTTESTadd(word, language) return IPA for word", function() {
         var filePath = path.join(__dirname, 'data/en.json');
