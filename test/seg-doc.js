@@ -68,7 +68,7 @@
         should(pat.test('asfd Bikkhu Tathagata asdf')).equal(true); // alternate spelling
 
     });
-    it("TESTTESTindexOf(scid) returns segment index", function() {
+    it("indexOf(scid) returns segment index", function() {
         var segDoc = new SegDoc({segments});
         should(segDoc.indexOf(0)).equal(0);
         should(segDoc.indexOf(2)).equal(2);
@@ -77,7 +77,7 @@
         should.throws(() => segDoc.indexOf("nonsense"));
         should.throws(() => segDoc.indexOf("s:1.*"));
     });
-    it("TESTTESTexcerpt(range) returns segments in range", function() {
+    it("excerpt(range) returns segments in range", function() {
         var segDoc = new SegDoc({segments});
 
         // excerpt all

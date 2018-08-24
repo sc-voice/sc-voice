@@ -62,7 +62,7 @@
         should(words.isForeignWord('Brahm\u0101')).equal(true);
         should(words.isForeignWord('brahm\u0101')).equal(true);
     });
-    it("TESTTESTalternates(word) returns array of alternate spellings", function() {
+    it("alternates(word) returns array of alternate spellings", function() {
         var words = new Words();
         should.deepEqual(words.alternates('asdf'), ['asdf']);
         should.deepEqual(words.alternates('bhikkhu'), [
@@ -109,7 +109,7 @@
             .equal(`${Words.U_LSQUOTE}nandi dukkhassa mulan${Words.U_RSQUOTE}ti${Words.U_EMDASH}`);
 
     });
-    it("TESTTESTtokenize(text) returns array of tokens", function() {
+    it("tokenize(text) returns array of tokens", function() {
         var words = new Words();
         var segments = [
             'he does not conceive earth',
@@ -127,12 +127,12 @@
             `abc`, Words.U_EMDASH, `def`,
         ]);
     });
-    it("TESTTESTutf16(word, minCode) return Unicode-16 string escape", function() {
+    it("utf16(word, minCode) return Unicode-16 string escape", function() {
         var words = new Words();
         should(Words.utf16('a\u0123\u0abcb',0x7f)).equal('a\\u0123\\u0ABCb');
         should(Words.utf16('a\u0123\u0abcb')).equal('\\u0061\\u0123\\u0ABC\\u0062');
     });
-    it("TESTTESTipa(word, language) return IPA for word", function() {
+    it("ipa(word, language) return IPA for word", function() {
         var aend = `\u0061\u0308`;
         var sutta = `\u02ccsutt${aend}`;
         ipaCompare(`bab`, `b\u0250b`);
@@ -153,7 +153,7 @@
         ipaCompare(`Pañcālacaṇḍa`,`pɐɲcɑlɐcɐ\u014bd${aend}`);
         ipaCompare(`Ākaṅkheyyasutta`,`ɑk\u0250\u1e45k\u02b0ejjɐ${sutta}`);
     });
-    it("TESTTESTadd(word, language) return IPA for word", function() {
+    it("add(word, language) return IPA for word", function() {
         var filePath = path.join(__dirname, 'data/en.json');
         var words = new Words(null, { filePath });
 

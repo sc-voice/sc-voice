@@ -1,6 +1,53 @@
 {
     "alphabet": "^[a-z]*$",
     "wordEnd": "([^a-zA-Z].*)?$",
+    "voices": [{
+        "language": "en-IN",
+        "service": "aws-polly",
+        "name": "Raveena",
+        "gender": "female",
+        "rates": ["+5%", "-20%"],
+        "ipa": {
+            "pli": {
+                "a": "\u0250",
+                "a$": "a\u0308",
+                "^a": "\u0250\u02c8",
+                "\u0101": "\u0251",
+                "aya": "aj\u0250\u02cc",
+                "bh": "b\u02b0",
+                "\u1e0d": "d",
+                "dh": "d\u02b0",
+                "du": "d\u028a",
+                "\u012b": "i\u02d0",
+                "\u1e6d\u1e6dh": "\u0288\u0306\u0288\u02b0",
+                "gh": "g\u02b0",
+                "unused-h": "h\u0308",
+                "i": "\u026a",
+                "j": "\u029d",
+                "jj": "\u029d.\u029d",
+                "kh": "k\u02b0",
+                "kk": "k.k",
+                "kkh": "k.k\u02b0",
+                "ll": "l.l",
+                "\u00f1": "\u0272",
+                "\u1e37":"\u029f\u0308",
+                "\u1e47": "\u014b",
+                "ma": "ma",
+                "ng": "\u014bg",
+                "nu": "nu",
+                "\u1e45g": "\u014bg",
+                "\u1e45k": "\u014bk",
+                "sutta": "\u02ccsutta\u0308",
+                "r": "\u027a",
+                "tt": "t.t",
+                "unused-th": "\u0288\u02b0",
+                "unused-u": "\u028A",
+                "\u016b": "\u028a\u02d0",
+                "^va": "va",
+                "y": "j"
+            }
+        }
+    }],
     "ipa": {
         "pli": {
             "a": "\u0250",

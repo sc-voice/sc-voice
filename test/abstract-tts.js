@@ -7,7 +7,7 @@
         Words,
     } = require("../index");
 
-    it("TESTTESTAbstractTTS(opts) can be customized", function() {
+    it("AbstractTTS(opts) can be customized", function() {
         var words = new Words();
         var tts = new AbstractTTS({
             words,
@@ -80,7 +80,7 @@
             ',', 'too', ',', 'accomplished', 'and', 'fully', 'enlightened',
         ]);
     });
-    it("TESTTESTsegment(tokens) returns array of segments", function() {
+    it("segment(tokens) returns array of segments", function() {
         var tts = new AbstractTTS();
         var tokens = [
             'a', '<b/>', ',', '(', 'c', 'd', ')', 'e', '.', 

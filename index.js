@@ -6,5 +6,6 @@ module.exports = {
     SoundStore: require("./src/sound-store"),
     Watson: require("./src/watson"),
     Words: require('./src/words'),
+    Voice: require('./src/voice'),
 
 };
