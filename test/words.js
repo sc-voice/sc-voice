@@ -11,8 +11,9 @@
         var autf = Words.utf16(a);
         var butf = Words.utf16(b);
         if (autf !== butf) {
-            console.log(autf, autf.length);
-            console.log(butf, butf.length);
+            console.log();
+            console.log('ipaCompare autf:', autf, autf.length);
+            console.log('ipaCompare butf:', butf, butf.length);
         }
         should(autf).equal(butf);
         should(a).equal(b);
@@ -132,7 +133,7 @@
         should(Words.utf16('a\u0123\u0abcb',0x7f)).equal('a\\u0123\\u0ABCb');
         should(Words.utf16('a\u0123\u0abcb')).equal('\\u0061\\u0123\\u0ABC\\u0062');
     });
-    it("ipa(word, language) return IPA for word", function() {
+    it("TESTTESTipa(word, language) return IPA for word", function() {
         var aend = `\u0061\u0308`;
         var sutta = `\u02ccsutt${aend}`;
         ipaCompare(`bab`, `b\u0250b`);
@@ -152,6 +153,7 @@
         ipaCompare(`Saccavibhaṅgasutta`,`sɐccɐvɪb\u02b0ɐŋgɐ${sutta}`);
         ipaCompare(`Pañcālacaṇḍa`,`pɐɲcɑlɐcɐ\u014bd${aend}`);
         ipaCompare(`Ākaṅkheyyasutta`,`ɑk\u0250\u1e45k\u02b0ejjɐ${sutta}`);
+        ipaCompare(`jhana`,`\u029dh\u0250na\u0308`);
     });
     it("add(word, language) return IPA for word", function() {
         var filePath = path.join(__dirname, 'data/en.json');

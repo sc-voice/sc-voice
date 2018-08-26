@@ -7,7 +7,7 @@
         Voice,
     } = require('../index');
 
-    it("loadVoices(voicePath) should return voices", function() {
+    it("TESTTESTloadVoices(voicePath) should return voices", function() {
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
         should(voices.length).greaterThan(0);
@@ -19,8 +19,8 @@
             service: 'aws-polly',
             gender: 'female',
             rates: {
-                navigation: "+5%", 
-                recitation: "-20%",
+                navigate: "+5%", 
+                recite: "-30%",
             },
         });
         should(!!raveena.ipa).equal(true);
@@ -34,8 +34,8 @@
             service: 'aws-polly',
             gender: 'female',
             rates: {
-                navigation: "+5%", 
-                recitation: "-20%",
+                navigate: "+5%", 
+                recite: "-20%",
             },
         });
         should(!!amy.ipa).equal(true);
@@ -49,8 +49,8 @@
             service: 'aws-polly',
             gender: 'female',
             rates: {
-                navigation: "+5%", 
-                recitation: "-20%",
+                navigate: "+5%", 
+                recite: "-20%",
             },
         });
         should(!!salli.ipa).equal(true);
@@ -66,35 +66,35 @@
         should(raveena).instanceOf(Voice);
         should(raveena.language).equal("en-IN");
         should(raveena.name).equal("Raveena");
-        should(raveena.usage).equal("recitation");
+        should(raveena.usage).equal("recite");
     });
-    it("createVoice(langOrName, opts) creates a Voice instance", function() {
+    it("TESTTESTcreateVoice(langOrName, opts) creates a Voice instance", function() {
         var reciteVoice = Voice.createVoice("en-IN");
-        should(reciteVoice.services.navigation).instanceOf(Polly);
-        should(reciteVoice.services.recitation).instanceOf(Polly);
-        should(reciteVoice.usage).equal('recitation');
-        should.deepEqual(reciteVoice.services.navigation.prosody, {
+        should(reciteVoice.services.navigate).instanceOf(Polly);
+        should(reciteVoice.services.recite).instanceOf(Polly);
+        should(reciteVoice.usage).equal('recite');
+        should.deepEqual(reciteVoice.services.navigate.prosody, {
             pitch: "-0%",
             rate: "+5%",
         });
-        should.deepEqual(reciteVoice.services.recitation.prosody, {
+        should.deepEqual(reciteVoice.services.recite.prosody, {
             pitch: "-0%",
-            rate: "-20%",
+            rate: "-30%",
         });
 
         var navVoice = Voice.createVoice("Raveena", {
-            usage: "navigation",
+            usage: "navigate",
         });
-        should(navVoice.services.navigation).instanceOf(Polly);
-        should(navVoice.services.recitation).instanceOf(Polly);
-        should(navVoice.usage).equal('navigation');
-        should.deepEqual(reciteVoice.services.navigation.prosody, {
+        should(navVoice.services.navigate).instanceOf(Polly);
+        should(navVoice.services.recite).instanceOf(Polly);
+        should(navVoice.usage).equal('navigate');
+        should.deepEqual(reciteVoice.services.navigate.prosody, {
             pitch: "-0%",
             rate: "+5%",
         });
-        should.deepEqual(reciteVoice.services.recitation.prosody, {
+        should.deepEqual(reciteVoice.services.recite.prosody, {
             pitch: "-0%",
-            rate: "-20%",
+            rate: "-30%",
         });
     });
     it("speak([text],opts) returns sound file for array of text", function(done) {
@@ -109,7 +109,7 @@
             var cache = true;
             var opts = {
                 cache,
-                usage: "navigation",
+                usage: "navigate",
             };
             var result = await navVoice.speak(text, opts);
             should(result).properties(['file','hits','misses','signature','cached']);

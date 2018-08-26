@@ -6,6 +6,7 @@ const {
     PoParser,
     Polly,
     SegDoc,
+    Voice,
     Words,
 } = require('../index');
 
@@ -13,6 +14,9 @@ var parser = new PoParser();
 var words = new Words();
 
 (async function() { try {
+    /*
+     *  Search MN suttas, extracting the second segment
+     */
     var files = await parser.files({
         root: path.join(__dirname, '../local/sc/mn/'),
     });
@@ -33,22 +37,18 @@ var words = new Words();
         return `${start+i}: ${excerpt[0].pli}${Words.U_EMDASH}${excerpt[0].en}.`;
     });
     var text = `SuttaCentral found ${nResults} suttas.\n`;
-    //var mn = 'Majjhima Nikāya';
-    //mn.split(' ').forEach(word => words.add(word, paliOpts));
-    //text += `The first 20 suttas in the ${mn} are:\n`;
     text += lines.join('\n');
-    console.log(text);
+    console.log(text); // text to be spoken
 
-    var speak = 1;
-    if (speak) {
-        var polly = new Polly({
-            words,
-            voice: 'Salli',
-            //voice: 'Raveena',
-            prosody: { rate: "-5%", },
+    if (1) { // speak?
+        /*
+         * Speak the text using Raveena
+         */
+        var voice = Voice.createVoice("Raveena", );
+        var result = await voice.speak(text, {
+            cache: false, // false: use TTS web service for every request
+            usage: "navigate",
         });
-        var cache = false;
-        var result = await polly.synthesizeText(text, {cache});
         console.log(result);
     }
 } catch(e) {

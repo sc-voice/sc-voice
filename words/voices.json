@@ -4,8 +4,8 @@
     "name": "Amy",
     "gender": "female",
     "rates": {
-        "navigation": "+5%", 
-        "recitation": "-20%"
+        "navigate": "+5%", 
+        "recite": "-20%"
     },
     "ipa": {
         "pli": {
@@ -25,6 +25,7 @@
             "i": "\u026a",
             "j": "\u029d",
             "jj": "\u029d.\u029d",
+            "jha": "\u0284h\u0251",
             "kh": "k\u02b0",
             "kk": "k.k",
             "kkh": "k.k\u02b0",
@@ -53,8 +54,8 @@
     "name": "Raveena",
     "gender": "female",
     "rates": {
-        "navigation": "+5%", 
-        "recitation": "-20%"
+        "navigate": "+5%", 
+        "recite": "-30%"
     },
     "ipa": {
         "pli": {
@@ -70,10 +71,10 @@
             "\u012b": "i\u02d0",
             "\u1e6d\u1e6dh": "\u0288\u0306\u0288\u02b0",
             "gh": "g\u02b0",
-            "unused-h": "h\u0308",
             "i": "\u026a",
             "j": "\u029d",
             "jj": "\u029d.\u029d",
+            "jha": "\u0284h\u0251",
             "kh": "k\u02b0",
             "kk": "k.k",
             "kkh": "k.k\u02b0",
@@ -86,11 +87,9 @@
             "nu": "nu",
             "\u1e45g": "\u014bg",
             "\u1e45k": "\u014bk",
-            "sutta": "\u02ccsutta\u0308",
+            "sutta": "\u02ccsu\u03b8\u03b8a\u0308",
             "r": "\u027a",
-            "tt": "t.t",
-            "unused-th": "\u0288\u02b0",
-            "unused-u": "\u028A",
+            "t": "\u03b8",
             "\u016b": "\u028a\u02d0",
             "^va": "va",
             "y": "j"
@@ -102,8 +101,8 @@
     "name": "Salli",
     "gender": "female",
     "rates": {
-        "navigation": "+5%", 
-        "recitation": "-20%"
+        "navigate": "+5%", 
+        "recite": "-20%"
     },
     "ipa": {
         "pli": {
@@ -123,6 +122,7 @@
             "i": "\u026a",
             "j": "\u029d",
             "jj": "\u029d.\u029d",
+            "jha": "\u0284h\u0251",
             "kh": "k\u02b0",
             "kk": "k.k",
             "kkh": "k.k\u02b0",

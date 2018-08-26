@@ -1,5 +1,6 @@
 local/
 archive
+.eslint*
 
 # Logs
 logs
