@@ -31,6 +31,7 @@
         var bhikkhu = {
             word: 'bhikkhu',
             ipa: "b\u026aku\u02D0(.)",
+            language: "pli",
         };
         should.deepEqual(words.lookup('asdf'), null);
         should.deepEqual(words.lookup('bhikkhu'), bhikkhu);

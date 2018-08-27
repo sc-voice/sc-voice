@@ -8,9 +8,10 @@ const {
     Words,
 } = require('../index');
 
-var SC = path.join(__dirname, '../local/sc/mn');
-var parser = new PoParser();
+var SC = process.argv[2] || path.join(__dirname, '../local/sc/mn');
+console.error(`scanning Pootle files in:${SC}`);
 
+var parser = new PoParser();
 
 var words = new Words;
 var opts = { 
@@ -18,7 +19,7 @@ var opts = {
 };
 function emitWords(text) {
     words.tokenize(text).forEach(token => {
-        words.isWord(token) && console.log(token);
+        words.isWord(token) && console.log(token.toLowerCase());
     });
     
 }

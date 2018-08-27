@@ -78,7 +78,7 @@
         wordSSML(word) {
             var wordInfo = this.wordInfo(word);
             if (wordInfo) {
-                var ipa = wordInfo.ipa || this.words.ipa(word);;
+                var ipa = wordInfo.ipa || this.words.ipa(word, wordInfo.language);
                 if (ipa) {
                     if (ipa.endsWith('(.)')) {
                         var pauses = ipa.split('(.)');

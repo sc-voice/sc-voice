@@ -34,9 +34,11 @@
         var tts = new AbstractTTS();
         var bhikkhu = {
             ipa: "b\u026aku\u02D0(.)",
+            language: "pli",
         };
         var bhikkhus = {
             ipa: "b\u026aku\u02D0z(.)",
+            language: "pli",
         };
 
         // no information
@@ -71,7 +73,9 @@
 
         // words with voice dependent information
         // are expanded with default words.ipa
-        should.deepEqual(tts.wordInfo('sati'), {});
+        should.deepEqual(tts.wordInfo('sati'), {
+            language: "pli",
+        });
         should(tts.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
     });
