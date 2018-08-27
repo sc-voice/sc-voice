@@ -34,24 +34,24 @@
 
         static createVoice(langOrName="en-GB", opts={}) {
             var voices = Voice.loadVoices();
-            var voice = voices.filter(v => {
+            var voiceJson = voices.filter(v => {
                 return v.language === langOrName || v.name === langOrName;
             })[0];
-            var ipa = voice.ipa;
+            var ipa = voiceJson && voiceJson.ipa;
             if (ipa == null) {
+                throw new Error("not implemented");
                 var words = new Words();
                 ipa = words.ipa;
             }
-            voice = Object.assign({
+            voiceJson = Object.assign({
                 ipa,
-            }, voice, opts);
-            return new Voice(voice);
+            }, voiceJson, opts);
+            return new Voice(voiceJson);
         }
 
         get services() {
             if (this._services == null) {
-                var words = new Words();
-                words.ipa = this.ipa;
+                var words = this.voiceWords();
                 this._services = {};
                 Object.keys(this.rates).forEach(key => {
                     if (this.service === 'aws-polly') {
@@ -70,6 +70,12 @@
 
             }
             return this._services;
+        }
+
+        voiceWords() {
+            var words = new Words();
+            words._ipa = this.ipa;
+            return words;
         }
 
         speak(text, opts={}) {

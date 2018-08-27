@@ -24,10 +24,14 @@
             Object.defineProperty(this, 'credentials', {
                 writable: true,
             });
-            Object.defineProperty(this, 'words', {
-                value: opts.words || new Words(null, {
+            var words = opts.words || null;
+            if (!(words instanceof Words)) {
+                words = new Words(words, {
                     language: this.language,
-                }),
+                });
+            }
+            Object.defineProperty(this, 'words', {
+                value: words,
             });
             this.audioFormat = opts.audioFormat || 'audio/ogg';
             this.prosody = opts.prosody || {
@@ -74,19 +78,20 @@
         wordSSML(word) {
             var wordInfo = this.wordInfo(word);
             if (wordInfo) {
-                var ipa = wordInfo.ipa;
-                if (ipa.endsWith('(.)')) {
-                    var pauses = ipa.split('(.)');
-                    ipa = pauses.map(x => {
-                        return x && `<phoneme alphabet="ipa" ph="${x}">${word}</phoneme>` || '';
-                    }).join(this.break(1));
-                    return ipa;
-                } else {
-                    return `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>`;
+                var ipa = wordInfo.ipa || this.words.ipa(word);;
+                if (ipa) {
+                    if (ipa.endsWith('(.)')) {
+                        var pauses = ipa.split('(.)');
+                        ipa = pauses.map(x => {
+                            return x && `<phoneme alphabet="ipa" ph="${x}">${word}</phoneme>` || '';
+                        }).join(this.break(1));
+                        return ipa;
+                    } else {
+                        return `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>`;
+                    }
                 }
-            } else {
-                return word;
             }
+            return word;
         }
 
         tokenize(text) {

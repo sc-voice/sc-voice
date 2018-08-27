@@ -58,7 +58,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("wordSSML(word) returns SSML text for word", function() {
+    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS();
 
         // words without information
@@ -68,6 +68,12 @@
         should(tts.wordSSML('bhikkhu'))
         .equal('<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>'+
             tts.break(1));
+
+        // words with voice dependent information
+        // are expanded with default words.ipa
+        should.deepEqual(tts.wordInfo('sati'), {});
+        should(tts.wordSSML('sati'))
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
     });
     it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();

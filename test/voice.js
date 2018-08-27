@@ -5,6 +5,7 @@
     const {
         Polly,
         Voice,
+        Words,
     } = require('../index');
 
     it("TESTTESTloadVoices(voicePath) should return voices", function() {
@@ -100,7 +101,7 @@
     it("speak([text],opts) returns sound file for array of text", function(done) {
         this.timeout(3*1000);
         (async function() {
-            var navVoice = Voice.createVoice("en-IN");
+            var raveena = Voice.createVoice("en-IN");
             var text = [
                 "Tomatoes are",
                 "red.",
@@ -111,7 +112,7 @@
                 cache,
                 usage: "navigate",
             };
-            var result = await navVoice.speak(text, opts);
+            var result = await raveena.speak(text, opts);
             should(result).properties(['file','hits','misses','signature','cached']);
             should(result.signature.files.length).equal(4);
             should(fs.statSync(result.signature.files[0]).size).greaterThan(1000); // Tomatoes are
@@ -122,6 +123,26 @@
             //console.log(result);
             done();
         })();
+    });
+    it("TESTTESTplaceholder words are expanded with voice ipa", function() {
+        /*
+         * TTS services such as AWS Polly tend to speak IPA phonemes
+         * in a voice-dependent manner. For example, the lower greek
+         * letter theta will be voiced differently by en-IN and en-GB voices.
+         * Because of this, each voice has its own IPA lexicon ("ipa") 
+         * for pronunciation. Because the voice IPA lexicon represents
+         * a dialect, it overrides the default language IPA lexicon.
+         *
+         * This subtle change manifests via the wordSSML() function of
+         * abstractTTS.
+         */
+        var raveena = Voice.createVoice("en-IN");
+        should(raveena.services.navigate.wordSSML('sati'))
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>`);
+
+        var amy = Voice.createVoice("en-GB");
+        should(amy.services.navigate.wordSSML('sati'))
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
     });
 
 })
