@@ -5,7 +5,7 @@ DIR=`dirname $0`
 if [ ! -e ~/Downloads/words-all.txt ]; then
     $DIR/pali-words.js \
     | sort -d \
-    | uniq \
+    | uniq -i \
     > ~/Downloads/words-all.txt
 fi
 

@@ -24,9 +24,9 @@ function emitWords(text) {
 }
 
 (async function() { try {
-    var files = await parser.files(
-        path.join(__dirname, '../local/sc/mn'),
-    );
+    var files = await parser.files({
+        root: path.join(__dirname, '../local/sc/mn'),
+    });
     if (0) {
         var files = [
             path.join(__dirname,'../local/sc/mn/en/mn031.po'),

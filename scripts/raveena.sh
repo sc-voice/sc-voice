@@ -23,10 +23,12 @@ var words = new Words();
         `2. Satthi (the thigh) and Sati (mindfulness).`,
     ];
     var text = lines.join('\n');
+    var text = fs.readFileSync(path.join(__dirname,'../test/data/mn1-end.txt')).toString();
     console.log(text); // text to be spoken
 
     var result = await voice.speak(text, {
         cache: false, // false: use TTS web service for every request
+        usage: "navigate",
     });
     console.log(result);
 } catch(e) {

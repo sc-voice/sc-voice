@@ -98,7 +98,6 @@
             return new Promise((resolve, reject) => { try {
                 if (typeof opts === 'string') {
                     throw new Error("expected options object");
-                    var language
                 } 
                 var language = opts.language || 'en';
                 var suffix = opts.suffix || '\\.po';
