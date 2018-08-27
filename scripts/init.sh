@@ -2,12 +2,12 @@
 
 echo -e "INIT\t: $0 START: `date`"
 
-type ispell
+type aspell
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: ispell detected (OK)"
+    echo -e "INIT\t: aspell detected (OK)"
 else
-    echo -e "INIT\t: installing ispell (requires sudo)"
-    sudo apt-get install ispell
+    echo -e "INIT\t: installing aspell (requires sudo)"
+    sudo apt-get install aspell
 fi
 
 type ffmpeg
