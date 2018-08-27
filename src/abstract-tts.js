@@ -224,27 +224,33 @@
                 (async function() {
                     var result = null;
                     if (typeof text === 'string') {
-                        var promises = that.segmentSSML(text).map(ssml => that.synthesizeSSML(ssml, opts));
+                        var segments = that.segmentSSML(text);
+                        var promises = segments.map(ssml => that.synthesizeSSML(ssml, opts));
                         result = await Promise.all(promises);
                     } else if (text instanceof Array) {
                         var textArray = text;
+                        var segments = [];
                         //var promises = textArray.map(t => that.synthesizeText(t, opts));
                         var promises = textArray.reduce((acc, t) => {
-                            that.segmentSSML(t).forEach(ssml => {
+                            var segs = that.segmentSSML(t);
+                            segs.forEach(ssml => {
                                 acc.push(that.synthesizeSSML(ssml, opts));
                             });
+                            segments.push(segs);
                             return acc;
                         }, []);
                         result = await Promise.all(promises);
                     }
                     if (result) {
                         if (result.length === 1) {
-                            resolve(result[0]);
+                            result = result[0];
                         } else {
                             var files = result.map(r => r.file);
-                            var concatResult = await that.ffmpegConcat(files);
-                            resolve(concatResult);
+                            result = await that.ffmpegConcat(files);
                         }
+                        resolve(Object.assign({
+                            segments,
+                        }, result));
                     } else {
                         reject(new Error("synthesizeText(text?) expected string or Array"));
                     }

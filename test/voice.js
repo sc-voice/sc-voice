@@ -144,5 +144,12 @@
         should(amy.services.navigate.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
     });
+    it("TESTTESTplaceholder words are expanded with voice ipa", function() {
+        var raveena = Voice.createVoice("en-IN");
+        var segments = raveena.services.navigate.segmentSSML('sati');
+        console.log(segments);
+        var segments = raveena.services.navigate.segmentSSML('Taṃ kissa hetu?');
+        console.log(segments);
+    });
 
 })

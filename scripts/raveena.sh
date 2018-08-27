@@ -14,9 +14,7 @@ var parser = new PoParser();
 var words = new Words();
 
 (async function() { try {
-    var voice = Voice.createVoice("Raveena", {
-        usage: "navigate",
-    });
+    var voice = Voice.createVoice("Raveena");
     var lines = [
         `${voice.name} says:`,
         `1. ananda (unhappy) and ānanda (very happy).`,
@@ -28,7 +26,7 @@ var words = new Words();
 
     var result = await voice.speak(text, {
         cache: false, // false: use TTS web service for every request
-        usage: "navigate",
+        usage: "recite",
     });
     console.log(result);
 } catch(e) {
