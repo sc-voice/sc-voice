@@ -8,7 +8,7 @@
         Words,
     } = require('../index');
 
-    it("TESTTESTloadVoices(voicePath) should return voices", function() {
+    it("loadVoices(voicePath) should return voices", function() {
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
         should(voices.length).greaterThan(0);
@@ -57,7 +57,7 @@
         should(!!salli.ipa).equal(true);
         should(!!salli.ipa.pli).equal(true);
     });
-    it("TESTTESTcreateVoice(opts) returns voice for a language", function() {
+    it("createVoice(opts) returns voice for a language", function() {
         var voice = Voice.createVoice();
         should(voice).instanceOf(Voice);
         should(voice.language).equal("en-IN");
@@ -70,7 +70,7 @@
         should(amy.name).equal("Amy");
         should(amy.usage).equal("recite");
     });
-    it("TESTTESTcreateVoice(opts) creates a Voice instance", function() {
+    it("createVoice(opts) creates a Voice instance", function() {
         var reciteVoice = Voice.createVoice("en-IN");
         should(reciteVoice.services.navigate).instanceOf(Polly);
         should(reciteVoice.services.recite).instanceOf(Polly);
@@ -146,7 +146,7 @@
         should(amy.services.navigate.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
     });
-    it("TESTTESTplaceholder words are expanded with voice ipa", function() {
+    it("placeholder words are expanded with voice ipa", function() {
         var raveena = Voice.createVoice({
             name: "raveena",
         });
@@ -168,22 +168,14 @@
         should.deepEqual(segments, [
             'Koalas and gummibears?',
         ]);
-return;
 
         // Interpret unknown words as Pali
         tts.languageUnknown = "pli";
-        var tokens = tts.tokensSSML('Taṃ kissa hetu?');
-        console.log('debug tokens', tokens);
-        var segments = tts.segment(tokens);
-        //console.log(Words.utf16(segments[0]));
-        segments.forEach(seg => {
-            console.log('debug segments', Words.utf16(seg));
-        });
+        var segments = tts.segmentSSML('Taṃ kissa hetu?');
         should.deepEqual(segments, [
-            '<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">Taṃ</phoneme>',
-            '<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">kissa</phoneme>',
-            '<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">hetu</phoneme>',
-            '?',
+            '<phoneme alphabet="ipa" ph="\u03b8\u0250\u1e43">Taṃ</phoneme> ' +
+            '<phoneme alphabet="ipa" ph="k\u026assa">kissa</phoneme> ' +
+            '<phoneme alphabet="ipa" ph="he\u03b8u">hetu</phoneme>?',
         ]);
         //var segments = tts.segmentSSML('Taṃ kissa hetu?');
         //console.log(segments);

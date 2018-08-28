@@ -7,7 +7,7 @@
         Words,
     } = require("../index");
 
-    it("TESTTESTAbstractTTS(opts) can be customized", function() {
+    it("AbstractTTS(opts) can be customized", function() {
         var words = new Words();
         var tts = new AbstractTTS({
             words,
@@ -64,7 +64,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
+    it("wordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS();
 
         // words without information
@@ -83,7 +83,7 @@
         should(tts.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
     });
-    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
+    it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();
         var text = "Bhikkhus, the Tathagata, too, accomplished and fully enlightened";
         var tokens = tts.tokensSSML(text);
@@ -126,7 +126,7 @@
             'Because delight is the root of suffering.',
         ]);
     });
-    it("TESTTESTtokenize(text) returns array of tokens", function() {
+    it("tokenize(text) returns array of tokens", function() {
         var tts = new AbstractTTS();
         should.deepEqual(tts.tokenize(`he does'nt conceive`), [
             'he', `does'nt`, 'conceive', 
