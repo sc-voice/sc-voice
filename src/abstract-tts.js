@@ -81,7 +81,7 @@
             if (wordInfo) {
                 if (wordInfo.ipa) { // use custom IPA
                     var ipa = wordInfo.ipa;
-                } else if (wordInfo.language !== this.language) { // generate IPA
+                } else if (wordInfo.language !== this.language.split('-')[0]) { // generate IPA
                     var ipa = this.words.ipa(word, wordInfo.language); 
                 } else {
                     var ipa = null;

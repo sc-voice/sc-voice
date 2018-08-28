@@ -163,7 +163,6 @@
             '<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>',
         ]);
 
-return;
         // Interpret unknown words as English
         var segments = tts.segmentSSML('Koalas and gummibears?');
         should.deepEqual(segments, [
