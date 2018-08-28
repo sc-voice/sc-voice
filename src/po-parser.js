@@ -2,6 +2,7 @@
     const fs = require('fs');
     const path = require('path');
     const SegDoc = require('./seg-doc');
+    const SC = path.join(__dirname, '../local/sc');
 
     const S_MSGCTXT = 1;
     const S_MSGID1 = 2;
@@ -20,6 +21,19 @@
             this.json_id = opts.json_id || 'pli';
             this.json_str = opts.json_str || 'en';
         }
+
+        static suttaPath(id, root=SC) {
+            var suttaId = id.toLowerCase().split(':')[0];
+            var suttaNum = suttaId.replace(/^[a-z]*/ug, "");
+            var folder = suttaId.replace(/[0-9-.:]*/gu, "");
+            var suttaFile = folder + ('000'+suttaNum).substring(suttaNum.length) + '.po';
+            if (suttaId.startsWith('sn')) {
+                return path.join(root, folder, 'en', suttaId, suttaFile);
+            } 
+
+            return path.join(root, folder, 'en', suttaFile);
+        }
+
 
         parseLines(lines, opts={}) {
             var that = this;

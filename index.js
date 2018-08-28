@@ -4,6 +4,7 @@ module.exports = {
     Polly: require("./src/polly"),
     SegDoc: require('./src/seg-doc'),
     SoundStore: require("./src/sound-store"),
+    Sutta: require("./src/sutta"),
     Watson: require("./src/watson"),
     Words: require('./src/words'),
     Voice: require('./src/voice'),

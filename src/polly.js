@@ -34,7 +34,7 @@
             that.polly.synthesizeSpeech(params, (err, data) => {
 
                 if (err) {
-                    console.log(err.stack)
+                    console.log(`serviceSynthesize()`, request, err.stack)
                     reject(err);
                 } else if (data == null) {
                     var err = new Error("(no data returned from AWS server)");

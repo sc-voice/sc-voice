@@ -54,7 +54,7 @@
     "gender": "female",
     "rates": {
         "navigate": "+5%", 
-        "recite": "-30%"
+        "recite": "-20%"
     },
     "ipa": {
         "pli": {

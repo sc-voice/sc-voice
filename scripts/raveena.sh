@@ -6,6 +6,7 @@ const {
     PoParser,
     Polly,
     SegDoc,
+    Sutta,
     Voice,
     Words,
 } = require('../index');
@@ -20,12 +21,24 @@ var words = new Words();
     });
     var lines = [
         `${voice.name} says:`,
-        `1. ananda (unhappy) and ānanda (very happy).`,
+        `1. ananda (not happy) and ānanda (very happy).`,
         `2. Satthi (the thigh) and Sati (mindfulness).`,
         `3. Mūlapariyāyasutta (The Root of All Things).`,
     ];
-    var text = lines.join(' ');
-    //var text = fs.readFileSync(path.join(__dirname,'../test/data/mn1-end.txt')).toString();
+    var challenge = lines.join(' ');
+
+    var sutta = await Sutta.loadSutta('mn1');
+    var header = sutta.excerpt({
+        start: 0,
+        end: 2,
+        prop: 'pli',
+    });
+    var excerpt = sutta.excerpt({
+        start: 0,
+        end: 3,
+        prop: 'en',
+    });
+    var text = `${header.join('. ')}. ${excerpt.join(', ')}`;
     console.log(text); // text to be spoken
 
     var result = await voice.speak(text, {

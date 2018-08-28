@@ -22,7 +22,7 @@
             gender: 'female',
             rates: {
                 navigate: "+5%", 
-                recite: "-30%",
+                recite: "-20%",
             },
         });
         should(!!raveena.ipa).equal(true);
@@ -82,7 +82,7 @@
         });
         should.deepEqual(reciteVoice.services.recite.prosody, {
             pitch: "-0%",
-            rate: "-30%",
+            rate: "-20%",
         });
 
         var navVoice = Voice.createVoice({
@@ -98,7 +98,7 @@
         });
         should.deepEqual(reciteVoice.services.recite.prosody, {
             pitch: "-0%",
-            rate: "-30%",
+            rate: "-20%",
         });
     });
     it("speak([text],opts) returns sound file for array of text", function(done) {
