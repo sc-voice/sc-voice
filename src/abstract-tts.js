@@ -38,7 +38,7 @@
             this.prosody = opts.prosody || {
                 rate: "-10%",
             };
-            this.breaks = opts.breaks || [0,0.1,0.2,0.4,0.8];
+            this.breaks = opts.breaks || [0.001,0.1,0.2,0.4,0.8];
         }
 
         get ERROR_SIZE() { return 1000 }
@@ -64,7 +64,7 @@
         }
 
         break(index) {
-            return `<break time="${index}s"></break>`;
+            return `<break time="${this.breaks[index]}s"/>`;
         }
 
         wordInfo(word) {
@@ -74,6 +74,12 @@
                 wordValue = this.wordInfo(wordValue);
             }
             return wordValue || null;
+        }
+
+        ipa_word(ipa, word) {
+            return this.break(0) +
+                `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>` +
+                this.break(0);
         }
 
         wordSSML(word) {
@@ -97,11 +103,11 @@
                 if (ipa.endsWith('(.)')) {
                     var pauses = ipa.split('(.)');
                     ipa = pauses.map(x => {
-                        return x && `<phoneme alphabet="ipa" ph="${x}">${word}</phoneme>` || '';
+                        return this.ipa_word(x, word);
                     }).join(this.break(1));
                     return ipa;
                 } else {
-                    return `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>`;
+                    return this.ipa_word(ipa, word);
                 }
             }
             return word;

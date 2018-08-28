@@ -30,7 +30,7 @@
         var words = new Words();
         var bhikkhu = {
             word: 'bhikkhu',
-            ipa: "b\u026aku\u02D0(.)",
+            ipa: "b\u026aku\u02D0",
             language: "pli",
         };
         should.deepEqual(words.lookup('asdf'), null);

@@ -7,6 +7,7 @@
         Voice,
         Words,
     } = require('../index');
+    const BREAK = `<break time="0.001s"/>`;
 
     it("loadVoices(voicePath) should return voices", function() {
         var voices = Voice.loadVoices();
@@ -140,11 +141,11 @@
          */
         var raveena = Voice.createVoice("en-IN");
         should(raveena.services.navigate.wordSSML('sati'))
-        .equal(`<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>`);
+        .equal(`${BREAK}<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>${BREAK}`);
 
         var amy = Voice.createVoice("en-GB");
         should(amy.services.navigate.wordSSML('sati'))
-        .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
+        .equal(`${BREAK}<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
     });
     it("placeholder words are expanded with voice ipa", function() {
         var raveena = Voice.createVoice("raveena");
@@ -159,7 +160,7 @@
         });
         var segments = tts.segmentSSML('sati');
         should.deepEqual(segments, [
-            '<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>',
+            `${BREAK}<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>${BREAK}`,
         ]);
 
         // Interpret unknown words as English
@@ -172,9 +173,9 @@
         tts.languageUnknown = "pli";
         var segments = tts.segmentSSML('Taṃ kissa hetu?');
         should.deepEqual(segments, [
-            '<phoneme alphabet="ipa" ph="\u03b8\u0250\u1e43">Taṃ</phoneme> ' +
-            '<phoneme alphabet="ipa" ph="k\u026assa">kissa</phoneme> ' +
-            '<phoneme alphabet="ipa" ph="he\u03b8u">hetu</phoneme>?',
+            `${BREAK}<phoneme alphabet="ipa" ph="\u03b8\u0250\u1e43">Taṃ</phoneme>${BREAK} ` +
+            `${BREAK}<phoneme alphabet="ipa" ph="k\u026assa">kissa</phoneme>${BREAK} ` +
+            `${BREAK}<phoneme alphabet="ipa" ph="he\u03b8u">hetu</phoneme>${BREAK}?`,
         ]);
     });
 

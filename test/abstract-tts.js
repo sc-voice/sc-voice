@@ -6,6 +6,7 @@
         AbstractTTS,
         Words,
     } = require("../index");
+    const BREAK = `<break time="0.001s"/>`;
 
     it("AbstractTTS(opts) can be customized", function() {
         var words = new Words();
@@ -37,11 +38,11 @@
     it("wordInfo(word) returns information about a word", function() {
         var tts = new AbstractTTS();
         var bhikkhu = {
-            ipa: "b\u026aku\u02D0(.)",
+            ipa: "b\u026aku\u02D0",
             language: "pli",
         };
         var bhikkhus = {
-            ipa: "b\u026aku\u02D0z(.)",
+            ipa: "b\u026aku\u02D0z",
             language: "pli",
         };
 
@@ -72,8 +73,7 @@
 
         // words with information
         should(tts.wordSSML('bhikkhu'))
-        .equal('<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>'+
-            tts.break(1));
+        .equal(`${BREAK}<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>${BREAK}`);
 
         // words with voice dependent information
         // are expanded with default words.ipa
@@ -81,16 +81,16 @@
             language: "pli",
         });
         should(tts.wordSSML('sati'))
-        .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
+        .equal(`${BREAK}<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
     });
     it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();
         var text = "Bhikkhus, the Tathagata, too, accomplished and fully enlightened";
         var tokens = tts.tokensSSML(text);
         should.deepEqual(tokens, [
-            `<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>` + tts.break(1),
+            `${BREAK}<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>${BREAK}` ,
             ',', 'the',
-            `<phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme>` + tts.break(1),
+            `${BREAK}<phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme>${BREAK}`,
             ',', 'too', ',', 'accomplished', 'and', 'fully', 'enlightened',
         ]);
     });
@@ -119,8 +119,10 @@
             'Because delight is the root of suffering.',
         ];
         var ssml = tts.segmentSSML(segments.join(' '));
+        should(tts.break(0)).equal('<break time="0.001s"/>');
+        should(tts.break(1)).equal('<break time="0.1s"/>');
         should.deepEqual(ssml, [
-            '<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>' + tts.break(1) +
+            `${BREAK}<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>${BREAK}` + 
                 ', he does not conceive water to be \u2018mine,\u2019 he does not delight in water.',
             'Why is that?',
             'Because delight is the root of suffering.',

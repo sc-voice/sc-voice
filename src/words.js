@@ -201,7 +201,7 @@
                 var pat = new RegExp(`${key}`,"ug");
                 result = result.replace(pat, value);
             });
-            result = result.replace(/U/g,'u');
+            result = result.replace(/U/g,'u').replace("\n", " ");
             return eval(`"${result}"`);
         }
 

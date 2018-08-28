@@ -174,6 +174,9 @@
     },
 
     "words": {
+        "amy": {"language":"en"},
+        "raveena": {"language":"en"},
+        "salli": {"language":"en"},
 
         "a": {"language":"en"},
         "abandoned": {"language":"en"},
@@ -6072,6 +6075,7 @@
         "unflawed": {"language":"en"},
         "unfolded": {"language":"en"},
         "unfreed": {"language":"en"},
+        "unhappy": {"language":"en"},
         "unhappiness": {"language":"en"},
         "unhealthy": {"language":"en"},
         "unhindered": {"language":"en"},
@@ -7117,17 +7121,17 @@
         "bhikku": "bhikkhu",
         "bikkhu": "bhikkhu",
         "bhikkhu":{
-            "ipa":"b\u026aku\u02D0(.)",
+            "ipa":"b\u026aku\u02D0",
             "language":"pli"
         },
         "bhikkus": "bhikkhus",
         "bikkhus": "bhikkhus",
         "bhikkhus":{
-            "ipa":"b\u026aku\u02D0z(.)",
+            "ipa":"b\u026aku\u02D0z",
             "language":"pli"
         },
         "earth": {
-            "ipa": "\u025c:r\u03b8(.)",
+            "ipa": "\u025c:r\u03b8",
             "language":"pli"
         },
         "sati": { "language":"pli" },
@@ -7139,12 +7143,12 @@
         "suttacentral": "suttasentr\u0250l",
         "tathagata": "tath\u0101gata", 
         "tath\u0101gata": {
-            "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259(.)",
+            "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259",
             "language":"pli"
         },
         "tathagatas": "tath\u0101gatas",
         "tath\u0101gatas": {
-            "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259z(.)",
+            "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259z",
             "language":"pli"
         }
 
