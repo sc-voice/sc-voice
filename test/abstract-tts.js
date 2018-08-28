@@ -7,7 +7,7 @@
         Words,
     } = require("../index");
 
-    it("AbstractTTS(opts) can be customized", function() {
+    it("TESTTESTAbstractTTS(opts) can be customized", function() {
         var words = new Words();
         var tts = new AbstractTTS({
             words,
@@ -15,7 +15,7 @@
         should(tts.words).equal(words);
         should(tts).properties({
             language: 'en',
-            languageUnknown: 'pli',
+            languageUnknown: 'en',
         });
     });
     it("signature(text) returns signature that identifies synthesized speech", function() {

@@ -4,9 +4,16 @@
     const Polly = require('./polly');
     const Words = require('./words');
 
+    function eqIgnoreCase(a,b) {
+        a = a.toLocaleLowerCase();
+        b = b.toLocaleLowerCase();
+        return a.localeCompare(b) === 0;
+    }
+
     class Voice { 
         constructor(opts={}) {
             this.language = opts.language || 'en-IN';
+            this.languageUnknown = opts.languageUnknown || this.language;
             this.service = opts.service || 'aws-polly';
             this.name = opts.name || 'Raveena';
             this.rates = opts.rates || {
@@ -44,18 +51,17 @@
             }
             var voices = Voice.loadVoices();
             var voiceJson = 
-                opts.language && voices.filter(v => v.language === opts.language)[0] ||
-                opts.name && voices.filter(v => v.name === opts.name)[0];
-            var ipa = voiceJson && voiceJson.ipa;
-            if (ipa == null) {
-                throw new Error("not implemented");
-                var words = new Words();
-                ipa = words.ipa;
+                opts.language && voices.filter(v => v.language.match(`^${opts.language}`))[0] ||
+                opts.name && voices.filter(v => eqIgnoreCase(v.name, opts.name))[0];
+            if (voiceJson == null) {
+                throw new Error(`Could not find pre-defined voice:${JSON.stringify(opts)}`);
             }
-            voiceJson = Object.assign({
-                ipa,
-            }, voiceJson, opts);
-            return new Voice(voiceJson);
+            if (voiceJson.ipa == null) {
+                throw new Error(`Expected IPA lexicon for pre-configured voice: ${voiceJson.name}`);
+            }
+            var voiceOpts = Object.assign({}, voiceJson, opts);
+            voiceOpts.language = voiceJson.language;
+            return new Voice(voiceOpts);
         }
 
         get services() {
@@ -66,6 +72,8 @@
                     if (this.service === 'aws-polly') {
                         this._services[key] = new Polly({
                             words,
+                            language: this.language,
+                            languageUnknown: this.languageUnknown,
                             voice: this.name,
                             prosody: {
                                 rate: this.rates[key],

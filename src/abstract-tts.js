@@ -11,7 +11,7 @@
     class AbstractTTS {
         constructor(opts={}) {
             this.language = opts.language || 'en';
-            this.languageUnknown = opts.languageUnknown || 'pli';
+            this.languageUnknown = opts.languageUnknown || this.language;
             this.hits = 0;
             this.misses = 0;
             this.voice = null;

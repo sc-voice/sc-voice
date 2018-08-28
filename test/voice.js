@@ -148,15 +148,20 @@
     });
     it("TESTTESTplaceholder words are expanded with voice ipa", function() {
         var raveena = Voice.createVoice({
-            language: "en-IN",
-            languageUnknown: "en",
+            name: "raveena",
+        });
+        should(raveena).properties({
+            name: "raveena",
         });
         var tts = raveena.services.navigate;
+        should(tts).properties({
+            language: "en-IN",
+            languageUnknown: "en-IN",
+        });
         var segments = tts.segmentSSML('sati');
         should.deepEqual(segments, [
             '<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>',
         ]);
-        //console.log(Words.utf16(segments[0]));
 
 return;
         // Interpret unknown words as English
@@ -164,12 +169,14 @@ return;
         should.deepEqual(segments, [
             'Koalas and gummibears?',
         ]);
+return;
 
         // Interpret unknown words as Pali
         tts.languageUnknown = "pli";
         var tokens = tts.tokensSSML('Taṃ kissa hetu?');
         console.log('debug tokens', tokens);
         var segments = tts.segment(tokens);
+        //console.log(Words.utf16(segments[0]));
         segments.forEach(seg => {
             console.log('debug segments', Words.utf16(seg));
         });
