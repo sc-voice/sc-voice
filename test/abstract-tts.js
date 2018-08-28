@@ -13,6 +13,10 @@
             words,
         });
         should(tts.words).equal(words);
+        should(tts).properties({
+            language: 'en',
+            languageUnknown: 'pli',
+        });
     });
     it("signature(text) returns signature that identifies synthesized speech", function() {
         var tts = new AbstractTTS();
@@ -79,7 +83,7 @@
         should(tts.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
     });
-    it("tokensSSML(text) returns array of SSML tokens", function() {
+    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();
         var text = "Bhikkhus, the Tathagata, too, accomplished and fully enlightened";
         var tokens = tts.tokensSSML(text);
@@ -122,18 +126,15 @@
             'Because delight is the root of suffering.',
         ]);
     });
-    it("tokenize(text) returns array of tokens", function() {
+    it("TESTTESTtokenize(text) returns array of tokens", function() {
         var tts = new AbstractTTS();
-        var segments = [
-            'he does not conceive earth',
-            'to be \u2018mine,\u2019.',
-            'Why is that?',
-        ];
-        var text = segments.join(' ');
-        var tokens = tts.tokenize(text);
-        should.deepEqual(tokens, [
-            'he', 'does', 'not', 'conceive', 'earth', 
+        should.deepEqual(tts.tokenize(`he does'nt conceive`), [
+            'he', `does'nt`, 'conceive', 
+        ]);
+        should.deepEqual(tts.tokenize('to be \u2018mine,\u2019.'), [
             'to', 'be', '\u2018', 'mine', ',', '\u2019', '.', 
+        ]);
+        should.deepEqual(tts.tokenize('Why is that?'), [
             'Why', 'is', 'that', '?',
         ]);
     });

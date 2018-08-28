@@ -32,11 +32,20 @@
             return json.map(voice => new Voice(voice));
         }
 
-        static createVoice(langOrName="en-GB", opts={}) {
+        static createVoice(opts) {
+            if (typeof opts === 'string') {
+                opts = {
+                    language: opts,
+                }
+            } else if (opts == null) {
+                opts = {
+                    language: "en-IN"
+                };
+            }
             var voices = Voice.loadVoices();
-            var voiceJson = voices.filter(v => {
-                return v.language === langOrName || v.name === langOrName;
-            })[0];
+            var voiceJson = 
+                opts.language && voices.filter(v => v.language === opts.language)[0] ||
+                opts.name && voices.filter(v => v.name === opts.name)[0];
             var ipa = voiceJson && voiceJson.ipa;
             if (ipa == null) {
                 throw new Error("not implemented");

@@ -134,7 +134,7 @@
         should(Words.utf16('a\u0123\u0abcb',0x7f)).equal('a\\u0123\\u0ABCb');
         should(Words.utf16('a\u0123\u0abcb')).equal('\\u0061\\u0123\\u0ABC\\u0062');
     });
-    it("TESTTESTipa(word, language) return IPA for word", function() {
+    it("ipa(word, language) return IPA for word", function() {
         var aend = `\u0061\u0308`;
         var sutta = `\u02ccsutt${aend}`;
         ipaCompare(`bab`, `b\u0250b`);

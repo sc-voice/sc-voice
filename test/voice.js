@@ -57,19 +57,20 @@
         should(!!salli.ipa).equal(true);
         should(!!salli.ipa.pli).equal(true);
     });
-    it("createVoice(language,opts) returns voice for a language", function() {
-        var amy = Voice.createVoice();
+    it("TESTTESTcreateVoice(opts) returns voice for a language", function() {
+        var voice = Voice.createVoice();
+        should(voice).instanceOf(Voice);
+        should(voice.language).equal("en-IN");
+        should(voice.name).equal("Raveena");
+        should(voice.usage).equal("recite");
+
+        var amy = Voice.createVoice("en-GB");
         should(amy).instanceOf(Voice);
         should(amy.language).equal("en-GB");
         should(amy.name).equal("Amy");
-
-        var raveena = Voice.createVoice("en-IN");
-        should(raveena).instanceOf(Voice);
-        should(raveena.language).equal("en-IN");
-        should(raveena.name).equal("Raveena");
-        should(raveena.usage).equal("recite");
+        should(amy.usage).equal("recite");
     });
-    it("TESTTESTcreateVoice(langOrName, opts) creates a Voice instance", function() {
+    it("TESTTESTcreateVoice(opts) creates a Voice instance", function() {
         var reciteVoice = Voice.createVoice("en-IN");
         should(reciteVoice.services.navigate).instanceOf(Polly);
         should(reciteVoice.services.recite).instanceOf(Polly);
@@ -83,7 +84,8 @@
             rate: "-30%",
         });
 
-        var navVoice = Voice.createVoice("Raveena", {
+        var navVoice = Voice.createVoice({
+            name: "Raveena",
             usage: "navigate",
         });
         should(navVoice.services.navigate).instanceOf(Polly);
@@ -124,7 +126,7 @@
             done();
         })();
     });
-    it("TESTTESTplaceholder words are expanded with voice ipa", function() {
+    it("placeholder words are expanded with voice ipa", function() {
         /*
          * TTS services such as AWS Polly tend to speak IPA phonemes
          * in a voice-dependent manner. For example, the lower greek
@@ -145,11 +147,40 @@
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
     });
     it("TESTTESTplaceholder words are expanded with voice ipa", function() {
-        var raveena = Voice.createVoice("en-IN");
-        var segments = raveena.services.navigate.segmentSSML('sati');
-        console.log(segments);
-        var segments = raveena.services.navigate.segmentSSML('Taṃ kissa hetu?');
-        console.log(segments);
+        var raveena = Voice.createVoice({
+            language: "en-IN",
+            languageUnknown: "en",
+        });
+        var tts = raveena.services.navigate;
+        var segments = tts.segmentSSML('sati');
+        should.deepEqual(segments, [
+            '<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>',
+        ]);
+        //console.log(Words.utf16(segments[0]));
+
+return;
+        // Interpret unknown words as English
+        var segments = tts.segmentSSML('Koalas and gummibears?');
+        should.deepEqual(segments, [
+            'Koalas and gummibears?',
+        ]);
+
+        // Interpret unknown words as Pali
+        tts.languageUnknown = "pli";
+        var tokens = tts.tokensSSML('Taṃ kissa hetu?');
+        console.log('debug tokens', tokens);
+        var segments = tts.segment(tokens);
+        segments.forEach(seg => {
+            console.log('debug segments', Words.utf16(seg));
+        });
+        should.deepEqual(segments, [
+            '<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">Taṃ</phoneme>',
+            '<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">kissa</phoneme>',
+            '<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">hetu</phoneme>',
+            '?',
+        ]);
+        //var segments = tts.segmentSSML('Taṃ kissa hetu?');
+        //console.log(segments);
     });
 
 })

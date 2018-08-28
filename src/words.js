@@ -72,9 +72,23 @@
         tokenize(text) {
             return text.split(' ').reduce((acc,t) => {
                 for (var matches;  (matches = this.symbolPat.exec(t)); ) {
-                    matches.index && acc.push(t.substring(0, matches.index));
-                    acc.push(t.substring(matches.index,matches.index+1));
-                    t = t.substring(matches.index+1);
+                    if (matches.index) {
+                        var c = matches[0];
+                        if (matches.index < t.length-1 && (
+                            c === Words.U_RSQUOTE || c === Words.U_RDQUOTE
+                            || c === "'" || c === '"')) {
+                            acc.push(t);
+                            t = "";
+                        } else {
+
+                            acc.push(t.substring(0, matches.index));
+                            acc.push(t.substring(matches.index,matches.index+1));
+                            t = t.substring(matches.index+1);
+                        }
+                    } else {
+                        acc.push(t.substring(matches.index,matches.index+1));
+                        t = t.substring(matches.index+1);
+                    }
                 }
                 t && acc.push(t);
                 return acc;

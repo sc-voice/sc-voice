@@ -11,6 +11,7 @@
     class AbstractTTS {
         constructor(opts={}) {
             this.language = opts.language || 'en';
+            this.languageUnknown = opts.languageUnknown || 'pli';
             this.hits = 0;
             this.misses = 0;
             this.voice = null;
@@ -78,17 +79,29 @@
         wordSSML(word) {
             var wordInfo = this.wordInfo(word);
             if (wordInfo) {
-                var ipa = wordInfo.ipa || this.words.ipa(word, wordInfo.language);
-                if (ipa) {
-                    if (ipa.endsWith('(.)')) {
-                        var pauses = ipa.split('(.)');
-                        ipa = pauses.map(x => {
-                            return x && `<phoneme alphabet="ipa" ph="${x}">${word}</phoneme>` || '';
-                        }).join(this.break(1));
-                        return ipa;
-                    } else {
-                        return `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>`;
-                    }
+                if (wordInfo.ipa) { // use custom IPA
+                    var ipa = wordInfo.ipa;
+                } else if (wordInfo.language !== this.language) { // generate IPA
+                    var ipa = this.words.ipa(word, wordInfo.language); 
+                } else {
+                    var ipa = null;
+                }
+             } else { // unknown word or punctuation
+                if (this.words.isWord(word) && this.languageUnknown !== this.language) { 
+                    var ipa = this.words.ipa(word, this.languageUnknown); 
+                } else {
+                    var ipa = null; 
+                }
+             }
+            if (ipa) {
+                if (ipa.endsWith('(.)')) {
+                    var pauses = ipa.split('(.)');
+                    ipa = pauses.map(x => {
+                        return x && `<phoneme alphabet="ipa" ph="${x}">${word}</phoneme>` || '';
+                    }).join(this.break(1));
+                    return ipa;
+                } else {
+                    return `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>`;
                 }
             }
             return word;
@@ -143,7 +156,8 @@
         }
 
         segmentSSML(text) {
-            return this.segment(this.tokensSSML(text));
+            var tokens = this.tokensSSML(text);
+            return this.segment(tokens);
         }
 
         signature(text) {
@@ -165,7 +179,7 @@
             var stats = fs.existsSync(outpath) && fs.statSync(outpath);
             if (stats && stats.size <= this.ERROR_SIZE) {
                 var err = fs.readFileSync(outpath).toString();
-                console.log(`synthesize() failed ${outpath}`, stats.size, err);
+                console.error(`synthesize() failed ${outpath}`, stats.size, err);
                 reject(new Error(err));
             }
             resolve(this.createResponse(request, false));
@@ -208,7 +222,7 @@
                         this.misses++;
 
                         this.serviceSynthesize(resolve, error => {
-                            console.log(`synthesize() error:`, error.stack);
+                            console.error(`synthesize() error:`, error.stack);
                             reject(error);
                         }, request);
                     }
@@ -287,7 +301,7 @@
                     var cmd = `bash -c "ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`;
                     exec(cmd, (err, stdout, stderr) => {
                         if (err) {
-                            console.log(err.stack);
+                            console.error(err.stack);
                             reject(err);
                             return;
                         }
@@ -297,7 +311,7 @@
                         var stats = fs.existsSync(outpath) && fs.statSync(outpath);
                         if (stats && stats.size <= this.ERROR_SIZE) {
                             var err = fs.readFileSync(outpath).toString();
-                            console.log(`ffmpegConcat() failed ${outpath}`, stats.size, err);
+                            console.error(`ffmpegConcat() failed ${outpath}`, stats.size, err);
                             reject(new Error(err));
                         } else {
                             resolve(this.createResponse(request, false));

@@ -2,38 +2,46 @@
 
 DIR=`dirname $0`
 DIR=`realpath $DIR`
+CACHE=0
 
-#if [ ! -e $DIR/../local/words-en.txt ]; then
+if [[ $CACHE -eq 0 ]] || [[ ! -e $DIR/../local/words-en-all.txt ]]; then
+    echo -e "generating words-en-all.txt" >&2
     $DIR/words-en.js $DIR/../local/sc \
     | sort -f \
     | uniq -i \
-    > $DIR/../local/words-en.txt
-#fi
+    > $DIR/../local/words-en-all.txt
+fi
 
-#if [ ! -e $DIR/../local/words-pli.txt ]; then
+if [[ $CACHE -eq 0 ]] || [[ ! -e $DIR/../local/words-pli.txt ]]; then
+    echo -e "generating words-pli.txt" >&2
     $DIR/words-pli.js $DIR/../local/sc \
     | sort -f \
     | uniq -i \
     > $DIR/../local/words-pli.txt
-#fi
+fi
 
-#if [ ! -e $DIR/../local/words-spell.txt ]; then
-    cat $DIR/../local/words-en.txt \
-    | aspell -p $DIR/../words/aspell.en.pws -a \
+if [[ $CACHE -eq 0 ]] || [[ ! -e $DIR/../local/words-en-pli.txt ]]; then
+    echo -e "generating words-en-pli.txt" >&2
+    cat $DIR/../local/words-en-all.txt \
+    | aspell --encoding=utf-8 -p $DIR/../words/aspell.en.pws -a \
     | cut -d ' ' -f 2 \
     | grep -v '*' \
-    | sed -e "/^$/d" \
-    | tee $DIR/../local/words-spell.txt
-#fi
+    | sed -e "/^$/d" -e "1d" \
+    > $DIR/../local/words-en-pli.txt
+fi
 
-#if [ ! -e $DIR/../local/words-pali.txt ]; then
-    #grep -v `printf '^[a-zA-Z\u2019]*$'` \
-    #< $DIR/../local/words-en.txt \
-    #> $DIR/../local/words-pali.txt
-#fi
+if [[ $CACHE -eq 0 ]] || [[ ! -e $DIR/../local/words-en.json ]]; then
+    echo -e "generating words-en.json" >&2
+    cat $DIR/../local/words-en-all.txt $DIR/../local/words-en-pli.txt \
+    | sort -f \
+    | uniq -u \
+    | sed -e 's/.*/  "&": {"language":"en"},/' -e '/\\"/d' \
+    > $DIR/../local/words-en.json
+fi
 
-#if [ ! -e $DIR/../local/words-romanize.json ]; then
-    #$DIR/romanize.js \
-    #< $DIR/../local/words-pali.txt \
-    #> $DIR/../local/words-romanize.json
-#fi
+if [[ $CACHE -eq 0 ]] || [[ ! -e $DIR/../local/words-romanize.json ]]; then
+    echo -e "generating words-romanize.txt" >&2
+    $DIR/romanize.js \
+    < $DIR/../local/words-pli.txt \
+    > $DIR/../local/words-romanize.json
+fi
