@@ -147,14 +147,13 @@
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>`);
     });
     it("placeholder words are expanded with voice ipa", function() {
-        var raveena = Voice.createVoice({
-            name: "raveena",
-        });
+        var raveena = Voice.createVoice("raveena");
         should(raveena).properties({
-            name: "raveena",
+            name: "Raveena",
         });
         var tts = raveena.services.navigate;
         should(tts).properties({
+            voice: "Raveena",
             language: "en-IN",
             languageUnknown: "en-IN",
         });
@@ -177,8 +176,6 @@
             '<phoneme alphabet="ipa" ph="k\u026assa">kissa</phoneme> ' +
             '<phoneme alphabet="ipa" ph="he\u03b8u">hetu</phoneme>?',
         ]);
-        //var segments = tts.segmentSSML('Taṃ kissa hetu?');
-        //console.log(segments);
     });
 
 })

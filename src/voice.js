@@ -40,27 +40,43 @@
         }
 
         static createVoice(opts) {
+            var voices = Voice.loadVoices();
             if (typeof opts === 'string') {
-                opts = {
-                    language: opts,
+                var voiceJson = voices.filter(v => v.language.match(`^${opts}`))[0];
+                if (voiceJson) {
+                    opts = {
+                        language: opts,
+                    }
+                } else {
+                    var voiceJson = voices.filter(v => eqIgnoreCase(v.name, opts))[0];
+                    if (voiceJson) {
+                        opts = {
+                            name: opts,
+                        }
+                    }
+                } 
+                if (voiceJson == null) {
+                    throw new Error(`Could not create voice:${opts}`);
                 }
             } else if (opts == null) {
                 opts = {
                     language: "en-IN"
                 };
             }
-            var voices = Voice.loadVoices();
-            var voiceJson = 
-                opts.language && voices.filter(v => v.language.match(`^${opts.language}`))[0] ||
-                opts.name && voices.filter(v => eqIgnoreCase(v.name, opts.name))[0];
             if (voiceJson == null) {
-                throw new Error(`Could not find pre-defined voice:${JSON.stringify(opts)}`);
+                var voiceJson = 
+                    opts.language && voices.filter(v => v.language.match(`^${opts.language}`))[0] ||
+                    opts.name && voices.filter(v => eqIgnoreCase(v.name, opts.name))[0];
+                if (voiceJson == null) {
+                    throw new Error(`Could not find pre-defined voice:${JSON.stringify(opts)}`);
+                }
             }
             if (voiceJson.ipa == null) {
                 throw new Error(`Expected IPA lexicon for pre-configured voice: ${voiceJson.name}`);
             }
             var voiceOpts = Object.assign({}, voiceJson, opts);
             voiceOpts.language = voiceJson.language;
+            voiceOpts.name = voiceJson.name;
             return new Voice(voiceOpts);
         }
 
