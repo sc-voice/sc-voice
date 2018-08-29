@@ -40,6 +40,8 @@
             };
             this.breaks = opts.breaks || [0.001,0.1,0.2,0.4,0.8];
             this.reNumber = /^[-+]?[0-9]+(\.[0-9]+)?$/;
+            var vowels = this.words._ipa.vowels || "aeiou";
+            this.reVowels1 = new RegExp(`^[${vowels}].*`, 'u');
         }
 
         get ERROR_SIZE() { return 1000 }
@@ -82,9 +84,13 @@
         }
 
         ipa_word(ipa, word) {
-            return this.break(0) +
-                `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>` +
+            var ssml = `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>` +
                 this.break(0);
+            if (ipa.match(this.reVowels1)) {
+                ssml = this.break(0)+ssml;
+            }
+
+            return ssml;
         }
 
         wordSSML(word) {

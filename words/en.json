@@ -2,6 +2,7 @@
     "alphabet": "^[a-z]*$",
     "wordEnd": "([^a-zA-Z].*)?$",
     "ipa": {
+        "vowels":"aeiouj",
         "pli": {
             "a": "\u0250",
             "a$": "a\u0308",

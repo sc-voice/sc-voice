@@ -21,8 +21,10 @@
                 end,
                 prop: 'en',
             });
+            //console.log(excerpt);
             should(excerpt[0]).equal('Middle Discourses 1');
-            should(excerpt[end-3]).equal('Why is that?');
+            should(excerpt[1]).equal('');
+            should(excerpt[2]).equal('The Root of All Things');
             done();
         } catch(e) { done(e); } })();
     });

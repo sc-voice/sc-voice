@@ -21,6 +21,7 @@
             this.symbols = json.symbols;
             this.words = json.words;
             this._ipa = opts.ipa || json.ipa || {};
+            this._ipa.vowels == null && (this._ipa.vowels = "aeiou");
             this._romanize = json.romanize || {};
             this.wordEnd = json.wordEnd;
             this.altMap = null;

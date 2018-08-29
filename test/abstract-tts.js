@@ -65,7 +65,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("wordSSML(word) returns SSML text for word", function() {
+    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS();
 
         // words without information
@@ -73,7 +73,7 @@
 
         // words with information
         should(tts.wordSSML('bhikkhu'))
-        .equal(`${BREAK}<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>${BREAK}`);
+        .equal(`<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>${BREAK}`);
 
         // words with voice dependent information
         // are expanded with default words.ipa
@@ -81,17 +81,19 @@
             language: "pli",
         });
         should(tts.wordSSML('sati'))
-        .equal(`${BREAK}<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
     });
     it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();
-        var text = "Bhikkhus, the Tathagata, too, accomplished and fully enlightened";
+        var text = "Bhikkhus, the Tathagata, was at Ukkaṭṭhā today.";
         var tokens = tts.tokensSSML(text);
         should.deepEqual(tokens, [
-            `${BREAK}<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>${BREAK}` ,
+            `<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>${BREAK}` ,
             ',', 'the',
-            `${BREAK}<phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme>${BREAK}`,
-            ',', 'too', ',', 'accomplished', 'and', 'fully', 'enlightened',
+            `<phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme>${BREAK}`,
+            ',', 'was', 'at',
+            `${BREAK}<phoneme alphabet="ipa" ph="uk.k\u0250\u0288\u0306\u0288\u02b0\u0251">Ukkaṭṭhā</phoneme>${BREAK}`,
+            'today', '.',
         ]);
 
         var tokens = tts.tokensSSML([
@@ -163,7 +165,7 @@
         should(tts.break(0)).equal('<break time="0.001s"/>');
         should(tts.break(1)).equal('<break time="0.1s"/>');
         should.deepEqual(ssml, [
-            `${BREAK}<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>${BREAK}` + 
+            `<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>${BREAK}` + 
                 ', he does not conceive water to be \u2018mine,\u2019 he does not delight in water.',
             'Why is that?',
             'Because delight is the root of suffering.',

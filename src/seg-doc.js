@@ -6,6 +6,7 @@
             this.segments = json.segments || [];
             this.words = new Words();
             this.groupSep = opts.groupSep || '';
+            this.reSegEnd = opts.reSegEnd || /.*[.?;,]$/;
         }
 
         findIndexes(pat, opts={}) {
@@ -81,7 +82,11 @@
                     if (prevGroups && curGroups != prevGroups) {
                         acc.push(this.groupSep);
                     }
-                    acc.push(seg[range.prop]);
+                    var segtext = seg[range.prop];
+                    acc.push(segtext);
+                    if (!segtext.match(this.reSegEnd)) {
+                        acc.push(this.groupSep);
+                    }
                     prevGroups = curGroups;
                     return acc;
                 }, []);

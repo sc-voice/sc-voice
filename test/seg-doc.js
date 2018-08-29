@@ -7,13 +7,13 @@
 
     var segments = [{
         scid: 's:0.1',
-        en:'a1 ab ac',
+        en:'a1 ab ac.',
     },{
         scid: 's:1.1',
-        en:'b1 ab bc',
+        en:'b1 ab bc.',
     },{
         scid: 's:1.2',
-        en:'c1 bc ac',
+        en:'c1 bc ac.',
     }]
 
     it("findIndexes(pat) returns array of segment indexes", function() {
@@ -42,10 +42,10 @@
         var result = segDoc.segments.filter(seg => /ab/.test(seg.en));
         should.deepEqual(result, [{
             scid: 's:0.1',
-            en:'a1 ab ac',
+            en:'a1 ab ac.',
         },{
             scid: 's:1.1',
-            en:'b1 ab bc',
+            en:'b1 ab bc.',
         }]);
     });
     it("createPattern(text) creates a pattern for finding text", function() {
