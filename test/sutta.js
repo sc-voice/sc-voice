@@ -21,7 +21,6 @@
                 end,
                 prop: 'en',
             });
-            console.log(header);
             should(excerpt[0]).equal('Middle Discourses 1');
             should(excerpt[end-2]).equal('Why is that?');
             done();

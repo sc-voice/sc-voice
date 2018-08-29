@@ -61,6 +61,10 @@
         "\u016b": "u"
     },
     "symbols": {
+        "\n": {
+            "name": "end of line",
+            "separator": true
+        },
         "!": {
             "name": "exclamation mark",
             "cuddle": "left",

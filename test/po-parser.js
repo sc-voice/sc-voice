@@ -71,12 +71,12 @@
             var segDoc = await parser.parse(fname);
             true && segDoc.segments.forEach(seg => {
                 if (seg.en && !words.isWord(seg) && !normalPat.test(seg.en)) {
-                    console.log(`${seg.scid}\t${seg.en}`);
+                    //console.log(`${seg.scid}\t${seg.en}`);
                 }
             });
             should(segDoc.segments.length).equal(334);
             var text = 'hello\u2026';
-            console.log('\u2026', normalPat, text);
+            //console.log('\u2026', normalPat, text);
             should(normalPat.test(text)).equal(true);
             done();
         } catch(e) {done(e)} })();

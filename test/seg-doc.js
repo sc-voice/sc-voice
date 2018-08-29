@@ -6,13 +6,13 @@
     const SegDoc = require("../src/seg-doc");
 
     var segments = [{
-        scid: 's:1.1',
+        scid: 's:0.1',
         en:'a1 ab ac',
     },{
-        scid: 's:1.2',
+        scid: 's:1.1',
         en:'b1 ab bc',
     },{
-        scid: 's:2.1',
+        scid: 's:1.2',
         en:'c1 bc ac',
     }]
 
@@ -35,16 +35,16 @@
 
         // search prop
         var prop = 'scid';
-        should.deepEqual(segDoc.findIndexes(/^s:1.1/,{prop}),[0]); // segment
-        should.deepEqual(segDoc.findIndexes(/^s:1.*/,{prop}),[0,1]); // section
-        should.deepEqual(segDoc.findIndexes(/^s:2.*/,{prop}),[2]); // section
+        should.deepEqual(segDoc.findIndexes(/^s:0.1/,{prop}),[0]); // segment
+        should.deepEqual(segDoc.findIndexes(/^s:0.*/,{prop}),[0]); // section
+        should.deepEqual(segDoc.findIndexes(/^s:1.*/,{prop}),[1,2]); // section
 
         var result = segDoc.segments.filter(seg => /ab/.test(seg.en));
         should.deepEqual(result, [{
-            scid: 's:1.1',
+            scid: 's:0.1',
             en:'a1 ab ac',
         },{
-            scid: 's:1.2',
+            scid: 's:1.1',
             en:'b1 ab bc',
         }]);
     });
@@ -73,7 +73,7 @@
         should(segDoc.indexOf(0)).equal(0);
         should(segDoc.indexOf(2)).equal(2);
         should(segDoc.indexOf(-2)).equal(-2);
-        should(segDoc.indexOf("s:1.2")).equal(1);
+        should(segDoc.indexOf("s:1.1")).equal(1);
         should.throws(() => segDoc.indexOf("nonsense"));
         should.throws(() => segDoc.indexOf("s:1.*"));
     });
@@ -102,8 +102,8 @@
 
         // excerpt by scid
         should.deepEqual(segDoc.excerpt({
-            start: "s:1.1",
-            end: "s:2.1",
+            start: "s:0.1",
+            end: "s:1.2",
             prop: 'en',
         }),[
             segments[0].en,

@@ -123,7 +123,6 @@
             should(fs.statSync(result.signature.files[2]).size).greaterThan(1000); // Tomatoes are red.
             should(fs.statSync(result.signature.files[3]).size).greaterThan(1000); // Broccoli is green.
             should(fs.statSync(result.file).size).greaterThan(5000);
-            //console.log(result);
             done();
         })();
     });

@@ -34,16 +34,16 @@
             that.polly.synthesizeSpeech(params, (err, data) => {
 
                 if (err) {
-                    console.log(`serviceSynthesize()`, request, err.stack)
+                    console.error(`serviceSynthesize()`, request, err.stack)
                     reject(err);
                 } else if (data == null) {
                     var err = new Error("(no data returned from AWS server)");
-                    console.log(err.stack)
+                    console.error(err.stack)
                     reject(err);
                 } else if (data.AudioStream instanceof Buffer) {
                     fs.writeFile(request.outpath, data.AudioStream, function(err) {
                         if (err) {
-                            console.log(err)
+                            console.error(err)
                             reject(err);
                         } else {
                             that.synthesizeResponse(resolve, reject, request);
@@ -51,7 +51,7 @@
                     })
                 } else {
                     var err = new Error(`synthesizeSpeech() expected:Buffer actual:${typeof data.AudioStream}`);
-                    console.log(err.stack)
+                    console.error(err.stack)
                     reject(err);
                 }
             })

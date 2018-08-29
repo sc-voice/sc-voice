@@ -83,7 +83,7 @@
         should(tts.wordSSML('sati'))
         .equal(`${BREAK}<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
     });
-    it("tokensSSML(text) returns array of SSML tokens", function() {
+    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();
         var text = "Bhikkhus, the Tathagata, too, accomplished and fully enlightened";
         var tokens = tts.tokensSSML(text);
@@ -93,17 +93,58 @@
             `${BREAK}<phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme>${BREAK}`,
             ',', 'too', ',', 'accomplished', 'and', 'fully', 'enlightened',
         ]);
+
+        var tokens = tts.tokensSSML([
+            `Why is that?\n`,
+            `They perceive fire as fire.`,
+        ].join('\n'));
+        should.deepEqual(tokens, [
+            'Why', 'is', 'that', '?', '\n',
+            '\n',
+            'They', 'perceive', 'fire', 'as', 'fire', '.',
+        ]);
     });
-    it("segment(tokens) returns array of segments", function() {
+    it("isNumber(text) returns true if text is a number", function() {
         var tts = new AbstractTTS();
-        var tokens = [
+
+        should(tts.isNumber(' ')).equal(false);
+        should(tts.isNumber('\n')).equal(false);
+        should(tts.isNumber('a')).equal(false);
+        should(tts.isNumber('a1')).equal(false);
+        should(tts.isNumber('1a')).equal(false);
+        should(tts.isNumber('123.')).equal(false);
+        should(tts.isNumber('.123')).equal(false);
+        should(tts.isNumber('123\n')).equal(false);
+        should(tts.isNumber('\n123')).equal(false);
+
+        should(tts.isNumber('1')).equal(true);
+        should(tts.isNumber('123')).equal(true);
+        should(tts.isNumber('-123')).equal(true);
+        should(tts.isNumber('+123')).equal(true);
+        should(tts.isNumber('+123.45')).equal(true);
+        should(tts.isNumber('123.45')).equal(true);
+        should(tts.isNumber('-0.45')).equal(true);
+    });
+    it("TESTTESTsegment(tokens) returns array of segments", function() {
+        var tts = new AbstractTTS();
+        should(isNaN('\n')).equal(false); // surprising
+        var segments = tts.segment([
+            'Why', 'is', 'that', '?', '\n',
+            '\n',
+            'They', 'perceive', 'fire', 'as', 'fire', '.',
+        ]);
+        should.deepEqual(segments, [
+            'Why is that?', 
+            '\n',
+            'They perceive fire as fire.',
+        ]);
+        var segments = tts.segment([
             'a', '<b/>', ',', '(', 'c', 'd', ')', 'e', '.', 
             'f', 'g', '?', 
             'h', 'i', '!', 
             'j', '\u2018', 'k', ',', '\u2019', 'l',
             '5', 'm',
-        ];
-        var segments = tts.segment(tokens);
+        ]);
         should.deepEqual(segments, [
             'a <b/>, (c d) e.',
             'f g?',

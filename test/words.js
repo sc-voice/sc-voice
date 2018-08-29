@@ -11,9 +11,9 @@
         var autf = Words.utf16(a);
         var butf = Words.utf16(b);
         if (autf !== butf) {
-            console.log();
-            console.log('ipaCompare autf:', autf, autf.length);
-            console.log('ipaCompare butf:', butf, butf.length);
+            console.error();
+            console.error('ipaCompare autf:', autf, autf.length);
+            console.error('ipaCompare butf:', butf, butf.length);
         }
         should(autf).equal(butf);
         should(a).equal(b);

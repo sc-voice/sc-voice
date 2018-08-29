@@ -39,6 +39,7 @@
                 rate: "-10%",
             };
             this.breaks = opts.breaks || [0.001,0.1,0.2,0.4,0.8];
+            this.reNumber = /^[-+]?[0-9]+(\.[0-9]+)?$/;
         }
 
         get ERROR_SIZE() { return 1000 }
@@ -61,6 +62,10 @@
             this.credentials == null && (this.credentials = {});
             this.credentials.password = value;
             return value;
+        }
+
+        isNumber(text) {
+            return !!text.match(this.reNumber);
         }
 
         break(index) {
@@ -128,7 +133,7 @@
         segment(tokens) {
             var symbols = this.words.symbols;
             var acc = tokens.reduce((acc,token) => {
-                if (token.length === 1 && !this.words.isWord(token) && isNaN(token)) {
+                if (token.length === 1 && !this.words.isWord(token) && !this.isNumber(token)) {
                     var symbol = symbols[token];
                     if (symbol == null) {
                         throw new Error(`undefined symbol: ${token}`);
@@ -136,6 +141,11 @@
                     acc.cuddle = symbol.cuddle;
                     if (acc.cuddle === 'left') {
                         acc.segment = acc.segment + token;
+                    } else if (symbol.separator) {
+                        if (token === acc.prevToken) {
+                            acc.segments.push(token);
+                            acc.segment = '';
+                        }
                     } else {
                         acc.segment = acc.segment ? acc.segment + ' ' + token : token;
                     }
@@ -151,11 +161,13 @@
                     }
                     acc.cuddle = null;
                 }
+                acc.prevToken = token;
                 return acc;
             }, {
                 segments: [],
                 segment: '',
                 cuddle: null,
+                prevToken: null,
             });
             acc.segment && acc.segments.push(acc.segment);
             return acc.segments;
@@ -312,8 +324,6 @@
                             return;
                         }
 
-                        //console.log(`stdout: ${stdout}`);
-                        //console.log(`stderr: ${stderr}`);
                         var stats = fs.existsSync(outpath) && fs.statSync(outpath);
                         if (stats && stats.size <= this.ERROR_SIZE) {
                             var err = fs.readFileSync(outpath).toString();
