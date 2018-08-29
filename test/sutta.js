@@ -22,7 +22,7 @@
                 prop: 'en',
             });
             should(excerpt[0]).equal('Middle Discourses 1');
-            should(excerpt[end-2]).equal('Why is that?');
+            should(excerpt[end-3]).equal('Why is that?');
             done();
         } catch(e) { done(e); } })();
     });

@@ -77,7 +77,18 @@
         should.throws(() => segDoc.indexOf("nonsense"));
         should.throws(() => segDoc.indexOf("s:1.*"));
     });
-    it("excerpt(range) returns segments in range", function() {
+    it("TESTTESTsegmentGroups(scid) returns array of segment group ids", function() {
+        should.deepEqual(SegDoc.segmentGroups('mn1:1.2.3'), [
+            "1", "2", "3",
+        ]);
+        should.deepEqual(SegDoc.segmentGroups('mn1:1'), [
+            "1", 
+        ]);
+        should.deepEqual(SegDoc.segmentGroups('mn1:1.2'), [
+            "1", "2", 
+        ]);
+    });
+    it("TESTTESTexcerpt(range) returns segments in range", function() {
         var segDoc = new SegDoc({segments});
 
         // excerpt all
@@ -107,6 +118,7 @@
             prop: 'en',
         }),[
             segments[0].en,
+            segDoc.groupSep,
             segments[1].en,
         ]);
     });

@@ -35,7 +35,7 @@ var words = new Words();
     });
     var excerpt = sutta.excerpt({
         start: 0,
-        end: 3,
+        end: 25,
         prop: 'en',
     });
     var text = `${header.join('\n')}.\n${excerpt.join('\n')}`;

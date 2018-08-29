@@ -7134,17 +7134,12 @@
             "ipa":"b\u026aku\u02D0z",
             "language":"pli"
         },
-        "earth": {
-            "ipa": "\u025c:r\u03b8",
-            "language":"pli"
-        },
         "sati": { "language":"pli" },
         "satthi": { "language":"pli" },
-        "supreme": {
-            "ipa":"s\u0259\u02c8pri\u02d0m",
-            "language":"pli"
+        "suttacentral": {
+            "ipa":"suttasentr\u0250l",
+            "language": "en"
         },
-        "suttacentral": "suttasentr\u0250l",
         "tathagata": "tath\u0101gata", 
         "tath\u0101gata": {
             "ipa": "t\u0259\u02c8t\u0251\u02d0\u0261\u0259t\u0259",

@@ -9,7 +9,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
-    it("parse(lines)", function(done) {
+    it("TESTTESTparse(lines)", function(done) {
         var parser = new PoParser();
         var lines = [
             'msgctxt "mn1:1.1"',
@@ -24,21 +24,19 @@
             'msgid ""',
             '"b1id"',
             '"b2id"',
-            'msgstr "b1 b2"',
+            'msgstr "b1 <i>b2</i> b3"',
         ];
         (async function() { try {
             var segDoc = await parser.parseLines(lines);
-            should.deepEqual(segDoc, new SegDoc({
-                segments: [{
-                    scid: 'mn1:1.1',
-                    pli: 'a1id a2id',
-                    en: 'a1 a2',
-                },{
-                    scid: 'mn1:1.2',
-                    pli: 'b1id b2id',
-                    en: 'b1 b2',
-                }],
-            }));
+            should.deepEqual(segDoc.segments, [{
+                scid: 'mn1:1.1',
+                pli: 'a1id a2id',
+                en: 'a1 a2',
+            },{
+                scid: 'mn1:1.2',
+                pli: 'b1id b2id',
+                en: 'b1 b2 b3',
+            }]);
             done();
         } catch(e) {done(e)} })();
     });

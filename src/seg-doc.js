@@ -5,6 +5,7 @@
         constructor(json={}, opts={}) {
             this.segments = json.segments || [];
             this.words = new Words();
+            this.groupSep = opts.groupSep || '';
         }
 
         findIndexes(pat, opts={}) {
@@ -63,11 +64,27 @@
             }
         }
 
+        static segmentGroups(scid) {
+            var tokens = scid.split(':');
+            return tokens[tokens.length-1].split('.');
+        }
+
         excerpt(range={}) {
             var start = this.indexOf(range.start || 0);
             var end = this.indexOf(range.end || this.segments.length);
             var segments = this.segments.slice(start, end);
             if (range.prop != null) {
+                var prevGroups = null;
+                return segments.reduce((acc, seg, i) => {
+                    var scidGroups = SegDoc.segmentGroups(seg.scid);
+                    var curGroups = JSON.stringify(scidGroups.slice(0, scidGroups.length-1));
+                    if (prevGroups && curGroups != prevGroups) {
+                        acc.push(this.groupSep);
+                    }
+                    acc.push(seg[range.prop]);
+                    prevGroups = curGroups;
+                    return acc;
+                }, []);
                 return segments.map(seg => seg[range.prop]);
             }
             return segments;

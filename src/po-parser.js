@@ -20,6 +20,7 @@
             this.json_ctxt = opts.json_ctxt || 'scid';
             this.json_id = opts.json_id || 'pli';
             this.json_str = opts.json_str || 'en';
+            this.reHTML = opts.reHTML || /<\/?\s*\w+\s*>/ug;
         }
 
         static suttaPath(id, root=SC) {
@@ -49,6 +50,7 @@
                     var state = S_MSGCTXT;
                     var segment = null;
                     lines.forEach(line => {
+                        line = line.replace(that.reHTML, '');
                         switch (state) {
                             case S_MSGCTXT:
                                 if (that.msgctxt.test(line)) {
