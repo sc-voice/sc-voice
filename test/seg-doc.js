@@ -88,7 +88,7 @@
             "1", "2", 
         ]);
     });
-    it("TESTTESTexcerpt(range) returns segments in range", function() {
+    it("excerpt(range) returns segments in range", function() {
         var segDoc = new SegDoc({segments});
 
         // excerpt all
@@ -117,8 +117,7 @@
             end: "s:1.2",
             prop: 'en',
         }),[
-            segments[0].en,
-            segDoc.groupSep,
+            segments[0].en + segDoc.groupSep,
             segments[1].en,
         ]);
     });

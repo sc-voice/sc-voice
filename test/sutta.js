@@ -21,10 +21,11 @@
                 end,
                 prop: 'en',
             });
-            //console.log(excerpt);
-            should(excerpt[0]).equal('Middle Discourses 1');
-            should(excerpt[1]).equal('');
-            should(excerpt[2]).equal('The Root of All Things');
+            var i = 0;
+            should(excerpt[i++]).equal('Middle Discourses 1\n'); // autoterminate segment
+            should(excerpt[i++]).equal('The Root of All Things\n'); // end group
+            should(excerpt[i++]).equal('So I have heard.');
+            should(excerpt[end-2]).equal('Why is that?');
             done();
         } catch(e) { done(e); } })();
     });

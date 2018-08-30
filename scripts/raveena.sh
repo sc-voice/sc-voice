@@ -38,7 +38,7 @@ var words = new Words();
         end: 25,
         prop: 'en',
     });
-    var text = `${header.join('\n')}.\n${excerpt.join('\n')}`;
+    var text = `${header.join('\n')}\n${excerpt.join('\n')}`;
     console.log(text); // text to be spoken
 
     var result = await voice.speak(text, {

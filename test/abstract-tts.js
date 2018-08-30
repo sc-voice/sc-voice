@@ -65,7 +65,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
+    it("wordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS();
 
         // words without information
@@ -83,7 +83,7 @@
         should(tts.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
     });
-    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
+    it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();
         var text = "Bhikkhus, the Tathagata, was at Ukkaṭṭhā today.";
         var tokens = tts.tokensSSML(text);
@@ -130,6 +130,14 @@
     it("TESTTESTsegment(tokens) returns array of segments", function() {
         var tts = new AbstractTTS();
         should(isNaN('\n')).equal(false); // surprising
+        var ssml = tts.segment([
+            'a', 'b', '\n', '\n', 'c', '\n', 'd',
+        ]);
+        should.deepEqual(ssml, [
+            'a b\n',
+            'c\n',
+            'd',
+        ]);
         var segments = tts.segment([
             'Why', 'is', 'that', '?', '\n',
             '\n',
@@ -156,12 +164,11 @@
     });
     it("segmentSSML(text) returns array of SSML text segments", function() {
         var tts = new AbstractTTS();
-        var segments = [
+        var ssml = tts.segmentSSML([
             'Bhikkhus, he does not conceive water to be \u2018mine,\u2019 he does not delight in water.',
             'Why is that?',
             'Because delight is the root of suffering.',
-        ];
-        var ssml = tts.segmentSSML(segments.join(' '));
+        ].join(' '));
         should(tts.break(0)).equal('<break time="0.001s"/>');
         should(tts.break(1)).equal('<break time="0.1s"/>');
         should.deepEqual(ssml, [

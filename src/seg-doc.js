@@ -5,8 +5,11 @@
         constructor(json={}, opts={}) {
             this.segments = json.segments || [];
             this.words = new Words();
-            this.groupSep = opts.groupSep || '';
-            this.reSegEnd = opts.reSegEnd || /.*[.?;,]$/;
+            this.groupSep = opts.groupSep || '\n';
+            this.reSegEnd = opts.reSegEnd || ".*[.?;,]$";
+            if (!(this.reSegEnd instanceof RegExp)) {
+                this.reSegEnd = new RegExp(this.reSegEnd, "u");
+            }
         }
 
         findIndexes(pat, opts={}) {
@@ -75,19 +78,23 @@
             var end = this.indexOf(range.end || this.segments.length);
             var segments = this.segments.slice(start, end);
             if (range.prop != null) {
-                var prevGroups = null;
+                var prevgid = null;
                 return segments.reduce((acc, seg, i) => {
-                    var scidGroups = SegDoc.segmentGroups(seg.scid);
-                    var curGroups = JSON.stringify(scidGroups.slice(0, scidGroups.length-1));
-                    if (prevGroups && curGroups != prevGroups) {
-                        acc.push(this.groupSep);
-                    }
                     var segtext = seg[range.prop];
-                    acc.push(segtext);
+                    var scidGroups = SegDoc.segmentGroups(seg.scid);
+                    var curgid = JSON.stringify(scidGroups.slice(0, scidGroups.length-1));
+
+                    if (prevgid && curgid != prevgid) {
+                        if (acc[i-1][acc[i-1].length-1] !== this.groupSep) {
+                            acc[i-1] = acc[i-1] + this.groupSep;
+                        }
+                    } 
                     if (!segtext.match(this.reSegEnd)) {
-                        acc.push(this.groupSep);
+                        segtext += this.groupSep;
                     }
-                    prevGroups = curGroups;
+                    acc.push(segtext);
+
+                    prevgid = curgid;
                     return acc;
                 }, []);
                 return segments.map(seg => seg[range.prop]);

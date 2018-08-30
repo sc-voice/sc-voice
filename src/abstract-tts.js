@@ -149,9 +149,11 @@
                         acc.segment = acc.segment + token;
                     } else if (symbol.separator) {
                         if (token === acc.prevToken) {
-                            acc.segments.push(token);
-                            acc.segment = '';
+                            acc.segment && acc.segments.push(acc.segment);
+                        } else {
+                            acc.segments.push(acc.segment + token);
                         }
+                        acc.segment = '';
                     } else {
                         acc.segment = acc.segment ? acc.segment + ' ' + token : token;
                     }
@@ -204,7 +206,7 @@
             if (stats && stats.size <= this.ERROR_SIZE) {
                 var err = fs.readFileSync(outpath).toString();
                 console.error(`synthesize() failed ${outpath}`, stats.size, err);
-                reject(new Error(err));
+                reject(new Error(`sound file is too short (${stats.size}): ${err}`));
             }
             resolve(this.createResponse(request, false));
         }
