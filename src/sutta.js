@@ -35,7 +35,7 @@
             if (parent.scid == null) {
                 throw new Error(`scidGroup() not implemented for sutta scid:${scid}`);
             }
-            var wildcard = parent.scid === scid.sutta ? "*" : ".*";
+            var wildcard = "*";
             var segments = this.findSegments(parent.scid + wildcard,  {
                 prop: 'scid',
             });
@@ -45,13 +45,15 @@
             }
         }
 
-        nextSegment(scid) {
-            scid instanceof SuttaCentralId || (scid = new SuttaCentralId(scid));
-
-            var group = this.scidGroup(scid);
-            if (group) {
-            } else {
+        nextSegment(scid, offset=1) {
+            scid = scid.toString();
+            var indexes = this.findIndexes(scid);
+            if (indexes == null || indexes.length === 0) {
+                return null;
             }
+            var nextIndex = offset + 
+                (offset < 0 ? indexes[0] : indexes[indexes.length-1]);
+            return this.segments[nextIndex] || null;
         }
 
     }

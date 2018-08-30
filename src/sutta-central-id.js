@@ -28,11 +28,11 @@
             if (groups == null) {
                 return new SuttaCentralId();
             }
-            groups.pop();
+            !groups.pop() && groups.pop();
             if (groups.length === 0) {
-                return new SuttaCentralId(this.sutta);
+                return new SuttaCentralId(`${this.sutta}:`);
             }
-            return new SuttaCentralId(`${this.sutta}:${groups.join('.')}`);
+            return new SuttaCentralId(`${this.sutta}:${groups.join('.')}.`);
         }
 
         toString() {

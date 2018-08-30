@@ -35,13 +35,13 @@
         should(scid.parent).instanceOf(SuttaCentralId);
         should(scid.parent.scid).equal(null);
 
-        var scid = new SuttaCentralId('mn1:2');
+        var scid = new SuttaCentralId('mn1:2.');
         should(scid.parent).instanceOf(SuttaCentralId);
-        should(scid.parent.scid).equal('mn1');
+        should(scid.parent.scid).equal('mn1:');
 
         var scid = new SuttaCentralId('mn1:2.3.4');
         should(scid.parent).instanceOf(SuttaCentralId);
-        should(scid.parent.scid).equal('mn1:2.3');
+        should(scid.parent.scid).equal('mn1:2.3.');
     });
     it("TESTTESTscidRegExp(pat) creates a wildcard pattern for finding scids", function() {
         // should be same as Linux file wildcards
