@@ -29,21 +29,31 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTgroupOf(scid) returns immediate segment group", function(done) {
+    it("TESTTESTscidGroup(scid) returns immediate segment group", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
-            var pat = 'mn1:0.*';
-            should.deepEqual(sutta.groupOf("mn1:0.1"), {
-                scid: 'mn1:0.*',
+
+            // first group
+            should.deepEqual(sutta.scidGroup("mn1:0.1"), {
+                scid: 'mn1:0',
                 segments: [
                     sutta.segments[0],
                     sutta.segments[1],
                 ],
             });
-            var mn1_1 = sutta.groupOf("mn1:1.2");
+
+            // some group
+            var mn1_1 = sutta.scidGroup("mn1:1.2");
+            should(mn1_1.scid).equal('mn1:1');
             should(mn1_1.segments.length).equal(6);
             should(mn1_1.segments[0].scid).equal('mn1:1.1');
             should(mn1_1.segments[5].scid).equal('mn1:1.6');
+
+            // full sutta group
+            var mn1 = sutta.scidGroup("mn1:1");
+            should(mn1.scid).equal('mn1');
+//            should(mn1.segments.length).equal(sutta.segments.length);
+
             done();
         } catch(e) { done(e); } })();
     });

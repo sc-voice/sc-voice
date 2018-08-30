@@ -16,28 +16,29 @@
         en:'c1 bc ac.',
     }]
 
-    it("findIndexes(pat) returns array of segment indexes", function() {
+    it("TESTTESTfindIndexes(pat) returns array of segment indexes", function() {
         var segDoc = new SegDoc({segments});
         should.deepEqual(segDoc.findIndexes('not found'),[]);
 
         // search string
-        should.deepEqual(segDoc.findIndexes('a1'),[0]);
-        should.deepEqual(segDoc.findIndexes('ab'),[0,1]);
-        should.deepEqual(segDoc.findIndexes('bc'),[1,2]);
-        should.deepEqual(segDoc.findIndexes('ac'),[0,2]);
+        var prop = "en";
+        should.deepEqual(segDoc.findIndexes('a1',{prop}),[0]);
+        should.deepEqual(segDoc.findIndexes('ab',{prop}),[0,1]);
+        should.deepEqual(segDoc.findIndexes('bc',{prop}),[1,2]);
+        should.deepEqual(segDoc.findIndexes('ac',{prop}),[0,2]);
 
         // search RegExp
-        should.deepEqual(segDoc.findIndexes(/a1/),[0]);
-        should.deepEqual(segDoc.findIndexes(/ab/),[0,1]);
-        should.deepEqual(segDoc.findIndexes(/bc/),[1,2]);
-        should.deepEqual(segDoc.findIndexes(/ac/),[0,2]);
-        should.deepEqual(segDoc.findIndexes(/a1 ab|ab bc/),[0,1]);
+        should.deepEqual(segDoc.findIndexes(/a1/,{prop}),[0]);
+        should.deepEqual(segDoc.findIndexes(/ab/,{prop}),[0,1]);
+        should.deepEqual(segDoc.findIndexes(/bc/,{prop}),[1,2]);
+        should.deepEqual(segDoc.findIndexes(/ac/,{prop}),[0,2]);
+        should.deepEqual(segDoc.findIndexes(/a1 ab|ab bc/,{prop}),[0,1]);
 
         // search prop
-        var prop = 'scid';
+        var prop = 'scid'; // default
         should.deepEqual(segDoc.findIndexes(/^s:0.1/,{prop}),[0]); // segment
         should.deepEqual(segDoc.findIndexes(/^s:0.*/,{prop}),[0]); // section
-        should.deepEqual(segDoc.findIndexes(/^s:1.*/,{prop}),[1,2]); // section
+        should.deepEqual(segDoc.findIndexes(/^s:1.*/),[1,2]); // section
 
         var result = segDoc.segments.filter(seg => /ab/.test(seg.en));
         should.deepEqual(result, [{
@@ -53,23 +54,30 @@
         should.deepEqual(segDoc.findSegments('not found'), []);
 
         // search string
-        should.deepEqual(segDoc.findSegments('a1'),[segments[0]]);
-        should.deepEqual(segDoc.findSegments('ab'),[segments[0],segments[1]]);
-        should.deepEqual(segDoc.findSegments('bc'),[segments[1],segments[2]]);
-        should.deepEqual(segDoc.findSegments('ac'),[segments[0],segments[2]]);
+        var prop = 'en';
+        should.deepEqual(segDoc.findSegments('a1',{prop}),[segments[0]]);
+        should.deepEqual(segDoc.findSegments('ab',{prop}),[segments[0],segments[1]]);
+        should.deepEqual(segDoc.findSegments('bc',{prop}),[segments[1],segments[2]]);
+        should.deepEqual(segDoc.findSegments('ac',{prop}),[segments[0],segments[2]]);
 
         // search RegExp
-        should.deepEqual(segDoc.findSegments(/a1/),[segments[0]]);
-        should.deepEqual(segDoc.findSegments(/ab/),[segments[0],segments[1]]);
-        should.deepEqual(segDoc.findSegments(/bc/),[segments[1],segments[2]]);
-        should.deepEqual(segDoc.findSegments(/ac/),[segments[0],segments[2]]);
-        should.deepEqual(segDoc.findSegments(/a1 ab|ab bc/),[segments[0],segments[1]]);
+        should.deepEqual(segDoc.findSegments(/a1/,{prop}),[segments[0]]);
+        should.deepEqual(segDoc.findSegments(/ab/,{prop}),[segments[0],segments[1]]);
+        should.deepEqual(segDoc.findSegments(/bc/,{prop}),[segments[1],segments[2]]);
+        should.deepEqual(segDoc.findSegments(/ac/,{prop}),[segments[0],segments[2]]);
+        should.deepEqual(segDoc.findSegments(/a1 ab|ab bc/,{prop}),[segments[0],segments[1]]);
 
         // search prop
-        var prop = 'scid';
+        var prop = 'scid'; // default value
         should.deepEqual(segDoc.findSegments(/^s:0.1/,{prop}),[segments[0]]); // segment
         should.deepEqual(segDoc.findSegments(/^s:0.*/,{prop}),[segments[0]]); // section
-        should.deepEqual(segDoc.findSegments(/^s:1.*/,{prop}),[segments[1],segments[2]]); // section
+        should.deepEqual(segDoc.findSegments(/^s:1.*/),[segments[1],segments[2]]); // section
+
+        // search all segments
+        var segs = segDoc.findSegments(/s.*/);
+        should(segs.length).equal(3);
+        var segs = segDoc.findSegments(/s:.*/);
+        should(segs.length).equal(3);
     });
     it("alternatesRegExp(text) creates a pattern for finding text", function() {
         var segDoc = new SegDoc({segments});
@@ -132,11 +140,6 @@
             segments[0].en + segDoc.groupSep,
             segments[1].en,
         ]);
-    });
-    it("TESTTESTgroups() returns segment groups", function() {
-        var segDoc = new SegDoc({segments});
-        var groups = segDoc.groups();
-        should(groups).instanceOf(Array);
     });
 
 })

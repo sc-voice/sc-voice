@@ -15,7 +15,7 @@
 
         findIndexes(pat, opts={}) {
             var re = pat instanceof RegExp ? pat : new RegExp(pat);
-            var prop = opts.prop || 'en';
+            var prop = opts.prop || 'scid';
             return this.segments.reduce((acc, seg, i) => {
                 re.test(seg[prop]) && acc.push(i);
                 return acc;
@@ -23,7 +23,7 @@
         }
 
         findSegments(pat, opts={}) {
-            var prop = opts.prop || 'en';
+            var prop = opts.prop || 'scid';
             if (prop === 'scid') {
                 var re = pat instanceof RegExp ? pat : SuttaCentralId.scidRegExp(pat);
             } else {
@@ -69,17 +69,6 @@
             }
         }
 
-        groups() {
-            var prevgid = null;
-            return this.segments.reduce((acc,seg,i) => {
-                var scid = new SuttaCentralId(seg.scid);
-                var groups = scid.groups;
-                groups.pop();
-                var curgid = JSON.stringify(groups);
-                return acc;
-            },[]);
-        }
-
         excerpt(range={}) {
             var start = this.indexOf(range.start || 0);
             var end = this.indexOf(range.end || this.segments.length);
@@ -89,9 +78,7 @@
                 return segments.reduce((acc, seg, i) => {
                     var segtext = seg[range.prop];
                     var scid = new SuttaCentralId(seg.scid);
-                    var groups = scid.groups;
-                    groups.pop();
-                    var curgid = JSON.stringify(groups);
+                    var curgid = scid.parent.scid;
 
                     if (prevgid && curgid != prevgid) {
                         if (acc[i-1][acc[i-1].length-1] !== this.groupSep) {

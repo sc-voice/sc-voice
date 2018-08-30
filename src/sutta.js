@@ -4,6 +4,7 @@
     const Words = require('./words');
     const SegDoc = require('./seg-doc');
     const PoParser = require('./po-parser');
+    const SuttaCentralId = require('./sutta-central-id');
 
     class Sutta extends SegDoc { 
         constructor(json={}, opts={}) {
@@ -22,15 +23,30 @@
             });
         }
 
-        groupOf(scid) {
-            var pat = scid.replace(/[0-9]+$/u, "*");
-            var segments = this.findSegments(pat, {
+        scidGroup(scid) {
+            if (typeof scid === 'string') {
+                scid = new SuttaCentralId(scid);
+            }
+
+            if (!(scid instanceof SuttaCentralId)) {
+                throw new Error('expected a SuttaCentralId');
+            }
+            var parent = scid.parent;
+            var segments = this.findSegments(parent.scid + ".*", {
                 prop: 'scid',
             });
-
             return {
-                scid: pat,
+                scid: parent.scid,
                 segments,
+            }
+        }
+
+        nextSegment(scid) {
+            scid instanceof SuttaCentralId || (scid = new SuttaCentralId(scid));
+
+            var group = this.scidGroup(scid);
+            if (group) {
+            } else {
             }
         }
 
