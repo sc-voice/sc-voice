@@ -48,22 +48,45 @@
             en:'b1 ab bc.',
         }]);
     });
-    it("createPattern(text) creates a pattern for finding text", function() {
+    it("TESTTESTfindSegments(pat) returns array of segment indexes", function() {
         var segDoc = new SegDoc({segments});
-        var pat = segDoc.createPattern("bhikkhu");
+        should.deepEqual(segDoc.findSegments('not found'), []);
+
+        // search string
+        should.deepEqual(segDoc.findSegments('a1'),[segments[0]]);
+        should.deepEqual(segDoc.findSegments('ab'),[segments[0],segments[1]]);
+        should.deepEqual(segDoc.findSegments('bc'),[segments[1],segments[2]]);
+        should.deepEqual(segDoc.findSegments('ac'),[segments[0],segments[2]]);
+
+        // search RegExp
+        should.deepEqual(segDoc.findSegments(/a1/),[segments[0]]);
+        should.deepEqual(segDoc.findSegments(/ab/),[segments[0],segments[1]]);
+        should.deepEqual(segDoc.findSegments(/bc/),[segments[1],segments[2]]);
+        should.deepEqual(segDoc.findSegments(/ac/),[segments[0],segments[2]]);
+        should.deepEqual(segDoc.findSegments(/a1 ab|ab bc/),[segments[0],segments[1]]);
+
+        // search prop
+        var prop = 'scid';
+        should.deepEqual(segDoc.findSegments(/^s:0.1/,{prop}),[segments[0]]); // segment
+        should.deepEqual(segDoc.findSegments(/^s:0.*/,{prop}),[segments[0]]); // section
+        should.deepEqual(segDoc.findSegments(/^s:1.*/,{prop}),[segments[1],segments[2]]); // section
+    });
+    it("alternatesRegExp(text) creates a pattern for finding text", function() {
+        var segDoc = new SegDoc({segments});
+        var pat = segDoc.alternatesRegExp("bhikkhu");
         should(pat.test('asfd bhikkhu asdf')).equal(true); // canonical spelling
         should(pat.test('asfd bikkhu asdf')).equal(true); // alternate spelling
         should(pat.test('asfd bhikku asdf')).equal(true); // alternate spelling
         should(pat.test('asfd biku asdf')).equal(false); // invalid spelling
         should(pat.test('asfd bhikkhus asdf')).equal(false); // plural
 
-        var pat = segDoc.createPattern("Tathagata");
+        var pat = segDoc.alternatesRegExp("Tathagata");
         should(pat.test('asfd Tathagata asdf')).equal(true); // alternate spelling
         should(pat.test('asfd tathagata asdf')).equal(true); // alternate spelling
         should(pat.test('asfd Tath\u0101gata asdf')).equal(true); // case
         should(pat.test('asfd tath\u0101gata asdf')).equal(true); // canonical spelling
 
-        var pat = segDoc.createPattern("bhikku tathagata");
+        var pat = segDoc.alternatesRegExp("bhikku tathagata");
         should(pat.test('asfd bhikkhu tathagata asdf')).equal(true); // alternate spelling
         should(pat.test('asfd Bikkhu Tathagata asdf')).equal(true); // alternate spelling
 
@@ -76,17 +99,6 @@
         should(segDoc.indexOf("s:1.1")).equal(1);
         should.throws(() => segDoc.indexOf("nonsense"));
         should.throws(() => segDoc.indexOf("s:1.*"));
-    });
-    it("TESTTESTsegmentGroups(scid) returns array of segment group ids", function() {
-        should.deepEqual(SegDoc.segmentGroups('mn1:1.2.3'), [
-            "1", "2", "3",
-        ]);
-        should.deepEqual(SegDoc.segmentGroups('mn1:1'), [
-            "1", 
-        ]);
-        should.deepEqual(SegDoc.segmentGroups('mn1:1.2'), [
-            "1", "2", 
-        ]);
     });
     it("excerpt(range) returns segments in range", function() {
         var segDoc = new SegDoc({segments});
@@ -120,6 +132,11 @@
             segments[0].en + segDoc.groupSep,
             segments[1].en,
         ]);
+    });
+    it("TESTTESTgroups() returns segment groups", function() {
+        var segDoc = new SegDoc({segments});
+        var groups = segDoc.groups();
+        should(groups).instanceOf(Array);
     });
 
 })

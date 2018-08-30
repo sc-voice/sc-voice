@@ -7,7 +7,7 @@
 
     class Sutta extends SegDoc { 
         constructor(json={}, opts={}) {
-            super(json);
+            super(json, opts);
         }
 
         static loadSutta(opts={}) {
@@ -20,6 +20,18 @@
                     resolve(new Sutta(segDoc, opts));
                 } catch(e) {reject(e);} })();
             });
+        }
+
+        groupOf(scid) {
+            var pat = scid.replace(/[0-9]+$/u, "*");
+            var segments = this.findSegments(pat, {
+                prop: 'scid',
+            });
+
+            return {
+                scid: pat,
+                segments,
+            }
         }
 
     }

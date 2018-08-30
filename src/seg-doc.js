@@ -1,40 +1,41 @@
 (function(exports) {
     const Words = require('./words');
+    const SuttaCentralId = require('./sutta-central-id');
 
     class SegDoc { // segmented document
         constructor(json={}, opts={}) {
-            this.segments = json.segments || [];
-            this.words = new Words();
-            this.groupSep = opts.groupSep || '\n';
-            this.reSegEnd = opts.reSegEnd || ".*[.?;,]$";
+            this.segments = json.segments && json.segments.map(seg => seg)  || [];
+            this.words = json.words || opts.words || new Words();
+            this.groupSep = json.groupSep || opts.groupSep || '\n';
+            this.reSegEnd = json.reSegEnd || opts.reSegEnd || ".*[.?;,]$";
             if (!(this.reSegEnd instanceof RegExp)) {
                 this.reSegEnd = new RegExp(this.reSegEnd, "u");
             }
         }
 
         findIndexes(pat, opts={}) {
-            if (!(pat instanceof RegExp)) {
-                pat = new RegExp(pat);
-            }
+            var re = pat instanceof RegExp ? pat : new RegExp(pat);
             var prop = opts.prop || 'en';
             return this.segments.reduce((acc, seg, i) => {
-                pat.test(seg[prop]) && acc.push(i);
+                re.test(seg[prop]) && acc.push(i);
                 return acc;
             },[]);
         }
 
         findSegments(pat, opts={}) {
-            if (!(pat instanceof RegExp)) {
-                pat = new RegExp(pat);
-            }
             var prop = opts.prop || 'en';
+            if (prop === 'scid') {
+                var re = pat instanceof RegExp ? pat : SuttaCentralId.scidRegExp(pat);
+            } else {
+                var re = pat instanceof RegExp ? pat : new RegExp(pat);
+            }
             return this.segments.reduce((acc, seg, i) => {
-                pat.test(seg[prop]) && acc.push(seg);
+                re.test(seg[prop]) && acc.push(seg);
                 return acc;
             },[]);
         }
 
-        createPattern(text) {
+        alternatesRegExp(text) {
             var words = this.words.tokenize(text);
             var pat = words.reduce((acc,word) => {
                 var alts = this.words.alternates(word);
@@ -68,9 +69,15 @@
             }
         }
 
-        static segmentGroups(scid) {
-            var tokens = scid.split(':');
-            return tokens[tokens.length-1].split('.');
+        groups() {
+            var prevgid = null;
+            return this.segments.reduce((acc,seg,i) => {
+                var scid = new SuttaCentralId(seg.scid);
+                var groups = scid.groups;
+                groups.pop();
+                var curgid = JSON.stringify(groups);
+                return acc;
+            },[]);
         }
 
         excerpt(range={}) {
@@ -81,8 +88,10 @@
                 var prevgid = null;
                 return segments.reduce((acc, seg, i) => {
                     var segtext = seg[range.prop];
-                    var scidGroups = SegDoc.segmentGroups(seg.scid);
-                    var curgid = JSON.stringify(scidGroups.slice(0, scidGroups.length-1));
+                    var scid = new SuttaCentralId(seg.scid);
+                    var groups = scid.groups;
+                    groups.pop();
+                    var curgid = JSON.stringify(groups);
 
                     if (prevgid && curgid != prevgid) {
                         if (acc[i-1][acc[i-1].length-1] !== this.groupSep) {

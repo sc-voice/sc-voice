@@ -5,6 +5,7 @@ module.exports = {
     SegDoc: require('./src/seg-doc'),
     SoundStore: require("./src/sound-store"),
     Sutta: require("./src/sutta"),
+    SuttaCentralId: require("./src/sutta-central-id"),
     Watson: require("./src/watson"),
     Words: require('./src/words'),
     Voice: require('./src/voice'),
