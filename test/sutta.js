@@ -52,7 +52,10 @@
             // full sutta group
             var mn1 = sutta.scidGroup("mn1:1");
             should(mn1.scid).equal('mn1');
-//            should(mn1.segments.length).equal(sutta.segments.length);
+            should(mn1.segments.length).equal(sutta.segments.length);
+
+            // not yet imoplemented. returning entire MN might be overkill
+            should.throws(() => sutta.scidGroup('mn1') );
 
             done();
         } catch(e) { done(e); } })();

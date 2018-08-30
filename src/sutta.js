@@ -32,7 +32,11 @@
                 throw new Error('expected a SuttaCentralId');
             }
             var parent = scid.parent;
-            var segments = this.findSegments(parent.scid + ".*", {
+            if (parent.scid == null) {
+                throw new Error(`scidGroup() not implemented for sutta scid:${scid}`);
+            }
+            var wildcard = parent.scid === scid.sutta ? "*" : ".*";
+            var segments = this.findSegments(parent.scid + wildcard,  {
                 prop: 'scid',
             });
             return {
