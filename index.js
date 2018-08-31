@@ -1,5 +1,6 @@
 module.exports = {
     AbstractTTS: require("./src/abstract-tts"),
+    Cursor: require('./src/cursor'),
     PoParser: require('./src/po-parser'),
     Polly: require("./src/polly"),
     SegDoc: require('./src/seg-doc'),

@@ -7,6 +7,10 @@
         }
 
         static scidRegExp(pat) {
+            if (!pat) {
+                return /.*/;
+            }
+
             var pat = pat.replace(/\./g, "\\.");
             var pat = pat.replace(/\*/g, ".*");
             var pat = pat.replace(/\?/g, ".");
