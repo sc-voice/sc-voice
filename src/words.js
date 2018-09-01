@@ -42,7 +42,7 @@
         static get U_RDQUOTE() { return '\u201D'; }
         static get U_ENDASH() { return '\u2013'; }
         static get U_EMDASH() { return '\u2014'; }
-        static get U_ELLPSIS() { return '\u2026'; }
+        static get U_ELLIPSIS() { return '\u2026'; }
         static get U_A_MACRON() { return '\u0100'; }
         static get U_a_MACRON() { return '\u0101'; }
         static get U_u_MACRON() { return '\u016d'; /* UTF-8 c5ab */ }

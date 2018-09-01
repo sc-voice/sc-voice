@@ -5,6 +5,7 @@
     const {
         Sutta,
         SuttaCentralId,
+        Words,
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
@@ -114,6 +115,25 @@
             // segment at end of group
             nextseg = sutta.nextSegment('mn1:2.',0);
             should(nextseg.scid).equal('mn1:2.4');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTnextSegment(scid, offset) returns following segment", function(done) {
+        (async function() { try {
+            var sutta = await Sutta.loadSutta('mn1');
+            if (0) {
+                var re = /.*\.1$/;
+                var segments = sutta.findSegments(re);
+                var reEOL = new RegExp(`[^${Words.U_ELLIPSIS}]$`);
+                segments = segments.filter(seg => seg.en.match(reEOL));
+            } else {
+                var re = new RegExp(`${Words.U_ELLIPSIS}$`);
+                var segments = sutta.findSegments(re, {
+                    prop: 'en',
+                });
+            }
+//            segments.forEach(seg => console.log(seg.scid, seg.en.substring(0,100)));
 
             done();
         } catch(e) { done(e); } })();
