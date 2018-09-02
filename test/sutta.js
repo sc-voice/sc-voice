@@ -119,21 +119,19 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTnextSegment(scid, offset) returns following segment", function(done) {
+    it("TESTTESTalternates() returns following expansion alternates", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
-            if (0) {
-                var re = /.*\.1$/;
-                var segments = sutta.findSegments(re);
-                var reEOL = new RegExp(`[^${Words.U_ELLIPSIS}]$`);
-                segments = segments.filter(seg => seg.en.match(reEOL));
-            } else {
-                var re = new RegExp(`${Words.U_ELLIPSIS}$`);
-                var segments = sutta.findSegments(re, {
-                    prop: 'en',
-                });
-            }
-//            segments.forEach(seg => console.log(seg.scid, seg.en.substring(0,100)));
+            var alternates = sutta.alternates();
+            should(alternates.prefix).equal('But then they conceive ');
+            should(alternates.en.length).equal(24);
+            var i = 0;
+            should(alternates.en[i++]).equal('earth');
+            should(alternates.en[i++]).equal('water');
+            should(alternates.en[i++]).equal('fire');
+            should(alternates.en[i++]).equal('air');
+            should(alternates.en[i++]).equal('creatures');
+            should(alternates.en[23]).equal('extinguishment');
 
             done();
         } catch(e) { done(e); } })();
