@@ -58,42 +58,49 @@
             return this.segments[nextIndex] || null;
         }
 
-        expansionTemplate(opts={}) {
-            opts = Object.assign({
-                prop: 'en',
-            }, opts);
-            var prop = opts.prop;
-            var indexEllipses = this.findIndexes(RE_ELLIPSIS, opts);
-            if (indexEllipses.length <= 1) {
-                throw new Error("not implemented");
-            }
-
-            var s0 = this.segments[indexEllipses[0]][prop];
-            var s1 = this.segments[indexEllipses[1]][prop];
+        commonPrefix(s0, s1) {
             var len = Math.min(s0.length, s1.length);
             for (var i=0; i<len; i++) {
                 if (s0.charAt(i) !== s1.charAt(i)) {
                     break;
                 }
             }
-            if (i === 0) {
+            return s0.substring(0, i);
+        }
+
+        expansionTemplate(opts={}) {
+            opts = Object.assign({
+                prop: 'en',
+            }, opts);
+            var iEllipses = this.findIndexes(RE_ELLIPSIS, opts);
+            if (iEllipses.length === 0) {
+                return null;
+            }
+            if (iEllipses.length <= 1) {
+                throw new Error("not implemented");
+            }
+
+            var prop = opts.prop;
+            var prefix = this.commonPrefix(
+                this.segments[iEllipses[0]][prop],
+                this.segments[iEllipses[1]][prop]);
+            if (!prefix) {
                 throw new Error("could not generate alternates");
             }
-            var prefix = s0.substring(0, i);
-            var indexAlts = this.findIndexes(`^${prefix}`, opts);
+            var iAlts = this.findIndexes(`^${prefix}`, opts);
 
-            var alternates = indexAlts.reduce((acc,iseg) => {
+            var alts = iAlts.reduce((acc,iseg) => {
                 var seg = this.segments[iseg];
                 var s = seg[prop].substring(prefix.length);
                 acc.push(s.replace(/\s*[,.;\u2026].*$/u,''));
                 return acc;
             }, []);
-            var i0 = indexAlts[0];
-            var i1 = indexAlts[1];
-            while (this.segments[i1-1][prop].indexOf(alternates[1])>=0) {
-                i1--;
+            var iTemplate = iAlts[0];
+            var iEnd = iAlts[1]; 
+            while (this.segments[iEnd-1][prop].indexOf(alts[1])>=0) {
+                iEnd--; // Ignore segments that are part of first variation 
             }
-            return new Template(this.segments.slice(i0, i1), alternates, opts);
+            return new Template( this.segments.slice(iTemplate, iEnd), alts, opts);
         }
 
     }
