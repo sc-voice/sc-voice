@@ -5,24 +5,14 @@
     const DEFAULT_PROP = 'en';
 
     class Template {
-        constructor(...parms) {
-            if (parms.length > 1) {
-                var segments = parms[0];
-                var alternates = parms[1];
-                var opts = parms[2] || {};
-                this.prop = opts.prop || DEFAULT_PROP;
-            } else if (parms == null ){
-                throw new Error("Template has no default constructor");
-            } else {
-                var segments = parms[0].segments;
-                var alternates = parms[0].alternates;
-                this.prop = parms[0].prop || DEFAULT_PROP;
-            }
+        constructor(parms={}) {
+            var segments = parms.segments;
             if (!(segments instanceof Array)) {
                 throw new Error('expected Array of segments');
             }
             this.segments = segments;
 
+            var alternates = parms.alternates;
             if (typeof alternates === 'string') {
                 alternates = [alternates];
             }
@@ -31,15 +21,22 @@
             }
             this.alternates = alternates;
 
+            this.prop = parms.prop || DEFAULT_PROP;
+
+            var seg0text = segments[0][this.prop];
+            var alt0 = alternates[0];
+            var seg0parts = seg0text.split(alt0);
+            this.prefix = parms.prefix || seg0parts[0];
+
             this.reAlternates = new RegExp(`${alternates.join('|')}`,'u');
-            this.prefixLen = segments[0][this.prop].indexOf(alternates[0]);
+            this.prefixLen = this.prefix.length;
         }
 
         expand(segment) {
             var src = this.segments[0][this.prop];
             var dst = segment[this.prop];
             var dstTokens = dst.split(this.reAlternates);
-            if (dstTokens.length < 2) {
+            if (dstTokens.length < 1) {
                 throw new Error(`could not find anything to expand:${dst}`);
             }
             var repLen = (dst.length - dstTokens.join('').length)/(dstTokens.length-1);
@@ -49,8 +46,9 @@
             return this.segments.map((seg,i) => {
                 var re = new RegExp(this.alternates[0], 'ug'); // WARNING: RegExp g is stateful
                 var propCopy = seg[this.prop].replace(re, replacement);
-                if (i === 0 && dstTokens[0]) {
-                    propCopy = dstTokens[0] + propCopy.substring(this.prefixLen);
+                if (i === 0) {
+                    var prefix = dstTokens[0] || this.prefix;
+                    propCopy = prefix + propCopy.substring(this.prefixLen);
                 }
                 return {
                     scid: `${scid}.${i+1}`,

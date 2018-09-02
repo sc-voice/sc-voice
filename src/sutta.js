@@ -106,7 +106,11 @@
             while (this.segments[iEnd-1][prop].indexOf(alts[1])>=0) {
                 iEnd--; // Ignore segments that are part of first variation 
             }
-            var template = new Template( this.segments.slice(iTemplate, iEnd), alts, opts);
+            var template = new Template({
+                segments: this.segments.slice(iTemplate, iEnd), 
+                alternates: alts, 
+                prop: this.prop,
+            });
             template.candidates = candidates;
             return template;
         }
@@ -142,7 +146,11 @@
                 throw new Error(`could not find ${alts[iAlt]} template for: ${textAltSeg}`);
             }
 
-            return new Template( this.segments.slice(iTemplate, iEll0), alts, opts);
+            return new Template({
+                segments: this.segments.slice(iTemplate, iEll0), 
+                alternates: alts, 
+                prop,
+            });
         }
 
         expansionTemplate(opts={}) {

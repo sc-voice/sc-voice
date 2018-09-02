@@ -25,6 +25,9 @@
     },{ // 5 (mn1:28-49.1)
         scid: 's:4.1',
         en: `q1 y3 ${Words.U_ELLIPSIS}`,
+    },{ // 5 (mn1:28-49.2)
+        scid: 's:5.1',
+        en: `y4 ${Words.U_ELLIPSIS}`,
     }];
 
     it("TESTTESTTemplate(parms) creates a template", function() {
@@ -93,6 +96,22 @@
         },{
             scid: 's:4.1.2', 
             en: 'c1 y3 c2 y3 c3',
+        }]);
+    });
+    it("TESTTESTexpand(segment) expands a template (mn1:28-49.2)", function() {
+        var template = new Template({
+            segments: [ segments[1], segments[2], ], 
+            alternates: ['x1', 'y1', 'y2a y2b', 'y3', 'y4'],
+            prefix: 'q1 ',
+        });
+
+        var expansion = template.expand(segments[6]);
+        should.deepEqual(expansion, [{
+            scid: 's:5.1.1', 
+            en: 'q1 y4 b2',
+        },{
+            scid: 's:5.1.2', 
+            en: 'c1 y4 c2 y4 c3',
         }]);
     });
 
