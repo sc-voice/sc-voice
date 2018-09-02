@@ -27,33 +27,35 @@
         en: `q1 y3 ${Words.U_ELLIPSIS}`,
     }];
 
-    it("Template(segments,alternates) creates a template", function() {
-        var template = new Template(segments, 'x1');
+    it("TESTTESTTemplate(parms) creates a template", function() {
+        var template = new Template({
+            segments, 
+            alternates: ['x1','x2'],
+        });
         should(template).properties({
             segments,
-            alternates: ['x1'],
-            reAlternates: /x1/u,
+            alternates: ['x1','x2'],
+            reAlternates: /x1|x2/u,
         });
         should(template.reAlternates.test('x1')).equal(true);
 
         var alternates = ['earth','the Creator','water']; // first alternate is template parameter
-        var template = new Template(segments, alternates);
+        var template = new Template({
+            segments, 
+            alternates,
+        });
         should(template).properties({
             segments,
             alternates,
             reAlternates: /earth|the Creator|water/u,
         });
     });
-    it("expand(segment) expands a template", function() {
-        var template = new Template([
-            segments[1],
-            segments[2],
-        ], ['x1', 'y1', 'y2a y2b','y3']);
+    it("TESTTESTexpand(segment) expands a template (mn1:4.2)", function() {
+        var template = new Template({
+            segments: [ segments[1], segments[2], ], 
+            alternates: ['x1', 'y1', 'y2a y2b','y3']
+        });
 
-        var re = /aaa|bb Cc|ddd/ug;
-        should.deepEqual('x aaa y bb Cc z ddd w'.split(re), ['x ',' y ',' z ', ' w']);
-
-        // expand with prefix (mn1:4.2)
         var expansion = template.expand(segments[3]);
         should.deepEqual(expansion, [{
             scid: 's:2.1.1', 
@@ -62,8 +64,13 @@
             scid: 's:2.1.2', 
             en: 'c1 y1 c2 y1 c3',
         }]);
+    });
+    it("TESTTESTexpand(segment) expands a template (mn1:28-49.6)", function() {
+        var template = new Template({
+            segments: [ segments[1], segments[2], ], 
+            alternates: ['x1', 'y1', 'y2a y2b','y3']
+        });
 
-        // expand without prefix (mn1:28-49.6)
         var expansion = template.expand(segments[4]);
         should.deepEqual(expansion, [{
             scid: 's:3.1.1', 
@@ -72,8 +79,13 @@
             scid: 's:3.1.2', 
             en: 'c1 y2a y2b c2 y2a y2b c3',
         }]);
+    });
+    it("TESTTESTexpand(segment) expands a template (mn1:28-49.1)", function() {
+        var template = new Template({
+            segments: [ segments[1], segments[2], ], 
+            alternates: ['x1', 'y1', 'y2a y2b','y3']
+        });
 
-        // expand with alternate  prefix (mn1:28-49.1)
         var expansion = template.expand(segments[5]);
         should.deepEqual(expansion, [{
             scid: 's:4.1.1', 
