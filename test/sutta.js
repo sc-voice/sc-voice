@@ -119,19 +119,24 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTalternates() returns following expansion alternates", function(done) {
+    it("TESTTESTexpansionTemplate() returns expansion template", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
-            var alternates = sutta.alternates();
-            should(alternates.prefix).equal('But then they conceive ');
-            should(alternates.en.length).equal(24);
+            var template = sutta.expansionTemplate();
+            should.deepEqual(template.segments, [
+                sutta.segments[14], // mn1:3.3 But then they conceive earth...
+                sutta.segments[15], // mn1:3.4 Why is that?
+                sutta.segments[16], // mn1:3.5 Because they haven't completely understood...
+            ]);
+            var alternates = template.alternates;
+            should(alternates.length).equal(24);
             var i = 0;
-            should(alternates.en[i++]).equal('earth');
-            should(alternates.en[i++]).equal('water');
-            should(alternates.en[i++]).equal('fire');
-            should(alternates.en[i++]).equal('air');
-            should(alternates.en[i++]).equal('creatures');
-            should(alternates.en[23]).equal('extinguishment');
+            should(alternates[i++]).equal('earth');
+            should(alternates[i++]).equal('water');
+            should(alternates[i++]).equal('fire');
+            should(alternates[i++]).equal('air');
+            should(alternates[i++]).equal('creatures');
+            should(alternates[23]).equal('extinguishment');
 
             done();
         } catch(e) { done(e); } })();
