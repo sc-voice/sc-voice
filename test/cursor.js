@@ -20,7 +20,7 @@
         segments,
     });
 
-    it("TESTTESTCursor(sutta, opts) creates a cursor", function() {
+    it("Cursor(sutta, opts) creates a cursor", function() {
         var cursor = new Cursor(sutta);
         should(cursor.sutta).equal(sutta);
         should(cursor.scid).instanceOf(SuttaCentralId);
@@ -30,7 +30,7 @@
             segments[0],
         ]);
     });
-    it("TESTTESTnext() advances cursor", function() {
+    it("next() advances cursor", function() {
         var cursor = new Cursor(sutta);
 
         // return true if advanced
@@ -49,7 +49,7 @@
             segments[2],
         ]);
     });
-    it("TESTTESTback() moves cursor back", function() {
+    it("back() moves cursor back", function() {
         var cursor = new Cursor(sutta);
 
         // return true if moved back
@@ -67,7 +67,7 @@
             segments[0],
         ]);
     });
-    it("TESTTESTmoveToScid(scid) moves cursor to segment", function() {
+    it("moveToScid(scid) moves cursor to segment", function() {
         var cursor = new Cursor(sutta);
 
         // return true on success
@@ -99,7 +99,7 @@
             segments[2],
         ]);
     });
-    it("TESTTESTmoveToIndex(index) moves cursor to index", function() {
+    it("moveToIndex(index) moves cursor to index", function() {
         var cursor = new Cursor(sutta);
 
         // return true on success
@@ -141,7 +141,7 @@
 
 
     });
-    it("TESTTESTshould handle empty sutta", function() {
+    it("should handle empty sutta", function() {
         var sutta = new Sutta();
         var cursor = new Cursor(sutta);
         should.deepEqual(cursor.scid, new SuttaCentralId());

@@ -16,7 +16,7 @@
         en:'c1 bc ac.',
     }]
 
-    it("TESTTESTfindIndexes(pat) returns array of segment indexes", function() {
+    it("findIndexes(pat) returns array of segment indexes", function() {
         var segDoc = new SegDoc({segments});
         should.deepEqual(segDoc.findIndexes('not found'),[]);
 
@@ -49,7 +49,7 @@
             en:'b1 ab bc.',
         }]);
     });
-    it("TESTTESTfindSegments(pat) returns array of segment indexes", function() {
+    it("findSegments(pat) returns array of segment indexes", function() {
         var segDoc = new SegDoc({segments});
         should.deepEqual(segDoc.findSegments('not found'), []);
 

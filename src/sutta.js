@@ -7,10 +7,14 @@
     const SuttaCentralId = require('./sutta-central-id');
     const Template = require('./template');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
+    const OPTS_EN = {
+        prop: 'en',
+    };
 
     class Sutta extends SegDoc { 
         constructor(json={}, opts={}) {
             super(json, opts);
+            this.alternates = json.alternates || opts.alternates;
         }
 
         static loadSutta(opts={}) {
@@ -68,18 +72,8 @@
             return s0.substring(0, i);
         }
 
-        expansionTemplate(opts={}) {
-            opts = Object.assign({
-                prop: 'en',
-            }, opts);
-            var iEllipses = this.findIndexes(RE_ELLIPSIS, opts);
-            if (iEllipses.length === 0) {
-                return null;
-            }
-            if (iEllipses.length <= 1) {
-                throw new Error("not implemented");
-            }
-
+        createPrimaryTemplate(iEllipses, opts) {
+            opts = Object.assign(OPTS_EN, opts);
             var prop = opts.prop;
             var prefix = this.commonPrefix(
                 this.segments[iEllipses[0]][prop],
@@ -95,12 +89,65 @@
                 acc.push(s.replace(/\s*[,.;\u2026].*$/u,''));
                 return acc;
             }, []);
+            this.alternates = alts;
+
             var iTemplate = iAlts[0];
             var iEnd = iAlts[1]; 
             while (this.segments[iEnd-1][prop].indexOf(alts[1])>=0) {
                 iEnd--; // Ignore segments that are part of first variation 
             }
             return new Template( this.segments.slice(iTemplate, iEnd), alts, opts);
+        }
+
+        createSecondaryTemplate(iEllipses, opts) {
+            console.log('secondary');
+            opts = Object.assign(OPTS_EN, opts);
+            var prop = opts.prop;
+            var iAlt = 0;
+            var alts = this.alternates;
+            var iEll0 = iEllipses[0];
+            var textAltSeg = this.segments[iEll0][prop];
+            if (!textAltSeg.match(alts[iAlt+1])) {
+                iAlt++;
+                if (!textAltSeg.match(alts[iAlt+1])) {
+                    throw new Error(`could not find "${alts[iAlt+1]}" in: "${textAltSeg}"`);
+                }
+            }
+            
+            var found = 0;
+            var iTemplate = iEll0 - 1; // template starting segment index
+            for (; 0 < iTemplate; iTemplate--, found++) { //
+                if (this.segments[iTemplate][prop].match(alts[iAlt])) {
+                    break;
+                }
+            }
+            for (; 0 < iTemplate; iTemplate--, found++) {
+                if (!this.segments[iTemplate-1][prop].match(alts[iAlt])) {
+                    break;
+                }
+            }
+            if (!found) {
+                throw new Error(`could not find ${alts[iAlt]} template for: ${textAltSeg}`);
+            }
+
+            return new Template( this.segments.slice(iTemplate, iEll0), alts, opts);
+        }
+
+        expansionTemplate(opts={}) {
+            opts = Object.assign(OPTS_EN, opts);
+            var iEllipses = this.findIndexes(RE_ELLIPSIS, opts);
+            if (iEllipses.length === 0) {
+                return null;
+            }
+            if (iEllipses.length <= 1) {
+                throw new Error("not implemented");
+            }
+
+            if (this.alternates == null) {
+                return this.createPrimaryTemplate(iEllipses, opts);
+            } else {
+                return this.createSecondaryTemplate(iEllipses, opts);
+            }
         }
 
     }

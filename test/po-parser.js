@@ -9,7 +9,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
-    it("TESTTESTparse(lines)", function(done) {
+    it("parse(lines)", function(done) {
         var parser = new PoParser();
         var lines = [
             'msgctxt "mn1:1.1"',
@@ -94,7 +94,7 @@
         } catch(e) {done(e)} })();
 
     });
-    it("TESTTESTsuttaPath(id, root) returns sutta file path", function() {
+    it("suttaPath(id, root) returns sutta file path", function() {
         should(PoParser.suttaPath('mn1')).equal(path.join(SC, 'mn', 'en', 'mn001.po'));
         should(PoParser.suttaPath('MN123:1.1')).equal(path.join(SC, 'mn', 'en', 'mn123.po'));
 

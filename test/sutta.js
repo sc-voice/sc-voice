@@ -9,7 +9,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
-    it("TESTTESTloadSutta(id, opts) returns a Sutta", function(done) {
+    it("loadSutta(id, opts) returns a Sutta", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var end = 21;
@@ -31,7 +31,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTscidGroup(scid) returns immediate segment group", function(done) {
+    it("scidGroup(scid) returns immediate segment group", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
 
@@ -62,7 +62,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTnextSegment(scid, offset) returns following segment", function(done) {
+    it("nextSegment(scid, offset) returns following segment", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
 
@@ -119,7 +119,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTexpansionTemplate() returns expansion template", function(done) {
+    it("expansionTemplate() returns expansion template", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var template = sutta.expansionTemplate();
@@ -140,6 +140,74 @@
 
             done();
         } catch(e) { done(e); } })();
+    });
+    it("expansionTemplate() returns template for 28-49.1", function() {
+        var segments = [{
+            scid: 's:26.4',
+            en: 'a1',
+        },{
+            scid: 's:27.1',
+            en: 'b1 b2 earth as earth.',
+        },{
+            scid: 's:27.2',
+            en: 'c1 earth c2 earth.',
+        },{
+            scid: 's:27.3',
+            en: 'd1 d2?',
+        },{
+            scid: 's:27.4',
+            en: 'e1 e2.',
+        },{
+            scid: 's:28-49.1',
+            en: 'f1 water as water \u2026',
+        },{
+            scid: 's:28-49.2',
+            en: 'fire \u2026',
+        }];
+        var alternates = ['earth','water','fire'];
+        var sutta = new Sutta({
+            segments,
+            alternates,
+        });
+        var template = sutta.expansionTemplate();
+        should.deepEqual(template.segments.map(seg=>seg.scid), 
+            ['s:27.1', 's:27.2', 's:27.3', 's:27.4']);
+        should(template.alternates).equal(sutta.alternates);
+        should(template.prop).equal('en');
+    });
+    it("expansionTemplate() returns template for 28-49.2", function() {
+        var segments = [{
+            scid: 's:26.4',
+            en: 'a1',
+        },{
+            scid: 's:28-49.1.1',
+            en: 'b1 b2 water as water.',
+        },{
+            scid: 's:28-49.1.2',
+            en: 'c1 water c2 water.',
+        },{
+            scid: 's:28-49.1.3',
+            en: 'd1 d2?',
+        },{
+            scid: 's:28-49.1.4',
+            en: 'e1 e2.',
+        },{
+            scid: 's:28-49.2',
+            en: 'fire \u2026',
+        },{
+            scid: 's:28-49.3',
+            en: 'air \u2026',
+        }];
+        var alternates = ['earth','water','fire','air'];
+        var sutta = new Sutta({
+            segments,
+            alternates,
+        });
+        var template = sutta.expansionTemplate();
+        should.deepEqual(template.segments.map(seg=>seg.scid), 
+            ['s:28-49.1.1', 's:28-49.1.2', 's:28-49.1.3', 's:28-49.1.4']);
+        should.deepEqual(template.alternates, alternates);
+        should(template.prop).equal('en');
     });
 });
 

@@ -127,7 +127,7 @@
         should(tts.isNumber('123.45')).equal(true);
         should(tts.isNumber('-0.45')).equal(true);
     });
-    it("TESTTESTsegment(tokens) returns array of segments", function() {
+    it("segment(tokens) returns array of segments", function() {
         var tts = new AbstractTTS();
         should(isNaN('\n')).equal(false); // surprising
         var ssml = tts.segment([

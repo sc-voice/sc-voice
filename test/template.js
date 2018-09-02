@@ -27,7 +27,7 @@
         en: `q1 y3 ${Words.U_ELLIPSIS}`,
     }];
 
-    it("TESTTESTTemplate(segments,alternates) creates a template", function() {
+    it("Template(segments,alternates) creates a template", function() {
         var template = new Template(segments, 'x1');
         should(template).properties({
             segments,
@@ -44,7 +44,7 @@
             reAlternates: /earth|the Creator|water/u,
         });
     });
-    it("TESTTESTexpand(segment) expands a template", function() {
+    it("expand(segment) expands a template", function() {
         var template = new Template([
             segments[1],
             segments[2],
