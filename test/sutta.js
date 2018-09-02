@@ -119,7 +119,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("expansionTemplate() returns expansion template", function(done) {
+    it("TESTTESTexpansionTemplate() returns expansion template", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var template = sutta.expansionTemplate();
@@ -129,19 +129,24 @@
                 sutta.segments[16], // mn1:3.5 Because they haven't completely understood...
             ]);
             var alternates = template.alternates;
-            should(alternates.length).equal(24);
+            should(alternates.length).equal(23);
             var i = 0;
             should(alternates[i++]).equal('earth');
             should(alternates[i++]).equal('water');
             should(alternates[i++]).equal('fire');
             should(alternates[i++]).equal('air');
             should(alternates[i++]).equal('creatures');
-            should(alternates[23]).equal('extinguishment');
+            should(alternates[22]).equal('all');
+
+            var candidates = template.candidates.map(can => can.scid);
+            should(candidates.length).equal(22);
+            should(candidates[0]).equal( "mn1:4.2" );
+            should(candidates[21]).equal( "mn1:25.2" );
 
             done();
         } catch(e) { done(e); } })();
     });
-    it("expansionTemplate() returns template for 28-49.1", function() {
+    it("TESTTESTexpansionTemplate() returns template for 28-49.1", function() {
         var segments = [{
             scid: 's:26.4',
             en: 'a1',
@@ -175,7 +180,7 @@
         should(template.alternates).equal(sutta.alternates);
         should(template.prop).equal('en');
     });
-    it("expansionTemplate() returns template for 28-49.2", function() {
+    it("TESTTESTexpansionTemplate() returns template for 28-49.2", function() {
         var segments = [{
             scid: 's:26.4',
             en: 'a1',

@@ -75,6 +75,7 @@
         createPrimaryTemplate(iEllipses, opts) {
             opts = Object.assign(OPTS_EN, opts);
             var prop = opts.prop;
+
             var prefix = this.commonPrefix(
                 this.segments[iEllipses[0]][prop],
                 this.segments[iEllipses[1]][prop]);
@@ -82,31 +83,42 @@
                 throw new Error("could not generate alternates");
             }
             var iAlts = this.findIndexes(`^${prefix}`, opts);
-
-            var alts = iAlts.reduce((acc,iseg) => {
+            var alts = iAlts.reduce((acc,iseg,i) => {
                 var seg = this.segments[iseg];
                 var s = seg[prop].substring(prefix.length);
-                acc.push(s.replace(/\s*[,.;\u2026].*$/u,''));
+                if (0==i || s.match(Words.U_ELLIPSIS)) {
+                    acc.push(s.replace(/\s*[,.;\u2026].*$/u,''));
+                }
                 return acc;
             }, []);
             this.alternates = alts;
+
+            var candidates = iAlts.reduce((acc, iAlt, i) => {
+                0<i // the template alternate is not a candidate
+                && iEllipses[i-1] === iAlt // the ellipsis is part of current group
+                && RE_ELLIPSIS.test(this.segments[iAlt][prop]) // there is an ellipsis
+                && acc.push(this.segments[iAlt]);
+                return acc;
+            }, []);
 
             var iTemplate = iAlts[0];
             var iEnd = iAlts[1]; 
             while (this.segments[iEnd-1][prop].indexOf(alts[1])>=0) {
                 iEnd--; // Ignore segments that are part of first variation 
             }
-            return new Template( this.segments.slice(iTemplate, iEnd), alts, opts);
+            var template = new Template( this.segments.slice(iTemplate, iEnd), alts, opts);
+            template.candidates = candidates;
+            return template;
         }
 
         createSecondaryTemplate(iEllipses, opts) {
-            console.log('secondary');
             opts = Object.assign(OPTS_EN, opts);
             var prop = opts.prop;
             var iAlt = 0;
             var alts = this.alternates;
             var iEll0 = iEllipses[0];
-            var textAltSeg = this.segments[iEll0][prop];
+            var candidates = [this.segments[iEll0]];
+            var textAltSeg = candidates[0][prop];
             if (!textAltSeg.match(alts[iAlt+1])) {
                 iAlt++;
                 if (!textAltSeg.match(alts[iAlt+1])) {
