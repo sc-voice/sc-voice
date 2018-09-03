@@ -13,30 +13,38 @@
             }
         }
 
-        findIndexes(pat, opts={}) {
+        static findIndexes(segments, pat, opts={}) {
             var prop = opts.prop || 'scid';
             if (prop === 'scid') {
                 var re = pat instanceof RegExp ? pat : SuttaCentralId.scidRegExp(pat);
             } else {
                 var re = pat instanceof RegExp ? pat : new RegExp(pat);
             }
-            return this.segments.reduce((acc, seg, i) => {
+            return segments.reduce((acc, seg, i) => {
                 re.test(seg[prop]) && acc.push(i);
                 return acc;
             },[]);
         }
 
-        findSegments(pat, opts={}) {
+        findIndexes(pat, opts={}) {
+            return SegDoc.findIndexes(this.segments, pat, opts);
+        }
+
+        static findSegments(segments, pat, opts={}) {
             var prop = opts.prop || 'scid';
             if (prop === 'scid') {
                 var re = pat instanceof RegExp ? pat : SuttaCentralId.scidRegExp(pat);
             } else {
                 var re = pat instanceof RegExp ? pat : new RegExp(pat);
             }
-            return this.segments.reduce((acc, seg, i) => {
+            return segments.reduce((acc, seg, i) => {
                 re.test(seg[prop]) && acc.push(seg);
                 return acc;
             },[]);
+        }
+
+        findSegments(pat, opts={}) {
+            return SegDoc.findSegments(this.segments, pat, opts);
         }
 
         alternatesRegExp(text) {
