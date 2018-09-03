@@ -22,6 +22,7 @@
             this.alternates = alternates;
 
             this.prop = parms.prop || DEFAULT_PROP;
+            this.candidates = parms.candidates;
 
             var seg0text = segments[0][this.prop];
             var alt0 = alternates[0];

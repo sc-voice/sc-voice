@@ -147,27 +147,30 @@
         } catch(e) { done(e); } })();
     });
     it("TESTTESTexpansionTemplate() returns template for 28-49.1", function() {
-        var segments = [{
+        var segments = [{ // 0
             scid: 's:26.4',
             en: 'a1',
-        },{
+        },{ // 1
             scid: 's:27.1',
             en: 'b1 b2 earth as earth.',
-        },{
+        },{ // 2
             scid: 's:27.2',
             en: 'c1 earth c2 earth.',
-        },{
+        },{ // 3
             scid: 's:27.3',
             en: 'd1 d2?',
-        },{
+        },{ // 4
             scid: 's:27.4',
             en: 'e1 e2.',
-        },{
+        },{ // 5
             scid: 's:28-49.1',
             en: 'f1 water as water \u2026',
-        },{
+        },{ // 6
             scid: 's:28-49.2',
             en: 'fire \u2026',
+        },{ // 7
+            scid: 's:50.1',
+            en: 'g1 g2 g3',
         }];
         var alternates = ['earth','water','fire'];
         var sutta = new Sutta({
@@ -179,6 +182,11 @@
             ['s:27.1', 's:27.2', 's:27.3', 's:27.4']);
         should(template.alternates).equal(sutta.alternates);
         should(template.prop).equal('en');
+        should(template.prefix).equal('f1 ');
+        should.deepEqual(template.candidates, [
+            segments[5],
+            segments[6],
+        ]);
     });
     it("TESTTESTexpansionTemplate() returns template for 28-49.2", function() {
         var segments = [{
@@ -213,6 +221,7 @@
             ['s:28-49.1.1', 's:28-49.1.2', 's:28-49.1.3', 's:28-49.1.4']);
         should.deepEqual(template.alternates, alternates);
         should(template.prop).equal('en');
+        should(template.prefix).equal('b1 b2 ');
     });
 });
 

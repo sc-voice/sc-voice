@@ -110,8 +110,8 @@
                 segments: this.segments.slice(iTemplate, iEnd), 
                 alternates: alts, 
                 prop: this.prop,
+                candidates,
             });
-            template.candidates = candidates;
             return template;
         }
 
@@ -122,13 +122,23 @@
             var alts = this.alternates;
             var iEll0 = iEllipses[0];
             var candidates = [this.segments[iEll0]];
-            var textAltSeg = candidates[0][prop];
-            if (!textAltSeg.match(alts[iAlt+1])) {
+            var candidateText = candidates[0][prop];
+            if (!candidateText.match(alts[iAlt+1])) {
                 iAlt++;
-                if (!textAltSeg.match(alts[iAlt+1])) {
-                    throw new Error(`could not find "${alts[iAlt+1]}" in: "${textAltSeg}"`);
+                if (!candidateText.match(alts[iAlt+1])) {
+                    throw new Error(`could not find "${alts[iAlt+1]}" in: "${candidateText}"`);
                 }
             }
+            var iEnd = iEll0 + this.alternates.length - iAlt - 1;
+            var endText = this.segments[iEnd-1][prop];
+            var altLast = alts[alts.length-1];
+            if (!endText.match(altLast)) {
+                throw new Error(`expected "${altLast}" in: "${this.segments[iEnd-1].scid} ${endText}"`);
+            }
+            if (!endText.match(RE_ELLIPSIS)) {
+                throw new Error(`expected "..." in: "${this.segments[iEnd-1].scid} ${endText}"`);
+            }
+            var candidates = this.segments.slice(iEll0, iEnd);
             
             var found = 0;
             var iTemplate = iEll0 - 1; // template starting segment index
@@ -143,13 +153,19 @@
                 }
             }
             if (!found) {
-                throw new Error(`could not find ${alts[iAlt]} template for: ${textAltSeg}`);
+                throw new Error(`could not find ${alts[iAlt]} template for: ${candidateText}`);
             }
+            var segments = this.segments.slice(iTemplate, iEll0);
+            var prefix = 
+                candidateText.substring(0, candidateText.indexOf(alts[iAlt+1])) ||
+                segments[0][prop].substring(0, segments[0][prop].indexOf(alts[iAlt]));
 
             return new Template({
-                segments: this.segments.slice(iTemplate, iEll0), 
+                segments,
                 alternates: alts, 
                 prop,
+                prefix,
+                candidates,
             });
         }
 
