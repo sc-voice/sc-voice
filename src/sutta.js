@@ -83,12 +83,14 @@
                 throw new Error("could not generate alternates");
             }
             var indexes = segDoc.findIndexes(`^${prefix}`, opts);
+            var prevIndex = -1;
             var values = indexes.reduce((acc,iseg,i) => {
                 var seg = segDoc.segments[iseg];
                 var s = seg[prop].substring(prefix.length);
-                if (0==i || s.match(Words.U_ELLIPSIS)) {
+                if (i === prevIndex+1) {
                     acc.push(s.replace(/\s*[,.;\u2026].*$/u,''));
                 }
+                prevIndex = i;
                 return acc;
             }, []);
             return {

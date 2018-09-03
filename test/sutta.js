@@ -129,7 +129,7 @@
                 sutta.segments[16], // mn1:3.5 Because they haven't completely understood...
             ]);
             var alternates = template.alternates;
-            should(alternates.length).equal(23);
+            should(alternates.length).equal(24);
             var i = 0;
             should(alternates[i++]).equal('earth');
             should(alternates[i++]).equal('water');
@@ -137,6 +137,7 @@
             should(alternates[i++]).equal('air');
             should(alternates[i++]).equal('creatures');
             should(alternates[22]).equal('all');
+            should(alternates[23]).equal('extinguishment');
 
             var candidates = template.candidates.map(can => can.scid);
             should(candidates.length).equal(22);
