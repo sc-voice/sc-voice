@@ -2,7 +2,7 @@
     const fs = require('fs');
     const path = require('path');
     const Words = require('./words');
-    const SegDoc = require('./seg-doc');
+    const segDoc = require('./seg-doc');
     const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
     const Template = require('./template');
@@ -11,7 +11,7 @@
         prop: 'en',
     };
 
-    class Sutta extends SegDoc { 
+    class Sutta extends segDoc { 
         constructor(json={}, opts={}) {
             super(json, opts);
             this.alternates = json.alternates || opts.alternates;
@@ -72,56 +72,68 @@
             return s0.substring(0, i);
         }
 
-        createPrimaryTemplate(iEllipses, opts) {
+        findAlternates(segDoc, iEllipses, opts) {
             opts = Object.assign(OPTS_EN, opts);
             var prop = opts.prop;
 
             var prefix = this.commonPrefix(
-                this.segments[iEllipses[0]][prop],
-                this.segments[iEllipses[1]][prop]);
+                segDoc.segments[iEllipses[0]][prop],
+                segDoc.segments[iEllipses[1]][prop]);
             if (!prefix) {
                 throw new Error("could not generate alternates");
             }
-            var iAlts = this.findIndexes(`^${prefix}`, opts);
-            var alts = iAlts.reduce((acc,iseg,i) => {
-                var seg = this.segments[iseg];
+            var indexes = segDoc.findIndexes(`^${prefix}`, opts);
+            var values = indexes.reduce((acc,iseg,i) => {
+                var seg = segDoc.segments[iseg];
                 var s = seg[prop].substring(prefix.length);
                 if (0==i || s.match(Words.U_ELLIPSIS)) {
                     acc.push(s.replace(/\s*[,.;\u2026].*$/u,''));
                 }
                 return acc;
             }, []);
-            this.alternates = alts;
+            return {
+                values,
+                indexes,
+            }
+        };
+
+        createPrimaryTemplate(segDoc, iEllipses, opts) {
+            opts = Object.assign(OPTS_EN, opts);
+            var prop = opts.prop;
+
+            var alternates = this.findAlternates(segDoc, iEllipses, opts);
+            var iAlts = alternates.indexes;
+            var alts = alternates.values;
 
             var candidates = iAlts.reduce((acc, iAlt, i) => {
                 0<i // the template alternate is not a candidate
                 && iEllipses[i-1] === iAlt // the ellipsis is part of current group
-                && RE_ELLIPSIS.test(this.segments[iAlt][prop]) // there is an ellipsis
-                && acc.push(this.segments[iAlt]);
+                && RE_ELLIPSIS.test(segDoc.segments[iAlt][prop]) // there is an ellipsis
+                && acc.push(segDoc.segments[iAlt]);
                 return acc;
             }, []);
 
             var iTemplate = iAlts[0];
             var iEnd = iAlts[1]; 
-            while (this.segments[iEnd-1][prop].indexOf(alts[1])>=0) {
+            while (segDoc.segments[iEnd-1][prop].indexOf(alts[1])>=0) {
                 iEnd--; // Ignore segments that are part of first variation 
             }
             var template = new Template({
-                segments: this.segments.slice(iTemplate, iEnd), 
+                segments: segDoc.segments.slice(iTemplate, iEnd), 
                 alternates: alts, 
-                prop: this.prop,
+                prop,
                 candidates,
             });
             return template;
         }
 
-        createSecondaryTemplate(iEllipses, opts) {
+        createSecondaryTemplate(segDoc, iEllipses, opts) {
             opts = Object.assign(OPTS_EN, opts);
             var prop = opts.prop;
             var iAlt = 0;
             var alts = this.alternates;
             var iEll0 = iEllipses[0];
-            var candidates = [this.segments[iEll0]];
+            var candidates = [segDoc.segments[iEll0]];
             var candidateText = candidates[0][prop];
             if (!candidateText.match(alts[iAlt+1])) {
                 iAlt++;
@@ -130,32 +142,32 @@
                 }
             }
             var iEnd = iEll0 + this.alternates.length - iAlt - 1;
-            var endText = this.segments[iEnd-1][prop];
+            var endText = segDoc.segments[iEnd-1][prop];
             var altLast = alts[alts.length-1];
             if (!endText.match(altLast)) {
-                throw new Error(`expected "${altLast}" in: "${this.segments[iEnd-1].scid} ${endText}"`);
+                throw new Error(`expected "${altLast}" in: "${segDoc.segments[iEnd-1].scid} ${endText}"`);
             }
             if (!endText.match(RE_ELLIPSIS)) {
-                throw new Error(`expected "..." in: "${this.segments[iEnd-1].scid} ${endText}"`);
+                throw new Error(`expected "..." in: "${segDoc.segments[iEnd-1].scid} ${endText}"`);
             }
-            var candidates = this.segments.slice(iEll0, iEnd);
+            var candidates = segDoc.segments.slice(iEll0, iEnd);
             
             var found = 0;
             var iTemplate = iEll0 - 1; // template starting segment index
             for (; 0 < iTemplate; iTemplate--, found++) { //
-                if (this.segments[iTemplate][prop].match(alts[iAlt])) {
+                if (segDoc.segments[iTemplate][prop].match(alts[iAlt])) {
                     break;
                 }
             }
             for (; 0 < iTemplate; iTemplate--, found++) {
-                if (!this.segments[iTemplate-1][prop].match(alts[iAlt])) {
+                if (!segDoc.segments[iTemplate-1][prop].match(alts[iAlt])) {
                     break;
                 }
             }
             if (!found) {
                 throw new Error(`could not find ${alts[iAlt]} template for: ${candidateText}`);
             }
-            var segments = this.segments.slice(iTemplate, iEll0);
+            var segments = segDoc.segments.slice(iTemplate, iEll0);
             var prefix = 
                 candidateText.substring(0, candidateText.indexOf(alts[iAlt+1])) ||
                 segments[0][prop].substring(0, segments[0][prop].indexOf(alts[iAlt]));
@@ -171,7 +183,9 @@
 
         expansionTemplate(opts={}) {
             opts = Object.assign(OPTS_EN, opts);
-            var iEllipses = this.findIndexes(RE_ELLIPSIS, opts);
+            var segDoc = this;
+
+            var iEllipses = segDoc.findIndexes(RE_ELLIPSIS, opts);
             if (iEllipses.length === 0) {
                 return null;
             }
@@ -179,10 +193,11 @@
                 throw new Error("not implemented");
             }
 
+
             if (this.alternates == null) {
-                return this.createPrimaryTemplate(iEllipses, opts);
+                return this.createPrimaryTemplate(segDoc, iEllipses, opts);
             } else {
-                return this.createSecondaryTemplate(iEllipses, opts);
+                return this.createSecondaryTemplate(segDoc, iEllipses, opts);
             }
         }
 
