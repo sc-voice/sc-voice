@@ -1,8 +1,13 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
+    const SegDoc = require('./seg-doc');
     const Words = require('./words');
+    const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
     const DEFAULT_PROP = 'en';
+    const MIN_PREFIX = 10;
+    const RE_TRIM_ELLIPSIS = /\s*[,.;\u2026].*$/u;
+    const RE_PUNCT_END = /[.,;].*$/u;
 
     class Template {
         constructor(parms={}) {
@@ -31,6 +36,88 @@
 
             this.reAlternates = new RegExp(`${alternates.join('|')}`,'u');
             this.prefixLen = this.prefix.length;
+        }
+
+        static commonPrefix(s0, s1, minLength=MIN_PREFIX) {
+            var len = Math.min(s0.length, s1.length);
+            for (var i=0; i<len; i++) {
+                if (s0.charAt(i) !== s1.charAt(i)) {
+                    break;
+                }
+            }
+            return i<minLength ? null : s0.substring(0, i);
+        }
+
+        static findAlternates(segments, prop=DEFAULT_PROP) {
+            var ie = SegDoc.findIndexes(segments, RE_ELLIPSIS, {prop});
+
+            if (ie.length === 0) {
+                return null; // segments are fully expanded
+            }
+            if (ie.length <= 1) {
+                throw new Error(`not implemented:`+
+                    JSON.stringify(segments[ie[0]]));
+            }
+
+            /*
+             * The substitution prefix is found on the second alternate 
+             * (i.e., the segment with the first ellipsis) and confirmed with
+             * a match either with the immediately following alternate or
+             * the preceding template.
+             */
+            var prefix = Template.commonPrefix(segments[ie[0]][prop], segments[ie[1]][prop]);
+            for (var it = ie[0]; !prefix && 0 <= --it; ) {
+                console.log('checking prefix:', segments[it][prop]);
+                prefix = Template.commonPrefix( segments[ie[0]][prop], segments[it][prop]);
+            }
+            if (!prefix) {
+                var alt = segments[ie[0]][prop].replace(RE_ELLIPSIS,'');
+                console.log('debug:', alt);
+                //console.error(`no expansion prefix for alternate:`+ JSON.stringify(segments[ie[0]],null,2));
+                return null;
+            }
+
+            var indexes = SegDoc.findIndexes(segments, `^${prefix}`, {prop});
+            console.log('debug a:', indexes.length, ie.length);
+            if (2 < indexes.length) { // prefix distinguishes discontinguous alternates
+                it = indexes[0];
+                var prevIndex = -1;
+                var values = indexes.reduce((acc,iseg,i) => {
+                    var seg = segments[iseg];
+                    var s = seg[prop].substring(prefix.length);
+                    if (i === prevIndex+1) {
+                        acc.push(s.replace(RE_TRIM_ELLIPSIS,''));
+                    }
+                    prevIndex = i;
+                    return acc;
+                }, []);
+            } else { // prefix cannot be used, so assume continguous alternates
+                var indexes = [it];
+                console.log('it', it);
+                var alt = segments[it][prop];
+                var alt = alt.substring(prefix.length).replace(RE_PUNCT_END,'');
+                var values = [alt];
+                for (var i = 0; i<ie.length; i++ ) {
+                    var seg = segments[ie[i]];
+                    var alt = seg[prop];
+                    if (alt.startsWith(prefix)) {
+                        alt = alt.substring(prefix.length).replace(RE_TRIM_ELLIPSIS, '');
+                    } else if (i && ie[i-1]+1 === ie[i]){
+                        alt = alt.replace(RE_TRIM_ELLIPSIS, '');
+                    } else {
+                        break;
+                    }
+                    values.push(alt); 
+                    indexes.push(ie[i]);
+                    
+                }
+            }
+
+            return {
+                prefix,
+                values,
+                indexes,
+            }
         }
 
         expand(segment) {

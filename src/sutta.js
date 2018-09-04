@@ -20,6 +20,11 @@
         static loadSutta(opts={}) {
             return new Promise((resolve, reject) => {
                 (async function() { try {
+                    if (typeof opts === 'string') {
+                        opts = {
+                            id: opts,
+                        }
+                    }
                     var parser = new PoParser();
                     var id = opts.id || 'mn1';
                     var suttaPath = PoParser.suttaPath(id, opts.root);
