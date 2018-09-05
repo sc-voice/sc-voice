@@ -178,7 +178,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("findAlternates(segments, prop) analyzes mn1 for alternates (2)", function(done) {
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (2)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var segments = sutta.segments.slice(109);
@@ -215,6 +215,254 @@
             should(alternates.length).equal(30);
             should(segments[alternates.start+alternates.length-1].scid)
                 .equal('mn1:50.3');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (3)", function(done) {
+        (async function() { try {
+            var sutta = await Sutta.loadSutta('mn1');
+            var segments = sutta.segments.slice(139);
+
+            var alternates = Template.findAlternates(segments);
+            should(alternates.phrase).equal('directly');
+            should(alternates.prefix).equal('They directly know ');
+            var values = alternates.values;
+            var i = 0;
+            should(values[i++]).equal('earth');
+            should(values[i++]).equal('water');
+            should(values[i++]).equal('fire');
+            should(values[i++]).equal('air');
+            should(values[i++]).equal('creatures');
+            i = 22;
+            should(values[i++]).equal('all');
+            should(values[i++]).equal('extinguishment');
+            should(values.length).equal(24);
+            var indexes = alternates.indexes;
+            should(indexes.length).equal(24);
+            var i = 0;
+            should(segments[indexes[i++]].scid).equal('mn1:51.1'); // knows earth
+            should(segments[indexes[i++]].scid).equal('mn1:52-74.1'); // knows water
+            should(segments[indexes[i++]].scid).equal('mn1:52-74.2'); // knows fire
+            should(segments[indexes[22]].scid).equal('mn1:52-74.22'); // knows all
+            should(segments[indexes[23]].scid).equal('mn1:52-74.23'); // knows extinguishment
+            should(segments[alternates.start].scid).equal('mn1:51.1');
+            should.deepEqual(alternates.template.map(seg => seg.scid), [
+                'mn1:51.1',
+                'mn1:51.2',
+                'mn1:51.3',
+                'mn1:51.4',
+            ]);
+            should(alternates.length).equal(30);
+            should(segments[alternates.start+alternates.length-1].scid)
+                .equal('mn1:52-74.26');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (4)", function(done) {
+        (async function() { try {
+            var sutta = await Sutta.loadSutta('mn1');
+            var segments = sutta.segments.slice(169);
+
+            var alternates = Template.findAlternates(segments);
+            should(alternates.phrase).equal('directly');
+            should(alternates.prefix).equal('They directly know ');
+            var values = alternates.values;
+            var i = 0;
+            should(values[i++]).equal('earth');
+            should(values[i++]).equal('water');
+            should(values[i++]).equal('fire');
+            should(values[i++]).equal('air');
+            should(values[i++]).equal('creatures');
+            i = 22;
+            should(values[i++]).equal('all');
+            should(values[i++]).equal('extinguishment');
+            should(values.length).equal(24);
+            var indexes = alternates.indexes;
+            should(indexes.length).equal(24);
+            var i = 0;
+            should(segments[indexes[i++]].scid).equal('mn1:75.1'); // knows earth
+            should(segments[indexes[i++]].scid).equal('mn1:76-98.1'); // knows water
+            should(segments[indexes[i++]].scid).equal('mn1:76-98.2'); // knows fire
+            should(segments[indexes[22]].scid).equal('mn1:76-98.22'); // knows all
+            should(segments[indexes[23]].scid).equal('mn1:76-98.23'); // knows extinguishment
+            should(segments[alternates.start].scid).equal('mn1:75.1');
+            should.deepEqual(alternates.template.map(seg => seg.scid), [
+                'mn1:75.1',
+                'mn1:75.2',
+                'mn1:75.3',
+                'mn1:75.4',
+            ]);
+            should(alternates.length).equal(30);
+            should(segments[alternates.start+alternates.length-1].scid)
+                .equal('mn1:76-98.26');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (5)", function(done) {
+        (async function() { try {
+            var sutta = await Sutta.loadSutta('mn1');
+            var segments = sutta.segments.slice(199);
+
+            var alternates = Template.findAlternates(segments);
+            should(alternates.phrase).equal('directly');
+            should(alternates.prefix).equal('They directly know ');
+            var values = alternates.values;
+            var i = 0;
+            should(values[i++]).equal('earth');
+            should(values[i++]).equal('water');
+            should(values[i++]).equal('fire');
+            should(values[i++]).equal('air');
+            should(values[i++]).equal('creatures');
+            i = 22;
+            should(values[i++]).equal('all');
+            should(values[i++]).equal('extinguishment');
+            should(values.length).equal(24);
+            var indexes = alternates.indexes;
+            should(indexes.length).equal(24);
+            var i = 0;
+            should(segments[indexes[i++]].scid).equal('mn1:99.1'); // knows earth
+            should(segments[indexes[i++]].scid).equal('mn1:100-122.1'); // knows water
+            should(segments[indexes[i++]].scid).equal('mn1:100-122.2'); // knows fire
+            should(segments[indexes[22]].scid).equal('mn1:100-122.22'); // knows all
+            should(segments[indexes[23]].scid).equal('mn1:100-122.23'); // knows extinguishment
+            should(segments[alternates.start].scid).equal('mn1:99.1');
+            should.deepEqual(alternates.template.map(seg => seg.scid), [
+                'mn1:99.1',
+                'mn1:99.2',
+                'mn1:99.3',
+                'mn1:99.4',
+            ]);
+            should(alternates.length).equal(30);
+            should(segments[alternates.start+alternates.length-1].scid)
+                .equal('mn1:100-122.26');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (6)", function(done) {
+        (async function() { try {
+            var sutta = await Sutta.loadSutta('mn1');
+            var segments = sutta.segments.slice(229);
+
+            var alternates = Template.findAlternates(segments);
+            should(alternates.phrase).equal('directly');
+            should(alternates.prefix).equal('They directly know ');
+            var values = alternates.values;
+            var i = 0;
+            should(values[i++]).equal('earth');
+            should(values[i++]).equal('water');
+            should(values[i++]).equal('fire');
+            should(values[i++]).equal('air');
+            should(values[i++]).equal('creatures');
+            i = 22;
+            should(values[i++]).equal('all');
+            should(values[i++]).equal('extinguishment');
+            should(values.length).equal(24);
+            var indexes = alternates.indexes;
+            should(indexes.length).equal(24);
+            var i = 0;
+            should(segments[indexes[i++]].scid).equal('mn1:123.1'); // knows earth
+            should(segments[indexes[i++]].scid).equal('mn1:124-146.1'); // knows water
+            should(segments[indexes[i++]].scid).equal('mn1:124-146.2'); // knows fire
+            should(segments[indexes[22]].scid).equal('mn1:124-146.22'); // knows all
+            should(segments[indexes[23]].scid).equal('mn1:124-146.23'); // knows extinguishment
+            should(segments[alternates.start].scid).equal('mn1:123.1');
+            should.deepEqual(alternates.template.map(seg => seg.scid), [
+                'mn1:123.1',
+                'mn1:123.2',
+                'mn1:123.3',
+                'mn1:123.4',
+            ]);
+            should(alternates.length).equal(30);
+            should(segments[alternates.start+alternates.length-1].scid)
+                .equal('mn1:124-146.26');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (7)", function(done) {
+        (async function() { try {
+            var sutta = await Sutta.loadSutta('mn1');
+            var segments = sutta.segments.slice(260);
+
+            var alternates = Template.findAlternates(segments);
+            should(alternates.phrase).equal('directly');
+            should(alternates.prefix).equal('He directly knows ');
+            var values = alternates.values;
+            var i = 0;
+            should(values[i++]).equal('earth');
+            should(values[i++]).equal('water');
+            should(values[i++]).equal('fire');
+            should(values[i++]).equal('air');
+            should(values[i++]).equal('creatures');
+            i = 22;
+            should(values[i++]).equal('all');
+            should(values[i++]).equal('extinguishment');
+            should(values.length).equal(24);
+            var indexes = alternates.indexes;
+            should(indexes.length).equal(24);
+            var i = 0;
+            should(segments[indexes[i++]].scid).equal('mn1:147.1'); // knows earth
+            should(segments[indexes[i++]].scid).equal('mn1:148-170.1'); // knows water
+            should(segments[indexes[i++]].scid).equal('mn1:148-170.2'); // knows fire
+            should(segments[indexes[22]].scid).equal('mn1:148-170.22'); // knows all
+            should(segments[indexes[23]].scid).equal('mn1:148-170.23'); // knows extinguishment
+            should(segments[alternates.start].scid).equal('mn1:147.1');
+            should.deepEqual(alternates.template.map(seg => seg.scid), [
+                'mn1:147.1',
+                'mn1:147.2',
+                'mn1:147.3',
+                'mn1:147.4',
+            ]);
+            should(alternates.length).equal(30);
+            should(segments[alternates.start+alternates.length-1].scid)
+                .equal('mn1:148-170.26');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (8)", function(done) {
+        (async function() { try {
+            var sutta = await Sutta.loadSutta('mn1');
+            var segments = sutta.segments.slice(292);
+
+            var alternates = Template.findAlternates(segments);
+            should(alternates.phrase).equal('directly');
+            should(alternates.prefix).equal('He directly knows ');
+            var values = alternates.values;
+            var i = 0;
+            should(values[i++]).equal('earth');
+            should(values[i++]).equal('water');
+            should(values[i++]).equal('fire');
+            should(values[i++]).equal('air');
+            should(values[i++]).equal('creatures');
+            i = 22;
+            should(values[i++]).equal('all');
+            should(values[i++]).equal('extinguishment');
+            should(values.length).equal(24);
+            var indexes = alternates.indexes;
+            should(indexes.length).equal(24);
+            var i = 0;
+            should(segments[indexes[i++]].scid).equal('mn1:171.1'); // knows earth
+            should(segments[indexes[i++]].scid).equal('mn1:172-194.1'); // knows water
+            should(segments[indexes[i++]].scid).equal('mn1:172-194.2'); // knows fire
+            should(segments[indexes[22]].scid).equal('mn1:172-194.22'); // knows all
+            should(segments[indexes[23]].scid).equal('mn1:172-194.23'); // knows extinguishment
+            should(segments[alternates.start].scid).equal('mn1:171.1');
+            should.deepEqual(alternates.template.map(seg => seg.scid), [
+                'mn1:171.1',
+                'mn1:171.2',
+                'mn1:171.3',
+                'mn1:171.4',
+                'mn1:171.5',
+                'mn1:171.6',
+            ]);
+            should(alternates.length).equal(34);
+            should(segments[alternates.start+alternates.length-1].scid)
+                .equal('mn1:172-194.28');
 
             done();
         } catch(e) { done(e); } })();

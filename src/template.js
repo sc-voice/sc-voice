@@ -9,6 +9,7 @@
     const MAX_LEVENSHTEIN = 2;
     const RE_TRIM_ELLIPSIS = /\s*[,.;\u2026].*$/u;
     const RE_PUNCT_END = /[.,;].*$/u;
+    const RE_WORDS = new RegExp(`[ ${Words.U_EMDASH}]`, 'u');
 
     class Template {
         constructor(parms={}) {
@@ -66,8 +67,9 @@
         }
         
         static commonPhrase(a,b, minLength=MIN_PHRASE) {
-            var x = a.split(' ');
-            var y = b.split(' ');
+            var re = new RegExp(`[ ${Words.U_EMDASH}]`);
+            var x = a.split(re);
+            var y = b.split(re);
             var c = new Array(x.length+1).fill(null).map(() => new Array(y.length+1).fill(null));
             for (var i = 0; i <= x.length; i++) {
                 c[i][0] = 0;
