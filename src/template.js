@@ -38,6 +38,39 @@
             this.prefixLen = this.prefix.length;
         }
 
+        
+        static commonPhrase(a,b) {
+            var x = a.split(' ');
+            var y = b.split(' ');
+            var c = new Array(x.length+1).fill(null).map(() => new Array(y.length+1).fill(null));
+            for (var i = 0; i <= x.length; i++) {
+                c[i][0] = 0;
+            }
+            for (var j = 0; j <= y.length; j++) {
+                c[0][j] = 0;
+            }
+            var lcs = []
+            for (var i = 1; i <= x.length; i++) {
+                for (var j = 1; j <= y.length; j++) {
+                    if (x[i-1] === y[j-1]) {
+                        c[i][j] = c[i-1][j-1] + 1;
+                        lcs[c[i][j]] = x[i-1];
+                    } else if (c[i][j-1] > c[i-1][j]) {
+                        c[i][j] = c[i][j-1];
+                    } else {
+                        c[i][j] = c[i-1][j];
+                    }
+                }
+            }
+            for (lcs.shift(); lcs.length; lcs.shift()) {
+                var pat = lcs.join(' ');
+                if (a.indexOf(pat) >= 0 && b.indexOf(pat) >= 0) {
+                    return pat;
+                }
+            }
+            return '';
+        }
+                            
         static commonPrefix(s0, s1, minLength=MIN_PREFIX) {
             var len = Math.min(s0.length, s1.length);
             for (var i=0; i<len; i++) {
@@ -78,7 +111,6 @@
             }
 
             var indexes = SegDoc.findIndexes(segments, `^${prefix}`, {prop});
-            console.log('debug a:', indexes.length, ie.length);
             if (2 < indexes.length) { // prefix distinguishes discontinguous alternates
                 it = indexes[0];
                 var prevIndex = -1;
@@ -109,7 +141,6 @@
                     }
                     values.push(alt); 
                     indexes.push(ie[i]);
-                    
                 }
             }
 

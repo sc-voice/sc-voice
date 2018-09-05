@@ -55,6 +55,16 @@
             reAlternates: /earth|the Creator|water/u,
         });
     });
+    it("TESTTESTcommonPhrase(a,b) returns longest common word sequence", function() {
+        should(Template.commonPhrase("a", "b c")).equal('');
+        should(Template.commonPhrase("a", "a b c")).equal('a');
+        should(Template.commonPhrase("a b c", "b c")).equal('b c');
+        should(Template.commonPhrase("a c b b c", "b c")).equal('b c');
+        should(Template.commonPhrase(
+            "Take a mendicant who, reflecting properly, lives restraining the faculty of the eye.", 
+            "Reflecting properly, they live restraining the faculty of the ear …"
+        )).equal('restraining the faculty of the');
+    });
     it("expand(segment) expands a template (mn1:4.2)", function() {
         var template = new Template({
             segments: [ segments[1], segments[2], ], 
