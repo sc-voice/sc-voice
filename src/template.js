@@ -5,7 +5,6 @@
     const Words = require('./words');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
     const DEFAULT_PROP = 'en';
-    const MIN_PREFIX = 10;
     const MIN_PHRASE = 10;
     const RE_TRIM_ELLIPSIS = /\s*[,.;\u2026].*$/u;
     const RE_PUNCT_END = /[.,;].*$/u;
@@ -77,16 +76,6 @@
             return '';
         }
                             
-        static commonPrefix(s0, s1, minLength=MIN_PREFIX) {
-            var len = Math.min(s0.length, s1.length);
-            for (var i=0; i<len; i++) {
-                if (s0.charAt(i) !== s1.charAt(i)) {
-                    break;
-                }
-            }
-            return i<minLength ? null : s0.substring(0, i);
-        }
-
         static findAlternates(segments, prop=DEFAULT_PROP) {
             var ie = SegDoc.findIndexes(segments, RE_ELLIPSIS, {prop});
 
