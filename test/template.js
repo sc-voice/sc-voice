@@ -55,6 +55,14 @@
             reAlternates: /earth|the Creator|water/u,
         });
     });
+    it("TESTTESTlevenshtein(a,b) returns distance between word", function() {
+        should(Math.min(321,12,42)).equal(12);
+        should(Template.levenshtein('abc','abc')).equal(0);
+        should(Template.levenshtein('bc','abc')).equal(1);
+        should(Template.levenshtein('abc','axbyc')).equal(2);
+        should(Template.levenshtein('abc','ABC')).equal(3);
+        should(Template.levenshtein('know','knows')).equal(1);
+    });
     it("commonPhrase(a,b,minLength) returns longest common word sequence", function() {
         var minLength = 1;
         should(Template.commonPhrase("a", "b c", minLength)).equal('');
@@ -177,11 +185,11 @@
             var segments = sutta.segments.slice(109);
 
             var alternates = Template.findAlternates(segments);
-            should(alternates.prefix).equal( 'They directly ' );
+            should(alternates.phrase).equal('directly');
+            should(alternates.prefix).equal('They directly ');
             var values = alternates.values;
             var i = 0;
-            i++;
-            //should(values[i++]).equal('earth');
+            should(values[i++]).equal('earth');
             should(values[i++]).equal('water');
             should(values[i++]).equal('fire');
             should(values[i++]).equal('air');
@@ -197,8 +205,6 @@
             should(segments[indexes[i++]].scid).equal('mn1:5.2'); // conceive fire
             should(segments[indexes[22]].scid).equal('mn1:25.2'); // conceive all
             should(segments[indexes[23]].scid).equal('mn1:26.2'); // conceive extinguishment
-            should(alternates.prefix).equal('But then they conceive ');
-            should(alternates.phrase).equal('But then they conceive');
             should(segments[alternates.start].scid).equal('mn1:3.2');
             should.deepEqual(alternates.template.map(seg => seg.scid), [
                 'mn1:3.3',

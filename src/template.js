@@ -6,6 +6,7 @@
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
     const DEFAULT_PROP = 'en';
     const MIN_PHRASE = 8;
+    const MAX_LEVENSHTEIN = 2;
     const RE_TRIM_ELLIPSIS = /\s*[,.;\u2026].*$/u;
     const RE_PUNCT_END = /[.,;].*$/u;
 
@@ -38,6 +39,31 @@
             this.prefixLen = this.prefix.length;
         }
 
+        static levenshtein(s,t) {
+            if (s.length == 0) {
+                return t.length;
+            }
+            if (t.length == 0) {
+                return s.length;
+            }
+            var d = new Array(s.length+1).fill(null).map(() => new Array(t.length+1).fill(null));
+            for (var i = 0; i <= s.length; i++) {
+                d[i][0] = i;
+            }
+            for (var j = 0; j <= t.length; j++) {
+                d[0][j] = j;
+            }
+
+            for (var i = 1; i <= s.length; i++) {
+                var si = s.charAt(i - 1);
+                for (var j = 1; j <= t.length; j++) {
+                    var tj = t.charAt(j - 1);
+                    var cost = si === tj ? 0 : 1;
+                    d[i][j] = Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1] + cost);
+                }
+            }
+            return d[s.length][t.length];
+        }
         
         static commonPhrase(a,b, minLength=MIN_PHRASE) {
             var x = a.split(' ');
@@ -69,8 +95,13 @@
                     lcs.pop();
                 }
                 var pat = lcs.join(' ');
+                var ai = a.indexOf(pat);
+                var bi = b.indexOf(pat);
                 if (a.indexOf(pat) >= 0 && b.indexOf(pat) >= 0) {
-                    return pat.length < minLength ? '' : pat;
+                    if (pat.length < minLength) {
+                        return '';
+                    }
+                    return pat;
                 }
             }
             return '';
