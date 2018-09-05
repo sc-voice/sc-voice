@@ -176,7 +176,7 @@
                 'the nose',
                 'the tongue',
                 'the body',
-                //'the mind',
+                'the mind',
             ]);
             should.deepEqual(alternates.indexes.map(i => segments[i].scid), [
                 'mn2:12.2',
@@ -184,7 +184,7 @@
                 'mn2:12.5',
                 'mn2:12.6',
                 'mn2:12.7',
-                //'mn2:12.8', // the mind
+                'mn2:12.8', 
             ]);
             should(alternates.prefix).equal('Reflecting properly, they live restraining the faculty of ');
             should(alternates.phrase).equal('restraining the faculty of');
@@ -207,7 +207,7 @@
                 'deceit and deviousness',
                 'obstinacy and aggression',
                 'conceit and arrogance',
-                //'vanity and negligence',
+                'vanity and negligence',
             ]);
             should.deepEqual(alternates.indexes.map(i => segments[i].scid), [
                 'mn3:8.1',
@@ -217,7 +217,7 @@
                 'mn3:9-15.4',
                 'mn3:9-15.5',
                 'mn3:9-15.6',
-                //'mn3:9-15.7',
+                'mn3:9-15.7',
             ]);
             should(alternates).properties({
                 prefix: 'The bad thing here is ',

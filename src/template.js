@@ -108,10 +108,11 @@
             var prefix = text1.substring(0, text1.indexOf(phrase) + phrase.length + 1);
 
             var indexes = SegDoc.findIndexes(segments, `${phrase}`, {prop});
+            var values = [];
             if (2 < indexes.length) { // phrase distinguishes discontinguous alternates
                 it = indexes[0];
                 var prevIndex = -1;
-                var values = indexes.reduce((acc,iseg,i) => {
+                values = indexes.reduce((acc,iseg,i) => {
                     var seg = segments[iseg];
                     var alt = seg[prop].split(phrase)[1].trim();
                     if (i === prevIndex+1) {
@@ -125,7 +126,7 @@
                 var alt = segments[it][prop];
                 alt = alt.split(phrase)[1].trim();
                 alt = alt.replace(RE_PUNCT_END,'');
-                var values = [alt];
+                values = [alt];
                 for (var i = 0; i<ie.length; i++ ) {
                     var seg = segments[ie[i]];
                     var alt = seg[prop];
@@ -139,6 +140,20 @@
                     }
                     values.push(alt); 
                     indexes.push(ie[i]);
+                }
+            }
+
+            if (indexes.length > 1 && 1 < indexes[1] - indexes[0]) { // possible closing alt
+                var template2 = segments[indexes[0]+1][prop];
+                var iEnd = indexes[indexes.length - 1] + 1;
+                var end2 = segments[iEnd+1][prop];
+                var endPhrase = Template.commonPhrase(template2, end2);
+                if (endPhrase) {
+                    var altEnd = segments[iEnd][prop].replace(RE_PUNCT_END, '');
+                    if (altEnd) {
+                        indexes.push(iEnd);
+                        values.push(altEnd);
+                    }
                 }
             }
 
