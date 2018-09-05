@@ -55,11 +55,12 @@
             reAlternates: /earth|the Creator|water/u,
         });
     });
-    it("TESTTESTcommonPhrase(a,b) returns longest common word sequence", function() {
-        should(Template.commonPhrase("a", "b c")).equal('');
-        should(Template.commonPhrase("a", "a b c")).equal('a');
-        should(Template.commonPhrase("a b c", "b c")).equal('b c');
-        should(Template.commonPhrase("a c b b c", "b c")).equal('b c');
+    it("commonPhrase(a,b,minLength) returns longest common word sequence", function() {
+        var minLength = 1;
+        should(Template.commonPhrase("a", "b c", minLength)).equal('');
+        should(Template.commonPhrase("a", "a b c", minLength)).equal('a');
+        should(Template.commonPhrase("a b c", "b c", minLength)).equal('b c');
+        should(Template.commonPhrase("a c b b c", "b c", minLength)).equal('b c');
         should(Template.commonPhrase(
             "Take a mendicant who, reflecting properly, lives restraining the faculty of the eye.", 
             "Reflecting properly, they live restraining the faculty of the ear …"
@@ -155,24 +156,43 @@
             should(segments[indexes[i++]].scid).equal('mn1:5.2'); // conceive fire
             should(segments[indexes[22]].scid).equal('mn1:25.2'); // conceive all
             should(segments[indexes[23]].scid).equal('mn1:26.2'); // conceive extinguishment
+            should(alternates).properties({
+                prefix: 'But then they conceive ',
+                phrase: 'But then they conceive',
+            });
 
             done();
         } catch(e) { done(e); } })();
     });
-    it("findAlternates(segments, prop) analyzes mn2 for alternates", function(done) {
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn2 for alternates", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn2');
+            var segments = sutta.segments;
 
-            /* mn2 does indeed have minor alternates (i.e., eye, ear, etc.) 
-             * as well as unexpandable ellipses.
-             */
-            var alternates = Template.findAlternates(sutta.segments);
-            should(alternates).equal(null);
+            var alternates = Template.findAlternates(segments);
+            should.deepEqual(alternates.values, [
+                'the eye',
+                'the ear',
+                'the nose',
+                'the tongue',
+                'the body',
+                //'the mind',
+            ]);
+            should.deepEqual(alternates.indexes.map(i => segments[i].scid), [
+                'mn2:12.2',
+                'mn2:12.4',
+                'mn2:12.5',
+                'mn2:12.6',
+                'mn2:12.7',
+                //'mn2:12.8', // the mind
+            ]);
+            should(alternates.prefix).equal('Reflecting properly, they live restraining the faculty of ');
+            should(alternates.phrase).equal('restraining the faculty of');
 
             done();
         } catch(e) { done(e); } })();
     });
-    it("findAlternates(segments, prop) analyzes mn3 for alternates", function(done) {
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn3 for alternates", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn3');
             var segments = sutta.segments;
@@ -199,6 +219,10 @@
                 'mn3:9-15.6',
                 //'mn3:9-15.7',
             ]);
+            should(alternates).properties({
+                prefix: 'The bad thing here is ',
+                phrase: 'The bad thing here is',
+            });
 
             done();
         } catch(e) { done(e); } })();

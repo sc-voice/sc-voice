@@ -6,6 +6,7 @@
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
     const DEFAULT_PROP = 'en';
     const MIN_PREFIX = 10;
+    const MIN_PHRASE = 10;
     const RE_TRIM_ELLIPSIS = /\s*[,.;\u2026].*$/u;
     const RE_PUNCT_END = /[.,;].*$/u;
 
@@ -39,7 +40,7 @@
         }
 
         
-        static commonPhrase(a,b) {
+        static commonPhrase(a,b, minLength=MIN_PHRASE) {
             var x = a.split(' ');
             var y = b.split(' ');
             var c = new Array(x.length+1).fill(null).map(() => new Array(y.length+1).fill(null));
@@ -62,10 +63,15 @@
                     }
                 }
             }
-            for (lcs.shift(); lcs.length; lcs.shift()) {
+            while (1 < lcs.length) {
+                if (a.indexOf(`${lcs[0]} ${lcs[1]}`) < 0) {
+                    lcs.shift();
+                } else if (a.indexOf`${lcs[lcs.length-2]} ${lcs[lcs.length-1]}` < 0) {
+                    lcs.pop();
+                }
                 var pat = lcs.join(' ');
                 if (a.indexOf(pat) >= 0 && b.indexOf(pat) >= 0) {
-                    return pat;
+                    return pat.length < minLength ? '' : pat;
                 }
             }
             return '';
@@ -92,48 +98,51 @@
                     JSON.stringify(segments[ie[0]]));
             }
 
-            /*
-             * The substitution prefix is found on the second alternate 
-             * (i.e., the segment with the first ellipsis) and confirmed with
-             * a match either with the immediately following alternate or
-             * the preceding template.
+            /* 
+             * The first alternate is found by searching back for a phrase common
+             * to the first and second alternate segments. 
              */
-            var prefix = Template.commonPrefix(segments[ie[0]][prop], segments[ie[1]][prop]);
-            for (var it = ie[0]; !prefix && 0 <= --it; ) {
-                console.log('checking prefix:', segments[it][prop]);
-                prefix = Template.commonPrefix( segments[ie[0]][prop], segments[it][prop]);
+            var phrase = '';
+            for (var it = ie[0]; !phrase && 0 <= --it; ) {
+                phrase = Template.commonPhrase(segments[ie[0]][prop], segments[it][prop]);
             }
-            if (!prefix) {
-                var alt = segments[ie[0]][prop].replace(RE_ELLIPSIS,'');
-                console.log('debug:', alt);
-                //console.error(`no expansion prefix for alternate:`+ JSON.stringify(segments[ie[0]],null,2));
+            if (!phrase) {
+                console.error(`no expansion template for alternate:`+ JSON.stringify(segments[ie[0]],null,2));
                 return null;
             }
 
-            var indexes = SegDoc.findIndexes(segments, `^${prefix}`, {prop});
-            if (2 < indexes.length) { // prefix distinguishes discontinguous alternates
+            /*
+             * The substitution prefix is found on the second alternate 
+             * (i.e., the segment with the first ellipsis).
+             */
+            var text1 = segments[ie[0]][prop];
+            var prefix = text1.substring(0, text1.indexOf(phrase) + phrase.length + 1);
+
+            var indexes = SegDoc.findIndexes(segments, `${phrase}`, {prop});
+            if (2 < indexes.length) { // phrase distinguishes discontinguous alternates
                 it = indexes[0];
                 var prevIndex = -1;
                 var values = indexes.reduce((acc,iseg,i) => {
                     var seg = segments[iseg];
-                    var s = seg[prop].substring(prefix.length);
+                    var alt = seg[prop].split(phrase)[1].trim();
                     if (i === prevIndex+1) {
-                        acc.push(s.replace(RE_TRIM_ELLIPSIS,''));
+                        acc.push(alt.replace(RE_TRIM_ELLIPSIS,''));
                     }
                     prevIndex = i;
                     return acc;
                 }, []);
-            } else { // prefix cannot be used, so assume continguous alternates
+            } else { // phrase cannot be used, so assume continguous alternates
                 var indexes = [it];
-                console.log('it', it);
                 var alt = segments[it][prop];
-                var alt = alt.substring(prefix.length).replace(RE_PUNCT_END,'');
+                alt = alt.split(phrase)[1].trim();
+                alt = alt.replace(RE_PUNCT_END,'');
                 var values = [alt];
                 for (var i = 0; i<ie.length; i++ ) {
                     var seg = segments[ie[i]];
                     var alt = seg[prop];
-                    if (alt.startsWith(prefix)) {
-                        alt = alt.substring(prefix.length).replace(RE_TRIM_ELLIPSIS, '');
+                    if (alt.match(phrase)) {
+                        alt = alt.split(phrase)[1].trim();
+                        alt = alt.replace(RE_TRIM_ELLIPSIS, '');
                     } else if (i && ie[i-1]+1 === ie[i]){
                         alt = alt.replace(RE_TRIM_ELLIPSIS, '');
                     } else {
@@ -145,6 +154,7 @@
             }
 
             return {
+                phrase,
                 prefix,
                 values,
                 indexes,
