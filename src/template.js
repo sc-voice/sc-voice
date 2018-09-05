@@ -95,8 +95,6 @@
                     lcs.pop();
                 }
                 var pat = lcs.join(' ');
-                var ai = a.indexOf(pat);
-                var bi = b.indexOf(pat);
                 if (a.indexOf(pat) >= 0 && b.indexOf(pat) >= 0) {
                     if (pat.length < minLength) {
                         return '';
@@ -107,6 +105,15 @@
             return '';
         }
                             
+        static stripValue(value) {
+            var words = value.split(' ');
+            var len = words.length;
+            if (len>=3 && words[len-1] === words[len-3]) {
+                return words[len-1]; // earth as earth => earth
+            }
+            return value;
+        }
+
         static findAlternates(segments, prop=DEFAULT_PROP) {
             var ie = SegDoc.findIndexes(segments, RE_ELLIPSIS, {prop});
 
@@ -127,7 +134,8 @@
                 phrase = Template.commonPhrase(segments[ie[0]][prop], segments[it][prop]);
             }
             if (!phrase) {
-                console.error(`no expansion template for alternate:`+ JSON.stringify(segments[ie[0]],null,2));
+                console.error(`no expansion template for alternate:`+ 
+                    JSON.stringify(segments[ie[0]],null,2));
                 return null;
             }
 
@@ -138,14 +146,14 @@
             var text1 = segments[ie[0]][prop];
             var prefix = text1.substring(0, text1.indexOf(phrase) + phrase.length + 1);
 
-            var indexes = SegDoc.findIndexes(segments, `${phrase}`, {prop});
             var values = [];
-            if (2 < indexes.length) { // phrase distinguishes discontinguous alternates
+            if (ie[0]+1 !== ie[1]) { // discontinguous alternates
+                indexes = SegDoc.findIndexes(segments, `${phrase}`, {prop});
                 it = indexes[0];
                 var prevIndex = -1;
                 values = indexes.reduce((acc,iseg,i) => {
-                    var seg = segments[iseg];
-                    var alt = seg[prop].split(phrase)[1].trim();
+                    var text = segments[iseg][prop];
+                    var alt = text.split(phrase)[1].trim();
                     if (i === prevIndex+1) {
                         acc.push(alt.replace(RE_TRIM_ELLIPSIS,''));
                     }
@@ -154,27 +162,40 @@
                 }, []);
             } else { // phrase cannot be used, so assume continguous alternates
                 var indexes = [it];
-                var alt = segments[it][prop];
-                alt = alt.split(phrase)[1].trim();
-                alt = alt.replace(RE_PUNCT_END,'');
-                values = [alt];
+                var alt0 = segments[it][prop].split(phrase)[1].trim();
+                alt0 = alt0.replace(RE_PUNCT_END,'');
+                values = [Template.stripValue(alt0)];
                 for (var i = 0; i<ie.length; i++ ) {
+                    if (i && ie[i-1]+1 !== ie[i]){
+                        break; // non-consecutive
+                    }
                     var seg = segments[ie[i]];
                     var alt = seg[prop];
-                    if (alt.match(phrase)) {
-                        alt = alt.split(phrase)[1].trim();
-                        alt = alt.replace(RE_TRIM_ELLIPSIS, '');
-                    } else if (i && ie[i-1]+1 === ie[i]){
-                        alt = alt.replace(RE_TRIM_ELLIPSIS, '');
+                    var phrased = alt.split(phrase);
+                    if (phrased.length > 1) {
+                        alt = phrased[1].trim();
+                        alt = alt.replace(RE_TRIM_ELLIPSIS, ''); 
                     } else {
-                        break;
+                        alt = alt.replace(RE_TRIM_ELLIPSIS, ''); 
                     }
-                    values.push(alt); 
+                    if (i === 1) {
+                        var prefix = Template.commonPhrase(values[1], alt);
+                        if (prefix === '') {
+                            var words1 = values[1].split(' ');
+                            var words2 = alt.split(' ');
+                            values[1] = words1.slice(words1.length-words2.length)
+                                .join(' ');
+                            prefix = segments[ie[0]][prop]
+                                .replace(new RegExp(`${values[1]}.*`), '');
+                        }
+                    }
+                    values.push(alt);
                     indexes.push(ie[i]);
                 }
             }
 
-            if (indexes.length > 1 && 1 < indexes[1] - indexes[0]) { // possible closing alt
+            if (indexes.length > 1 && 1 < indexes[1] - indexes[0]) { 
+                // possible closing alt
                 var template2 = segments[indexes[0]+1][prop];
                 var iEnd = indexes[indexes.length - 1] + 1;
                 var end2 = segments[iEnd+1][prop];
@@ -183,7 +204,8 @@
                     var altEnd = segments[iEnd][prop].replace(RE_PUNCT_END, '');
                     if (altEnd) {
                         indexes.push(iEnd);
-                        values.push(altEnd);
+                        altEnd = altEnd.replace(prefix, '');
+                        values.push(Template.stripValue(altEnd));
                     }
                 }
             }
@@ -201,7 +223,6 @@
             while (start>0 && segments[start-1][prop].indexOf(values[0]) >= 0) {
                 start--;
             }
-
 
             return {
                 phrase,

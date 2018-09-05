@@ -55,7 +55,7 @@
             reAlternates: /earth|the Creator|water/u,
         });
     });
-    it("TESTTESTlevenshtein(a,b) returns distance between word", function() {
+    it("levenshtein(a,b) returns distance between word", function() {
         should(Math.min(321,12,42)).equal(12);
         should(Template.levenshtein('abc','abc')).equal(0);
         should(Template.levenshtein('bc','abc')).equal(1);
@@ -135,7 +135,7 @@
             en: 'c1 y4 c2 y4 c3',
         }]);
     });
-    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (1)", function(done) {
+    it("findAlternates(segments, prop) analyzes mn1 for alternates (1)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var prop = "xyz";
@@ -178,15 +178,14 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (2)", function(done) {
-    done(); return;
+    it("findAlternates(segments, prop) analyzes mn1 for alternates (2)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var segments = sutta.segments.slice(109);
 
             var alternates = Template.findAlternates(segments);
             should(alternates.phrase).equal('directly');
-            should(alternates.prefix).equal('They directly ');
+            should(alternates.prefix).equal('They directly know ');
             var values = alternates.values;
             var i = 0;
             should(values[i++]).equal('earth');
@@ -194,30 +193,33 @@
             should(values[i++]).equal('fire');
             should(values[i++]).equal('air');
             should(values[i++]).equal('creatures');
-            should(values[22]).equal('all');
-            should(values[23]).equal('extinguishment');
+            i = 22;
+            should(values[i++]).equal('all');
+            should(values[i++]).equal('extinguishment');
             should(values.length).equal(24);
             var indexes = alternates.indexes;
             should(indexes.length).equal(24);
             var i = 0;
-            should(segments[indexes[i++]].scid).equal('mn1:3.3'); // conceive earth
-            should(segments[indexes[i++]].scid).equal('mn1:4.2'); // conceive water
-            should(segments[indexes[i++]].scid).equal('mn1:5.2'); // conceive fire
-            should(segments[indexes[22]].scid).equal('mn1:25.2'); // conceive all
-            should(segments[indexes[23]].scid).equal('mn1:26.2'); // conceive extinguishment
-            should(segments[alternates.start].scid).equal('mn1:3.2');
+            should(segments[indexes[i++]].scid).equal('mn1:27.1'); // knows earth
+            should(segments[indexes[i++]].scid).equal('mn1:28-49.1'); // knows water
+            should(segments[indexes[i++]].scid).equal('mn1:28-49.2'); // knows fire
+            should(segments[indexes[22]].scid).equal('mn1:28-49.22'); // knows all
+            should(segments[indexes[23]].scid).equal('mn1:28-49.23'); // knows extinguishment
+            should(segments[alternates.start].scid).equal('mn1:27.1');
             should.deepEqual(alternates.template.map(seg => seg.scid), [
-                'mn1:3.3',
-                'mn1:3.4',
-                'mn1:3.5',
+                'mn1:27.1',
+                'mn1:27.2',
+                'mn1:27.3',
+                'mn1:27.4',
             ]);
-            should(alternates.length).equal(96);
-            should(segments[alternates.start+alternates.length-1].scid).equal('mn1:26.4');
+            should(alternates.length).equal(30);
+            should(segments[alternates.start+alternates.length-1].scid)
+                .equal('mn1:50.3');
 
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTfindAlternates(segments, prop) analyzes mn2 for alternates", function(done) {
+    it("findAlternates(segments, prop) analyzes mn2 for alternates", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn2');
             var segments = sutta.segments;
@@ -252,7 +254,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTfindAlternates(segments, prop) analyzes mn3 for alternates", function(done) {
+    it("findAlternates(segments, prop) analyzes mn3 for alternates", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn3');
             var segments = sutta.segments;

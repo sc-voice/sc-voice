@@ -119,7 +119,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTexpansionTemplate() returns expansion template", function(done) {
+    it("expansionTemplate() returns expansion template", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var template = sutta.expansionTemplate();
@@ -147,7 +147,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTexpansionTemplate() returns template for 28-49.1", function() {
+    it("expansionTemplate() returns template for 28-49.1", function() {
         var segments = [{ // 0
             scid: 's:26.4',
             en: 'a1',
@@ -189,7 +189,7 @@
             segments[6],
         ]);
     });
-    it("TESTTESTexpansionTemplate() returns template for 28-49.2", function() {
+    it("expansionTemplate() returns template for 28-49.2", function() {
         var segments = [{
             scid: 's:26.4',
             en: 'a1',
