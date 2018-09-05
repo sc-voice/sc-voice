@@ -5,7 +5,7 @@
     const Words = require('./words');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
     const DEFAULT_PROP = 'en';
-    const MIN_PHRASE = 10;
+    const MIN_PHRASE = 8;
     const RE_TRIM_ELLIPSIS = /\s*[,.;\u2026].*$/u;
     const RE_PUNCT_END = /[.,;].*$/u;
 
@@ -157,11 +157,29 @@
                 }
             }
 
+            var templateLength = indexes[1] - indexes[0];
+            var template = [];
+            for (var i = indexes[0]; i < indexes[1]; i++) {
+                if (segments[i][prop].indexOf(values[1]) >= 0) {
+                    break;
+                }
+                template.push(segments[i]);
+            }
+            
+            var start = indexes[0];
+            while (start>0 && segments[start-1][prop].indexOf(values[0]) >= 0) {
+                start--;
+            }
+
+
             return {
                 phrase,
                 prefix,
                 values,
                 indexes,
+                template,
+                start,
+                length: indexes[indexes.length-1] - start + template.length,
             }
         }
 

@@ -127,7 +127,7 @@
             en: 'c1 y4 c2 y4 c3',
         }]);
     });
-    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates", function(done) {
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (1)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var prop = "xyz";
@@ -156,10 +156,57 @@
             should(segments[indexes[i++]].scid).equal('mn1:5.2'); // conceive fire
             should(segments[indexes[22]].scid).equal('mn1:25.2'); // conceive all
             should(segments[indexes[23]].scid).equal('mn1:26.2'); // conceive extinguishment
-            should(alternates).properties({
-                prefix: 'But then they conceive ',
-                phrase: 'But then they conceive',
-            });
+            should(alternates.prefix).equal('But then they conceive ');
+            should(alternates.phrase).equal('But then they conceive');
+            should(segments[alternates.start].scid).equal('mn1:3.2');
+            should.deepEqual(alternates.template.map(seg => seg.scid), [
+                'mn1:3.3',
+                'mn1:3.4',
+                'mn1:3.5',
+            ]);
+            should(alternates.length).equal(96);
+            should(segments[alternates.start+alternates.length-1].scid).equal('mn1:26.4');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTfindAlternates(segments, prop) analyzes mn1 for alternates (2)", function(done) {
+    done(); return;
+        (async function() { try {
+            var sutta = await Sutta.loadSutta('mn1');
+            var segments = sutta.segments.slice(109);
+
+            var alternates = Template.findAlternates(segments);
+            should(alternates.prefix).equal( 'They directly ' );
+            var values = alternates.values;
+            var i = 0;
+            i++;
+            //should(values[i++]).equal('earth');
+            should(values[i++]).equal('water');
+            should(values[i++]).equal('fire');
+            should(values[i++]).equal('air');
+            should(values[i++]).equal('creatures');
+            should(values[22]).equal('all');
+            should(values[23]).equal('extinguishment');
+            should(values.length).equal(24);
+            var indexes = alternates.indexes;
+            should(indexes.length).equal(24);
+            var i = 0;
+            should(segments[indexes[i++]].scid).equal('mn1:3.3'); // conceive earth
+            should(segments[indexes[i++]].scid).equal('mn1:4.2'); // conceive water
+            should(segments[indexes[i++]].scid).equal('mn1:5.2'); // conceive fire
+            should(segments[indexes[22]].scid).equal('mn1:25.2'); // conceive all
+            should(segments[indexes[23]].scid).equal('mn1:26.2'); // conceive extinguishment
+            should(alternates.prefix).equal('But then they conceive ');
+            should(alternates.phrase).equal('But then they conceive');
+            should(segments[alternates.start].scid).equal('mn1:3.2');
+            should.deepEqual(alternates.template.map(seg => seg.scid), [
+                'mn1:3.3',
+                'mn1:3.4',
+                'mn1:3.5',
+            ]);
+            should(alternates.length).equal(96);
+            should(segments[alternates.start+alternates.length-1].scid).equal('mn1:26.4');
 
             done();
         } catch(e) { done(e); } })();
@@ -188,6 +235,13 @@
             ]);
             should(alternates.prefix).equal('Reflecting properly, they live restraining the faculty of ');
             should(alternates.phrase).equal('restraining the faculty of');
+            should(segments[alternates.start].scid).equal('mn2:12.2');
+            should.deepEqual(alternates.template.map(seg => seg.scid), [
+                'mn2:12.2',
+                'mn2:12.3',
+            ]);
+            should(alternates.length).equal(8);
+            should(segments[alternates.start+alternates.length-1].scid).equal('mn2:12.9');
 
             done();
         } catch(e) { done(e); } })();
@@ -219,10 +273,20 @@
                 'mn3:9-15.6',
                 'mn3:9-15.7',
             ]);
-            should(alternates).properties({
-                prefix: 'The bad thing here is ',
-                phrase: 'The bad thing here is',
-            });
+            should(alternates.prefix).equal('The bad thing here is ');
+            should(alternates.phrase).equal('The bad thing here is');
+            should(alternates.length).equal(18);
+            should(segments[alternates.start].scid).equal('mn3:8.1');
+            should.deepEqual(alternates.template.map(seg => seg.scid), [
+                'mn3:8.1',
+                'mn3:8.2',
+                'mn3:8.3',
+                'mn3:8.4',
+                'mn3:8.5',
+                'mn3:8.6',
+            ]);
+            should(alternates.length).equal(18);
+            should(segments[alternates.start+alternates.length-1].scid).equal('mn3:9-15.12');
 
             done();
         } catch(e) { done(e); } })();
