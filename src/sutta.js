@@ -5,7 +5,6 @@
     const SegDoc = require('./seg-doc');
     const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
-    const Template = require('./template');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
     const OPTS_EN = {
         prop: 'en',
@@ -103,110 +102,6 @@
                 indexes,
             }
         };
-
-        createPrimaryTemplate(segments, iEllipses, opts) {
-            opts = Object.assign(OPTS_EN, opts);
-            var prop = opts.prop;
-
-            var alternates = this.findAlternates(segments, iEllipses, opts);
-            var iAlts = alternates.indexes;
-            var alts = alternates.values;
-
-            var candidates = iAlts.reduce((acc, iAlt, i) => {
-                0<i // the template alternate is not a candidate
-                && iEllipses[i-1] === iAlt // the ellipsis is part of current group
-                && RE_ELLIPSIS.test(segments[iAlt][prop]) // there is an ellipsis
-                && acc.push(segments[iAlt]);
-                return acc;
-            }, []);
-
-            var iTemplate = iAlts[0];
-            var iEnd = iAlts[1]; 
-            while (segments[iEnd-1][prop].indexOf(alts[1])>=0) {
-                iEnd--; // Ignore segments that are part of first variation 
-            }
-            var template = new Template({
-                segments: segments.slice(iTemplate, iEnd), 
-                alternates: alts, 
-                prop,
-                candidates,
-            });
-            return template;
-        }
-
-        createSecondaryTemplate(segments, iEllipses, opts) {
-            opts = Object.assign(OPTS_EN, opts);
-            var prop = opts.prop;
-            var iAlt = 0;
-            var alts = this.alternates;
-            var iEll0 = iEllipses[0];
-            var candidates = [segments[iEll0]];
-            var candidateText = candidates[0][prop];
-            if (!candidateText.match(alts[iAlt+1])) {
-                iAlt++;
-                if (!candidateText.match(alts[iAlt+1])) {
-                    throw new Error(`could not find "${alts[iAlt+1]}" in: "${candidateText}"`);
-                }
-            }
-            var iEnd = iEll0 + this.alternates.length - iAlt - 1;
-            var endText = segments[iEnd-1][prop];
-            var altLast = alts[alts.length-1];
-            if (!endText.match(altLast)) {
-                throw new Error(`expected "${altLast}" in: "${segments[iEnd-1].scid} ${endText}"`);
-            }
-            if (!endText.match(RE_ELLIPSIS)) {
-                throw new Error(`expected "..." in: "${segments[iEnd-1].scid} ${endText}"`);
-            }
-            var candidates = segments.slice(iEll0, iEnd);
-            
-            var found = 0;
-            var iTemplate = iEll0 - 1; // template starting segment index
-            for (; 0 < iTemplate; iTemplate--, found++) { //
-                if (segments[iTemplate][prop].match(alts[iAlt])) {
-                    break;
-                }
-            }
-            for (; 0 < iTemplate; iTemplate--, found++) {
-                if (!segments[iTemplate-1][prop].match(alts[iAlt])) {
-                    break;
-                }
-            }
-            if (!found) {
-                throw new Error(`could not find ${alts[iAlt]} template for: ${candidateText}`);
-            }
-            var templateSegs = segments.slice(iTemplate, iEll0);
-            var prefix = 
-                candidateText.substring(0, candidateText.indexOf(alts[iAlt+1])) ||
-                templateSegs[0][prop].substring(0, templateSegs[0][prop].indexOf(alts[iAlt]));
-
-            return new Template({
-                segments: templateSegs,
-                alternates: alts, 
-                prop,
-                prefix,
-                candidates,
-            });
-        }
-
-        expansionTemplate(opts={}) {
-            opts = Object.assign(OPTS_EN, opts);
-            var segDoc = this;
-
-            var iEllipses = segDoc.findIndexes(RE_ELLIPSIS, opts);
-            if (iEllipses.length === 0) {
-                return null;
-            }
-            if (iEllipses.length <= 1) {
-                throw new Error("not implemented");
-            }
-
-
-            if (this.alternates == null) {
-                return this.createPrimaryTemplate(this.segments, iEllipses, opts);
-            } else {
-                return this.createSecondaryTemplate(this.segments, iEllipses, opts);
-            }
-        }
 
     }
 

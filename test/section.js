@@ -7,7 +7,6 @@
         Section,
         SegDoc,
         Sutta,
-        Template,
         Words,
     } = require('../index');
 

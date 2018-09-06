@@ -9,7 +9,6 @@
         SectionParser,
         SegDoc,
         Sutta,
-        Template,
         Words,
     } = require('../index');
 
