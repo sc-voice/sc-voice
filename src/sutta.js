@@ -34,6 +34,10 @@
         }
 
         scidGroup(scid) {
+            return Sutta.scidGroup(this.segments, scid);
+        }
+
+        static scidGroup(segments, scid) {
             if (typeof scid === 'string') {
                 scid = new SuttaCentralId(scid);
             }
@@ -46,7 +50,7 @@
                 throw new Error(`scidGroup() not implemented for sutta scid:${scid}`);
             }
             var wildcard = "*";
-            var segments = this.findSegments(parent.scid + wildcard,  {
+            var segments = SegDoc.findSegments(segments, parent.scid + wildcard,  {
                 prop: 'scid',
             });
             return {
