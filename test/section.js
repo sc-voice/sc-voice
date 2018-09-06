@@ -34,7 +34,7 @@
     }];
 
 
-    it("TESTTESTSection(parms) creates a section", function() {
+    it("Section(parms) creates a section", function() {
         var section = new Section({
             segments, 
         });
@@ -44,7 +44,7 @@
         });
     });
 
-    it("TESTTESTexpand(segment) expands a template (mn1:4.2)", function() {
+    it("expand(segment) expands a template (mn1:4.2)", function() {
         var section = new Section({
             segments,
             prefix: 'd1 ',
@@ -61,7 +61,7 @@
             en: 'c1 y1 c2 y1 c3',
         }]);
     });
-    it("TESTTESTexpand(segment) expands a template (mn1:28-49.6)", function() {
+    it("expand(segment) expands a template (mn1:28-49.6)", function() {
         var section = new Section({
             segments,
             prefix: 'e1 ',
@@ -78,7 +78,7 @@
             en: 'c1 y2a y2b c2 y2a y2b c3',
         }]);
     });
-    it("TESTTESTexpand(segment) expands a template (mn1:28-49.1)", function() {
+    it("expand(segment) expands a template (mn1:28-49.1)", function() {
         var section = new Section({
             segments,
             prefix: 'e1 ',
@@ -95,7 +95,7 @@
             en: 'c1 y3 c2 y3 c3',
         }]);
     });
-    it("TESTTESTexpand(segment) expands a template (mn1:28-49.2)", function() {
+    it("expand(segment) expands a template (mn1:28-49.2)", function() {
         var section = new Section({
             segments,
             template: [ segments[1], segments[2], ], 
@@ -112,7 +112,7 @@
             en: 'c1 y4 c2 y4 c3',
         }]);
     });
-    it("TESTTESTexpand() expands entire section", function() {
+    it("expand() expands entire section", function() {
         var section = new Section({
             segments,
             template: [ segments[1], segments[2], ], 
@@ -155,7 +155,7 @@
             en: 'c1 y4 c2 y4 c3',
         }]);
     });
-    it("TESTTESTis serializable", function() {
+    it("is serializable", function() {
         var section = new Section({
             segments,
             template: [ segments[1], segments[2], ], 

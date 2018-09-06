@@ -85,7 +85,7 @@
         });
     });
 
-    it("TESTTESTparseExpandable(segments) parses mn1 (1)", function(done) {
+    it("parseExpandable(segments) parses mn1 (1)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var prop = "xyz";
@@ -114,7 +114,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseExpandable(segments) parses mn1 (2)", function(done) {
+    it("parseExpandable(segments) parses mn1 (2)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
@@ -132,7 +132,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseExpandable(segments) parses mn1 (3)", function(done) {
+    it("parseExpandable(segments) parses mn1 (3)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
@@ -150,7 +150,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseExpandable(segments) parses mn1 (4)", function(done) {
+    it("parseExpandable(segments) parses mn1 (4)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
@@ -168,7 +168,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseExpandable(segments) parses mn1 (5)", function(done) {
+    it("parseExpandable(segments) parses mn1 (5)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
@@ -186,7 +186,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseExpandable(segments) parses mn1 (6)", function(done) {
+    it("parseExpandable(segments) parses mn1 (6)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
@@ -204,7 +204,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseExpandable(segments) parses mn1 (7)", function(done) {
+    it("parseExpandable(segments) parses mn1 (7)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
@@ -222,7 +222,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseExpandable(segments) parses mn1 (8)", function(done) {
+    it("parseExpandable(segments) parses mn1 (8)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
@@ -240,7 +240,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseExpandable(segments) parses mn2 (1)", function(done) {
+    it("parseExpandable(segments) parses mn2 (1)", function(done) {
         done(); return; // TODO
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn2');
@@ -259,7 +259,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseExpandable(segments) parses mn3 (1)", function(done) {
+    it("parseExpandable(segments) parses mn3 (1)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn2');
             var parser = new SectionParser();
