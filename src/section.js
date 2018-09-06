@@ -1,17 +1,7 @@
 (function(exports) {
-    const fs = require('fs');
-    const path = require('path');
-    const SegDoc = require('./seg-doc');
-    const Words = require('./words');
-    const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
     const DEFAULT_PROP = 'en';
-    const MIN_PHRASE = 8;
-    const MAX_LEVENSHTEIN = 2;
-    const RE_TRIM_ELLIPSIS = /\s*[,.;\u2026].*$/u;
-    const RE_PUNCT_END = /[.,;].*$/u;
-    const RE_WORDS = new RegExp(`[ ${Words.U_EMDASH}]`, 'u');
 
-    class Template {
+    class Section {
         constructor(parms={}) {
             var segments = parms.segments;
             if (!(segments instanceof Array)) {
@@ -19,25 +9,10 @@
             }
             this.segments = segments;
 
-            var alternates = parms.alternates;
-            if (typeof alternates === 'string') {
-                alternates = [alternates];
-            }
-            if (!(alternates instanceof Array)) {
-                throw new Error('expected array of alternates');
-            }
-            this.alternates = alternates;
-
+            this.prefix = parms.prefix;
+            this.values = parms.values;
+            this.template = parms.template;
             this.prop = parms.prop || DEFAULT_PROP;
-            this.candidates = parms.candidates;
-
-            var seg0text = segments[0][this.prop];
-            var alt0 = alternates[0];
-            var seg0parts = seg0text.split(alt0);
-            this.prefix = parms.prefix || seg0parts[0];
-
-            this.reAlternates = new RegExp(`${alternates.join('|')}`,'u');
-            this.prefixLen = this.prefix.length;
         }
 
         expand(segment) {
@@ -64,9 +39,8 @@
                 };
             });
         }
-
     }
 
-    module.exports = exports.Template = Template;
+    module.exports = exports.Section = Section;
 })(typeof exports === "object" ? exports : (exports = {}));
 

@@ -3,12 +3,15 @@
     const path = require('path');
     const SegDoc = require('./seg-doc');
     const SC = path.join(__dirname, '../local/sc');
+    const Words = require('./words');
 
     const S_MSGCTXT = 1;
     const S_MSGID1 = 2;
     const S_MSGIDN = 3;
     const S_MSGSTR1 = 4;
     const S_MSGSTRN = 5;
+
+    const RE_SPACE_EOL = new RegExp(`[^-${Words.U_HYPHEN}${Words.U_ENDASH}${Words.U_EMDASH} ]$`, 'u');
 
     class PoParser {
         constructor(opts={}) {
@@ -68,7 +71,8 @@
                                 break;
                             case S_MSGIDN:
                                 if (that.msgquote.test(line)) {
-                                    segment[that.json_id] && (segment[that.json_id] += " ");
+                                    segment[that.json_id] && segment[that.json_id].match(RE_SPACE_EOL) &&
+                                        (segment[that.json_id] += " ");
                                     segment[that.json_id] += line.substring(1, line.length-1);
                                 } else if (that.msgstr.test(line)) {
                                     segment[that.json_str] = line.substring(8, line.length-1);
@@ -85,7 +89,11 @@
                                 break;
                             case S_MSGSTRN:
                                 if (that.msgquote.test(line)) {
-                                    segment[that.json_str] && (segment[that.json_str] += " ");
+                                    if (segment[that.json_str] && segment[that.json_str].match(RE_SPACE_EOL)) {
+                                        segment[that.json_str].indexOf('non')>=0 && 
+                                            console.log(`debug: "${segment[that.json_str]}"`);
+                                        segment[that.json_str] += " ";
+                                    }
                                     segment[that.json_str] += line.substring(1, line.length-1);
                                 } else {
                                     state = S_MSGCTXT;

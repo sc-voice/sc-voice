@@ -40,6 +40,7 @@
         static get U_RSQUOTE() { return '\u2019'; }
         static get U_LDQUOTE() { return '\u201C'; }
         static get U_RDQUOTE() { return '\u201D'; }
+        static get U_HYPHEN() { return '\u2010'; }
         static get U_ENDASH() { return '\u2013'; }
         static get U_EMDASH() { return '\u2014'; }
         static get U_ELLIPSIS() { return '\u2026'; }
@@ -47,6 +48,73 @@
         static get U_a_MACRON() { return '\u0101'; }
         static get U_u_MACRON() { return '\u016d'; /* UTF-8 c5ab */ }
 
+        static levenshtein(s,t) {
+            if (s.length == 0) {
+                return t.length;
+            }
+            if (t.length == 0) {
+                return s.length;
+            }
+            var d = new Array(s.length+1).fill(null).map(() => new Array(t.length+1).fill(null));
+            for (var i = 0; i <= s.length; i++) {
+                d[i][0] = i;
+            }
+            for (var j = 0; j <= t.length; j++) {
+                d[0][j] = j;
+            }
+
+            for (var i = 1; i <= s.length; i++) {
+                var si = s.charAt(i - 1);
+                for (var j = 1; j <= t.length; j++) {
+                    var tj = t.charAt(j - 1);
+                    var cost = si === tj ? 0 : 1;
+                    d[i][j] = Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1] + cost);
+                }
+            }
+            return d[s.length][t.length];
+        }
+        
+        static commonPhrase(a,b, minLength=0) {
+            var re = new RegExp(`[ ${Words.U_EMDASH}]`);
+            var x = a.split(re);
+            var y = b.split(re);
+            var c = new Array(x.length+1).fill(null).map(() => new Array(y.length+1).fill(null));
+            for (var i = 0; i <= x.length; i++) {
+                c[i][0] = 0;
+            }
+            for (var j = 0; j <= y.length; j++) {
+                c[0][j] = 0;
+            }
+            var lcs = []
+            for (var i = 1; i <= x.length; i++) {
+                for (var j = 1; j <= y.length; j++) {
+                    if (x[i-1] === y[j-1]) {
+                        c[i][j] = c[i-1][j-1] + 1;
+                        lcs[c[i][j]] = x[i-1];
+                    } else if (c[i][j-1] > c[i-1][j]) {
+                        c[i][j] = c[i][j-1];
+                    } else {
+                        c[i][j] = c[i-1][j];
+                    }
+                }
+            }
+            while (1 < lcs.length) {
+                if (a.indexOf(`${lcs[0]} ${lcs[1]}`) < 0) {
+                    lcs.shift();
+                } else if (a.indexOf`${lcs[lcs.length-2]} ${lcs[lcs.length-1]}` < 0) {
+                    lcs.pop();
+                }
+                var pat = lcs.join(' ');
+                if (a.indexOf(pat) >= 0 && b.indexOf(pat) >= 0) {
+                    if (pat.length < minLength) {
+                        return '';
+                    }
+                    return pat;
+                }
+            }
+            return '';
+        }
+                            
         isWord(token) {
             return !this.symbolPat.test(token) && !/^[0-9]*$/.test(token);
         }

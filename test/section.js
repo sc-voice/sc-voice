@@ -1,8 +1,10 @@
-(typeof describe === 'function') && describe("template", function() {
+
+(typeof describe === 'function') && describe("section", function() {
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
     const {
+        Section,
         SegDoc,
         Sutta,
         Template,
@@ -32,29 +34,30 @@
         en: `y4 ${Words.U_ELLIPSIS}`,
     }];
 
-    it("Template(parms) creates a template", function() {
-        var template = new Template({
-            segments, 
-            alternates: ['x1','x2'],
-        });
-        should(template).properties({
-            segments,
-            alternates: ['x1','x2'],
-            reAlternates: /x1|x2/u,
-        });
-        should(template.reAlternates.test('x1')).equal(true);
+    const MN1_VALUES = [
+        'earth', 'water', 'fire', 'air', 'creatures',
+        'gods', 'the Creator', 'Brahmā', 
+        'the gods of streaming radiance', 
+        'the gods replete with glory',
+        'the gods of abundant fruit',
+        'the Overlord',
+        'the dimension of infinite space',
+        'the dimension of infinite consciousness',
+        'the dimension of nothingness',
+        'the dimension of neither perception nor non-perception',
+        'the seen', 'the heard', 'the thought', 'the cognized',
+        'oneness', 'diversity', 'all', 'extinguishment',
+    ];
 
-        var alternates = ['earth','the Creator','water']; // first alternate is template parameter
-        var template = new Template({
+    it("TESTTESTSection(parms) creates a section", function() {
+        var section = new Section({
             segments, 
-            alternates,
         });
-        should(template).properties({
+        should(section).properties({
             segments,
-            alternates,
-            reAlternates: /earth|the Creator|water/u,
         });
     });
+
     it("expand(segment) expands a template (mn1:4.2)", function() {
         var template = new Template({
             segments: [ segments[1], segments[2], ], 

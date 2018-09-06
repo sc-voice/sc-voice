@@ -190,5 +190,25 @@
             word: pali.toLowerCase(),
         });
     });
+    it("TESTTESTlevenshtein(a,b) returns distance between word", function() {
+        should(Math.min(321,12,42)).equal(12);
+        should(Words.levenshtein('abc','abc')).equal(0);
+        should(Words.levenshtein('bc','abc')).equal(1);
+        should(Words.levenshtein('abc','axbyc')).equal(2);
+        should(Words.levenshtein('abc','ABC')).equal(3);
+        should(Words.levenshtein('know','knows')).equal(1);
+    });
+    it("TESTTESTcommonPhrase(a,b,minLength) returns longest common word sequence", function() {
+        var minLength = 1;
+        should(Words.commonPhrase("a", "b c", minLength)).equal('');
+        should(Words.commonPhrase("a", "a b c", minLength)).equal('a');
+        should(Words.commonPhrase("a b c", "b c", minLength)).equal('b c');
+        should(Words.commonPhrase("a c b b c", "b c", minLength)).equal('b c');
+        should(Words.commonPhrase(
+            "Take a mendicant who, reflecting properly, lives restraining the faculty of the eye.", 
+            "Reflecting properly, they live restraining the faculty of the ear …"
+        )).equal('restraining the faculty of the');
+    });
+    
 
 })
