@@ -98,14 +98,14 @@
             var parser = new SectionParser({
                 prop,
             });
-            var expandable = parser.parseExpandable(segments);
-
-            should.deepEqual(expandable.values, MN1_VALUES);
-            should(expandable.segments.length).equal(96);
-            should(expandable.segments[0].scid).equal('mn1:3.2');
-            should(expandable.segments[95].scid).equal('mn1:26.4');
-            should(expandable.prefix).equal('But then they conceive ');
-            should.deepEqual(expandable.template.map(seg => seg.scid), [
+            var section = parser.parseExpandable(segments);
+            should(section).instanceOf(Section);
+            should.deepEqual(section.values, MN1_VALUES);
+            should(section.segments.length).equal(96);
+            should(section.segments[0].scid).equal('mn1:3.2');
+            should(section.segments[95].scid).equal('mn1:26.4');
+            should(section.prefix).equal('But then they conceive ');
+            should.deepEqual(section.template.map(seg => seg.scid), [
                 'mn1:3.3',
                 'mn1:3.4',
                 'mn1:3.5',

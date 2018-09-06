@@ -4,6 +4,7 @@
     const fs = require('fs');
     const path = require('path');
     const SegDoc = require('./seg-doc');
+    const Section = require('./section');
     const Words = require('./words');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
     const DEFAULT_PROP = 'en';
@@ -179,12 +180,12 @@
             }
             var length = indexes[indexes.length-1] - start + template.length;
 
-            return {
+            return new Section({
                 prefix,
                 values,
                 template,
                 segments: segments.slice(start, start+length),
-            }
+            });
         }
 
     }
