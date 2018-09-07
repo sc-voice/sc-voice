@@ -3,10 +3,10 @@
     const SuttaCentralId = require('./sutta-central-id');
 
     class SegDoc { // segmented document
-        constructor(json={}, opts={}) {
-            this.segments = json.segments && json.segments.map(seg => seg)  || [];
-            this.groupSep = json.groupSep || opts.groupSep || '\n';
-            this.reSegEnd = json.reSegEnd || opts.reSegEnd || ".*[.?;,]$";
+        constructor(opts={}) {
+            this.segments = opts.segments && opts.segments.map(seg => seg)  || [];
+            this.groupSep = opts.groupSep || '\n';
+            this.reSegEnd = opts.reSegEnd || ".*[.?;,]$";
             if (!(this.reSegEnd instanceof RegExp)) {
                 this.reSegEnd = new RegExp(this.reSegEnd, "u");
             }

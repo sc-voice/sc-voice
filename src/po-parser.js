@@ -42,7 +42,7 @@
         parseLines(lines, opts={}) {
             var that = this;
             return new Promise((resolve, reject) => {
-                var segDoc = new SegDoc({}, opts);
+                var segDoc = new SegDoc(opts);
                 function add(segment) {
                     if (segment) {
                         segDoc.segments.push(segment);

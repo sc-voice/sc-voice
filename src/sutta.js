@@ -12,9 +12,9 @@
     };
 
     class Sutta extends SegDoc { 
-        constructor(json={}, opts={}) {
-            super(json, opts);
-            this.sections = json.sections || opts.sections || [new Section({
+        constructor(opts={}) {
+            super(opts);
+            this.sections = opts.sections || [new Section({
                 segments: this.segments
             })];
         }
@@ -31,7 +31,7 @@
                     var id = opts.id || 'mn1';
                     var suttaPath = PoParser.suttaPath(id, opts.root);
                     var segDoc = await parser.parse(suttaPath, opts);
-                    resolve(new Sutta(segDoc, opts));
+                    resolve(new Sutta(Object.assign({}, segDoc, opts)));
                 } catch(e) {reject(e);} })();
             });
         }
