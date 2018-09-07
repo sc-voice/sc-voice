@@ -19,10 +19,6 @@
             })];
         }
 
-        scidGroup(scid) {
-            return Sutta.scidGroup(this.segments, scid);
-        }
-
         static scidGroup(segments, scid) {
             if (typeof scid === 'string') {
                 scid = new SuttaCentralId(scid);
@@ -45,6 +41,10 @@
             }
         }
 
+        scidGroup(scid) {
+            return Sutta.scidGroup(this.segments, scid);
+        }
+
         nextSegment(scid, offset=1) {
             scid = scid.toString();
             var indexes = this.findIndexes(scid);
@@ -64,10 +64,6 @@
                 }
             }
             return s0.substring(0, i);
-        }
-
-        expand() {
-            var sections = this.sections.map(sect => sect.expand());
         }
 
     }

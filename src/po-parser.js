@@ -42,10 +42,10 @@
         parseLines(lines, opts={}) {
             var that = this;
             return new Promise((resolve, reject) => {
-                var segDoc = new Segments(opts);
+                var segments = [];
                 function add(segment) {
                     if (segment) {
-                        segDoc.segments.push(segment);
+                        segments.push(segment);
                     }
                     return null;
                 }
@@ -105,7 +105,7 @@
                         }
                     });
                     segment = add(segment);
-                    resolve(segDoc);
+                    resolve(new Segments({segments}));
                 } catch(e){reject(e);} })();
             });
         }
