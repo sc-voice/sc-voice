@@ -61,10 +61,9 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTparseSutta(autta) parses mn1", function(done) {
+    it("parseSutta(sutta) parses mn1", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn1');
-            var parser = new SectionParser();
             var sutta2 = new SuttaFactory().parseSutta(sutta);
             should(sutta2).instanceOf(Sutta);
             var sections = sutta2.sections;
@@ -82,8 +81,30 @@
             should.deepEqual(sectSegs, sutta.segments);
 
             sections.forEach((sect,i) => {
-                console.log(`${i+1}: ${sect.segments[0].scid} ${sect.segments[0].en}`);
+            //    console.log(`${i+1}: ${sect.segments[0].scid} ${sect.segments[0].en}`);
             });
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("expandSutta(sutta) expands mn1", function(done) {
+        (async function() { try {
+            var sutta = await SuttaFactory.loadSutta('mn1');
+            var sutta2 = new SuttaFactory().expandSutta(sutta);
+            should(sutta2).instanceOf(Sutta);
+            var sections = sutta2.sections;
+            should(sections.length).equal(9);
+            should.deepEqual(sections.map(section => section.expandable), [
+                false, false, false, false, false, false, false, false, false,
+            ]);
+            should.deepEqual(sections.map(section => section.segments.length), [
+                12, 142, 97, 97, 97, 97, 97, 97, 148,
+            ]);
+            var sectSegs = sections.reduce((acc,section) => {
+                section.segments.forEach(seg => acc.push(seg));
+                return acc;
+            }, []);
+            should.deepEqual(sectSegs, sutta2.segments);
 
             done();
         } catch(e) { done(e); } })();

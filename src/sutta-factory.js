@@ -67,6 +67,21 @@
                 sections,
             }));
         }
+
+        expandSutta(sutta) {
+            var parsedSutta = this.parseSutta(sutta);
+            console.log('expandSutta sections:', parsedSutta.sections.length);
+            var sections = parsedSutta.sections.map(sect => {
+                if (sect.expandable) {
+                    return sect.expandAll();
+                }
+                return sect;
+            });
+            return new Sutta({
+                sections,
+                prop: this.prop,
+            });
+        }
     }
 
     module.exports = exports.SuttaFactory = SuttaFactory;
