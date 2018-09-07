@@ -202,32 +202,6 @@
             });
         }
 
-        parseSutta(sutta) {
-            var segments = sutta.segments.slice();
-            var sections = [];
-
-            while (segments.length) {
-                var section = this.parseExpandableSection(segments);
-                if (section == null) {
-                    sections.push(new Section({
-                        segments,
-                    }));
-                    break;
-                } 
-                var index = segments.indexOf(section.segments[0]);
-                if (index) {
-                    sections.push(new Section({
-                        segments: segments.slice(0, index),
-                    }));
-                }
-                sections.push(section);
-                segments = segments.slice(index+section.segments.length);
-            }
-            return new Sutta(Object.assign({}, sutta, {
-                sections,
-            }));
-        }
-
     }
 
     module.exports = exports.SectionParser = SectionParser;

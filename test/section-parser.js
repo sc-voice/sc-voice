@@ -1,6 +1,6 @@
 
 
-(typeof describe === 'function') && describe("section", function() {
+(typeof describe === 'function') && describe("section-parser", function() {
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
@@ -273,34 +273,6 @@
             should(section.prefix).equal('Reflecting properly, they live restraining the faculty of the ');
             should.deepEqual(section.template.map(seg => seg.scid), 
                 [ 'mn2:12.2', 'mn2:12.3']);
-
-            done();
-        } catch(e) { done(e); } })();
-    });
-
-    it("parseSutta(autta) parses mn1", function(done) {
-        (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
-            var parser = new SectionParser();
-            var sutta2 = parser.parseSutta(sutta);
-            should(sutta2).instanceOf(Sutta);
-            var sections = sutta2.sections;
-            should(sections.length).equal(9);
-            should.deepEqual(sections.map(section => section.expandable), [
-                false, true, true, true, true, true, true, true, true,
-            ]);
-            should.deepEqual(sections.map(section => section.segments.length), [
-                12, 98, 31, 31, 31, 31, 31, 31, 38,
-            ]);
-            var sectSegs = sections.reduce((acc,section) => {
-                section.segments.forEach(seg => acc.push(seg));
-                return acc;
-            }, []);
-            should.deepEqual(sectSegs, sutta.segments);
-
-            sections.forEach((sect,i) => {
-                console.log(`${i+1}: ${sect.segments[0].scid} ${sect.segments[0].en}`);
-            });
 
             done();
         } catch(e) { done(e); } })();
