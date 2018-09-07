@@ -83,6 +83,10 @@
             return s0.substring(0, i);
         }
 
+        expand() {
+            var sections = this.sections.map(sect => sect.expand());
+        }
+
     }
 
     module.exports = exports.Sutta = Sutta;

@@ -4,42 +4,52 @@
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
 
     class Section {
-        constructor(parms={}) {
-            var segments = parms.segments;
+        constructor(opts={}) {
+            var segments = opts.segments;
             if (!(segments instanceof Array)) {
                 throw new Error('expected Array of segments');
             }
             this.segments = segments;
             this.type = this.constructor.name;
-            this.prefix = parms.prefix || '';
-            this.values = parms.values;
-            this.template = parms.template;
-            this.prop = parms.prop || DEFAULT_PROP;
+            this.prefix = opts.prefix || '';
+            this.values = opts.values || [];
+            this.template = opts.template || [];
+            this.prop = opts.prop || DEFAULT_PROP;
 
             Object.defineProperty(this, 'expandable', {
                 enumerable: true,
-                get() {return this.template != null},
+                get() {return this.template.length > 0},
             });
             this.expandable && Object.defineProperty(this, 'reValues', {
                 value: new RegExp(`${this.values.join('|')}`,'u'),
             });
         }
 
+        expandAll() {
+            if (!this.expandable) {
+                return this;
+            }
+            var segments = this.segments.reduce((acc,seg) => {
+                if (seg[this.prop].match(RE_ELLIPSIS)) {
+                    acc.push.apply(acc, this.expand(seg));
+                } else {
+                    acc.push(seg);
+                }
+                return acc;
+            }, []);
+            var opts = Object.assign({}, this, {
+                segments,
+                template: [],
+                values: [],
+                prefix: '',
+            });
+            return new Section(opts);
+        }
+
         expand(segment) {
             if (!this.expandable) {
-                throw new Error('section is not expandable');
+                return segment;
             }
-            if (segment == null) {
-                return this.segments.reduce((acc,seg) => {
-                    if (seg[this.prop].match(RE_ELLIPSIS)) {
-                        acc.push.apply(acc, this.expand(seg));
-                    } else {
-                        acc.push(seg);
-                    }
-                    return acc;
-                }, []);
-            }
-
             var src = this.template[0][this.prop];
             var dst = segment[this.prop].replace(RE_ELLIPSIS, '');
             var dstTokens = dst.split(this.reValues);

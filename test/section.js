@@ -112,15 +112,22 @@
             en: 'c1 y4 c2 y4 c3',
         }]);
     });
-    it("expand() expands entire section", function() {
+    it("TESTTESTexpandAll() returns expanded section", function() {
         var section = new Section({
             segments,
             template: [ segments[1], segments[2], ], 
             values: ['x1', 'y1', 'y2a y2b', 'y3', 'y4'],
             prefix: 'q1 ',
         });
-        var expansion = section.expand();
-        should.deepEqual(expansion, [{ // 0
+        var section2 = section.expandAll();
+        should(section2).properties({
+            prefix: '',
+            template: [],
+            values: [],
+        });
+        should(section2.expandable).equal(false);
+        should(section.expandable).equal(true);
+        should.deepEqual(section2.segments, [{ // 0
             scid: 's:0.1',
             en: 'a1 a2 a3',
         },{ // 1
@@ -154,8 +161,9 @@
             scid: 's:5.1.2', 
             en: 'c1 y4 c2 y4 c3',
         }]);
+        should(section2.expandAll()).equal(section2);
     });
-    it("is serializable", function() {
+    it("Section is serializable", function() {
         var section = new Section({
             segments,
             template: [ segments[1], segments[2], ], 
