@@ -2,7 +2,6 @@
     const fs = require('fs');
     const path = require('path');
     const Words = require('./words');
-    const Segments = require('./segments');
     const Sutta = require('./sutta');
     const Section = require('./section');
     const PoParser = require('./po-parser');

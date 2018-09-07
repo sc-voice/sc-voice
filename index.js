@@ -5,7 +5,6 @@ module.exports = {
     Polly: require("./src/polly"),
     Section: require('./src/section'),
     SectionParser: require('./src/section-parser'),
-    Segments: require('./src/segments'),
     SoundStore: require("./src/sound-store"),
     Sutta: require("./src/sutta"),
     SuttaFactory: require("./src/sutta-factory"),

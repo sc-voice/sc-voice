@@ -1,7 +1,6 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const Segments = require('./segments');
     const SC = path.join(__dirname, '../local/sc');
     const Words = require('./words');
 
