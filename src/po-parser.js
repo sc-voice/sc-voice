@@ -1,7 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const SegDoc = require('./seg-doc');
+    const Segments = require('./segments');
     const SC = path.join(__dirname, '../local/sc');
     const Words = require('./words');
 
@@ -42,7 +42,7 @@
         parseLines(lines, opts={}) {
             var that = this;
             return new Promise((resolve, reject) => {
-                var segDoc = new SegDoc(opts);
+                var segDoc = new Segments(opts);
                 function add(segment) {
                     if (segment) {
                         segDoc.segments.push(segment);

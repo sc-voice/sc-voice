@@ -5,7 +5,7 @@
     const path = require('path');
     const {
         Section,
-        SegDoc,
+        Segments,
         Sutta,
         Words,
     } = require('../index');

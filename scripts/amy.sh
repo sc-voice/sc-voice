@@ -5,7 +5,7 @@ const path = require("path");
 const {
     PoParser,
     Polly,
-    SegDoc,
+    Segments,
     Sutta,
     SuttaFactory,
     Voice,

@@ -7,7 +7,7 @@
     const {
         Section,
         SectionParser,
-        SegDoc,
+        Segments,
         Sutta,
         SuttaFactory,
         Words,

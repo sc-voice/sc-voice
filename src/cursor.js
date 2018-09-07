@@ -3,7 +3,7 @@
     const fs = require('fs');
     const path = require('path');
     const Words = require('./words');
-    const SegDoc = require('./seg-doc');
+    const Segments = require('./segments');
     const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
 

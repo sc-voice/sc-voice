@@ -3,7 +3,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const SegDoc = require('./seg-doc');
+    const Segments = require('./segments');
     const Sutta = require('./sutta');
     const SuttaCentralId = require('./sutta-central-id');
     const Section = require('./section');
@@ -32,7 +32,7 @@
         }
 
         expandableSegments(segments) {
-            var ie = SegDoc.findIndexes(segments, RE_ELLIPSIS, {
+            var ie = Segments.findIndexes(segments, RE_ELLIPSIS, {
                 prop: this.prop,
             });
 
@@ -48,7 +48,7 @@
 
         parseAlternatesByPhrase(segments, phrase, prefix) {
             var prop = this.prop;
-            var indexes = SegDoc.findIndexes(segments, `${phrase}`, {prop});
+            var indexes = Segments.findIndexes(segments, `${phrase}`, {prop});
             var it = indexes[0];
             var prevIndex = -1;
             var values = indexes.reduce((acc,iseg,i) => {
@@ -111,11 +111,11 @@
 
         sectionGroup(segments, start, length) {
             var patStart = new SuttaCentralId(segments[start].scid).parent.scid + '*';
-            var startIndexes = SegDoc.findIndexes(segments, patStart); 
+            var startIndexes = Segments.findIndexes(segments, patStart); 
             var iStart = startIndexes[0];
 
             var patLast = new SuttaCentralId(segments[start+length-1].scid).parent.scid + '*';
-            var lastIndexes = SegDoc.findIndexes(segments, patLast); 
+            var lastIndexes = Segments.findIndexes(segments, patLast); 
             var iEnd = lastIndexes[lastIndexes.length-1]+1;
 
             return segments.slice(iStart, iEnd);

@@ -2,7 +2,7 @@
     const fs = require('fs');
     const path = require('path');
     const Words = require('./words');
-    const SegDoc = require('./seg-doc');
+    const Segments = require('./segments');
     const Section = require('./section');
     const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
@@ -11,7 +11,7 @@
         prop: 'en',
     };
 
-    class Sutta extends SegDoc { 
+    class Sutta extends Segments { 
         constructor(opts={}) {
             super(opts);
             this.sections = opts.sections || [new Section({
@@ -36,7 +36,7 @@
                 throw new Error(`scidGroup() not implemented for sutta scid:${scid}`);
             }
             var wildcard = "*";
-            var segments = SegDoc.findSegments(segments, parent.scid + wildcard,  {
+            var segments = Segments.findSegments(segments, parent.scid + wildcard,  {
                 prop: 'scid',
             });
             return {

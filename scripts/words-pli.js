@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const {
     PoParser,
-    SegDoc,
+    Segments,
     Words,
 } = require('../index');
 

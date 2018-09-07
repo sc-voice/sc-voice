@@ -2,7 +2,7 @@
     const Words = require('./words');
     const SuttaCentralId = require('./sutta-central-id');
 
-    class SegDoc { // segmented document
+    class Segments { // segmented document
         constructor(opts={}) {
             this.segments = opts.segments && opts.segments.map(seg => seg)  || [];
             this.groupSep = opts.groupSep || '\n';
@@ -26,7 +26,7 @@
         }
 
         findIndexes(pat, opts={}) {
-            return SegDoc.findIndexes(this.segments, pat, opts);
+            return Segments.findIndexes(this.segments, pat, opts);
         }
 
         static findSegments(segments, pat, opts={}) {
@@ -43,10 +43,14 @@
         }
 
         findSegments(pat, opts={}) {
-            return SegDoc.findSegments(this.segments, pat, opts);
+            return Segments.findSegments(this.segments, pat, opts);
         }
 
         indexOf(segid,opts={}) {
+            return Segments.indexOf(this.segments, segid, opts);
+        }
+
+        static indexOf(segments, segid, opts={}) {
             var prop = opts.prop || "scid";
             if (typeof segid === "number") {
                 return segid;
@@ -54,7 +58,7 @@
                 var findOpts = Object.assign({
                     prop,
                 }, opts);
-                var indexes = this.findIndexes(segid, findOpts);
+                var indexes = Segments.findIndexes(segments, segid, findOpts);
                 if (indexes.length < 1) {
                     throw new Error(`Segment not found for segid:${segid}`);
                 } else if (indexes.length > 1) {
@@ -66,37 +70,46 @@
             }
         }
 
-        excerpt(range={}) {
-            var start = this.indexOf(range.start || 0);
-            var end = this.indexOf(range.end || this.segments.length);
-            var segments = this.segments.slice(start, end);
-            if (range.prop != null) {
+        excerpt(opts={}) {
+            opts = Object.assign({
+                groupSep: this.groupSep,
+                reSegEnd: this.reSegEnd,
+                prop: this.prop,
+            }, opts);
+            return Segments.excerpt(this.segments, opts);
+        }
+
+        static excerpt(segments, opts={}) {
+            var start = Segments.indexOf(segments, opts.start || 0);
+            var end = Segments.indexOf(segments, opts.end || segments.length);
+            var segments = segments.slice(start, end);
+            if (opts.prop != null) {
                 var prevgid = null;
                 return segments.reduce((acc, seg, i) => {
-                    var segtext = seg[range.prop];
+                    var segtext = seg[opts.prop];
                     var scid = new SuttaCentralId(seg.scid);
                     var curgid = scid.parent.scid;
 
                     if (prevgid && curgid != prevgid) {
-                        if (acc[i-1][acc[i-1].length-1] !== this.groupSep) {
-                            acc[i-1] = acc[i-1] + this.groupSep;
+                        if (acc[i-1][acc[i-1].length-1] !== opts.groupSep) {
+                            acc[i-1] = acc[i-1] + opts.groupSep;
                         }
                     } 
-                    if (!segtext.match(this.reSegEnd)) {
-                        segtext += this.groupSep;
+                    if (!segtext.match(opts.reSegEnd)) {
+                        segtext += opts.groupSep;
                     }
                     acc.push(segtext);
 
                     prevgid = curgid;
                     return acc;
                 }, []);
-                return segments.map(seg => seg[range.prop]);
+                return segments.map(seg => seg[opts.prop]);
             }
             return segments;
         }
 
     }
 
-    module.exports = exports.SegDoc = SegDoc;
+    module.exports = exports.Segments = Segments;
 })(typeof exports === "object" ? exports : (exports = {}));
 

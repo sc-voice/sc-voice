@@ -4,7 +4,7 @@
     const path = require('path');
     const {
         PoParser,
-        SegDoc,
+        Segments,
         Words,
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
@@ -40,12 +40,12 @@
             done();
         } catch(e) {done(e)} })();
     });
-    it("parse(filePath) creates a SegDoc", function(done) {
+    it("parse(filePath) creates a Segments", function(done) {
         (async function() { try {
             var parser = new PoParser();
             var fname = path.join(__dirname, '../local/sc/mn/en/mn001.po');
             var segDoc = await parser.parse(fname);
-            should(segDoc).instanceOf(SegDoc);
+            should(segDoc).instanceOf(Segments);
             should(segDoc.segments.length).equal(334);
             var segments = segDoc.findSegments(/mn1:172-194.25/,{prop:'scid'});
             should(segments.length).equal(1);

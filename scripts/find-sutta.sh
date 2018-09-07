@@ -5,7 +5,7 @@ const path = require("path");
 const {
     PoParser,
     Polly,
-    SegDoc,
+    Segments,
     Voice,
     Words,
 } = require('../index');

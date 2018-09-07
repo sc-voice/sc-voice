@@ -1,4 +1,4 @@
-(typeof describe === 'function') && describe("seg-doc", function() {
+(typeof describe === 'function') && describe("segments", function() {
     const should = require("should");
     const {
         SuttaCentralId,

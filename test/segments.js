@@ -1,9 +1,9 @@
 
-(typeof describe === 'function') && describe("seg-doc", function() {
+(typeof describe === 'function') && describe("segments", function() {
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const SegDoc = require("../src/seg-doc");
+    const Segments = require("../src/segments");
 
     var segments = [{
         scid: 's:0.1',
@@ -17,7 +17,7 @@
     }]
 
     it("findIndexes(pat) returns array of segment indexes", function() {
-        var segDoc = new SegDoc({segments});
+        var segDoc = new Segments({segments});
         should.deepEqual(segDoc.findIndexes('not found'),[]);
 
         // search string
@@ -50,7 +50,7 @@
         }]);
     });
     it("findSegments(pat) returns array of segment indexes", function() {
-        var segDoc = new SegDoc({segments});
+        var segDoc = new Segments({segments});
         should.deepEqual(segDoc.findSegments('not found'), []);
 
         // search string
@@ -79,8 +79,8 @@
         var segs = segDoc.findSegments(/s:.*/);
         should(segs.length).equal(3);
     });
-    it("indexOf(scid) returns segment index", function() {
-        var segDoc = new SegDoc({segments});
+    it("TESTTESTindexOf(scid) returns segment index", function() {
+        var segDoc = new Segments({segments});
         should(segDoc.indexOf(0)).equal(0);
         should(segDoc.indexOf(2)).equal(2);
         should(segDoc.indexOf(-2)).equal(-2);
@@ -88,8 +88,8 @@
         should.throws(() => segDoc.indexOf("nonsense"));
         should.throws(() => segDoc.indexOf("s:1.*"));
     });
-    it("excerpt(range) returns segments in range", function() {
-        var segDoc = new SegDoc({segments});
+    it("TESTTESTexcerpt(range) returns segments in range", function() {
+        var segDoc = new Segments({segments});
 
         // excerpt all
         should.deepEqual(segDoc.excerpt(), segments);
