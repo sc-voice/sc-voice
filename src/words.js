@@ -274,6 +274,21 @@
             return eval(`"${result}"`);
         }
 
+        alternatesRegExp(text) {
+            var words = this.tokenize(text);
+            var pat = words.reduce((acc,word) => {
+                var alts = this.alternates(word);
+                var wordPat = (alts.length === 1)
+                    ? alts[0]
+                    : `(${alts.join('|')})`;
+                acc = acc ? `${acc} ${wordPat}` : wordPat;
+                return acc;
+            }, "");
+            var wordEnd = this.wordEnd || "";
+            return new RegExp(`${pat}${wordEnd}`, "iu");
+        }
+
+
     }
 
     module.exports = exports.Words = Words;

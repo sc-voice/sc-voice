@@ -5,7 +5,6 @@
     class SegDoc { // segmented document
         constructor(json={}, opts={}) {
             this.segments = json.segments && json.segments.map(seg => seg)  || [];
-            this.words = json.words || opts.words || new Words();
             this.groupSep = json.groupSep || opts.groupSep || '\n';
             this.reSegEnd = json.reSegEnd || opts.reSegEnd || ".*[.?;,]$";
             if (!(this.reSegEnd instanceof RegExp)) {
@@ -45,20 +44,6 @@
 
         findSegments(pat, opts={}) {
             return SegDoc.findSegments(this.segments, pat, opts);
-        }
-
-        alternatesRegExp(text) {
-            var words = this.words.tokenize(text);
-            var pat = words.reduce((acc,word) => {
-                var alts = this.words.alternates(word);
-                var wordPat = (alts.length === 1)
-                    ? alts[0]
-                    : `(${alts.join('|')})`;
-                acc = acc ? `${acc} ${wordPat}` : wordPat;
-                return acc;
-            }, "");
-            var wordEnd = this.words.wordEnd || "";
-            return new RegExp(`${pat}${wordEnd}`, "iu");
         }
 
         indexOf(segid,opts={}) {

@@ -209,6 +209,26 @@
             "Reflecting properly, they live restraining the faculty of the ear …"
         )).equal('restraining the faculty of the');
     });
+    it("alternatesRegExp(text) creates a pattern for finding text", function() {
+        var words = new Words();
+        var pat = words.alternatesRegExp("bhikkhu");
+        should(pat.test('asfd bhikkhu asdf')).equal(true); // canonical spelling
+        should(pat.test('asfd bikkhu asdf')).equal(true); // alternate spelling
+        should(pat.test('asfd bhikku asdf')).equal(true); // alternate spelling
+        should(pat.test('asfd biku asdf')).equal(false); // invalid spelling
+        should(pat.test('asfd bhikkhus asdf')).equal(false); // plural
+
+        var pat = words.alternatesRegExp("Tathagata");
+        should(pat.test('asfd Tathagata asdf')).equal(true); // alternate spelling
+        should(pat.test('asfd tathagata asdf')).equal(true); // alternate spelling
+        should(pat.test('asfd Tath\u0101gata asdf')).equal(true); // case
+        should(pat.test('asfd tath\u0101gata asdf')).equal(true); // canonical spelling
+
+        var pat = words.alternatesRegExp("bhikku tathagata");
+        should(pat.test('asfd bhikkhu tathagata asdf')).equal(true); // alternate spelling
+        should(pat.test('asfd Bikkhu Tathagata asdf')).equal(true); // alternate spelling
+
+    });
     
 
 })

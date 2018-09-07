@@ -86,7 +86,7 @@
         });
     });
 
-    it("parseExpandable(segments) parses mn1 (1)", function(done) {
+    it("parseExpandableSection(segments) parses mn1 (1)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var prop = "xyz";
@@ -98,7 +98,7 @@
             var parser = new SectionParser({
                 prop,
             });
-            var section = parser.parseExpandable(segments);
+            var section = parser.parseExpandableSection(segments);
             should(section).instanceOf(Section);
             should.deepEqual(section.values, MN1_VALUES);
             should(section.segments.length).equal(98);
@@ -115,11 +115,11 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandable(segments) parses mn1 (2)", function(done) {
+    it("parseExpandableSection(segments) parses mn1 (2)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
-            var section = parser.parseExpandable(sutta.segments.slice(109));
+            var section = parser.parseExpandableSection(sutta.segments.slice(109));
 
             should.deepEqual(section.values, MN1_VALUES);
             should(section.segments.length).equal(31);
@@ -133,11 +133,11 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandable(segments) parses mn1 (3)", function(done) {
+    it("parseExpandableSection(segments) parses mn1 (3)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
-            var section = parser.parseExpandable(sutta.segments.slice(139));
+            var section = parser.parseExpandableSection(sutta.segments.slice(139));
 
             should.deepEqual(section.values, MN1_VALUES);
             should(section.segments.length).equal(31);
@@ -151,11 +151,11 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandable(segments) parses mn1 (4)", function(done) {
+    it("parseExpandableSection(segments) parses mn1 (4)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
-            var section = parser.parseExpandable(sutta.segments.slice(169));
+            var section = parser.parseExpandableSection(sutta.segments.slice(169));
 
             should.deepEqual(section.values, MN1_VALUES);
             should(section.segments.length).equal(31);
@@ -169,11 +169,11 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandable(segments) parses mn1 (5)", function(done) {
+    it("parseExpandableSection(segments) parses mn1 (5)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
-            var section = parser.parseExpandable(sutta.segments.slice(199));
+            var section = parser.parseExpandableSection(sutta.segments.slice(199));
 
             should.deepEqual(section.values, MN1_VALUES);
             should(section.segments.length).equal(31);
@@ -187,11 +187,11 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandable(segments) parses mn1 (6)", function(done) {
+    it("parseExpandableSection(segments) parses mn1 (6)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
-            var section = parser.parseExpandable(sutta.segments.slice(229));
+            var section = parser.parseExpandableSection(sutta.segments.slice(229));
 
             should.deepEqual(section.values, MN1_VALUES);
             should(section.segments.length).equal(31);
@@ -205,11 +205,11 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandable(segments) parses mn1 (7)", function(done) {
+    it("parseExpandableSection(segments) parses mn1 (7)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
-            var section = parser.parseExpandable(sutta.segments.slice(260));
+            var section = parser.parseExpandableSection(sutta.segments.slice(260));
 
             should.deepEqual(section.values, MN1_VALUES);
             should(section.segments.length).equal(31);
@@ -223,11 +223,11 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandable(segments) parses mn1 (8)", function(done) {
+    it("parseExpandableSection(segments) parses mn1 (8)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
-            var section = parser.parseExpandable(sutta.segments.slice(292));
+            var section = parser.parseExpandableSection(sutta.segments.slice(292));
 
             should.deepEqual(section.values, MN1_VALUES);
             should(section.segments.length).equal(38);
@@ -241,12 +241,12 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandable(segments) parses mn2 (1)", function(done) {
+    it("parseExpandableSection(segments) parses mn2 (1)", function(done) {
         done(); return; // TODO
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn2');
             var parser = new SectionParser();
-            var section = parser.parseExpandable(sutta.segments.slice(0));
+            var section = parser.parseExpandableSection(sutta.segments.slice(0));
 
             should.deepEqual(section.values, MN2_VALUES);
             should(section.segments.length).equal(8);
@@ -260,11 +260,11 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandable(segments) parses mn3 (1)", function(done) {
+    it("parseExpandableSection(segments) parses mn3 (1)", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn2');
             var parser = new SectionParser();
-            var section = parser.parseExpandable(sutta.segments.slice(0));
+            var section = parser.parseExpandableSection(sutta.segments.slice(0));
 
             should.deepEqual(section.values.slice(15,20), MN2_VALUES.slice(15,20));
             should(section.segments.length).equal(12);
@@ -273,6 +273,32 @@
             should(section.prefix).equal('Reflecting properly, they live restraining the faculty of the ');
             should.deepEqual(section.template.map(seg => seg.scid), 
                 [ 'mn2:12.2', 'mn2:12.3']);
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+
+    it("TESTTESTparseSutta(autta) parses mn1", function(done) {
+        (async function() { try {
+            var sutta = await Sutta.loadSutta('mn1');
+            var parser = new SectionParser();
+            var sections = parser.parseSutta(sutta);
+            should(sections.length).equal(9);
+            should.deepEqual(sections.map(section => section.expandable), [
+                false, true, true, true, true, true, true, true, true,
+            ]);
+            should.deepEqual(sections.map(section => section.segments.length), [
+                12, 98, 31, 31, 31, 31, 31, 31, 38,
+            ]);
+            var sectSegs = sections.reduce((acc,section) => {
+                section.segments.forEach(seg => acc.push(seg));
+                return acc;
+            }, []);
+            should.deepEqual(sectSegs, sutta.segments);
+
+            sections.forEach((sect,i) => {
+                console.log(`${i+1}: ${sect.segments[0].scid} ${sect.segments[0].en}`);
+            });
 
             done();
         } catch(e) { done(e); } })();

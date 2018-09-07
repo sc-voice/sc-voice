@@ -13,7 +13,6 @@
     class Sutta extends SegDoc { 
         constructor(json={}, opts={}) {
             super(json, opts);
-            this.alternates = json.alternates || opts.alternates;
         }
 
         static loadSutta(opts={}) {
@@ -79,33 +78,6 @@
             }
             return s0.substring(0, i);
         }
-
-        findAlternates(segments, iEllipses, opts) {
-            opts = Object.assign(OPTS_EN, opts);
-            var prop = opts.prop;
-
-            var prefix = this.commonPrefix(
-                segments[iEllipses[0]][prop],
-                segments[iEllipses[1]][prop]);
-            if (!prefix) {
-                throw new Error("could not generate alternates");
-            }
-            var indexes = SegDoc.findIndexes(segments, `^${prefix}`, opts);
-            var prevIndex = -1;
-            var values = indexes.reduce((acc,iseg,i) => {
-                var seg = segments[iseg];
-                var s = seg[prop].substring(prefix.length);
-                if (i === prevIndex+1) {
-                    acc.push(s.replace(/\s*[,.;\u2026].*$/u,''));
-                }
-                prevIndex = i;
-                return acc;
-            }, []);
-            return {
-                values,
-                indexes,
-            }
-        };
 
     }
 

@@ -79,26 +79,6 @@
         var segs = segDoc.findSegments(/s:.*/);
         should(segs.length).equal(3);
     });
-    it("alternatesRegExp(text) creates a pattern for finding text", function() {
-        var segDoc = new SegDoc({segments});
-        var pat = segDoc.alternatesRegExp("bhikkhu");
-        should(pat.test('asfd bhikkhu asdf')).equal(true); // canonical spelling
-        should(pat.test('asfd bikkhu asdf')).equal(true); // alternate spelling
-        should(pat.test('asfd bhikku asdf')).equal(true); // alternate spelling
-        should(pat.test('asfd biku asdf')).equal(false); // invalid spelling
-        should(pat.test('asfd bhikkhus asdf')).equal(false); // plural
-
-        var pat = segDoc.alternatesRegExp("Tathagata");
-        should(pat.test('asfd Tathagata asdf')).equal(true); // alternate spelling
-        should(pat.test('asfd tathagata asdf')).equal(true); // alternate spelling
-        should(pat.test('asfd Tath\u0101gata asdf')).equal(true); // case
-        should(pat.test('asfd tath\u0101gata asdf')).equal(true); // canonical spelling
-
-        var pat = segDoc.alternatesRegExp("bhikku tathagata");
-        should(pat.test('asfd bhikkhu tathagata asdf')).equal(true); // alternate spelling
-        should(pat.test('asfd Bikkhu Tathagata asdf')).equal(true); // alternate spelling
-
-    });
     it("indexOf(scid) returns segment index", function() {
         var segDoc = new SegDoc({segments});
         should(segDoc.indexOf(0)).equal(0);
