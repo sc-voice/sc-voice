@@ -278,7 +278,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseSutta(autta) parses mn1", function(done) {
+    it("parseSutta(autta) parses mn1", function(done) {
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();

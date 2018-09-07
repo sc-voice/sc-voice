@@ -112,7 +112,7 @@
             en: 'c1 y4 c2 y4 c3',
         }]);
     });
-    it("TESTTESTexpandAll() returns expanded section", function() {
+    it("expandAll() returns expanded section", function() {
         var section = new Section({
             segments,
             template: [ segments[1], segments[2], ], 
