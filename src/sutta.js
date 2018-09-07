@@ -3,6 +3,7 @@
     const path = require('path');
     const Words = require('./words');
     const SegDoc = require('./seg-doc');
+    const Section = require('./section');
     const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
@@ -13,6 +14,9 @@
     class Sutta extends SegDoc { 
         constructor(json={}, opts={}) {
             super(json, opts);
+            this.sections = opts.sections || [new Section({
+                segments: this.segments
+            })];
         }
 
         static loadSutta(opts={}) {
