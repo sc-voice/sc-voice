@@ -9,6 +9,7 @@
         SectionParser,
         SegDoc,
         Sutta,
+        SuttaFactory,
         Words,
     } = require('../index');
 
@@ -88,7 +89,7 @@
 
     it("parseExpandableSection(segments) parses mn1 (1)", function(done) {
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn1');
+            var sutta = await SuttaFactory.loadSutta('mn1');
             var prop = "xyz";
             var segments = sutta.segments.map(seg => ({
                 scid: seg.scid,
@@ -117,7 +118,7 @@
 
     it("parseExpandableSection(segments) parses mn1 (2)", function(done) {
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn1');
+            var sutta = await SuttaFactory.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(109));
 
@@ -135,7 +136,7 @@
 
     it("parseExpandableSection(segments) parses mn1 (3)", function(done) {
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn1');
+            var sutta = await SuttaFactory.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(139));
 
@@ -153,7 +154,7 @@
 
     it("parseExpandableSection(segments) parses mn1 (4)", function(done) {
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn1');
+            var sutta = await SuttaFactory.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(169));
 
@@ -171,7 +172,7 @@
 
     it("parseExpandableSection(segments) parses mn1 (5)", function(done) {
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn1');
+            var sutta = await SuttaFactory.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(199));
 
@@ -189,7 +190,7 @@
 
     it("parseExpandableSection(segments) parses mn1 (6)", function(done) {
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn1');
+            var sutta = await SuttaFactory.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(229));
 
@@ -207,7 +208,7 @@
 
     it("parseExpandableSection(segments) parses mn1 (7)", function(done) {
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn1');
+            var sutta = await SuttaFactory.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(260));
 
@@ -225,7 +226,7 @@
 
     it("parseExpandableSection(segments) parses mn1 (8)", function(done) {
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn1');
+            var sutta = await SuttaFactory.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(292));
 
@@ -244,7 +245,7 @@
     it("parseExpandableSection(segments) parses mn2 (1)", function(done) {
         done(); return; // TODO
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn2');
+            var sutta = await SuttaFactory.loadSutta('mn2');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(0));
 
@@ -262,7 +263,7 @@
 
     it("parseExpandableSection(segments) parses mn3 (1)", function(done) {
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn2');
+            var sutta = await SuttaFactory.loadSutta('mn2');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(0));
 
@@ -280,7 +281,7 @@
 
     it("parseSutta(autta) parses mn1", function(done) {
         (async function() { try {
-            var sutta = await Sutta.loadSutta('mn1');
+            var sutta = await SuttaFactory.loadSutta('mn1');
             var parser = new SectionParser();
             var sutta2 = parser.parseSutta(sutta);
             should(sutta2).instanceOf(Sutta);

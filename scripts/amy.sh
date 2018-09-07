@@ -7,6 +7,7 @@ const {
     Polly,
     SegDoc,
     Sutta,
+    SuttaFactory,
     Voice,
     Words,
 } = require('../index');
@@ -27,7 +28,7 @@ var words = new Words();
     ];
     var challenge = lines.join(' ');
 
-    var sutta = await Sutta.loadSutta('mn1');
+    var sutta = await SuttaFactory.loadSutta('mn1');
     var header = sutta.excerpt({
         start: 0,
         end: 2,
