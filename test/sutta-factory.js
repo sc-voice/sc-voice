@@ -106,6 +106,9 @@
             }, []);
             should.deepEqual(sectSegs, sutta2.segments);
 
+            var jsonPath = path.join(__dirname, '../local/mn1-expanded.json');
+            fs.writeFileSync(jsonPath, JSON.stringify(sutta2, null, 2));
+
             done();
         } catch(e) { done(e); } })();
     });
