@@ -4,11 +4,7 @@
     const RE_PHRASE_END = new RegExp('.*[.?;,]$', 'u');
     const DEFAULT_PROP = 'scid';
 
-    class Segments { // segmented document
-        constructor(opts={}) {
-            this.segments = opts.segments && opts.segments.map(seg => seg)  || [];
-        }
-
+    class Segments { 
         static get GROUP_SEP() { return '\n'; }
 
         static findIndexes(segments, pat, opts={}) {
@@ -90,26 +86,6 @@
                 throw new Error("invalid segid");
             }
         }
-
-        /*
-         * Copy the following if you don't want to extend Segments
-         */
-        findIndexes(pat, opts={}) {
-            return Segments.findIndexes(this.segments, pat, opts);
-        }
-
-        findSegments(pat, opts={}) {
-            return Segments.findSegments(this.segments, pat, opts);
-        }
-
-        indexOf(segid,opts={}) {
-            return Segments.indexOf(this.segments, segid, opts);
-        }
-
-        excerpt(opts={}) {
-            return Segments.excerpt(this.segments, opts);
-        }
-
     }
 
     module.exports = exports.Segments = Segments;

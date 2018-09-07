@@ -11,11 +11,10 @@
         prop: 'en',
     };
 
-    class Sutta extends Segments { 
+    class Sutta { 
         constructor(opts={}) {
-            super(opts);
             this.sections = opts.sections || [new Section({
-                segments: this.segments
+                segments: opts.segments || [],
             })];
         }
 
@@ -39,6 +38,29 @@
                 scid: parent.scid,
                 segments,
             }
+        }
+
+        get segments() {
+            return this.sections.reduce((acc,section) => {
+                section.segments.forEach(seg => acc.push(seg));
+                return acc;
+            }, []);
+        }
+
+        findIndexes(pat, opts={}) {
+            return Segments.findIndexes(this.segments, pat, opts);
+        }
+
+        findSegments(pat, opts={}) {
+            return Segments.findSegments(this.segments, pat, opts);
+        }
+
+        indexOf(segid,opts={}) {
+            return Segments.indexOf(this.segments, segid, opts);
+        }
+
+        excerpt(opts={}) {
+            return Segments.excerpt(this.segments, opts);
         }
 
         scidGroup(scid) {
