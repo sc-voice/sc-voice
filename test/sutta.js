@@ -3,6 +3,7 @@
     const fs = require('fs');
     const path = require('path');
     const {
+        Section,
         Sutta,
         SuttaCentralId,
         Words,
@@ -28,6 +29,8 @@
             should(excerpt[i++]).equal('The Root of All Things\n'); // end group
             should(excerpt[i++]).equal('So I have heard.');
             should(excerpt[end-2]).equal('Why is that?');
+            should(sutta.sections).instanceOf(Array);
+            should(sutta.sections[0]).instanceOf(Section);
             done();
         } catch(e) { done(e); } })();
     });

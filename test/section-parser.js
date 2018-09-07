@@ -282,7 +282,9 @@
         (async function() { try {
             var sutta = await Sutta.loadSutta('mn1');
             var parser = new SectionParser();
-            var sections = parser.parseSutta(sutta);
+            var sutta2 = parser.parseSutta(sutta);
+            should(sutta2).instanceOf(Sutta);
+            var sections = sutta2.sections;
             should(sections.length).equal(9);
             should.deepEqual(sections.map(section => section.expandable), [
                 false, true, true, true, true, true, true, true, true,

@@ -224,7 +224,9 @@
                 sections.push(section);
                 segments = segments.slice(index+section.segments.length);
             }
-            return sections;
+            return new Sutta(Object.assign({}, sutta, {
+                sections,
+            }));
         }
 
     }

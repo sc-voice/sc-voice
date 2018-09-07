@@ -14,7 +14,7 @@
     class Sutta extends SegDoc { 
         constructor(json={}, opts={}) {
             super(json, opts);
-            this.sections = opts.sections || [new Section({
+            this.sections = json.sections || opts.sections || [new Section({
                 segments: this.segments
             })];
         }
