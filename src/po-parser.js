@@ -105,7 +105,7 @@
                         }
                     });
                     segment = add(segment);
-                    resolve(new Segments({segments}));
+                    resolve(segments);
                 } catch(e){reject(e);} })();
             });
         }
