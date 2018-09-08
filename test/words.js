@@ -2,7 +2,9 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const Words = require("../src/words");
+    const {
+        Words,
+    } = require("../index");
 
     var words = new Words();
 
@@ -209,7 +211,7 @@
             "Reflecting properly, they live restraining the faculty of the ear …"
         )).equal('restraining the faculty of the');
     });
-    it("alternatesRegExp(text) creates a pattern for finding text", function() {
+    it("TESTTESTalternatesRegExp(text) creates a pattern for finding text", function() {
         var words = new Words();
         var pat = words.alternatesRegExp("bhikkhu");
         should(pat.test('asfd bhikkhu asdf')).equal(true); // canonical spelling

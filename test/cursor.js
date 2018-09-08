@@ -2,9 +2,11 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const Cursor = require("../src/cursor");
-    const Sutta = require("../src/sutta");
-    const SuttaCentralId = require("../src/sutta-central-id");
+    const { 
+        Cursor,
+        Sutta, 
+        SuttaCentralId,
+    } = require("../index");
 
     var segments = [{
         scid: 's:0.1',

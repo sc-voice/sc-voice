@@ -2,9 +2,11 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const Watson = require("../src/watson");
-    const AbstractTTS = require("../src/abstract-tts");
     const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+    const {
+        AbstractTTS,
+        Watson,
+    } = require("../index");
 
     // Service results are normally cached. To bypass the cache, change
     // the following value to false. You can clear the cache by

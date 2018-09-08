@@ -1,25 +1,39 @@
 {
   "name": "js-pootl",
   "version": "0.1.9",
-  "description": "SuttaCentral Javascript/Pootl utilities",
+  "description": "SuttaCentral Voice Assistant",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
     "aws-sdk": "^2.294.0",
+    "axios": "^0.18.0",
+    "axis": "^1.0.0",
     "compression": "^1.7.3",
     "express": "^4.16.3",
     "merkle-json": "^1.1.2",
     "tmp": "0.0.33",
+    "vue": "^2.5.17",
+    "vue-axios": "^2.1.3",
+    "vuetify": "^1.2.3",
     "watson-developer-cloud": "^3.8.0",
     "winston": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.0.0-beta.49",
     "mocha": "^5.2.0",
-    "should": "^11.2.0"
+    "should": "^11.2.0",
+    "@vue/cli-plugin-babel": "^3.0.1",
+    "@vue/cli-plugin-eslint": "^3.0.1",
+    "vue-cli-plugin-vuetify": "^0.1.6",
+    "@vue/cli-service": "^3.0.1",
+    "vue-template-compiler": "^2.5.17"
   },
   "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
     "test": "npm run test:verbose",
     "test:test": "mocha -w -R min --inline-diffs -g TEST",
     "test:verbose": "mocha --inline-diffs",
@@ -37,5 +51,29 @@
   ],
   "author": "Karl Lew",
   "homepage": "https://github.com/suttacentral/translation",
-  "license": "MIT"
+  "license": "MIT",
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }

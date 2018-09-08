@@ -10,7 +10,7 @@
             super(opts);
             var credentials = opts.credentials;
             if (credentials == null) {
-                var credpath = path.join(__dirname, '../local/watson/credentials.json');
+                var credpath = path.join(__dirname, '../../local/watson/credentials.json');
                 if (fs.existsSync(credpath)) {
                     credentials = JSON.parse(fs.readFileSync(credpath));
                 }

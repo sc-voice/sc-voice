@@ -34,7 +34,7 @@
         static get RATE_SLOW() { return "-20%"; }
 
         static loadVoices(voicePath) {
-            voicePath == null && (voicePath = path.join(__dirname, '../words/voices.json'));
+            voicePath == null && (voicePath = path.join(__dirname, '../../words/voices.json'));
             var json = JSON.parse(fs.readFileSync(voicePath).toString());
             return json.map(voice => new Voice(voice));
         }

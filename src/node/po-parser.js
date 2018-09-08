@@ -1,7 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const SC = path.join(__dirname, '../local/sc');
+    const SC = path.join(__dirname, '../../local/sc');
     const Words = require('./words');
 
     const S_MSGCTXT = 1;
@@ -128,7 +128,7 @@
                 if (!(filePattern instanceof RegExp)) {
                     filePattern = new RegExp(filePattern);
                 }
-                var root = opts.root || path.join(__dirname, '../local/sc');
+                var root = opts.root || path.join(__dirname, '../../local/sc');
                 var files = [];
                 function visit(apath) {
                     var stats = fs.statSync(apath);

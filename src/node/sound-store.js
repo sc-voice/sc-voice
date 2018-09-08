@@ -1,7 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const LOCAL = path.join(__dirname, '..', 'local');
+    const LOCAL = path.join(__dirname, '../../local');
 
     class SoundStore {
         constructor(opts={}) {
