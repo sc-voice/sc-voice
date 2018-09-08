@@ -2,15 +2,14 @@
   <v-container fluid>
     <v-slide-y-transition mode="out-in">
       <v-layout column align-center>
-        <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
         <blockquote>
-          <div v-for="(sect,i) in sections" :key="sect+i">
-            <h2>section {{i+1}}</h2>
-            <div v-for="(seg,j) in sect.segments" :key="seg+j">
-                <div class='scv-scid'>{{seg.scid.split(":")[1]}}</div> 
-                <div class='scv-en'>{{seg.en}}</div>
-            </div>
-          </div>
+          <details v-for="(sect,i) in sections" :key="sect+i">
+            <summary >section {{i+1}}</summary>
+            <p v-for="(seg,j) in sect.segments" :key="seg+j" class="scv-text">
+                <span aria-hidden="true" class='scv-scid'>{{seg.scid.split(":")[1]}}</span> 
+                {{seg.en}}
+            </p>
+          </details>
           <footer>
             <small>
               <em>&mdash;MN1</em>
@@ -26,7 +25,7 @@
 /* eslint no-console: 0*/
 
 export default {
-  name: 'HelloWorld',
+  name: 'Sutta',
   props: {
     msg: String
   },
@@ -73,8 +72,9 @@ a {
     color: #888;
     width: 6em;
 }
-.scv-en {
-    display: inline-block;
+.scv-section-body {
     width: 40em;
+}
+.scv-text {
 }
 </style>

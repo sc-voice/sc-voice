@@ -45,7 +45,7 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-      <HelloWorld/>
+      <Sutta/>
     </v-content>
     <v-navigation-drawer
       temporary
@@ -70,12 +70,12 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import Sutta from './components/Sutta'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Sutta
   },
   data () {
     return {
