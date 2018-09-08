@@ -1,7 +1,6 @@
 local/
 archive
 .eslint*
-scv
 
 # Logs
 logs

@@ -21,6 +21,20 @@ git clone git@github.com:sc-karl/sc-voice.git
 cd sc-voice
 ./scripts/init.sh
 ```
+##### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+##### Compiles and minifies for production
+```
+npm run build
+```
+
+##### Lints and fixes files
+```
+npm run lint
+```
 
 As part of installation you will need to configure one TTS service adapter.
 
@@ -55,4 +69,9 @@ npm run test
 * **local** contains local content not archived in git
 * **words** contains language lexicons for search and speech.
 
+
+## Project setup
+```
+npm install
+```
 

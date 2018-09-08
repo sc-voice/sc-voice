@@ -211,7 +211,7 @@
             "Reflecting properly, they live restraining the faculty of the ear …"
         )).equal('restraining the faculty of the');
     });
-    it("TESTTESTalternatesRegExp(text) creates a pattern for finding text", function() {
+    it("alternatesRegExp(text) creates a pattern for finding text", function() {
         var words = new Words();
         var pat = words.alternatesRegExp("bhikkhu");
         should(pat.test('asfd bhikkhu asdf')).equal(true); // canonical spelling
