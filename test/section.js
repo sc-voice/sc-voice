@@ -12,7 +12,7 @@
 
     var segments = [{ // 0
         scid: 's:0.1',
-        en: 'a1 a2 a3',
+        en: 'a1 a2, a3',
     },{ // 1
         scid: 's:1.1',
         en: 'b1 x1 b2',
@@ -41,6 +41,7 @@
         should(section).properties({
             segments,
             type: 'Section',
+            title: `a1 a2${Words.U_ELLIPSIS}`,
         });
     });
 
@@ -129,7 +130,7 @@
         should(section.expandable).equal(true);
         should.deepEqual(section2.segments, [{ // 0
             scid: 's:0.1',
-            en: 'a1 a2 a3',
+            en: 'a1 a2, a3',
         },{ // 1
             scid: 's:1.1',
             en: 'b1 x1 b2',

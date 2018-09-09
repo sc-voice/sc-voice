@@ -1,21 +1,28 @@
 <template>
   <v-container fluid>
     <v-slide-y-transition mode="out-in">
-      <v-layout column align-center>
-        <blockquote>
-          <details v-for="(sect,i) in sections" :key="sect+i">
-            <summary >section {{i+1}}</summary>
-            <p v-for="(seg,j) in sect.segments" :key="seg+j" class="scv-text">
-                <span aria-hidden="true" class='scv-scid'>{{seg.scid.split(":")[1]}}</span> 
-                {{seg.en}}
-            </p>
+      <v-layout column align-left>
+          <details v-if="sections && sections[0]" class="scv-header">
+            <summary class="subheading scv-header-summary" >
+                <span v-for="(seg,i) in sections[0].segments" :key="hs-seg+i" class="title">
+                    {{seg.en}}<span v-if="i<sections[0].segments.length-1">&mdash;</span>
+                </span>
+            </summary>
+            <div class="scv-header-body">
+                {{sections[0].segments[0].pli}}
+                {{sections[0].segments[1].pli}}
+            </div>
           </details>
-          <footer>
-            <small>
-              <em>&mdash;MN1</em>
-            </small>
-          </footer>
-        </blockquote>
+          <details class="scv-section-body" v-for="(sect,i) in sections" :key="sect+i" v-if="i>0">
+            <summary class="subheading" >Section {{i}} {{sect.title}}</summary>
+            <button>Play</button>
+            <div v-for="(seg,j) in sect.segments" :key="seg+j" class="scv-para">
+                <div v-show="showId" class='scv-scid'>
+                    SC{{seg.scid.split(":")[1]}}
+                </div> 
+                {{seg.en}}
+            </div>
+          </details>
       </v-layout>
     </v-slide-y-transition>
   </v-container>
@@ -27,7 +34,10 @@
 export default {
   name: 'Sutta',
   props: {
-    msg: String
+    msg: String,
+    showId: {
+        default: true,
+    },
   },
   data: function( ){
     return {
@@ -70,11 +80,24 @@ a {
     display: inline-block;
     font-size: xx-small;
     color: #888;
-    width: 6em;
+    padding-right: 1em;
 }
 .scv-section-body {
     width: 40em;
 }
-.scv-text {
+.scv-header {
+    margin-bottom: 0.5em;
+}
+summary::marker {
+    display: none;
+    color: red;
+}
+.scv-header-body {
+    font-style: italic;
+    margin-left: 1.4em;
+}
+.scv-para {
+    margin-top: 0.5em;
+    padding-left: 1em;
 }
 </style>

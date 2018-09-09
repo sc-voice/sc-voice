@@ -107,8 +107,6 @@
             should(section.prefix).equal('But then they conceive ');
             should.deepEqual(section.template.map(seg => seg.scid), [
                 'mn1:3.3',
-                'mn1:3.4',
-                'mn1:3.5',
             ]);
 
             done();

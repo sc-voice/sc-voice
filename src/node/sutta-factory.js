@@ -8,6 +8,7 @@
     const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
+    const RE_HEADER = new RegExp(`^.*:0\.*$`, 'u');
     const OPTS_EN = {
         prop: 'en',
     };
@@ -16,6 +17,7 @@
         constructor(opts={}) {
             this.type = this.constructor.name;
             this.prop = opts.prop || OPTS_EN.prop;
+            this.reHeader = opts.reHeader || RE_HEADER;
         }
 
         static loadSutta(opts={}) {
@@ -46,6 +48,16 @@
             });
             var sections = [];
 
+            var header = [];
+            while (segments[0].scid.match(RE_HEADER)) {
+                header.push(segments.shift());
+            }
+            if (header.length) {
+                sections.push(new Section({
+                    segments:header,
+                }));
+            }
+            
             while (segments.length) {
                 var section = parser.parseExpandableSection(segments);
                 if (section == null) {
@@ -70,7 +82,6 @@
 
         expandSutta(sutta) {
             var parsedSutta = this.parseSutta(sutta);
-            console.log('expandSutta sections:', parsedSutta.sections.length);
             var sections = parsedSutta.sections.map(sect => {
                 if (sect.expandable) {
                     return sect.expandAll();

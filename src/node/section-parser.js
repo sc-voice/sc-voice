@@ -179,9 +179,9 @@
                 }
             }
 
-            var templateLength = indexes[1] - indexes[0];
+            var alternateStep = (indexes[2] - indexes[1]) || 1;
             var template = [];
-            for (var i = indexes[0]; i < indexes[1]; i++) {
+            for (var i = indexes[0]; i + alternateStep <= indexes[1]; i++) {
                 if (segments[i][prop].indexOf(values[1]) >= 0) {
                     break;
                 }

@@ -14,15 +14,15 @@
         var lines = [
             'msgctxt "mn1:1.1"',
             'msgid ""',
-            '"a1id"',
+            '"a1id "',
             '"a2id"',
             'msgstr ""',
-            '"a1"',
+            '"a1 "',
             '"a2"',
             '',
             'msgctxt "mn1:1.2"',
             'msgid ""',
-            '"b1id"',
+            '"b1id "',
             '"b2id"',
             'msgstr "b1 <i>b2</i> b3"',
         ];

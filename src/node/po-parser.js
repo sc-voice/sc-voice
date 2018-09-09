@@ -91,7 +91,7 @@
                                     if (segment[that.json_str] && segment[that.json_str].match(RE_SPACE_EOL)) {
                                         segment[that.json_str].indexOf('non')>=0 && 
                                             console.log(`debug: "${segment[that.json_str]}"`);
-                                        segment[that.json_str] += " ";
+                                        //segment[that.json_str] += " ";
                                     }
                                     segment[that.json_str] += line.substring(1, line.length-1);
                                 } else {

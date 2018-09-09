@@ -2,6 +2,8 @@
     const Words = require('./words');
     const DEFAULT_PROP = 'en';
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
+    const RE_TITLE_END = new RegExp(`[.?;,${Words.U_EMDASH}].*$`, 'u');
+    const MILLERS_LAW = 7; // cognitive limit
 
     class Section {
         constructor(opts={}) {
@@ -15,6 +17,8 @@
             this.values = opts.values || [];
             this.template = opts.template || [];
             this.prop = opts.prop || DEFAULT_PROP;
+            this.title = opts.title || 
+                Section.titleOfText(this.segments[0] && this.segments[0][this.prop]);
 
             Object.defineProperty(this, 'expandable', {
                 enumerable: true,
@@ -23,6 +27,11 @@
             this.expandable && Object.defineProperty(this, 'reValues', {
                 value: new RegExp(`${this.values.join('|')}`,'u'),
             });
+        }
+
+        static titleOfText(text='(untitled)') {
+            var title = text.split(' ').slice(0,MILLERS_LAW).join(' ');
+            return title.replace(RE_TITLE_END, '') + Words.U_ELLIPSIS;
         }
 
         expandAll() {
