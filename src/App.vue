@@ -1,44 +1,46 @@
 <template>
-  <v-app>
-    <v-navigation-drawer
-      persistent
-      :clipped="clipped"
-      v-model="drawer"
-      enable-resize-watcher
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-tile
-          value="true"
-          v-for="(item, i) in items"
-          :key="i"
-        >
-          <v-list-tile-action>
-            <v-icon v-html="item.icon"></v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-toolbar
-      app
-      :clipped-left="clipped"
-    >
+  <v-app dark>
+    <v-toolbar app flat dark >
+      <img src="/favicon.png" height=30px/>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon aria-label="SuttaCentral Voice Preferences">
+      <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+        aria-label="Settings"
+        @click="dialogSettings = !dialogSettings"
+        >
         <v-icon>settings</v-icon>
       </v-btn>
     </v-toolbar>
+    <v-dialog v-model="dialogSettings" fullscreen persistent>
+        <v-card>
+          <v-card-title class="title scv-dialog-title">
+              Settings
+              <v-spacer/>
+              <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+                aria-label="Close"
+                @click="dialogSettings = false"
+                >
+                <v-icon>close</v-icon>
+              </v-btn>
+          </v-card-title>
+          <v-card-text>
+            <details class="scv-dialog" >
+                <summary class="subheading">Content</summary>
+                <v-checkbox v-model="showId" role="checkbox" :aria-checked="showId"
+                    label="Show SuttaCentral text segment identifiers">
+                </v-checkbox>
+            </details>
+          </v-card-text>
+          <v-card-actions>
+            <button class="scv-dialog-button" :style="cssProps"
+                @click="dialogSettings=false" >
+                Close </button>
+          </v-card-actions>
+        </v-card>
+    </v-dialog>
     <v-content>
-      <Sutta/>
+      <Sutta :showId="showId"/>
     </v-content>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
-    </v-footer>
   </v-app>
 </template>
 
@@ -52,15 +54,59 @@ export default {
   },
   data () {
     return {
-      clipped: true,
-      drawer: true,
-      fixed: false,
-      items: [{
-        icon: 'bubble_chart',
-        title: 'Inspire'
-      }],
+        dialogSettings: false,
+        focused: {
+            'settings': false,
+        },
+        showId: false,
+        items: [{
+            title:'red',
+        },{
+            title:'blue',
+        },{
+            title:'green',
+        }],
       title: 'SuttaCentral Voice Assistant'
     }
-  }
+  },
+  methods: {
+    onfocus(id) {
+        this.focused[id] = true;
+    },
+    onblur(id) {
+        this.focused[id] = false;
+    },
+  },
+  computed: {
+    cssProps() {
+        return {
+            '--accent-color': this.$vuetify.theme.accent,
+        };
+    },
+  },
 }
 </script>
+<style >
+.scv-icon-btn:focus {
+    border-radius:5px;
+    border: 1pt solid var(--accent-color);
+}
+.scv-dialog-button {
+    border-radius: 5px;
+    border: 1pt solid #888;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    text-align: center;
+    margin-left: 1.2em;
+}
+.scv-dialog-button:focus {
+    border-color: var(--accent-color);
+    outline: 1pt solid var(--accent-color);
+}
+.scv-dialog-title {
+    border-bottom: 1pt solid white;
+}
+details.scv-dialog {
+    margin-left: 1em;
+}
+</style>
