@@ -41,12 +41,11 @@ do the following:
 ### Scripts
 
  | script | description |
- | +----- | +---------- |
+ | :----- | :---------- |
  | `npm run test`  | Run service unit tests. The unit tests require AWS Polly. Tests for IBM Watson are disabled by default (see `test/watson.js`). |
  | `npm run serve` | Compile and reload SC-Voice Vue for development at http://localhost:8080 |
  | `npm run build` | Create production Vue build in `dist` folder |
  | `npm run lint`  | Lints and fixes files |
-```
 
 ### Other
 #### Directory structure
