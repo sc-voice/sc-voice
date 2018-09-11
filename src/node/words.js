@@ -193,7 +193,7 @@
             } else {
                 var def = value;
             }
-            var alternates = opts.alternates || [word];;
+            var alternates = opts.alternates || [word];
             if (value == null) {
                 alternates.forEach(alt => {
                     alt !== word && (this.words[alt] = word);

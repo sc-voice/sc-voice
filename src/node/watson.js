@@ -37,9 +37,9 @@
                 voice: request.voice || this.voice,
             };
             this.textToSpeech.synthesize(serviceParams)
-            .on('error', error => reject(error) )
-            .on('end', () => this.synthesizeResponse(resolve, reject, request) )
-            .pipe(ostream);
+                .on('error', error => reject(error) )
+                .on('end', () => this.synthesizeResponse(resolve, reject, request) )
+                .pipe(ostream);
         }
     }
 

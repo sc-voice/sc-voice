@@ -15,8 +15,8 @@
             this.region = opts.region || 'us-west-1';
             this.audioFormat = opts.audioFormat || 'ogg_vorbis';
             this.pollyConfig = opts.config || {
-               signatureVersion: this.apiVersion,
-               region: this.region,
+                signatureVersion: this.apiVersion,
+                region: this.region,
             };
             opts.prosody == null && (this.prosody.rate = "-20%");
             this.polly = opts.polly || new AWS.Polly(this.pollyConfig);

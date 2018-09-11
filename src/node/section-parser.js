@@ -118,7 +118,7 @@
             var iEnd = lastIndexes[lastIndexes.length-1]+1;
 
             return segments.slice(iStart, iEnd);
-       }
+        }
 
         parseExpandableSection(segments) {
             var prop = this.prop;
