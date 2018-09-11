@@ -123,6 +123,34 @@
             }
         }
 
+        static textOfSegments(segments, opts={}) {
+            var prop = opts.prop || 'en';
+            var rePhraseEnd = opts.rePhraseEnd || RE_PHRASE_END;
+            if (!(rePhraseEnd instanceof RegExp)) {
+                rePhraseEnd = new RegExp(rePhraseEnd, "u");
+            }
+            var groupSep = opts.groupSep || Sutta.GROUP_SEP;
+            var prevgid = null;
+            return segments.reduce((acc, seg, i) => {
+                var segtext = seg[prop];
+                var scid = new SuttaCentralId(seg.scid);
+                var curgid = scid.parent.scid;
+
+                if (prevgid && curgid != prevgid) {
+                    if (acc[i-1][acc[i-1].length-1] !== groupSep) {
+                        acc[i-1] = acc[i-1] + groupSep;
+                    }
+                } 
+                if (!segtext.match(rePhraseEnd)) {
+                    segtext += groupSep;
+                }
+                acc.push(segtext);
+
+                prevgid = curgid;
+                return acc;
+            }, []);
+        }
+
         get segments() {
             return this.sections.reduce((acc,section) => {
                 section.segments.forEach(seg => acc.push(seg));

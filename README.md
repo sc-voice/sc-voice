@@ -21,21 +21,6 @@ git clone git@github.com:sc-karl/sc-voice.git
 cd sc-voice
 ./scripts/init.sh
 ```
-##### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-##### Compiles and minifies for production
-```
-npm run build
-```
-
-##### Lints and fixes files
-```
-npm run lint
-```
-
 As part of installation you will need to configure one TTS service adapter.
 
 ##### Configure Amazon AWS Polly (recommended)
@@ -53,11 +38,14 @@ do the following:
 1. ENTER
 1. CTRL-D
 
-##### Testing
-The unit tests require AWS Polly. Tests for IBM Watson are disabled by default (see `test/watson.js`).
+### Scripts
 
-```json
-npm run test
+ | script | description |
+ | +----- | +---------- |
+ | `npm run test`  | Run service unit tests. The unit tests require AWS Polly. Tests for IBM Watson are disabled by default (see `test/watson.js`). |
+ | `npm run serve` | Compile and reload SC-Voice Vue for development at http://localhost:8080 |
+ | `npm run build` | Create production Vue build in `dist` folder |
+ | `npm run lint`  | Lints and fixes files |
 ```
 
 ### Other
@@ -67,11 +55,6 @@ npm run test
 * **test** contains Javascript unit tests
 * **scripts** contains miscellaneous scripts
 * **local** contains local content not archived in git
+* **public** Vue/Vuetify public HTML assets
 * **words** contains language lexicons for search and speech.
-
-
-## Project setup
-```
-npm install
-```
 
