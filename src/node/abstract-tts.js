@@ -103,13 +103,13 @@
                 } else {
                     var ipa = null;
                 }
-             } else { // unknown word or punctuation
+            } else { // unknown word or punctuation
                 if (this.words.isWord(word) && this.languageUnknown !== this.language) { 
                     var ipa = this.words.ipa(word, this.languageUnknown); 
                 } else {
                     var ipa = null; 
                 }
-             }
+            }
             if (ipa) {
                 if (ipa.endsWith('(.)')) {
                     var pauses = ipa.split('(.)');

@@ -12,5 +12,5 @@ Vue.use(VueAxios, axios);
 //Vue.use(Vuetify);
 
 new Vue({
-  render: h => h(App)
+    render: h => h(App)
 }).$mount('#app')

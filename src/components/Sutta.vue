@@ -38,37 +38,37 @@
 /* eslint no-console: 0*/
 
 export default {
-  name: 'Sutta',
-  props: {
-    msg: String,
-    showId: {
-        default: true,
+    name: 'Sutta',
+    props: {
+        msg: String,
+        showId: {
+            default: true,
+        },
     },
-  },
-  data: function( ){
-    return {
-        sections: null,
-    }
-  },
-  methods: {
-  },
-  computed: {
-    cssProps() {
+    data: function( ){
         return {
-            '--accent-color': this.$vuetify.theme.accent,
+            sections: null,
         }
     },
-  },
-  created() {
-    console.debug("hello created", this.$vuetify.theme);
-    this.$http.get('/mn1-expanded.json').then(res => {
-        console.log(res);
-        this.sections = res.data.sections;
-    }).catch(e => {
-        console.error(e.stack);
-    });
+    methods: {
+    },
+    computed: {
+        cssProps() {
+            return {
+                '--accent-color': this.$vuetify.theme.accent,
+            }
+        },
+    },
+    created() {
+        console.debug("hello created", this.$vuetify.theme);
+        this.$http.get('/mn1-expanded.json').then(res => {
+            console.log(res);
+            this.sections = res.data.sections;
+        }).catch(e => {
+            console.error(e.stack);
+        });
 
-  },
+    },
 
 }
 </script>

@@ -204,7 +204,9 @@
                 });
                 this.words[word] = def;
             } else if (typeof value === 'string') {
+                // TODO
             } else {
+                // TODO
             }
         }
 

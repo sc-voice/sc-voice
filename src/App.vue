@@ -48,42 +48,42 @@
 import Sutta from './components/Sutta'
 
 export default {
-  name: 'App',
-  components: {
-    Sutta
-  },
-  data () {
-    return {
-        dialogSettings: false,
-        focused: {
-            'settings': false,
-        },
-        showId: false,
-        items: [{
-            title:'red',
-        },{
-            title:'blue',
-        },{
-            title:'green',
-        }],
-      title: 'SuttaCentral Voice Assistant'
-    }
-  },
-  methods: {
-    onfocus(id) {
-        this.focused[id] = true;
+    name: 'App',
+    components: {
+        Sutta
     },
-    onblur(id) {
-        this.focused[id] = false;
-    },
-  },
-  computed: {
-    cssProps() {
+    data () {
         return {
-            '--accent-color': this.$vuetify.theme.accent,
-        };
+            dialogSettings: false,
+            focused: {
+                'settings': false,
+            },
+            showId: false,
+            items: [{
+                title:'red',
+            },{
+                title:'blue',
+            },{
+                title:'green',
+            }],
+            title: 'SuttaCentral Voice Assistant'
+        }
     },
-  },
+    methods: {
+        onfocus(id) {
+            this.focused[id] = true;
+        },
+        onblur(id) {
+            this.focused[id] = false;
+        },
+    },
+    computed: {
+        cssProps() {
+            return {
+                '--accent-color': this.$vuetify.theme.accent,
+            };
+        },
+    },
 }
 </script>
 <style >

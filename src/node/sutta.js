@@ -98,7 +98,6 @@
                     prevgid = curgid;
                     return acc;
                 }, []);
-                return segments.map(seg => seg[opts.prop]);
             }
             return segments;
         }

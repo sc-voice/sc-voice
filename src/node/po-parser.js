@@ -54,53 +54,53 @@
                     lines.forEach(line => {
                         line = line.replace(that.reHTML, '');
                         switch (state) {
-                            case S_MSGCTXT:
-                                if (that.msgctxt.test(line)) {
-                                    segment = {
-                                        [that.json_ctxt]: line.split('"')[1],
-                                    };
-                                    state = S_MSGID1;
-                                }
-                                break;
-                            case S_MSGID1:
-                                if (that.msgid.test(line)) {
-                                    segment[that.json_id] = line.substring(7, line.length-1);
-                                    state = S_MSGIDN;
-                                }
-                                break;
-                            case S_MSGIDN:
-                                if (that.msgquote.test(line)) {
-                                    segment[that.json_id] && segment[that.json_id].match(RE_SPACE_EOL) &&
+                        case S_MSGCTXT:
+                            if (that.msgctxt.test(line)) {
+                                segment = {
+                                    [that.json_ctxt]: line.split('"')[1],
+                                };
+                                state = S_MSGID1;
+                            }
+                            break;
+                        case S_MSGID1:
+                            if (that.msgid.test(line)) {
+                                segment[that.json_id] = line.substring(7, line.length-1);
+                                state = S_MSGIDN;
+                            }
+                            break;
+                        case S_MSGIDN:
+                            if (that.msgquote.test(line)) {
+                                segment[that.json_id] && segment[that.json_id].match(RE_SPACE_EOL) &&
                                         (segment[that.json_id] += " ");
-                                    segment[that.json_id] += line.substring(1, line.length-1);
-                                } else if (that.msgstr.test(line)) {
-                                    segment[that.json_str] = line.substring(8, line.length-1);
-                                    state = S_MSGSTRN;
-                                } else {
-                                    state = S_MSGSTR1;
-                                }
-                                break;
-                            case S_MSGSTR1:
-                                if (that.msgstr.test(line)) {
-                                    segment[that.json_str] = line.substring(8, line.length-1);
-                                    state = S_MSGSTRN;
-                                }
-                                break;
-                            case S_MSGSTRN:
-                                if (that.msgquote.test(line)) {
-                                    if (segment[that.json_str] && segment[that.json_str].match(RE_SPACE_EOL)) {
-                                        segment[that.json_str].indexOf('non')>=0 && 
+                                segment[that.json_id] += line.substring(1, line.length-1);
+                            } else if (that.msgstr.test(line)) {
+                                segment[that.json_str] = line.substring(8, line.length-1);
+                                state = S_MSGSTRN;
+                            } else {
+                                state = S_MSGSTR1;
+                            }
+                            break;
+                        case S_MSGSTR1:
+                            if (that.msgstr.test(line)) {
+                                segment[that.json_str] = line.substring(8, line.length-1);
+                                state = S_MSGSTRN;
+                            }
+                            break;
+                        case S_MSGSTRN:
+                            if (that.msgquote.test(line)) {
+                                if (segment[that.json_str] && segment[that.json_str].match(RE_SPACE_EOL)) {
+                                    segment[that.json_str].indexOf('non')>=0 && 
                                             console.log(`debug: "${segment[that.json_str]}"`);
-                                        //segment[that.json_str] += " ";
-                                    }
-                                    segment[that.json_str] += line.substring(1, line.length-1);
-                                } else {
-                                    state = S_MSGCTXT;
-                                    segment = add(segment);
+                                    //segment[that.json_str] += " ";
                                 }
-                                break;
-                            default:
-                                break;
+                                segment[that.json_str] += line.substring(1, line.length-1);
+                            } else {
+                                state = S_MSGCTXT;
+                                segment = add(segment);
+                            }
+                            break;
+                        default:
+                            break;
                         }
                     });
                     segment = add(segment);
@@ -113,7 +113,7 @@
             if (!fs.existsSync(filePath)) {
                 return Promise.reject(new Error(`file not found:${filePath}`));
             }
-            var lines = fs.readFileSync(filePath).toString().split('\n');;
+            var lines = fs.readFileSync(filePath).toString().split('\n');
             return this.parseLines(lines, opts);
         }
 
@@ -130,7 +130,7 @@
                 }
                 var root = opts.root || path.join(__dirname, '../../local/sc');
                 var files = [];
-                function visit(apath) {
+                var visit = (apath)=>{
                     var stats = fs.statSync(apath);
                     if (stats.isDirectory()) {
                         fs.readdirSync(apath).forEach(file => 

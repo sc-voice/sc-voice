@@ -8,7 +8,7 @@
     const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
-    const RE_HEADER = new RegExp(`^.*:0\.*$`, 'u');
+    const RE_HEADER = new RegExp(`^.*:0\\..*$`, 'u');
     const OPTS_EN = {
         prop: 'en',
     };
