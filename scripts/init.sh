@@ -2,6 +2,14 @@
 
 echo -e "INIT\t: $0 START: `date`"
 
+type npm
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: npm detected (OK)"
+else
+    echo -e "INIT\t: installing npm (requires sudo)"
+    sudo apt-get install -y npm
+fi
+
 type aspell
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: aspell detected (OK)"
