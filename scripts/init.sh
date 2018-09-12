@@ -32,10 +32,12 @@ type python
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: Python detected (consult AWS CLI for required version)"
 else
-    echo -e "ERROR\t: Python not installed. See AWS CLI documentation"
-    echo -e "ERROR\t: https://docs.aws.amazon.com/cli/latest/userguide/awscli-install-bundle.html"
-    echo -e "ERROR\t: Install correct version of Python per AWS CLI instructions"
-    exit -1
+    echo -e "INIT\t: installing python (requires sudo)"
+    sudo apt-get install -y python
+    #echo -e "ERROR\t: Python not installed. See AWS CLI documentation"
+    #echo -e "ERROR\t: https://docs.aws.amazon.com/cli/latest/userguide/awscli-install-bundle.html"
+    #echo -e "ERROR\t: Install correct version of Python per AWS CLI instructions"
+    #exit -1
 fi
 
 type aws
