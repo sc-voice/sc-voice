@@ -19,7 +19,7 @@ RC=$?; if [ "$RC" == "0" ]; then
 else
     echo -e "INIT\t: installing npm (requires sudo)"
     curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-    sudo apt-get install -y npm
+    sudo apt-get install -y nodejs
 fi
 
 type aspell
