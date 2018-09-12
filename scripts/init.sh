@@ -22,6 +22,14 @@ else
     sudo apt-get install -y nodejs
 fi
 
+type mocha
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: mocha detected (OK)"
+else
+    echo -e "INIT\t: installing mocha (requires sudo)"
+    sudo npm install -g -y mocha
+fi
+
 type aspell
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: aspell detected (OK)"
