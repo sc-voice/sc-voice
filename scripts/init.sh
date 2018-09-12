@@ -4,6 +4,14 @@ echo -e "INIT\t: $0 START: `date`"
 
 sudo apt-get update
 
+type unzip
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: unzip detected (OK)"
+else
+    echo -e "INIT\t: installing unzip (requires sudo)"
+    sudo apt-get install -y unzip
+fi
+
 type npm
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: npm detected (OK)"
