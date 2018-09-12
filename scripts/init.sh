@@ -18,16 +18,8 @@ RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: npm detected (OK)"
 else
     echo -e "INIT\t: installing npm (requires sudo)"
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
     sudo apt-get install -y npm
-fi
-
-type node
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: node detected (OK)"
-else
-    echo -e "INIT\t: upgrading npm "
-    echo -e "INIT\t: installing node"
-    sudo apt-get install -y nodejs
 fi
 
 type aspell
