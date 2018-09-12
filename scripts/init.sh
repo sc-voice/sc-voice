@@ -21,6 +21,14 @@ else
     sudo apt-get install -y npm
 fi
 
+type node
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: node detected (OK)"
+else
+    echo -e "INIT\t: installing node (requires sudo)"
+    npm install -g npm@latest
+fi
+
 type aspell
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: aspell detected (OK)"
