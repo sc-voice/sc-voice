@@ -25,8 +25,9 @@ type node
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: node detected (OK)"
 else
-    echo -e "INIT\t: installing node (requires sudo)"
-    npm install -g npm@latest
+    echo -e "INIT\t: upgrading npm "
+    echo -e "INIT\t: installing node"
+    sudo npm install -g npm@latest
 fi
 
 type aspell
