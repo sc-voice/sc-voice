@@ -7,7 +7,7 @@ RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: aspell detected (OK)"
 else
     echo -e "INIT\t: installing aspell (requires sudo)"
-    sudo apt-get install aspell
+    sudo apt-get install -y aspell
 fi
 
 type ffmpeg
@@ -15,7 +15,7 @@ RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: ffmpeg detected (OK)"
 else
     echo -e "INIT\t: installing ffmpeg (requires sudo)"
-    sudo apt-get install ffmpeg
+    sudo apt-get install -y ffmpeg
 fi
 
 type python
