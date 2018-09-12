@@ -18,7 +18,7 @@ RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: npm detected (OK)"
 else
     echo -e "INIT\t: installing npm (requires sudo)"
-    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
     sudo apt-get install -y nodejs
 fi
 
