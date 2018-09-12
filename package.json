@@ -1,5 +1,5 @@
 {
-  "name": "js-pootl",
+  "name": "sc-voice",
   "version": "0.1.9",
   "description": "SuttaCentral Voice Assistant",
   "main": "index.js",
@@ -13,6 +13,7 @@
     "compression": "^1.7.3",
     "express": "^4.16.3",
     "merkle-json": "^1.1.2",
+    "rest-bundle": "^0.36.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "tmp": "0.0.33",
@@ -34,9 +35,10 @@
     "vue-template-compiler": "^2.5.17"
   },
   "scripts": {
-    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "dev": "concurrently \"scripts/server.js \" \"npm run serve\"",
     "lint": "vue-cli-service lint",
+    "serve": "vue-cli-service serve",
     "test": "npm run test:verbose",
     "test:test": "mocha -w -R min --inline-diffs -g TEST",
     "test:verbose": "mocha --inline-diffs",

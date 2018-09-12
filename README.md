@@ -17,7 +17,7 @@ Javascript implemenation of SuttaCentral voice assistance for vision-impaired. I
 With a Linux console, install the software:
 
 ```
-git clone git@github.com:sc-karl/sc-voice.git
+git clone https://github.com/sc-karl/sc-voice.git
 cd sc-voice
 ./scripts/init.sh
 ```
