@@ -27,7 +27,7 @@ RC=$?; if [ "$RC" == "0" ]; then
 else
     echo -e "INIT\t: upgrading npm "
     echo -e "INIT\t: installing node"
-    sudo npm install -g npm@latest
+    sudo apt-get install -y nodejs
 fi
 
 type aspell
