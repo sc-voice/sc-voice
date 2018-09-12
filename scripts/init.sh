@@ -2,8 +2,8 @@
 
 echo -e "INIT\t: $0 START: `date`"
 
-sudo apt-get update
-sudo apt-get upgrade
+sudo apt-get update -y
+sudo apt-get upgrade -y
 
 type unzip
 RC=$?; if [ "$RC" == "0" ]; then
