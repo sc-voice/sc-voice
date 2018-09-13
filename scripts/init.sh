@@ -132,7 +132,8 @@ After=network.target
 User=`whoami`
 Environment=
 WorkingDirectory=`realpath $SCRIPT_DIR/..`
-ExecStart=/usr/bin/node server.js
+ExecStart=scripts/sc-voice-start.sh
+ExecStop=scripts/sc-voice-stop.sh
 
 [Install]
 WantedBy=multi-user.target
