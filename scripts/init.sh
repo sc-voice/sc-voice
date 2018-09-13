@@ -2,7 +2,7 @@
 
 echo -e "INIT\t: $0 START: `date`"
 
-SCRIPT_DIR=`dirname $0`
+SCRIPT_DIR=`realpath \`dirname $0\``
 
 sudo apt-get update -y
 sudo apt-get upgrade -y
@@ -122,8 +122,8 @@ else
     popd
 fi
 
-echo -e "INIT\t: creating local/sc-voice-unit"
-cat <<- HEREDOC > $SCRIPT_DIR/../local/sc-voice-unit.service
+echo -e "INIT\t: creating local/sc-voice"
+cat <<- HEREDOC > $SCRIPT_DIR/../local/sc-voice.service
 [Unit]
 Description=SuttaCentral Voice Assistant
 After=network.target
