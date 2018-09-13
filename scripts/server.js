@@ -31,6 +31,8 @@ app.all('*', function(req, res, next) {
 });
 app.use("/", express.static(path.join(__dirname, "../public")));
 app.use("/dist", express.static(path.join(__dirname, "../dist")));
+app.use("/js", express.static(path.join(__dirname, "../dist/js")));
+app.use("/css", express.static(path.join(__dirname, "../dist/css")));
 app.use("/sounds", express.static(path.join(__dirname, "../local/sounds")));
 var async = function*() {
     try {

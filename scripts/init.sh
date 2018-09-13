@@ -2,6 +2,8 @@
 
 echo -e "INIT\t: $0 START: `date`"
 
+SCRIPT_DIR=`dirname $0`
+
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
@@ -20,6 +22,14 @@ else
     echo -e "INIT\t: installing npm (requires sudo)"
     curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
     sudo apt-get install -y nodejs
+fi
+
+sudo getcap -v `which node` | grep net_bind_service
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: node can run on port 80 (OK)"
+else
+    echo -e "INIT\t: changing capability of node to run on port 80"
+    sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
 fi
 
 type vue
@@ -111,6 +121,24 @@ else
     rm sc/README.md
     popd
 fi
+
+echo -e "INIT\t: creating local/sc-voice-unit"
+cat <<- HEREDOC > $SCRIPT_DIR/../local/sc-voice-unit
+[Unit]
+Description=SuttaCentral Voice Assistant
+After=network.target
+
+[Service]
+User=`whoami`
+Environment=
+WorkingDirectory=`realpath $SCRIPT_DIR/..`
+ExecStart=/usr/bin/node server.js
+
+[Install]
+WantedBy=multi-user.target
+HEREDOC
+# END sc-voice-unit
+
 
 if [ -e local/awscli-bundle ]; then
     echo -e "INIT\t: awscli-bundle folder exists (OK)"
