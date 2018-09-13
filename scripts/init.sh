@@ -123,7 +123,7 @@ else
 fi
 
 echo -e "INIT\t: creating local/sc-voice-unit"
-cat <<- HEREDOC > $SCRIPT_DIR/../local/sc-voice-unit
+cat <<- HEREDOC > $SCRIPT_DIR/../local/sc-voice-unit.service
 [Unit]
 Description=SuttaCentral Voice Assistant
 After=network.target
