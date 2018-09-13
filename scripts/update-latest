@@ -1,0 +1,89 @@
+#!/bin/bash
+
+echo -e "UPDATE\t: $0 START `date`"
+
+sudo apt-get update
+
+echo -e "UPDATE\t: ***NOT IMPLEMENTED***"
+
+exit 0
+
+REBOOT=0
+OPTIND=1
+while getopts "r" opt; do
+    case "$opt" in
+    r)  REBOOT=1
+        ;;
+    esac
+done
+shift $((OPTIND-1))
+[ "$1" = "--" ] && shift
+
+if [ -e /etc/rc2.d/S50oyapi ]; then
+    echo -e "UPDATE\t: updating /etc/init.d/oyapi"
+    sudo cp scripts/oyapi /etc/init.d
+    echo -e "UPDATE\t: updating /etc/init.d/oyapi-spawnd"
+    sudo cp scripts/oyapi-spawnd /etc/init.d
+    sudo ln -sf /etc/init.d/oyapi-spawnd /etc/rc2.d/S50oyapi-spawnd
+else
+    while true; do
+        echo -e "UPDATE\t: Oyapi currently needs to be started manually"
+        read -p "UPDATE  : Configure system to launch Oyapi automatically on power-up? [y,n]:" LAUNCH
+        case $LAUNCH in
+            [y]* ) break;;
+            [n]* ) break;;
+               * ) echo "        : Please enter 'y' or 'n'";;
+        esac
+    done
+    if [ "$LAUNCH" == "y" ]; then
+        echo -e "UPDATE\t: installing /etc/init.d/oyapi"
+        sudo cp scripts/oyapi /etc/init.d
+        echo -e "UPDATE\t: sudo ln -s `pwd`/scripts/oyapi /etc/rc2.d/S50oyapi"
+        sudo ln -s /etc/init.d/oyapi /etc/rc2.d/S50oyapi
+
+        echo -e "UPDATE\t: installing /etc/init.d/oyapi-spawnd"
+        sudo cp scripts/oyapi-spawnd /etc/init.d
+        echo -e "UPDATE\t: sudo ln -s `pwd`/scripts/oyapi-spawnd /etc/rc2.d/S50oyapi-spawnd"
+        sudo ln -s /etc/init.d/oyapi-spawnd /etc/rc2.d/S50oyapi-spawnd
+        sync
+    fi
+fi
+
+echo -e "UPDATE\t: Installing dependencies..."
+npm install
+sync
+
+motion -h >& /dev/null
+RC=$?; if [ "$RC" != "0" ]; then 
+    echo -e "INSTALL\t: installing webcam motion capture"
+    sudo apt install -y motion
+    sudo mkdir -p /var/log/motion
+    sudo chown pi:pi /var/log/motion
+fi
+echo -e "INSTALL\t: `motion -h | head -1`"
+
+`dirname $0`/sqlite3-install.sh
+RC=$?; if [ "$RC" != "0" ]; then 
+    echo -e "ERROR\t: Could not set up SQLite3 database "
+    exit $RC
+fi
+
+echo -e "UPDATE\t: Building web server..."
+npm run build
+sync
+
+if [ "$REBOOT" == "1" ]; then
+    sudo shutdown -r now
+fi
+
+while true; do
+    echo -e "UPDATE\t: OyaMist update requires a reboot"
+    read -p "UPDATE  : Reboot now? [y,n]:" REBOOT
+    case $REBOOT in
+        [y]* ) sudo shutdown -r now; break;;
+        [n]* ) break;;
+           * ) echo "        : Please enter 'y' or 'n'";;
+    esac
+done
+
+echo -e "UPDATE\t: $0 END `date`"

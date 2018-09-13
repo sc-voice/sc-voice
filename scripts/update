@@ -1,0 +1,40 @@
+#!/bin/bash
+
+echo -e "UPDATE\t: $0 START `date`"
+
+if [ "`whoami`" == "root" ]; then
+    echo -e "ERROR\t: root detected. This script cannot be run as root"
+    exit -1
+fi
+
+if [ "`id -u`" == "0" ]; then
+    echo -e "UPDATE\t: superuser detected, switching to normal user"
+    sudo -u `whoami` $0 $*
+    RC=$?
+    exit $RC
+fi
+echo -e "UPDATE\t: normal user detected"
+
+echo -e "UPDATE\t: Retrieving latest github content..."
+git checkout package-lock.json
+git pull &> /tmp/git.log
+RC=$?; if [ "$RC" != "0" ]; then 
+    echo -e "ERROR\t: Could not update"
+    cat /tmp/git.log
+    exit $RC
+fi
+grep Already /tmp/git.log
+RC=$?; if [ "$RC" == "0" ]; then
+    if [ "$1" == "-f" ]; then
+        echo -e "UPDATE\t: Your system is up-to-date. Forcing update..."
+    else
+        echo -e "UPDATE\t: Your system is up-to-date. No further action required"
+        exit 0
+    fi
+fi
+sync
+
+DIR=`dirname $0`
+${DIR}/update-latest $*
+
+echo -e "UPDATE\t: $0 END `date`"
