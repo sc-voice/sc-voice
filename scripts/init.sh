@@ -122,24 +122,6 @@ else
     popd
 fi
 
-echo -e "INIT\t: creating local/sc-voice"
-cat <<- HEREDOC > $SCRIPT_DIR/../local/sc-voice.service
-[Unit]
-Description=SuttaCentral Voice Assistant
-After=network.target
-
-[Service]
-User=`whoami`
-Environment=
-WorkingDirectory=`realpath $SCRIPT_DIR/..`
-ExecStart=$SCRIPT_DIR/sc-voice-start.sh
-ExecStop=$SCRIPT_DIR/sc-voice-stop.sh
-
-[Install]
-WantedBy=multi-user.target
-HEREDOC
-# END sc-voice-unit
-
 
 if [ -e local/awscli-bundle ]; then
     echo -e "INIT\t: awscli-bundle folder exists (OK)"

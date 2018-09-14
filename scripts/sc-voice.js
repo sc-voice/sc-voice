@@ -30,10 +30,10 @@ app.all('*', function(req, res, next) {
     next();
 });
 app.use("/", express.static(path.join(__dirname, "../public")));
-app.use("/dist", express.static(path.join(__dirname, "../dist")));
-app.use("/js", express.static(path.join(__dirname, "../dist/js")));
-app.use("/css", express.static(path.join(__dirname, "../dist/css")));
-app.use("/sounds", express.static(path.join(__dirname, "../local/sounds")));
+app.use("/scv/", express.static(path.join(__dirname, "../dist")));
+app.use("/scv/js", express.static(path.join(__dirname, "../dist/js")));
+app.use("/scv/css", express.static(path.join(__dirname, "../dist/css")));
+app.use("/scv/sounds", express.static(path.join(__dirname, "../local/sounds")));
 var async = function*() {
     try {
         // create RestBundles
