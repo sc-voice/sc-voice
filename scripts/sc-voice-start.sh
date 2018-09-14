@@ -10,8 +10,9 @@ LOGFILE="${APP_DIR}/local/logs/scv-${TS}.log"
 SCVLOG="${APP_DIR}/local/scv.log" 
 rm -f $SCVLOG
 ln -sf ${LOGFILE} $SCVLOG
+echo -e "`date` START sc-voice" | tee -a ${LOGFILE}
 
 ${SCRIPT_DIR}/sc-voice.js 2>&1 | tee -a ${LOGFILE}
 
-echo -e "`date` sc-voice exiting..." | tee -a ${LOGFILE}
+echo -e "`date` EXIT sc-voice" | tee -a ${LOGFILE}
 
