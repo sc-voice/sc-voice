@@ -36,6 +36,8 @@ app.use("/scv/css", express.static(path.join(__dirname, "../dist/css")));
 app.use("/scv/sounds", express.static(path.join(__dirname, "../local/sounds")));
 var async = function*() {
     try {
+        var rbServer =  app.locals.rbServer = new RbServer();
+
         // create RestBundles
         var restBundles = app.locals.restBundles = [];
         var scvRest = new ScvRest();
@@ -44,7 +46,6 @@ var async = function*() {
 
         // create http server and web socket
         var ports = [80, 8081].concat(new Array(100).fill(3000).map((p,i)=>p+i));
-        var rbServer =  app.locals.rbServer = new RbServer();
         rbServer.listen(app, restBundles, ports); 
         yield rbServer.initialize().then(r=>async.next(r)).catch(e=>async.throw(e));
     } catch(e) {

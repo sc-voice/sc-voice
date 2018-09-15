@@ -109,4 +109,10 @@ export default {
 details.scv-dialog {
     margin-left: 1em;
 }
+.v-content {
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-image: url("/img/buddha-head.png") ;
+}
+
 </style>

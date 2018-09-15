@@ -93,13 +93,16 @@
         } catch(e) {done(e)} })();
 
     });
-    it("suttaPath(id, root) returns sutta file path", function() {
+    it("TESTTESTsuttaPath(id, root, opts) returns sutta file path", function() {
         should(PoParser.suttaPath('mn1')).equal(path.join(SC, 'mn', 'en', 'mn001.po'));
         should(PoParser.suttaPath('MN123:1.1')).equal(path.join(SC, 'mn', 'en', 'mn123.po'));
 
         var root = 'dummy';
         should(PoParser.suttaPath('mn1', root)).equal(path.join(root, 'mn', 'en', 'mn001.po'));
         should(PoParser.suttaPath('MN123:1.1', root)).equal(path.join(root, 'mn', 'en', 'mn123.po'));
+        should(PoParser.suttaPath('sn22.1', root)).equal(path.join(root, 'sn/en/sn22/sn22.001.po'));
+        should(PoParser.suttaPath('an3.163-182', root)).equal(path.join(root, 'an/en/an03/an3.163-182.po'));
+        should(PoParser.suttaPath('an3.3', root)).equal(path.join(root, 'an/en/an03/an3.003.po'));
     });
 
 })

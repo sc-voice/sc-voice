@@ -5,6 +5,7 @@
     const Section = require('./section');
     const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
+    const RE_HEADER = new RegExp(`^.*:0\\..*$`, 'u');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
     const RE_PHRASE_END = new RegExp('.*[.?;,]$', 'u');
     const FIND_PROP = 'scid';
@@ -14,9 +15,27 @@
 
     class Sutta { 
         constructor(opts={}) {
-            this.sections = opts.sections || [new Section({
-                segments: opts.segments || [],
-            })];
+            this.sections = opts.sections || Sutta.defaultSections(opts.segments);
+        }
+
+        static isHeader(segment) {
+            return segment && segment.scid.match(RE_HEADER);
+        } 
+
+        static defaultSections(segments=[]) {
+            segments = segments.slice();
+            var sections = [];
+            var header = [];
+            while (Sutta.isHeader(segments[0])) {
+                header.push(segments.shift());
+            }
+            header.length && sections.push(new Section({
+                segments:header,
+            }));
+            segments.length && sections.push(new Section({
+                segments,
+            }));
+            return sections;
         }
 
         static get GROUP_SEP() { return '\n'; }

@@ -13,7 +13,7 @@
     "compression": "^1.7.3",
     "express": "^4.16.3",
     "merkle-json": "^1.1.2",
-    "rest-bundle": "^0.36.0",
+    "rest-bundle": "^0.36.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "tmp": "0.0.33",
@@ -31,6 +31,7 @@
     "eslint-plugin-html": "^4.0.5",
     "mocha": "^5.2.0",
     "should": "^11.2.0",
+    "supertest": "^3.3.0",
     "vue-cli-plugin-vuetify": "^0.1.6",
     "vue-template-compiler": "^2.5.17"
   },

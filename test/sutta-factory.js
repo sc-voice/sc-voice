@@ -61,6 +61,30 @@
             done();
         } catch(e) { done(e); } })();
     });
+    it("TESTTESTloadSutta(id, opts) loads an3.163-182", function(done) {
+        (async function() { try {
+            var sutta = await SuttaFactory.loadSutta('an3.163-182');
+            should(sutta.sections[0].segments[0].en).equal('Numbered Discourses 3');
+            should(sutta.sections[0].segments[1].en).equal(`17. Courses of Deeds`);
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTloadSutta(id, opts) loads dn7", function(done) {
+        (async function() { try {
+            var sutta = await SuttaFactory.loadSutta('dn7');
+            should(sutta.sections[0].segments[0].en).equal('Long Discourses 7');
+            should(sutta.sections[0].segments[1].en).equal(`With Jāliya`);
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTloadSutta(id, opts) loads sn22.1", function(done) {
+        (async function() { try {
+            var sutta = await SuttaFactory.loadSutta('sn22.1');
+            should(sutta.sections[0].segments[0].en).equal('Linked Discourses 22');
+            should(sutta.sections[0].segments[1].en).equal(`1. Nakula${Words.U_RSQUOTE}s Father`);
+            done();
+        } catch(e) { done(e); } })();
+    });
     it("parseSutta(sutta) parses mn1", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn1');

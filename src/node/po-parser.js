@@ -25,16 +25,30 @@
             this.reHTML = opts.reHTML || /<\/?\s*\w+\s*>/ug;
         }
 
-        static suttaPath(id, root=SC) {
+        static suttaPath(id, root=SC, opts={}) {
             var suttaId = id.toLowerCase().split(':')[0];
-            var suttaNum = suttaId.replace(/^[a-z]*/ug, "");
-            var folder = suttaId.replace(/[0-9-.:]*/gu, "");
-            var suttaFile = folder + ('000'+suttaNum).substring(suttaNum.length) + '.po';
-            if (suttaId.startsWith('sn')) {
-                return path.join(root, folder, 'en', suttaId, suttaFile);
-            } 
-
-            return path.join(root, folder, 'en', suttaFile);
+            var suttaMajor = suttaId.replace(/\..*/gu, '').substring(2);
+            var majorFolder = suttaId.substring(0,2) + ('00'+suttaMajor).substring(suttaMajor.length);
+            var suttaNum = suttaId.replace(/^[a-z]*/ug, "").split('.');
+            var language = opts.language || 'en';
+            var translator = opts.translator || 'sujato';
+            var collection = suttaId.replace(/[0-9-.:]*/gu, "");
+            if (suttaId.startsWith('an')) {
+                var filePrefix = `${collection}${suttaMajor}.`;
+                var suttaFile = filePrefix + 
+                    ('000'+suttaNum[1]).substring(Math.min(3,suttaNum[1].length)) + '.po';
+                return path.join(root, collection, language, majorFolder, suttaFile);
+            } else if (suttaId.startsWith('dn')) {
+                var suttaFile = collection + ('00'+suttaNum[0]).substring(suttaNum[0].length) + '.po';
+                return path.join(root, collection, language, suttaFile);
+            } else if (suttaId.startsWith('sn')) {
+                var filePrefix = `${collection}${suttaMajor}.`;
+                var suttaFile = filePrefix + ('000'+suttaNum[1]).substring(suttaNum[1].length) + '.po';
+                return path.join(root, collection, language, majorFolder, suttaFile);
+            } else {
+                var suttaFile = collection + ('000'+suttaNum[0]).substring(suttaNum[0].length) + '.po';
+                return path.join(root, collection, language, suttaFile);
+            }
         }
 
 

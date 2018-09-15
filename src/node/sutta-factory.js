@@ -8,7 +8,6 @@
     const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
-    const RE_HEADER = new RegExp(`^.*:0\\..*$`, 'u');
     const OPTS_EN = {
         prop: 'en',
     };
@@ -17,7 +16,7 @@
         constructor(opts={}) {
             this.type = this.constructor.name;
             this.prop = opts.prop || OPTS_EN.prop;
-            this.reHeader = opts.reHeader || RE_HEADER;
+            this.reHeader = opts.reHeader || Sutta.RE_HEADER;
         }
 
         static loadSutta(opts={}) {
@@ -32,6 +31,8 @@
                             id: opts,
                         }
                     }
+                    var language = opts.language || 'en';
+                    var translator = opts.translator || 'sujato';
                     var parser = new PoParser();
                     var id = opts.id || 'mn1';
                     var suttaPath = PoParser.suttaPath(id, opts.root);
@@ -49,7 +50,7 @@
             var sections = [];
 
             var header = [];
-            while (segments[0].scid.match(RE_HEADER)) {
+            while (Sutta.isHeader(segments[0])) {
                 header.push(segments.shift());
             }
             if (header.length) {
