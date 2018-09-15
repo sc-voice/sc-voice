@@ -195,6 +195,10 @@ a {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    justify-content: center;
+}
+.scv-icon-btn {
+    margin: 0;
 }
 .scv-icon-btn:focus {
     border-radius:5px;

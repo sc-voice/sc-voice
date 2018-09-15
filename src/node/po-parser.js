@@ -30,23 +30,25 @@
             var suttaMajor = suttaId.replace(/\..*/gu, '').substring(2);
             var majorFolder = suttaId.substring(0,2) + ('00'+suttaMajor).substring(suttaMajor.length);
             var suttaNum = suttaId.replace(/^[a-z]*/ug, "").split('.');
+            var suttaNumEnd = suttaNum[suttaNum.length-1];
+            suttaNumEnd = ('000'+suttaNumEnd).replace(/^0*([0-9][0-9][0-9][^0-9]+.*)/u,'$1');
+            suttaNumEnd = suttaNumEnd.replace(/^0*([0-9][0-9][0-9])$/u,'$1');
             var language = opts.language || 'en';
             var translator = opts.translator || 'sujato';
             var collection = suttaId.replace(/[0-9-.:]*/gu, "");
             if (suttaId.startsWith('an')) {
                 var filePrefix = `${collection}${suttaMajor}.`;
-                var suttaFile = filePrefix + 
-                    ('000'+suttaNum[1]).substring(Math.min(3,suttaNum[1].length)) + '.po';
+                var suttaFile = `${filePrefix}${suttaNumEnd}.po`;
                 return path.join(root, collection, language, majorFolder, suttaFile);
             } else if (suttaId.startsWith('dn')) {
-                var suttaFile = collection + ('00'+suttaNum[0]).substring(suttaNum[0].length) + '.po';
+                var suttaFile = collection + ('00'+suttaNumEnd).substring(suttaNumEnd.length) + '.po';
                 return path.join(root, collection, language, suttaFile);
             } else if (suttaId.startsWith('sn')) {
                 var filePrefix = `${collection}${suttaMajor}.`;
-                var suttaFile = filePrefix + ('000'+suttaNum[1]).substring(suttaNum[1].length) + '.po';
+                var suttaFile = `${filePrefix}${suttaNumEnd}.po`;
                 return path.join(root, collection, language, majorFolder, suttaFile);
             } else {
-                var suttaFile = collection + ('000'+suttaNum[0]).substring(suttaNum[0].length) + '.po';
+                var suttaFile = collection + ('000'+suttaNumEnd).substring(suttaNumEnd.length) + '.po';
                 return path.join(root, collection, language, suttaFile);
             }
         }

@@ -102,7 +102,10 @@
         should(PoParser.suttaPath('MN123:1.1', root)).equal(path.join(root, 'mn', 'en', 'mn123.po'));
         should(PoParser.suttaPath('sn22.1', root)).equal(path.join(root, 'sn/en/sn22/sn22.001.po'));
         should(PoParser.suttaPath('an3.163-182', root)).equal(path.join(root, 'an/en/an03/an3.163-182.po'));
+        should(PoParser.suttaPath('an2.1-10', root)).equal(path.join(root, 'an/en/an02/an2.001-10.po'));
         should(PoParser.suttaPath('an3.3', root)).equal(path.join(root, 'an/en/an03/an3.003.po'));
+        should(PoParser.suttaPath('dn1', root)).equal(path.join(root, 'dn/en/dn01.po'));
+        should(PoParser.suttaPath('dn12', root)).equal(path.join(root, 'dn/en/dn12.po'));
     });
 
 })
