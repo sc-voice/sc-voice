@@ -60,7 +60,7 @@
             </div>
             <div v-for="(seg,j) in sect.segments" :key="seg+j" class="scv-para">
                 <div v-show="showId" class='scv-scid'>
-                    SC&nbsp;{seg.scid.split(":")[1]}}
+                    SC&nbsp;{{seg.scid.split(":")[1]}}
                 </div> 
                 {{seg.en}}
             </div>
@@ -86,12 +86,19 @@ export default {
             search: null,
             error: {},
             sections: null,
+            suttaId: null,
+            language: 'en',
+            translator: 'sujato',
         }
     },
     methods: {
         recite(iSection) {
             console.debug("recite", iSection);
-            var url = `/scv/recite/section/${this.search}/sujato/${iSection}`;
+            var search = this.search.trim();
+            var suttaId = search;
+            var language = this.language;
+            var translator = this.translator;
+            var url = `/scv/recite/section/${suttaId}/${language}/${translator}/${iSection}`;
             this.$http.get(url).then(res => {
                 console.log(res.data);
                 //this.sections = res.data.sections;
@@ -104,8 +111,9 @@ export default {
             });
         },
         onSearch() {
-            console.debug("search", this.search);
-            var url = `/scv/sutta/${this.search}/en/sujato`;
+            var search = this.search.trim();
+            console.debug("search", search);
+            var url = `/scv/sutta/${search}/en/sujato`;
             Object.keys(this.error).forEach(key => {
                 Vue.set(this.error, key, null);
             });

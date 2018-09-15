@@ -22,6 +22,9 @@
     const SUPPORTED_TRANSLATORS = {
         sujato: true,
     };
+    const SUPPORTED_LANGUAGES = {
+        en: true,
+    };
 
     class ScvRest extends RestBundle { 
         constructor(opts = {}) {
@@ -32,7 +35,8 @@
             Object.defineProperty(this, "handlers", {
                 value: super.handlers.concat([
                     this.resourceMethod("get", "audio/:guid", this.getAudio, 'audio/ogg'),
-                    this.resourceMethod("get", "recite/section/:suttaId/:translator/:iSection", 
+                    this.resourceMethod("get", 
+                        "recite/section/:suttaId/:language/:translator/:iSection", 
                         this.getReciteSection),
                     this.resourceMethod("get", "sutta/:suttaId/:language/:translator", 
                         this.getSutta),
@@ -53,8 +57,11 @@
         }
 
         getReciteSection(req, res, next) {
-                return Promise.reject(new Error(`SC-Voice does not support translator: ${translator}`));
             var suttaId = req.params.suttaId || 'mn1';
+            var language = req.params.language || 'en';
+            if (SUPPORTED_LANGUAGES[language] !== true) {
+                return Promise.reject(new Error(`SC-Voice does not support language: ${language}`));
+            }
             var translator = req.params.translator || 'sujato';
             if (SUPPORTED_TRANSLATORS[translator] !== true) {
                 return Promise.reject(new Error(`SC-Voice does not support translator: ${translator}`));
@@ -69,17 +76,28 @@
                     if (iSection < 0 || sutta.sections.length <= iSection) {
                         throw new Error(`Sutta ${suttaId}/${translator} has no section:${iSection}`);
                     }
+                    var usage = 'recite';
+                    var name = "amy";
                     var voice = Voice.createVoice({
-                        name: "amy",
+                        name,
                         languageUnknown: "pli",
                     });
                     var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
                     var text = `${lines.join('\n')}\n`;
                     var result = await voice.speak(text, {
                         cache: true, // false: use TTS web service for every request
-                        usage: "recite",
+                        usage,
                     });
-                    resolve(result);
+                    var guid = result.signature.guid;
+                    resolve({
+                        usage,
+                        name,
+                        suttaId,
+                        language,
+                        translator,
+                        section:iSection,
+                        guid,
+                    });
                 } catch(e) { reject(e); } })();
             });
         }
