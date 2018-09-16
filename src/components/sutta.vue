@@ -18,34 +18,7 @@
               <div>
                 <div class="title">{{this.search}}</div>
                 <div>{{error.search.data}}</div>
-                <details>
-                    <summary>Help</summary>
-                    <div class="scv-help-title">HTTP Response Status</div>
-                    <div >{{error.search.http}}</div>
-                    <div class="scv-help-title">Sutta Identifier Search</div>
-                    <div>
-                    Search for suttas by SuttaCentral identifier 
-                    (e.g., "mn1", "an2.1-10", "dn2", "sn3.18").
-                    </div>
-                    <div class="scv-help-title">Keyword Search 
-                        <span class="caption">NOT IMPLEMENTED</span></div>
-                    <div>
-                    Search for suttas with given keyword(s) (e.g., "root of suffering")
-                    </div>
-                    <div class="scv-help-title">Title Search 
-                        <span class="caption">NOT IMPLEMENTED</span></div>
-                    <div>
-                    Search for suttas with English or romanized Pali title:
-                    <br/><code class="ml-2">root of all things</code>
-                    <br/><code class="ml-2">mulapariyaya</code>
-                    </div>
-                    <div class="scv-help-title">Literal Search 
-                        <span class="caption">NOT IMPLEMENTED</span></div>
-                    <div>
-                    Search for suttas having exact match of quoted text. 
-                    <br/><code class="ml-2">"Root of All Things"</code>
-                    </div>
-                </details>
+                <search-help :httpError="error.search.http" />
               </div>
               <v-btn icon @click="error.search=null" class="scv-icon-btn" :style="cssProps"
                 aria-label="Dismiss Error">
@@ -71,15 +44,18 @@
                 </div> 
                 <i>{{sect.title}}</i>
             </summary>
-            <audio v-if="audioGuids[i]" controls class="ml-4 mt-1" 
-                :aria-label="`play section ${i}`">
-                <source :src="`./audio/${audioGuids[i]}`" type="audio/ogg"/>
-                <p>Your browser doesn't support HTML5 audio</p>
-            </audio>
-            <button v-else :ref="`play${i}`" @click="recite(i)"
-                class="scv-text-button" :style="cssProps">
-                Recite Section {{i}}
-            </button>
+            <div class="scv-play-controls">
+                <audio v-if="audioGuids[i]" controls class="ml-4 mt-1" 
+                    :aria-label="`play section ${i}`">
+                    <source :src="`./audio/${audioGuids[i]}`" type="audio/ogg"/>
+                    <p>Your browser doesn't support HTML5 audio</p>
+                </audio>
+                <button v-else :ref="`play${i}`" @click="recite(i)" :disabled="waiting"
+                    class="scv-text-button mt-4 mb-4" :style="cssProps">
+                    Recite Section {{i}}
+                </button>
+                <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
+            </div>
             <div v-if="error[i]" class="scv-error" 
                 style="margin-left: 1.2em" >
               <div>
@@ -106,6 +82,7 @@
 <script>
 /* eslint no-console: 0*/
 import Vue from "vue";
+import SearchHelp from "./search-help";
 const MAX_SECTIONS = 100;
 
 export default {
@@ -133,6 +110,7 @@ export default {
             suttaId: null,
             language: 'en',
             translator: 'sujato',
+            waiting: false,
         }
         return that;
     },
@@ -152,8 +130,10 @@ export default {
             var language = this.language;
             var translator = this.translator;
             var url = `./recite/section/${suttaId}/${language}/${translator}/${iSection}`;
+            Vue.set(this, "waiting", true);
             this.$http.get(url).then(res => {
                 Vue.set(this.audioGuids, iSection, res.data.guid);
+                Vue.set(this, "waiting", false);
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
                     || `Section #${iSection} cannot be recited. Try again later.`;
@@ -162,6 +142,7 @@ export default {
                     data,
                 }
                 console.error(e.stack, data);
+                Vue.set(this, "waiting", false);
             });
         },
         onSearch() {
@@ -196,6 +177,9 @@ export default {
     created() {
     },
 
+    components: {
+        SearchHelp,
+    },
 }
 </script>
 
@@ -286,8 +270,10 @@ a {
 .scv-sutta-col {
     border: 1pt solid red;
 }
-.scv-help-title {
-    font-weight: 900;
-    margin-top: 0.5em;
+.scv-play-controls {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 </style>

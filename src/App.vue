@@ -38,18 +38,20 @@
           </v-card-actions>
         </v-card>
     </v-dialog>
-    <transition name="fade">
-        <div v-if="bgShow" class="scv-background">
-            <v-content class="">
-              <Sutta :showId="showId"/>
-            </v-content>
-        </div>
-    </transition>
+    <div class="scv-content">
+        <transition name="fade">
+            <div v-if="bgShow" class="scv-background">
+            </div>
+        </transition>
+        <v-content class="">
+          <Sutta :showId="showId"/>
+        </v-content>
+    </div>
   </v-app>
 </template>
 
 <script>
-import Sutta from './components/Sutta'
+import Sutta from './components/sutta'
 
 export default {
     name: 'App',
@@ -92,7 +94,7 @@ export default {
     created() {
         setTimeout(() => {
             this.bgShow = true; // trigger CSS transition
-        }, 1);
+        }, 1000);
     }
 }
 </script>
@@ -119,15 +121,23 @@ export default {
 details.scv-dialog {
     margin-left: 1em;
 }
+.scv-content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
 .scv-background {
+    position: absolute;
+    bottom: 0;
     background-image: url("/img/buddha-head.png") ;
     background-repeat: no-repeat;
     background-position: center bottom;
     opacity: 1;
     height: 100%;
+    width: 100%;
 }
 .fade-enter-active, .fade-leave-active {
-    transition: opacity 2s linear !important;
+    transition: opacity 10s linear !important;
 }
 .fade-enter {
     opacity: 0;
