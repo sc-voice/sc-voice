@@ -14,11 +14,38 @@
                 <v-icon>clear</v-icon>
               </v-btn>
           </div>
-          <div tabindex=0 v-if="error.search" class="error scv-error" >
+          <div v-if="error.search" class="scv-error" >
               <div>
-                {{error.search.data.error}}
-                <br>
-                <span class="font-italic">{{error.search.http}}</span>
+                <div class="title">{{this.search}}</div>
+                <div>{{error.search.data}}</div>
+                <details>
+                    <summary>Help</summary>
+                    <div class="scv-help-title">HTTP Response Status</div>
+                    <div >{{error.search.http}}</div>
+                    <div class="scv-help-title">Sutta Identifier Search</div>
+                    <div>
+                    Search for suttas by SuttaCentral identifier 
+                    (e.g., "mn1", "an2.1-10", "dn2", "sn3.18").
+                    </div>
+                    <div class="scv-help-title">Keyword Search 
+                        <span class="caption">NOT IMPLEMENTED</span></div>
+                    <div>
+                    Search for suttas with given keyword(s) (e.g., "root of suffering")
+                    </div>
+                    <div class="scv-help-title">Title Search 
+                        <span class="caption">NOT IMPLEMENTED</span></div>
+                    <div>
+                    Search for suttas with English or romanized Pali title:
+                    <br/><code class="ml-2">root of all things</code>
+                    <br/><code class="ml-2">mulapariyaya</code>
+                    </div>
+                    <div class="scv-help-title">Literal Search 
+                        <span class="caption">NOT IMPLEMENTED</span></div>
+                    <div>
+                    Search for suttas having exact match of quoted text. 
+                    <br/><code class="ml-2">"Root of All Things"</code>
+                    </div>
+                </details>
               </div>
               <v-btn icon @click="error.search=null" class="scv-icon-btn" :style="cssProps"
                 aria-label="Dismiss Error">
@@ -44,13 +71,20 @@
                 </div> 
                 <i>{{sect.title}}</i>
             </summary>
-            <button :ref="`play${i}`" @click="recite(i)"
+            <audio v-if="audioGuids[i]" controls class="ml-4 mt-1" 
+                :aria-label="`play section ${i}`">
+                <source :src="`./audio/${audioGuids[i]}`" type="audio/ogg"/>
+                <p>Your browser doesn't support HTML5 audio</p>
+            </audio>
+            <button v-else :ref="`play${i}`" @click="recite(i)"
                 class="scv-text-button" :style="cssProps">
                 Recite Section {{i}}
             </button>
-            <div tabindex=0 v-if="error[i]" class="error scv-error" >
+            <div v-if="error[i]" class="scv-error" 
+                style="margin-left: 1.2em" >
               <div>
-                {{error[i].data.error}}<br>
+                <span class="subheading">{{error[i].data}}</span>
+                <br>
                 <span class="font-italic">{{error[i].http}}</span>
               </div>
               <v-btn icon @click="error[i]=null" class="scv-icon-btn" :style="cssProps"
@@ -72,6 +106,7 @@
 <script>
 /* eslint no-console: 0*/
 import Vue from "vue";
+const MAX_SECTIONS = 100;
 
 export default {
     name: 'Sutta',
@@ -82,49 +117,71 @@ export default {
         },
     },
     data: function( ){
-        return {
+        var error = {
             search: null,
-            error: {},
+        };
+        var audioGuids = [];
+        for (var i = 0; i < MAX_SECTIONS; i++) {
+            error[i] = null;
+            audioGuids[i] = null;
+        }
+        var that = {
+            search: null,
+            error,
+            audioGuids,
             sections: null,
             suttaId: null,
             language: 'en',
             translator: 'sujato',
         }
+        return that;
     },
     methods: {
+        clear() {
+            this.error.search = null;
+            for (var i = 0; i < MAX_SECTIONS; i++) {
+                this.error[i] = null;
+                this.audioGuids[i] = null;
+            }
+            this.segments = null;
+        },
         recite(iSection) {
             console.debug("recite", iSection);
             var search = this.search.trim();
             var suttaId = search;
             var language = this.language;
             var translator = this.translator;
-            var url = `/scv/recite/section/${suttaId}/${language}/${translator}/${iSection}`;
+            var url = `./recite/section/${suttaId}/${language}/${translator}/${iSection}`;
             this.$http.get(url).then(res => {
-                console.log(res.data);
-                //this.sections = res.data.sections;
+                Vue.set(this.audioGuids, iSection, res.data.guid);
             }).catch(e => {
+                var data = e.response && e.response.data && e.response.data.error 
+                    || `Section #${iSection} cannot be recited. Try again later.`;
                 this.error[iSection] = {
                     http: e.message,
-                    data: e.response.data,
+                    data,
                 }
-                console.error(e.stack, e.response.data);
+                console.error(e.stack, data);
             });
         },
         onSearch() {
             var search = this.search.trim();
             console.debug("search", search);
-            var url = `/scv/sutta/${search}/en/sujato`;
+            var url = `./sutta/${search}/en/sujato`;
             Object.keys(this.error).forEach(key => {
                 Vue.set(this.error, key, null);
             });
             this.$http.get(url).then(res => {
+                this.clear();
                 this.sections = res.data.sections;
             }).catch(e => {
+                var data = e.response && e.response.data && e.response.data.error 
+                    || `Not found.`;
                 this.error.search = {
                     http: e.message,
-                    data: e.response.data,
+                    data,
                 };
-                console.error(e.stack, e.response.data.error);
+                console.error(e.stack, data);
             });
 
         },
@@ -179,7 +236,7 @@ a {
 }
 .scv-para {
     margin-top: 0.5em;
-    padding-left: 1em;
+    padding-left: 1.5em;
     margin-bottom: 0.2em;
 }
 .scv-sutta {
@@ -213,17 +270,24 @@ a {
     border: 1pt solid var(--accent-color);
 }
 .scv-error {
+    background-color: #403030 !important;
+    border-top: 2pt solid #ff3232;
     border-bottom-left-radius: .5em;
     border-bottom-right-radius: .5em;
+    padding: 0.4em;
     padding-left: 0.5em;
     padding-right: 0.5em;
+    margin-top: 0.5em;
     margin-bottom: 1em;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    font-size: larger;
 }
 .scv-sutta-col {
     border: 1pt solid red;
+}
+.scv-help-title {
+    font-weight: 900;
+    margin-top: 0.5em;
 }
 </style>

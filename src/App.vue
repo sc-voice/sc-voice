@@ -38,9 +38,13 @@
           </v-card-actions>
         </v-card>
     </v-dialog>
-    <v-content>
-      <Sutta :showId="showId"/>
-    </v-content>
+    <transition name="fade">
+        <div v-if="bgShow" class="scv-background">
+            <v-content class="">
+              <Sutta :showId="showId"/>
+            </v-content>
+        </div>
+    </transition>
   </v-app>
 </template>
 
@@ -66,7 +70,8 @@ export default {
             },{
                 title:'green',
             }],
-            title: 'SuttaCentral Voice Assistant'
+            title: 'SuttaCentral Voice Assistant',
+            bgShow: false,
         }
     },
     methods: {
@@ -84,6 +89,11 @@ export default {
             };
         },
     },
+    created() {
+        setTimeout(() => {
+            this.bgShow = true; // trigger CSS transition
+        }, 1);
+    }
 }
 </script>
 <style >
@@ -109,10 +119,18 @@ export default {
 details.scv-dialog {
     margin-left: 1em;
 }
-.v-content {
+.scv-background {
+    background-image: url("/img/buddha-head.png") ;
     background-repeat: no-repeat;
     background-position: center bottom;
-    background-image: url("/img/buddha-head.png") ;
+    opacity: 1;
+    height: 100%;
+}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 2s linear !important;
+}
+.fade-enter {
+    opacity: 0;
 }
 
 </style>
