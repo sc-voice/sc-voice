@@ -8,12 +8,14 @@
 
     class Polly extends AbstractTTS {
         constructor(opts={}) {
-            super(opts);
+            super(Object.assign({
+                audioFormat: 'mp3', // iPhone does not support OGG
+                audioSuffix: '.mp3', // iPhone does not support OGG
+            }, opts));
             this.voice = opts.voice || 'Amy';
             this.api = opts.api || 'aws-polly';
             this.apiVersion = opts.apiVersion || 'v4';
             this.region = opts.region || 'us-west-1';
-            this.audioFormat = opts.audioFormat || 'ogg_vorbis';
             this.pollyConfig = opts.config || {
                 signatureVersion: this.apiVersion,
                 region: this.region,

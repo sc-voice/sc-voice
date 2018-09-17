@@ -27,14 +27,27 @@
     };
 
     class ScvRest extends RestBundle { 
-        constructor(opts = {}) {
+        constructor(opts = {
+            audioFormat: 'mp3',
+        }) {
             super(opts.name || 'scv', Object.assign({
                 srcPkg,
             }, opts));
             winston.info(`ScvRest.ctor(${this.name})`);
+            if (opts.audioFormat === 'ogg') {
+                this.audioSuffix = '.ogg';
+                this.audioFormat = 'ogg_vorbis';
+                this.audioMIME = 'audio/ogg';
+            } else if (opts.audioFormat === 'mp3') {
+                this.audioSuffix = '.mp3';
+                this.audioFormat = 'mp3';
+                this.audioMIME = 'audio/mp3';
+            } else {
+                throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
+            }
             Object.defineProperty(this, "handlers", {
                 value: super.handlers.concat([
-                    this.resourceMethod("get", "audio/:guid", this.getAudio, 'audio/ogg'),
+                    this.resourceMethod("get", "audio/:guid", this.getAudio, this.audioMIME),
                     this.resourceMethod("get", 
                         "recite/section/:suttaId/:language/:translator/:iSection", 
                         this.getReciteSection),
@@ -50,13 +63,15 @@
                 var guid = req.params.guid;
                 var folder = guid.substring(0, 2);
                 var root = path.join(PATH_SOUNDS, guid.substring(0,2));
-                var filePath = path.join(root, `${guid}.ogg`);
+                var filePath = path.join(root, `${guid}${this.audioSuffix}`);
                 var data = fs.readFileSync(filePath);
                 resolve(data);
             } catch (e) { reject(e) } });
         }
 
         getReciteSection(req, res, next) {
+            var audioFormat = this.audioFormat;
+            var audioSuffix = this.audioSuffix;
             var suttaId = req.params.suttaId || 'mn1';
             var language = req.params.language || 'en';
             if (SUPPORTED_LANGUAGES[language] !== true) {
@@ -81,6 +96,8 @@
                     var voice = Voice.createVoice({
                         name,
                         languageUnknown: "pli",
+                        audioFormat,
+                        audioSuffix,
                     });
                     var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
                     var text = `${lines.join('\n')}\n`;

@@ -12,11 +12,13 @@
     // deleting local/sounds
     var cache = true; 
 
-    it("constructor", function() {
+    it("TESTTESTconstructor", function() {
         var polly = new Polly();
         should(polly).properties({
             language: 'en',
             voice: 'Amy',
+            audioFormat: 'mp3',
+            audioSuffix: '.mp3',
             prosody: {
                 rate: "-20%", // Slow Amy
             },
@@ -29,7 +31,7 @@
         should.deepEqual(sig, {
             api: 'aws-polly',
             apiVersion: 'v4',
-            audioFormat: 'ogg_vorbis',
+            audioFormat: 'mp3',
             voice: 'Amy',
             prosody: {
                 rate: '-20%',
@@ -38,7 +40,7 @@
             guid,
         });
     });
-    it("synthesizeSSML(ssml) returns sound file", function(done) {
+    it("TESTTESTsynthesizeSSML(ssml) returns sound file", function(done) {
         this.timeout(3*1000);
         var polly = new Polly();
         var segments = [
@@ -51,11 +53,11 @@
             should(result).properties(['file','signature','hits', 'misses']);
             should(fs.statSync(result.file).size).greaterThan(1000);
             var suffix = result.file.substring(result.file.length-4);
-            should(suffix).equal('.ogg');
+            should(suffix).equal('.mp3');
             done();
         })();
     });
-    it("synthesizeText(text) returns sound file for text", function(done) {
+    it("TESTTESTsynthesizeText(text) returns sound file for text", function(done) {
         this.timeout(3*1000);
         (async function() {
             var polly = new Polly();
@@ -66,7 +68,7 @@
             done();
         })();
     });
-    it("synthesizeText([text]) returns sound file for array of text", function(done) {
+    it("TESTTESTsynthesizeText([text]) returns sound file for array of text", function(done) {
         this.timeout(3*1000);
         (async function() {
             var polly = new Polly();

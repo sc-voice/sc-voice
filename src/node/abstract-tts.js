@@ -48,7 +48,7 @@
             this.reVowels1 = new RegExp(`^[${vowels}].*`, 'u');
         }
 
-        get ERROR_SIZE() { return 1000 }
+        get ERROR_SIZE() { return 500 }
 
         get username() {
             return this.credentials && this.credentials.username;
@@ -217,8 +217,8 @@
             var stats = fs.existsSync(outpath) && fs.statSync(outpath);
             if (stats && stats.size <= this.ERROR_SIZE) {
                 var err = fs.readFileSync(outpath).toString();
-                console.error(`synthesize() failed ${outpath}`, stats.size, err);
-                reject(new Error(`sound file is too short (${stats.size}): ${err}`));
+                reject(new Error(`sound file is too short (${stats.size}): ${outpath} ${this.audioFormat} ${this.audioSuffix}`));
+                //reject(new Error(`sound file is too short (${stats.size}): ${outpath} ${err}`));
             }
             resolve(this.createResponse(request, false));
         }
@@ -245,7 +245,7 @@
                     var pitch = this.prosody.pitch || "0%";
                     var ssml = `<prosody rate="${rate}" pitch="${pitch}">${ssmlFragment}</prosody>`;
                     var signature = this.signature(ssml);
-                    var outpath = this.store.signaturePath(signature);
+                    var outpath = this.store.signaturePath(signature, this.audioSuffix);
                     var request = {
                         ssml,
                         signature,
