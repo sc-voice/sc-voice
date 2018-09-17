@@ -2,6 +2,7 @@
     const fs = require('fs');
     const path = require('path');
     const winston = require('winston');
+    const Queue = require('promise-queue');
     const { MerkleJson } = require('merkle-json');
     const SoundStore = require('./sound-store');
     const Words = require('./words');
@@ -20,6 +21,7 @@
             this.api = opts.api || null;
             this.apiVersion = opts.apiVersion || null;
             this.audioSuffix = opts.audioSuffix || ".ogg";
+            this.queue = new Queue(opts.maxConcurrentServiceCalls || 20, Infinity);
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
@@ -40,7 +42,7 @@
             this.prosody = opts.prosody || {
                 rate: "-10%",
             };
-            this.breaks = opts.breaks || [0.001,0.1,0.2,0.6,1.5];
+            this.breaks = opts.breaks || [0.001,0.1,0.2,0.6,1];
             this.reNumber = /^[-+]?[0-9]+(\.[0-9]+)?$/;
             var vowels = this.words._ipa.vowels || "aeiou";
             this.reVowels1 = new RegExp(`^[${vowels}].*`, 'u');
@@ -271,6 +273,7 @@
         synthesizeText(text, opts={}) {
             var that = this;
             return new Promise((resolve, reject) => {
+                var queue = this.queue;
                 (async function() { try {
                     var result = null;
                     var ssmlAll = [];
@@ -278,7 +281,7 @@
                         var segments = that.segmentSSML(text);
                         var promises = segments.map(ssml => {
                             ssmlAll.push(ssml);
-                            return that.synthesizeSSML(ssml, opts);
+                            return queue.add(() => that.synthesizeSSML(ssml, opts));
                         });
                         result = await Promise.all(promises);
                     } else if (text instanceof Array) {
@@ -289,7 +292,7 @@
                             var segs = that.segmentSSML(t);
                             segs.forEach(ssml => {
                                 ssmlAll.push(ssml);
-                                acc.push(that.synthesizeSSML(ssml, opts));
+                                acc.push(queue.add(() => that.synthesizeSSML(ssml, opts)));
                             });
                             segments.push(segs);
                             return acc;

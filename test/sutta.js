@@ -208,7 +208,7 @@
             segments[1].en,
         ]);
     });
-    it("TESTTESTtextOfSegments(segments, opts) returns array of text", function() {
+    it("textOfSegments(segments, opts) returns array of text", function() {
         should.deepEqual(Sutta.textOfSegments(segments), [
             `${segments[0].en}\n`, // group change forces extra EOL
             segments[1].en,

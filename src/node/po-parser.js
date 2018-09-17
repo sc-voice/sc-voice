@@ -140,7 +140,7 @@
                 } 
                 var language = opts.language || 'en';
                 var suffix = opts.suffix || '\\.po';
-                var filePattern = opts.filePattern || `.*/${language}/[^/]*${suffix}$`;
+                var filePattern = opts.filePattern || `.*/${language}/.*${suffix}$`;
                 if (!(filePattern instanceof RegExp)) {
                     filePattern = new RegExp(filePattern);
                 }

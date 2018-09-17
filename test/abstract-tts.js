@@ -66,7 +66,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
+    it("wordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS();
 
         // words without information
@@ -84,7 +84,7 @@
         should(tts.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
     });
-    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
+    it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();
         var text = "Bhikkhus, the Tathagata, was at Ukkaṭṭhā today.";
         var tokens = tts.tokensSSML(text);
@@ -130,7 +130,7 @@
         should(tts.isNumber('123.45')).equal(true);
         should(tts.isNumber('-0.45')).equal(true);
     });
-    it("TESTTESTsegment(tokens) returns array of segments", function() {
+    it("segment(tokens) returns array of segments", function() {
         var tts = new AbstractTTS();
         should(isNaN('\n')).equal(false); // surprising
         var ssml = tts.segment([
@@ -164,7 +164,7 @@
             'j \u2018k,\u2019 l 5 m',
         ]);
     });
-    it("TESTTESTsegmentSSML(text) returns array of SSML text segments", function() {
+    it("segmentSSML(text) returns array of SSML text segments", function() {
         var tts = new AbstractTTS();
 
         // a paragraph of sentences
@@ -199,7 +199,7 @@
             `c1 c2 c3.\n`,
         ]);
     });
-    it("TESTTESTbreak(index) returns SSML break", function() {
+    it("break(index) returns SSML break", function() {
         var tts = new AbstractTTS();
         should(tts.break(0)).equal('<break time="0.001s"/>');
         should(tts.break(1)).equal('<break time="0.1s"/>');

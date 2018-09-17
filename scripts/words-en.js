@@ -25,18 +25,13 @@ function emitWords(text) {
 
 (async function() { try {
     var files = await parser.files({
-        root: path.join(__dirname, '../local/sc/mn'),
+        root: path.join(__dirname, '../local/sc'),
     });
-    if (0) {
-        var files = [
-            path.join(__dirname,'../local/sc/mn/en/mn031.po'),
-            //path.join(__dirname,'../local/sc/mn/en/mn058.po'),
-        ];
-    }
+    console.log(`processing ${files.length} files...`);
     files.forEach(file => {
         (async function() { try {
-            var segDoc = await parser.parse(file, opts);
-            segDoc.segments.forEach((seg,i) => {
+            var segments = await parser.parse(file, opts);
+            segments.forEach((seg,i) => {
                 if (i < 2) { // intro
                     emitWords(seg.pli);
                 } else {
@@ -44,7 +39,7 @@ function emitWords(text) {
                 }
             });
         } catch(e) {
-            console.log(e.stack);
+            console.log(file, e.stack);
         }})();
     });
 } catch(e) {

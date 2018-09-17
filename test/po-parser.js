@@ -78,22 +78,34 @@
             done();
         } catch(e) {done(e)} })();
     });
-    it("files(opts) returns source file list", (done) => {
+    it("TESTTESTfiles(opts) returns source file list", (done) => {
         (async function() { try {
             var parser = new PoParser();
             var files = await parser.files();
             should(fs.statSync(files[0]).isFile()).equal(true);
             should(fs.statSync(files[1]).isFile()).equal(true);
             should(fs.statSync(files[files.length-1]).isFile()).equal(true);
-            should(files[0]).match(/.*\/en\/[^\/]*\.po$/);
-            should(files[1]).match(/.*\/en\/[^\/]*\.po$/);
-            should(files[files.length-1]).match(/.*\/en\/[^\/]*\.po$/);
-            should(files.length).equal(191);
+            const count = {
+                mn: 153,
+                dn: 35,
+                an: 1408,
+                sn: 1821,
+                kn: 338,
+                pivi: 97,
+            };
+            should(files.filter(f => f.match(/\/mn\//)).length).equal(count.mn);
+            should(files.filter(f => f.match(/\/dn\//)).length).equal(count.dn);
+            should(files.filter(f => f.match(/\/an\//)).length).equal(count.an);
+            should(files.filter(f => f.match(/\/sn\//)).length).equal(count.sn);
+            should(files.filter(f => f.match(/\/kn\//)).length).equal(count.kn);
+            should(files.filter(f => f.match(/\/pi-vi\//)).length).equal(count.pivi);
+            should(files.filter(f => f.match(/\/en\//)).length).equal(
+                count.mn+count.dn+count.an+count.sn+count.kn+count.pivi);
             done();
         } catch(e) {done(e)} })();
 
     });
-    it("TESTTESTsuttaPath(id, root, opts) returns sutta file path", function() {
+    it("suttaPath(id, root, opts) returns sutta file path", function() {
         should(PoParser.suttaPath('mn1')).equal(path.join(SC, 'mn', 'en', 'mn001.po'));
         should(PoParser.suttaPath('MN123:1.1')).equal(path.join(SC, 'mn', 'en', 'mn123.po'));
 

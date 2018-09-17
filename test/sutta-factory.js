@@ -61,7 +61,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTloadSutta(id, opts) loads an3.163-182", function(done) {
+    it("loadSutta(id, opts) loads an3.163-182", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('an3.163-182');
             should(sutta.sections[0].segments[0].en).equal('Numbered Discourses 3');
@@ -69,7 +69,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTloadSutta(id, opts) loads dn7", function(done) {
+    it("loadSutta(id, opts) loads dn7", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('dn7');
             should(sutta.sections[0].segments[0].en).equal('Long Discourses 7');
@@ -77,7 +77,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTloadSutta(id, opts) loads sn22.1", function(done) {
+    it("loadSutta(id, opts) loads sn22.1", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('sn22.1');
             should(sutta.sections[0].segments[0].en).equal('Linked Discourses 22');
@@ -107,7 +107,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTexpandSutta(sutta) expands mn1", function(done) {
+    it("expandSutta(sutta) expands mn1", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn1');
             var sutta2 = new SuttaFactory().expandSutta(sutta);

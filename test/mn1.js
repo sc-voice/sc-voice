@@ -12,7 +12,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
-    it("TESTTESTexpandSutta(sutta) expands mn1", function(done) {
+    it("expandSutta(sutta) expands mn1", function(done) {
         this.timeout(10*1000); // takes 2 seconds if cache is empty
         /*
          * This is real-world system test that exercises and requires:

@@ -11,10 +11,11 @@
         ScvRest,
         Words,
     } = require("../index");
+    const Queue = require('promise-queue');
     const SC = path.join(__dirname, '../local/sc');
     const app = require("../scripts/sc-voice.js"); // access cached instance 
 
-    it("TESTTESTGET /identity returns restbundle identity JSON", function(done) {
+    it("GET /identity returns restbundle identity JSON", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/identity").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -27,7 +28,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /sutta/mn100/en/sujato returns sutta", function(done) {
+    it("GET /sutta/mn100/en/sujato returns sutta", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn100/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -59,8 +60,8 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /recite/sutta/mn100/en/sujato/1 returns recitation", function(done) {
-        this.timeout(5*1000);
+    it("GET /recite/sutta/mn100/en/sujato/1 returns recitation", function(done) {
+        this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/recite/section/mn100/en/sujato/1")
                 .expect((res) => {
@@ -113,6 +114,39 @@
             done();
         } catch (e) { done(e); } }();
         async.next();
+    });
+    it("Queue handles promises", function(done) {
+        (async function() { try {
+            var monitor = [];
+            var q = new Queue(3, Infinity);
+            var doit = (ms) => new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    monitor.push(ms);
+                    resolve(ms);
+                }, ms);
+            });
+            var queuedPromises = [1,2,3,4,5,6,7].map(i => q.add(() => doit(i)));
+            var all = Promise.all(queuedPromises);
+            should(q.getQueueLength()).equal(4); // waiting
+            should(q.getPendingLength()).equal(3); // processing
+            should.deepEqual(monitor, []);
+            var r1 = await(queuedPromises[1]);
+            should(r1).equal(2);
+            should.deepEqual(monitor, [1,2]);
+            should(q.getQueueLength()).equal(2); // waiting
+            should(q.getPendingLength()).equal(3); // processing
+            var r2 = await(queuedPromises[2]);
+            should(r2).equal(3);
+            should(q.getQueueLength()).equal(1); // waiting
+            should(q.getPendingLength()).equal(3); // processing
+            var r3 = await(queuedPromises[3]);
+            should(r3).equal(4);
+            should(q.getQueueLength()).equal(0); // waiting
+            should(q.getPendingLength()).equal(3); // processing
+            var allResult = await(all);
+            should.deepEqual(allResult, [1,2,3,4,5,6,7]);
+            done();
+        } catch(e) {done(e);} })();
     });
 });
 
