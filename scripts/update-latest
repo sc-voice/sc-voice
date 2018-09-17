@@ -4,10 +4,6 @@ echo -e "UPDATE\t: $0 START `date`"
 
 sudo apt-get update
 
-echo -e "UPDATE\t: ***NOT IMPLEMENTED***"
-
-exit 0
-
 REBOOT=0
 OPTIND=1
 while getopts "r" opt; do
