@@ -134,7 +134,7 @@
             'a', 'b', '\n', '\n', 'c', '\n', 'd',
         ]);
         should.deepEqual(ssml, [
-            'a b\n',
+            'a b\n\n',
             'c\n',
             'd',
         ]);
@@ -144,8 +144,7 @@
             'They', 'perceive', 'fire', 'as', 'fire', '.',
         ]);
         should.deepEqual(segments, [
-            'Why is that?', 
-            '\n',
+            'Why is that?\n\n', 
             'They perceive fire as fire.',
         ]);
         var segments = tts.segment([

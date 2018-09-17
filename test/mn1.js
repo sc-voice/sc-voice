@@ -36,7 +36,7 @@
                 usage: "recite",
             });
             //console.log(result);
-            should(result.signature.files.length).equal(195);
+            should(result.signature.files.length).equal(98);
 
             done();
         } catch(e) { done(e); } })();

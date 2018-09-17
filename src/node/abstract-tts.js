@@ -147,11 +147,11 @@
                     acc.cuddle = symbol.cuddle;
                     if (acc.cuddle === 'left') {
                         acc.segment = acc.segment + token;
-                    } else if (symbol.separator) {
-                        if (token === acc.prevToken) {
-                            acc.segment && acc.segments.push(acc.segment);
-                        } else {
+                    } else if (symbol.eol) {
+                        if (acc.segment) {
                             acc.segments.push(acc.segment + token);
+                        } else if (acc.segments) {
+                            acc.segments[acc.segments.length-1] += token;
                         }
                         acc.segment = '';
                     } else {
