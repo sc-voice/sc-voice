@@ -129,7 +129,8 @@ export default {
             var suttaId = search;
             var language = this.language;
             var translator = this.translator;
-            var url = `./recite/section/${suttaId}/${language}/${translator}/${iSection}`;
+            var g = Math.random();
+            var url = `./recite/section/${suttaId}/${language}/${translator}/${iSection}?g=${g}`;
             Vue.set(this, "waiting", true);
             this.$http.get(url).then(res => {
                 Vue.set(this.audioGuids, iSection, res.data.guid);
@@ -209,7 +210,7 @@ a {
     padding-right: 1em;
 }
 .scv-section-body {
-    width: 40em;
+    max-width: 40em;
 }
 .scv-header {
     margin-bottom: 0.5em;
@@ -224,7 +225,7 @@ a {
     margin-bottom: 0.2em;
 }
 .scv-sutta {
-    width: 40em;
+    max-width: 40em;
     padding-left: auto;
     padding-right: auto;
 }
