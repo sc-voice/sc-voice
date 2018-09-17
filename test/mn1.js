@@ -35,8 +35,8 @@
                 cache: true, // false: use TTS web service for every request
                 usage: "recite",
             });
-            //console.log(result);
-            should(result.signature.files.length).equal(98);
+            console.log("mn1 sound guid:", result.signature.guid);
+            should(result.signature.files.length).equal(166);
 
             done();
         } catch(e) { done(e); } })();

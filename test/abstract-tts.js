@@ -7,6 +7,7 @@
         Words,
     } = require("../index");
     const BREAK = `<break time="0.001s"/>`;
+    const PARA_BREAK = `<break time="1.5s"/>`;
 
     it("AbstractTTS(opts) can be customized", function() {
         var words = new Words();
@@ -65,7 +66,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("wordSSML(word) returns SSML text for word", function() {
+    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS();
 
         // words without information
@@ -83,7 +84,7 @@
         should(tts.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
     });
-    it("tokensSSML(text) returns array of SSML tokens", function() {
+    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();
         var text = "Bhikkhus, the Tathagata, was at Ukkaṭṭhā today.";
         var tokens = tts.tokensSSML(text);
@@ -97,12 +98,14 @@
         ]);
 
         var tokens = tts.tokensSSML([
+            `Life is good.`,
             `Why is that?\n`,
             `They perceive fire as fire.`,
         ].join('\n'));
         should.deepEqual(tokens, [
+            'Life', 'is', 'good', '.', '\n',
             'Why', 'is', 'that', '?', '\n',
-            '\n',
+            tts.break(4), '\n',
             'They', 'perceive', 'fire', 'as', 'fire', '.',
         ]);
     });
@@ -127,7 +130,7 @@
         should(tts.isNumber('123.45')).equal(true);
         should(tts.isNumber('-0.45')).equal(true);
     });
-    it("segment(tokens) returns array of segments", function() {
+    it("TESTTESTsegment(tokens) returns array of segments", function() {
         var tts = new AbstractTTS();
         should(isNaN('\n')).equal(false); // surprising
         var ssml = tts.segment([
@@ -161,21 +164,45 @@
             'j \u2018k,\u2019 l 5 m',
         ]);
     });
-    it("segmentSSML(text) returns array of SSML text segments", function() {
+    it("TESTTESTsegmentSSML(text) returns array of SSML text segments", function() {
         var tts = new AbstractTTS();
+
+        // a paragraph of sentences
         var ssml = tts.segmentSSML([
             'Bhikkhus, he does not conceive water to be \u2018mine,\u2019 he does not delight in water.',
             'Why is that?',
             'Because delight is the root of suffering.',
         ].join(' '));
-        should(tts.break(0)).equal('<break time="0.001s"/>');
-        should(tts.break(1)).equal('<break time="0.1s"/>');
         should.deepEqual(ssml, [
             `<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>${BREAK}` + 
                 ', he does not conceive water to be \u2018mine,\u2019 he does not delight in water.',
             'Why is that?',
             'Because delight is the root of suffering.',
         ]);
+
+        // two paragraphs
+        var text = 'a1, a2 a3.\n' +
+            'b1 b2?\n\n' +
+            'c1 c2 c3.\n';
+        var tokens = tts.tokensSSML(text);
+        should.deepEqual(tokens, [
+            'a1', ',', 'a2', 'a3', '.', '\n',
+            'b1', 'b2', '?', '\n',
+            tts.break(4), '\n',
+            'c1', 'c2', 'c3', '.', '\n',
+        ]);
+        var ssml = tts.segment(tokens);
+        should.deepEqual(ssml, [
+            `a1, a2 a3.\n`,
+            'b1 b2?\n',
+            `${tts.break(4)}\n`,
+            `c1 c2 c3.\n`,
+        ]);
+    });
+    it("TESTTESTbreak(index) returns SSML break", function() {
+        var tts = new AbstractTTS();
+        should(tts.break(0)).equal('<break time="0.001s"/>');
+        should(tts.break(1)).equal('<break time="0.1s"/>');
     });
     it("tokenize(text) returns array of tokens", function() {
         var tts = new AbstractTTS();

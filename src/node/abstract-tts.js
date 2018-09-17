@@ -7,6 +7,8 @@
     const Words = require('./words');
     const ABSTRACT_METHOD = "abstract method must be overridden and implemented by base class";
     const { exec } = require('child_process');
+    const RE_PARA = new RegExp(`^[${Words.U_RSQUOTE}${Words.U_RDQUOTE}]*\n$`,'u');
+    const RE_PARA_EOL = /^\n\n+$/u;
 
     class AbstractTTS {
         constructor(opts={}) {
@@ -38,7 +40,7 @@
             this.prosody = opts.prosody || {
                 rate: "-10%",
             };
-            this.breaks = opts.breaks || [0.001,0.1,0.2,0.4,0.8];
+            this.breaks = opts.breaks || [0.001,0.1,0.2,0.6,1.5];
             this.reNumber = /^[-+]?[0-9]+(\.[0-9]+)?$/;
             var vowels = this.words._ipa.vowels || "aeiou";
             this.reVowels1 = new RegExp(`^[${vowels}].*`, 'u');
@@ -71,13 +73,14 @@
         }
 
         break(index) {
-            return `<break time="${this.breaks[index]}s"/>`;
+            var t = this.breaks[index] || this.breaks[this.breaks.length-1];
+            return `<break time="${t}s"/>`;
         }
 
         wordInfo(word) {
             word = word && word.toLowerCase();
             var wordValue = word && this.words.words[word];
-            if (typeof wordValue === 'string') { // synonym
+            if (wordValue && typeof wordValue === 'string') { // synonym
                 wordValue = this.wordInfo(wordValue);
             }
             return wordValue || null;
@@ -130,9 +133,16 @@
 
         tokensSSML(text) {
             var tokens = text instanceof Array ? text : this.tokenize(text);
-            var tokensSSML = tokens.map(token => {
-                return this.wordSSML(token) || token;
-            });
+            var tokensSSML = tokens.reduce((acc, token) => {
+                if (RE_PARA_EOL.test(token)) {
+                    acc.length && acc.push('\n');
+                    acc.push(`${this.break(5)}`);
+                    acc.push('\n');
+                } else {
+                    acc.push(this.wordSSML(token) || token);
+                }
+                return acc;
+            }, []);
             return tokensSSML;
         }
 
@@ -261,11 +271,15 @@
         synthesizeText(text, opts={}) {
             var that = this;
             return new Promise((resolve, reject) => {
-                (async function() {
+                (async function() { try {
                     var result = null;
+                    var ssmlAll = [];
                     if (typeof text === 'string') {
                         var segments = that.segmentSSML(text);
-                        var promises = segments.map(ssml => that.synthesizeSSML(ssml, opts));
+                        var promises = segments.map(ssml => {
+                            ssmlAll.push(ssml);
+                            return that.synthesizeSSML(ssml, opts);
+                        });
                         result = await Promise.all(promises);
                     } else if (text instanceof Array) {
                         var textArray = text;
@@ -274,6 +288,7 @@
                         var promises = textArray.reduce((acc, t) => {
                             var segs = that.segmentSSML(t);
                             segs.forEach(ssml => {
+                                ssmlAll.push(ssml);
                                 acc.push(that.synthesizeSSML(ssml, opts));
                             });
                             segments.push(segs);
@@ -286,7 +301,9 @@
                             result = result[0];
                         } else {
                             var files = result.map(r => r.file);
-                            result = await that.ffmpegConcat(files);
+                            result = await that.ffmpegConcat(files, {
+                                ssmlAll,
+                            });
                         }
                         resolve(Object.assign({
                             segments,
@@ -294,7 +311,7 @@
                     } else {
                         reject(new Error("synthesizeText(text?) expected string or Array"));
                     }
-                })();
+                } catch(e) { reject(e);} })();
             });
         }
 
@@ -322,6 +339,10 @@
                     this.hits++;
                     resolve(this.createResponse(request, true));
                 } else {
+                    if (opts.ssmlAll) {
+                        var ssmlPath = this.store.signaturePath(signature, ".ssml");
+                        fs.writeFileSync(ssmlPath, JSON.stringify(opts.ssmlAll, null, 2));
+                    }
                     var inpath = this.store.signaturePath(signature, ".txt");
                     fs.writeFileSync(inpath, inputs);
                     var cmd = `bash -c "ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`;

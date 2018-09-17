@@ -139,27 +139,38 @@
         }
 
         tokenize(text) {
-            return text.split(' ').reduce((acc,t) => {
-                for (var matches;  (matches = this.symbolPat.exec(t)); ) {
+            return text.split(' ').reduce((acc,tok) => {
+                var prevMatches = null;
+                for (var matches; (matches = this.symbolPat.exec(tok)); ) {
+                    var c = matches[0];
                     if (matches.index) {
-                        var c = matches[0];
-                        if (matches.index < t.length-1 && (
+                        if (matches.index < tok.length-1 && (
                             c === Words.U_RSQUOTE || c === Words.U_RDQUOTE
                             || c === "'" || c === '"')) {
-                            acc.push(t);
-                            t = "";
+                            acc.push(tok);
+                            tok = "";
                         } else {
-
-                            acc.push(t.substring(0, matches.index));
-                            acc.push(t.substring(matches.index,matches.index+1));
-                            t = t.substring(matches.index+1);
+                            acc.push(tok.substring(0, matches.index));
+                            acc.push(tok.substring(matches.index,matches.index+1));
+                            tok = tok.substring(matches.index+1);
                         }
                     } else {
-                        acc.push(t.substring(matches.index,matches.index+1));
-                        t = t.substring(matches.index+1);
+                        if (c === '\n') {
+                            if (acc.length && acc[acc.length-1].endsWith('\n')) {
+                                acc[acc.length-1] += '\n';
+                                tok = tok.substring(matches.index+1);
+                            } else {
+                                acc.push(tok.substring(matches.index,matches.index+1));
+                                tok = tok.substring(matches.index+1);
+                            }
+                        } else {
+                            acc.push(tok.substring(matches.index,matches.index+1));
+                            tok = tok.substring(matches.index+1);
+                        }
                     }
+                    prevMatches = matches;
                 }
-                t && acc.push(t);
+                tok && acc.push(tok);
                 return acc;
             }, []);
         }
