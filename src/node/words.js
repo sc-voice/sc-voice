@@ -85,7 +85,7 @@
             for (var j = 0; j <= y.length; j++) {
                 c[0][j] = 0;
             }
-            var lcs = []
+            var lcs = []; // longest common sequence (possibly contiguous)
             for (var i = 1; i <= x.length; i++) {
                 for (var j = 1; j <= y.length; j++) {
                     if (x[i-1] === y[j-1]) {
@@ -98,8 +98,13 @@
                     }
                 }
             }
-            while (1 < lcs.length) {
-                if (a.indexOf(`${lcs[0]} ${lcs[1]}`) < 0) {
+
+            /*
+             * Find longest common contiguous sequence.
+             * This algorithm is buggy.
+             */
+            while (1 < lcs.length) { 
+                if (lcs[0] == null || a.indexOf(`${lcs[0]} ${lcs[1]}`) < 0) {
                     lcs.shift();
                 } else if (a.indexOf`${lcs[lcs.length-2]} ${lcs[lcs.length-1]}` < 0) {
                     lcs.pop();

@@ -7,12 +7,12 @@
     const SuttaCentralId = require('./sutta-central-id');
     const Section = require('./section');
     const Words = require('./words');
-    const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
+    const RE_ELLIPSIS = new RegExp(` *${Words.U_ELLIPSIS} *$`, 'u');
     const DEFAULT_PROP = 'en';
     const MIN_PHRASE = 8;
     const MAX_LEVENSHTEIN = 2;
     const RE_TRIM_ELLIPSIS = /\s*[,.;\u2026].*$/u;
-    const RE_PUNCT_END = /[.,;].*$/u;
+    const RE_PUNCT_END = /[.,;!?].*$/u;
     const RE_WORDS = new RegExp(`[ ${Words.U_EMDASH}]`, 'u');
 
     class SectionParser {
@@ -31,18 +31,18 @@
         }
 
         expandableSegments(segments) {
-            var ie = Sutta.findIndexes(segments, RE_ELLIPSIS, {
+            var iEll = Sutta.findIndexes(segments, RE_ELLIPSIS, {
                 prop: this.prop,
             });
 
-            if (ie.length === 0) {
+            if (iEll.length === 0) {
                 return null; // segments are fully expanded
             }
-            if (ie.length <= 1) {
+            if (iEll.length <= 1) {
                 throw new Error(`not implemented:`+
-                    JSON.stringify(segments[ie[0]]));
+                    JSON.stringify(segments[iEll[0]]));
             }
-            return ie;
+            return iEll;
         }
 
         parseAlternatesByPhrase(segments, phrase, prefix) {
@@ -67,38 +67,41 @@
             }
         }
 
-        parseContiguousAlternates(segments, phrase, prefix, iTemplate, ie) {
+        parseContiguousAlternates(segments, phrase, prefix, iTemplate, iEll) {
             var prop = this.prop;
             var indexes = [iTemplate];
             let alt0 = segments[iTemplate][prop].split(phrase)[1].trim();
             alt0 = alt0.replace(RE_PUNCT_END,'');
+            console.debug(`parseContiguousAlternates alt0:"${alt0}" iEll:${JSON.stringify(iEll)}`);
             var values = [this.stripValue(alt0)];
-            for (let i = 0; i<ie.length; i++ ) {
-                if (i && ie[i-1]+1 !== ie[i]){
+            for (let i = 0; i<iEll.length; i++ ) {
+                if (i && !this.areAdjacent(segments, iEll[i-1], iEll[i], prop)){
                     break; // non-consecutive
                 }
-                let seg = segments[ie[i]];
-                let alt = seg[prop];
-                let phrased = alt.split(phrase);
+                let seg_i = segments[iEll[i]];
+                let alt_i = seg_i[prop];
+                let phrased = alt_i.split(phrase);
                 if (phrased.length > 1) {
-                    alt = phrased[1].trim();
-                    alt = alt.replace(RE_TRIM_ELLIPSIS, ''); 
+                    alt_i = phrased[1].trim();
+                    alt_i = alt_i.replace(RE_TRIM_ELLIPSIS, ''); 
                 } else {
-                    alt = alt.replace(RE_TRIM_ELLIPSIS, ''); 
+                    alt_i = alt_i.replace(RE_TRIM_ELLIPSIS, ''); 
                 }
                 if (i === 1) {
-                    var prefix = Words.commonPhrase(values[1], alt, MIN_PHRASE);
+                    prefix = Words.commonPhrase(values[1], alt_i, MIN_PHRASE);
+                    console.debug(`parseContiguousAlternates phrase:"${phrase}" prefix:"${prefix}"`);
                     if (prefix === '') {
                         var words1 = values[1].split(' ');
-                        var words2 = alt.split(' ');
+                        var words2 = alt_i.split(' ');
                         values[1] = words1.slice(words1.length-words2.length)
                             .join(' ');
-                        prefix = segments[ie[0]][prop]
+                        prefix = segments[iEll[0]][prop]
                             .replace(new RegExp(`${values[1]}.*`), '');
                     }
                 }
-                values.push(alt);
-                indexes.push(ie[i]);
+                values.push(alt_i);
+                //console.debug(`values:${values}`);
+                indexes.push(iEll[i]);
             }
 
             return {
@@ -112,18 +115,32 @@
             var patStart = new SuttaCentralId(segments[start].scid).parent.scid + '*';
             var startIndexes = Sutta.findIndexes(segments, patStart); 
             var iStart = startIndexes[0];
+            //console.debug(`sectionGroup start:${start} patStart:"${patStart}" startIndexes:${startIndexes} length:${length}`);
 
             var patLast = new SuttaCentralId(segments[start+length-1].scid).parent.scid + '*';
             var lastIndexes = Sutta.findIndexes(segments, patLast); 
             var iEnd = lastIndexes[lastIndexes.length-1]+1;
+            //console.debug(`sectionGroup patLast:"${patLast}" lastIndexes:${lastIndexes} iEnd:${iEnd}`);
 
             return segments.slice(iStart, iEnd);
         }
 
+        areAdjacent(segments, iSeg1, iSeg2, prop=DEFAULT_PROP) {
+            (iSeg1 > iSeg2) && ({iSeg1, iSeg2} = {iSeg2, iSeg1});
+            for (var i = iSeg1+1; i < iSeg2; i++) {
+                var text = segments[i][prop].trim();
+                //console.debug(`text:"${text}"`);
+                if (text.length) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         parseExpandableSection(segments) {
             var prop = this.prop;
-            var ie = this.expandableSegments(segments);
-            if (ie == null) {
+            var iEll = this.expandableSegments(segments);
+            if (iEll == null) {
                 return null;    
             }
 
@@ -132,12 +149,28 @@
              * to the first and second alternate segments. 
              */
             var phrase = '';
-            for (var it = ie[0]; !phrase && 0 <= --it; ) {
-                phrase = Words.commonPhrase(segments[ie[0]][prop], segments[it][prop], MIN_PHRASE);
+            for (var it = iEll[0]; !phrase && 0 <= --it; ) {
+                phrase = Words.commonPhrase(segments[iEll[0]][prop], segments[it][prop], MIN_PHRASE);
+            }
+            var text1 = segments[iEll[0]][prop].replace(RE_ELLIPSIS,'');
+            if (iEll.length > 2) {
+                var text2 = segments[iEll[1]][prop].replace(RE_ELLIPSIS,'');
+                var text3 = segments[iEll[2]][prop].replace(RE_ELLIPSIS,'');
+                //console.debug(`parseExpandableSection text1:"${text1}"`);
+                //console.debug(`parseExpandableSection text2:"${text2}"`);
+                //console.debug(`parseExpandableSection text3:"${text3}" iEll:${iEll.length}`);
+                var p12 = Words.commonPhrase(text1, text2, MIN_PHRASE);
+                var p23 = Words.commonPhrase(text2, text3, MIN_PHRASE);
+                //console.debug(`p12:"${p12}" p23:"${p23}"`);
+                if (p12 && p12 !== p23) {
+                    // mn41 special case
+                    phrase = phrase.replace(p12, '').trim();
+                    console.debug(`parseExpandableSection phrase:"${phrase}"`); 
+                }
             }
             if (!phrase) {
                 console.error(`no expansion template for alternate:`+ 
-                    JSON.stringify(segments[ie[0]],null,2));
+                    JSON.stringify(segments[iEll[0]],null,2));
                 return null;
             }
 
@@ -145,22 +178,22 @@
              * The substitution prefix is found on the second alternate 
              * (i.e., the segment with the first ellipsis).
              */
-            var text1 = segments[ie[0]][prop];
             var prefix = text1.substring(0, text1.indexOf(phrase) + phrase.length + 1);
+            console.debug(`parseExpandableSection prefix:"${prefix}"`);
 
             var values = [];
-            if (ie[0]+1 !== ie[1]) { // discontinguous alternates
+            if (this.areAdjacent(segments, iEll[0], iEll[1], prop)) {
+                var {
+                    indexes,
+                    prefix,
+                    values,
+                } = this.parseContiguousAlternates(segments, phrase, prefix, it, iEll);
+            } else { 
                 var {
                     indexes,
                     prefix,
                     values,
                 } = this.parseAlternatesByPhrase(segments, phrase, prefix);
-            } else { // phrase cannot be used, so assume continguous alternates
-                var {
-                    indexes,
-                    prefix,
-                    values,
-                } = this.parseContiguousAlternates(segments, phrase, prefix, it, ie);
             }
 
             if (indexes.length > 1 && 1 < indexes[1] - indexes[0]) { 
@@ -192,7 +225,15 @@
             while (start>0 && segments[start-1][prop].indexOf(values[0]) >= 0) {
                 start--;
             }
-            var length = indexes[indexes.length-1] - start + template.length;
+            //console.debug(`parseExpandableSection start:${start} indexes:${indexes}`);
+            var lastIndex  = indexes[indexes.length-1]; 
+            var textLast = segments[lastIndex][prop];
+            if (!RE_ELLIPSIS.test(textLast)) { // last value was expanded
+                lastIndex += template.length - 1;
+            }
+            //console.debug(`textLast:"${textLast}"`);
+            var length = lastIndex-start+1;
+            //console.debug(`parseExpandableSection lastIndex:${lastIndex} template:${template.length} length:${length}`);
 
             return new Section({
                 prefix,

@@ -57,9 +57,11 @@
         should.deepEqual(expansion, [{
             scid: 's:2.1.1', 
             en: 'd1 y1 b2',
+            expanded: true,
         },{
             scid: 's:2.1.2', 
             en: 'c1 y1 c2 y1 c3',
+            expanded: true,
         }]);
     });
     it("expand(segment) expands a template (mn1:28-49.6)", function() {
@@ -74,9 +76,11 @@
         should.deepEqual(expansion, [{
             scid: 's:3.1.1', 
             en: 'e1 y2a y2b b2',
+            expanded: true,
         },{
             scid: 's:3.1.2', 
             en: 'c1 y2a y2b c2 y2a y2b c3',
+            expanded: true,
         }]);
     });
     it("expand(segment) expands a template (mn1:28-49.1)", function() {
@@ -91,9 +95,11 @@
         should.deepEqual(expansion, [{
             scid: 's:4.1.1', 
             en: 'q1 y3 b2',
+            expanded: true,
         },{
             scid: 's:4.1.2', 
             en: 'c1 y3 c2 y3 c3',
+            expanded: true,
         }]);
     });
     it("expand(segment) expands a template (mn1:28-49.2)", function() {
@@ -108,9 +114,11 @@
         should.deepEqual(expansion, [{
             scid: 's:5.1.1', 
             en: 'q1 y4 b2',
+            expanded: true,
         },{
             scid: 's:5.1.2', 
             en: 'c1 y4 c2 y4 c3',
+            expanded: true,
         }]);
     });
     it("expandAll() returns expanded section", function() {
@@ -140,27 +148,35 @@
         },{ // 3 (mn1:4.2)
             scid: 's:2.1.1', 
             en: 'd1 y1 b2',
+            expanded: true,
         },{
             scid: 's:2.1.2', 
             en: 'c1 y1 c2 y1 c3',
+            expanded: true,
         },{ // 4 (mn1:28-49.6)
             scid: 's:3.1.1', 
             en: 'q1 y2a y2b b2',
+            expanded: true,
         },{
             scid: 's:3.1.2', 
             en: 'c1 y2a y2b c2 y2a y2b c3',
+            expanded: true,
         },{ // 5 (mn1:28-49.1)
             scid: 's:4.1.1', 
             en: 'q1 y3 b2',
+            expanded: true,
         },{
             scid: 's:4.1.2', 
             en: 'c1 y3 c2 y3 c3',
+            expanded: true,
         },{ // 6 (mn1:28-49.2)
             scid: 's:5.1.1', 
             en: 'q1 y4 b2',
+            expanded: true,
         },{
             scid: 's:5.1.2', 
             en: 'c1 y4 c2 y4 c3',
+            expanded: true,
         }]);
         should(section2.expandAll()).equal(section2);
     });

@@ -69,7 +69,7 @@
                 <v-icon>clear</v-icon>
               </v-btn>
             </div>
-            <div v-for="(seg,j) in sect.segments" :key="seg+j" class="scv-para">
+            <div v-for="(seg,j) in sect.segments" :key="seg+j" :class="segClass(seg)">
                 <div v-show="showId" class='scv-scid'>
                     SC&nbsp;{{seg.scid.split(":")[1]}}
                 </div> 
@@ -168,6 +168,9 @@ export default {
             });
 
         },
+        segClass(seg) {
+            return seg.expanded ? "scv-para scv-para-expanded" : "scv-para";
+        },
     },
     computed: {
         cssProps() {
@@ -224,6 +227,9 @@ a {
     margin-top: 0.5em;
     padding-left: 1.5em;
     margin-bottom: 0.2em;
+}
+.scv-para-expanded {
+    border-right: 1pt dotted #888;
 }
 .scv-sutta {
     max-width: 40em;

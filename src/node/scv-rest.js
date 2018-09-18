@@ -18,7 +18,7 @@
 
     const EXPANDABLE_SUTTAS = {
         mn1: true,
-        mn41: false, 
+        mn41: true, 
     };
     const SUPPORTED_TRANSLATORS = {
         sujato: true,

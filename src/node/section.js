@@ -56,7 +56,7 @@
         }
 
         expand(segment) {
-            if (!this.expandable) {
+            if (!this.expandable || this.expanded) {
                 return segment;
             }
             var src = this.template[0][this.prop];
@@ -79,6 +79,7 @@
                 return {
                     scid: `${scid}.${i+1}`,
                     [this.prop]: dstText,
+                    expanded: true,
                 };
             });
         }
