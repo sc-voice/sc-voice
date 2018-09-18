@@ -200,8 +200,13 @@
         should(Words.levenshtein('abc','ABC')).equal(3);
         should(Words.levenshtein('know','knows')).equal(1);
     });
-    it("commonPhrase(a,b,minLength) returns longest common word sequence", function() {
+    it("TESTTESTcommonPhrase(a,b,minLength) returns longest common word left sequence", function() {
         var minLength = 1;
+        should(Words.commonPhrase(
+            `b1 b2 v0aaa v1b`,
+            `v0aaa v2b`, 
+            4
+            )).equal(`v0aaa`);
         should(Words.commonPhrase("a", "b c", minLength)).equal('');
         should(Words.commonPhrase("a", "a b c", minLength)).equal('a');
         should(Words.commonPhrase("a b c", "b c", minLength)).equal('b c');

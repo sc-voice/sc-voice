@@ -12,7 +12,7 @@
     // deleting local/sounds
     var cache = true; 
 
-    it("TESTTESTconstructor", function() {
+    it("constructor", function() {
         var polly = new Polly();
         should(polly).properties({
             language: 'en',
@@ -40,7 +40,7 @@
             guid,
         });
     });
-    it("TESTTESTsynthesizeSSML(ssml) returns sound file", function(done) {
+    it("synthesizeSSML(ssml) returns sound file", function(done) {
         this.timeout(3*1000);
         var polly = new Polly();
         var segments = [
@@ -57,18 +57,7 @@
             done();
         })();
     });
-    it("TESTTESTsynthesizeText(text) returns sound file for text", function(done) {
-        this.timeout(3*1000);
-        (async function() {
-            var polly = new Polly();
-            var text = "Tomatoes are red. Broccoli is green."
-            var result = await polly.synthesizeText(text, {cache});
-            should(result).properties(['file','hits','misses','signature','cached']);
-            should(fs.statSync(result.file).size).greaterThan(5000);
-            done();
-        })();
-    });
-    it("TESTTESTsynthesizeText([text]) returns sound file for array of text", function(done) {
+    it("synthesizeText([text]) returns sound file for array of text", function(done) {
         this.timeout(3*1000);
         (async function() {
             var polly = new Polly();

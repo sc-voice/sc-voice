@@ -83,6 +83,10 @@
         });
         should(tts.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
+
+        // english word variant
+        should(tts.wordSSML('bowed'))
+        .equal(`<phoneme alphabet="ipa" ph="ba\u028ad">bowed</phoneme>${BREAK}`);
     });
     it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS();

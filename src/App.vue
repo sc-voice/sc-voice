@@ -14,7 +14,7 @@
     <v-dialog v-model="dialogSettings" fullscreen persistent>
         <v-card>
           <v-card-title class="title scv-dialog-title">
-              Settings
+              Settings {{version}}
               <v-spacer/>
               <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
                 aria-label="Close"
@@ -51,7 +51,8 @@
 </template>
 
 <script>
-import Sutta from './components/sutta'
+import Vue from "vue";
+import Sutta from './components/sutta';
 
 export default {
     name: 'App',
@@ -63,6 +64,8 @@ export default {
             dialogSettings: false,
             focused: {
                 'settings': false,
+            },
+            identity: {
             },
             showId: false,
             items: [{
@@ -90,11 +93,22 @@ export default {
                 '--accent-color': this.$vuetify.theme.accent,
             };
         },
+        version() {
+            return `v${this.identity.version}`;
+        },
     },
     created() {
+        var that = this;
         setTimeout(() => {
             this.bgShow = true; // trigger CSS transition
         }, 1000);
+        this.$http.get('./identity').then(res => {
+            Vue.set(that, "identity", res.data);
+            console.log(that.identity);
+        }).catch(e=>{
+            console.error(e.stack);
+        });
+
     }
 }
 </script>
