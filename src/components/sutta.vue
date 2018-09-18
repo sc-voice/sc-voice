@@ -229,7 +229,8 @@ a {
     margin-bottom: 0.2em;
 }
 .scv-para-expanded {
-    border-right: 1pt dotted #888;
+    padding-right: 1em;
+    border-right: 2pt solid #444;
 }
 .scv-sutta {
     max-width: 40em;

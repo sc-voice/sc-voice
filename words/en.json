@@ -109,7 +109,8 @@
             "cuddle": "left"
         },
         "-": {
-            "name": "hyphen minus"
+            "name": "hyphen minus",
+            "isWord": true
         },
         ".": {
             "name": "full stop",

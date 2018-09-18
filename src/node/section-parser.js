@@ -72,7 +72,7 @@
             var indexes = [iTemplate];
             let alt0 = segments[iTemplate][prop].split(phrase)[1].trim();
             alt0 = alt0.replace(RE_PUNCT_END,'');
-            console.debug(`parseContiguousAlternates alt0:"${alt0}" iEll:${JSON.stringify(iEll)}`);
+            //console.debug(`parseContiguousAlternates alt0:"${alt0}" iEll:${JSON.stringify(iEll)}`);
             var values = [this.stripValue(alt0)];
             for (let i = 0; i<iEll.length; i++ ) {
                 if (i && !this.areAdjacent(segments, iEll[i-1], iEll[i], prop)){
@@ -89,7 +89,7 @@
                 }
                 if (i === 1) {
                     prefix = Words.commonPhrase(values[1], alt_i, MIN_PHRASE);
-                    console.debug(`parseContiguousAlternates phrase:"${phrase}" prefix:"${prefix}"`);
+                    //console.debug(`parseContiguousAlternates phrase:"${phrase}" prefix:"${prefix}"`);
                     if (prefix === '') {
                         var words1 = values[1].split(' ');
                         var words2 = alt_i.split(' ');
@@ -97,6 +97,9 @@
                             .join(' ');
                         prefix = segments[iEll[0]][prop]
                             .replace(new RegExp(`${values[1]}.*`), '');
+                    }
+                    if (values[0].startsWith(prefix)) {
+                        prefix = phrase + ' ';
                     }
                 }
                 values.push(alt_i);
@@ -106,7 +109,7 @@
 
             return {
                 indexes,
-                prefix,
+                prefix, // replacement prefix
                 values,
             }
         }
@@ -165,7 +168,7 @@
                 if (p12 && p12 !== p23) {
                     // mn41 special case
                     phrase = phrase.replace(p12, '').trim();
-                    console.debug(`parseExpandableSection phrase:"${phrase}"`); 
+                    //console.debug(`parseExpandableSection phrase:"${phrase}"`); 
                 }
             }
             if (!phrase) {
@@ -179,7 +182,7 @@
              * (i.e., the segment with the first ellipsis).
              */
             var prefix = text1.substring(0, text1.indexOf(phrase) + phrase.length + 1);
-            console.debug(`parseExpandableSection prefix:"${prefix}"`);
+            //console.debug(`parseExpandableSection prefix:"${prefix}"`);
 
             var values = [];
             if (this.areAdjacent(segments, iEll[0], iEll[1], prop)) {

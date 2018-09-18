@@ -26,14 +26,18 @@
             this.wordEnd = json.wordEnd;
             this.altMap = null;
             this.alphabet = new RegExp(json.alphabet || '[a-z]*', "iu");
-            var symAcc= Object.keys(this.symbols).reduce((acc,text) => {
-                if (text === ']') {
-                    text = '\\' + text;
+            var symAcc= Object.keys(this.symbols).reduce((acc,sym) => {
+                if (this.symbols[sym].isWord) {
+                    // symbol is part of a word
+                } else {
+                    if (sym === ']') {
+                        sym = '\\' + sym;
+                    }
+                    acc.syms += sym;
                 }
-                acc.text += text;
                 return acc;
-            }, { text: '' });
-            this.symbolPat = new RegExp(`[${symAcc.text}]`);
+            }, { syms: '' });
+            this.symbolPat = new RegExp(`[${symAcc.syms}]`);
         }
 
         static get U_LSQUOTE() { return '\u2018'; }
@@ -124,8 +128,24 @@
             return !this.symbolPat.test(token) && !/^[0-9]*$/.test(token);
         }
 
+        wordInfo(word) {
+            word = word && word.toLowerCase();
+            var wordValue = word && this.words[word];
+            if (wordValue && typeof wordValue === 'string') { // synonym
+                wordValue = this.wordInfo(wordValue);
+            }
+            return wordValue || null;
+        }
+
         isForeignWord(token) {
-            return !this.symbolPat.test(token) && !this.alphabet.test(token);
+            if (token.indexOf('-') > 0) {
+                return token.split('-').reduce((acc,w) => {
+                    return acc || this.isForeignWord(w);
+                }, false);
+            }
+            var info = this.wordInfo(token);
+            return !this.symbolPat.test(token) && 
+                (!this.alphabet.test(token) || info == null || info.language !== this.language);
         }
 
         romanize(text) {

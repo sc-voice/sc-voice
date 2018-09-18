@@ -109,7 +109,9 @@
                     var ipa = null;
                 }
             } else { // unknown word or punctuation
-                if (this.words.isWord(word) && this.languageUnknown !== this.language) { 
+                if (this.words.isWord(word) && 
+                    this.languageUnknown !== this.language && 
+                    this.words.isForeignWord(word)) { 
                     var ipa = this.words.ipa(word, this.languageUnknown); 
                 } else {
                     var ipa = null; 

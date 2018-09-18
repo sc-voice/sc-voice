@@ -35,6 +35,7 @@
         } catch(e) { done(e); } })();
     });
     it("expandSutta(sutta) expands mn1", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn1');
             var sutta2 = new SuttaFactory().expandSutta(sutta);

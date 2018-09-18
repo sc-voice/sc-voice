@@ -146,7 +146,7 @@
         should(amy.services.navigate.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
     });
-    it("placeholder words are expanded with voice ipa", function() {
+    it("TESTTESTplaceholder words are expanded with voice ipa", function() {
         var raveena = Voice.createVoice("raveena");
         should(raveena).properties({
             name: "Raveena",

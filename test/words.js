@@ -52,19 +52,22 @@
         should(words.isWord('123')).equal(false);
         should(words.isWord('1.23')).equal(false);
     });
-    it("isForeignWord(token) return true if token is a word in foreign alphabet", function() {
+    it("TESTTESTisForeignWord(token) return true if token is a word in foreign alphabet", function() {
         var words = new Words();
         // punctuation
         should(words.isForeignWord('!')).equal(false);
 
-
         // native word
-        should(words.isForeignWord('abc')).equal(false);
-        should(words.isForeignWord('ABC')).equal(false);
+        should(words.isForeignWord('thirty')).equal(false);
+        should(words.isForeignWord('Thirty')).equal(false);
 
         // foreign word
         should(words.isForeignWord('Brahm\u0101')).equal(true);
         should(words.isForeignWord('brahm\u0101')).equal(true);
+
+        // hyphenated
+        should(words.isForeignWord('thirty-three')).equal(false);
+        should(words.isForeignWord('well-to-do')).equal(false);
     });
     it("alternates(word) returns array of alternate spellings", function() {
         var words = new Words();
@@ -200,7 +203,7 @@
         should(Words.levenshtein('abc','ABC')).equal(3);
         should(Words.levenshtein('know','knows')).equal(1);
     });
-    it("TESTTESTcommonPhrase(a,b,minLength) returns longest common word left sequence", function() {
+    it("commonPhrase(a,b,minLength) returns longest common word left sequence", function() {
         var minLength = 1;
         should(Words.commonPhrase(
             `b1 b2 v0aaa v1b`,

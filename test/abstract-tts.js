@@ -87,14 +87,20 @@
         // english word variant
         should(tts.wordSSML('bowed'))
         .equal(`<phoneme alphabet="ipa" ph="ba\u028ad">bowed</phoneme>${BREAK}`);
+
+        // hyphenated word 
+        should(tts.wordSSML('well-to-do'))
+        .equal(`well-to-do`);
     });
     it("tokensSSML(text) returns array of SSML tokens", function() {
-        var tts = new AbstractTTS();
-        var text = "Bhikkhus, the Tathagata, was at Ukkaṭṭhā today.";
+        var tts = new AbstractTTS({
+            languageUnknown: 'pli',
+        });
+        var text = "Bhikkhus, the well-to-do Tathagata, was at Ukkaṭṭhā today.";
         var tokens = tts.tokensSSML(text);
         should.deepEqual(tokens, [
             `<phoneme alphabet="ipa" ph="bɪkuːz">Bhikkhus</phoneme>${BREAK}` ,
-            ',', 'the',
+            ',', 'the', 'well-to-do',
             `<phoneme alphabet="ipa" ph="təˈtɑːɡətə">Tathagata</phoneme>${BREAK}`,
             ',', 'was', 'at',
             `${BREAK}<phoneme alphabet="ipa" ph="uk.k\u0250\u0288\u0306\u0288\u02b0\u0251">Ukkaṭṭhā</phoneme>${BREAK}`,

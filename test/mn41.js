@@ -12,7 +12,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
-    it("TESTTESTparseSutta(sutta) parses mn41 structure", function(done) {
+    it("parseSutta(sutta) parses mn41 structure", function(done) {
         (async function() { try {
             var segments = [{ // section[0]
                 scid:'mn41:0.1',
@@ -79,7 +79,7 @@
             should.deepEqual(parsedSutta.sections[2].segments, segments.slice(13,14));
             should(parsedSutta.sections.length).equal(3);
             should.deepEqual(parsedSutta.sections[1].template, segments.slice(2,6));
-            //should(sections[1].prefix).equal('b1 b2');
+            should(sections[1].prefix).equal('b1 b2 ');
 
             // fully parsed
             var sectSegs = sections.reduce((acc,section) => {
