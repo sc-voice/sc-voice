@@ -46,6 +46,7 @@
             </summary>
             <div class="scv-play-controls">
                 <audio v-if="audioGuids[i]" controls class="ml-4 mt-1" 
+                    preload=auto
                     :aria-label="`play section ${i}`">
                     <source :src="`./audio/${audioGuids[i]}`" type="audio/mp3"/>
                     <p>Your browser doesn't support HTML5 audio</p>

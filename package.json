@@ -1,6 +1,6 @@
 {
   "name": "sc-voice",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "SuttaCentral Voice Assistant",
   "main": "index.js",
   "directories": {
@@ -31,6 +31,7 @@
     "@vue/cli-service": "^3.0.1",
     "eslint-plugin-html": "^4.0.5",
     "mocha": "^5.2.0",
+    "rimraf": "^2.6.2",
     "should": "^11.2.0",
     "supertest": "^3.3.0",
     "vue-cli-plugin-vuetify": "^0.1.6",
@@ -38,6 +39,7 @@
   },
   "scripts": {
     "build": "vue-cli-service build",
+    "clear:sounds": "rimraf local/sounds",
     "dev": "npm run build; echo 'UI-only service'; npm run serve",
     "lint": "vue-cli-service lint",
     "serve": "vue-cli-service serve",
