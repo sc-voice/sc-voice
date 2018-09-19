@@ -43,10 +43,10 @@ do the following:
 1. CTRL-D
 
 ##### Service installation
-SC-Voice can be installed as a **systemd** service that will be launched at boot. On Ubuntu 16.04:
+SC-Voice can be installed as a **systemd** service that will be launched at boot. For example, in Ubuntu 16.04 you can type the following from a console window in the `sc-voice` folder:
 
 ```bash
-sudo ln -s /home/ubuntu/sc-voice/local/sc-voice.service /etc/systemd/system/sc-voice.service
+./scripts/sc-voice-daemon.sh
 ```
 
 Restart server to launch SC-Voice.
