@@ -52,6 +52,9 @@
                     this.resourceMethod("get", 
                         "recite/section/:suttaId/:language/:translator/:iSection", 
                         this.getReciteSection),
+                    this.resourceMethod("get", 
+                        "review/section/:suttaId/:language/:translator/:iSection", 
+                        this.getReviewSection),
                     this.resourceMethod("get", "sutta/:suttaId/:language/:translator", 
                         this.getSutta),
 
@@ -70,7 +73,7 @@
             } catch (e) { reject(e) } });
         }
 
-        getReciteSection(req, res, next) {
+        reciteSection(req, res, next, name, usage) {
             var audioFormat = this.audioFormat;
             var audioSuffix = this.audioSuffix;
             var suttaId = req.params.suttaId || 'mn1';
@@ -92,16 +95,14 @@
                     if (iSection < 0 || sutta.sections.length <= iSection) {
                         throw new Error(`Sutta ${suttaId}/${translator} has no section:${iSection}`);
                     }
-                    var usage = 'recite';
-                    var name = "amy";
+                    var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
+                    var text = `${lines.join('\n')}\n`;
                     var voice = Voice.createVoice({
                         name,
                         languageUnknown: "pli",
                         audioFormat,
                         audioSuffix,
                     });
-                    var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
-                    var text = `${lines.join('\n')}\n`;
                     var result = await voice.speak(text, {
                         cache: true, // false: use TTS web service for every request
                         usage,
@@ -118,6 +119,14 @@
                     });
                 } catch(e) { reject(e); } })();
             });
+        }
+
+        getReciteSection(req, res, next) {
+            return this.reciteSection(req, res, next, 'amy', 'recite');
+        }
+
+        getReviewSection(req, res, next) {
+            return this.reciteSection(req, res, next, 'raveena', 'review');
         }
 
         getSutta(req, res, next) {

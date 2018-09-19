@@ -25,10 +25,22 @@
           </v-card-title>
           <v-card-text>
             <details class="scv-dialog" >
-                <summary class="subheading">Content</summary>
-                <v-checkbox v-model="showId" role="checkbox" :aria-checked="showId"
-                    label="Show SuttaCentral text segment identifiers">
-                </v-checkbox>
+                <summary class="subheading">Content settings</summary>
+                <div class="scv-settings">
+                    <v-checkbox v-model="showId" role="checkbox" :aria-checked="showId"
+                        label="Show SuttaCentral text segment identifiers">
+                    </v-checkbox>
+                </div>
+            </details>
+            <details class="scv-dialog" >
+                <summary class="subheading">Voice settings</summary>
+                <div class="scv-settings">
+                    <v-radio-group v-model="voice" column>
+                       <v-radio v-for="v in voices" 
+                         :label="v.label" :value="v.value" :key="`voice${v.value}`">
+                         </v-radio>
+                    </v-radio-group>
+                </div>
             </details>
           </v-card-text>
           <v-card-actions>
@@ -77,6 +89,16 @@ export default {
             }],
             title: 'SuttaCentral Voice Assistant',
             bgShow: false,
+            voice: "recite",
+            voices: [{
+                name: 'Amy',
+                value: 'recite',
+                label: 'Amy for meditation and contemplation',
+            },{
+                name: 'Raveena',
+                value: 'review',
+                label: 'Raveena for review and study',
+            }],
         }
     },
     methods: {
@@ -149,6 +171,9 @@ details.scv-dialog {
     opacity: 1;
     height: 100%;
     width: 100%;
+}
+.scv-settings {
+    margin-left: 1em;
 }
 .fade-enter-active, .fade-leave-active {
     transition: opacity 10s linear !important;

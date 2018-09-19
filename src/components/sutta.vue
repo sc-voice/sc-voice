@@ -3,7 +3,7 @@
       <v-layout column align-left >
           <div class="scv-search-row">
               <v-text-field placeholder="Enter sutta id" 
-                  v-model="search" 
+                  v-model="search" :change="onSearchChange()" v-on:keypress="onSearchKey($event)"
                   label = "Search" ></v-text-field>
               <v-btn icon @click="onSearch()" class="scv-icon-btn" :style="cssProps"
                 aria-label="Search Suttas">
@@ -36,7 +36,9 @@
                 {{sections[0].segments[1].pli}}
             </div>
           </details>
-          <details class="scv-section-body" v-for="(sect,i) in sections" :key="`sect${i}`" v-if="i>0">
+          <details class="scv-section-body" 
+            v-for="(sect,i) in sections" :key="`sect${i}`" 
+            v-if="i>0">
             <summary class="subheading" >
                 Section {{i}} 
                 <div v-show="showId" class='scv-scid'>
@@ -51,9 +53,9 @@
                     <source :src="`./audio/${audioGuids[i]}`" type="audio/mp3"/>
                     <p>Your browser doesn't support HTML5 audio</p>
                 </audio>
-                <button v-else :ref="`play${i}`" @click="recite(i)" :disabled="waiting"
+                <button v-else :ref="`play${i}`" @click="playSection(i)" :disabled="waiting"
                     class="scv-text-button mt-4 mb-4" :style="cssProps">
-                    Recite Section {{i}}
+                    Play Section {{i}}
                 </button>
                 <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
             </div>
@@ -124,14 +126,15 @@ export default {
             }
             this.segments = null;
         },
-        recite(iSection) {
-            console.debug("recite", iSection);
+        playSection(iSection) {
+            console.debug("playSection", iSection);
             var search = this.search.trim();
             var suttaId = search;
             var language = this.language;
             var translator = this.translator;
             var g = Math.random();
-            var url = `./recite/section/${suttaId}/${language}/${translator}/${iSection}?g=${g}`;
+            var voice = this.voice === 'recite' ? 'recite' : 'review';
+            var url = `./${voice}/section/${suttaId}/${language}/${translator}/${iSection}?g=${g}`;
             Vue.set(this, "waiting", true);
             this.$http.get(url).then(res => {
                 Vue.set(this.audioGuids, iSection, res.data.guid);
@@ -146,6 +149,14 @@ export default {
                 console.error(e.stack, data);
                 Vue.set(this, "waiting", false);
             });
+        },
+        onSearchKey(event) {
+            if (event.key === "Enter") {
+                this.onSearch();
+            }
+        },
+        onSearchChange() {
+            console.log(`searchChanged search:${this.search}`);
         },
         onSearch() {
             var search = this.search.trim();

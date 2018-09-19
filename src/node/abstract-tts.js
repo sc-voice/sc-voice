@@ -22,6 +22,7 @@
             this.apiVersion = opts.apiVersion || null;
             this.audioSuffix = opts.audioSuffix || ".ogg";
             this.queue = new Queue(opts.maxConcurrentServiceCalls || 20, Infinity);
+            this.usages = opts.usages;
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
