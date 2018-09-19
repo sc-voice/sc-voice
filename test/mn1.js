@@ -34,7 +34,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("expandSutta(sutta) expands mn1", function(done) {
+    it("TESTTESTexpandSutta(sutta) expands mn1", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn1');
@@ -48,13 +48,16 @@
             should.deepEqual(sections.map(section => section.segments.length), [
                 2, 10, 98, 97, 97, 97, 97, 97, 97, 148,
             ]);
+            should.deepEqual(sections.map(section => section.expanded), [
+                false, false, true, true, true, true, true, true, true, true,
+            ]);
             var sectSegs = sections.reduce((acc,section) => {
                 section.segments.forEach(seg => acc.push(seg));
                 return acc;
             }, []);
             should.deepEqual(sectSegs, sutta2.segments);
 
-            var jsonPath = path.join(__dirname, '../local/mn1-expanded.json');
+            var jsonPath = path.join(__dirname, '../public/sutta/test/en/sujato');
             fs.writeFileSync(jsonPath, JSON.stringify(sutta2, null, 2));
 
             done();
@@ -64,11 +67,11 @@
         this.timeout(10*1000); // takes 2 seconds if cache is empty
         /*
          * This is real-world system test that exercises and requires:
-         * 1) AWS Polly
-         * 2) Internet connection
-         * 3) An actual section of MN1
-         * 4) The local sound cache
-         * 5) >5MB of local disk for sound storage
+         * 1. AWS Polly
+         * 2. Internet connection
+         * 3. An actual section of MN1
+         * 4. The local sound cache
+         * 5. >5MB of local disk for sound storage
          */
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn1');

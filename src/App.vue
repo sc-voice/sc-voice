@@ -36,8 +36,8 @@
                 <summary class="subheading">Voice settings</summary>
                 <div class="scv-settings">
                     <v-radio-group v-model="voice" column>
-                       <v-radio v-for="v in voices" 
-                         :label="v.label" :value="v.value" :key="`voice${v.value}`">
+                       <v-radio v-for="(v,i) in voices" 
+                         :label="v.label" :value="i" :key="`voice${v.value}`">
                          </v-radio>
                     </v-radio-group>
                 </div>
@@ -56,7 +56,7 @@
             </div>
         </transition>
         <v-content class="">
-          <Sutta :showId="showId"/>
+          <Sutta :showId="showId" :voice="voices[voice]" />
         </v-content>
     </div>
   </v-app>
@@ -89,7 +89,7 @@ export default {
             }],
             title: 'SuttaCentral Voice Assistant',
             bgShow: false,
-            voice: "recite",
+            voice: 0,
             voices: [{
                 name: 'Amy',
                 value: 'recite',

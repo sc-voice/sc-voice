@@ -16,6 +16,7 @@
             this.prefix = opts.prefix || '';
             this.values = opts.values || [];
             this.template = opts.template || [];
+            this.expanded = opts.expanded || false;
             this.prop = opts.prop || DEFAULT_PROP;
             this.title = opts.title || 
                 Section.titleOfText(this.segments[0] && this.segments[0][this.prop]);
@@ -48,6 +49,7 @@
             }, []);
             var opts = Object.assign({}, this, {
                 segments,
+                expanded: true,
                 template: [],
                 values: [],
                 prefix: '',

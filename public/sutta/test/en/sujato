@@ -1,0 +1,4324 @@
+{
+  "sections": [
+    {
+      "segments": [
+        {
+          "scid": "mn1:0.1",
+          "pli": "Majjhima Nikāya 1",
+          "en": "Middle Discourses 1"
+        },
+        {
+          "scid": "mn1:0.2",
+          "pli": "Mūlapariyāyasutta",
+          "en": "The Root of All Things"
+        }
+      ],
+      "type": "Section",
+      "prefix": "",
+      "values": [],
+      "template": [],
+      "expanded": false,
+      "prop": "en",
+      "title": "Middle Discourses 1…",
+      "expandable": false
+    },
+    {
+      "segments": [
+        {
+          "scid": "mn1:1.1",
+          "pli": "Evaṃ me sutaṃ—​",
+          "en": "So I have heard."
+        },
+        {
+          "scid": "mn1:1.2",
+          "pli": "ekaṃ samayaṃ bhagavā ukkaṭṭhāyaṃ viharati subhagavane sālarājamūle.",
+          "en": "At one time the Buddha was staying near Ukkaṭṭhā, in the Subhaga Forest at the root of a magnificent sal tree."
+        },
+        {
+          "scid": "mn1:1.3",
+          "pli": "Tatra kho bhagavā bhikkhū āmantesi:",
+          "en": "There the Buddha addressed the mendicants:"
+        },
+        {
+          "scid": "mn1:1.4",
+          "pli": "“bhikkhavo”ti.",
+          "en": "“Mendicants!”"
+        },
+        {
+          "scid": "mn1:1.5",
+          "pli": "“Bhadante”ti te bhikkhū bhagavato paccassosuṃ.",
+          "en": "“Venerable sir,” they replied."
+        },
+        {
+          "scid": "mn1:1.6",
+          "pli": "Bhagavā etadavoca:",
+          "en": "The Buddha said this:"
+        },
+        {
+          "scid": "mn1:2.1",
+          "pli": "“sabbadhammamūlapariyāyaṃ vo, bhikkhave, desessāmi.",
+          "en": "“Mendicants, I will teach you the explanation of the root of all things."
+        },
+        {
+          "scid": "mn1:2.2",
+          "pli": "Taṃ suṇātha, sādhukaṃ manasi karotha, bhāsissāmī”ti.",
+          "en": "Listen and pay close attention, I will speak.”"
+        },
+        {
+          "scid": "mn1:2.3",
+          "pli": "“Evaṃ, bhante”ti kho te bhikkhū bhagavato paccassosuṃ.",
+          "en": "“Yes, sir,” they replied."
+        },
+        {
+          "scid": "mn1:2.4",
+          "pli": "Bhagavā etadavoca:",
+          "en": "The Buddha said this:"
+        }
+      ],
+      "type": "Section",
+      "prefix": "",
+      "values": [],
+      "template": [],
+      "expanded": false,
+      "prop": "en",
+      "title": "So I have heard…",
+      "expandable": false
+    },
+    {
+      "segments": [
+        {
+          "scid": "mn1:3.1",
+          "pli": "“Idha, bhikkhave, assutavā puthujjano ariyānaṃ adassāvī ariyadhammassa akovido ariyadhamme avinīto, sappurisānaṃ adassāvī sappurisadhammassa akovido sappurisadhamme avinīto—",
+          "en": "“Take an uneducated ordinary person who has not seen the noble ones, and is neither skilled nor trained in their teaching. They’ve not seen good persons, and are neither skilled nor trained in their teaching."
+        },
+        {
+          "scid": "mn1:3.2",
+          "pli": "pathaviṃ pathavito sañjānāti;",
+          "en": "They perceive earth as earth."
+        },
+        {
+          "scid": "mn1:3.3",
+          "pli": "pathaviṃ pathavito saññatvā pathaviṃ maññati, pathaviyā maññati, pathavito maññati, pathaviṃ meti maññati, pathaviṃ abhinandati.",
+          "en": "But then they conceive earth, they conceive regarding earth, they conceive as earth, they conceive that ‘earth is mine’, they take pleasure in earth."
+        },
+        {
+          "scid": "mn1:3.4",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:3.5",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (1)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:4.1",
+          "pli": "Āpaṃ āpato sañjānāti;",
+          "en": "They perceive water as water."
+        },
+        {
+          "scid": "mn1:4.2.1",
+          "en": "But then they conceive water, they conceive regarding water, they conceive as water, they conceive that ‘water is mine’, they take pleasure in water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:4.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:4.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (2)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:5.1",
+          "pli": "Tejaṃ tejato sañjānāti;",
+          "en": "They perceive fire as fire."
+        },
+        {
+          "scid": "mn1:5.2.1",
+          "en": "But then they conceive fire, they conceive regarding fire, they conceive as fire, they conceive that ‘fire is mine’, they take pleasure in fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:5.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:5.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (3)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:6.1",
+          "pli": "Vāyaṃ vāyato sañjānāti;",
+          "en": "They perceive air as air."
+        },
+        {
+          "scid": "mn1:6.2.1",
+          "en": "But then they conceive air, they conceive regarding air, they conceive as air, they conceive that ‘air is mine’, they take pleasure in air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:6.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:6.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (4)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:7.1",
+          "pli": "Bhūte bhūtato sañjānāti;",
+          "en": "They perceive creatures as creatures."
+        },
+        {
+          "scid": "mn1:7.2.1",
+          "en": "But then they conceive creatures, they conceive regarding creatures, they conceive as creatures, they conceive that ‘creatures is mine’, they take pleasure in creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:7.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:7.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (5)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:8.1",
+          "pli": "Deve devato sañjānāti;",
+          "en": "They perceive gods as gods."
+        },
+        {
+          "scid": "mn1:8.2.1",
+          "en": "But then they conceive gods, they conceive regarding gods, they conceive as gods, they conceive that ‘gods is mine’, they take pleasure in gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:8.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:8.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (6)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:9.1",
+          "pli": "Pajāpatiṃ pajāpatito sañjānāti;",
+          "en": "They perceive the Creator as the Creator."
+        },
+        {
+          "scid": "mn1:9.2.1",
+          "en": "But then they conceive the Creator, they conceive regarding the Creator, they conceive as the Creator, they conceive that ‘the Creator is mine’, they take pleasure in the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:9.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:9.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (7)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:10.1",
+          "pli": "Brahmaṃ brahmato sañjānāti;",
+          "en": "They perceive Brahmā as Brahmā."
+        },
+        {
+          "scid": "mn1:10.2.1",
+          "en": "But then they conceive Brahmā, they conceive regarding Brahmā, they conceive as Brahmā, they conceive that ‘Brahmā is mine’, they take pleasure in Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:10.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:10.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (8)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:11.1",
+          "pli": "Ābhassare ābhassarato sañjānāti;",
+          "en": "They perceive the gods of streaming radiance as the gods of streaming radiance."
+        },
+        {
+          "scid": "mn1:11.2.1",
+          "en": "But then they conceive the gods of streaming radiance, they conceive regarding the gods of streaming radiance, they conceive as the gods of streaming radiance, they conceive that ‘the gods of streaming radiance is mine’, they take pleasure in the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:11.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:11.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (9)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:12.1",
+          "pli": "Subhakiṇhe subhakiṇhato sañjānāti;",
+          "en": "They perceive the gods replete with glory as the gods replete with glory."
+        },
+        {
+          "scid": "mn1:12.2.1",
+          "en": "But then they conceive the gods replete with glory, they conceive regarding the gods replete with glory, they conceive as the gods replete with glory, they conceive that ‘the gods replete with glory is mine’, they take pleasure in the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:12.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:12.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (10)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:13.1",
+          "pli": "Vehapphale vehapphalato sañjānāti;",
+          "en": "They perceive the gods of abundant fruit as the gods of abundant fruit."
+        },
+        {
+          "scid": "mn1:13.2.1",
+          "en": "But then they conceive the gods of abundant fruit, they conceive regarding the gods of abundant fruit, they conceive as the gods of abundant fruit, they conceive that ‘the gods of abundant fruit is mine’, they take pleasure in the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:13.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:13.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (11)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:14.1",
+          "pli": "Abhibhuṃ abhibhuto sañjānāti;",
+          "en": "They perceive the Overlord as the Overlord."
+        },
+        {
+          "scid": "mn1:14.2.1",
+          "en": "But then they conceive the Overlord, they conceive regarding the Overlord, they conceive as the Overlord, they conceive that ‘the Overlord is mine’, they take pleasure in the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:14.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:14.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (12)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:15.1",
+          "pli": "Ākāsānañcāyatanaṃ ākāsānañcāyatanato sañjānāti;",
+          "en": "They perceive the dimension of infinite space as the dimension of infinite space."
+        },
+        {
+          "scid": "mn1:15.2.1",
+          "en": "But then they conceive the dimension of infinite space, they conceive regarding the dimension of infinite space, they conceive as the dimension of infinite space, they conceive that ‘the dimension of infinite space is mine’, they take pleasure in the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:15.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:15.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (13)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:16.1",
+          "pli": "Viññāṇañcāyatanaṃ viññāṇañcāyatanato sañjānāti;",
+          "en": "They perceive the dimension of infinite consciousness as the dimension of infinite consciousness."
+        },
+        {
+          "scid": "mn1:16.2.1",
+          "en": "But then they conceive the dimension of infinite consciousness, they conceive regarding the dimension of infinite consciousness, they conceive as the dimension of infinite consciousness, they conceive that ‘the dimension of infinite consciousness is mine’, they take pleasure in the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:16.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:16.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (14)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:17.1",
+          "pli": "Ākiñcaññāyatanaṃ ākiñcaññāyatanato sañjānāti;",
+          "en": "They perceive the dimension of nothingness as the dimension of nothingness."
+        },
+        {
+          "scid": "mn1:17.2.1",
+          "en": "But then they conceive the dimension of nothingness, they conceive regarding the dimension of nothingness, they conceive as the dimension of nothingness, they conceive that ‘the dimension of nothingness is mine’, they take pleasure in the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:17.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:17.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (15)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:18.1",
+          "pli": "Nevasaññānāsaññāyatanaṃ nevasaññānāsaññāyatanato sañjānāti;",
+          "en": "They perceive the dimension of neither perception nor non-perception as the dimension of neither perception nor non-perception."
+        },
+        {
+          "scid": "mn1:18.2.1",
+          "en": "But then they conceive the dimension of neither perception nor non-perception, they conceive regarding the dimension of neither perception nor non-perception, they conceive as the dimension of neither perception nor non-perception, they conceive that ‘the dimension of neither perception nor non-perception is mine’, they take pleasure in the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:18.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:18.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (16)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:19.1",
+          "pli": "Diṭṭhaṃ diṭṭhato sañjānāti;",
+          "en": "They perceive the seen as the seen."
+        },
+        {
+          "scid": "mn1:19.2.1",
+          "en": "But then they conceive the seen, they conceive regarding the seen, they conceive as the seen, they conceive that ‘the seen is mine’, they take pleasure in the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:19.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:19.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (17)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:20.1",
+          "pli": "Sutaṃ sutato sañjānāti;",
+          "en": "They perceive the heard as the heard."
+        },
+        {
+          "scid": "mn1:20.2.1",
+          "en": "But then they conceive the heard, they conceive regarding the heard, they conceive as the heard, they conceive that ‘the heard is mine’, they take pleasure in the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:20.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:20.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (18)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:21.1",
+          "pli": "Mutaṃ mutato sañjānāti;",
+          "en": "They perceive the thought as the thought."
+        },
+        {
+          "scid": "mn1:21.2.1",
+          "en": "But then they conceive the thought, they conceive regarding the thought, they conceive as the thought, they conceive that ‘the thought is mine’, they take pleasure in the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:21.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:21.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (19)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:22.1",
+          "pli": "Viññātaṃ viññātato sañjānāti;",
+          "en": "They perceive the cognized as the cognized."
+        },
+        {
+          "scid": "mn1:22.2.1",
+          "en": "But then they conceive the cognized, they conceive regarding the cognized, they conceive as the cognized, they conceive that ‘the cognized is mine’, they take pleasure in the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:22.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:22.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (20)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:23.1",
+          "pli": "Ekattaṃ ekattato sañjānāti;",
+          "en": "They perceive oneness as oneness."
+        },
+        {
+          "scid": "mn1:23.2.1",
+          "en": "But then they conceive oneness, they conceive regarding oneness, they conceive as oneness, they conceive that ‘oneness is mine’, they take pleasure in oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:23.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:23.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (21)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:24.1",
+          "pli": "Nānattaṃ nānattato sañjānāti;",
+          "en": "They perceive diversity as diversity."
+        },
+        {
+          "scid": "mn1:24.2.1",
+          "en": "But then they conceive diversity, they conceive regarding diversity, they conceive as diversity, they conceive that ‘diversity is mine’, they take pleasure in diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:24.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:24.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (22)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:25.1",
+          "pli": "Sabbaṃ sabbato sañjānāti;",
+          "en": "They perceive all as all."
+        },
+        {
+          "scid": "mn1:25.2.1",
+          "en": "But then they conceive all, they conceive regarding all, they conceive as all, they conceive that ‘all is mine’, they take pleasure in all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:25.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:25.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (23)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:26.1",
+          "pli": "Nibbānaṃ nibbānato sañjānāti;",
+          "en": "They perceive extinguishment as extinguishment."
+        },
+        {
+          "scid": "mn1:26.2",
+          "pli": "nibbānaṃ nibbānato saññatvā nibbānaṃ maññati, nibbānasmiṃ maññati, nibbānato maññati, nibbānaṃ meti maññati, nibbānaṃ abhinandati.",
+          "en": "But then they conceive extinguishment, they conceive regarding extinguishment, they conceive as extinguishment, they conceive that ‘extinguishment is mine’, they take pleasure in extinguishment."
+        },
+        {
+          "scid": "mn1:26.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:26.4",
+          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (24)",
+          "en": "Because they haven’t completely understood it, I say."
+        },
+        {
+          "scid": "mn1:26.5",
+          "pli": "Puthujjanavasena paṭhamanayabhūmiparicchedo niṭṭhito.",
+          "en": ""
+        }
+      ],
+      "type": "Section",
+      "prefix": "",
+      "values": [],
+      "template": [],
+      "expanded": true,
+      "prop": "en",
+      "title": "“Take an uneducated ordinary person who has…",
+      "expandable": false
+    },
+    {
+      "segments": [
+        {
+          "scid": "mn1:27.1",
+          "pli": "Yopi so, bhikkhave, bhikkhu sekkho appattamānaso anuttaraṃ yogakkhemaṃ patthayamāno viharati, sopi pathaviṃ pathavito abhijānāti;",
+          "en": "A mendicant who is a trainee, who hasn’t achieved their heart’s desire, but lives aspiring to the supreme sanctuary, directly knows earth as earth."
+        },
+        {
+          "scid": "mn1:27.2",
+          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ mā maññi, pathaviyā mā maññi, pathavito mā maññi, pathaviṃ meti mā maññi, pathaviṃ mābhinandi.",
+          "en": "But they shouldn’t conceive earth, they shouldn’t conceive regarding earth, they shouldn’t conceive as earth, they shouldn’t conceive that ‘earth is mine’, they shouldn’t take pleasure in earth."
+        },
+        {
+          "scid": "mn1:27.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:27.4",
+          "pli": "‘Pariññeyyaṃ tassā’ti vadāmi.",
+          "en": "So that they may completely understand it, I say."
+        },
+        {
+          "scid": "mn1:28-49.1.1",
+          "en": "They directly know water as water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.1.2",
+          "en": "But they shouldn’t conceive water, they shouldn’t conceive regarding water, they shouldn’t conceive as water, they shouldn’t conceive that ‘water is mine’, they shouldn’t take pleasure in water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.1.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.1.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.2.1",
+          "en": "They directly know fire as fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.2.2",
+          "en": "But they shouldn’t conceive fire, they shouldn’t conceive regarding fire, they shouldn’t conceive as fire, they shouldn’t conceive that ‘fire is mine’, they shouldn’t take pleasure in fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.2.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.2.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.3.1",
+          "en": "They directly know air as air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.3.2",
+          "en": "But they shouldn’t conceive air, they shouldn’t conceive regarding air, they shouldn’t conceive as air, they shouldn’t conceive that ‘air is mine’, they shouldn’t take pleasure in air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.3.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.3.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.4.1",
+          "en": "They directly know creatures as creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.4.2",
+          "en": "But they shouldn’t conceive creatures, they shouldn’t conceive regarding creatures, they shouldn’t conceive as creatures, they shouldn’t conceive that ‘creatures is mine’, they shouldn’t take pleasure in creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.4.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.4.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.5.1",
+          "en": "They directly know gods as gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.5.2",
+          "en": "But they shouldn’t conceive gods, they shouldn’t conceive regarding gods, they shouldn’t conceive as gods, they shouldn’t conceive that ‘gods is mine’, they shouldn’t take pleasure in gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.5.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.5.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.6.1",
+          "en": "They directly know the Creator as the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.6.2",
+          "en": "But they shouldn’t conceive the Creator, they shouldn’t conceive regarding the Creator, they shouldn’t conceive as the Creator, they shouldn’t conceive that ‘the Creator is mine’, they shouldn’t take pleasure in the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.6.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.6.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.7.1",
+          "en": "They directly know Brahmā as Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.7.2",
+          "en": "But they shouldn’t conceive Brahmā, they shouldn’t conceive regarding Brahmā, they shouldn’t conceive as Brahmā, they shouldn’t conceive that ‘Brahmā is mine’, they shouldn’t take pleasure in Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.7.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.7.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.8.1",
+          "en": "They directly know the gods of streaming radiance as the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.8.2",
+          "en": "But they shouldn’t conceive the gods of streaming radiance, they shouldn’t conceive regarding the gods of streaming radiance, they shouldn’t conceive as the gods of streaming radiance, they shouldn’t conceive that ‘the gods of streaming radiance is mine’, they shouldn’t take pleasure in the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.8.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.8.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.9.1",
+          "en": "They directly know the gods replete with glory as the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.9.2",
+          "en": "But they shouldn’t conceive the gods replete with glory, they shouldn’t conceive regarding the gods replete with glory, they shouldn’t conceive as the gods replete with glory, they shouldn’t conceive that ‘the gods replete with glory is mine’, they shouldn’t take pleasure in the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.9.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.9.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.10.1",
+          "en": "They directly know the gods of abundant fruit as the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.10.2",
+          "en": "But they shouldn’t conceive the gods of abundant fruit, they shouldn’t conceive regarding the gods of abundant fruit, they shouldn’t conceive as the gods of abundant fruit, they shouldn’t conceive that ‘the gods of abundant fruit is mine’, they shouldn’t take pleasure in the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.10.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.10.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.11.1",
+          "en": "They directly know the Overlord as the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.11.2",
+          "en": "But they shouldn’t conceive the Overlord, they shouldn’t conceive regarding the Overlord, they shouldn’t conceive as the Overlord, they shouldn’t conceive that ‘the Overlord is mine’, they shouldn’t take pleasure in the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.11.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.11.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.12.1",
+          "en": "They directly know the dimension of infinite space as the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.12.2",
+          "en": "But they shouldn’t conceive the dimension of infinite space, they shouldn’t conceive regarding the dimension of infinite space, they shouldn’t conceive as the dimension of infinite space, they shouldn’t conceive that ‘the dimension of infinite space is mine’, they shouldn’t take pleasure in the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.12.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.12.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.13.1",
+          "en": "They directly know the dimension of infinite consciousness as the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.13.2",
+          "en": "But they shouldn’t conceive the dimension of infinite consciousness, they shouldn’t conceive regarding the dimension of infinite consciousness, they shouldn’t conceive as the dimension of infinite consciousness, they shouldn’t conceive that ‘the dimension of infinite consciousness is mine’, they shouldn’t take pleasure in the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.13.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.13.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.14.1",
+          "en": "They directly know the dimension of nothingness as the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.14.2",
+          "en": "But they shouldn’t conceive the dimension of nothingness, they shouldn’t conceive regarding the dimension of nothingness, they shouldn’t conceive as the dimension of nothingness, they shouldn’t conceive that ‘the dimension of nothingness is mine’, they shouldn’t take pleasure in the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.14.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.14.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.15.1",
+          "en": "They directly know the dimension of neither perception nor non-perception as the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.15.2",
+          "en": "But they shouldn’t conceive the dimension of neither perception nor non-perception, they shouldn’t conceive regarding the dimension of neither perception nor non-perception, they shouldn’t conceive as the dimension of neither perception nor non-perception, they shouldn’t conceive that ‘the dimension of neither perception nor non-perception is mine’, they shouldn’t take pleasure in the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.15.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.15.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.16.1",
+          "en": "They directly know the seen as the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.16.2",
+          "en": "But they shouldn’t conceive the seen, they shouldn’t conceive regarding the seen, they shouldn’t conceive as the seen, they shouldn’t conceive that ‘the seen is mine’, they shouldn’t take pleasure in the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.16.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.16.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.17.1",
+          "en": "They directly know the heard as the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.17.2",
+          "en": "But they shouldn’t conceive the heard, they shouldn’t conceive regarding the heard, they shouldn’t conceive as the heard, they shouldn’t conceive that ‘the heard is mine’, they shouldn’t take pleasure in the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.17.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.17.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.18.1",
+          "en": "They directly know the thought as the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.18.2",
+          "en": "But they shouldn’t conceive the thought, they shouldn’t conceive regarding the thought, they shouldn’t conceive as the thought, they shouldn’t conceive that ‘the thought is mine’, they shouldn’t take pleasure in the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.18.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.18.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.19.1",
+          "en": "They directly know the cognized as the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.19.2",
+          "en": "But they shouldn’t conceive the cognized, they shouldn’t conceive regarding the cognized, they shouldn’t conceive as the cognized, they shouldn’t conceive that ‘the cognized is mine’, they shouldn’t take pleasure in the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.19.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.19.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.20.1",
+          "en": "They directly know oneness as oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.20.2",
+          "en": "But they shouldn’t conceive oneness, they shouldn’t conceive regarding oneness, they shouldn’t conceive as oneness, they shouldn’t conceive that ‘oneness is mine’, they shouldn’t take pleasure in oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.20.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.20.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.21.1",
+          "en": "They directly know diversity as diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.21.2",
+          "en": "But they shouldn’t conceive diversity, they shouldn’t conceive regarding diversity, they shouldn’t conceive as diversity, they shouldn’t conceive that ‘diversity is mine’, they shouldn’t take pleasure in diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.21.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.21.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.22.1",
+          "en": "They directly know all as all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.22.2",
+          "en": "But they shouldn’t conceive all, they shouldn’t conceive regarding all, they shouldn’t conceive as all, they shouldn’t conceive that ‘all is mine’, they shouldn’t take pleasure in all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.22.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.22.4",
+          "en": "So that they may completely understand it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:28-49.23",
+          "pli": "nibbānaṃ nibbānato abhijānāti;",
+          "en": "They directly know extinguishment as extinguishment."
+        },
+        {
+          "scid": "mn1:50.1",
+          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ mā maññi, nibbānasmiṃ mā maññi, nibbānato mā maññi, nibbānaṃ meti mā maññi, nibbānaṃ mābhinandi.",
+          "en": "But they shouldn’t conceive extinguishment, they shouldn’t conceive regarding extinguishment, they shouldn’t conceive as extinguishment, they shouldn’t conceive that ‘extinguishment is mine’, they shouldn’t take pleasure in extinguishment."
+        },
+        {
+          "scid": "mn1:50.2",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:50.3",
+          "pli": "‘Pariññeyyaṃ tassā’ti vadāmi.",
+          "en": "So that they may completely understand it, I say."
+        },
+        {
+          "scid": "mn1:50.4",
+          "pli": "Sekkhavasena dutiyanayabhūmiparicchedo niṭṭhito.",
+          "en": ""
+        }
+      ],
+      "type": "Section",
+      "prefix": "",
+      "values": [],
+      "template": [],
+      "expanded": true,
+      "prop": "en",
+      "title": "A mendicant who is a trainee…",
+      "expandable": false
+    },
+    {
+      "segments": [
+        {
+          "scid": "mn1:51.1",
+          "pli": "Yopi so, bhikkhave, bhikkhu arahaṃ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṃyojano sammadaññāvimutto, sopi pathaviṃ pathavito abhijānāti;",
+          "en": "A mendicant who is perfected—with defilements ended, who has completed the spiritual journey, done what had to be done, laid down the burden, achieved their own goal, utterly ended the fetters of rebirth, and is rightly freed through enlightenment—directly knows earth as earth."
+        },
+        {
+          "scid": "mn1:51.2",
+          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
+          "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+        },
+        {
+          "scid": "mn1:51.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:51.4",
+          "pli": "‘Pariññātaṃ tassā’ti vadāmi.",
+          "en": "Because they have completely understood it, I say."
+        },
+        {
+          "scid": "mn1:52-74.1.1",
+          "en": "They directly know water as water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.1.2",
+          "en": "But they don’t conceive water, they don’t conceive regarding water, they don’t conceive as water, they don’t conceive that ‘water is mine’, they don’t take pleasure in water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.1.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.1.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.2.1",
+          "en": "They directly know fire as fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.2.2",
+          "en": "But they don’t conceive fire, they don’t conceive regarding fire, they don’t conceive as fire, they don’t conceive that ‘fire is mine’, they don’t take pleasure in fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.2.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.2.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.3.1",
+          "en": "They directly know air as air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.3.2",
+          "en": "But they don’t conceive air, they don’t conceive regarding air, they don’t conceive as air, they don’t conceive that ‘air is mine’, they don’t take pleasure in air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.3.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.3.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.4.1",
+          "en": "They directly know creatures as creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.4.2",
+          "en": "But they don’t conceive creatures, they don’t conceive regarding creatures, they don’t conceive as creatures, they don’t conceive that ‘creatures is mine’, they don’t take pleasure in creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.4.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.4.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.5.1",
+          "en": "They directly know gods as gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.5.2",
+          "en": "But they don’t conceive gods, they don’t conceive regarding gods, they don’t conceive as gods, they don’t conceive that ‘gods is mine’, they don’t take pleasure in gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.5.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.5.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.6.1",
+          "en": "They directly know the Creator as the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.6.2",
+          "en": "But they don’t conceive the Creator, they don’t conceive regarding the Creator, they don’t conceive as the Creator, they don’t conceive that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.6.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.6.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.7.1",
+          "en": "They directly know Brahmā as Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.7.2",
+          "en": "But they don’t conceive Brahmā, they don’t conceive regarding Brahmā, they don’t conceive as Brahmā, they don’t conceive that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.7.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.7.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.8.1",
+          "en": "They directly know the gods of streaming radiance as the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.8.2",
+          "en": "But they don’t conceive the gods of streaming radiance, they don’t conceive regarding the gods of streaming radiance, they don’t conceive as the gods of streaming radiance, they don’t conceive that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.8.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.8.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.9.1",
+          "en": "They directly know the gods replete with glory as the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.9.2",
+          "en": "But they don’t conceive the gods replete with glory, they don’t conceive regarding the gods replete with glory, they don’t conceive as the gods replete with glory, they don’t conceive that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.9.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.9.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.10.1",
+          "en": "They directly know the gods of abundant fruit as the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.10.2",
+          "en": "But they don’t conceive the gods of abundant fruit, they don’t conceive regarding the gods of abundant fruit, they don’t conceive as the gods of abundant fruit, they don’t conceive that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.10.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.10.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.11.1",
+          "en": "They directly know the Overlord as the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.11.2",
+          "en": "But they don’t conceive the Overlord, they don’t conceive regarding the Overlord, they don’t conceive as the Overlord, they don’t conceive that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.11.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.11.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.12.1",
+          "en": "They directly know the dimension of infinite space as the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.12.2",
+          "en": "But they don’t conceive the dimension of infinite space, they don’t conceive regarding the dimension of infinite space, they don’t conceive as the dimension of infinite space, they don’t conceive that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.12.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.12.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.13.1",
+          "en": "They directly know the dimension of infinite consciousness as the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.13.2",
+          "en": "But they don’t conceive the dimension of infinite consciousness, they don’t conceive regarding the dimension of infinite consciousness, they don’t conceive as the dimension of infinite consciousness, they don’t conceive that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.13.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.13.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.14.1",
+          "en": "They directly know the dimension of nothingness as the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.14.2",
+          "en": "But they don’t conceive the dimension of nothingness, they don’t conceive regarding the dimension of nothingness, they don’t conceive as the dimension of nothingness, they don’t conceive that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.14.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.14.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.15.1",
+          "en": "They directly know the dimension of neither perception nor non-perception as the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.15.2",
+          "en": "But they don’t conceive the dimension of neither perception nor non-perception, they don’t conceive regarding the dimension of neither perception nor non-perception, they don’t conceive as the dimension of neither perception nor non-perception, they don’t conceive that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.15.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.15.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.16.1",
+          "en": "They directly know the seen as the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.16.2",
+          "en": "But they don’t conceive the seen, they don’t conceive regarding the seen, they don’t conceive as the seen, they don’t conceive that ‘the seen is mine’, they don’t take pleasure in the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.16.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.16.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.17.1",
+          "en": "They directly know the heard as the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.17.2",
+          "en": "But they don’t conceive the heard, they don’t conceive regarding the heard, they don’t conceive as the heard, they don’t conceive that ‘the heard is mine’, they don’t take pleasure in the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.17.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.17.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.18.1",
+          "en": "They directly know the thought as the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.18.2",
+          "en": "But they don’t conceive the thought, they don’t conceive regarding the thought, they don’t conceive as the thought, they don’t conceive that ‘the thought is mine’, they don’t take pleasure in the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.18.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.18.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.19.1",
+          "en": "They directly know the cognized as the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.19.2",
+          "en": "But they don’t conceive the cognized, they don’t conceive regarding the cognized, they don’t conceive as the cognized, they don’t conceive that ‘the cognized is mine’, they don’t take pleasure in the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.19.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.19.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.20.1",
+          "en": "They directly know oneness as oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.20.2",
+          "en": "But they don’t conceive oneness, they don’t conceive regarding oneness, they don’t conceive as oneness, they don’t conceive that ‘oneness is mine’, they don’t take pleasure in oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.20.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.20.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.21.1",
+          "en": "They directly know diversity as diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.21.2",
+          "en": "But they don’t conceive diversity, they don’t conceive regarding diversity, they don’t conceive as diversity, they don’t conceive that ‘diversity is mine’, they don’t take pleasure in diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.21.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.21.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.22.1",
+          "en": "They directly know all as all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.22.2",
+          "en": "But they don’t conceive all, they don’t conceive regarding all, they don’t conceive as all, they don’t conceive that ‘all is mine’, they don’t take pleasure in all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.22.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.22.4",
+          "en": "Because they have completely understood it, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:52-74.23",
+          "pli": "nibbānaṃ nibbānato abhijānāti;",
+          "en": "They directly know extinguishment as extinguishment."
+        },
+        {
+          "scid": "mn1:52-74.24",
+          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
+          "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+        },
+        {
+          "scid": "mn1:52-74.25",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:52-74.26",
+          "pli": "‘Pariññātaṃ tassā’ti vadāmi.",
+          "en": "Because they have completely understood it, I say."
+        },
+        {
+          "scid": "mn1:52-74.27",
+          "pli": "Khīṇāsavavasena tatiyanayabhūmiparicchedo niṭṭhito.",
+          "en": ""
+        }
+      ],
+      "type": "Section",
+      "prefix": "",
+      "values": [],
+      "template": [],
+      "expanded": true,
+      "prop": "en",
+      "title": "A mendicant who is perfected…",
+      "expandable": false
+    },
+    {
+      "segments": [
+        {
+          "scid": "mn1:75.1",
+          "pli": "Yopi so, bhikkhave, bhikkhu arahaṃ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṃyojano sammadaññā vimutto, sopi pathaviṃ pathavito abhijānāti;",
+          "en": "A mendicant who is perfected—with defilements ended, who has completed the spiritual journey, done what had to be done, laid down the burden, achieved their own goal, utterly ended the fetters of rebirth, and is rightly freed through enlightenment—directly knows earth as earth."
+        },
+        {
+          "scid": "mn1:75.2",
+          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
+          "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+        },
+        {
+          "scid": "mn1:75.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:75.4",
+          "pli": "Khayā rāgassa, vītarāgattā.",
+          "en": "Because they’re free of greed due to the ending of greed."
+        },
+        {
+          "scid": "mn1:76-98.1.1",
+          "en": "They directly know water as water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.1.2",
+          "en": "But they don’t conceive water, they don’t conceive regarding water, they don’t conceive as water, they don’t conceive that ‘water is mine’, they don’t take pleasure in water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.1.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.1.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.2.1",
+          "en": "They directly know fire as fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.2.2",
+          "en": "But they don’t conceive fire, they don’t conceive regarding fire, they don’t conceive as fire, they don’t conceive that ‘fire is mine’, they don’t take pleasure in fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.2.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.2.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.3.1",
+          "en": "They directly know air as air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.3.2",
+          "en": "But they don’t conceive air, they don’t conceive regarding air, they don’t conceive as air, they don’t conceive that ‘air is mine’, they don’t take pleasure in air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.3.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.3.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.4.1",
+          "en": "They directly know creatures as creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.4.2",
+          "en": "But they don’t conceive creatures, they don’t conceive regarding creatures, they don’t conceive as creatures, they don’t conceive that ‘creatures is mine’, they don’t take pleasure in creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.4.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.4.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.5.1",
+          "en": "They directly know gods as gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.5.2",
+          "en": "But they don’t conceive gods, they don’t conceive regarding gods, they don’t conceive as gods, they don’t conceive that ‘gods is mine’, they don’t take pleasure in gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.5.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.5.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.6.1",
+          "en": "They directly know the Creator as the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.6.2",
+          "en": "But they don’t conceive the Creator, they don’t conceive regarding the Creator, they don’t conceive as the Creator, they don’t conceive that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.6.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.6.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.7.1",
+          "en": "They directly know Brahmā as Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.7.2",
+          "en": "But they don’t conceive Brahmā, they don’t conceive regarding Brahmā, they don’t conceive as Brahmā, they don’t conceive that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.7.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.7.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.8.1",
+          "en": "They directly know the gods of streaming radiance as the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.8.2",
+          "en": "But they don’t conceive the gods of streaming radiance, they don’t conceive regarding the gods of streaming radiance, they don’t conceive as the gods of streaming radiance, they don’t conceive that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.8.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.8.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.9.1",
+          "en": "They directly know the gods replete with glory as the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.9.2",
+          "en": "But they don’t conceive the gods replete with glory, they don’t conceive regarding the gods replete with glory, they don’t conceive as the gods replete with glory, they don’t conceive that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.9.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.9.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.10.1",
+          "en": "They directly know the gods of abundant fruit as the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.10.2",
+          "en": "But they don’t conceive the gods of abundant fruit, they don’t conceive regarding the gods of abundant fruit, they don’t conceive as the gods of abundant fruit, they don’t conceive that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.10.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.10.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.11.1",
+          "en": "They directly know the Overlord as the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.11.2",
+          "en": "But they don’t conceive the Overlord, they don’t conceive regarding the Overlord, they don’t conceive as the Overlord, they don’t conceive that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.11.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.11.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.12.1",
+          "en": "They directly know the dimension of infinite space as the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.12.2",
+          "en": "But they don’t conceive the dimension of infinite space, they don’t conceive regarding the dimension of infinite space, they don’t conceive as the dimension of infinite space, they don’t conceive that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.12.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.12.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.13.1",
+          "en": "They directly know the dimension of infinite consciousness as the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.13.2",
+          "en": "But they don’t conceive the dimension of infinite consciousness, they don’t conceive regarding the dimension of infinite consciousness, they don’t conceive as the dimension of infinite consciousness, they don’t conceive that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.13.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.13.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.14.1",
+          "en": "They directly know the dimension of nothingness as the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.14.2",
+          "en": "But they don’t conceive the dimension of nothingness, they don’t conceive regarding the dimension of nothingness, they don’t conceive as the dimension of nothingness, they don’t conceive that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.14.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.14.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.15.1",
+          "en": "They directly know the dimension of neither perception nor non-perception as the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.15.2",
+          "en": "But they don’t conceive the dimension of neither perception nor non-perception, they don’t conceive regarding the dimension of neither perception nor non-perception, they don’t conceive as the dimension of neither perception nor non-perception, they don’t conceive that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.15.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.15.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.16.1",
+          "en": "They directly know the seen as the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.16.2",
+          "en": "But they don’t conceive the seen, they don’t conceive regarding the seen, they don’t conceive as the seen, they don’t conceive that ‘the seen is mine’, they don’t take pleasure in the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.16.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.16.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.17.1",
+          "en": "They directly know the heard as the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.17.2",
+          "en": "But they don’t conceive the heard, they don’t conceive regarding the heard, they don’t conceive as the heard, they don’t conceive that ‘the heard is mine’, they don’t take pleasure in the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.17.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.17.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.18.1",
+          "en": "They directly know the thought as the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.18.2",
+          "en": "But they don’t conceive the thought, they don’t conceive regarding the thought, they don’t conceive as the thought, they don’t conceive that ‘the thought is mine’, they don’t take pleasure in the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.18.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.18.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.19.1",
+          "en": "They directly know the cognized as the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.19.2",
+          "en": "But they don’t conceive the cognized, they don’t conceive regarding the cognized, they don’t conceive as the cognized, they don’t conceive that ‘the cognized is mine’, they don’t take pleasure in the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.19.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.19.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.20.1",
+          "en": "They directly know oneness as oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.20.2",
+          "en": "But they don’t conceive oneness, they don’t conceive regarding oneness, they don’t conceive as oneness, they don’t conceive that ‘oneness is mine’, they don’t take pleasure in oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.20.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.20.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.21.1",
+          "en": "They directly know diversity as diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.21.2",
+          "en": "But they don’t conceive diversity, they don’t conceive regarding diversity, they don’t conceive as diversity, they don’t conceive that ‘diversity is mine’, they don’t take pleasure in diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.21.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.21.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.22.1",
+          "en": "They directly know all as all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.22.2",
+          "en": "But they don’t conceive all, they don’t conceive regarding all, they don’t conceive as all, they don’t conceive that ‘all is mine’, they don’t take pleasure in all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.22.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.22.4",
+          "en": "Because they’re free of greed due to the ending of greed.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:76-98.23",
+          "pli": "nibbānaṃ nibbānato abhijānāti;",
+          "en": "They directly know extinguishment as extinguishment."
+        },
+        {
+          "scid": "mn1:76-98.24",
+          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
+          "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+        },
+        {
+          "scid": "mn1:76-98.25",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:76-98.26",
+          "pli": "Khayā rāgassa, vītarāgattā.",
+          "en": "Because they’re free of greed due to the ending of greed."
+        },
+        {
+          "scid": "mn1:76-98.27",
+          "pli": "Khīṇāsavavasena catutthanayabhūmiparicchedo niṭṭhito.",
+          "en": ""
+        }
+      ],
+      "type": "Section",
+      "prefix": "",
+      "values": [],
+      "template": [],
+      "expanded": true,
+      "prop": "en",
+      "title": "A mendicant who is perfected…",
+      "expandable": false
+    },
+    {
+      "segments": [
+        {
+          "scid": "mn1:99.1",
+          "pli": "Yopi so, bhikkhave, bhikkhu arahaṃ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṃyojano sammadaññāvimutto, sopi pathaviṃ pathavito abhijānāti;",
+          "en": "A mendicant who is perfected—with defilements ended, who has completed the spiritual journey, done what had to be done, laid down the burden, achieved their own goal, utterly ended the fetters of rebirth, and is rightly freed through enlightenment—directly knows earth as earth."
+        },
+        {
+          "scid": "mn1:99.2",
+          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
+          "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+        },
+        {
+          "scid": "mn1:99.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:99.4",
+          "pli": "Khayā dosassa, vītadosattā.",
+          "en": "Because they’re free of hate due to the ending of hate."
+        },
+        {
+          "scid": "mn1:100-122.1.1",
+          "en": "They directly know water as water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.1.2",
+          "en": "But they don’t conceive water, they don’t conceive regarding water, they don’t conceive as water, they don’t conceive that ‘water is mine’, they don’t take pleasure in water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.1.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.1.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.2.1",
+          "en": "They directly know fire as fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.2.2",
+          "en": "But they don’t conceive fire, they don’t conceive regarding fire, they don’t conceive as fire, they don’t conceive that ‘fire is mine’, they don’t take pleasure in fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.2.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.2.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.3.1",
+          "en": "They directly know air as air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.3.2",
+          "en": "But they don’t conceive air, they don’t conceive regarding air, they don’t conceive as air, they don’t conceive that ‘air is mine’, they don’t take pleasure in air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.3.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.3.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.4.1",
+          "en": "They directly know creatures as creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.4.2",
+          "en": "But they don’t conceive creatures, they don’t conceive regarding creatures, they don’t conceive as creatures, they don’t conceive that ‘creatures is mine’, they don’t take pleasure in creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.4.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.4.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.5.1",
+          "en": "They directly know gods as gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.5.2",
+          "en": "But they don’t conceive gods, they don’t conceive regarding gods, they don’t conceive as gods, they don’t conceive that ‘gods is mine’, they don’t take pleasure in gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.5.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.5.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.6.1",
+          "en": "They directly know the Creator as the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.6.2",
+          "en": "But they don’t conceive the Creator, they don’t conceive regarding the Creator, they don’t conceive as the Creator, they don’t conceive that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.6.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.6.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.7.1",
+          "en": "They directly know Brahmā as Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.7.2",
+          "en": "But they don’t conceive Brahmā, they don’t conceive regarding Brahmā, they don’t conceive as Brahmā, they don’t conceive that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.7.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.7.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.8.1",
+          "en": "They directly know the gods of streaming radiance as the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.8.2",
+          "en": "But they don’t conceive the gods of streaming radiance, they don’t conceive regarding the gods of streaming radiance, they don’t conceive as the gods of streaming radiance, they don’t conceive that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.8.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.8.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.9.1",
+          "en": "They directly know the gods replete with glory as the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.9.2",
+          "en": "But they don’t conceive the gods replete with glory, they don’t conceive regarding the gods replete with glory, they don’t conceive as the gods replete with glory, they don’t conceive that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.9.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.9.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.10.1",
+          "en": "They directly know the gods of abundant fruit as the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.10.2",
+          "en": "But they don’t conceive the gods of abundant fruit, they don’t conceive regarding the gods of abundant fruit, they don’t conceive as the gods of abundant fruit, they don’t conceive that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.10.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.10.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.11.1",
+          "en": "They directly know the Overlord as the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.11.2",
+          "en": "But they don’t conceive the Overlord, they don’t conceive regarding the Overlord, they don’t conceive as the Overlord, they don’t conceive that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.11.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.11.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.12.1",
+          "en": "They directly know the dimension of infinite space as the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.12.2",
+          "en": "But they don’t conceive the dimension of infinite space, they don’t conceive regarding the dimension of infinite space, they don’t conceive as the dimension of infinite space, they don’t conceive that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.12.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.12.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.13.1",
+          "en": "They directly know the dimension of infinite consciousness as the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.13.2",
+          "en": "But they don’t conceive the dimension of infinite consciousness, they don’t conceive regarding the dimension of infinite consciousness, they don’t conceive as the dimension of infinite consciousness, they don’t conceive that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.13.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.13.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.14.1",
+          "en": "They directly know the dimension of nothingness as the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.14.2",
+          "en": "But they don’t conceive the dimension of nothingness, they don’t conceive regarding the dimension of nothingness, they don’t conceive as the dimension of nothingness, they don’t conceive that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.14.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.14.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.15.1",
+          "en": "They directly know the dimension of neither perception nor non-perception as the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.15.2",
+          "en": "But they don’t conceive the dimension of neither perception nor non-perception, they don’t conceive regarding the dimension of neither perception nor non-perception, they don’t conceive as the dimension of neither perception nor non-perception, they don’t conceive that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.15.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.15.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.16.1",
+          "en": "They directly know the seen as the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.16.2",
+          "en": "But they don’t conceive the seen, they don’t conceive regarding the seen, they don’t conceive as the seen, they don’t conceive that ‘the seen is mine’, they don’t take pleasure in the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.16.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.16.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.17.1",
+          "en": "They directly know the heard as the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.17.2",
+          "en": "But they don’t conceive the heard, they don’t conceive regarding the heard, they don’t conceive as the heard, they don’t conceive that ‘the heard is mine’, they don’t take pleasure in the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.17.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.17.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.18.1",
+          "en": "They directly know the thought as the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.18.2",
+          "en": "But they don’t conceive the thought, they don’t conceive regarding the thought, they don’t conceive as the thought, they don’t conceive that ‘the thought is mine’, they don’t take pleasure in the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.18.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.18.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.19.1",
+          "en": "They directly know the cognized as the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.19.2",
+          "en": "But they don’t conceive the cognized, they don’t conceive regarding the cognized, they don’t conceive as the cognized, they don’t conceive that ‘the cognized is mine’, they don’t take pleasure in the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.19.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.19.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.20.1",
+          "en": "They directly know oneness as oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.20.2",
+          "en": "But they don’t conceive oneness, they don’t conceive regarding oneness, they don’t conceive as oneness, they don’t conceive that ‘oneness is mine’, they don’t take pleasure in oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.20.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.20.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.21.1",
+          "en": "They directly know diversity as diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.21.2",
+          "en": "But they don’t conceive diversity, they don’t conceive regarding diversity, they don’t conceive as diversity, they don’t conceive that ‘diversity is mine’, they don’t take pleasure in diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.21.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.21.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.22.1",
+          "en": "They directly know all as all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.22.2",
+          "en": "But they don’t conceive all, they don’t conceive regarding all, they don’t conceive as all, they don’t conceive that ‘all is mine’, they don’t take pleasure in all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.22.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.22.4",
+          "en": "Because they’re free of hate due to the ending of hate.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:100-122.23",
+          "pli": "nibbānaṃ nibbānato abhijānāti;",
+          "en": "They directly know extinguishment as extinguishment."
+        },
+        {
+          "scid": "mn1:100-122.24",
+          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
+          "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+        },
+        {
+          "scid": "mn1:100-122.25",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:100-122.26",
+          "pli": "Khayā dosassa, vītadosattā.",
+          "en": "Because they’re free of hate due to the ending of hate."
+        },
+        {
+          "scid": "mn1:100-122.27",
+          "pli": "Khīṇāsavavasena pañcamanayabhūmiparicchedo niṭṭhito.",
+          "en": ""
+        }
+      ],
+      "type": "Section",
+      "prefix": "",
+      "values": [],
+      "template": [],
+      "expanded": true,
+      "prop": "en",
+      "title": "A mendicant who is perfected…",
+      "expandable": false
+    },
+    {
+      "segments": [
+        {
+          "scid": "mn1:123.1",
+          "pli": "Yopi so, bhikkhave, bhikkhu arahaṃ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṃyojano sammadaññāvimutto, sopi pathaviṃ pathavito abhijānāti;",
+          "en": "A mendicant who is perfected—with defilements ended, who has completed the spiritual journey, done what had to be done, laid down the burden, achieved their own goal, utterly ended the fetters of rebirth, and is rightly freed through enlightenment—directly knows earth as earth."
+        },
+        {
+          "scid": "mn1:123.2",
+          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
+          "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+        },
+        {
+          "scid": "mn1:123.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:123.4",
+          "pli": "Khayā mohassa, vītamohattā.",
+          "en": "Because they’re free of delusion due to the ending of delusion."
+        },
+        {
+          "scid": "mn1:124-146.1.1",
+          "en": "They directly know water as water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.1.2",
+          "en": "But they don’t conceive water, they don’t conceive regarding water, they don’t conceive as water, they don’t conceive that ‘water is mine’, they don’t take pleasure in water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.1.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.1.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.2.1",
+          "en": "They directly know fire as fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.2.2",
+          "en": "But they don’t conceive fire, they don’t conceive regarding fire, they don’t conceive as fire, they don’t conceive that ‘fire is mine’, they don’t take pleasure in fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.2.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.2.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.3.1",
+          "en": "They directly know air as air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.3.2",
+          "en": "But they don’t conceive air, they don’t conceive regarding air, they don’t conceive as air, they don’t conceive that ‘air is mine’, they don’t take pleasure in air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.3.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.3.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.4.1",
+          "en": "They directly know creatures as creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.4.2",
+          "en": "But they don’t conceive creatures, they don’t conceive regarding creatures, they don’t conceive as creatures, they don’t conceive that ‘creatures is mine’, they don’t take pleasure in creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.4.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.4.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.5.1",
+          "en": "They directly know gods as gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.5.2",
+          "en": "But they don’t conceive gods, they don’t conceive regarding gods, they don’t conceive as gods, they don’t conceive that ‘gods is mine’, they don’t take pleasure in gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.5.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.5.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.6.1",
+          "en": "They directly know the Creator as the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.6.2",
+          "en": "But they don’t conceive the Creator, they don’t conceive regarding the Creator, they don’t conceive as the Creator, they don’t conceive that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.6.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.6.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.7.1",
+          "en": "They directly know Brahmā as Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.7.2",
+          "en": "But they don’t conceive Brahmā, they don’t conceive regarding Brahmā, they don’t conceive as Brahmā, they don’t conceive that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.7.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.7.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.8.1",
+          "en": "They directly know the gods of streaming radiance as the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.8.2",
+          "en": "But they don’t conceive the gods of streaming radiance, they don’t conceive regarding the gods of streaming radiance, they don’t conceive as the gods of streaming radiance, they don’t conceive that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.8.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.8.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.9.1",
+          "en": "They directly know the gods replete with glory as the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.9.2",
+          "en": "But they don’t conceive the gods replete with glory, they don’t conceive regarding the gods replete with glory, they don’t conceive as the gods replete with glory, they don’t conceive that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.9.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.9.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.10.1",
+          "en": "They directly know the gods of abundant fruit as the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.10.2",
+          "en": "But they don’t conceive the gods of abundant fruit, they don’t conceive regarding the gods of abundant fruit, they don’t conceive as the gods of abundant fruit, they don’t conceive that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.10.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.10.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.11.1",
+          "en": "They directly know the Overlord as the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.11.2",
+          "en": "But they don’t conceive the Overlord, they don’t conceive regarding the Overlord, they don’t conceive as the Overlord, they don’t conceive that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.11.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.11.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.12.1",
+          "en": "They directly know the dimension of infinite space as the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.12.2",
+          "en": "But they don’t conceive the dimension of infinite space, they don’t conceive regarding the dimension of infinite space, they don’t conceive as the dimension of infinite space, they don’t conceive that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.12.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.12.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.13.1",
+          "en": "They directly know the dimension of infinite consciousness as the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.13.2",
+          "en": "But they don’t conceive the dimension of infinite consciousness, they don’t conceive regarding the dimension of infinite consciousness, they don’t conceive as the dimension of infinite consciousness, they don’t conceive that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.13.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.13.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.14.1",
+          "en": "They directly know the dimension of nothingness as the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.14.2",
+          "en": "But they don’t conceive the dimension of nothingness, they don’t conceive regarding the dimension of nothingness, they don’t conceive as the dimension of nothingness, they don’t conceive that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.14.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.14.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.15.1",
+          "en": "They directly know the dimension of neither perception nor non-perception as the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.15.2",
+          "en": "But they don’t conceive the dimension of neither perception nor non-perception, they don’t conceive regarding the dimension of neither perception nor non-perception, they don’t conceive as the dimension of neither perception nor non-perception, they don’t conceive that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.15.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.15.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.16.1",
+          "en": "They directly know the seen as the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.16.2",
+          "en": "But they don’t conceive the seen, they don’t conceive regarding the seen, they don’t conceive as the seen, they don’t conceive that ‘the seen is mine’, they don’t take pleasure in the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.16.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.16.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.17.1",
+          "en": "They directly know the heard as the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.17.2",
+          "en": "But they don’t conceive the heard, they don’t conceive regarding the heard, they don’t conceive as the heard, they don’t conceive that ‘the heard is mine’, they don’t take pleasure in the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.17.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.17.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.18.1",
+          "en": "They directly know the thought as the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.18.2",
+          "en": "But they don’t conceive the thought, they don’t conceive regarding the thought, they don’t conceive as the thought, they don’t conceive that ‘the thought is mine’, they don’t take pleasure in the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.18.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.18.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.19.1",
+          "en": "They directly know the cognized as the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.19.2",
+          "en": "But they don’t conceive the cognized, they don’t conceive regarding the cognized, they don’t conceive as the cognized, they don’t conceive that ‘the cognized is mine’, they don’t take pleasure in the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.19.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.19.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.20.1",
+          "en": "They directly know oneness as oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.20.2",
+          "en": "But they don’t conceive oneness, they don’t conceive regarding oneness, they don’t conceive as oneness, they don’t conceive that ‘oneness is mine’, they don’t take pleasure in oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.20.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.20.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.21.1",
+          "en": "They directly know diversity as diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.21.2",
+          "en": "But they don’t conceive diversity, they don’t conceive regarding diversity, they don’t conceive as diversity, they don’t conceive that ‘diversity is mine’, they don’t take pleasure in diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.21.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.21.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.22.1",
+          "en": "They directly know all as all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.22.2",
+          "en": "But they don’t conceive all, they don’t conceive regarding all, they don’t conceive as all, they don’t conceive that ‘all is mine’, they don’t take pleasure in all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.22.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.22.4",
+          "en": "Because they’re free of delusion due to the ending of delusion.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:124-146.23",
+          "pli": "nibbānaṃ nibbānato abhijānāti;",
+          "en": "They directly know extinguishment as extinguishment."
+        },
+        {
+          "scid": "mn1:124-146.24",
+          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
+          "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+        },
+        {
+          "scid": "mn1:124-146.25",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:124-146.26",
+          "pli": "Khayā mohassa, vītamohattā.",
+          "en": "Because they’re free of delusion due to the ending of delusion."
+        },
+        {
+          "scid": "mn1:124-146.27",
+          "pli": "Khīṇāsavavasena chaṭṭhanayabhūmiparicchedo niṭṭhito.",
+          "en": ""
+        }
+      ],
+      "type": "Section",
+      "prefix": "",
+      "values": [],
+      "template": [],
+      "expanded": true,
+      "prop": "en",
+      "title": "A mendicant who is perfected…",
+      "expandable": false
+    },
+    {
+      "segments": [
+        {
+          "scid": "mn1:147.1",
+          "pli": "Tathāgatopi, bhikkhave, arahaṃ sammāsambuddho pathaviṃ pathavito abhijānāti;",
+          "en": "The Realized One, the perfected one, the fully awakened Buddha directly knows earth as earth."
+        },
+        {
+          "scid": "mn1:147.2",
+          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
+          "en": "But he doesn’t conceive earth, he doesn’t conceive regarding earth, he doesn’t conceive as earth, he doesn’t conceive that ‘earth is mine’, he doesn’t take pleasure in earth."
+        },
+        {
+          "scid": "mn1:147.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:147.4",
+          "pli": "‘Pariññātantaṃ tathāgatassā’ti vadāmi.",
+          "en": "Because the Realized One has completely understood it to the end, I say."
+        },
+        {
+          "scid": "mn1:148-170.1.1",
+          "en": "He directly knows water as water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.1.2",
+          "en": "But he doesn’t conceive water, he doesn’t conceive regarding water, he doesn’t conceive as water, he doesn’t conceive that ‘water is mine’, he doesn’t take pleasure in water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.1.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.1.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.2.1",
+          "en": "He directly knows fire as fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.2.2",
+          "en": "But he doesn’t conceive fire, he doesn’t conceive regarding fire, he doesn’t conceive as fire, he doesn’t conceive that ‘fire is mine’, he doesn’t take pleasure in fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.2.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.2.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.3.1",
+          "en": "He directly knows air as air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.3.2",
+          "en": "But he doesn’t conceive air, he doesn’t conceive regarding air, he doesn’t conceive as air, he doesn’t conceive that ‘air is mine’, he doesn’t take pleasure in air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.3.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.3.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.4.1",
+          "en": "He directly knows creatures as creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.4.2",
+          "en": "But he doesn’t conceive creatures, he doesn’t conceive regarding creatures, he doesn’t conceive as creatures, he doesn’t conceive that ‘creatures is mine’, he doesn’t take pleasure in creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.4.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.4.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.5.1",
+          "en": "He directly knows gods as gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.5.2",
+          "en": "But he doesn’t conceive gods, he doesn’t conceive regarding gods, he doesn’t conceive as gods, he doesn’t conceive that ‘gods is mine’, he doesn’t take pleasure in gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.5.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.5.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.6.1",
+          "en": "He directly knows the Creator as the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.6.2",
+          "en": "But he doesn’t conceive the Creator, he doesn’t conceive regarding the Creator, he doesn’t conceive as the Creator, he doesn’t conceive that ‘the Creator is mine’, he doesn’t take pleasure in the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.6.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.6.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.7.1",
+          "en": "He directly knows Brahmā as Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.7.2",
+          "en": "But he doesn’t conceive Brahmā, he doesn’t conceive regarding Brahmā, he doesn’t conceive as Brahmā, he doesn’t conceive that ‘Brahmā is mine’, he doesn’t take pleasure in Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.7.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.7.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.8.1",
+          "en": "He directly knows the gods of streaming radiance as the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.8.2",
+          "en": "But he doesn’t conceive the gods of streaming radiance, he doesn’t conceive regarding the gods of streaming radiance, he doesn’t conceive as the gods of streaming radiance, he doesn’t conceive that ‘the gods of streaming radiance is mine’, he doesn’t take pleasure in the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.8.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.8.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.9.1",
+          "en": "He directly knows the gods replete with glory as the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.9.2",
+          "en": "But he doesn’t conceive the gods replete with glory, he doesn’t conceive regarding the gods replete with glory, he doesn’t conceive as the gods replete with glory, he doesn’t conceive that ‘the gods replete with glory is mine’, he doesn’t take pleasure in the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.9.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.9.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.10.1",
+          "en": "He directly knows the gods of abundant fruit as the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.10.2",
+          "en": "But he doesn’t conceive the gods of abundant fruit, he doesn’t conceive regarding the gods of abundant fruit, he doesn’t conceive as the gods of abundant fruit, he doesn’t conceive that ‘the gods of abundant fruit is mine’, he doesn’t take pleasure in the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.10.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.10.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.11.1",
+          "en": "He directly knows the Overlord as the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.11.2",
+          "en": "But he doesn’t conceive the Overlord, he doesn’t conceive regarding the Overlord, he doesn’t conceive as the Overlord, he doesn’t conceive that ‘the Overlord is mine’, he doesn’t take pleasure in the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.11.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.11.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.12.1",
+          "en": "He directly knows the dimension of infinite space as the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.12.2",
+          "en": "But he doesn’t conceive the dimension of infinite space, he doesn’t conceive regarding the dimension of infinite space, he doesn’t conceive as the dimension of infinite space, he doesn’t conceive that ‘the dimension of infinite space is mine’, he doesn’t take pleasure in the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.12.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.12.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.13.1",
+          "en": "He directly knows the dimension of infinite consciousness as the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.13.2",
+          "en": "But he doesn’t conceive the dimension of infinite consciousness, he doesn’t conceive regarding the dimension of infinite consciousness, he doesn’t conceive as the dimension of infinite consciousness, he doesn’t conceive that ‘the dimension of infinite consciousness is mine’, he doesn’t take pleasure in the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.13.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.13.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.14.1",
+          "en": "He directly knows the dimension of nothingness as the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.14.2",
+          "en": "But he doesn’t conceive the dimension of nothingness, he doesn’t conceive regarding the dimension of nothingness, he doesn’t conceive as the dimension of nothingness, he doesn’t conceive that ‘the dimension of nothingness is mine’, he doesn’t take pleasure in the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.14.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.14.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.15.1",
+          "en": "He directly knows the dimension of neither perception nor non-perception as the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.15.2",
+          "en": "But he doesn’t conceive the dimension of neither perception nor non-perception, he doesn’t conceive regarding the dimension of neither perception nor non-perception, he doesn’t conceive as the dimension of neither perception nor non-perception, he doesn’t conceive that ‘the dimension of neither perception nor non-perception is mine’, he doesn’t take pleasure in the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.15.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.15.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.16.1",
+          "en": "He directly knows the seen as the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.16.2",
+          "en": "But he doesn’t conceive the seen, he doesn’t conceive regarding the seen, he doesn’t conceive as the seen, he doesn’t conceive that ‘the seen is mine’, he doesn’t take pleasure in the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.16.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.16.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.17.1",
+          "en": "He directly knows the heard as the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.17.2",
+          "en": "But he doesn’t conceive the heard, he doesn’t conceive regarding the heard, he doesn’t conceive as the heard, he doesn’t conceive that ‘the heard is mine’, he doesn’t take pleasure in the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.17.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.17.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.18.1",
+          "en": "He directly knows the thought as the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.18.2",
+          "en": "But he doesn’t conceive the thought, he doesn’t conceive regarding the thought, he doesn’t conceive as the thought, he doesn’t conceive that ‘the thought is mine’, he doesn’t take pleasure in the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.18.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.18.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.19.1",
+          "en": "He directly knows the cognized as the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.19.2",
+          "en": "But he doesn’t conceive the cognized, he doesn’t conceive regarding the cognized, he doesn’t conceive as the cognized, he doesn’t conceive that ‘the cognized is mine’, he doesn’t take pleasure in the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.19.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.19.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.20.1",
+          "en": "He directly knows oneness as oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.20.2",
+          "en": "But he doesn’t conceive oneness, he doesn’t conceive regarding oneness, he doesn’t conceive as oneness, he doesn’t conceive that ‘oneness is mine’, he doesn’t take pleasure in oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.20.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.20.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.21.1",
+          "en": "He directly knows diversity as diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.21.2",
+          "en": "But he doesn’t conceive diversity, he doesn’t conceive regarding diversity, he doesn’t conceive as diversity, he doesn’t conceive that ‘diversity is mine’, he doesn’t take pleasure in diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.21.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.21.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.22.1",
+          "en": "He directly knows all as all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.22.2",
+          "en": "But he doesn’t conceive all, he doesn’t conceive regarding all, he doesn’t conceive as all, he doesn’t conceive that ‘all is mine’, he doesn’t take pleasure in all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.22.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.22.4",
+          "en": "Because the Realized One has completely understood it to the end, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:148-170.23",
+          "pli": "nibbānaṃ nibbānato abhijānāti;",
+          "en": "He directly knows extinguishment as extinguishment."
+        },
+        {
+          "scid": "mn1:148-170.24",
+          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
+          "en": "But he doesn’t conceive extinguishment, he doesn’t conceive regarding extinguishment, he doesn’t conceive as extinguishment, he doesn’t conceive that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment."
+        },
+        {
+          "scid": "mn1:148-170.25",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:148-170.26",
+          "pli": "‘Pariññātantaṃ tathāgatassā’ti vadāmi.",
+          "en": "Because the Realized One has completely understood it to the end, I say."
+        },
+        {
+          "scid": "mn1:148-170.27",
+          "pli": "Tathāgatavasena sattamanayabhūmiparicchedo niṭṭhito.",
+          "en": ""
+        }
+      ],
+      "type": "Section",
+      "prefix": "",
+      "values": [],
+      "template": [],
+      "expanded": true,
+      "prop": "en",
+      "title": "The Realized One…",
+      "expandable": false
+    },
+    {
+      "segments": [
+        {
+          "scid": "mn1:171.1",
+          "pli": "Tathāgatopi, bhikkhave, arahaṃ sammāsambuddho pathaviṃ pathavito abhijānāti;",
+          "en": "The Realized One, the perfected one, the fully awakened Buddha directly knows earth as earth."
+        },
+        {
+          "scid": "mn1:171.2",
+          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
+          "en": "But he doesn’t conceive earth, he doesn’t conceive regarding earth, he doesn’t conceive as earth, he doesn’t conceive that ‘earth is mine’, he doesn’t take pleasure in earth."
+        },
+        {
+          "scid": "mn1:171.3",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:171.4",
+          "pli": "‘Nandī dukkhassa mūlan’ti—",
+          "en": "Because he has understood that relishing is the root of suffering,"
+        },
+        {
+          "scid": "mn1:171.5",
+          "pli": "iti viditvā ‘bhavā jāti bhūtassa jarāmaraṇan’ti.",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies."
+        },
+        {
+          "scid": "mn1:171.6",
+          "pli": "Tasmātiha, bhikkhave, ‘tathāgato sabbaso taṇhānaṃ khayā virāgā nirodhā cāgā paṭinissaggā anuttaraṃ sammāsambodhiṃ abhisambuddho’ti vadāmi.",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say."
+        },
+        {
+          "scid": "mn1:172-194.1.1",
+          "en": "He directly knows water as water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.1.2",
+          "en": "But he doesn’t conceive water, he doesn’t conceive regarding water, he doesn’t conceive as water, he doesn’t conceive that ‘water is mine’, he doesn’t take pleasure in water.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.1.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.1.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.1.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.1.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.2.1",
+          "en": "He directly knows fire as fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.2.2",
+          "en": "But he doesn’t conceive fire, he doesn’t conceive regarding fire, he doesn’t conceive as fire, he doesn’t conceive that ‘fire is mine’, he doesn’t take pleasure in fire.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.2.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.2.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.2.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.2.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.3.1",
+          "en": "He directly knows air as air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.3.2",
+          "en": "But he doesn’t conceive air, he doesn’t conceive regarding air, he doesn’t conceive as air, he doesn’t conceive that ‘air is mine’, he doesn’t take pleasure in air.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.3.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.3.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.3.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.3.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.4.1",
+          "en": "He directly knows creatures as creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.4.2",
+          "en": "But he doesn’t conceive creatures, he doesn’t conceive regarding creatures, he doesn’t conceive as creatures, he doesn’t conceive that ‘creatures is mine’, he doesn’t take pleasure in creatures.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.4.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.4.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.4.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.4.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.5.1",
+          "en": "He directly knows gods as gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.5.2",
+          "en": "But he doesn’t conceive gods, he doesn’t conceive regarding gods, he doesn’t conceive as gods, he doesn’t conceive that ‘gods is mine’, he doesn’t take pleasure in gods.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.5.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.5.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.5.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.5.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.6.1",
+          "en": "He directly knows the Creator as the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.6.2",
+          "en": "But he doesn’t conceive the Creator, he doesn’t conceive regarding the Creator, he doesn’t conceive as the Creator, he doesn’t conceive that ‘the Creator is mine’, he doesn’t take pleasure in the Creator.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.6.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.6.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.6.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.6.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.7.1",
+          "en": "He directly knows Brahmā as Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.7.2",
+          "en": "But he doesn’t conceive Brahmā, he doesn’t conceive regarding Brahmā, he doesn’t conceive as Brahmā, he doesn’t conceive that ‘Brahmā is mine’, he doesn’t take pleasure in Brahmā.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.7.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.7.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.7.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.7.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.8.1",
+          "en": "He directly knows the gods of streaming radiance as the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.8.2",
+          "en": "But he doesn’t conceive the gods of streaming radiance, he doesn’t conceive regarding the gods of streaming radiance, he doesn’t conceive as the gods of streaming radiance, he doesn’t conceive that ‘the gods of streaming radiance is mine’, he doesn’t take pleasure in the gods of streaming radiance.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.8.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.8.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.8.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.8.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.9.1",
+          "en": "He directly knows the gods replete with glory as the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.9.2",
+          "en": "But he doesn’t conceive the gods replete with glory, he doesn’t conceive regarding the gods replete with glory, he doesn’t conceive as the gods replete with glory, he doesn’t conceive that ‘the gods replete with glory is mine’, he doesn’t take pleasure in the gods replete with glory.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.9.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.9.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.9.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.9.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.10.1",
+          "en": "He directly knows the gods of abundant fruit as the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.10.2",
+          "en": "But he doesn’t conceive the gods of abundant fruit, he doesn’t conceive regarding the gods of abundant fruit, he doesn’t conceive as the gods of abundant fruit, he doesn’t conceive that ‘the gods of abundant fruit is mine’, he doesn’t take pleasure in the gods of abundant fruit.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.10.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.10.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.10.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.10.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.11.1",
+          "en": "He directly knows the Overlord as the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.11.2",
+          "en": "But he doesn’t conceive the Overlord, he doesn’t conceive regarding the Overlord, he doesn’t conceive as the Overlord, he doesn’t conceive that ‘the Overlord is mine’, he doesn’t take pleasure in the Overlord.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.11.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.11.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.11.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.11.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.12.1",
+          "en": "He directly knows the dimension of infinite space as the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.12.2",
+          "en": "But he doesn’t conceive the dimension of infinite space, he doesn’t conceive regarding the dimension of infinite space, he doesn’t conceive as the dimension of infinite space, he doesn’t conceive that ‘the dimension of infinite space is mine’, he doesn’t take pleasure in the dimension of infinite space.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.12.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.12.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.12.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.12.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.13.1",
+          "en": "He directly knows the dimension of infinite consciousness as the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.13.2",
+          "en": "But he doesn’t conceive the dimension of infinite consciousness, he doesn’t conceive regarding the dimension of infinite consciousness, he doesn’t conceive as the dimension of infinite consciousness, he doesn’t conceive that ‘the dimension of infinite consciousness is mine’, he doesn’t take pleasure in the dimension of infinite consciousness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.13.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.13.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.13.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.13.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.14.1",
+          "en": "He directly knows the dimension of nothingness as the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.14.2",
+          "en": "But he doesn’t conceive the dimension of nothingness, he doesn’t conceive regarding the dimension of nothingness, he doesn’t conceive as the dimension of nothingness, he doesn’t conceive that ‘the dimension of nothingness is mine’, he doesn’t take pleasure in the dimension of nothingness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.14.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.14.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.14.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.14.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.15.1",
+          "en": "He directly knows the dimension of neither perception nor non-perception as the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.15.2",
+          "en": "But he doesn’t conceive the dimension of neither perception nor non-perception, he doesn’t conceive regarding the dimension of neither perception nor non-perception, he doesn’t conceive as the dimension of neither perception nor non-perception, he doesn’t conceive that ‘the dimension of neither perception nor non-perception is mine’, he doesn’t take pleasure in the dimension of neither perception nor non-perception.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.15.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.15.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.15.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.15.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.16.1",
+          "en": "He directly knows the seen as the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.16.2",
+          "en": "But he doesn’t conceive the seen, he doesn’t conceive regarding the seen, he doesn’t conceive as the seen, he doesn’t conceive that ‘the seen is mine’, he doesn’t take pleasure in the seen.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.16.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.16.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.16.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.16.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.17.1",
+          "en": "He directly knows the heard as the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.17.2",
+          "en": "But he doesn’t conceive the heard, he doesn’t conceive regarding the heard, he doesn’t conceive as the heard, he doesn’t conceive that ‘the heard is mine’, he doesn’t take pleasure in the heard.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.17.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.17.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.17.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.17.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.18.1",
+          "en": "He directly knows the thought as the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.18.2",
+          "en": "But he doesn’t conceive the thought, he doesn’t conceive regarding the thought, he doesn’t conceive as the thought, he doesn’t conceive that ‘the thought is mine’, he doesn’t take pleasure in the thought.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.18.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.18.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.18.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.18.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.19.1",
+          "en": "He directly knows the cognized as the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.19.2",
+          "en": "But he doesn’t conceive the cognized, he doesn’t conceive regarding the cognized, he doesn’t conceive as the cognized, he doesn’t conceive that ‘the cognized is mine’, he doesn’t take pleasure in the cognized.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.19.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.19.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.19.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.19.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.20.1",
+          "en": "He directly knows oneness as oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.20.2",
+          "en": "But he doesn’t conceive oneness, he doesn’t conceive regarding oneness, he doesn’t conceive as oneness, he doesn’t conceive that ‘oneness is mine’, he doesn’t take pleasure in oneness.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.20.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.20.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.20.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.20.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.21.1",
+          "en": "He directly knows diversity as diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.21.2",
+          "en": "But he doesn’t conceive diversity, he doesn’t conceive regarding diversity, he doesn’t conceive as diversity, he doesn’t conceive that ‘diversity is mine’, he doesn’t take pleasure in diversity.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.21.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.21.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.21.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.21.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.22.1",
+          "en": "He directly knows all as all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.22.2",
+          "en": "But he doesn’t conceive all, he doesn’t conceive regarding all, he doesn’t conceive as all, he doesn’t conceive that ‘all is mine’, he doesn’t take pleasure in all.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.22.3",
+          "en": "Why is that?",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.22.4",
+          "en": "Because he has understood that relishing is the root of suffering,",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.22.5",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.22.6",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.",
+          "expanded": true
+        },
+        {
+          "scid": "mn1:172-194.23",
+          "pli": "nibbānaṃ nibbānato abhijānāti;",
+          "en": "He directly knows extinguishment as extinguishment."
+        },
+        {
+          "scid": "mn1:172-194.24",
+          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
+          "en": "But he doesn’t conceive extinguishment, he doesn’t conceive regarding extinguishment, he doesn’t conceive as extinguishment, he doesn’t conceive that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment."
+        },
+        {
+          "scid": "mn1:172-194.25",
+          "pli": "Taṃ kissa hetu?",
+          "en": "Why is that?"
+        },
+        {
+          "scid": "mn1:172-194.26",
+          "pli": "‘Nandī dukkhassa mūlan’ti—",
+          "en": "Because he has understood that relishing is the root of suffering,"
+        },
+        {
+          "scid": "mn1:172-194.27",
+          "pli": "iti viditvā ‘bhavā jāti bhūtassa jarāmaraṇan’ti.",
+          "en": "and that rebirth comes from continued existence; whoever has come to be gets old and dies."
+        },
+        {
+          "scid": "mn1:172-194.28",
+          "pli": "Tasmātiha, bhikkhave, ‘tathāgato sabbaso taṇhānaṃ khayā virāgā nirodhā cāgā paṭinissaggā anuttaraṃ sammāsambodhiṃ abhisambuddho’ti vadāmī”ti.",
+          "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.”"
+        },
+        {
+          "scid": "mn1:172-194.29",
+          "pli": "Tathāgatavasena aṭṭhamanayabhūmiparicchedo niṭṭhito.",
+          "en": ""
+        },
+        {
+          "scid": "mn1:172-194.30",
+          "pli": "Idamavoca bhagavā.",
+          "en": "That is what the Buddha said."
+        },
+        {
+          "scid": "mn1:172-194.31",
+          "pli": "Na te bhikkhū bhagavato bhāsitaṃ abhinandunti.",
+          "en": "But the mendicants were not happy with what the Buddha said."
+        },
+        {
+          "scid": "mn1:172-194.32",
+          "pli": "Mūlapariyāyasuttaṃ niṭṭhitaṃ paṭhamaṃ.",
+          "en": ""
+        }
+      ],
+      "type": "Section",
+      "prefix": "",
+      "values": [],
+      "template": [],
+      "expanded": true,
+      "prop": "en",
+      "title": "The Realized One…",
+      "expandable": false
+    }
+  ]
+}

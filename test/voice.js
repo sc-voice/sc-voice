@@ -58,7 +58,7 @@
         should(!!salli.ipa).equal(true);
         should(!!salli.ipa.pli).equal(true);
     });
-    it("createVoice(opts) returns voice for a language", function() {
+    it("TESTTESTcreateVoice(opts) returns voice for a language", function() {
         var voice = Voice.createVoice();
         should(voice).instanceOf(Voice);
         should(voice.language).equal("en-IN");
@@ -71,11 +71,13 @@
         should(amy.name).equal("Amy");
         should(amy.usage).equal("recite");
     });
-    it("createVoice(opts) creates a Voice instance", function() {
+    it("TESTTESTcreateVoice(opts) creates a recite Voice instance", function() {
         var reciteVoice = Voice.createVoice("en-IN");
         should(reciteVoice.services.navigate).instanceOf(Polly);
         should(reciteVoice.services.recite).instanceOf(Polly);
         should(reciteVoice.usage).equal('recite');
+        should(reciteVoice.usages).properties(["navigate", "recite", "review"]);
+        should(reciteVoice.usages.review).properties(['rate', 'breaks']);
         should.deepEqual(reciteVoice.services.navigate.prosody, {
             pitch: "-0%",
             rate: "+5%",
@@ -99,6 +101,41 @@
         should.deepEqual(reciteVoice.services.recite.prosody, {
             pitch: "-0%",
             rate: "-20%",
+        });
+    });
+    it("TESTTESTcreateVoice(opts) creates a review Voice instance", function() {
+        var reviewVoice = Voice.createVoice({
+            language: "en-IN", 
+            usage: 'review',
+        });
+        should(reviewVoice.usage).equal('review');
+        should(reviewVoice.usages).properties(["navigate", "recite", "review"]);
+        should(reviewVoice.usages.review).properties(['rate', 'breaks']);
+        should(reviewVoice.services.navigate).instanceOf(Polly);
+        should(reviewVoice.services.recite).instanceOf(Polly);
+        should(reviewVoice.services.review).instanceOf(Polly);
+        should.deepEqual(reviewVoice.services.navigate.prosody, {
+            pitch: "-0%",
+            rate: "+5%",
+        });
+        should.deepEqual(reviewVoice.services.recite.prosody, {
+            pitch: "-0%",
+            rate: "-20%",
+        });
+        should.deepEqual(reviewVoice.services.review.prosody, {
+            pitch: "-0%",
+            rate: "-5%",
+        });
+        should.deepEqual(reviewVoice.services.navigate.breaks, 
+            [0.001, 0.1, 0.2, 0.3, 0.4]);
+        should.deepEqual(reviewVoice.services.recite.breaks, 
+            [0.001, 0.1, 0.2, 0.6, 1]);
+        should.deepEqual(reviewVoice.services.review.breaks, 
+            [0.001, 0.1, 0.2, 0.4, 0.5]);
+
+        var navVoice = Voice.createVoice({
+            name: "Raveena",
+            usage: "navigate",
         });
     });
     it("speak([text],opts) returns sound file for array of text", function(done) {

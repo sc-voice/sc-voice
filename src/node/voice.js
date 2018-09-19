@@ -21,9 +21,10 @@
                 recite: Voice.RATE_SLOW,
             }
             this.gender = opts.gender || "female";
-            this.usage = opts.usage || "recite";
             this.ipa = opts.ipa || {};
             this.pitch = opts.pitch || "-0%";
+            this.usage = opts.usage || 'recite';
+            this.usages = opts.usages;
             Object.defineProperty(this, '_services', {
                 writable: true,
                 value: opts.services || null,
@@ -84,15 +85,18 @@
             if (this._services == null) {
                 var words = this.voiceWords();
                 this._services = {};
-                Object.keys(this.rates).forEach(key => {
+                Object.keys(this.usages).forEach(key => {
                     if (this.service === 'aws-polly') {
+                        var usage = this.usages[key];
                         this._services[key] = new Polly({
                             words,
                             language: this.language,
                             languageUnknown: this.languageUnknown,
                             voice: this.name,
+                            usage: key,
+                            breaks: usage.breaks,
                             prosody: {
-                                rate: this.rates[key],
+                                rate: usage.rate,
                                 pitch: this.pitch,
                             }
                         });
@@ -116,7 +120,8 @@
             var service = this.services[usage];
             if (service == null) {
                 var avail = Object.keys(this.services);
-                return Promise.reject(new Error(`Unsupported TTS service usage:${usage} available:${avail}`));
+                return Promise.reject(new Error(
+                    `Voice.speak() unsupported TTS service usage:${usage} available:${avail}`));
             }
             return new Promise((resolve, reject) => {
                 (async function() { try {

@@ -5,11 +5,13 @@
               <v-text-field placeholder="Enter sutta id" 
                   v-model="search" :change="onSearchChange()" v-on:keypress="onSearchKey($event)"
                   label = "Search" ></v-text-field>
-              <v-btn icon @click="onSearch()" class="scv-icon-btn" :style="cssProps"
+              <v-btn icon @click="onSearch()" v-if="searchButtons" 
+                class="scv-icon-btn" :style="cssProps"
                 aria-label="Search Suttas">
                 <v-icon>search</v-icon>
               </v-btn>
-              <v-btn icon @click="search=''" class="scv-icon-btn" :style="cssProps"
+              <v-btn icon @click="search=''" v-if="searchButtons" 
+                class="scv-icon-btn" :style="cssProps"
                 aria-label="Clear Search">
                 <v-icon>clear</v-icon>
               </v-btn>
@@ -55,7 +57,7 @@
                 </audio>
                 <button v-else :ref="`play${i}`" @click="playSection(i)" :disabled="waiting"
                     class="scv-text-button mt-4 mb-4" :style="cssProps">
-                    Play Section {{i}}
+                    Play Section {{i}} ({{voice.name}})
                 </button>
                 <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
             </div>
@@ -92,6 +94,10 @@ export default {
     name: 'Sutta',
     props: {
         msg: String,
+        voice: {
+            name: 'default voice',
+            value: 'recite',
+        },
         showId: {
             default: true,
         },
@@ -114,6 +120,7 @@ export default {
             language: 'en',
             translator: 'sujato',
             waiting: false,
+            searchButtons: false,
         }
         return that;
     },
@@ -133,7 +140,10 @@ export default {
             var language = this.language;
             var translator = this.translator;
             var g = Math.random();
-            var voice = this.voice === 'recite' ? 'recite' : 'review';
+            var voice = this.voice.value;
+            if (voice !== 'recite' && voice !== 'review' && voice !== 'navigate') {
+                voice = 'recite';
+            }
             var url = `./${voice}/section/${suttaId}/${language}/${translator}/${iSection}?g=${g}`;
             Vue.set(this, "waiting", true);
             this.$http.get(url).then(res => {

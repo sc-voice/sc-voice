@@ -22,7 +22,8 @@
             this.apiVersion = opts.apiVersion || null;
             this.audioSuffix = opts.audioSuffix || ".ogg";
             this.queue = new Queue(opts.maxConcurrentServiceCalls || 20, Infinity);
-            this.usages = opts.usages;
+            this.usage = opts.usage || "recite";
+            this.usages = opts.usages || {};
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
@@ -43,7 +44,8 @@
             this.prosody = opts.prosody || {
                 rate: "-10%",
             };
-            this.breaks = opts.breaks || [0.001,0.1,0.2,0.6,1];
+            var usage = this.usages[this.usage] || {};
+            this.breaks = opts.breaks || usage.breaks || [0.001,0.1,0.2,0.6,1];
             this.reNumber = /^[-+]?[0-9]+(\.[0-9]+)?$/;
             var vowels = this.words._ipa.vowels || "aeiou";
             this.reVowels1 = new RegExp(`^[${vowels}].*`, 'u');

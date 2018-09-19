@@ -28,7 +28,29 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /sutta/mn100/en/sujato returns sutta", function(done) {
+    it("TESTTESTGET /sutta/mn1/en/sujato returns sutta", function(done) {
+        var async = function* () { try {
+            var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato").expect((res) => {
+                res.statusCode.should.equal(200);
+                should(res.body).properties([
+                    "sections"
+                ]);
+                var sections = res.body.sections;
+                should(sections.length).equal(10);
+                should(sections[2].expandable).equal(false);
+                should(sections[2].expanded).equal(true);
+                should(sections[2].prefix).equal("");
+                should(sections[2].prop).equal("en");
+                should.deepEqual(sections[2].template, []);
+                should(sections[2].title).match(/.Take an uneducated.*/u);
+                should(sections[2].type).equal("Section");
+                should.deepEqual(sections[2].values, []);
+            }).end((e,r) => e ? async.throw(e) : async.next(r));
+            done();
+        } catch (e) { done(e); } }();
+        async.next();
+    });
+    it("TESTTESTGET /sutta/mn100/en/sujato returns sutta", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn100/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -39,6 +61,7 @@
                 should(sections.length).equal(2);
                 should.deepEqual(sections[0], {
                     expandable: false,
+                    expanded: false,
                     prefix: "",
                     prop: 'en',
                     template: [],
