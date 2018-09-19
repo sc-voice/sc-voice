@@ -1,6 +1,6 @@
 # sc-voice
 
-Javascript implemenation of SuttaCentral voice assistance for vision-impaired. Includes:
+Javascript implemenation of SuttaCentral Voice Assistance (SC-Voice) for vision-impaired. Includes:
 
 * TTS adapter for [Amazon AWS Polly Text-to-Speech](https://aws.amazon.com/polly/) 
 * TTS adapter for [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
@@ -41,6 +41,15 @@ do the following:
 1. _paste credentials_
 1. ENTER
 1. CTRL-D
+
+##### Service installation
+SC-Voice can be installed as a **systemd** service that will be launched at boot. On Ubuntu 16.04:
+
+```bash
+sudo ln -s /home/ubuntu/sc-voice/local/sc-voice.service /etc/systemd/system/sc-voice.service
+```
+
+Restart server to launch SC-Voice.
 
 ### Scripts
 
