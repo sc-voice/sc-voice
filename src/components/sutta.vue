@@ -43,7 +43,7 @@
             v-if="i>0">
             <summary class="subheading" >
                 Section {{i}} 
-                <div v-show="showId" class='scv-scid'>
+                <div v-if="scvOpts.showId" class='scv-scid'>
                     SC&nbsp;{{sect.segments[0].scid.split(":")[1]}}
                 </div> 
                 <i>{{sect.title}}</i>
@@ -74,7 +74,7 @@
               </v-btn>
             </div>
             <div v-for="(seg,j) in sect.segments" :key="seg+j" :class="segClass(seg)">
-                <div v-show="showId" class='scv-scid'>
+                <div v-show="scvOpts.showId" class='scv-scid'>
                     SC&nbsp;{{seg.scid.split(":")[1]}}
                 </div> 
                 {{seg.en}}
@@ -87,6 +87,7 @@
 <script>
 /* eslint no-console: 0*/
 import Vue from "vue";
+
 import SearchHelp from "./search-help";
 const MAX_SECTIONS = 100;
 
@@ -94,13 +95,6 @@ export default {
     name: 'Sutta',
     props: {
         msg: String,
-        voice: {
-            name: 'default voice',
-            value: 'recite',
-        },
-        showId: {
-            default: true,
-        },
     },
     data: function( ){
         var error = {
@@ -121,6 +115,7 @@ export default {
             translator: 'sujato',
             waiting: false,
             searchButtons: false,
+            scid: null,
         }
         return that;
     },
@@ -140,11 +135,11 @@ export default {
             var language = this.language;
             var translator = this.translator;
             var g = Math.random();
-            var voice = this.voice.value;
-            if (voice !== 'recite' && voice !== 'review' && voice !== 'navigate') {
-                voice = 'recite';
+            var vSvc = this.voice.value;
+            if (vSvc !== 'recite' && vSvc !== 'review' && vSvc !== 'navigate') {
+                vSvc = 'recite';
             }
-            var url = `./${voice}/section/${suttaId}/${language}/${translator}/${iSection}?g=${g}`;
+            var url = `./${vSvc}/section/${suttaId}/${language}/${translator}/${iSection}?g=${g}`;
             Vue.set(this, "waiting", true);
             this.$http.get(url).then(res => {
                 Vue.set(this.audioGuids, iSection, res.data.guid);
@@ -167,6 +162,25 @@ export default {
         },
         onSearchChange() {
             console.log(`searchChanged search:${this.search}`);
+        },
+        showSutta(scid) {
+            var url = `./sutta/${scid}/en/sujato`;
+            Object.keys(this.error).forEach(key => {
+                Vue.set(this.error, key, null);
+            });
+            this.$http.get(url).then(res => {
+                this.clear();
+                this.sections = res.data.sections;
+            }).catch(e => {
+                var data = e.response && e.response.data && e.response.data.error 
+                    || `Not found.`;
+                this.error.search = {
+                    http: e.message,
+                    data,
+                };
+                console.error(e.stack, data);
+            });
+
         },
         onSearch() {
             var search = this.search.trim();
@@ -194,13 +208,28 @@ export default {
         },
     },
     computed: {
+        voice() {
+            return this.scvOpts.voices[this.scvOpts.iVoice];
+        },
+        scvOpts() {
+            return this.$root.$data;
+        },
         cssProps() {
             return {
                 '--accent-color': this.$vuetify.theme.accent,
             }
         },
     },
-    created() {
+    mounted() {
+        this.$nextTick(() => {
+            var query = this.$route.query;
+            if (query) {
+                if (query.scid != null) {
+                    Vue.set(this, 'search', query.scid);
+                    this.showSutta(query.scid);
+                }
+            }
+        });
     },
 
     components: {

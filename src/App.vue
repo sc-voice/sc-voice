@@ -14,10 +14,10 @@
     <v-dialog v-model="dialogSettings" fullscreen persistent>
         <v-card>
           <v-card-title class="title scv-dialog-title">
-              Settings {{version}}
+              Settings&nbsp;&nbsp;<span class="scv-version">v{{version}}</span>
               <v-spacer/>
               <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
-                aria-label="Close"
+                aria-label="Close Settings"
                 @click="dialogSettings = false"
                 >
                 <v-icon>close</v-icon>
@@ -27,7 +27,9 @@
             <details class="scv-dialog" >
                 <summary class="subheading">Content settings</summary>
                 <div class="scv-settings">
-                    <v-checkbox v-model="showId" role="checkbox" :aria-checked="showId"
+                    <v-checkbox v-if="scvOpts" 
+                        v-model="scvOpts.showId" role="checkbox" 
+                        :aria-checked="scvOpts.showId"
                         label="Show SuttaCentral text segment identifiers">
                     </v-checkbox>
                 </div>
@@ -35,8 +37,8 @@
             <details class="scv-dialog" >
                 <summary class="subheading">Voice settings</summary>
                 <div class="scv-settings">
-                    <v-radio-group v-model="voice" column>
-                       <v-radio v-for="(v,i) in voices" 
+                    <v-radio-group v-model="scvOpts.iVoice" column>
+                       <v-radio v-for="(v,i) in scvOpts.voices" 
                          :label="v.label" :value="i" :key="`voice${v.value}`">
                          </v-radio>
                     </v-radio-group>
@@ -46,7 +48,7 @@
           <v-card-actions>
             <button class="scv-dialog-button" :style="cssProps"
                 @click="dialogSettings=false" >
-                Close </button>
+                Close Settings</button>
           </v-card-actions>
         </v-card>
     </v-dialog>
@@ -56,7 +58,7 @@
             </div>
         </transition>
         <v-content class="">
-          <Sutta :showId="showId" :voice="voices[voice]" />
+          <Sutta />
         </v-content>
     </div>
   </v-app>
@@ -65,6 +67,7 @@
 <script>
 import Vue from "vue";
 import Sutta from './components/sutta';
+import scvPackage from '../package';
 
 export default {
     name: 'App',
@@ -79,7 +82,6 @@ export default {
             },
             identity: {
             },
-            showId: false,
             items: [{
                 title:'red',
             },{
@@ -89,16 +91,6 @@ export default {
             }],
             title: 'SuttaCentral Voice Assistant',
             bgShow: false,
-            voice: 0,
-            voices: [{
-                name: 'Amy',
-                value: 'recite',
-                label: 'Amy for meditation and contemplation',
-            },{
-                name: 'Raveena',
-                value: 'review',
-                label: 'Raveena for review and study',
-            }],
         }
     },
     methods: {
@@ -110,27 +102,35 @@ export default {
         },
     },
     computed: {
+        voice() {
+            return this.scvOpts.voices[this.scvOpts.iVoice];
+        },
+        scvOpts() {
+            return this.$root && this.$root.$data;
+        },
         cssProps() {
             return {
                 '--accent-color': this.$vuetify.theme.accent,
             };
         },
-        version() {
-            return `v${this.identity.version}`;
-        },
+    },
+    mounted() {
+        this.$nextTick(() => {
+            console.log('App mounted');
+            var query = this.$route.query;
+            if (query) {
+                query.iv && Vue.set(this.scvOpts, "iVoice", Number(query.iv));
+                query.showId != null && 
+                    Vue.set(this.scvOpts, "showId", query.showId==='true');
+            }
+        });
     },
     created() {
         var that = this;
         setTimeout(() => {
             this.bgShow = true; // trigger CSS transition
         }, 1000);
-        this.$http.get('./identity').then(res => {
-            Vue.set(that, "identity", res.data);
-            console.log(that.identity);
-        }).catch(e=>{
-            console.error(e.stack);
-        });
-
+        this.version = scvPackage.version;
     }
 }
 </script>
@@ -161,6 +161,10 @@ details.scv-dialog {
     position: relative;
     height: 100%;
     width: 100%;
+}
+.scv-version {
+    padding-top: 0.6em;
+    font-size: small;
 }
 .scv-background {
     position: absolute;
