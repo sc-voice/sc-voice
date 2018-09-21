@@ -150,7 +150,7 @@
             }
             var majorIdValue = majorIdLang[majorId];
             if (majorIdValue == null) {
-                throw new Error(`Sutta not found:${majorId}`);
+                throw new Error(`Sutta not found: ${id}`);
             }
             var folder = MAJOR_IDS[lang] && MAJOR_IDS[lang][majorId];
             var zeros = 0;
@@ -237,11 +237,14 @@
             });
         }
 
-        parse(filePath, opts) {
-            if (!fs.existsSync(filePath)) {
-                return Promise.reject(new Error(`file not found:${filePath}`));
+        parse(filepath, opts) {
+            if (!fs.existsSync(filepath)) {
+                var tokens = filepath.split('/sc/');
+                var e = new Error(`file not found: ${Words.U_ELLIPSIS}/${tokens[tokens.length-1]}`)
+                console.error(`file not found:${filepath}`);
+                return Promise.reject(e);
             }
-            var lines = fs.readFileSync(filePath).toString().split('\n');
+            var lines = fs.readFileSync(filepath).toString().split('\n');
             return this.parseLines(lines, opts);
         }
 

@@ -189,7 +189,7 @@ export default {
             }
         },
         errorSummary() {
-            return `Error: ${this.search} ${this.error.search.data}`;
+            return `Error: ${this.error.search.data}`;
         },
     },
     mounted() {
