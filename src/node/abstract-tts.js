@@ -21,7 +21,7 @@
             this.api = opts.api || null;
             this.apiVersion = opts.apiVersion || null;
             this.audioSuffix = opts.audioSuffix || ".ogg";
-            this.queue = new Queue(opts.maxConcurrentServiceCalls || 20, Infinity);
+            this.queue = new Queue(opts.maxConcurrentServiceCalls || 10, Infinity);
             this.usage = opts.usage || "recite";
             this.usages = opts.usages || {};
             this.mj = new MerkleJson({
