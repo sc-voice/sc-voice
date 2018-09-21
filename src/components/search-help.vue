@@ -11,17 +11,23 @@
                     <i>dn2</i>, 
                     <i>sn39.1-15</i>
                 </li>
-                <li>Search for suttas with keywords 
+                <li>Leave SuttaCentral Voice Assistant and continue search 
+                    at&nbsp;<a :href="searchSuttaCentral()">SuttaCentral.net</a>
+                </li>
+                <li class="scv-not-implemented">
+                    Search for suttas with keywords 
                     such as <i>root of suffering</i>
-                    <span class="caption">NOT IMPLEMENTED</span>
+                    &nbsp;<span class="caption">NOT IMPLEMENTED</span>
                 </li>
-                <li>Search for suttas exactly matching quoted text 
+                <li class="scv-not-implemented">
+                    Search for suttas exactly matching quoted text 
                     such as "Root of All Things"
-                    <span class="caption">NOT IMPLEMENTED</span>
+                    &nbsp;<span class="caption">NOT IMPLEMENTED</span>
                 </li>
-                <li>Search for suttas with English or romanized Pali title such as
+                <li class="scv-not-implemented">
+                    Search for suttas with English or romanized Pali title such as
                     <i>root of all things</i> or <i>mulapariyaya</i>
-                    <span class="caption">NOT IMPLEMENTED</span>
+                    &nbsp;<span class="caption">NOT IMPLEMENTED</span>
                 </li>
             </ul>
         </div>
@@ -41,6 +47,11 @@ export default {
             default: 'Help',
         },
     },
+    methods: {
+        searchSuttaCentral() {
+            return `https://suttacentral.net/search?query=${this.$root.$data.scid}`;
+        },
+    },
 }
 </script>
 
@@ -55,5 +66,8 @@ button {
 .scv-help-title {
     font-weight: 900;
     margin-top: 0.5em;
+}
+.scv-not-implemented {
+    color: #888;
 }
 </style>
