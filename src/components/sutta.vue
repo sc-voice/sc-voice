@@ -3,36 +3,25 @@
       <v-layout column align-left >
           <div class="scv-search-row">
               <v-text-field placeholder="Enter sutta id" 
-                  v-model="search" :change="onSearchChange()" v-on:keypress="onSearchKey($event)"
+                  v-model="search" v-on:keypress="onSearchKey($event)"
                   label = "Search" ></v-text-field>
-              <v-btn icon @click="onSearch()" v-if="searchButtons" 
-                class="scv-icon-btn" :style="cssProps"
-                aria-label="Search Suttas">
-                <v-icon>search</v-icon>
-              </v-btn>
-              <v-btn icon @click="search=''" v-if="searchButtons" 
-                class="scv-icon-btn" :style="cssProps"
-                aria-label="Clear Search">
-                <v-icon>clear</v-icon>
-              </v-btn>
           </div>
           <div v-if="error.search" class="scv-error" >
-              <div>
-                <div class="title">{{this.search}}</div>
-                <div>{{error.search.data}}</div>
-                <search-help :httpError="error.search.http" />
-              </div>
+              <search-help autofocus :title="errorSummary" :httpError="error.search.http" />
               <v-btn icon @click="error.search=null" class="scv-icon-btn" :style="cssProps"
                 aria-label="Dismiss Error">
                 <v-icon>clear</v-icon>
               </v-btn>
           </div>
-          <details v-if="sections && sections[0]" class="scv-header">
+          <details autofocus v-if="sections && sections[0]" class="scv-header">
             <summary class="subheading scv-header-summary" >
                 <span v-for="(seg,i) in sections[0].segments" :key="`hs-seg${i}`" class="title">
                     {{seg.en}}<span v-if="i<sections[0].segments.length-1">&mdash;</span>
                 </span>
             </summary>
+            <a :href="`https://suttacentral.net/search?query=${search}`">
+                Search SuttaCentral for {{search}}
+            </a>
             <div class="scv-header-body" dark>
                 {{sections[0].segments[0].pli}}
                 {{sections[0].segments[1].pli}}
@@ -49,7 +38,7 @@
                 <i>{{sect.title}}</i>
             </summary>
             <div class="scv-play-controls">
-                <audio v-if="audioGuids[i]" controls class="ml-4 mt-1" 
+                <audio v-if="audioGuids[i]" autoplay controls class="ml-4 mt-1" 
                     preload=auto
                     :aria-label="`play section ${i}`">
                     <source :src="`./audio/${audioGuids[i]}`" type="audio/mp3"/>
@@ -106,8 +95,8 @@ export default {
             audioGuids[i] = null;
         }
         var that = {
-            search: null,
             error,
+            search: '',
             audioGuids,
             sections: null,
             suttaId: null,
@@ -115,7 +104,6 @@ export default {
             translator: 'sujato',
             waiting: false,
             searchButtons: false,
-            scid: null,
         }
         return that;
     },
@@ -157,11 +145,8 @@ export default {
         },
         onSearchKey(event) {
             if (event.key === "Enter") {
-                this.onSearch();
+                this.search && this.onSearch();
             }
-        },
-        onSearchChange() {
-            console.log(`searchChanged search:${this.search}`);
         },
         showSutta(scid) {
             var url = `./sutta/${scid}/en/sujato`;
@@ -184,24 +169,23 @@ export default {
         },
         onSearch() {
             var search = this.search.trim();
-            console.debug("search", search);
-            var url = `./sutta/${search}/en/sujato`;
-            Object.keys(this.error).forEach(key => {
-                Vue.set(this.error, key, null);
+            var hash = Object.keys(this.scvOpts).reduce((acc,key) => {
+                if (acc == null) {
+                    acc = `#/?scid=${search}&`;
+                } else {
+                    acc = acc + '&';
+                }
+                acc += `${key}=${this.scvOpts[key]}`;
+                return acc;
+            }, null);
+            var loc = window.location;
+            var url = `${loc.protocol}//${loc.host}${loc.pathname}${hash}`;
+            this.$nextTick(() => {
+                loc.assign(url);
+                loc.reload();
             });
-            this.$http.get(url).then(res => {
-                this.clear();
-                this.sections = res.data.sections;
-            }).catch(e => {
-                var data = e.response && e.response.data && e.response.data.error 
-                    || `Not found.`;
-                this.error.search = {
-                    http: e.message,
-                    data,
-                };
-                console.error(e.stack, data);
-            });
-
+            console.debug("navigate to", url);
+            return;
         },
         segClass(seg) {
             return seg.expanded ? "scv-para scv-para-expanded" : "scv-para";
@@ -218,6 +202,9 @@ export default {
             return {
                 '--accent-color': this.$vuetify.theme.accent,
             }
+        },
+        errorSummary() {
+            return `Error: ${this.search} ${this.error.search.data}`;
         },
     },
     mounted() {

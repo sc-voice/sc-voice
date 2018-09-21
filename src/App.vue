@@ -4,7 +4,7 @@
       <img src="/favicon.png" height=30px/>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+      <v-btn tabindex=-1 id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
         aria-label="Settings"
         @click="dialogSettings = !dialogSettings"
         >
@@ -61,6 +61,16 @@
           <Sutta />
         </v-content>
     </div>
+    <v-footer>
+      <div class="pl-2">{{scvOpts.title}}</div>
+      <v-spacer/>
+      <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+        aria-label="Settings"
+        @click="dialogSettings = !dialogSettings"
+        >
+        <v-icon>settings</v-icon>
+      </v-btn>
+    </v-footer>
   </v-app>
 </template>
 
@@ -122,6 +132,7 @@ export default {
                 query.iv && Vue.set(this.scvOpts, "iVoice", Number(query.iv));
                 query.showId != null && 
                     Vue.set(this.scvOpts, "showId", query.showId==='true');
+                query.scid && Vue.set(this.scvOpts, "title", query.scid);
             }
         });
     },

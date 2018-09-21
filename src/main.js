@@ -20,8 +20,14 @@ const DEFAULT_VOICES = [{
 const scvOptions = {
     showId: false,
     iVoice: 0,
-    voices: DEFAULT_VOICES,
 };
+Object.defineProperty(scvOptions, "voices", {
+    value: DEFAULT_VOICES,
+});
+Object.defineProperty(scvOptions, "title", {
+    writable: true,
+    value: "no title",
+});
 
 Vue.config.productionTip = false
 

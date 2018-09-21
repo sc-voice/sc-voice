@@ -28,7 +28,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /sutta/mn1/en/sujato returns sutta", function(done) {
+    it("GET /sutta/mn1/en/sujato returns sutta", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -50,7 +50,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /sutta/mn100/en/sujato returns sutta", function(done) {
+    it("GET /sutta/mn100/en/sujato returns sutta", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn100/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
