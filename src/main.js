@@ -20,7 +20,27 @@ const DEFAULT_VOICES = [{
 const scvOptions = {
     showId: false,
     iVoice: 0,
+    scid: null,
 };
+Object.defineProperty(scvOptions, 'reload', {
+    value: () => {
+        var hash = Object.keys(scvOptions).reduce((acc,key) => {
+            if (acc == null) {
+                acc = `#/?`;
+            } else {
+                acc = acc + '&';
+            }
+            acc += `${key}=${scvOptions[key]}`;
+            return acc;
+        }, null);
+        var loc = window.location;
+        var url = `${loc.protocol}//${loc.host}${loc.pathname}${hash}`;
+        loc.assign(url);
+        loc.reload();
+        console.debug("navigate to", url);
+        return;
+    }
+});
 Object.defineProperty(scvOptions, "voices", {
     value: DEFAULT_VOICES,
 });

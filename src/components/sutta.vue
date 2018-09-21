@@ -169,23 +169,8 @@ export default {
         },
         onSearch() {
             var search = this.search.trim();
-            var hash = Object.keys(this.scvOpts).reduce((acc,key) => {
-                if (acc == null) {
-                    acc = `#/?scid=${search}&`;
-                } else {
-                    acc = acc + '&';
-                }
-                acc += `${key}=${this.scvOpts[key]}`;
-                return acc;
-            }, null);
-            var loc = window.location;
-            var url = `${loc.protocol}//${loc.host}${loc.pathname}${hash}`;
-            this.$nextTick(() => {
-                loc.assign(url);
-                loc.reload();
-            });
-            console.debug("navigate to", url);
-            return;
+            this.scvOpts.scid = search;
+            this.scvOpts.reload();
         },
         segClass(seg) {
             return seg.expanded ? "scv-para scv-para-expanded" : "scv-para";

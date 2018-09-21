@@ -47,7 +47,7 @@
           </v-card-text>
           <v-card-actions>
             <button class="scv-dialog-button" :style="cssProps"
-                @click="dialogSettings=false" >
+                @click="closeDialog()" >
                 Close Settings</button>
           </v-card-actions>
         </v-card>
@@ -62,7 +62,7 @@
         </v-content>
     </div>
     <v-footer>
-      <div class="pl-2">{{scvOpts.title}}</div>
+      <div class="pl-2">{{scvOpts.scid}}</div>
       <v-spacer/>
       <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
         aria-label="Settings"
@@ -110,6 +110,9 @@ export default {
         onblur(id) {
             this.focused[id] = false;
         },
+        closeDialog() {
+            this.scvOpts.reload();
+        },
     },
     computed: {
         voice() {
@@ -129,10 +132,10 @@ export default {
             console.log('App mounted');
             var query = this.$route.query;
             if (query) {
-                query.iv && Vue.set(this.scvOpts, "iVoice", Number(query.iv));
+                query.iVoice && Vue.set(this.scvOpts, "iVoice", Number(query.iVoice));
                 query.showId != null && 
                     Vue.set(this.scvOpts, "showId", query.showId==='true');
-                query.scid && Vue.set(this.scvOpts, "title", query.scid);
+                query.scid && Vue.set(this.scvOpts, "scid", query.scid);
             }
         });
     },
