@@ -61,7 +61,7 @@
           <Sutta />
         </v-content>
     </div>
-    <v-footer>
+    <v-footer fixed>
       <div class="pl-2">{{scvOpts.scid}}</div>
       <v-spacer/>
       <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
