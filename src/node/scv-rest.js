@@ -69,6 +69,8 @@
                 var root = path.join(PATH_SOUNDS, guid.substring(0,2));
                 var filePath = path.join(root, `${guid}${this.audioSuffix}`);
                 var data = fs.readFileSync(filePath);
+                res.set('accept-ranges', 'bytes');
+                res.set('do_stream', 'true');
                 resolve(data);
             } catch (e) { reject(e) } });
         }
