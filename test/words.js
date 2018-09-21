@@ -52,7 +52,7 @@
         should(words.isWord('123')).equal(false);
         should(words.isWord('1.23')).equal(false);
     });
-    it("TESTTESTisForeignWord(token) return true if token is a word in foreign alphabet", function() {
+    it("isForeignWord(token) return true if token is a word in foreign alphabet", function() {
         var words = new Words();
         // punctuation
         should(words.isForeignWord('!')).equal(false);

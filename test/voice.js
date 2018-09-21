@@ -58,7 +58,7 @@
         should(!!salli.ipa).equal(true);
         should(!!salli.ipa.pli).equal(true);
     });
-    it("TESTTESTcreateVoice(opts) returns voice for a language", function() {
+    it("createVoice(opts) returns voice for a language", function() {
         var voice = Voice.createVoice();
         should(voice).instanceOf(Voice);
         should(voice.language).equal("en-IN");
@@ -71,7 +71,7 @@
         should(amy.name).equal("Amy");
         should(amy.usage).equal("recite");
     });
-    it("TESTTESTcreateVoice(opts) creates a recite Voice instance", function() {
+    it("createVoice(opts) creates a recite Voice instance", function() {
         var reciteVoice = Voice.createVoice("en-IN");
         should(reciteVoice.services.navigate).instanceOf(Polly);
         should(reciteVoice.services.recite).instanceOf(Polly);
@@ -103,7 +103,7 @@
             rate: "-20%",
         });
     });
-    it("TESTTESTcreateVoice(opts) creates a review Voice instance", function() {
+    it("createVoice(opts) creates a review Voice instance", function() {
         var reviewVoice = Voice.createVoice({
             language: "en-IN", 
             usage: 'review',
@@ -183,7 +183,7 @@
         should(amy.services.navigate.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
     });
-    it("TESTTESTplaceholder words are expanded with voice ipa", function() {
+    it("placeholder words are expanded with voice ipa", function() {
         var raveena = Voice.createVoice("raveena");
         should(raveena).properties({
             name: "Raveena",

@@ -105,7 +105,7 @@
         } catch(e) {done(e)} })();
 
     });
-    it("TESTTESTsuttaPath(id, root, opts) returns sutta file path", function() {
+    it("suttaPath(id, root, opts) returns sutta file path", function() {
         should(PoParser.suttaPath('mn1')).equal(path.join(SC, 'mn', 'en', 'mn001.po'));
         should(PoParser.suttaPath('MN123:1.1')).equal(path.join(SC, 'mn', 'en', 'mn123.po'));
 
