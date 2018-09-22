@@ -1,12 +1,23 @@
 (function(exports) {
     const http = require('http');
-    const DEFAULT_LANGUAGE = 'en';
-    const DEFAULT_TRANSLATOR = 'sujato';
+    const winston = require('winston');
+    const Words = require('./words');
 
     class SCRest {
         constructor(opts={}) {
-            this.language = opts.language || DEFAULT_LANGUAGE;
+            this.language = opts.language;
             this.translator = opts.translator;
+        }
+
+        linesFromHtml(html) {
+            html = html.replace(/(.*\n)*<body>\n*/um, '');
+            html = html.replace(/<\/body>(\n.*)*/um, '');
+            html = html.replace(/<br>\n/gum, ' ');
+            html = html.replace(/<aside(.*\n?)*<\/aside>/gum, ' ');
+            html = html.replace(/<\/p>\n/gum, '');
+            var lines = html.split('\n');
+            return lines;
+            return lines.map(l => Words.utf16(l));
         }
 
         getSutta(opts={}, ...args) {
@@ -29,6 +40,8 @@
                     request += `/${translator}`;
                 }
                 request += `?lang=${language}`;
+                console.debug(request);
+                winston.info(request);
 
                 var req = http.get(request, res => {
                     const { statusCode } = res;
@@ -53,9 +66,18 @@
                     res.on('data', (chunk) => { rawData += chunk; });
                     res.on('end', () => {
                         try {
-                            var parsedData = JSON.parse(rawData);
-                            parsedData.ip = opts.host;
-                            resolve(parsedData);
+                            var result = JSON.parse(rawData);
+                            var suttaplex = result.suttaplex;
+                            var translations = suttaplex && suttaplex.translations;
+                            if (translations && language) {
+                                suttaplex.translations = translations.filter(t => t.lang === language);
+                            }
+                            var translation = result.translation;
+                            if (translation && translation.text) {
+                                translation.lines = this.linesFromHtml(translation.text);
+                            }
+                            result.request = request;
+                            resolve(result);
                         } catch (e) {
                             reject(e);
                         }
