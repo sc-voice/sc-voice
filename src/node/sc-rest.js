@@ -9,15 +9,27 @@
             this.translator = opts.translator;
         }
 
-        linesFromHtml(html) {
-            html = html.replace(/(.*\n)*<body>\n*/um, '');
-            html = html.replace(/<\/body>(\n.*)*/um, '');
+        segmentsFromHtmlResult(json) {
+            var translation = json.translation;
+            var html = translation.text;
+            html = html.replace(/(.*\n)*<blockquote[^>]*>\n*/um, '');
+            html = html.replace(/<\/blockquote>(\n.*)*/um, '');
             html = html.replace(/<br>\n/gum, ' ');
             html = html.replace(/<aside(.*\n?)*<\/aside>/gum, ' ');
-            html = html.replace(/<\/p>\n/gum, '');
+            html = html.replace(/<\/p>/gum, '');
+            html = html.replace(/\n( *\n)*/gum, '\n');
+            html = html.replace(/\n*$/gum, '');
             var lines = html.split('\n');
-            return lines;
-            return lines.map(l => Words.utf16(l));
+            var suttaplex = json.suttaplex;
+            var segments = lines.map(line => {
+                var tokens = line.split('</a>');
+                var scid = tokens[0].replace(/.*sc/u,`${suttaplex.uid}:`).replace(/".*/u,'');
+                return {
+                    scid,
+                    [translation.lang]: tokens[2],
+                }
+            });
+            return segments;
         }
 
         getSutta(opts={}, ...args) {
@@ -74,7 +86,7 @@
                             }
                             var translation = result.translation;
                             if (translation && translation.text) {
-                                translation.lines = this.linesFromHtml(translation.text);
+                                translation.lines = this.segmentsFromHtmlResult(result);
                             }
                             result.request = request;
                             resolve(result);
