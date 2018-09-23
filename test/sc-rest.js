@@ -35,12 +35,12 @@
         title: 'Loving-kindness',
     }];
 
-    it("TESTTESTgetSutta(opts) returns list of english translations for Snp1.8", function(done) {
+    it("TESTTESTloadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         (async function() { try {
             var scr = new SCRest();
             var scid = 'snp1.8';
             var language = 'en';
-            var result = await scr.getSutta('snp1.8','en');
+            var result = await scr.loadSutta('snp1.8','en');
             var suttaplex = result.suttaplex;
             should(suttaplex).properties(SUTTAPLEX_SNP1_8);
             var translations = suttaplex.translations;
@@ -49,12 +49,16 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTgetSutta(opts) returns english translations for Snp1.8", function(done) {
+    it("TESTTESTloadSutta(opts) returns english translations for Snp1.8", function(done) {
         (async function() { try {
             var scr = new SCRest();
             var scid = 'snp1.8';
             var language = 'en';
-            var result = await scr.getSutta('snp1.8','en', 'mills');
+            var result = await scr.loadSutta({
+                scid:'snp1.8',
+                language: 'en', 
+                translator: 'mills'
+            });
             var suttaplex = result.suttaplex;
             should(suttaplex).properties(SUTTAPLEX_SNP1_8);
             var translations = suttaplex.translations;
@@ -66,8 +70,10 @@
             should(translation.author_uid).equal( 'mills');
             should(translation.author_short).equal( 'Mills');
             should(translation.author).equal( 'Laurence Khantipalo Mills');
-            var lines = translation.lines;
-            console.log(lines, lines.length);
+            var segments = result.segments;
+            should(segments.length).equal(10);
+            console.log(segments, segments.length);
+            should(result.metaarea).match(/<p>This translation[^]*No rights reserved.[^]*/um);
             done();
         } catch(e) {done(e);} })();
     });

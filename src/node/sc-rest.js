@@ -9,18 +9,30 @@
             this.translator = opts.translator;
         }
 
-        segmentsFromHtmlResult(json) {
-            var translation = json.translation;
+        suttaFromApiText(apiJson) {
+            var translation = apiJson.translation;
             var html = translation.text;
+            var resultAside = (/<aside/um).exec(html);
+            if (resultAside) {
+                let start = html.indexOf('>', resultAside.index)+1;
+                let end = html.indexOf('</aside', start);
+                var metaarea = html.substring(start, end);
+                let reAside = new RegExp('<aside[^]*</aside>', 'gum');
+                console.log(`aside start:${start} end:${end} reAside:${reAside}`);
+                html = html.replace(reAside, '');
+                console.log(`metaarea`, metaarea);
+            } else {
+                var metaArea = '';
+                console.log('no aside');
+            }
             html = html.replace(/(.*\n)*<blockquote[^>]*>\n*/um, '');
-            html = html.replace(/<\/blockquote>(\n.*)*/um, '');
+            html = html.replace(/<\/blockquote>[^]*/um, '');
             html = html.replace(/<br>\n/gum, ' ');
-            html = html.replace(/<aside(.*\n?)*<\/aside>/gum, ' ');
             html = html.replace(/<\/p>/gum, '');
             html = html.replace(/\n( *\n)*/gum, '\n');
             html = html.replace(/\n*$/gum, '');
             var lines = html.split('\n');
-            var suttaplex = json.suttaplex;
+            var suttaplex = apiJson.suttaplex;
             var segments = lines.map(line => {
                 var tokens = line.split('</a>');
                 var scid = tokens[0].replace(/.*sc/u,`${suttaplex.uid}:`).replace(/".*/u,'');
@@ -29,10 +41,13 @@
                     [translation.lang]: tokens[2],
                 }
             });
-            return segments;
+            return Object.assign({
+                metaarea,
+                segments,
+            }, apiJson);
         }
 
-        getSutta(opts={}, ...args) {
+        loadSutta(opts={}, ...args) {
             return new Promise((resolve, reject) => {
                 if (typeof opts === 'string') {
                     opts = {
@@ -86,7 +101,7 @@
                             }
                             var translation = result.translation;
                             if (translation && translation.text) {
-                                translation.lines = this.segmentsFromHtmlResult(result);
+                                result = this.suttaFromApiText(result);
                             }
                             result.request = request;
                             resolve(result);
