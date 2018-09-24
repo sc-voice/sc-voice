@@ -6,6 +6,8 @@
     const Words = require('./words');
     const Sutta = require('./sutta');
     const EXPANSION_PATH = path.join(__dirname, '..', '..', 'local', 'expansion.json');
+    const DEFAULT_LANGUAGE = 'en';
+    const DEFAULT_TRANSLATOR = 'sujato-walton';
     var expansion = [{}];
 
     class SuttaCentralApi {
@@ -142,8 +144,8 @@
                 if (typeof opts === 'string') {
                     opts = {
                         scid: opts,
-                        language: args[0],
-                        translator: args[1],
+                        language: args[0] || DEFAULT_LANGUAGE,
+                        translator: args[1] || DEFAULT_TRANSLATOR,
                     };
                 }
                 var scid = opts.scid;
@@ -186,7 +188,6 @@
                                 segObj[scid][language] = text;
                             });
                             var segments = Object.keys(segObj).map(scid => segObj[scid]);
-                            console.log(segments.slice(0,3));
                             resolve(new Sutta({
                                 segments,
                             }));

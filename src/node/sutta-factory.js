@@ -3,6 +3,7 @@
     const path = require('path');
     const Words = require('./words');
     const Sutta = require('./sutta');
+    const SuttaCentralApi = require('./sutta-central-api');
     const Section = require('./section');
     const SectionParser = require('./section-parser');
     const PoParser = require('./po-parser');
@@ -17,17 +18,35 @@
             this.type = this.constructor.name;
             this.prop = opts.prop || OPTS_EN.prop;
             this.reHeader = opts.reHeader || Sutta.RE_HEADER;
+            this.scapi = new SuttaCentralApi(opts);
         }
 
         static loadSutta(opts={}) {
-            return new SuttaFactory(opts).loadSutta(opts);
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var sf = await new SuttaFactory(opts).initialize();
+                    var sutta = await sf.loadSutta(opts);
+                    resolve(sutta);
+                } catch(e) {reject(e);} })();
+            });
         }
 
         static loadSuttaPootl(opts={}) {
             return new SuttaFactory(opts).loadSuttaPootl(opts);
         }
 
+        initialize() {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var scapi = await that.scapi.initialize();
+                    resolve(that);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
         loadSutta(opts={}) {
+            //TODOreturn this.scapi.loadSutta(opts);
             return this.loadSuttaPootl(opts);
         }
 
