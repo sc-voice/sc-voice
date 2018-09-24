@@ -81,6 +81,38 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTloadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
+    done(); return;//TODO
+        (async function() { try {
+            var scr = await new SuttaCentralApi().initialize();
+            var scid = 'snp2.12';
+            var language = 'en';
+            var result = await scr.loadSutta({
+                scid:'snp1.8',
+                language: 'en', 
+                translator: 'mills'
+            });
+            var suttaplex = result.suttaplex;
+            should(suttaplex).properties(SUTTAPLEX_SNP1_8);
+            var translations = suttaplex.translations;
+            should(translations).instanceOf(Array);
+            should.deepEqual(translations, TRANSLATIONS_SNP1_8);
+            var translation = result.translation;
+            should(translation.uid).equal( 'snp1.8');
+            should(translation.lang).equal( 'en');
+            should(translation.author_uid).equal( 'mills');
+            should(translation.author_short).equal( 'Mills');
+            should(translation.author).equal( 'Laurence Khantipalo Mills');
+            var segments = result.segments;
+            should(segments.length).equal(10);
+            should(segments[0].scid).match(/snp1.8:1/um);
+            should(segments[0].en).match(/What should[^]*well content/um);
+            should(segments[9].scid).match(/snp1.8:10/um);
+            should(segments[9].en).match(/But when on[^]*no more to be reborn./um);
+            should(result.metaarea).match(/<p>This translation[^]*No rights reserved.[^]*/um);
+            done();
+        } catch(e) {done(e);} })();
+    });
     it("expandAbbreviation(abbr) expands abbreviation", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();

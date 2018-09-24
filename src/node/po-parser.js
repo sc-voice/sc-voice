@@ -163,7 +163,24 @@
                 range[0] = '0' + range[0];
             }
             filename = range.join('-');
-            return path.join(root, `${folder}${filename}.po`);
+            var fullPath = path.join(root, `${folder}${filename}.po`);
+            if (!fs.existsSync(root) || fs.existsSync(fullPath)) {
+                return fullPath; 
+            }
+
+            var basename = path.basename(fullPath);
+            var baseprefix = basename.split('.po')[0];
+            var dirname = path.dirname(fullPath);
+            var dirfiles = fs.readdirSync(dirname);
+            var fname = dirfiles.reduce((acc, f) => {
+                return f.substring(0,baseprefix.length) <= baseprefix ? f : acc;
+            }, dirfiles[0]);
+            var fullPath = path.join(dirname, fname);
+            if (fs.existsSync(fullPath)) {
+                return fullPath; 
+            }
+            
+            throw new Error(`file not found:${fullPath}`);
         }
 
         parseLines(lines, opts={}) {
