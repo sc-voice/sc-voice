@@ -3,7 +3,7 @@ module.exports = {
     Cursor: require('./src/node/cursor'),
     PoParser: require('./src/node/po-parser'),
     Polly: require("./src/node/polly"),
-    SCRest: require('./src/node/sc-rest'),
+    SuttaCentralApi: require('./src/node/sutta-central-api'),
     ScvRest: require('./src/node/scv-rest'),
     Section: require('./src/node/section'),
     SectionParser: require('./src/node/section-parser'),

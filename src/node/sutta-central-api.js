@@ -8,7 +8,7 @@
     const EXPANSION_PATH = path.join(__dirname, '..', '..', 'local', 'expansion.json');
     var expansion = [{}];
 
-    class SCRest {
+    class SuttaCentralApi {
         constructor(opts={}) {
             var that = this;
             this.language = opts.language;
@@ -71,7 +71,7 @@
             } else {
                 return new Promise((resolve, reject) => {
                     var url = `http://suttacentral.net/api/expansion`;
-                    SCRest.loadJson(url).then(res => {
+                    SuttaCentralApi.loadJson(url).then(res => {
                         fs.writeFileSync(EXPANSION_PATH, JSON.stringify(res,null,2));
                         resolve(res);
                     }).catch(e => reject(e));
@@ -81,7 +81,7 @@
 
         initialize() {
             return new Promise((resolve,reject) => { try {
-                SCRest.loadExpansion().then(res => {
+                SuttaCentralApi.loadExpansion().then(res => {
                     this.expansion = res;
                     this.initialized = true;
                     resolve(this);
@@ -160,7 +160,7 @@
                 winston.info(request);
 
                 (async function(){ try {
-                    var result = await SCRest.loadJson(request);
+                    var result = await SuttaCentralApi.loadJson(request);
                     var suttaplex = result.suttaplex;
                     var translations = suttaplex && suttaplex.translations;
                     if (translations && language) {
@@ -202,6 +202,6 @@
         
     }
 
-    module.exports = exports.SCRest = SCRest;
+    module.exports = exports.SuttaCentralApi = SuttaCentralApi;
 })(typeof exports === "object" ? exports : (exports = {}));
 

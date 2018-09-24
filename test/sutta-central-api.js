@@ -1,9 +1,9 @@
-(typeof describe === 'function') && describe("sc-rest", function() {
+(typeof describe === 'function') && describe("sutta-central-api", function() {
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
     const {
-        SCRest,
+        SuttaCentralApi,
         Segments,
         Sutta,
         SuttaFactory,
@@ -38,7 +38,7 @@
 
     it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         (async function() { try {
-            var scr = await new SCRest().initialize();
+            var scr = await new SuttaCentralApi().initialize();
             var scid = 'snp1.8';
             var language = 'en';
             var result = await scr.loadSutta('snp1.8','en');
@@ -52,7 +52,7 @@
     });
     it("loadSutta(opts) returns english translations for Snp1.8", function(done) {
         (async function() { try {
-            var scr = await new SCRest().initialize();
+            var scr = await new SuttaCentralApi().initialize();
             var scid = 'snp1.8';
             var language = 'en';
             var result = await scr.loadSutta({
@@ -83,7 +83,7 @@
     });
     it("expandAbbreviation(abbr) expands abbreviation", function(done) {
         (async function() { try {
-            var scr = await new SCRest().initialize();
+            var scr = await new SuttaCentralApi().initialize();
             should.deepEqual(scr.expandAbbreviation('sk'), [
               "Sk",
               "Sekhiya"
@@ -93,7 +93,7 @@
     });
     it("TESTTESTloadSutta(opts) returns same sutta as Pootl", function(done) {
         (async function() { try {
-            var scr = await new SCRest().initialize();
+            var scr = await new SuttaCentralApi().initialize();
             var sutta = await scr.loadSutta("mn1", "en", "sujato");
             var suttaPootl = await SuttaFactory.loadSuttaPootl('mn1');
 
