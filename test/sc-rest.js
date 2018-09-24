@@ -37,7 +37,7 @@
 
     it("TESTTESTloadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         (async function() { try {
-            var scr = new SCRest();
+            var scr = await new SCRest().initialize();
             var scid = 'snp1.8';
             var language = 'en';
             var result = await scr.loadSutta('snp1.8','en');
@@ -51,7 +51,7 @@
     });
     it("TESTTESTloadSutta(opts) returns english translations for Snp1.8", function(done) {
         (async function() { try {
-            var scr = new SCRest();
+            var scr = await new SCRest().initialize();
             var scid = 'snp1.8';
             var language = 'en';
             var result = await scr.loadSutta({
@@ -72,10 +72,22 @@
             should(translation.author).equal( 'Laurence Khantipalo Mills');
             var segments = result.segments;
             should(segments.length).equal(10);
-            console.log(segments, segments.length);
+            should(segments[0].scid).match(/snp1.8:1/um);
+            should(segments[0].en).match(/What should[^]*well content/um);
+            should(segments[9].scid).match(/snp1.8:10/um);
+            should(segments[9].en).match(/But when on[^]*no more to be reborn./um);
             should(result.metaarea).match(/<p>This translation[^]*No rights reserved.[^]*/um);
             done();
         } catch(e) {done(e);} })();
     });
-
+    it("TESTTESTexpand(abbr) expands abbreviation", function(done) {
+        (async function() { try {
+            var scr = await new SCRest().initialize();
+            should.deepEqual(scr.expand('sk'), [
+              "Sk",
+              "Sekhiya"
+            ]);
+            done();
+        } catch(e) {done(e);} })();
+    });
 })
