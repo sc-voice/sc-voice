@@ -89,7 +89,7 @@
             } catch(e) {reject(e);} });
         }
 
-        expand(abbr) {
+        expandAbbreviation(abbr) {
             if (!this.initialized) {
                 throw new Error('initialize() must be called');
             }
@@ -116,6 +116,7 @@
             html = html.replace(/<\/blockquote>[^]*/um, '');
             html = html.replace(/<br>\n/gum, ' ');
             html = html.replace(/<\/p>/gum, '');
+            html = html.replace(/<\/?i>/gum, ''); 
             html = html.replace(/\n( *\n)*/gum, '\n');
             html = html.replace(/\n*$/gum, '');
             var lines = html.split('\n');
@@ -170,9 +171,25 @@
                         if (translation.text) {
                             resolve(that.suttaFromApiText(result));
                         } else {
-                            resolve({
-                                segments: translation.segments,
+                            var rootStrings = result.root_text.strings;
+                            var segObj = {};
+                            Object.keys(rootStrings).forEach(scid => {
+                                segObj[scid] = segObj[scid] || { scid };
+                                segObj[scid].pli = rootStrings[scid];
+                                segObj[scid].en = "";
                             });
+                            var transStrings = translation.strings;
+                            Object.keys(transStrings).forEach(scid => {
+                                segObj[scid] = segObj[scid] || { scid };
+                                var text = transStrings[scid];
+                                text = text.replace(/<\/?i>/gum, '');
+                                segObj[scid][language] = text;
+                            });
+                            var segments = Object.keys(segObj).map(scid => segObj[scid]);
+                            console.log(segments.slice(0,3));
+                            resolve(new Sutta({
+                                segments,
+                            }));
                         }
                     }
 

@@ -23,7 +23,15 @@
             return new SuttaFactory(opts).loadSutta(opts);
         }
 
+        static loadSuttaPootl(opts={}) {
+            return new SuttaFactory(opts).loadSuttaPootl(opts);
+        }
+
         loadSutta(opts={}) {
+            return this.loadSuttaPootl(opts);
+        }
+
+        loadSuttaPootl(opts={}) {
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     if (typeof opts === 'string') {

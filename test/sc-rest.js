@@ -6,6 +6,7 @@
         SCRest,
         Segments,
         Sutta,
+        SuttaFactory,
         Words,
     } = require('../index');
 
@@ -35,7 +36,7 @@
         title: 'Loving-kindness',
     }];
 
-    it("TESTTESTloadSutta(opts) returns list of english translations for Snp1.8", function(done) {
+    it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         (async function() { try {
             var scr = await new SCRest().initialize();
             var scid = 'snp1.8';
@@ -49,7 +50,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) returns english translations for Snp1.8", function(done) {
+    it("loadSutta(opts) returns english translations for Snp1.8", function(done) {
         (async function() { try {
             var scr = await new SCRest().initialize();
             var scid = 'snp1.8';
@@ -80,14 +81,45 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTexpand(abbr) expands abbreviation", function(done) {
+    it("expandAbbreviation(abbr) expands abbreviation", function(done) {
         (async function() { try {
             var scr = await new SCRest().initialize();
-            should.deepEqual(scr.expand('sk'), [
+            should.deepEqual(scr.expandAbbreviation('sk'), [
               "Sk",
               "Sekhiya"
             ]);
             done();
         } catch(e) {done(e);} })();
+    });
+    it("TESTTESTloadSutta(opts) returns same sutta as Pootl", function(done) {
+        (async function() { try {
+            var scr = await new SCRest().initialize();
+            var sutta = await scr.loadSutta("mn1", "en", "sujato");
+            var suttaPootl = await SuttaFactory.loadSuttaPootl('mn1');
+
+            if (0) { // change this to 1 to diagnose differences
+                should.deepEqual(sutta.segments[0], {
+                    scid: 'mn1:0.1',
+                    en: 'Middle Discourses 1',
+                    pli: 'Majjhima Nikāya 1'
+                });
+                var nSegments = suttaPootl.segments.length;
+                should.deepEqual(sutta.segments[0], suttaPootl.segments[0]);
+                should.deepEqual(sutta.segments[100], suttaPootl.segments[100]);
+                should.deepEqual(sutta.segments[nSegments-1], suttaPootl.segments[nSegments-1]);
+                should(sutta.segments.length).equal(nSegments);
+                should.deepEqual(Object.keys(sutta), Object.keys(suttaPootl));
+                should.deepEqual(Object.keys(sutta.sections), Object.keys(suttaPootl.sections));
+                var scrs1 = sutta.sections[1];
+                var scrp1 = suttaPootl.sections[1];
+                var nSegs = scrp1.segments.length;
+                should.deepEqual(scrs1.segments.length, nSegs);
+                var nCmp = null;
+                should.deepEqual(scrs1.segments.slice(0,nCmp), scrp1.segments.slice(0,nCmp));
+            }
+            should.deepEqual(sutta, suttaPootl);
+
+            done();
+        } catch(e) { done(e); } })();
     });
 })
