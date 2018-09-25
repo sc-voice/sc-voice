@@ -140,6 +140,18 @@
             this.reHTML = opts.reHTML || /<\/?\s*\w+\s*>/ug;
         }
 
+        static minorSuttaId(filename) {
+            var scid = filename.replace(/\.po/u, '');
+            scid = scid.replace(/[a-z].*\./iu,'');
+            var id =  Number(scid);
+            if (isNaN(id)) {
+                var e = new Error(`could not parse minorSuttaId from filename:${filename}`);
+                //console.error(e.stack);
+                throw e;
+            }
+            return id;
+        }
+
         static suttaPath(id, root=SC, opts={}) {
             var lang = opts.lang || DEFAULT_LANG;
             var suttaId = id.toLowerCase().split(':')[0];
@@ -158,11 +170,11 @@
                 folder = folder.substring(0, folder.length-1);
             }
             var filename = suttaId.replace(majorId, '');
-            var range = filename.split('-');
-            while (range[0].length < zeros) {
-                range[0] = '0' + range[0];
+            var rangeSplits = filename.split('-');
+            while (rangeSplits[0].length < zeros) {
+                rangeSplits[0] = '0' + rangeSplits[0];
             }
-            filename = range.join('-');
+            filename = rangeSplits.join('-');
             var fullPath = path.join(root, `${folder}${filename}.po`);
             if (!fs.existsSync(root) || fs.existsSync(fullPath)) {
                 return fullPath; 
@@ -175,9 +187,14 @@
             var fname = dirfiles.reduce((acc, f) => {
                 return f.substring(0,baseprefix.length) <= baseprefix ? f : acc;
             }, dirfiles[0]);
-            var fullPath = path.join(dirname, fname);
-            if (fs.existsSync(fullPath)) {
-                return fullPath; 
+            if (fname.indexOf('-') >= 0) { // a range
+                var range = fname.split('-').map(s => PoParser.minorSuttaId(s));
+                var baseId = PoParser.minorSuttaId(basename);
+                if (range[0] <= baseId && baseId <= range[1]) {
+                    return path.join(dirname, fname);
+                } else {
+                    throw new Error(`file not found:${fullPath} closest:${fname}`);
+                }
             }
             
             throw new Error(`file not found:${fullPath}`);
@@ -233,10 +250,11 @@
                             break;
                         case S_MSGSTRN:
                             if (that.msgquote.test(line)) {
-                                if (segment[that.json_str] && segment[that.json_str].match(RE_SPACE_EOL)) {
-                                    segment[that.json_str].indexOf('non')>=0 && 
-                                            console.log(`debug: "${segment[that.json_str]}"`);
-                                    //segment[that.json_str] += " ";
+                                if (segment[that.json_str] && 
+                                    segment[that.json_str].match(RE_SPACE_EOL)) 
+                                {
+                                    //segment[that.json_str].indexOf('non')>=0 && 
+                                        //console.log(`debug: "${segment[that.json_str]}"`);
                                 }
                                 segment[that.json_str] += line.substring(1, line.length-1);
                             } else {

@@ -12,7 +12,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
-    it("TESTTESTparseSutta(sutta) parses thag1.1", function(done) {
+    it("parseSutta(sutta) parses thag1.1", function(done) {
     //done();return; //TODO
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('thag1.1');

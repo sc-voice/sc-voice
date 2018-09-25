@@ -105,7 +105,7 @@
         } catch(e) {done(e)} })();
 
     });
-    it("TESTTESTsuttaPath(id, root, opts) returns sutta file path", function() {
+    it("suttaPath(id, root, opts) returns sutta file path", function() {
         should(PoParser.suttaPath('mn1')).equal(path.join(SC, 'mn', 'en', 'mn001.po'));
         should(PoParser.suttaPath('MN123:1.1')).equal(path.join(SC, 'mn', 'en', 'mn123.po'));
 
@@ -136,7 +136,7 @@
             PoParser.suttaPath('snp1.8', root);
         });
     });
-    it("TESTTESTsuttaPath(id, root, opts) returns nearest sutta file path", function() {
+    it("suttaPath(id, root, opts) returns nearest sutta file path", function() {
         // if root exists
         should(PoParser.suttaPath('an2.11'))
             .equal(path.join(SC, 'an/en/an02/an2.011-20.po'));

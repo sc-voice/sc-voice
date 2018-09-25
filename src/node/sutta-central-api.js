@@ -5,18 +5,22 @@
     const winston = require('winston');
     const Words = require('./words');
     const Sutta = require('./sutta');
+    const PoParser = require('./po-parser');
     const EXPANSION_PATH = path.join(__dirname, '..', '..', 'local', 'expansion.json');
     const DEFAULT_LANGUAGE = 'en';
-    const DEFAULT_TRANSLATOR = 'sujato-walton';
+    const DEFAULT_API_URL = 'http://suttacentral.net/api';
+    const ANY_LANGUAGE = '*';
+    const ANY_TRANSLATOR = '*';
+    const PO_SUFFIX_LENGTH = '.po'.length;
     var expansion = [{}];
 
     class SuttaCentralApi {
         constructor(opts={}) {
-            var that = this;
-            this.language = opts.language;
+            this.language = opts.language || DEFAULT_LANGUAGE;
             this.translator = opts.translator;
             this.expansion = opts.expansion || [{}];
             this.initialized = false;
+            this.apiUrl = opts.apiUrl || DEFAULT_API_URL;
         }
 
         static loadJson(url) {
@@ -35,7 +39,7 @@
                     }
                     if (error) {
                         res.resume(); // consume response data to free up memory
-                        winston.error(e.stack);
+                        winston.error(error.stack);
                         reject(error);
                         return;
                     }
@@ -62,7 +66,7 @@
             } catch(e) {reject(e);} });
         }
 
-        static loadExpansion() {
+        static loadExpansion(apiUrl=DEFAULT_API_URL) {
             if (fs.existsSync(EXPANSION_PATH)) {
                 try {
                     var expansion = JSON.parse(fs.readFileSync(EXPANSION_PATH));
@@ -72,7 +76,7 @@
                 }
             } else {
                 return new Promise((resolve, reject) => {
-                    var url = `http://suttacentral.net/api/expansion`;
+                    var url = `${apiurl}/expansion`;
                     SuttaCentralApi.loadJson(url).then(res => {
                         fs.writeFileSync(EXPANSION_PATH, JSON.stringify(res,null,2));
                         resolve(res);
@@ -83,7 +87,7 @@
 
         initialize() {
             return new Promise((resolve,reject) => { try {
-                SuttaCentralApi.loadExpansion().then(res => {
+                SuttaCentralApi.loadExpansion(this.apiUrl).then(res => {
                     this.expansion = res;
                     this.initialized = true;
                     resolve(this);
@@ -123,55 +127,111 @@
             html = html.replace(/\n*$/gum, '');
             var lines = html.split('\n');
             var suttaplex = apiJson.suttaplex;
-            var segments = lines.map(line => {
+            var uid = suttaplex.uid;
+            var lang = translation.lang;
+            var collId = uid.replace(/[0-9.-]+/u, '');
+            var collNum = uid.replace(/[a-z]*/iu, '');
+            var collNames = this.expandAbbreviation(collId);
+            var collName = collNames && collNames[collNames.length-1];
+            var headerSegments = [{
+                scid:`${uid}:0.1`,
+                [lang]: `${collName || colId} ${collNum}`,
+                pli: `${collName || colId} ${collNum}`,
+            },{
+                scid:`${uid}:0.2`,
+                [lang]: `${translation.title}`,
+                pli: `${suttaplex.original_title}`,
+            }];
+            var textSegments = lines.map(line => {
                 var tokens = line.split('</a>');
-                var scid = tokens[0].replace(/.*sc/u,`${suttaplex.uid}:`).replace(/".*/u,'');
+                var scid = tokens[0].replace(/.*sc/u,`${uid}:`).replace(/".*/u,'');
                 return {
                     scid,
-                    [translation.lang]: tokens[2],
+                    [lang]: tokens[2],
                 }
             });
-            return Object.assign({
+            return new Sutta({
                 metaarea,
-                segments,
-            }, apiJson);
+                segments: headerSegments.concat(textSegments),
+            });
         }
 
+        normalizeScid(scid) {
+            if (scid == null) {
+                throw new Error('Sutta reference identifier is required');
+            }
+            try {
+                var popath = PoParser.suttaPath(scid);
+                var basename = path.basename(popath);
+                scid = basename.substring(0, basename.length-PO_SUFFIX_LENGTH);
+                scid = scid.replace(/([^0-9])0*/gu,'$1');
+            } catch(e) {
+                // ignore and pass to api (possibly not in Pootl)
+                console.error(e.message);
+            }
+            return scid;
+        }
 
-        loadSutta(opts={}, ...args) {
+        loadSuttaJson(opts={}, ...args) {
             var that = this;
-            return new Promise((resolve, reject) => {
-                if (typeof opts === 'string') {
-                    opts = {
-                        scid: opts,
-                        language: args[0] || DEFAULT_LANGUAGE,
-                        translator: args[1] || DEFAULT_TRANSLATOR,
-                    };
-                }
-                var scid = opts.scid;
-                if (scid == null) {
-                    throw new Error('Sutta reference identifier is required');
-                }
-                var language = opts.language || that.language;
-                var translator = opts.translator || that.translator;
-                var request = `http://suttacentral.net/api/suttas/${scid}`;
-                if (translator) {
-                    request += `/${translator}`;
-                }
-                request += `?lang=${language}`;
-                winston.info(request);
+            return new Promise((resolve, reject) => (async function(){ 
+                try {
+                    if (typeof opts === 'string') {
+                        opts = {
+                            scid: opts,
+                            language: args[0],
+                            translator: args[1],
+                        };
+                    }
+                    var scid = that.normalizeScid(opts.scid);
+                    var language = opts.language || that.language;
+                    var translator = opts.translator || that.translator;
+                    var apiSuttas = `${that.apiUrl}/suttas`;
+                    var request = `${apiSuttas}/${scid}`;
+                    if (translator && translator !== ANY_TRANSLATOR) {
+                        request += `/${translator}`;
+                    }
+                    if (language && language !== ANY_LANGUAGE) {
+                        request += `?lang=${language}`;
+                    }
+                    winston.info(request);
+                    console.debug(request);
 
-                (async function(){ try {
                     var result = await SuttaCentralApi.loadJson(request);
                     var suttaplex = result.suttaplex;
                     var translations = suttaplex && suttaplex.translations;
-                    if (translations && language) {
+                    if (translations == null || translations.length === 0) {
+                        throw new Error(`loadSuttaJson() no sutta found for id:${scid}`);
+                    }
+                    if (translations && language && language !== ANY_LANGUAGE) {
                         suttaplex.translations = translations.filter(t => t.lang === language);
+                    }
+                    resolve(result);
+                } catch(e) {
+                    reject(e);
+                } 
+            })()); 
+        }
+
+        loadSutta(opts={}, ...args) {
+            var that = this;
+            return new Promise((resolve, reject) => { try {
+                (async function(){ try {
+                    var result = await that.loadSuttaJson(opts);
+                    var translations = result.suttaplex.translations;
+                    if (result.translation == null && translations.length>0) {
+                        var {
+                            author_uid,
+                            lang,
+                        } = translations[0];
+                        var uid = result.suttaplex.uid;
+                        // multiple translations found, using first
+                        var result = await that.loadSuttaJson(uid, lang, author_uid);
                     }
                     var translation = result.translation;
                     if (translation) {
                         if (translation.text) {
-                            resolve(that.suttaFromApiText(result));
+                            var sutta = that.suttaFromApiText(result);
                         } else {
                             var rootStrings = result.root_text.strings;
                             var segObj = {};
@@ -185,20 +245,20 @@
                                 segObj[scid] = segObj[scid] || { scid };
                                 var text = transStrings[scid];
                                 text = text.replace(/<\/?i>/gum, '');
-                                segObj[scid][language] = text;
+                                segObj[scid][translation.lang] = text;
                             });
                             var segments = Object.keys(segObj).map(scid => segObj[scid]);
-                            resolve(new Sutta({
+                            var sutta = new Sutta({
                                 segments,
-                            }));
+                            });
                         }
+                        sutta.suttaplex = result.suttaplex,
+                        resolve(sutta);
+                    } else { // no unique translation 
+                        resolve(result);
                     }
-
-                    // no unique translation 
-                    result.request = request;
-                    resolve(result);
                 } catch(e) {reject(e);} })();
-            });
+            } catch(e) {reject(e);} });
         }
         
     }
