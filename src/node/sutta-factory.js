@@ -18,7 +18,7 @@
             this.type = this.constructor.name;
             this.prop = opts.prop || OPTS_EN.prop;
             this.reHeader = opts.reHeader || Sutta.RE_HEADER;
-            this.scapi = new SuttaCentralApi(opts);
+            this.suttaCentralApi = opts.suttaCentralApi;
         }
 
         static loadSutta(opts={}) {
@@ -39,15 +39,18 @@
             var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var scapi = await that.scapi.initialize();
+                    if (that.suttaCentralApi) {
+                        await that.suttaCentralApi.initialize();
+                    }
                     resolve(that);
                 } catch(e) {reject(e);} })();
             });
         }
 
         loadSutta(opts={}) {
-            //TODOreturn this.scapi.loadSutta(opts);
-            return this.loadSuttaPootl(opts);
+            return this.suttaCentralApi 
+                ? this.suttaCentralApi.loadSutta(opts)
+                : this.loadSuttaPootl(opts);
         }
 
         loadSuttaPootl(opts={}) {
