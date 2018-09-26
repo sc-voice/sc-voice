@@ -258,6 +258,7 @@ a {
     max-width: 40em;
     padding-left: auto;
     padding-right: auto;
+    padding-bottom: 100px;
 }
 .scv-text-button {
     border-radius: 4px;
