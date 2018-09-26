@@ -15,6 +15,7 @@
 
     class Sutta { 
         constructor(opts={}) {
+            opts.support && (this.support = opts.support);
             opts.suttaplex && (this.suttaplex = opts.suttaplex);
             opts.metaarea && (this.metaarea = opts.metaarea);
             this.sections = opts.sections || Sutta.defaultSections(opts.segments);

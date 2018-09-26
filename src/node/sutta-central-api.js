@@ -6,6 +6,7 @@
     const Words = require('./words');
     const Sutta = require('./sutta');
     const PoParser = require('./po-parser');
+    const Definitions = require('./definitions');
     const EXPANSION_PATH = path.join(__dirname, '..', '..', 'local', 'expansion.json');
     const DEFAULT_LANGUAGE = 'en';
     const DEFAULT_API_URL = 'http://suttacentral.net/api';
@@ -163,6 +164,7 @@
                 }
             });
             return new Sutta({
+                support: Definitions.SUPPORT_LEVELS.Legacy,
                 metaarea,
                 segments: headerSegments.concat(textSegments),
             });
@@ -177,11 +179,16 @@
                 var basename = path.basename(popath);
                 scid = basename.substring(0, basename.length-PO_SUFFIX_LENGTH);
                 scid = scid.replace(/([^0-9])0*/gu,'$1');
+                var support = Definitions.SUPPORT_LEVELS.Supported;
             } catch(e) {
                 // ignore and pass to api (possibly not in Pootl)
                 console.error(e.message);
+                var support = Definitions.SUPPORT_LEVELS.Legacy;
             }
-            return scid;
+            return {
+                support,
+                scid,
+            };
         }
 
         loadSuttaJson(opts={}, ...args) {
@@ -195,7 +202,10 @@
                             translator: args[1],
                         };
                     }
-                    var scid = that.normalizeScid(opts.scid);
+                    var {
+                        scid,
+                        support,
+                    } = that.normalizeScid(opts.scid);
                     var language = opts.language || that.language;
                     var translator = opts.translator || that.translator;
                     var apiSuttas = `${that.apiUrl}/suttas`;
@@ -210,6 +220,7 @@
                     console.debug(request);
 
                     var result = await SuttaCentralApi.loadJson(request);
+                    result.support = support;
                     var suttaplex = result.suttaplex;
                     var translations = suttaplex && suttaplex.translations;
                     if (translations == null || translations.length === 0) {
@@ -261,6 +272,7 @@
                             });
                             var segments = Object.keys(segObj).map(scid => segObj[scid]);
                             var sutta = new Sutta({
+                                support: result.support,
                                 segments,
                             });
                         }

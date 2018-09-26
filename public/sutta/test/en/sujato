@@ -1,4 +1,8 @@
 {
+  "support": {
+    "value": "Supported",
+    "description": "Content is actively maintained. Please report errors and inconsistencies"
+  },
   "sections": [
     {
       "segments": [

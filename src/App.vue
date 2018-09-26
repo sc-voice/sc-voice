@@ -182,8 +182,9 @@ details.scv-dialog {
 }
 .scv-background {
     position: absolute;
-    bottom: 32px;
+    bottom: 35px;
     background-image: url("/img/lotus.png") ;
+    background-size: 390px 200px;
     background-repeat: no-repeat;
     background-position: center bottom;
     opacity: 1;

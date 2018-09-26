@@ -1,6 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
+    const Definitions = require('./definitions');
     const Words = require('./words');
     const Sutta = require('./sutta');
     const SuttaCentralApi = require('./sutta-central-api');
@@ -67,7 +68,10 @@
                     var id = opts.id || 'mn1';
                     var suttaPath = PoParser.suttaPath(id, opts.root);
                     var segments = await parser.parse(suttaPath, opts);
-                    resolve(new Sutta(Object.assign({segments}, opts)));
+                    resolve(new Sutta(Object.assign({
+                        support: Definitions.SUPPORT_LEVELS.Supported,
+                        segments,
+                    }, opts)));
                 } catch(e) {reject(e);} })();
             });
         }
@@ -119,10 +123,10 @@
                 }
                 return sect;
             });
-            return new Sutta({
+            return new Sutta(Object.assign({}, sutta, {
                 sections,
                 prop: this.prop,
-            });
+            }));
         }
     }
 

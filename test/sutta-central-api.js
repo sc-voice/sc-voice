@@ -3,11 +3,13 @@
     const fs = require('fs');
     const path = require('path');
     const {
-        SuttaCentralApi,
+        Definitions,
         Segments,
         Sutta,
+        SuttaCentralApi,
         SuttaFactory,
         Words,
+
     } = require('../index');
 
     const SUTTAPLEX_SNP1_8 = {
@@ -76,13 +78,15 @@
         title: 'The One Way In Sūtra',
     }];
 
-    it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
+    it("TESTTESTloadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
             var scid = 'snp1.8';
             var language = 'en';
-            var result = await scr.loadSutta('snp1.8','en');
-            var suttaplex = result.suttaplex;
+            var sutta = await scr.loadSutta('snp1.8','en');
+            should(sutta).instanceOf(Sutta);
+            should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
+            var suttaplex = sutta.suttaplex;
             should(suttaplex).properties(SUTTAPLEX_SNP1_8);
             var translations = suttaplex.translations;
             should(translations).instanceOf(Array);
@@ -100,8 +104,9 @@
             });
             should(sutta).instanceOf(Sutta);
             should.deepEqual(Object.keys(sutta).sort(), [
-                'metaarea', 'sections', 'suttaplex',
+                'support', 'metaarea', 'sections', 'suttaplex',
             ].sort());
+            should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
 
             var suttaplex = sutta.suttaplex;
             should(suttaplex).properties(SUTTAPLEX_SNP1_8);
@@ -129,6 +134,7 @@
         } catch(e) {done(e);} })();
     });
     it("TESTTESTloadSutta(opts) returns english translations for ea12.1", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
             var language = 'en';
@@ -139,8 +145,9 @@
             });
             should(sutta).instanceOf(Sutta);
             should.deepEqual(Object.keys(sutta).sort(), [
-                'metaarea', 'sections', 'suttaplex',
+                'support', 'metaarea', 'sections', 'suttaplex',
             ].sort());
+            should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
 
             var suttaplex = sutta.suttaplex;
             should(suttaplex).properties(SUTTAPLEX_EA12_1);
@@ -216,6 +223,7 @@
             var language = 'en';
             var sutta = await scr.loadSutta('an2.12');
             should(sutta).instanceOf(Sutta);
+            should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Supported);
             should(sutta.suttaplex.uid).equal('an2.11-20');
             var suttaplex = sutta.suttaplex;
             should(suttaplex).properties(SUTTAPLEX_AN2_12);
@@ -243,6 +251,7 @@
         } catch(e) {done(e);} })();
     });
     it("loadSutta(opts) returns same sutta as Pootl", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
             var sutta = await scr.loadSutta("mn1", "en", "sujato");
@@ -259,7 +268,7 @@
             should.deepEqual(sutta.segments[nSegments-1], suttaPootl.segments[nSegments-1]);
             should(sutta.segments.length).equal(nSegments);
             should.deepEqual(Object.keys(sutta).sort(), [
-                'suttaplex', 'sections',
+                'support', 'suttaplex', 'sections',
             ].sort());
             should.deepEqual(Object.keys(sutta.sections), Object.keys(suttaPootl.sections));
             var scrs1 = sutta.sections[1];

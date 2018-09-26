@@ -19,7 +19,7 @@
                     {{seg.en}}<span v-if="i<sections[0].segments.length-1">&mdash;</span>
                 </span>
             </summary>
-            <a :href="`https://suttacentral.net/search?query=${search}`">
+            <a :href="`https://github.com/sc-voice/sc-voice/wiki/Support-Policy`">
                 Search SuttaCentral for {{search}}
             </a>
             <div class="scv-header-body" dark>
@@ -69,6 +69,12 @@
                 {{seg.en}}
             </div>
           </details>
+          <div class="scv-support">
+            <a href="https://discourse.suttacentral.net/">
+            {{support.value}} 
+            </a>:
+            {{support.description}}
+          </div>
       </v-layout>
   </v-container>
 </template>
@@ -98,6 +104,12 @@ export default {
             error,
             search: '',
             audioGuids,
+            support: {
+                value: '(n/a)',
+                descriptions: '(n/a)',
+            },
+            suttaplex: {},
+            metaarea: '',
             sections: null,
             suttaId: null,
             language: 'en',
@@ -155,6 +167,9 @@ export default {
             });
             this.$http.get(url).then(res => {
                 this.clear();
+                this.support = res.data.support;
+                this.metaarea = res.data.metaarea;
+                this.suttaplex = res.data.suttaplex;
                 this.sections = res.data.sections;
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
@@ -255,6 +270,7 @@ a {
     border-right: 2pt solid #444;
 }
 .scv-sutta {
+    position: relative;
     max-width: 40em;
     padding-left: auto;
     padding-right: auto;
@@ -307,5 +323,12 @@ a {
     flex-flow: column;
     align-items: center;
     justify-content: flex-start;
+}
+.scv-support {
+    bottom: 0px;
+    padding-top: 3em;
+    text-align: center;
+    font-size: smaller;
+    font-style: italic;
 }
 </style>

@@ -4,12 +4,15 @@
     const path = require('path');
     const supertest = require('supertest');
     const {
+        Definitions,
+        ScvRest,
         Section,
         Sutta,
-        SuttaFactory,
+        SuttaCentralApi,
         SuttaCentralId,
-        ScvRest,
+        SuttaFactory,
         Words,
+
     } = require("../index");
     const Queue = require('promise-queue');
     const SC = path.join(__dirname, '../local/sc');
@@ -29,13 +32,16 @@
         async.next();
     });
     it("TESTTESTGET /sutta/mn1/en/sujato returns sutta", function(done) {
+        this.timeout(5*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
-                should(res.body).properties([
-                    "sections"
-                ]);
-                var sections = res.body.sections;
+                var sutta = res.body;
+                should.deepEqual(Object.keys(sutta).sort(), [
+                    "sections", "suttaplex", "support",
+                ].sort());
+                should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Supported);
+                var sections = sutta.sections;
                 should(sections.length).equal(10);
                 should(sections[2].expandable).equal(false);
                 should(sections[2].expanded).equal(true);
