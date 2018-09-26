@@ -78,7 +78,7 @@
         title: 'The One Way In Sūtra',
     }];
 
-    it("TESTTESTloadSutta(opts) returns list of english translations for Snp1.8", function(done) {
+    it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
             var scid = 'snp1.8';
@@ -93,7 +93,7 @@
             should.deepEqual(translations, TRANSLATIONS_SNP1_8); done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) returns english translations for Snp1.8", function(done) {
+    it("loadSutta(opts) returns english translations for Snp1.8", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
             var language = 'en';
@@ -104,7 +104,7 @@
             });
             should(sutta).instanceOf(Sutta);
             should.deepEqual(Object.keys(sutta).sort(), [
-                'support', 'metaarea', 'sections', 'suttaplex',
+                'author_uid', 'support', 'metaarea', 'sections', 'suttaplex',
             ].sort());
             should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
 
@@ -133,7 +133,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) returns english translations for ea12.1", function(done) {
+    it("loadSutta(opts) returns english translations for ea12.1", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
@@ -145,7 +145,7 @@
             });
             should(sutta).instanceOf(Sutta);
             should.deepEqual(Object.keys(sutta).sort(), [
-                'support', 'metaarea', 'sections', 'suttaplex',
+                'support', 'metaarea', 'author_uid', 'sections', 'suttaplex',
             ].sort());
             should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
 
@@ -268,7 +268,7 @@
             should.deepEqual(sutta.segments[nSegments-1], suttaPootl.segments[nSegments-1]);
             should(sutta.segments.length).equal(nSegments);
             should.deepEqual(Object.keys(sutta).sort(), [
-                'support', 'suttaplex', 'sections',
+                'support', 'suttaplex', 'author_uid', 'sections',
             ].sort());
             should.deepEqual(Object.keys(sutta.sections), Object.keys(suttaPootl.sections));
             var scrs1 = sutta.sections[1];

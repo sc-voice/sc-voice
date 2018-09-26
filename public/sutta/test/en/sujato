@@ -1,7 +1,55 @@
 {
+  "author_uid": "sujato",
   "support": {
     "value": "Supported",
     "description": "Content is actively maintained. Please report errors and inconsistencies"
+  },
+  "suttaplex": {
+    "acronym": "MN 1",
+    "volpages": "MN i 1",
+    "uid": "mn1",
+    "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
+    "difficulty": 3,
+    "original_title": "Mūlapariyāya Sutta",
+    "root_lang": "pli",
+    "type": "text",
+    "from": null,
+    "translated_title": "The Root of All Things",
+    "translations": [
+      {
+        "lang": "en",
+        "lang_name": "English",
+        "author": "Bhikkhu Sujato",
+        "author_short": "Sujato",
+        "author_uid": "sujato",
+        "id": "en_mn1_sujato",
+        "segmented": true,
+        "title": "The Root of All Things"
+      },
+      {
+        "author": "Bhikkhu Bodhi",
+        "author_short": "Bodhi",
+        "author_uid": "bodhi",
+        "id": "en_mn1_bodhi",
+        "lang": "en",
+        "lang_name": "English",
+        "segmented": false,
+        "title": "The Root of All Things"
+      },
+      {
+        "author": "I.B. Horner",
+        "author_short": "Horner",
+        "author_uid": "horner",
+        "id": "en_mn1_horner",
+        "lang": "en",
+        "lang_name": "English",
+        "segmented": false,
+        "title": "Discourse on the Synopsis of Fundamentals"
+      }
+    ],
+    "parallel_count": 4,
+    "biblio": null,
+    "num": 1
   },
   "sections": [
     {

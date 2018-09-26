@@ -77,7 +77,7 @@
                 }
             } else {
                 return new Promise((resolve, reject) => {
-                    var url = `${apiurl}/expansion`;
+                    var url = `${apiUrl}/expansion`;
                     SuttaCentralApi.loadJson(url).then(res => {
                         fs.writeFileSync(EXPANSION_PATH, JSON.stringify(res,null,2));
                         resolve(res);
@@ -253,6 +253,7 @@
                     }
                     var translation = result.translation;
                     if (translation) {
+                        var author_uid = translation.author_uid;
                         if (translation.text) {
                             var sutta = that.suttaFromApiText(result);
                         } else {
@@ -276,6 +277,7 @@
                                 segments,
                             });
                         }
+                        sutta.author_uid = translation.author_uid;
                         sutta.suttaplex = result.suttaplex,
                         resolve(sutta);
                     } else { // no unique translation 

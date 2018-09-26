@@ -12,7 +12,7 @@
     const S_MSGSTRN = 5;
 
     const RE_SPACE_EOL = new RegExp(`[^-${Words.U_HYPHEN}${Words.U_ENDASH}${Words.U_EMDASH} ]$`, 'u');
-    const RE_MAJOR = /mn|sn|an|kn|pi-vi/;
+    const RE_MAJOR = /mn|sn|an|kn|pli-tv/;
 
     const MAJOR_IDS = {
         en: {
@@ -119,11 +119,11 @@
             'sn54.': 'sn/en/sn54/sn54.00',
             'sn55.': 'sn/en/sn55/sn55.00',
             'sn56.': 'sn/en/sn56/sn56.000',
-            'pli-tv-bu-vb-ay': 'pi-vi/en/ay/pli-tv-bu-vb-ay',
-            'pli-tv-bu-vb-np': 'pi-vi/en/np/pli-tv-bu-vb-np',
-            'pli-tv-bu-vb-pc': 'pi-vi/en/pc/pli-tv-bu-vb-pc',
-            'pli-tv-bu-vb-pj': 'pi-vi/en/pj/pli-tv-bu-vb-pj',
-            'pli-tv-bu-vb-ss': 'pi-vi/en/ss/pli-tv-bu-vb-ss',
+            'pli-tv-bu-vb-ay': 'pli-tv/en/ay/pli-tv-bu-vb-ay', // TODO
+            'pli-tv-bu-vb-np': 'pli-tv/en/np/pli-tv-bu-vb-np', // TODO
+            'pli-tv-bu-vb-pc': 'pli-tv/en/pc/pli-tv-bu-vb-pc', // TODO
+            'pli-tv-bu-vb-pj': 'pli-tv/en/pj/pli-tv-bu-vb-pj', // TODO
+            'pli-tv-bu-vb-ss': 'pli-tv/en/ss/pli-tv-bu-vb-ss', // TODO
         }
     };
 

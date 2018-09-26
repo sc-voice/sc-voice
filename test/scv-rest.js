@@ -31,14 +31,14 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /sutta/mn1/en/sujato returns sutta", function(done) {
+    it("GET /sutta/mn1/en/sujato returns sutta", function(done) {
         this.timeout(5*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
                 var sutta = res.body;
                 should.deepEqual(Object.keys(sutta).sort(), [
-                    "sections", "suttaplex", "support",
+                    'author_uid', "sections", "suttaplex", "support",
                 ].sort());
                 should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Supported);
                 var sections = sutta.sections;
@@ -89,7 +89,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /recite/sutta/mn100/en/sujato/1 returns recitation", function(done) {
+    it("GET /recite/sutta/mn100/en/sujato/1 returns recitation", function(done) {
         this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/recite/section/mn100/en/sujato/1")

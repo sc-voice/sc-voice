@@ -15,6 +15,7 @@
 
     class Sutta { 
         constructor(opts={}) {
+            opts.author_uid && (this.author_uid = opts.author_uid);
             opts.support && (this.support = opts.support);
             opts.suttaplex && (this.suttaplex = opts.suttaplex);
             opts.metaarea && (this.metaarea = opts.metaarea);

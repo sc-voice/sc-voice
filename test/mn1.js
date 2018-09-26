@@ -7,6 +7,7 @@
         Sutta,
         SuttaFactory,
         SuttaCentralId,
+        SuttaCentralApi,
         Voice,
         Words,
     } = require("../index");
@@ -35,11 +36,21 @@
         } catch(e) { done(e); } })();
     });
     it("expandSutta(sutta) expands mn1", function(done) {
-        this.timeout(5*1000);
+        this.timeout(10*1000);
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
-            var sutta2 = new SuttaFactory().expandSutta(sutta);
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            var factory = new SuttaFactory({
+                suttaCentralApi,
+            });
+            var sutta = await factory.loadSutta('mn1');
+            should.deepEqual(Object.keys(sutta).sort(), [
+                'author_uid', 'sections', 'support', 'suttaplex'].sort());
+            var sutta2 = factory.expandSutta(sutta);
             should(sutta2).instanceOf(Sutta);
+            should.deepEqual(Object.keys(sutta2).sort(), [
+                'author_uid', 'sections', 'support', 'suttaplex'].sort());
+            should(sutta2.suttaplex.blurb).match(/^The Buddha[^]*without attachment.$/um);
+            should(sutta2.author_uid).match('sujato');
             var sections = sutta2.sections;
             should(sections.length).equal(10);
             should.deepEqual(sections.map(section => section.expandable), [
