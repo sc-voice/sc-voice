@@ -11,6 +11,7 @@ const {
 } = require('rest-bundle');
 const {
     ScvRest,
+    SuttaCentralApi,
 } = require('../index');
 
 global.__appdir = path.dirname(__dirname);
@@ -34,23 +35,27 @@ app.use("/scv/", express.static(path.join(__dirname, "../dist")));
 app.use("/scv/js", express.static(path.join(__dirname, "../dist/js")));
 app.use("/scv/css", express.static(path.join(__dirname, "../dist/css")));
 app.use("/scv/sounds", express.static(path.join(__dirname, "../local/sounds")));
-var async = function*() {
+(async function() {
     try {
+        var suttaCentralApi = await new SuttaCentralApi().initialize();
         var rbServer =  app.locals.rbServer = new RbServer();
 
         // create RestBundles
         var restBundles = app.locals.restBundles = [];
-        var scvRest = new ScvRest();
-        yield scvRest.initialize().then(r=>async.next(r)).catch(e=>async.throw(e));
+        var opts = {
+            suttaCentralApi,
+        };
+        //opts = undefined;
+        var scvRest = new ScvRest(opts);
+        await scvRest.initialize();
         restBundles.push(scvRest);
 
         // create http server and web socket
         var ports = [80, 8081].concat(new Array(100).fill(3000).map((p,i)=>p+i));
         rbServer.listen(app, restBundles, ports); 
-        yield rbServer.initialize().then(r=>async.next(r)).catch(e=>async.throw(e));
+        await rbServer.initialize();
     } catch(e) {
         winston.error(e.stack);
         throw e;
     }
-}();
-async.next();
+})();

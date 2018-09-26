@@ -40,6 +40,21 @@
         biblio: null,
         num: 1,
     };
+    const SUTTAPLEX_EA12_1 = {
+        acronym: 'EA 12.1//T 125.12.1',
+        volpages: 'T ii 568a01',
+        uid: 'ea12.1',
+        blurb: null,
+        difficulty: null,
+        original_title: ' ?',
+        root_lang: 'lzh',
+        type: 'text',
+        from: null,
+        translated_title: 'The One Way In Sūtra',
+        parallel_count: 8,
+        biblio: null,
+        num: 96,
+    };
     const TRANSLATIONS_SNP1_8 = [{
         author: 'Laurence Khantipalo Mills',
         author_short: 'Mills',
@@ -49,6 +64,16 @@
         lang_name: 'English',
         segmented: false,
         title: 'Loving-kindness',
+    }];
+    const TRANSLATIONS_EA12_1 = [{
+        author: 'Thích Nhất Hạnh, Annabel Laity',
+        author_short: 'Nhất Hạnh …',
+        author_uid: 'nhat_hanh-laity',
+        id: 'en_ea12.1_nhat_hanh-laity',
+        lang: 'en',
+        lang_name: 'English',
+        segmented: false,
+        title: 'The One Way In Sūtra',
     }];
 
     it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
@@ -67,7 +92,6 @@
     it("TESTTESTloadSutta(opts) returns english translations for Snp1.8", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
-            var scid = 'snp1.8';
             var language = 'en';
             var sutta = await scr.loadSutta({
                 scid:'snp1.8',
@@ -89,7 +113,6 @@
             var i = 0;
             should(segments[i].scid).match(/snp1.8:0.1/um);
             should(segments[i].en).match(/Sutta Nipāta 1/um);
-            should(segments[i].pli).match(/Sutta Nipāta 1/um);
             i += 1;
             should(segments[i].scid).match(/snp1.8:0.2/um);
             should(segments[i].en).match(/Loving-kindness/um);
@@ -102,6 +125,51 @@
             should(segments[i].en).match(/But when on[^]*no more to be reborn./um);
             should(sutta.metaarea).match(/<p>This translation[^]*No rights reserved.[^]*/um);
             should(segments.length).equal(12);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTloadSutta(opts) returns english translations for ea12.1", function(done) {
+        (async function() { try {
+            var scr = await new SuttaCentralApi().initialize();
+            var language = 'en';
+            var sutta = await scr.loadSutta({
+                scid:'ea12.1',
+                language: 'en', 
+                translator: 'mills'
+            });
+            should(sutta).instanceOf(Sutta);
+            should.deepEqual(Object.keys(sutta).sort(), [
+                'metaarea', 'sections', 'suttaplex',
+            ].sort());
+
+            var suttaplex = sutta.suttaplex;
+            should(suttaplex).properties(SUTTAPLEX_EA12_1);
+            var translations = suttaplex.translations;
+            should(translations).instanceOf(Array);
+            should.deepEqual(translations, TRANSLATIONS_EA12_1);
+            var translation = suttaplex.translations[0];
+            var segments = sutta.segments;
+            var i = 0;
+            should(segments[i].scid).match(/ea12.1:0.1/um);
+            should(segments[i].en).match(/Ekottarikāgama \(1st\) 12.1/um);
+            i += 1;
+            should(segments[i].scid).match(/ea12.1:0.2/um);
+            should(segments[i].en).match(/The One Way In Sūtra/um);
+            should(segments[i].lzh).match(/ ?/um);
+            i += 1;
+            should(segments[i].scid).match(/ea12.1:1/um);
+            should(segments[i].en).match(/^$/um);
+            i += 1;
+            should(segments[i].scid).match(/ea12.1:2/um);
+            should(segments[i].en).match(/^Ekottar/um);
+            i += 1;
+            should(segments[i].scid).match(/ea12.1:3/um);
+            should(segments[i].en).match(/^The One Way In/um);
+            i += 1;
+            should(segments[i].scid).match(/ea12.1:4/um);
+            should(segments[i].en).match(/^Introduction/um);
+            should(sutta.metaarea).match(/Translated from Sanskrit[^]*Bhikkhu Sujato[^]*/um);
+            should(segments.length).equal(55);
             done();
         } catch(e) {done(e);} })();
     });

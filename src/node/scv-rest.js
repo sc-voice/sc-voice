@@ -11,6 +11,7 @@
     const Section = require('./section');
     const Sutta = require('./sutta');
     const SuttaFactory = require('./sutta-factory');
+    const SuttaCentralApi = require('./sutta-central-api');
     const PoParser = require('./po-parser');
     const Voice = require('./voice');
     const SuttaCentralId = require('./sutta-central-id');
@@ -40,13 +41,17 @@
                 this.audioSuffix = '.ogg';
                 this.audioFormat = 'ogg_vorbis';
                 this.audioMIME = 'audio/ogg';
-            } else if (opts.audioFormat === 'mp3') {
+            } else if (opts.audioFormat == null || opts.audioFormat === 'mp3') {
                 this.audioSuffix = '.mp3';
                 this.audioFormat = 'mp3';
                 this.audioMIME = 'audio/mp3';
             } else {
                 throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
             }
+            this.suttaCentralApi = opts.suttaCentralApi;
+            this.suttaFactory = new SuttaFactory({
+                suttaCentralApi: this.suttaCentralApi,
+            });
             Object.defineProperty(this, "handlers", {
                 value: super.handlers.concat([
                     this.resourceMethod("get", "audio/:guid", this.getAudio, this.audioMIME),
@@ -77,8 +82,9 @@
         }
 
         reciteSection(req, res, next, name, usage) {
-            var audioFormat = this.audioFormat;
-            var audioSuffix = this.audioSuffix;
+            var that = this;
+            var audioFormat = that.audioFormat;
+            var audioSuffix = that.audioSuffix;
             var suttaId = req.params.suttaId || 'mn1';
             var language = req.params.language || 'en';
             if (SUPPORTED_LANGUAGES[language] !== true) {
@@ -91,9 +97,9 @@
             var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var sutta = await SuttaFactory.loadSutta(suttaId);
+                    var sutta = await that.suttaFactory.loadSutta(suttaId);
                     if (EXPANDABLE_SUTTAS[suttaId]) {
-                        sutta = new SuttaFactory().expandSutta(sutta);
+                        sutta = that.suttaFactory.expandSutta(sutta);
                     }
                     if (iSection < 0 || sutta.sections.length <= iSection) {
                         throw new Error(`Sutta ${suttaId}/${translator} has no section:${iSection}`);
@@ -125,7 +131,11 @@
         }
 
         getReciteSection(req, res, next) {
-            return this.reciteSection(req, res, next, 'amy', 'recite');
+            var promise =  this.reciteSection(req, res, next, 'amy', 'recite');
+            promise.catch(e => {
+                console.error(e.stack);
+            });
+            return promise;
         }
 
         getReviewSection(req, res, next) {
@@ -133,6 +143,7 @@
         }
 
         getSutta(req, res, next) {
+            var that = this;
             var language = req.params.language || 'en';
             if (language !== 'en') { 
                 return Promise.reject(new Error(`SC-Voice does not support language: ${language}`));
@@ -145,9 +156,9 @@
             var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var sutta = await SuttaFactory.loadSutta(suttaId);
+                    var sutta = await that.suttaFactory.loadSutta(suttaId);
                     if (EXPANDABLE_SUTTAS[suttaId]) {
-                        sutta = new SuttaFactory().expandSutta(sutta);
+                        sutta = that.suttaFactory.expandSutta(sutta);
                     }
                     resolve(sutta);
                 } catch(e) { reject(e); } })();

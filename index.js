@@ -11,6 +11,7 @@ module.exports = {
     Sutta: require("./src/node/sutta"),
     SuttaFactory: require("./src/node/sutta-factory"),
     SuttaCentralId: require("./src/node/sutta-central-id"),
+    SuttaCentralApi: require("./src/node/sutta-central-api"),
     Watson: require("./src/node/watson"),
     Words: require('./src/node/words'),
     Voice: require('./src/node/voice'),

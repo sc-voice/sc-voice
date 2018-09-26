@@ -118,11 +118,17 @@
             } else {
                 var metaArea = '';
             }
+            html = html.replace(/(.*\n)*<section[^>]*>\n*/um, '');
+            html = html.replace(/<\/section>[^]*/um, '');
             html = html.replace(/(.*\n)*<blockquote[^>]*>\n*/um, '');
             html = html.replace(/<\/blockquote>[^]*/um, '');
             html = html.replace(/<br>\n/gum, ' ');
             html = html.replace(/<\/p>/gum, '');
-            html = html.replace(/<\/?i>/gum, ''); 
+            //html = html.replace(/<\/?[^a][^>]+>/igum, ''); 
+            html = html.replace(/<\/?article[^>]*>/igum, ''); 
+            html = html.replace(/<\/?div[^>]*>/igum, ''); 
+            html = html.replace(/<\/?h[0-9][^>]*>/igum, ''); 
+            html = html.replace(/<\/?i[^>]*>/igum, ''); 
             html = html.replace(/\n( *\n)*/gum, '\n');
             html = html.replace(/\n*$/gum, '');
             var lines = html.split('\n');
@@ -136,18 +142,24 @@
             var headerSegments = [{
                 scid:`${uid}:0.1`,
                 [lang]: `${collName || colId} ${collNum}`,
-                pli: `${collName || colId} ${collNum}`,
             },{
                 scid:`${uid}:0.2`,
                 [lang]: `${translation.title}`,
-                pli: `${suttaplex.original_title}`,
+                [suttaplex.root_lang]: `${suttaplex.original_title}`,
             }];
-            var textSegments = lines.map(line => {
+            var textSegments = lines.map((line,i) => {
                 var tokens = line.split('</a>');
-                var scid = tokens[0].replace(/.*sc/u,`${uid}:`).replace(/".*/u,'');
-                return {
-                    scid,
-                    [lang]: tokens[2],
+                if (tokens.length > 1) {
+                    return {
+                        scid: tokens[0].replace(/.*sc/u,`${uid}:`).replace(/".*/u,''),
+                        [lang]: tokens[2],
+                    }
+                } else { // really raw HTML with just line counts
+                    line = line.replace(/<\/?[^>]+>/gum, '');
+                    return {
+                        scid: `${uid}:${i+1}`,
+                        [lang]: line,
+                    }
                 }
             });
             return new Sutta({

@@ -275,15 +275,20 @@
             });
         }
 
+        stripHtml(text) {
+            text = text.replace(/<[^>]*>/ug, '');
+            return text;
+        }
+
         synthesizeText(text, opts={}) {
             var that = this;
             return new Promise((resolve, reject) => {
-                var queue = this.queue;
+                var queue = that.queue;
                 (async function() { try {
                     var result = null;
                     var ssmlAll = [];
                     if (typeof text === 'string') {
-                        var segments = that.segmentSSML(text);
+                        var segments = that.segmentSSML(that.stripHtml(text));
                         var promises = segments.map(ssml => {
                             ssmlAll.push(ssml);
                             return queue.add(() => that.synthesizeSSML(ssml, opts));
@@ -294,7 +299,7 @@
                         var segments = [];
                         //var promises = textArray.map(t => that.synthesizeText(t, opts));
                         var promises = textArray.reduce((acc, t) => {
-                            var segs = that.segmentSSML(t);
+                            var segs = that.segmentSSML(that.stripHtml(t));
                             segs.forEach(ssml => {
                                 ssmlAll.push(ssml);
                                 acc.push(queue.add(() => that.synthesizeSSML(ssml, opts)));
