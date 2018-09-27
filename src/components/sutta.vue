@@ -24,7 +24,7 @@
                 Translated by {{sutta.author}}
             </div>
             <div class="scv-blurb">{{suttaplex.blurb}}</div>
-            <div class="scv-blurb">{{metaarea}}</div>
+            <div class="scv-blurb"><span v-html="metaarea"></span></div>
             <div class="scv-play-controls">
                 <audio v-if="suttaAudioGuid" autoplay controls class="ml-4 mt-1" 
                     preload=auto
@@ -46,8 +46,8 @@
                             class="text-xs-center"
                             :key="translation.id"
                             v-show="author_uid !== translation.author_uid">
-                            <a @click="loadTranslation(translation.author_uid)"
-                                href="" > 
+                            <a :href="translationLink(translation.author_uid)"
+                                @click="linkClicked()"> 
                                 {{translation.author}} 
                                 &nbsp;&bull;&nbsp; 
                                 {{translation.lang_name}}
@@ -207,8 +207,30 @@ export default {
                 this.search && this.onSearch();
             }
         },
+        parseSearch() {
+            var defaultSearch = {
+                translator: 'sujato',
+                lang: 'en',
+            };
+            var search = window.location.search;
+            search = search && search.substring(1) || '';
+            var searchSplits = search.split('&');
+            return searchSplits.reduce((acc,s) => {
+                var kv = s.split('=');
+                if (kv[0] === 'translator') {
+                    acc.translator = kv[1];
+                } else if (kv[0] === 'lang') {
+                    acc.lang = kv[1];
+                }
+                return acc;
+            }, defaultSearch);
+        },
         showSutta(scid) {
-            var url = `./sutta/${scid}/en/sujato`;
+            var { 
+                translator,
+                lang,
+            } = this.parseSearch();
+            var url = `./sutta/${scid}/${lang}/${translator}`;
             Object.keys(this.error).forEach(key => {
                 Vue.set(this.error, key, null);
             });
@@ -254,16 +276,11 @@ export default {
         },
         playSutta() {
         },
-        loadTranslation(author_uid) {
+        translationLink(author_uid,lang='en') {
             console.log(window.location);
-            var splits = window.location.hash.split('&');
-            splits = splits.filter(s => !s.startsWith('translator='));
-            splits.push(`translator=${author_uid}`);
-            var url = window.location.pathname + splits.join('&');
-            var url = `${window.location.origin}${window.location.pathname + splits.join('&')}`;
-            console.log('navigate to ', url);
-            window.location.href = url;
-            return url;
+            var loc = window.location;
+            var search = `translator=${author_uid}&lang=${lang}`;
+            return `${loc.protocol}//${loc.host}${loc.pathname}?${search}${loc.hash}`;
         },
     },
     computed: {

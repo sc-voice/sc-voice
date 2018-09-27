@@ -24,9 +24,12 @@
     };
     const SUPPORTED_TRANSLATORS = {
         sujato: true,
+        bodhi: true,
+        horner: true,
     };
     const SUPPORTED_LANGUAGES = {
         en: true,
+        de: true,
     };
 
     class ScvRest extends RestBundle { 
@@ -97,7 +100,11 @@
             var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var sutta = await that.suttaFactory.loadSutta(suttaId);
+                    var sutta = await that.suttaFactory.loadSutta({
+                        scid: suttaId,
+                        translator,
+                        language,
+                    });
                     if (EXPANDABLE_SUTTAS[suttaId]) {
                         sutta = that.suttaFactory.expandSutta(sutta);
                     }
@@ -156,7 +163,11 @@
             var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var sutta = await that.suttaFactory.loadSutta(suttaId);
+                    var sutta = await that.suttaFactory.loadSutta({
+                        scid: suttaId,
+                        translator,
+                        language,
+                    });
                     if (EXPANDABLE_SUTTAS[suttaId]) {
                         sutta = that.suttaFactory.expandSutta(sutta);
                     }
