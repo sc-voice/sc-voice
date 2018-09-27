@@ -6,6 +6,7 @@ import VueAxios from 'vue-axios'
 //import Vuetify from 'vuetify'
 import './plugins/vuetify'
 import App from './App.vue'
+// eslint no-console 0 
 
 const DEFAULT_VOICES = [{
     name: 'Amy',

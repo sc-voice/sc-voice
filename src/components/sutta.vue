@@ -15,16 +15,68 @@
           </div>
           <details autofocus v-if="sections && sections[0]" class="scv-header">
             <summary class="subheading scv-header-summary" >
-                <span v-for="(seg,i) in sections[0].segments" :key="`hs-seg${i}`" class="title">
-                    {{seg.en}}<span v-if="i<sections[0].segments.length-1">&mdash;</span>
-                </span>
+                {{sutta.title}}
             </summary>
-            <a :href="`https://github.com/sc-voice/sc-voice/wiki/Support-Policy`">
-                Search SuttaCentral for {{search}}
-            </a>
-            <div class="scv-header-body" dark>
-                {{sections[0].segments[0].pli}}
-                {{sections[0].segments[1].pli}}
+            <div class="title pt-4 pb-2 text-xs-center">
+                {{sutta.original_title}}
+            </div>
+            <div class="subtitle font-italic pt-1 pb-3 text-xs-center">
+                Translated by {{sutta.author}}
+            </div>
+            <div class="scv-blurb">{{suttaplex.blurb}}</div>
+            <div class="scv-blurb">{{metaarea}}</div>
+            <div class="scv-play-controls">
+                <audio v-if="suttaAudioGuid" autoplay controls class="ml-4 mt-1" 
+                    preload=auto
+                    :aria-label="`play sutta`">
+                    <source :src="`./audio/${suttaAudioGuid}`" type="audio/mp3"/>
+                    <p>Your browser doesn't support HTML5 audio</p>
+                </audio>
+                <button v-else :ref="`play`" @click="playSutta" :disabled="waiting"
+                    class="scv-text-button mt-4 mb-4" :style="cssProps">
+                    Play Sutta ({{voice.name}})
+                </button>
+                <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
+            </div>
+            <div class="scv-blurb-more">
+                <details>
+                    <summary class="body-2">{{suttaId.toUpperCase()}}: Other Resources</summary>
+                    <div class="caption text-xs-center">
+                        <div v-for="translation in suttaplex.translations" 
+                            class="text-xs-center"
+                            :key="translation.id"
+                            v-show="author_uid !== translation.author_uid">
+                            <a @click="loadTranslation(translation.author_uid)"
+                                href="" > 
+                                {{translation.author}} 
+                                &nbsp;&bull;&nbsp; 
+                                {{translation.lang_name}}
+                            </a>
+                        </div>
+                        <div class="text-xs-center">
+                            <a :href="`https://github.com/sc-voice/sc-voice/wiki/Audio-${suttaId}`"
+                                target="_blank"> 
+                                {{suttaId.toUpperCase()}} audio recordings
+                            </a>
+                        </div>
+                        <div class="text-xs-center">
+                            <a :href="`https://suttacentral.net/${suttaId}`"
+                                target="_blank"> 
+                                {{suttaId.toUpperCase()}} at SuttaCentral.net
+                            </a>
+                        </div>
+                        <a class="text-xs-center" :style="cssProps"
+                            target="_blank"
+                            href="https://github.com/sc-voice/sc-voice/wiki/Support-Policy/">
+                            <span v-if="support.value==='Legacy'">
+                                Content support: Legacy
+                            </span>
+                            <span v-if="support.value==='Supported'">
+                                Content support: <em>Supported</em>
+                            </span>
+                        </a>
+                    </div>
+                </details>
             </div>
           </details>
           <details class="scv-section-body" 
@@ -38,10 +90,10 @@
                 <i>{{sect.title}}</i>
             </summary>
             <div class="scv-play-controls">
-                <audio v-if="audioGuids[i]" autoplay controls class="ml-4 mt-1" 
+                <audio v-if="sectionAudioGuids[i]" autoplay controls class="ml-4 mt-1" 
                     preload=auto
                     :aria-label="`play section ${i}`">
-                    <source :src="`./audio/${audioGuids[i]}`" type="audio/mp3"/>
+                    <source :src="`./audio/${sectionAudioGuids[i]}`" type="audio/mp3"/>
                     <p>Your browser doesn't support HTML5 audio</p>
                 </audio>
                 <button v-else :ref="`play${i}`" @click="playSection(i)" :disabled="waiting"
@@ -69,12 +121,6 @@
                 {{seg.en}}
             </div>
           </details>
-          <div class="scv-support">
-            <a href="https://discourse.suttacentral.net/">
-            {{support.value}} 
-            </a>:
-            {{support.description}}
-          </div>
       </v-layout>
   </v-container>
 </template>
@@ -95,23 +141,24 @@ export default {
         var error = {
             search: null,
         };
-        var audioGuids = [];
+        var sectionAudioGuids = [];
         for (var i = 0; i < MAX_SECTIONS; i++) {
             error[i] = null;
-            audioGuids[i] = null;
+            sectionAudioGuids[i] = null;
         }
         var that = {
             error,
             search: '',
-            audioGuids,
+            sectionAudioGuids,
+            suttaAudioGuid: null,
             support: {
                 value: '(n/a)',
                 descriptions: '(n/a)',
             },
+            sutta: {},
             suttaplex: {},
             metaarea: '',
             sections: null,
-            suttaId: null,
             language: 'en',
             translator: 'sujato',
             waiting: false,
@@ -124,7 +171,7 @@ export default {
             this.error.search = null;
             for (var i = 0; i < MAX_SECTIONS; i++) {
                 this.error[i] = null;
-                this.audioGuids[i] = null;
+                this.sectionAudioGuids[i] = null;
             }
             this.segments = null;
         },
@@ -142,7 +189,7 @@ export default {
             var url = `./${vSvc}/section/${suttaId}/${language}/${translator}/${iSection}?g=${g}`;
             Vue.set(this, "waiting", true);
             this.$http.get(url).then(res => {
-                Vue.set(this.audioGuids, iSection, res.data.guid);
+                Vue.set(this.sectionAudioGuids, iSection, res.data.guid);
                 Vue.set(this, "waiting", false);
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
@@ -167,10 +214,25 @@ export default {
             });
             this.$http.get(url).then(res => {
                 this.clear();
-                this.support = res.data.support;
+                var sections = this.sections = res.data.sections;
+                Object.assign(this.support, res.data.support);
                 this.metaarea = res.data.metaarea;
-                this.suttaplex = res.data.suttaplex;
-                this.sections = res.data.sections;
+                var suttaplex = this.suttaplex = 
+                    Object.assign(this.suttaplex, res.data.suttaplex);
+
+                var author_uid = this.author_uid = res.data.author_uid;
+                var acronym = suttaplex.acronym || suttaplex.uid.toUpperCase();
+                var translation = suttaplex.translations
+                    .filter(t => t.author_uid === author_uid)[0] || {
+                    lang: this.language,
+                };
+                var title = translation.title || suttaplex.translated_title;
+                this.sutta.acronym = acronym;
+                this.sutta.title = `${acronym}: ${title}`;
+                this.sutta.original_title = suttaplex.original_title || "?";
+                var seg0 = sections[0].segments[0];
+                this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
+                this.sutta.author = translation.author;
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
                     || `Not found.`;
@@ -190,8 +252,25 @@ export default {
         segClass(seg) {
             return seg.expanded ? "scv-para scv-para-expanded" : "scv-para";
         },
+        playSutta() {
+        },
+        loadTranslation(author_uid) {
+            console.log(window.location);
+            var splits = window.location.hash.split('&');
+            splits = splits.filter(s => !s.startsWith('translator='));
+            splits.push(`translator=${author_uid}`);
+            var url = window.location.pathname + splits.join('&');
+            var url = `${window.location.origin}${window.location.pathname + splits.join('&')}`;
+            console.log('navigate to ', url);
+            window.location.href = url;
+            return url;
+        },
     },
     computed: {
+        suttaId() {
+            var query = this.$route.query;
+            return query && query.scid && query.scid || '';
+        },
         voice() {
             return this.scvOpts.voices[this.scvOpts.iVoice];
         },
@@ -201,20 +280,23 @@ export default {
         cssProps() {
             return {
                 '--accent-color': this.$vuetify.theme.accent,
+                '--success-color': this.$vuetify.theme.success,
             }
         },
         errorSummary() {
             return `Error: ${this.error.search.data}`;
         },
+        supportClass() {
+            return this.support.value === 'Supported' 
+                ? 'scv-support scv-supported' 
+                : 'scv-support scv-legacy';
+        },
     },
     mounted() {
         this.$nextTick(() => {
-            var query = this.$route.query;
-            if (query) {
-                if (query.scid != null) {
-                    Vue.set(this, 'search', query.scid);
-                    this.showSutta(query.scid);
-                }
+            if (this.suttaId) {
+                Vue.set(this, 'search', this.suttaId);
+                this.showSutta(this.suttaId);
             }
         });
     },
@@ -227,11 +309,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+summary {
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
 button {
     background-color: var(accentColor);
-}
-h3 {
-  margin: 40px 0 0;
 }
 ul {
   list-style-type: none;
@@ -241,8 +324,20 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
+:focus {
+    background-color: #000 !important;
+}
 a {
-  color: #42b983;
+    color: white;
+    text-decoration: none;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
+a:visited {
+    color: white;
+}
+a:hover {
+    text-decoration: underline;
 }
 .scv-scid {
     display: inline-block;
@@ -324,11 +419,26 @@ a {
     align-items: center;
     justify-content: flex-start;
 }
+
+.scv-blurb {
+    padding-left: 3em;
+    padding-right: 3em;
+}
+.scv-title {
+    display: inline-block;
+    padding-top: 0.5em;
+}
 .scv-support {
-    bottom: 0px;
-    padding-top: 3em;
+    display: block;
     text-align: center;
-    font-size: smaller;
-    font-style: italic;
+}
+.scv-supported {
+}
+.scv-legacy {
+}
+.scv-blurb-more {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 }
 </style>

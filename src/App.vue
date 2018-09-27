@@ -78,6 +78,7 @@
 import Vue from "vue";
 import Sutta from './components/sutta';
 import scvPackage from '../package';
+// eslint no-console 0 
 
 export default {
     name: 'App',
@@ -129,7 +130,7 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            console.log('App mounted');
+            console.debug('App mounted');
             var query = this.$route.query;
             if (query) {
                 query.iVoice && Vue.set(this.scvOpts, "iVoice", Number(query.iVoice));
@@ -142,9 +143,10 @@ export default {
     created() {
         var that = this;
         setTimeout(() => {
-            this.bgShow = true; // trigger CSS transition
+            // The background interferes with legibility
+            // that.bgShow = true; // trigger CSS transition
         }, 1000);
-        this.version = scvPackage.version;
+        that.version = scvPackage.version;
     }
 }
 </script>
@@ -184,7 +186,7 @@ details.scv-dialog {
     position: absolute;
     bottom: 35px;
     background-image: url("/img/lotus.png") ;
-    background-size: 390px 200px;
+    background-size: 350px 200px;
     background-repeat: no-repeat;
     background-position: center bottom;
     opacity: 1;
