@@ -4,7 +4,7 @@
     const winston = require('winston');
     const Queue = require('promise-queue');
     const { MerkleJson } = require('merkle-json');
-    const SoundStore = require('./sound-store');
+    const GuidStore = require('./guid-store');
     const Words = require('./words');
     const ABSTRACT_METHOD = "abstract method must be overridden and implemented by base class";
     const { exec } = require('child_process');
@@ -27,7 +27,10 @@
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
-            this.store = opts.store || new SoundStore();
+            this.store = opts.store || new GuidStore({
+                type: 'SoundStore',
+                storeName: 'sounds',
+            });
             Object.defineProperty(this, 'credentials', {
                 writable: true,
             });

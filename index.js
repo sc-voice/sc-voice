@@ -7,7 +7,7 @@ module.exports = {
     ScvRest: require('./src/node/scv-rest'),
     SectionParser: require('./src/node/section-parser'),
     Section: require('./src/node/section'),
-    SoundStore: require("./src/node/sound-store"),
+    GuidStore: require("./src/node/guid-store"),
     SuttaCentralApi: require('./src/node/sutta-central-api'),
     SuttaCentralId: require("./src/node/sutta-central-id"),
     SuttaFactory: require("./src/node/sutta-factory"),

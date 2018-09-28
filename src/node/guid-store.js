@@ -3,22 +3,23 @@
     const path = require('path');
     const LOCAL = path.join(__dirname, '../../local');
 
-    class SoundStore {
+    class GuidStore {
         constructor(opts={}) {
             if (!fs.existsSync(LOCAL)) {
                 fs.mkdirSync(LOCAL);
             }
-            this.type = 'SoundStore';
+            this.type = opts.type || 'GuidStore';
             this.folderPrefix = opts.folderPrefix || 2;
 
-            this.storePath = opts.storePath ||  path.join(LOCAL, 'sounds');
+            this.suffix = opts.suffix || '';
+            this.storeName = opts.storeName || 'guid-store';
+            this.storePath = opts.storePath ||  path.join(LOCAL, this.storeName);
             fs.existsSync(this.storePath) || fs.mkdirSync(this.storePath);
         }
 
-        signaturePath(signature, suffix='.ogg') {
-            var guid = signature.guid;
+        guidPath(guid, suffix=this.suffix) {
             if (typeof guid !== 'string') {
-                var e = new Error(`SoundStore.assetPath() invalid guid:${guid}`);
+                var e = new Error(`GuidStore.guidPath() invalid guid:${guid}`);
                 throw e;
             }
             var folder = guid.substr(0,this.folderPrefix);
@@ -27,8 +28,12 @@
             return path.join(folderPath, `${guid}${suffix}`);
         }
 
+        signaturePath(signature, suffix=this.suffix) {
+            return this.guidPath(signature.guid, suffix);
+        }
+
     }
 
-    module.exports = exports.SoundStore = SoundStore;
+    module.exports = exports.GuidStore = GuidStore;
 })(typeof exports === "object" ? exports : (exports = {}));
 
