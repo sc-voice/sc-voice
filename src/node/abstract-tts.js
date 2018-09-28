@@ -1,9 +1,11 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const winston = require('winston');
     const Queue = require('promise-queue');
     const { MerkleJson } = require('merkle-json');
+    const {
+        logger,
+    } = require('rest-bundle');
     const GuidStore = require('./guid-store');
     const Words = require('./words');
     const ABSTRACT_METHOD = "abstract method must be overridden and implemented by base class";

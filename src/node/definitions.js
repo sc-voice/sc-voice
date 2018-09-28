@@ -1,4 +1,5 @@
 (function(exports) {
+
     class Definitions {
 
         static get SUPPORT_LEVELS() {

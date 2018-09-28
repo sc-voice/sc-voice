@@ -1,9 +1,9 @@
 
 (function(exports) {
-    const winston = require('winston');
     const fs = require('fs');
     const path = require('path');
     const {
+        logger,
         RestBundle,
     } = require('rest-bundle');
     const srcPkg = require("../../package.json");
@@ -39,7 +39,7 @@
             super(opts.name || 'scv', Object.assign({
                 srcPkg,
             }, opts));
-            winston.info(`ScvRest.ctor(${this.name})`);
+            logger.info(`ScvRest.ctor(${this.name})`);
             if (opts.audioFormat === 'ogg') {
                 this.audioSuffix = '.ogg';
                 this.audioFormat = 'ogg_vorbis';

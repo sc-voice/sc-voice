@@ -2,6 +2,9 @@
     const fs = require('fs');
     const path = require('path');
     const SC = path.join(__dirname, '../../local/sc');
+    const {
+        logger,
+    } = require('rest-bundle');
     const Words = require('./words');
     const DEFAULT_LANG = 'en';
 
@@ -146,7 +149,7 @@
             var id =  Number(scid);
             if (isNaN(id)) {
                 var e = new Error(`could not parse minorSuttaId from filename:${filename}`);
-                //console.error(e.stack);
+                logger.error(e);
                 throw e;
             }
             return id;
@@ -162,7 +165,8 @@
             }
             var majorIdValue = majorIdLang[majorId];
             if (majorIdValue == null) {
-                throw new Error(`Sutta not found: ${id}`);
+                var e = new Error(`suttaPath() file not found: ${id}`);
+                throw e;
             }
             var folder = MAJOR_IDS[lang] && MAJOR_IDS[lang][majorId];
             var zeros = 0;
@@ -276,7 +280,7 @@
             if (!fs.existsSync(filepath)) {
                 var tokens = filepath.split('/sc/');
                 var e = new Error(`file not found: ${Words.U_ELLIPSIS}/${tokens[tokens.length-1]}`)
-                console.error(`file not found:${filepath}`);
+                logger.error(`parse() file not found:${filepath}`);
                 return Promise.reject(e);
             }
             var lines = fs.readFileSync(filepath).toString().split('\n');

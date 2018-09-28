@@ -2,7 +2,6 @@
     const fs = require('fs');
     const path = require('path');
     const http = require('http');
-    const winston = require('winston');
     const Words = require('./words');
     const Sutta = require('./sutta');
     const PoParser = require('./po-parser');
@@ -15,6 +14,12 @@
     const ANY_LANGUAGE = '*';
     const ANY_TRANSLATOR = '*';
     const PO_SUFFIX_LENGTH = '.po'.length;
+    const { 
+        logger,
+        RbServer,
+    } = require('rest-bundle');
+    RbServer.logDefault();
+    logger.level = 'info';
 
     var singleton;
 
@@ -50,15 +55,14 @@
             var stat = fs.existsSync(cachedPath) && fs.statSync(cachedPath);
             var age = stat && (Date.now() - stat.ctimeMs)/1000 || this.apiCacheSeconds;
             if (age < this.apiCacheSeconds) {
-            console.log('age fresh', age);
                 var res = JSON.parse(fs.readFileSync(cachedPath));
-                winston.info(`loadJson() => cached response guid:${guid} url:${url}`);
+                logger.debug(`loadJson() => cached response guid:${guid} url:${url}`);
                 var result = Promise.resolve(res);
             } else {
                 var result = this.loadJsonRest(url);
                 result.then(res => {
                     fs.writeFileSync(cachedPath, JSON.stringify(res,null,2));
-                    winston.info(`loadJson() => updated apiStore guid:${guid} url:${url}`);
+                    logger.info(`loadJson() => updated apiStore guid:${guid} url:${url}`);
                 });
             }
             return result;
@@ -80,7 +84,7 @@
                     }
                     if (error) {
                         res.resume(); // consume response data to free up memory
-                        winston.error(error.stack);
+                        logger.error(error.stack);
                         reject(error);
                         return;
                     }
@@ -91,17 +95,17 @@
                     res.on('end', () => {
                         try {
                             var result = JSON.parse(rawData);
-                            winston.info(`${url} => HTTP200`);
+                            logger.info(`loadJsonRest() ${url} => HTTP200`);
                             resolve(result);
                         } catch (e) {
-                            winston.error(e.stack);
+                            logger.error(e.stack);
                             reject(e);
                         }
                     });
                 }).on('error', (e) => {
                     reject(e);
                 }).on('timeout', (e) => {
-                    winston.error(e.stack);
+                    logger.error(e.stack);
                     req.abort();
                 });
             } catch(e) {reject(e);} });
@@ -222,7 +226,7 @@
                 var support = Definitions.SUPPORT_LEVELS.Supported;
             } catch(e) {
                 // ignore and pass to api (possibly not in Pootl)
-                console.error(e.message);
+                logger.debug(e.stack);
                 var support = Definitions.SUPPORT_LEVELS.Legacy;
             }
             return {
@@ -256,8 +260,7 @@
                     if (language && language !== ANY_LANGUAGE) {
                         request += `?lang=${language}`;
                     }
-                    winston.info(request);
-                    console.debug(request);
+                    logger.debug(`loadSuttaJson()`, request);
 
                     var result = await SuttaCentralApi.loadJson(request);
                     result.support = support;
@@ -267,7 +270,8 @@
                         throw new Error(`loadSuttaJson() no sutta found for id:${scid}`);
                     }
                     if (translations && language && language !== ANY_LANGUAGE) {
-                        suttaplex.translations = translations.filter(t => t.lang === language);
+                        suttaplex.translations = 
+                            translations.filter(t => t.lang === language);
                     }
                     resolve(result);
                 } catch(e) {

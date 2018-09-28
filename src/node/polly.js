@@ -2,7 +2,9 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const winston = require('winston');
+    const {
+        logger,
+    } = require('rest-bundle');
     const AbstractTTS = require('./abstract-tts');
     const AWS = require("aws-sdk");
 
@@ -36,16 +38,16 @@
             that.polly.synthesizeSpeech(params, (err, data) => {
 
                 if (err) {
-                    console.error(`serviceSynthesize()`, request, err.stack)
+                    logger.error(`serviceSynthesize()`, request, err.stack)
                     reject(err);
                 } else if (data == null) {
                     var err = new Error("(no data returned from AWS server)");
-                    console.error(err.stack)
+                    logger.error(err.stack)
                     reject(err);
                 } else if (data.AudioStream instanceof Buffer) {
                     fs.writeFile(request.outpath, data.AudioStream, function(err) {
                         if (err) {
-                            console.error(err)
+                            logger.error(err)
                             reject(err);
                         } else {
                             that.synthesizeResponse(resolve, reject, request);
@@ -53,7 +55,7 @@
                     })
                 } else {
                     var err = new Error(`synthesizeSpeech() expected:Buffer actual:${typeof data.AudioStream}`);
-                    console.error(err.stack)
+                    logger.error(err.stack)
                     reject(err);
                 }
             })

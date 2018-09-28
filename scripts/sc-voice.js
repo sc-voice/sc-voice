@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 const path = require("path");
-const winston = require("winston");
 const compression = require("compression");
 const express = require('express');
 const app = module.exports = express();
 const {
+    logger,
     RestBundle,
     RbServer,
 } = require('rest-bundle');
@@ -15,12 +15,13 @@ const {
 } = require('../index');
 
 global.__appdir = path.dirname(__dirname);
+RbServer.logDefault();
 
 app.use(compression());
 
 // ensure argv is actually for script instead of mocha
 var argv = process.argv[1].match(__filename) && process.argv || [];
-argv.filter(a => a==='--log-debug').length && (winston.level = 'debug');
+argv.filter(a => a==='--log-debug').length && (logger.level = 'debug');
 
 // set up application
 app.all('*', function(req, res, next) {
@@ -55,7 +56,7 @@ app.use("/scv/sounds", express.static(path.join(__dirname, "../local/sounds")));
         rbServer.listen(app, restBundles, ports); 
         await rbServer.initialize();
     } catch(e) {
-        winston.error(e.stack);
+        logger.error(e.stack);
         throw e;
     }
 })();
