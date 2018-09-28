@@ -78,7 +78,7 @@
             done();
         } catch(e) {done(e)} })();
     });
-    it("TESTTESTfiles(opts) returns source file list", (done) => {
+    it("files(opts) returns source file list", (done) => {
         (async function() { try {
             var parser = new PoParser();
             var files = await parser.files();

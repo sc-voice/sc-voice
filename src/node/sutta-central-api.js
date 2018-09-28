@@ -6,25 +6,65 @@
     const Words = require('./words');
     const Sutta = require('./sutta');
     const PoParser = require('./po-parser');
+    const GuidStore = require('./guid-store');
     const Definitions = require('./definitions');
+    const { MerkleJson } = require('merkle-json');
     const EXPANSION_PATH = path.join(__dirname, '..', '..', 'local', 'expansion.json');
     const DEFAULT_LANGUAGE = 'en';
     const DEFAULT_API_URL = 'http://suttacentral.net/api';
     const ANY_LANGUAGE = '*';
     const ANY_TRANSLATOR = '*';
     const PO_SUFFIX_LENGTH = '.po'.length;
-    var expansion = [{}];
+
+    var singleton;
 
     class SuttaCentralApi {
         constructor(opts={}) {
             this.language = opts.language || DEFAULT_LANGUAGE;
             this.translator = opts.translator;
             this.expansion = opts.expansion || [{}];
+            this.apiStore = opts.apiStore || new GuidStore({
+                type: 'ApiStore',
+                suffix: '.json',
+                storeName: 'api',
+            });
+            this.apiCacheSeconds = opts.apiCacheSeconds || 10*60; 
+            this.mj = new MerkleJson({
+                hashTag: 'guid',
+            });
             this.initialized = false;
             this.apiUrl = opts.apiUrl || DEFAULT_API_URL;
         }
 
         static loadJson(url) {
+            singleton = singleton || new SuttaCentralApi();
+            return singleton.loadJson(url);
+        }
+
+        loadJson(url) {
+            var guid = this.mj.hash({
+                method: 'get',
+                url,
+            });
+            var cachedPath = this.apiStore.guidPath(guid);
+            var stat = fs.existsSync(cachedPath) && fs.statSync(cachedPath);
+            var age = stat && (Date.now() - stat.ctimeMs)/1000 || this.apiCacheSeconds;
+            if (age < this.apiCacheSeconds) {
+            console.log('age fresh', age);
+                var res = JSON.parse(fs.readFileSync(cachedPath));
+                winston.info(`loadJson() => cached response guid:${guid} url:${url}`);
+                var result = Promise.resolve(res);
+            } else {
+                var result = this.loadJsonRest(url);
+                result.then(res => {
+                    fs.writeFileSync(cachedPath, JSON.stringify(res,null,2));
+                    winston.info(`loadJson() => updated apiStore guid:${guid} url:${url}`);
+                });
+            }
+            return result;
+        }
+
+        loadJsonRest(url) {
             return new Promise((resolve, reject) => { try {
                 var req = http.get(url, res => {
                     const { statusCode } = res;

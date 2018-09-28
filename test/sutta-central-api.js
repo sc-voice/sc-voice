@@ -78,7 +78,7 @@
         title: 'The One Way In Sūtra',
     }];
 
-    it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
+    it("TESTTESTloadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
