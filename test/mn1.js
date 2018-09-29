@@ -13,7 +13,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
-    it("TESTTESTloadSutta(scid) parses mn1", function(done) {
+    it("loadSutta(scid) parses mn1/bodhi", function(done) {
         (async function() { try {
             var scapi = await new SuttaCentralApi().initialize();
             var factory = new SuttaFactory({
@@ -24,7 +24,16 @@
                 translator: 'bodhi',
                 language: 'en',
             });
-            console.log(Object.keys(sutta));
+            should.deepEqual(Object.keys(sutta).sort(), [
+                'support', 'metaarea', 'sections', 'suttaplex', 'author_uid',
+            ].sort());
+            should(sutta.support.value).equal('Legacy');
+            should(sutta.metaarea).match(/.*Bhikkhu Bodhi,[^]*Blake Walsh.*/);
+            should(sutta.suttaplex).properties({
+                translated_title: 'The Root of All Things',
+                type:'text',
+                root_lang: 'pli',
+            });
             done();
         } catch(e) { done(e); } })();
     });

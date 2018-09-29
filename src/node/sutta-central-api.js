@@ -151,6 +151,9 @@
             if (!this.initialized) {
                 throw new Error('initialize() must be called');
             }
+            var debug = true;
+
+            var msStart = Date.now();
             var translation = apiJson.translation;
             var lang = translation.lang;
             var suttaplex = apiJson.suttaplex;
@@ -167,36 +170,68 @@
             } else {
                 var metaArea = '';
             }
-            html = html.replace(/(.*\n)*<section[^>]*>\n*/um, '');
-            html = html.replace(/<\/section>[^]*/um, '');
-            html = html.replace(/(.*\n)*<blockquote[^>]*>\n*/um, '');
-            html = html.replace(/<\/blockquote>[^]*/um, '');
-            html = html.replace(/<br>\n/gum, ' ');
-            html = html.replace(/<\/p>/gum, '');
-            //html = html.replace(/<\/?[^a][^>]+>/igum, ''); 
-            html = html.replace(/<\/?article[^>]*>/igum, ''); 
-            html = html.replace(/<\/?div[^>]*>/igum, ''); 
-            html = html.replace(/<\/?h[0-9][^>]*>/igum, ''); 
-            html = html.replace(/<\/?i[^>]*>/igum, ''); 
-            html = html.replace(/\n( *\n)*/gum, '\n');
-            html = html.replace(/\n*$/gum, '');
+
+            var iH = html.match(/<h[0-9]/um);
+            var iP = html.indexOf('<p');
+            if (iH >= 0) {
+                html = html.replace(/[^]*?(<h[0-9][^>]*)>/um, '$1');
+            } else {
+                html = html.replace(/[^]*?<p[^>]*>/um, '<p>');
+            }
+            //html = html.replace(/[^]*?<p[^>]*>/um, '<p>');
+            //if (html.indexOf('class="hgroup"') >= 0) {
+                //html = html.replace(/[^]*?<\/div>\n*/um, '');
+            //}
+            html = html.replace(/<\/?div[^>]*>\n*/gum,'');
+            html = html.replace(/<\/?blockquote[^>]*>\n*/gum,'');
+            html = html.replace(/<\/?br[^>]*>\n*/gum,' ');
+
+            var ipLast = html.lastIndexOf('</p>');
+            var pEnd = '</p>';
+            html = html.substring(0, html.lastIndexOf(pEnd)+pEnd.length);
             var lines = html.split('\n');
-            console.log(lines.slice(0,10));
+
+            var debug1 = 0;
+            var debug2 = debug1 + 10;
+            if (debug) {
+                lines.slice(debug1, debug2).forEach((l,i) => {
+                    var head = l.substring(0,40);
+                    var tail = l.substring(l.length-10);
+                    console.log(`${i+debug1} ${head}...${tail}"`)
+                });
+            }
+
+            var section = 1;
+            if (html.indexOf('id="sc') >= 0) {
+            } else {
+            }
+            var id = '.0';
             var textSegments = lines.map((line,i) => {
-                var tokens = line.split('</a>');
-                if (tokens.length > 1) {
-                    return {
-                        scid: tokens[0].replace(/.*sc/u,`${uid}:`).replace(/".*/u,''),
-                        [lang]: tokens[2],
-                    }
-                } else { // really raw HTML with just line counts
-                    line = line.replace(/<\/?[^>]+>/gum, '');
-                    return {
-                        scid: `${uid}:${i+1}`,
-                        [lang]: line,
-                    }
+                if (line.indexOf('id="sc') > 0) {
+                    id = line.replace(/.*"sc([0-9]+)[^]*/u,'.$1');
+                }
+                if (i) {
+                    section = line.match(/^<h[2-9]/u) ? section+1 : section;
+                }
+                var scid = `${uid}:${section}${id}.${i+1}`;
+                line = line.replace(/<\/?[^>]*>/gu,'');
+                return {
+                    scid,
+                    [lang]: line,
                 }
             });
+
+            if (debug) {
+                console.log('elapsed', ((Date.now() - msStart)/1000).toFixed(3));
+                textSegments.slice(debug1, debug2).forEach((seg,i) => {
+                    var l = seg.en;
+                    var len = Math.min(20,l.length/2-1);
+                    console.log(`${i+debug1} ${seg.scid} "` +
+                        l.substring(0,len)+
+                        '...'+
+                        `${l.substring(seg.en.length-len)}"`)
+                });
+            }
 
             var collId = uid.replace(/[0-9.-]+/u, '');
             var collNum = uid.replace(/[a-z]*/iu, '');
@@ -285,7 +320,6 @@
 
         loadSutta(opts={}, ...args) {
             var that = this;
-            console.log('debug1');
             return new Promise((resolve, reject) => { try {
                 (async function(){ try {
                     var result = await that.loadSuttaJson(opts);

@@ -77,6 +77,10 @@
         }
 
         parseSutta(sutta) {
+            console.log('parseSutta() support', sutta.support);
+            if (sutta.support && sutta.support.value === 'Legacy') {
+                return sutta;
+            }
             var segments = sutta.segments.slice();
             var parser = new SectionParser({
                 prop: this.prop,

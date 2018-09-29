@@ -78,7 +78,7 @@
         title: 'The One Way In Sūtra',
     }];
 
-    it("TESTTESTloadSutta(opts) returns list of english translations for Snp1.8", function(done) {
+    it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
@@ -124,17 +124,26 @@
             should(segments[i].en).match(/Loving-kindness/um);
             should(segments[i].pli).match(/Metta Sutta/um);
             i += 1;
-            should(segments[i].scid).match(/snp1.8:1/um);
+            should(segments[i].scid).match(/snp1.8:1.0.1$/um);
+            should(segments[i].en).match(/Sutta Nipāta/um);
+            i += 1;
+            should(segments[i].scid).match(/snp1.8:1.0.2$/um);
+            should(segments[i].en).match(/Mettā Sutta/um);
+            i += 1;
+            should(segments[i].scid).match(/snp1.8:1.0.3$/um);
+            should(segments[i].en).match(/1.8. Loving-kindness/um);
+            i += 1;
+            should(segments[i].scid).match(/snp1.8:1.1.4$/um);
             should(segments[i].en).match(/What should[^]*well content/um);
             i += 9;
-            should(segments[i].scid).match(/snp1.8:10/um);
+            should(segments[i].scid).match(/snp1.8:1.10.13$/um);
             should(segments[i].en).match(/But when on[^]*no more to be reborn./um);
             should(sutta.metaarea).match(/<p>This translation[^]*No rights reserved.[^]*/um);
-            should(segments.length).equal(12);
+            should(segments.length).equal(15);
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) returns english translations for ea12.1", function(done) {
+    it("loadSutta(opts) returns english translations for ea12.1", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
@@ -165,19 +174,20 @@
             should(segments[i].en).match(/The One Way In Sūtra/um);
             should(segments[i].lzh).match(/ ?/um);
             i += 1;
-            should(segments[i].scid).match(/ea12.1:1/um);
-            should(segments[i].en).match(/^$/um);
+            should(segments[i].scid).match(/ea12.1:1.0.1$/um);
+            should(segments[i].en).match(/Ekottarikāgama 12.1/um);
+            //should(segments[i].en).match(/^Introduction$/um);
             i += 1;
-            should(segments[i].scid).match(/ea12.1:2/um);
-            should(segments[i].en).match(/^Ekottar/um);
-            i += 1;
-            should(segments[i].scid).match(/ea12.1:3/um);
+            should(segments[i].scid).match(/ea12.1:1.0.2/um);
             should(segments[i].en).match(/^The One Way In/um);
             i += 1;
-            should(segments[i].scid).match(/ea12.1:4/um);
+            should(segments[i].scid).match(/ea12.1:2.0.3/um);
             should(segments[i].en).match(/^Introduction/um);
+            i += 1;
+            should(segments[i].scid).match(/ea12.1:2.0.4/um);
+            should(segments[i].en).match(/^I heard these words[^]*assembly of monks:/um);
             should(sutta.metaarea).match(/Translated from Sanskrit[^]*Bhikkhu Sujato[^]*/um);
-            should(segments.length).equal(55);
+            should(segments.length).equal(54);
             done();
         } catch(e) {done(e);} })();
     });
