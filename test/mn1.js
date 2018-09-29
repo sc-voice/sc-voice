@@ -13,6 +13,21 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
+    it("TESTTESTloadSutta(scid) parses mn1", function(done) {
+        (async function() { try {
+            var scapi = await new SuttaCentralApi().initialize();
+            var factory = new SuttaFactory({
+                suttaCentralApi: scapi,
+            });
+            var sutta = await factory.loadSutta({
+                scid: 'mn1',
+                translator: 'bodhi',
+                language: 'en',
+            });
+            console.log(Object.keys(sutta));
+            done();
+        } catch(e) { done(e); } })();
+    });
     it("parseSutta(sutta) parses mn1", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn1');

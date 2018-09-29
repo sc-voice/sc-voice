@@ -134,7 +134,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("loadSutta(opts) returns english translations for ea12.1", function(done) {
+    it("TESTTESTloadSutta(opts) returns english translations for ea12.1", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();

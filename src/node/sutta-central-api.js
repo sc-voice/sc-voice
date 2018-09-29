@@ -152,6 +152,10 @@
                 throw new Error('initialize() must be called');
             }
             var translation = apiJson.translation;
+            var lang = translation.lang;
+            var suttaplex = apiJson.suttaplex;
+            var uid = suttaplex.uid;
+
             var html = translation.text;
             var resultAside = (/<aside/um).exec(html);
             if (resultAside) {
@@ -177,21 +181,7 @@
             html = html.replace(/\n( *\n)*/gum, '\n');
             html = html.replace(/\n*$/gum, '');
             var lines = html.split('\n');
-            var suttaplex = apiJson.suttaplex;
-            var uid = suttaplex.uid;
-            var lang = translation.lang;
-            var collId = uid.replace(/[0-9.-]+/u, '');
-            var collNum = uid.replace(/[a-z]*/iu, '');
-            var collNames = this.expandAbbreviation(collId);
-            var collName = collNames && collNames[collNames.length-1];
-            var headerSegments = [{
-                scid:`${uid}:0.1`,
-                [lang]: `${collName || colId} ${collNum}`,
-            },{
-                scid:`${uid}:0.2`,
-                [lang]: `${translation.title}`,
-                [suttaplex.root_lang]: `${suttaplex.original_title}`,
-            }];
+            console.log(lines.slice(0,10));
             var textSegments = lines.map((line,i) => {
                 var tokens = line.split('</a>');
                 if (tokens.length > 1) {
@@ -207,6 +197,19 @@
                     }
                 }
             });
+
+            var collId = uid.replace(/[0-9.-]+/u, '');
+            var collNum = uid.replace(/[a-z]*/iu, '');
+            var collNames = this.expandAbbreviation(collId);
+            var collName = collNames && collNames[collNames.length-1];
+            var headerSegments = [{
+                scid:`${uid}:0.1`,
+                [lang]: `${collName || colId} ${collNum}`,
+            },{
+                scid:`${uid}:0.2`,
+                [lang]: `${translation.title}`,
+                [suttaplex.root_lang]: `${suttaplex.original_title}`,
+            }];
             return new Sutta({
                 support: Definitions.SUPPORT_LEVELS.Legacy,
                 metaarea,
@@ -282,6 +285,7 @@
 
         loadSutta(opts={}, ...args) {
             var that = this;
+            console.log('debug1');
             return new Promise((resolve, reject) => { try {
                 (async function(){ try {
                     var result = await that.loadSuttaJson(opts);
