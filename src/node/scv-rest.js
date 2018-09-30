@@ -59,12 +59,12 @@
                 value: super.handlers.concat([
                     this.resourceMethod("get", "audio/:guid", this.getAudio, this.audioMIME),
                     this.resourceMethod("get", 
-                        "recite/section/:suttaId/:language/:translator/:iSection", 
+                        "recite/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReciteSection),
                     this.resourceMethod("get", 
-                        "review/section/:suttaId/:language/:translator/:iSection", 
+                        "review/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReviewSection),
-                    this.resourceMethod("get", "sutta/:suttaId/:language/:translator", 
+                    this.resourceMethod("get", "sutta/:sutta_uid/:language/:translator", 
                         this.getSutta),
 
                 ]),
@@ -88,7 +88,7 @@
             var that = this;
             var audioFormat = that.audioFormat;
             var audioSuffix = that.audioSuffix;
-            var suttaId = req.params.suttaId || 'mn1';
+            var sutta_uid = req.params.sutta_uid || 'mn1';
             var language = req.params.language || 'en';
             if (SUPPORTED_LANGUAGES[language] !== true) {
                 return Promise.reject(new Error(`SC-Voice does not support language: ${language}`));
@@ -101,15 +101,15 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
-                        scid: suttaId,
+                        scid: sutta_uid,
                         translator,
                         language,
                     });
-                    if (EXPANDABLE_SUTTAS[suttaId]) {
+                    if (EXPANDABLE_SUTTAS[sutta_uid]) {
                         sutta = that.suttaFactory.expandSutta(sutta);
                     }
                     if (iSection < 0 || sutta.sections.length <= iSection) {
-                        throw new Error(`Sutta ${suttaId}/${translator} has no section:${iSection}`);
+                        throw new Error(`Sutta ${sutta_uid}/${translator} has no section:${iSection}`);
                     }
                     var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
                     var text = `${lines.join('\n')}\n`;
@@ -127,7 +127,7 @@
                     resolve({
                         usage,
                         name,
-                        suttaId,
+                        sutta_uid,
                         language,
                         translator,
                         section:iSection,
@@ -155,7 +155,7 @@
             if (language !== 'en') { 
                 return Promise.reject(new Error(`SC-Voice does not support language: ${language}`));
             }
-            var suttaId = req.params.suttaId || 'mn1';
+            var sutta_uid = req.params.sutta_uid || 'mn1';
             var translator = req.params.translator || 'sujato';
             if (SUPPORTED_TRANSLATORS[translator] !== true) {
                 return Promise.reject(new Error(`SC-Voice does not support translator: ${translator}`));
@@ -164,11 +164,11 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
-                        scid: suttaId,
+                        scid: sutta_uid,
                         translator,
                         language,
                     });
-                    if (EXPANDABLE_SUTTAS[suttaId]) {
+                    if (EXPANDABLE_SUTTAS[sutta_uid]) {
                         sutta = that.suttaFactory.expandSutta(sutta);
                     }
                     resolve(sutta);

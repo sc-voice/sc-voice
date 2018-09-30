@@ -18,7 +18,7 @@
               <v-spacer/>
               <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
                 aria-label="Close Settings"
-                @click="dialogSettings = false"
+                @click="closeDialog()"
                 >
                 <v-icon>close</v-icon>
               </v-btn>
@@ -112,6 +112,7 @@ export default {
             this.focused[id] = false;
         },
         closeDialog() {
+            console.log('closeDialog()');
             this.scvOpts.reload();
         },
     },
@@ -130,15 +131,17 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            console.debug('App mounted');
-            var query = this.$route.query;
-            if (query) {
-                query.iVoice && Vue.set(this.scvOpts, "iVoice", Number(query.iVoice));
-                query.showId != null && 
-                    Vue.set(this.scvOpts, "showId", query.showId==='true');
-                query.scid && Vue.set(this.scvOpts, "scid", query.scid);
-            }
+            console.debug(`App.mounted(nextTick)`, this.$route.query);
         });
+        var query = this.$route.query;
+        console.debug('App.mounted() with query:', query);
+        if (query) {
+            query.iVoice && Vue.set(this.scvOpts, "iVoice", Number(query.iVoice));
+            query.showId != null && 
+                Vue.set(this.scvOpts, "showId", query.showId==='true');
+            var search = query.scid || query.search || '';
+            query.search && Vue.set(this.scvOpts, "search", search);
+        }
     },
     created() {
         var that = this;

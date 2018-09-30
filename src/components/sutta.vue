@@ -1,6 +1,7 @@
 <template>
   <v-container fluid class="scv-sutta">
       <v-layout column align-left >
+          sutta_uid:{{sutta_uid}}
           <div class="scv-search-row">
               <v-text-field placeholder="Enter sutta id" 
                   v-model="search" v-on:keypress="onSearchKey($event)"
@@ -17,13 +18,13 @@
             <summary class="subheading scv-header-summary" >
                 {{sutta.title}}
             </summary>
+            <div class="scv-blurb">{{suttaplex.blurb}}</div>
             <div class="title pt-4 pb-2 text-xs-center">
                 {{sutta.original_title}}
             </div>
             <div class="subtitle font-italic pt-1 pb-3 text-xs-center">
                 Translated by {{sutta.author}}
             </div>
-            <div class="scv-blurb">{{suttaplex.blurb}}</div>
             <div class="scv-blurb"><span v-html="metaarea"></span></div>
             <div class="scv-play-controls">
                 <audio v-if="suttaAudioGuid" autoplay controls class="ml-4 mt-1" 
@@ -40,29 +41,29 @@
             </div>
             <div class="scv-blurb-more">
                 <details>
-                    <summary class="body-2">{{suttaId.toUpperCase()}}: Other Resources</summary>
+                    <summary class="body-2">{{sutta_uid.toUpperCase()}}: Other Resources</summary>
                     <div class="caption text-xs-center">
                         <div v-for="translation in suttaplex.translations" 
                             class="text-xs-center"
                             :key="translation.id"
                             v-show="author_uid !== translation.author_uid">
-                            <a :href="translationLink(translation.author_uid)"
-                                @click="linkClicked()"> 
+                            <a :href="translationLink(translation)"
+                                v-on:click="clickTranslation(translation,$event)">
                                 {{translation.author}} 
                                 &nbsp;&bull;&nbsp; 
                                 {{translation.lang_name}}
                             </a>
                         </div>
                         <div class="text-xs-center">
-                            <a :href="`https://github.com/sc-voice/sc-voice/wiki/Audio-${suttaId}`"
+                            <a :href="`https://github.com/sc-voice/sc-voice/wiki/Audio-${sutta_uid}`"
                                 target="_blank"> 
-                                {{suttaId.toUpperCase()}} audio recordings
+                                {{sutta_uid.toUpperCase()}} audio recordings
                             </a>
                         </div>
                         <div class="text-xs-center">
-                            <a :href="`https://suttacentral.net/${suttaId}`"
+                            <a :href="`https://suttacentral.net/${sutta_uid}`"
                                 target="_blank"> 
-                                {{suttaId.toUpperCase()}} at SuttaCentral.net
+                                {{sutta_uid.toUpperCase()}} at SuttaCentral.net
                             </a>
                         </div>
                         <a class="text-xs-center" :style="cssProps"
@@ -173,12 +174,13 @@ export default {
                 this.error[i] = null;
                 this.sectionAudioGuids[i] = null;
             }
+            Object.keys(this.error).forEach(key => {
+                Vue.set(this.error, key, null);
+            });
             this.segments = null;
         },
         playSection(iSection) {
             console.debug("playSection", iSection);
-            var search = this.search.trim();
-            var suttaId = search;
             var language = this.language;
             var translator = this.translator;
             var g = Math.random();
@@ -186,7 +188,7 @@ export default {
             if (vSvc !== 'recite' && vSvc !== 'review' && vSvc !== 'navigate') {
                 vSvc = 'recite';
             }
-            var url = `./${vSvc}/section/${suttaId}/${language}/${translator}/${iSection}?g=${g}`;
+            var url = `./${vSvc}/section/${this.sutta_uid}/${language}/${translator}/${iSection}?g=${g}`;
             Vue.set(this, "waiting", true);
             this.$http.get(url).then(res => {
                 Vue.set(this.sectionAudioGuids, iSection, res.data.guid);
@@ -207,33 +209,11 @@ export default {
                 this.search && this.onSearch();
             }
         },
-        parseSearch() {
-            var defaultSearch = {
-                translator: 'sujato',
-                lang: 'en',
-            };
-            var search = window.location.search;
-            search = search && search.substring(1) || '';
-            var searchSplits = search.split('&');
-            return searchSplits.reduce((acc,s) => {
-                var kv = s.split('=');
-                if (kv[0] === 'translator') {
-                    acc.translator = kv[1];
-                } else if (kv[0] === 'lang') {
-                    acc.lang = kv[1];
-                }
-                return acc;
-            }, defaultSearch);
-        },
-        showSutta(scid) {
-            var { 
-                translator,
-                lang,
-            } = this.parseSearch();
-            var url = `./sutta/${scid}/${lang}/${translator}`;
-            Object.keys(this.error).forEach(key => {
-                Vue.set(this.error, key, null);
-            });
+        showSutta(search) {
+            var tokens = search.split('/');
+            (tokens.length < 2) && tokens.push(this.scvOpts.lang);
+            (tokens.length < 3) && tokens.push('sujato'); // TODO remove sujato
+            var url = `./sutta/${tokens.join('/')}`;
             this.$http.get(url).then(res => {
                 this.clear();
                 var sections = this.sections = res.data.sections;
@@ -248,6 +228,8 @@ export default {
                     .filter(t => t.author_uid === author_uid)[0] || {
                     lang: this.language,
                 };
+                this.language = translation.lang;
+                this.translator = translation.author_uid;
                 var title = translation.title || suttaplex.translated_title;
                 this.sutta.acronym = acronym;
                 this.sutta.title = `${acronym}: ${title}`;
@@ -267,26 +249,37 @@ export default {
 
         },
         onSearch() {
-            var search = this.search.trim();
-            this.scvOpts.scid = search;
-            this.scvOpts.reload();
+            this.scvOpts.reload({
+                search: this.search,
+            });
         },
         segClass(seg) {
             return seg.expanded ? "scv-para scv-para-expanded" : "scv-para";
         },
         playSutta() {
         },
-        translationLink(author_uid,lang='en') {
-            console.log(window.location);
-            var loc = window.location;
-            var search = `translator=${author_uid}&lang=${lang}`;
-            return `${loc.protocol}//${loc.host}${loc.pathname}?${search}${loc.hash}`;
+        translationSearch(translation) {
+            var author_uid = translation.author_uid;
+            var lang = translation.lang;
+            return `${this.sutta_uid}/${lang}/${author_uid}`;
+        },
+        clickTranslation(translation,event) {
+            var search = this.translationSearch(translation);
+            console.log(`clickTranslation(${search})`,event);
+            this.showSutta(search);
+        },
+        translationLink(translation) {
+            return this.scvOpts.url({
+                search: this.translationSearch(translation),
+            });
         },
     },
     computed: {
-        suttaId() {
+        sutta_uid() {
             var query = this.$route.query;
-            return query && query.scid && query.scid || '';
+            var search = query && query.search || '';
+            var tokens = search.split('/');
+            return tokens[0];
         },
         voice() {
             return this.scvOpts.voices[this.scvOpts.iVoice];
@@ -311,10 +304,14 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            if (this.suttaId) {
-                Vue.set(this, 'search', this.suttaId);
-                this.showSutta(this.suttaId);
-            }
+            var search = this.scvOpts.search;
+            Vue.set(this, 'search', search);
+            if (search) {
+                console.log(`sutta.mounted() showSutta(${search})`);
+                this.showSutta(search);
+            } else {
+                console.log(`sutta.mounted() no search`);
+            } 
         });
     },
 
@@ -438,8 +435,10 @@ a:hover {
 }
 
 .scv-blurb {
+    padding-top: 1em;
     padding-left: 3em;
     padding-right: 3em;
+    font-style: italic;
 }
 .scv-title {
     display: inline-block;

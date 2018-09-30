@@ -103,7 +103,7 @@
                         language: 'en',
                         name: 'amy',
                         section: 1,
-                        suttaId: 'mn100',
+                        sutta_uid: 'mn100',
                         translator: 'sujato', 
                         usage: 'recite', 
                     });

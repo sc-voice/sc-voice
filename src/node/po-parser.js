@@ -157,8 +157,8 @@
 
         static suttaPath(id, root=SC, opts={}) {
             var lang = opts.lang || DEFAULT_LANG;
-            var suttaId = id.toLowerCase().split(':')[0];
-            var majorId = suttaId.replace(/[0-9-]*$/u,'');
+            var sutta_uid = id.toLowerCase().split(':')[0];
+            var majorId = sutta_uid.replace(/[0-9-]*$/u,'');
             var majorIdLang = MAJOR_IDS[lang] && MAJOR_IDS[lang];
             if (majorIdLang == null) {
                 throw new Error(`Sutta language not supported:${lang}`);
@@ -173,7 +173,7 @@
             for (var zeros=0; folder.endsWith('0'); zeros++) {
                 folder = folder.substring(0, folder.length-1);
             }
-            var filename = suttaId.replace(majorId, '');
+            var filename = sutta_uid.replace(majorId, '');
             var rangeSplits = filename.split('-');
             while (rangeSplits[0].length < zeros) {
                 rangeSplits[0] = '0' + rangeSplits[0];
