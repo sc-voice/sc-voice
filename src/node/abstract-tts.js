@@ -150,6 +150,8 @@
                     acc.length && acc.push('\n');
                     acc.push(`${this.break(5)}`);
                     acc.push('\n');
+                } else if (token === '&') {
+                    acc.push('&amp;');
                 } else {
                     acc.push(this.wordSSML(token) || token);
                 }
@@ -269,12 +271,13 @@
                     } else {
                         this.misses++;
 
-                        this.serviceSynthesize(resolve, error => {
-                            console.error(`synthesize() error:`, error.stack);
-                            reject(error);
+                        this.serviceSynthesize(resolve, e => {
+                            logger.warn(`synthesizeSSML() ${e.message} ssml:${ssmlFragment}`);
+                            reject(e);
                         }, request);
                     }
                 } catch (e) {
+                    logger.warn(`synthesizeSSML() ${e.message} ssml:${ssmlFragment}`);
                     reject(e);
                 }
             });

@@ -26,6 +26,7 @@
         sujato: true,
         bodhi: true,
         horner: true,
+        thanissaro: true,
     };
     const SUPPORTED_LANGUAGES = {
         en: true,

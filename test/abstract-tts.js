@@ -92,7 +92,7 @@
         should(tts.wordSSML('well-to-do'))
         .equal(`well-to-do`);
     });
-    it("tokensSSML(text) returns array of SSML tokens", function() {
+    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS({
             languageUnknown: 'pli',
         });
@@ -117,6 +117,14 @@
             'Why', 'is', 'that', '?', '\n',
             tts.break(4), '\n',
             'They', 'perceive', 'fire', 'as', 'fire', '.',
+        ]);
+
+        // XML
+        var tokens = tts.tokensSSML([
+            `Life is good & happy.`,
+        ].join('\n'));
+        should.deepEqual(tokens, [
+            'Life', 'is', 'good', '&amp;', 'happy', '.',
         ]);
     });
     it("isNumber(text) returns true if text is a number", function() {
