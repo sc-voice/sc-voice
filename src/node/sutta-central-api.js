@@ -33,7 +33,7 @@
                 suffix: '.json',
                 storeName: 'api',
             });
-            this.apiCacheSeconds = opts.apiCacheSeconds || 10*60; 
+            this.apiCacheSeconds = opts.apiCacheSeconds || 60*60; 
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
@@ -151,7 +151,7 @@
             if (!this.initialized) {
                 throw new Error('initialize() must be called');
             }
-            var debug = true;
+            var debug = 0;
 
             var msStart = Date.now();
             var translation = apiJson.translation;
@@ -178,10 +178,6 @@
             } else {
                 html = html.replace(/[^]*?<p[^>]*>/um, '<p>');
             }
-            //html = html.replace(/[^]*?<p[^>]*>/um, '<p>');
-            //if (html.indexOf('class="hgroup"') >= 0) {
-                //html = html.replace(/[^]*?<\/div>\n*/um, '');
-            //}
             html = html.replace(/<\/?div[^>]*>\n*/gum,'');
             html = html.replace(/<\/?blockquote[^>]*>\n*/gum,'');
             html = html.replace(/<\/?br[^>]*>\n*/gum,' ');

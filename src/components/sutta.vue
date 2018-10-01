@@ -1,7 +1,6 @@
 <template>
   <v-container fluid class="scv-sutta">
       <v-layout column align-left >
-          sutta_uid:{{sutta_uid}}
           <div class="scv-search-row">
               <v-text-field placeholder="Enter sutta id" 
                   v-model="search" v-on:keypress="onSearchKey($event)"
