@@ -44,7 +44,7 @@ if [ -e local/sc ]; then
         rm -rf local/sc
     fi
 fi
-if [ ! -e local/sc ]; then
+if [ -e local/sc ]; then
     echo -e "INIT\t: updating SuttaCentral translation content..."
     pushd local/sc
     git pull
