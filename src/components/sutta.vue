@@ -6,6 +6,7 @@
                   v-model="search" v-on:keypress="onSearchKey($event)"
                   label = "Search" ></v-text-field>
           </div>
+          <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
           <div v-if="error.search" class="scv-error" >
               <search-help autofocus :title="errorSummary" :httpError="error.search.http" />
               <v-btn icon @click="error.search=null" class="scv-icon-btn" :style="cssProps"
@@ -25,6 +26,7 @@
                 Translated by {{sutta.author}}
             </div>
             <div class="scv-blurb"><span v-html="metaarea"></span></div>
+            <!--
             <div class="scv-play-controls">
                 <audio v-if="suttaAudioGuid" autoplay controls class="ml-4 mt-1" 
                     preload=auto
@@ -38,6 +40,7 @@
                 </button>
                 <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
             </div>
+            -->
             <div class="scv-blurb-more">
                 <details>
                     <summary class="body-2">{{sutta_uid.toUpperCase()}}: Other Resources</summary>
@@ -53,9 +56,8 @@
                                 {{translation.lang_name}}
                             </a>
                         </div>
-                        <div class="text-xs-center">
-                            <a :href="`https://github.com/sc-voice/sc-voice/wiki/Audio-${sutta_uid}`"
-                                target="_blank"> 
+                        <div class="text-xs-center" v-if="hasAudio">
+                            <a :href="audioUrl" target="_blank"> 
                                 {{sutta_uid.toUpperCase()}} audio recordings
                             </a>
                         </div>
@@ -148,6 +150,7 @@ export default {
         }
         var that = {
             error,
+            hasAudio: true,
             search: '',
             sectionAudioGuids,
             suttaAudioGuid: null,
@@ -213,6 +216,7 @@ export default {
             (tokens.length < 2) && tokens.push(this.scvOpts.lang);
             (tokens.length < 3) && tokens.push('sujato'); // TODO remove sujato
             var url = `./sutta/${tokens.join('/')}`;
+            this.waiting = true;
             this.$http.get(url).then(res => {
                 this.clear();
                 var sections = this.sections = res.data.sections;
@@ -236,6 +240,7 @@ export default {
                 var seg0 = sections[0].segments[0];
                 this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
                 this.sutta.author = translation.author;
+                this.waiting = false;
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
                     || `Not found.`;
@@ -244,6 +249,7 @@ export default {
                     data,
                 };
                 console.error(e.stack, data);
+                this.waiting = false;
             });
 
         },
@@ -274,6 +280,9 @@ export default {
         },
     },
     computed: {
+        audioUrl() {
+            return `https://github.com/sc-voice/sc-voice/wiki/Audio-${this.sutta_uid}`;
+        },
         sutta_uid() {
             var query = this.$route.query;
             var search = query && query.search || '';
