@@ -111,17 +111,19 @@ else
 fi
 
 if [ -e local/sc ]; then
-    echo -e "INIT\t: mn folder exists (OK)"
-else
+    if [ -e local/sc/.git ]; then
+        echo -e "INIT\t: SuttaCentral/translation folder local/sc exists (OK)"
+    else
+        echo -e "INIT\t: removing legacy SuttaCentral/translation folder "
+        rm -rf local/sc
+    fi
+fi
+if [ ! -e local/sc ]; then
     pushd local
-    echo -e "INIT\t: loading SuttaCentral translation content (translation.zip)..."
-    curl https://codeload.github.com/suttacentral/translation/zip/master -o master.zip
-    unzip master.zip
-    mv translation-master sc
-    rm sc/README.md
+    echo -e "INIT\t: loading SuttaCentral translation content..."
+    git clone https://github.com/suttacentral/translation sc
     popd
 fi
-
 
 if [ -e local/awscli-bundle ]; then
     echo -e "INIT\t: awscli-bundle folder exists (OK)"
