@@ -25,7 +25,7 @@
                 language: 'en',
             });
             should.deepEqual(Object.keys(sutta).sort(), [
-                'support', 'metaarea', 'sections', 'suttaplex', 'author_uid',
+                'sutta_uid', 'support', 'metaarea', 'sections', 'suttaplex', 'author_uid',
             ].sort());
             should(sutta.support.value).equal('Legacy');
             should(sutta.metaarea).match(/.*Bhikkhu Bodhi,[^]*Blake Walsh.*/);
@@ -68,11 +68,11 @@
             });
             var sutta = await factory.loadSutta('mn1');
             should.deepEqual(Object.keys(sutta).sort(), [
-                'author_uid', 'sections', 'support', 'suttaplex'].sort());
+                'sutta_uid', 'author_uid', 'sections', 'support', 'suttaplex'].sort());
             var sutta2 = factory.expandSutta(sutta);
             should(sutta2).instanceOf(Sutta);
             should.deepEqual(Object.keys(sutta2).sort(), [
-                'author_uid', 'sections', 'support', 'suttaplex'].sort());
+                'sutta_uid', 'author_uid', 'sections', 'support', 'suttaplex'].sort());
             should(sutta2.suttaplex.blurb).match(/^The Buddha[^]*without attachment.$/um);
             should(sutta2.author_uid).match('sujato');
             var sections = sutta2.sections;

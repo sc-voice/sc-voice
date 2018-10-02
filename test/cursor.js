@@ -19,6 +19,7 @@
         en:'c1 bc ac.',
     }]
     var sutta = new Sutta({
+        sutta_uid: 'test',
         segments,
     });
 
@@ -144,7 +145,9 @@
 
     });
     it("should handle empty sutta", function() {
-        var sutta = new Sutta();
+        var sutta = new Sutta({
+            sutta_uid: 'empty',
+        });
         var cursor = new Cursor(sutta);
         should.deepEqual(cursor.scid, new SuttaCentralId());
         should.deepEqual(cursor.segments, []);

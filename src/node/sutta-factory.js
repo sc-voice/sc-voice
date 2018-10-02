@@ -13,6 +13,21 @@
     const OPTS_EN = {
         prop: 'en',
     };
+    const EXPANDABLE_SUTTAS = {
+        mn1: true,
+        mn41: true, 
+        mn8: false, // very difficult to expand because of grammatical changes
+    };
+    const SUPPORTED_TRANSLATORS = {
+        sujato: true,
+        bodhi: true,
+        horner: true,
+        thanissaro: true,
+    };
+    const SUPPORTED_LANGUAGES = {
+        en: true,
+        de: true,
+    };
 
     class SuttaFactory { 
         constructor(opts={}) {
@@ -49,9 +64,28 @@
         }
 
         loadSutta(opts={}) {
-            return this.suttaCentralApi 
-                ? this.suttaCentralApi.loadSutta(opts)
-                : this.loadSuttaPootl(opts);
+            var language = opts.language || 'en';
+            if (SUPPORTED_LANGUAGES[language] !== true) {
+                return Promise.reject(
+                    new Error(`SC-Voice does not support language: ${language}`));
+            }
+            var translator = opts.translator || 'sujato';
+            if (SUPPORTED_TRANSLATORS[translator] !== true) {
+                return Promise.reject(
+                    new Error(`SC-Voice does not support translator: ${translator}`));
+            }
+
+            return new Promise((resolve, reject) => { try {
+                var promise = this.suttaCentralApi 
+                    ? this.suttaCentralApi.loadSutta(opts)
+                    : this.loadSuttaPootl(opts);
+                promise.then(sutta => {
+                    if (opts.expand) {
+                    } else{
+                        resolve(sutta);
+                    }
+                }).catch(e => reject(e));
+            } catch(e) {reject(e);} });
         }
 
         loadSuttaPootl(opts={}) {
@@ -69,6 +103,7 @@
                     var suttaPath = PoParser.suttaPath(id, opts.root);
                     var segments = await parser.parse(suttaPath, opts);
                     resolve(new Sutta(Object.assign({
+                        sutta_uid: id,
                         support: Definitions.SUPPORT_LEVELS.Supported,
                         segments,
                     }, opts)));

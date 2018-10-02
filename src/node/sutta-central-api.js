@@ -242,6 +242,7 @@
                 [suttaplex.root_lang]: `${suttaplex.original_title}`,
             }];
             return new Sutta({
+                sutta_uid: uid,
                 support: Definitions.SUPPORT_LEVELS.Legacy,
                 metaarea,
                 segments: headerSegments.concat(textSegments),
@@ -351,6 +352,7 @@
                             });
                             var segments = Object.keys(segObj).map(scid => segObj[scid]);
                             var sutta = new Sutta({
+                                sutta_uid: result.suttaplex.uid,
                                 support: result.support,
                                 segments,
                             });

@@ -38,7 +38,7 @@
                 res.statusCode.should.equal(200);
                 var sutta = res.body;
                 should.deepEqual(Object.keys(sutta).sort(), [
-                    'author_uid', "sections", "suttaplex", "support",
+                    'sutta_uid', 'author_uid', "sections", "suttaplex", "support",
                 ].sort());
                 should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Supported);
                 var sections = sutta.sections;

@@ -59,6 +59,7 @@
             }];
 
             var sutta = new Sutta({
+                sutta_uid: 'mn1',
                 segments,
             });
             var parsedSutta = new SuttaFactory().parseSutta(sutta);
@@ -74,6 +75,7 @@
                 'v3a v3b',
                 'v4',
             ]);
+            should.deepEqual(parsedSutta.sutta_uid, 'mn1');
             should.deepEqual(parsedSutta.sections[0].segments, segments.slice(0,1));
             should.deepEqual(parsedSutta.sections[1].segments, segments.slice(1,13));
             should.deepEqual(parsedSutta.sections[2].segments, segments.slice(13,14));

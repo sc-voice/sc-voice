@@ -92,7 +92,7 @@
         should(tts.wordSSML('well-to-do'))
         .equal(`well-to-do`);
     });
-    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
+    it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS({
             languageUnknown: 'pli',
         });

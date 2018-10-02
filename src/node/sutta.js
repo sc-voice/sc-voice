@@ -15,6 +15,9 @@
 
     class Sutta { 
         constructor(opts={}) {
+            if (!(this.sutta_uid = opts.sutta_uid)) {
+                throw new Error('sutta_uid is required');
+            }
             opts.author_uid && (this.author_uid = opts.author_uid);
             opts.support && (this.support = opts.support);
             opts.suttaplex && (this.suttaplex = opts.suttaplex);

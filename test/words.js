@@ -40,7 +40,7 @@
         should.deepEqual(words.lookup('bikkhu'), bhikkhu);
         should.deepEqual(words.lookup('bhikku'), bhikkhu);
     });
-    it("TESTTESTisWord(token) return true if token is a word", function() {
+    it("isWord(token) return true if token is a word", function() {
         var words = new Words();
 
         // strings with symbols
