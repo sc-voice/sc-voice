@@ -55,6 +55,9 @@
                     this.resourceMethod("get", 
                         "review/sutta/:sutta_uid/:language/:translator", 
                         this.getReviewSutta),
+                    this.resourceMethod("get", 
+                        "download/sutta/:sutta_uid/:language/:translator/:usage", 
+                        this.getDownloadSutta),
                     this.resourceMethod("get", "sutta/:sutta_uid/:language/:translator", 
                         this.getSutta),
 
@@ -83,7 +86,7 @@
             };
         }
 
-        reciteSection(req, res, next, name, usage) {
+        reciteSection(req, res, next, usage) {
             var that = this;
             var { sutta_uid, language, translator } = that.suttaRef(req);
             var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
@@ -102,7 +105,8 @@
                     var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
                     var text = `${lines.join('\n')}\n`;
                     var voice = Voice.createVoice({
-                        name,
+                        language,
+                        usage,
                         languageUnknown: "pli",
                         audioFormat: that.audioFormat,
                         audioSuffix: that.audioSuffix,
@@ -113,7 +117,7 @@
                     });
                     resolve({
                         usage,
-                        name,
+                        name: voice.name,
                         sutta_uid,
                         language,
                         translator,
@@ -124,7 +128,7 @@
             });
         }
 
-        reciteSutta(req, res, next, name, usage) {
+        reciteSutta(req, res, next, usage) {
             var that = this;
             var { sutta_uid, language, translator } = that.suttaRef(req);
             return new Promise((resolve, reject) => {
@@ -142,7 +146,8 @@
                     var lines = Sutta.textOfSegments(sutta.segments);
                     var text = `${preamble}\n${lines.join('\n')}\n`;
                     var voice = Voice.createVoice({
-                        name,
+                        language,
+                        usage,
                         languageUnknown: "pli",
                         audioFormat: that.audioFormat,
                         audioSuffix: that.audioSuffix,
@@ -155,7 +160,7 @@
                     logger.info(`reciteSutta() ms:${Date.now()-msStart} ${text.substring(0,50)}`);
                     resolve({
                         usage,
-                        name,
+                        name: voice.name,
                         sutta_uid,
                         language,
                         translator,
@@ -166,7 +171,7 @@
         }
 
         getReciteSection(req, res, next) {
-            var promise =  this.reciteSection(req, res, next, 'amy', 'recite');
+            var promise =  this.reciteSection(req, res, next, 'recite');
             promise.catch(e => {
                 console.error(e.stack);
             });
@@ -174,11 +179,11 @@
         }
 
         getReviewSection(req, res, next) {
-            return this.reciteSection(req, res, next, 'raveena', 'review');
+            return this.reciteSection(req, res, next, 'review');
         }
 
         getReciteSutta(req, res, next) {
-            var promise =  this.reciteSutta(req, res, next, 'amy', 'recite');
+            var promise =  this.reciteSutta(req, res, next, 'recite');
             promise.catch(e => {
                 console.error(e.stack);
             });
@@ -186,8 +191,17 @@
         }
 
         getReviewSutta(req, res, next) {
-            return this.reciteSutta(req, res, next, 'raveena', 'review');
+            return this.reciteSutta(req, res, next, 'review');
         }
+
+        getDownloadSutta(req, res, next) {
+            var promise =  this.reciteSutta(req, res, next, 'recite');
+            promise.catch(e => {
+                console.error(e.stack);
+            });
+            return promise;
+        }
+
 
         getSutta(req, res, next) {
             var that = this;

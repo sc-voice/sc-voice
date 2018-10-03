@@ -42,7 +42,12 @@
 
         static createVoice(opts) {
             var voices = Voice.loadVoices();
-            if (typeof opts === 'string') {
+            if (opts === 'navigate' || opts === 'review' || opts === 'recite') {
+                opts = {
+                    usage: opts,
+                }
+                console.log(`createVoice()`, opts);
+            } else if (typeof opts === 'string') {
                 var voiceJson = voices.filter(v => v.language.match(`^${opts}`))[0];
                 if (voiceJson) {
                     opts = {
@@ -65,15 +70,39 @@
                 };
             }
             if (voiceJson == null) {
-                var voiceJson = 
-                    opts.language && voices.filter(v => v.language.match(`^${opts.language}`))[0] ||
-                    opts.name && voices.filter(v => eqIgnoreCase(v.name, opts.name))[0];
+                var voiceJson = voices.filter(v => {
+                    if (opts.language && !v.language.match(`^${opts.language}`)) {
+                        return false;
+                    }
+                    if (opts.name && !eqIgnoreCase(v.name, opts.name)) {
+                        return false;
+                    }
+                    if (opts.usage && !v.usages[opts.usage]) {
+                        return false;
+                    }
+                    return true;
+                }).sort((v1,v2) => {
+                    if (opts.usage) {
+                        var u1 = v1.usages[opts.usage];
+                        var u2 = v2.usages[opts.usage];
+                        var p1 = u1 && u1.priority || 0;
+                        var p2 = u2 && u2.priority || 0;
+                        if (p1 === p2) {
+                            return v1.name.localeCompare(v2.name);
+                        }
+                        return p2 - p1;
+                    } else {
+                        return v1.name.localeCompare(v2.name);
+                    }
+                })[0];
                 if (voiceJson == null) {
-                    throw new Error(`Could not find pre-defined voice:${JSON.stringify(opts)}`);
+                    throw new Error(`Could not find pre-defined voice:`+
+                        `${JSON.stringify(opts)}`);
                 }
             }
             if (voiceJson.ipa == null) {
-                throw new Error(`Expected IPA lexicon for pre-configured voice: ${voiceJson.name}`);
+                throw new Error(`Expected IPA lexicon for pre-configured voice: `+
+                    `${voiceJson.name}`);
             }
             var voiceOpts = Object.assign({}, voiceJson, opts);
             voiceOpts.language = voiceJson.language;

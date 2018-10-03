@@ -102,7 +102,7 @@
                     ]);
                     should(res.body).properties({
                         language: 'en',
-                        name: 'amy',
+                        name: 'Amy',
                         section: 2,
                         sutta_uid: 'mn1',
                         translator: 'sujato', 
@@ -125,7 +125,7 @@
                     ]);
                     should(res.body).properties({
                         language: 'en',
-                        name: 'amy',
+                        name: 'Amy',
                         section: 1,
                         sutta_uid: 'mn100',
                         translator: 'sujato', 

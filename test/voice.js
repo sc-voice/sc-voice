@@ -58,7 +58,7 @@
         should(!!salli.ipa).equal(true);
         should(!!salli.ipa.pli).equal(true);
     });
-    it("createVoice(opts) returns voice for a language", function() {
+    it("TESTTESTcreateVoice(opts) returns voice for a language", function() {
         var voice = Voice.createVoice();
         should(voice).instanceOf(Voice);
         should(voice.language).equal("en-IN");
@@ -71,8 +71,12 @@
         should(amy.name).equal("Amy");
         should(amy.usage).equal("recite");
     });
-    it("createVoice(opts) creates a recite Voice instance", function() {
-        var reciteVoice = Voice.createVoice("en-IN");
+    it("TESTTESTcreateVoice(opts) creates a recite Voice instance", function() {
+        var reciteVoice = Voice.createVoice({
+            language: 'en',
+            usage: 'recite',
+        });
+        should(reciteVoice.name).equal('Amy');
         should(reciteVoice.services.navigate).instanceOf(Polly);
         should(reciteVoice.services.recite).instanceOf(Polly);
         should(reciteVoice.usage).equal('recite');
@@ -84,30 +88,28 @@
         });
         should.deepEqual(reciteVoice.services.recite.prosody, {
             pitch: "-0%",
-            rate: "-20%",
+            rate: "-30%",
         });
 
         var navVoice = Voice.createVoice({
-            name: "Raveena",
+            language: 'en',
             usage: "navigate",
         });
+        should(navVoice.name).equal('Raveena');
         should(navVoice.services.navigate).instanceOf(Polly);
         should(navVoice.services.recite).instanceOf(Polly);
         should(navVoice.usage).equal('navigate');
-        should.deepEqual(reciteVoice.services.navigate.prosody, {
+        should.deepEqual(navVoice.services.navigate.prosody, {
             pitch: "-0%",
             rate: "+5%",
         });
-        should.deepEqual(reciteVoice.services.recite.prosody, {
-            pitch: "-0%",
-            rate: "-20%",
-        });
     });
-    it("createVoice(opts) creates a review Voice instance", function() {
+    it("TESTTESTcreateVoice(opts) creates a review Voice instance", function() {
         var reviewVoice = Voice.createVoice({
-            language: "en-IN", 
+            language: "en", 
             usage: 'review',
         });
+        should(reviewVoice.name).equal('Raveena');
         should(reviewVoice.usage).equal('review');
         should(reviewVoice.usages).properties(["navigate", "recite", "review"]);
         should(reviewVoice.usages.review).properties(['rate', 'breaks']);
