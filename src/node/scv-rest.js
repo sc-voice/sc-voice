@@ -136,24 +136,23 @@
                         expand: true,
                     });
                     var preamble = [
-                        `suttacentral voice recording`,
-                        `${sutta_uid.toUpperCase()}-${translator}`,
-                        '',
-                    ].join('\n');
+                        `suttacentral voice recording\n`,
+                        `{${sutta.suttaCode}}\n`,
+                    ].join('');
                     var lines = Sutta.textOfSegments(sutta.segments);
-                    var text = `${preamble}${lines.join('\n')}\n`;
+                    var text = `${preamble}\n${lines.join('\n')}\n`;
                     var voice = Voice.createVoice({
                         name,
                         languageUnknown: "pli",
                         audioFormat: that.audioFormat,
                         audioSuffix: that.audioSuffix,
                     });
-                    logger.info(`reciteSutta() START ${text.substring(0,50)}`);
+                    var msStart = Date.now();
                     var result = await voice.speak(text, {
                         cache: true, // false: use TTS web service for every request
                         usage,
                     });
-                    logger.info(`reciteSutta() END ${text.substring(0,50)}`);
+                    logger.info(`reciteSutta() ms:${Date.now()-msStart} ${text.substring(0,50)}`);
                     resolve({
                         usage,
                         name,

@@ -66,7 +66,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("wordSSML(word) returns SSML text for word", function() {
+    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS();
 
         // words without information
@@ -91,6 +91,10 @@
         // hyphenated word 
         should(tts.wordSSML('well-to-do'))
         .equal(`well-to-do`);
+
+        // acronyms
+        should(tts.wordSSML('{mn1.2-en-test}'))
+        .equal(`<say-as interpret-as="spell">mn1.2-en-test</say-as>`);
     });
     it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS({

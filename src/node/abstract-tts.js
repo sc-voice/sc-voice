@@ -117,7 +117,11 @@
                     var ipa = null;
                 }
             } else { // unknown word or punctuation
-                if (this.words.isWord(word) && 
+                if (Words.RE_ACRONYM.test(word)) {
+                    return word
+                        .replace('{', '<say-as interpret-as="spell">')
+                        .replace('}', '</say-as>');
+                } else if (this.words.isWord(word) && 
                     this.languageUnknown !== this.language && 
                     this.words.isForeignWord(word)) { 
                     var ipa = this.words.ipa(word, this.languageUnknown); 

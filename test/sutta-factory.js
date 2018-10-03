@@ -13,7 +13,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
-    it("TESTTESTloadSutta(id, opts) returns a Sutta from SuttaCentral api", function(done) {
+    it("loadSutta(id, opts) returns a Sutta from SuttaCentral api", function(done) {
         (async function() { try {
             var suttaCentralApi = new SuttaCentralApi();
             var factory = new SuttaFactory({

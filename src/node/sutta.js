@@ -26,6 +26,17 @@
             delete this.translation.strings;
             opts.metaarea && (this.metaarea = opts.metaarea);
             this.sections = opts.sections || Sutta.defaultSections(opts.segments);
+            Object.defineProperty(this, 'suttaCode', {
+                enumerable: true,
+                get() {
+                    return [
+                        this.sutta_uid,
+                        this.translation.lang,
+                        this.translation.author_uid,
+                    ].join('/');
+                }
+            });
+
         }
 
         static isHeader(segment) {
@@ -184,14 +195,6 @@
                 section.segments.forEach(seg => acc.push(seg));
                 return acc;
             }, []);
-        }
-
-        get suttaCode() {
-            return [
-                this.sutta_uid,
-                this.translation.lang,
-                this.translation.author_uid,
-            ].join('-');
         }
 
         findIndexes(pat, opts={}) {

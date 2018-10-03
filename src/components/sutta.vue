@@ -41,7 +41,7 @@
             </div>
             <div class="scv-blurb-more">
                 <details>
-                    <summary class="body-2">{{sutta_uid.toUpperCase()}}: Other Resources</summary>
+                    <summary class="body-2">{{suttaCode}}: Other Resources</summary>
                     <div class="caption text-xs-center">
                         <div v-for="translation in suttaplex.translations" 
                             class="text-xs-center"
@@ -158,6 +158,7 @@ export default {
             },
             sutta: {},
             suttaplex: {},
+            suttaCode: '',
             metaarea: '',
             sections: null,
             language: 'en',
@@ -229,6 +230,7 @@ export default {
                     .filter(t => t.author_uid === author_uid)[0] || {
                     lang: this.language,
                 };
+                this.suttaCode = res.data.suttaCode || '';
                 this.language = translation.lang;
                 this.translator = translation.author_uid;
                 var title = translation.title || suttaplex.translated_title;

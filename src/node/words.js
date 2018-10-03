@@ -40,6 +40,8 @@
             this.symbolPat = new RegExp(`[${symAcc.syms}]`);
         }
 
+        static get RE_ACRONYM() { return /\{[^}]*\}/u };
+
         static get U_LSQUOTE() { return '\u2018'; }
         static get U_RSQUOTE() { return '\u2019'; }
         static get U_LDQUOTE() { return '\u201C'; }
@@ -168,7 +170,7 @@
                 var prevMatches = null;
                 for (var matches; (matches = this.symbolPat.exec(tok)); ) {
                     var c = matches[0];
-                    if (matches.index) {
+                    if (matches.index) { 
                         if (matches.index < tok.length-1 && (
                             c === Words.U_RSQUOTE || c === Words.U_RDQUOTE
                             || c === "'" || c === '"')) {
@@ -188,6 +190,9 @@
                                 acc.push(tok.substring(matches.index,matches.index+1));
                                 tok = tok.substring(matches.index+1);
                             }
+                        } else if (Words.RE_ACRONYM.test(tok)) {
+                            acc.push(tok); // {...}
+                            tok = "";
                         } else {
                             acc.push(tok.substring(matches.index,matches.index+1));
                             tok = tok.substring(matches.index+1);

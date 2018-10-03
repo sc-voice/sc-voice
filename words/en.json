@@ -112,6 +112,12 @@
             "name": "hyphen minus",
             "isWord": true
         },
+        "{": {
+            "name": "left brace"
+        },
+        "}": {
+            "name": "right brace"
+        },
         ".": {
             "name": "full stop",
             "endSegment": true,
@@ -11050,6 +11056,7 @@
 "revered": {"language":"en"},
 "revere": {"language":"en"},
 "reverence": {"language":"en"},
+"reverences": {"language":"en"},
 "reverend": {"language":"en"},
 "reverends": {"language":"en"},
 "reverential": {"language":"en"},

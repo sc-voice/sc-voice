@@ -24,7 +24,8 @@
                 res.statusCode.should.equal(200);
                 var keys = Object.keys(res.body).sort();
                 should.deepEqual(keys, [
-                    'freemem', 'hostname', 'loadavg', 'name', 'package', 'totalmem', 'uptime', 'version'
+                    'freemem', 'hostname', 'loadavg', 'name', 
+                    'package', 'totalmem', 'uptime', 'version'
                 ]);
             }).end((e,r) => e ? async.throw(e) : async.next(r));
             done();
@@ -38,7 +39,8 @@
                 res.statusCode.should.equal(200);
                 var sutta = res.body;
                 should.deepEqual(Object.keys(sutta).sort(), [
-                    'translation', 'sutta_uid', 'author_uid', "sections", "suttaplex", "support",
+                    'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
+                    "sections", "suttaplex", "support",
                 ].sort());
                 should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Supported);
                 var sections = sutta.sections;
@@ -89,7 +91,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /recite/sutta/mn1/en/sujato/2 returns recitation", function(done) {
+    it("GET /recite/sutta/mn1/en/sujato/2 returns recitation", function(done) {
         this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/recite/section/mn1/en/sujato/2")

@@ -14,7 +14,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
-    it("TESTTESTloadSutta(scid) parses mn1/bodhi", function(done) {
+    it("loadSutta(scid) parses mn1/bodhi", function(done) {
         (async function() { try {
             var scapi = await new SuttaCentralApi().initialize();
             var factory = new SuttaFactory({
@@ -26,9 +26,9 @@
                 language: 'en',
             });
             should.deepEqual(Object.keys(sutta).sort(), [
-                'translation', 'sutta_uid', 'author_uid', 
+                'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
                 'metaarea', 'sections', 'support', 'suttaplex'].sort());
-            should(sutta.suttaCode).equal('mn1-en-bodhi');
+            should(sutta.suttaCode).equal('mn1/en/bodhi');
             should(sutta.support.value).equal('Legacy');
             should(sutta.metaarea).match(/.*Bhikkhu Bodhi,[^]*Blake Walsh.*/);
             should(sutta.suttaplex).properties({
@@ -39,7 +39,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTparseSutta(sutta) parses mn1 from Github", function(done) {
+    it("parseSutta(sutta) parses mn1 from Github", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn1'); // no SuttaCentralApi
             var sutta2 = new SuttaFactory().parseSutta(sutta);
@@ -52,7 +52,7 @@
             should.deepEqual(sections.map(section => section.segments.length), [
                 2, 10, 98, 31, 31, 31, 31, 31, 31, 38,
             ]);
-            should(sutta2.suttaCode).equal('mn1-en-sujato');
+            should(sutta2.suttaCode).equal('mn1/en/sujato');
             var sectSegs = sections.reduce((acc,section) => {
                 section.segments.forEach(seg => acc.push(seg));
                 return acc;
@@ -71,12 +71,12 @@
             });
             var sutta = await factory.loadSutta('mn1');
             should.deepEqual(Object.keys(sutta).sort(), [
-                'translation', 'sutta_uid', 'author_uid', 
+                'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
                 'sections', 'support', 'suttaplex'].sort());
             var sutta2 = factory.expandSutta(sutta);
             should(sutta2).instanceOf(Sutta);
             should.deepEqual(Object.keys(sutta2).sort(), [
-                'translation', 'sutta_uid', 'author_uid', 
+                'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
                 'sections', 'support', 'suttaplex'].sort());
             should(sutta2.suttaplex.blurb).match(/^The Buddha[^]*without attachment.$/um);
             should(sutta2.author_uid).match('sujato');

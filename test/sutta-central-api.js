@@ -105,7 +105,7 @@
             });
             should(sutta).instanceOf(Sutta);
             should.deepEqual(Object.keys(sutta).sort(), [
-                'translation', 'sutta_uid', 'author_uid', 'support', 
+                'translation', 'suttaCode', 'sutta_uid', 'author_uid', 'support', 
                 'metaarea', 'sections', 'suttaplex',
             ].sort());
             should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
@@ -156,7 +156,7 @@
             });
             should(sutta).instanceOf(Sutta);
             should.deepEqual(Object.keys(sutta).sort(), [
-                'translation', 'sutta_uid', 'author_uid', 'support', 
+                'translation', 'suttaCode', 'sutta_uid', 'author_uid', 'support', 
                 'metaarea', 'sections', 'suttaplex',
             ].sort());
             should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
@@ -282,7 +282,8 @@
             should.deepEqual(sutta.segments[nSegments-1], suttaPootl.segments[nSegments-1]);
             should(sutta.segments.length).equal(nSegments);
             should.deepEqual(Object.keys(sutta).sort(), [
-                'translation', 'sutta_uid', 'author_uid', 'support', 'sections', 'suttaplex',
+                'suttaCode', 'translation', 'sutta_uid', 'author_uid', 'support', 
+                'sections', 'suttaplex',
                 //'metaarea', 
             ].sort());
             should.deepEqual(Object.keys(sutta.sections), Object.keys(suttaPootl.sections));
