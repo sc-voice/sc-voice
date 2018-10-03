@@ -64,6 +64,7 @@
         }
 
         loadSutta(opts={}) {
+            var that = this;
             var language = opts.language || 'en';
             if (SUPPORTED_LANGUAGES[language] !== true) {
                 return Promise.reject(
@@ -74,18 +75,18 @@
                 return Promise.reject(
                     new Error(`SC-Voice does not support translator: ${translator}`));
             }
-
-            return new Promise((resolve, reject) => { try {
-                var promise = this.suttaCentralApi 
-                    ? this.suttaCentralApi.loadSutta(opts)
-                    : this.loadSuttaPootl(opts);
-                promise.then(sutta => {
-                    if (opts.expand) {
-                    } else{
-                        resolve(sutta);
+ 
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var sutta = that.suttaCentralApi 
+                        ? await that.suttaCentralApi.loadSutta(opts)
+                        : await that.loadSuttaPootl(opts);
+                    if (opts.expand && EXPANDABLE_SUTTAS[sutta.sutta_uid]) {
+                        sutta = that.expandSutta(that.parseSutta(sutta))
                     }
-                }).catch(e => reject(e));
-            } catch(e) {reject(e);} });
+                    resolve(sutta);
+                } catch(e) {reject(e);} })();
+            });
         }
 
         loadSuttaPootl(opts={}) {
@@ -112,7 +113,6 @@
         }
 
         parseSutta(sutta) {
-            console.log('parseSutta() support', sutta.support);
             if (sutta.support && sutta.support.value === 'Legacy') {
                 return sutta;
             }

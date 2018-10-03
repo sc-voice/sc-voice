@@ -89,6 +89,28 @@
         } catch (e) { done(e); } }();
         async.next();
     });
+    it("TESTTESTGET /recite/sutta/mn1/en/sujato/2 returns recitation", function(done) {
+        this.timeout(15*1000);
+        var async = function* () { try {
+            var response = yield supertest(app).get("/scv/recite/section/mn1/en/sujato/2")
+                .expect((res) => {
+                    res.statusCode.should.equal(200);
+                    should(res.body).properties([
+                        'guid', 
+                    ]);
+                    should(res.body).properties({
+                        language: 'en',
+                        name: 'amy',
+                        section: 2,
+                        sutta_uid: 'mn1',
+                        translator: 'sujato', 
+                        usage: 'recite', 
+                    });
+                }).end((e,r) => e ? async.throw(e) : async.next(r));
+            done();
+        } catch (e) { done(e); } }();
+        async.next();
+    });
     it("GET /recite/sutta/mn100/en/sujato/1 returns recitation", function(done) {
         this.timeout(15*1000);
         var async = function* () { try {

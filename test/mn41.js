@@ -2,6 +2,7 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const { logger } = require('rest-bundle');
     const {
         Section,
         Sutta,
@@ -149,7 +150,7 @@
                 cache: true, // false: use TTS web service for every request
                 usage: "recite",
             });
-            console.log("mn41 sound guid:", result.signature.guid);
+            logger.info(`mn41 sound guid:${result.signature.guid}`);
             should(result.signature.files.length).equal(228);
 
             done();

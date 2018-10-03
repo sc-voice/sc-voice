@@ -17,22 +17,6 @@
     const SuttaCentralId = require('./sutta-central-id');
     const PATH_SOUNDS = path.join(__dirname, '../../local/sounds/');
 
-    const EXPANDABLE_SUTTAS = {
-        mn1: true,
-        mn41: true, 
-        mn8: false, // very difficult to expand because of grammatical changes
-    };
-    const SUPPORTED_TRANSLATORS = {
-        sujato: true,
-        bodhi: true,
-        horner: true,
-        thanissaro: true,
-    };
-    const SUPPORTED_LANGUAGES = {
-        en: true,
-        de: true,
-    };
-
     class ScvRest extends RestBundle { 
         constructor(opts = {
             audioFormat: 'mp3',
@@ -91,13 +75,7 @@
             var audioSuffix = that.audioSuffix;
             var sutta_uid = req.params.sutta_uid || 'mn1';
             var language = req.params.language || 'en';
-            if (SUPPORTED_LANGUAGES[language] !== true) {
-                return Promise.reject(new Error(`SC-Voice does not support language: ${language}`));
-            }
             var translator = req.params.translator || 'sujato';
-            if (SUPPORTED_TRANSLATORS[translator] !== true) {
-                return Promise.reject(new Error(`SC-Voice does not support translator: ${translator}`));
-            }
             var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -105,12 +83,10 @@
                         scid: sutta_uid,
                         translator,
                         language,
+                        expand: true,
                     });
-                    if (EXPANDABLE_SUTTAS[sutta_uid]) {
-                        sutta = that.suttaFactory.expandSutta(sutta);
-                    }
                     if (iSection < 0 || sutta.sections.length <= iSection) {
-                        throw new Error(`Sutta ${sutta_uid}/${translator} has no section:${iSection}`);
+                        throw new Error(`Sutta ${sutta_uid}/${language}/${translator} has no section:${iSection}`);
                     }
                     var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
                     var text = `${lines.join('\n')}\n`;
@@ -153,14 +129,8 @@
         getSutta(req, res, next) {
             var that = this;
             var language = req.params.language || 'en';
-            if (language !== 'en') { 
-                return Promise.reject(new Error(`SC-Voice does not support language: ${language}`));
-            }
             var sutta_uid = req.params.sutta_uid || 'mn1';
             var translator = req.params.translator || 'sujato';
-            if (SUPPORTED_TRANSLATORS[translator] !== true) {
-                return Promise.reject(new Error(`SC-Voice does not support translator: ${translator}`));
-            }
             var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -168,10 +138,8 @@
                         scid: sutta_uid,
                         translator,
                         language,
+                        expand: true,
                     });
-                    if (EXPANDABLE_SUTTAS[sutta_uid]) {
-                        sutta = that.suttaFactory.expandSutta(sutta);
-                    }
                     resolve(sutta);
                 } catch(e) { reject(e); } })();
             });
