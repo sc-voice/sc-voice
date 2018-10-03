@@ -52,6 +52,24 @@
     "biblio": null,
     "num": 1
   },
+  "translation": {
+    "uid": "mn1",
+    "author": "Bhikkhu Sujato",
+    "author_short": "Sujato",
+    "author_uid": "sujato",
+    "author_blurb": {
+      "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+    },
+    "lang": "en",
+    "title": "The Root of All Things",
+    "next": {
+      "author_uid": "sujato",
+      "lang": "en",
+      "name": "All the Defilements",
+      "uid": "mn2"
+    },
+    "previous": null
+  },
   "sections": [
     {
       "segments": [

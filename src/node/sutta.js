@@ -21,6 +21,9 @@
             opts.author_uid && (this.author_uid = opts.author_uid);
             opts.support && (this.support = opts.support);
             opts.suttaplex && (this.suttaplex = opts.suttaplex);
+            this.translation = Object.assign({}, opts.translation);
+            delete this.translation.text;
+            delete this.translation.strings;
             opts.metaarea && (this.metaarea = opts.metaarea);
             this.sections = opts.sections || Sutta.defaultSections(opts.segments);
         }
@@ -181,6 +184,14 @@
                 section.segments.forEach(seg => acc.push(seg));
                 return acc;
             }, []);
+        }
+
+        get suttaCode() {
+            return [
+                this.sutta_uid,
+                this.translation.lang,
+                this.translation.author_uid,
+            ].join('-');
         }
 
         findIndexes(pat, opts={}) {

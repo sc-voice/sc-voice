@@ -49,6 +49,12 @@
                     this.resourceMethod("get", 
                         "review/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReviewSection),
+                    this.resourceMethod("get", 
+                        "recite/sutta/:sutta_uid/:language/:translator", 
+                        this.getReciteSutta),
+                    this.resourceMethod("get", 
+                        "review/sutta/:sutta_uid/:language/:translator", 
+                        this.getReviewSutta),
                     this.resourceMethod("get", "sutta/:sutta_uid/:language/:translator", 
                         this.getSutta),
 
@@ -69,13 +75,17 @@
             } catch (e) { reject(e) } });
         }
 
+        suttaRef(req) {
+            return {
+                sutta_uid: req.params.sutta_uid || 'mn1',
+                language: req.params.language || 'en',
+                translator: req.params.translator || 'sujato', // TODO
+            };
+        }
+
         reciteSection(req, res, next, name, usage) {
             var that = this;
-            var audioFormat = that.audioFormat;
-            var audioSuffix = that.audioSuffix;
-            var sutta_uid = req.params.sutta_uid || 'mn1';
-            var language = req.params.language || 'en';
-            var translator = req.params.translator || 'sujato';
+            var { sutta_uid, language, translator } = that.suttaRef(req);
             var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -86,21 +96,21 @@
                         expand: true,
                     });
                     if (iSection < 0 || sutta.sections.length <= iSection) {
-                        throw new Error(`Sutta ${sutta_uid}/${language}/${translator} has no section:${iSection}`);
+                        var suttaRef = `${sutta_uid}/${language}/${translator}`;
+                        throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
                     }
                     var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
                     var text = `${lines.join('\n')}\n`;
                     var voice = Voice.createVoice({
                         name,
                         languageUnknown: "pli",
-                        audioFormat,
-                        audioSuffix,
+                        audioFormat: that.audioFormat,
+                        audioSuffix: that.audioSuffix,
                     });
                     var result = await voice.speak(text, {
                         cache: true, // false: use TTS web service for every request
                         usage,
                     });
-                    var guid = result.signature.guid;
                     resolve({
                         usage,
                         name,
@@ -108,7 +118,49 @@
                         language,
                         translator,
                         section:iSection,
-                        guid,
+                        guid: result.signature.guid,
+                    });
+                } catch(e) { reject(e); } })();
+            });
+        }
+
+        reciteSutta(req, res, next, name, usage) {
+            var that = this;
+            var { sutta_uid, language, translator } = that.suttaRef(req);
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var sutta = await that.suttaFactory.loadSutta({
+                        scid: sutta_uid,
+                        translator,
+                        language,
+                        expand: true,
+                    });
+                    var preamble = [
+                        `suttacentral voice recording`,
+                        `${sutta_uid.toUpperCase()}-${translator}`,
+                        '',
+                    ].join('\n');
+                    var lines = Sutta.textOfSegments(sutta.segments);
+                    var text = `${preamble}${lines.join('\n')}\n`;
+                    var voice = Voice.createVoice({
+                        name,
+                        languageUnknown: "pli",
+                        audioFormat: that.audioFormat,
+                        audioSuffix: that.audioSuffix,
+                    });
+                    logger.info(`reciteSutta() START ${text.substring(0,50)}`);
+                    var result = await voice.speak(text, {
+                        cache: true, // false: use TTS web service for every request
+                        usage,
+                    });
+                    logger.info(`reciteSutta() END ${text.substring(0,50)}`);
+                    resolve({
+                        usage,
+                        name,
+                        sutta_uid,
+                        language,
+                        translator,
+                        guid: result.signature.guid,
                     });
                 } catch(e) { reject(e); } })();
             });
@@ -124,6 +176,18 @@
 
         getReviewSection(req, res, next) {
             return this.reciteSection(req, res, next, 'raveena', 'review');
+        }
+
+        getReciteSutta(req, res, next) {
+            var promise =  this.reciteSutta(req, res, next, 'amy', 'recite');
+            promise.catch(e => {
+                console.error(e.stack);
+            });
+            return promise;
+        }
+
+        getReviewSutta(req, res, next) {
+            return this.reciteSutta(req, res, next, 'raveena', 'review');
         }
 
         getSutta(req, res, next) {

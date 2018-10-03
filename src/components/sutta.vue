@@ -26,7 +26,6 @@
                 Translated by {{sutta.author}}
             </div>
             <div class="scv-blurb"><span v-html="metaarea"></span></div>
-            <!--
             <div class="scv-play-controls">
                 <audio v-if="suttaAudioGuid" autoplay controls class="ml-4 mt-1" 
                     preload=auto
@@ -40,7 +39,6 @@
                 </button>
                 <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
             </div>
-            -->
             <div class="scv-blurb-more">
                 <details>
                     <summary class="body-2">{{sutta_uid.toUpperCase()}}: Other Resources</summary>
@@ -262,6 +260,30 @@ export default {
             return seg.expanded ? "scv-para scv-para-expanded" : "scv-para";
         },
         playSutta() {
+            console.debug("playSutta");
+            var language = this.language;
+            var translator = this.translator;
+            var g = Math.random();
+            var vSvc = this.voice.value;
+            if (vSvc !== 'recite' && vSvc !== 'review' && vSvc !== 'navigate') {
+                vSvc = 'recite';
+            }
+            var url = `./${vSvc}/sutta/${this.sutta_uid}/${language}/${translator}?g=${g}`;
+            Vue.set(this, "waiting", true);
+            this.$http.get(url).then(res => {
+                Vue.set(this, "suttaAudioGuid", res.data.guid);
+                Vue.set(this, "waiting", false);
+                console.log(`playSutta ${res.data.guid}`);
+            }).catch(e => {
+                var data = e.response && e.response.data && e.response.data.error 
+                    || `Sutta cannot be recited. Try again later.`;
+                this.error[iSection] = {
+                    http: e.message,
+                    data,
+                }
+                console.error(e.stack, data);
+                Vue.set(this, "waiting", false);
+            });
         },
         translationSearch(translation) {
             var author_uid = translation.author_uid;

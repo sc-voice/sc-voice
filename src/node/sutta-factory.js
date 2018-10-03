@@ -107,6 +107,11 @@
                         sutta_uid: id,
                         support: Definitions.SUPPORT_LEVELS.Supported,
                         segments,
+                        translation: {
+                            lang: 'en',
+                            author: 'Bhikku Sujato', // TODO: just guessing
+                            author_uid: 'sujato', // TODO: just guessing
+                        },
                     }, opts)));
                 } catch(e) {reject(e);} })();
             });

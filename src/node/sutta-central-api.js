@@ -246,6 +246,7 @@
                 support: Definitions.SUPPORT_LEVELS.Legacy,
                 metaarea,
                 segments: headerSegments.concat(textSegments),
+                translation,
             });
         }
 
@@ -355,6 +356,7 @@
                                 sutta_uid: result.suttaplex.uid,
                                 support: result.support,
                                 segments,
+                                translation,
                             });
                         }
                         sutta.author_uid = translation.author_uid;

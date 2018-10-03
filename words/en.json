@@ -186,6 +186,7 @@
         "salli": {"language":"en"},
 
 
+"recording":{"language":"en"},
 "ababa":{"language":"pli"},
 "abandoned": {"language":"en"},
 "abandoner":{"language":"en"},
@@ -15197,7 +15198,7 @@
         "sati": { "language":"pli" },
         "satthi": { "language":"pli" },
         "suttacentral": {
-            "ipa":"suttasentr\u0250l",
+            "ipa":"sʊttəsɛntɹəl̩",
             "language": "en"
         },
         "tathagata": "tath\u0101gata", 
