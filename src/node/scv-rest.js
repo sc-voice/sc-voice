@@ -78,17 +78,18 @@
             } catch (e) { reject(e) } });
         }
 
-        suttaRef(req) {
+        suttaParms(req) {
             return {
                 sutta_uid: req.params.sutta_uid || 'mn1',
                 language: req.params.language || 'en',
                 translator: req.params.translator || 'sujato', // TODO
+                usage: req.params.usage || 'recite',
             };
         }
 
         reciteSection(req, res, next, usage) {
             var that = this;
-            var { sutta_uid, language, translator } = that.suttaRef(req);
+            var { sutta_uid, language, translator } = that.suttaParms(req);
             var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -128,9 +129,8 @@
             });
         }
 
-        reciteSutta(req, res, next, usage) {
+        synthesizeSutta(sutta_uid, language, translator, usage) {
             var that = this;
-            var { sutta_uid, language, translator } = that.suttaRef(req);
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
@@ -157,7 +157,7 @@
                         cache: true, // false: use TTS web service for every request
                         usage,
                     });
-                    logger.info(`reciteSutta() ms:${Date.now()-msStart} ${text.substring(0,50)}`);
+                    logger.info(`synthesizeSutta() ms:${Date.now()-msStart} ${text.substring(0,50)}`);
                     resolve({
                         usage,
                         name: voice.name,
@@ -183,25 +183,19 @@
         }
 
         getReciteSutta(req, res, next) {
-            var promise =  this.reciteSutta(req, res, next, 'recite');
-            promise.catch(e => {
-                console.error(e.stack);
-            });
-            return promise;
+            var { sutta_uid, language, translator } = that.suttaParms(req);
+            return this.synthesizeSutta(sutta_uid, language, translator, 'recite');
         }
 
         getReviewSutta(req, res, next) {
-            return this.reciteSutta(req, res, next, 'review');
+            var { sutta_uid, language, translator } = that.suttaParms(req);
+            return this.synthesizeSutta(sutta_uid, language, translator, 'review');
         }
 
         getDownloadSutta(req, res, next) {
-            var promise =  this.reciteSutta(req, res, next, 'recite');
-            promise.catch(e => {
-                console.error(e.stack);
-            });
-            return promise;
+            var { sutta_uid, language, translator, usage } = that.suttaParms(req);
+            return this.synthesizeSutta(sutta_uid, language, translator, usage);
         }
-
 
         getSutta(req, res, next) {
             var that = this;
