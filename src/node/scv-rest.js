@@ -8,6 +8,7 @@
     } = require('rest-bundle');
     const srcPkg = require("../../package.json");
     const Words = require('./words');
+    const GuidStore = require('./guid-store');
     const Section = require('./section');
     const Sutta = require('./sutta');
     const SuttaFactory = require('./sutta-factory');
@@ -36,13 +37,19 @@
             } else {
                 throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
             }
+            this.soundStore = new GuidStore({
+                storeName: 'sounds',
+                storePath: PATH_SOUNDS,
+                suffix: this.audioSuffix,
+            });
             this.suttaCentralApi = opts.suttaCentralApi;
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
             });
             Object.defineProperty(this, "handlers", {
                 value: super.handlers.concat([
-                    this.resourceMethod("get", "audio/:guid", this.getAudio, this.audioMIME),
+                    this.resourceMethod("get", 
+                        "audio/:guid/:filename", this.getAudio, this.audioMIME),
                     this.resourceMethod("get", 
                         "recite/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReciteSection),
@@ -57,7 +64,7 @@
                         this.getReviewSutta),
                     this.resourceMethod("get", 
                         "download/sutta/:sutta_uid/:language/:translator/:usage", 
-                        this.getDownloadSutta),
+                        this.getDownloadSutta, this.audioMIME),
                     this.resourceMethod("get", "sutta/:sutta_uid/:language/:translator", 
                         this.getSutta),
 
@@ -68,12 +75,13 @@
         getAudio(req, res, next) {
             return new Promise((resolve, reject) => { try {
                 var guid = req.params.guid;
-                var folder = guid.substring(0, 2);
-                var root = path.join(PATH_SOUNDS, guid.substring(0,2));
-                var filePath = path.join(root, `${guid}${this.audioSuffix}`);
+                var filePath = this.soundStore.guidPath(guid, this.audioSuffix);
+                var filename = req.params.filename;
                 var data = fs.readFileSync(filePath);
                 res.set('accept-ranges', 'bytes');
                 res.set('do_stream', 'true');
+                res.set('Content-disposition', 'attachment; filename=' + filename);
+
                 resolve(data);
             } catch (e) { reject(e) } });
         }
@@ -157,7 +165,8 @@
                         cache: true, // false: use TTS web service for every request
                         usage,
                     });
-                    logger.info(`synthesizeSutta() ms:${Date.now()-msStart} ${text.substring(0,50)}`);
+                    logger.info(`synthesizeSutta() ms:${Date.now()-msStart} `+
+                        `${text.substring(0,50)}`);
                     resolve({
                         usage,
                         name: voice.name,
@@ -183,18 +192,30 @@
         }
 
         getReciteSutta(req, res, next) {
-            var { sutta_uid, language, translator } = that.suttaParms(req);
+            var { sutta_uid, language, translator } = this.suttaParms(req);
             return this.synthesizeSutta(sutta_uid, language, translator, 'recite');
         }
 
         getReviewSutta(req, res, next) {
-            var { sutta_uid, language, translator } = that.suttaParms(req);
+            var { sutta_uid, language, translator } = this.suttaParms(req);
             return this.synthesizeSutta(sutta_uid, language, translator, 'review');
         }
 
         getDownloadSutta(req, res, next) {
-            var { sutta_uid, language, translator, usage } = that.suttaParms(req);
-            return this.synthesizeSutta(sutta_uid, language, translator, usage);
+            var that = this;
+            return new Promise((resolve, reject) => { try {
+                (async function() { try {
+                    var { sutta_uid, language, translator, usage } = that.suttaParms(req);
+                    var {
+                        guid,
+                    } = await that.synthesizeSutta(sutta_uid, language, translator, usage);
+                    var filePath = that.soundStore.guidPath(guid, that.audioSuffix);
+                    var filename = `${sutta_uid}-${language}-${translator}${that.audioSuffix}`;
+                    var data = fs.readFileSync(filePath);
+                    res.set('Content-disposition', 'attachment; filename=' + filename);
+                    resolve(data);
+                } catch(e) {reject(e);} })();
+            } catch(e) {reject(e);} });
         }
 
         getSutta(req, res, next) {

@@ -136,6 +136,20 @@
         } catch (e) { done(e); } }();
         async.next();
     });
+    it("TESTTESTGET /download/sutta/mn100/en/sujato/review returns download", function(done) {
+        this.timeout(15*1000);
+        var async = function* () { try {
+                console.log('debug1');
+            var response = yield supertest(app)
+                .get("/scv/download/sutta/mn100/en/sujato/review")
+                .expect('Content-Type', /audio\/mp3/)
+                .expect('Content-Disposition', /attachment; filename=mn100-en-sujato.mp3/)
+                .expect('Content-Length', /9[0-9][0-9][0-9][0-9][0-9][0-9]/)
+                .end((e,r) => e ? async.throw(e) : async.next(r));
+            done();
+        } catch (e) { done(e); } }();
+        async.next();
+    });
     it("GET /sutta/an2.1-10/en/sujato returns sutta", function(done) {
         done(); return; // TODO
         var async = function* () { try {

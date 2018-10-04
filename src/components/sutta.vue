@@ -30,7 +30,7 @@
                 <audio v-if="suttaAudioGuid" autoplay controls class="ml-4 mt-1" 
                     preload=auto
                     :aria-label="`play sutta`">
-                    <source :src="`./audio/${suttaAudioGuid}`" type="audio/mp3"/>
+                    <source :src="audioSuttaSrc" type="audio/mp3"/>
                     <p>Your browser doesn't support HTML5 audio</p>
                 </audio>
                 <button v-else :ref="`play`" @click="playSutta" :disabled="waiting"
@@ -43,6 +43,11 @@
                 <details>
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
                     <div class="caption text-xs-center">
+                        <div class="text-xs-center" v-if="hasAudio">
+                            <a :href="downloadUrl" target="_blank"> 
+                                Download {{sutta_uid}}-{{language}}-{{author_uid}}.mp3
+                            </a>
+                        </div>
                         <div v-for="translation in suttaplex.translations" 
                             class="text-xs-center"
                             :key="translation.id"
@@ -304,8 +309,20 @@ export default {
         },
     },
     computed: {
+        audioSuttaSrc(){
+            var lang = this.language;
+            var trans = this.author_uid;
+            var filename = `${this.sutta_uid}-${lang}-${trans}.mp3`;
+            var guid = this.suttaAudioGuid;
+            return `./audio/${guid}/${filename}`;
+        },
         audioUrl() {
             return `https://github.com/sc-voice/sc-voice/wiki/Audio-${this.sutta_uid}`;
+        },
+        downloadUrl() {
+            var usage = ['recite','review'][this.scvOpts.iVoice];
+            var ref = `${this.sutta_uid}/${this.language}/${this.author_uid}`;
+            return `./download/sutta/${ref}/${usage}`;
         },
         sutta_uid() {
             var query = this.$route.query;
