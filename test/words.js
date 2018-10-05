@@ -119,7 +119,7 @@
             .equal(`${Words.U_LSQUOTE}nandi dukkhassa mulan${Words.U_RSQUOTE}ti${Words.U_EMDASH}`);
 
     });
-    it("TESTTESTtokenize(text) returns array of tokens", function() {
+    it("tokenize(text) returns array of tokens", function() {
         var words = new Words();
         var tokens = words.tokenize('Hello {mn1.2-en-test} world.');
         should.deepEqual(tokens, [

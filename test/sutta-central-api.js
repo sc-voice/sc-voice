@@ -298,4 +298,20 @@
             done();
         } catch(e) { done(e); } })();
     });
+    it("normalizeSuttaId(id) returns normalized sutta_uid", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var scr = await new SuttaCentralApi().initialize();
+            should(scr.normalizeSuttaId('an1.21-30')).equal('an1.21-30');
+            should(scr.normalizeSuttaId('AN 1.21-30')).equal('an1.21-30');
+            should(scr.normalizeSuttaId(' AN  1.21-30 ')).equal('an1.21-30');
+            should(scr.normalizeSuttaId('An 1.21-30')).equal('an1.21-30');
+            should(scr.normalizeSuttaId('Ds 1.1')).equal('ds1.1');
+            should(scr.normalizeSuttaId('fear')).equal(null);
+            should(scr.normalizeSuttaId('root of suffering')).equal(null);
+            should(scr.normalizeSuttaId('1986')).equal(null);
+            should(scr.normalizeSuttaId(' 1986')).equal(null);
+            done();
+        } catch(e) { done(e); } })();
+    });
 })

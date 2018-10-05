@@ -2,15 +2,20 @@
     const fs = require('fs');
     const path = require('path');
     const http = require('http');
+    const https = require('https');
     const Words = require('./words');
     const Sutta = require('./sutta');
     const PoParser = require('./po-parser');
     const GuidStore = require('./guid-store');
     const Definitions = require('./definitions');
     const { MerkleJson } = require('merkle-json');
-    const EXPANSION_PATH = path.join(__dirname, '..', '..', 'local', 'expansion.json');
+    const LOCAL = path.join(__dirname, '..', '..', 'local');
+    const EXPANSION_PATH = path.join(LOCAL, 'expansion.json');
+    const UID_EXPANSION_PATH = path.join(LOCAL, 'uid_expansion.json');
     const DEFAULT_LANGUAGE = 'en';
     const DEFAULT_API_URL = 'http://suttacentral.net/api';
+    const UID_EXPANSION_URL = 'https://raw.githubusercontent.com/suttacentral'+
+        '/sc-data/master/misc/uid_expansion.json';
     const ANY_LANGUAGE = '*';
     const ANY_TRANSLATOR = '*';
     const PO_SUFFIX_LENGTH = '.po'.length;
@@ -33,7 +38,7 @@
                 suffix: '.json',
                 storeName: 'api',
             });
-            this.apiCacheSeconds = opts.apiCacheSeconds || 60*60; 
+            this.apiCacheSeconds = opts.apiCacheSeconds || 24*60*60; 
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
@@ -70,7 +75,8 @@
 
         loadJsonRest(url) {
             return new Promise((resolve, reject) => { try {
-                var req = http.get(url, res => {
+                var httpx = url.startsWith('https') ? https : http;
+                var req = httpx.get(url, res => {
                     const { statusCode } = res;
                     const contentType = res.headers['content-type'];
 
@@ -78,7 +84,11 @@
                     if (statusCode !== 200) {
                         error = new Error('Request Failed.\n' +
                                           `Status Code: ${statusCode}`);
-                    } else if (!/^application\/json/.test(contentType)) {
+                    } else if (/^application\/json/.test(contentType)) {
+                        // OK
+                    } else if (/^text\/plain/.test(contentType)) {
+                        // OK
+                    } else {
                         error = new Error('Invalid content-type.\n' +
                                           `Expected application/json but received ${contentType}`);
                     }
@@ -111,6 +121,28 @@
             } catch(e) {reject(e);} });
         }
 
+        static loadUidExpansion(url=UID_EXPANSION_URL) {
+            if (fs.existsSync(UID_EXPANSION_PATH)) {
+                try {
+                    var uid_expansion = JSON.parse(fs.readFileSync(UID_EXPANSION_PATH));
+                    return Promise.resolve(uid_expansion);
+                } catch(e) {
+                    return Promise.reject(e);
+                }
+            } else {
+                return new Promise((resolve, reject) => {
+                    SuttaCentralApi.loadJson(url).then(res => {
+                        logger.info(`${url}`);
+                        fs.writeFileSync(UID_EXPANSION_PATH, JSON.stringify(res,null,2));
+                        resolve(res);
+                    }).catch(e => {
+                        logger.error(`${url} ${e.message}`);
+                        reject(e);
+                    });
+                });
+            }
+        }
+
         static loadExpansion(apiUrl=DEFAULT_API_URL) {
             if (fs.existsSync(EXPANSION_PATH)) {
                 try {
@@ -123,20 +155,31 @@
                 return new Promise((resolve, reject) => {
                     var url = `${apiUrl}/expansion`;
                     SuttaCentralApi.loadJson(url).then(res => {
+                        logger.info(`${url}`);
                         fs.writeFileSync(EXPANSION_PATH, JSON.stringify(res,null,2));
                         resolve(res);
-                    }).catch(e => reject(e));
+                    }).catch(e => {
+                        logger.error(`${url} ${e.message}`);
+                        reject(e);
+                    });
                 });
             }
         }
 
         initialize() {
+            var that = this;
             return new Promise((resolve,reject) => { try {
-                SuttaCentralApi.loadExpansion(this.apiUrl).then(res => {
-                    this.expansion = res;
-                    this.initialized = true;
-                    resolve(this);
-                }).catch(e => reject(e));
+                (async function() {
+                    await SuttaCentralApi.loadExpansion(that.apiUrl).then(res => {
+                        that.expansion = res;
+                        that.initialized = true;
+                    }).catch(e => reject(e));
+                    await SuttaCentralApi.loadUidExpansion().then(res => {
+                        that.uid_expansion = res;
+                        that.initialized = true;
+                    }).catch(e => reject(e));
+                    resolve(that);
+                })();
             } catch(e) {reject(e);} });
         }
 
@@ -145,6 +188,27 @@
                 throw new Error('initialize() must be called');
             }
             return this.expansion[0][abbr];
+        }
+
+        normalizeSuttaId(id) {
+            if (!this.initialized) {
+                throw new Error('initialize() must be called');
+            }
+            var sutta_uid = null;
+            id = id.trim();
+            if (/[^0-9][1-9]/.test(id)) {
+                var tokens = id.toLowerCase().split(' ');
+                if (tokens.length === 1) {
+                    sutta_uid =  id;
+                } else {
+                    var matches = this.uid_expansion.filter(ue => 
+                        0 === ue.acro.toLowerCase().localeCompare(tokens[0]));
+                    if (matches.length > 0) {
+                        sutta_uid = `${matches[0].uid}${tokens.slice(1).join('')}`;
+                    }
+                }
+            }
+            return sutta_uid;
         }
 
         suttaFromApiText(apiJson) {
@@ -250,9 +314,13 @@
             });
         }
 
-        normalizeScid(scid) {
-            if (scid == null) {
+        normalizeScid(id) {
+            if (id == null) {
                 throw new Error('Sutta reference identifier is required');
+            }
+            var scid = this.normalizeSuttaId(id);
+            if (scid == null) {
+                throw new Error(`Keyword search is not yet implemented:${id}`);
             }
             try {
                 var popath = PoParser.suttaPath(scid);

@@ -58,7 +58,7 @@
         should(!!salli.ipa).equal(true);
         should(!!salli.ipa.pli).equal(true);
     });
-    it("TESTTESTcreateVoice(opts) returns voice for a language", function() {
+    it("createVoice(opts) returns voice for a language", function() {
         var voice = Voice.createVoice();
         should(voice).instanceOf(Voice);
         should(voice.language).equal("en-IN");
@@ -71,7 +71,7 @@
         should(amy.name).equal("Amy");
         should(amy.usage).equal("recite");
     });
-    it("TESTTESTcreateVoice(opts) creates a recite Voice instance", function() {
+    it("createVoice(opts) creates a recite Voice instance", function() {
         var reciteVoice = Voice.createVoice({
             language: 'en',
             usage: 'recite',
@@ -104,7 +104,7 @@
             rate: "+5%",
         });
     });
-    it("TESTTESTcreateVoice(opts) creates a review Voice instance", function() {
+    it("createVoice(opts) creates a review Voice instance", function() {
         var reviewVoice = Voice.createVoice({
             language: "en", 
             usage: 'review',

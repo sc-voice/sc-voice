@@ -16,9 +16,9 @@
     it("loadSutta(id, opts) returns a Sutta from SuttaCentral api", function(done) {
         (async function() { try {
             var suttaCentralApi = new SuttaCentralApi();
-            var factory = new SuttaFactory({
+            var factory = await new SuttaFactory({
                 suttaCentralApi,
-            });
+            }).initialize();
             var sutta = await factory.loadSutta('mn1');
             var end = 21;
             var header = sutta.excerpt({
@@ -110,7 +110,18 @@
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('sn22.1');
             should(sutta.sections[0].segments[0].en).equal('Linked Discourses 22');
-            should(sutta.sections[0].segments[1].en).equal(`1. Nakula${Words.U_RSQUOTE}s Father`);
+            should(sutta.sections[0].segments[1].en)
+                .equal(`1. Nakula${Words.U_RSQUOTE}s Father`);
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("supportedSuttas() returns hierarchy of supported suttas", function(done) { 
+        (async function() { try {
+            var factory = new SuttaFactory();
+            var suttas = await factory.supportedSuttas();
+            Object.keys(suttas).forEach(coll => {
+                console.log(`supported Suttas ${coll}`, suttas[coll].length);
+            });
             done();
         } catch(e) { done(e); } })();
     });

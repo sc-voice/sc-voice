@@ -35,6 +35,7 @@
             this.prop = opts.prop || OPTS_EN.prop;
             this.reHeader = opts.reHeader || Sutta.RE_HEADER;
             this.suttaCentralApi = opts.suttaCentralApi;
+            this.pootleParser = new PoParser();
         }
 
         static loadSutta(opts={}) {
@@ -59,6 +60,30 @@
                         await that.suttaCentralApi.initialize();
                     }
                     resolve(that);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        supportedSuttas(){
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var files = await that.pootleParser.files();
+                    var suttas = {};
+                    files.forEach(f => {
+                        var flocal = f.split('/sc/')[1];
+                        var ftokens = flocal.split('/');
+                        var collection = ftokens[0];
+                        suttas[collection] = suttas[collection] || [];
+                        var fname = ftokens[ftokens.length - 1];
+                        if (fname !== 'info.po') {
+                            var sutta_uid = fname
+                                .replace('.po','')
+                                .replace(/([^0-9])0+/gum,'$1');
+                            suttas[collection].push(sutta_uid);
+                        }
+                    });
+                    resolve(suttas);
                 } catch(e) {reject(e);} })();
             });
         }
@@ -90,6 +115,7 @@
         }
 
         loadSuttaPootl(opts={}) {
+            var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     if (typeof opts === 'string') {
@@ -99,7 +125,7 @@
                     }
                     var language = opts.language || 'en';
                     var translator = opts.translator || 'sujato';
-                    var parser = new PoParser();
+                    var parser = that.pootleParser;
                     var id = opts.id || 'mn1';
                     var suttaPath = PoParser.suttaPath(id, opts.root);
                     var segments = await parser.parse(suttaPath, opts);
