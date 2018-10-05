@@ -44,7 +44,7 @@
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
                     <div class="caption text-xs-center">
                         <div class="text-xs-center" v-if="hasAudio">
-                            <a :href="downloadUrl" target="_blank"> 
+                            <a :href="downloadUrl" download>
                                 Download {{sutta_uid}}-{{language}}-{{author_uid}}.mp3
                             </a>
                         </div>
