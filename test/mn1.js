@@ -12,7 +12,8 @@
         Voice,
         Words,
     } = require("../index");
-    const SC = path.join(__dirname, '../local/sc');
+    const LOCAL = path.join(__dirname, '../local');
+    const SC = path.join(LOCAL, 'sc');
 
     it("loadSutta(scid) parses mn1/bodhi", function(done) {
         (async function() { try {
