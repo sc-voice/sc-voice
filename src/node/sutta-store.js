@@ -6,8 +6,10 @@
     } = require('rest-bundle');
     const Words = require('./words');
     const SuttaCentralApi = require('./sutta-central-api');
+    const SuttaCentralId = require('./sutta-central-id');
     const SuttaFactory = require('./sutta-factory');
     const ROOT = path.join(__dirname, '..', '..', 'local', 'suttas');
+    const SUTTAIDS_PATH = path.join(__dirname, '..', '..', 'src', 'node', 'sutta-ids.json');
     const COLLECTIONS = {
         an: {
             folder: 'an',
@@ -68,10 +70,19 @@
             this.suttaFactory = opts.suttaFactory || new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
             });
+            this.suttaIds = opts.suttaIds || null;
             this.root = opts.root || ROOT;
+            Object.defineProperty(this, 'isInitialized', {
+                writable: true,
+                value: false,
+            });
         }
 
         initialize() {
+            if (this.isInitialized) {
+                return Promise.resolve(this);
+            }
+            this.isInitialized = true;
             var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -79,9 +90,25 @@
                     if (!fs.existsSync(that.root)) {
                         fs.mkdirSync(that.root);
                     }
+                    if (that.suttaIds == null) {
+                        if (fs.existsSync(SUTTAIDS_PATH)) {
+                            logger.info(`SuttaStore.initialize() loading:${SUTTAIDS_PATH}`);
+                            that.suttaIds = JSON.parse(fs.readFileSync(SUTTAIDS_PATH));
+                        } else {
+                            that.suttaIds = [];
+                        }
+                    }
                     resolve(that);
                 } catch(e) {reject(e);} })();
             });
+        }
+
+        *collectionIterator(collection=null) {
+            const n = 10;
+            for (let i=0; i<n; i++) {
+                yield i;
+            }
+            return n;
         }
 
         suttaFolder(sutta_uid) {
@@ -102,6 +129,9 @@
         }
 
         suttaPath(...args) {
+            if (!this.isInitialized) {
+                throw new Error("SuttaStore.initialize() is required");
+            }
             if (typeof args[0] === 'string') {
                 var opts = {
                     sutta_uid: args[0],
@@ -129,7 +159,10 @@
             if (!fs.existsSync(authorPath)) {
                 fs.mkdirSync(authorPath);
             }
-            return path.join(authorPath, `${sutta_uid}.json`);
+            var fname = this.suttaIds.filter(id => {
+                return 0 === SuttaCentralId.compare(sutta_uid, id);
+            })[0] || sutta_uid;
+            return path.join(authorPath, `${fname}.json`);
         }
 
     }

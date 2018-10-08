@@ -1,4 +1,4 @@
-(typeof describe === 'function') && describe("polly", function() {
+(typeof describe === 'function') && describe("sutta-searcher", function() {
     const should = require("should");
     const fs = require('fs');
     const path = require('path');

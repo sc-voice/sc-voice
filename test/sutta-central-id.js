@@ -20,6 +20,37 @@
         should(scid).instanceOf(SuttaCentralId);
         should(scid.toString()).equal(null);
     });
+    it("TESTTESTcompare(id1,id2) compares two ids", function() {
+        var cmp = (a,b,expected) => {
+            should(SuttaCentralId.compare(a,b))[expected](0);
+            if (expected === 'equal') {
+                should(SuttaCentralId.compare(b,a)).equal(0);
+            } else if (expected === 'above') {
+                should(SuttaCentralId.compare(b,a)).below(0);
+            } else {
+                should(SuttaCentralId.compare(b,a)).above(0);
+            }
+        };
+        cmp('an1.1', 'an2.11-20', 'below');
+        cmp('an1.1', 'an2.011-20', 'below');
+        cmp('an1.100', 'an2.11-20', 'below');
+        cmp('an1.100', 'an2.011-020', 'below');
+        cmp('an2.1', 'an2.11-20', 'below');
+        cmp('an2.1', 'an2.011-020', 'below');
+        cmp('an2.5', 'an2.11-20', 'below');
+        cmp('an2.10', 'an2.11-20', 'below');
+        cmp('an2.11', 'an2.11-20', 'equal');
+        cmp('an2.15', 'an2.11-20', 'equal');
+        cmp('an2.20', 'an2.11-20', 'equal');
+        cmp('an2.21', 'an2.11-20', 'above');
+        cmp('an2.100', 'an2.11-20', 'above');
+        cmp('an3.1', 'an2.11-20', 'above');
+        cmp('an3.1', 'an2.011-020', 'above');
+        cmp('an1', 'dn2', 'below');
+        cmp('an9.1', 'dn2', 'below');
+        cmp('dn2', 'mn1', 'below');
+        cmp('an2.1-10', 'an2.11-20', 'below');
+    });
     it("sutta return sutta id", function() {
         var scid = new SuttaCentralId();
         should(scid.sutta).equal(null);
