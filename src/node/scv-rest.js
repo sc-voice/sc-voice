@@ -213,6 +213,7 @@
                     var filename = `${sutta_uid}-${language}-${translator}${that.audioSuffix}`;
                     var data = fs.readFileSync(filePath);
                     res.set('Content-disposition', 'attachment; filename=' + filename);
+                    logger.info(`GET download/sutta => ${filename} size:${data.length}`);
                     resolve(data);
                 } catch(e) {reject(e);} })();
             } catch(e) {reject(e);} });
@@ -232,6 +233,7 @@
                         language,
                         expand: true,
                     });
+                    logger.info(`GET sutta => ${sutta_uid}/${language}/${translator}`);
                     resolve(sutta);
                 } catch(e) { reject(e); } })();
             });
