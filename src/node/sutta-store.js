@@ -31,14 +31,13 @@
         }
     }
 
-
     class SuttaStore {
         constructor(opts={}) {
             this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
             this.suttaFactory = opts.suttaFactory || new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
             });
-            this.suttaIds = opts.suttaIds || null;
+            this.suttaIds = opts.suttaIds || SuttaCentralId.supportedSuttas;
             this.root = opts.root || ROOT;
             Object.defineProperty(this, 'isInitialized', {
                 writable: true,
@@ -58,14 +57,14 @@
                     if (!fs.existsSync(that.root)) {
                         fs.mkdirSync(that.root);
                     }
-                    if (that.suttaIds == null) {
-                        if (fs.existsSync(SUTTAIDS_PATH)) {
-                            logger.info(`SuttaStore.initialize() loading:${SUTTAIDS_PATH}`);
-                            that.suttaIds = JSON.parse(fs.readFileSync(SUTTAIDS_PATH));
-                        } else {
-                            that.suttaIds = [];
-                        }
-                    }
+                    //if (that.suttaIds == null) {
+                        //if (fs.existsSync(SUTTAIDS_PATH)) {
+                            //logger.debug(`SuttaStore.initialize() loading:${SUTTAIDS_PATH}`);
+                            //that.suttaIds = JSON.parse(fs.readFileSync(SUTTAIDS_PATH));
+                        //} else {
+                            //that.suttaIds = [];
+                        //}
+                    //}
                     resolve(that);
                 } catch(e) {reject(e);} })();
             });
@@ -79,6 +78,39 @@
             return n;
         }
 
+        updateSuttas(suttaIds, opts={}) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var maxAge = opts.maxAge || 0;
+                    suttaIds = suttaIds || that.suttaIds;
+                    for (let i = 0; i < suttaIds.length; i++) {
+                        var id = suttaIds[i];
+                        var sutta = await that.suttaCentralApi.loadSutta(id);
+                        var translation = sutta.translation;
+                        if (translation == null) {
+                            logger.info(`SuttaStore.updateSuttas() ${id} NO TRANSLATION`);
+                        } else {
+                            var language = translation.lang;
+                            var author_uid = translation.author_uid;
+                            var spath = that.suttaPath(id, language, author_uid);
+                            var updateFile = !fs.existsSync(spath) || maxAge === 0;
+                            if (!updateFile) {
+                                var stats = fs.statSync(spath);
+                                var age = (Date.now() - stats.mtime)/1000;
+                                updateFile = age > maxAge;
+                            }
+                            if (updateFile) {
+                                fs.writeFileSync(spath, JSON.stringify(sutta, null, 2));
+                                logger.info(`SuttaStore.updateSuttas() ${id}`);
+                            }
+                        }
+                    };
+                    resolve(suttaIds);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
         suttaFolder(sutta_uid) {
             var group = sutta_uid.replace(/[^a-z]*/gu,'');
             var folder = Object.keys(COLLECTIONS).reduce((acc,key) => {
@@ -90,7 +122,7 @@
             }
             var fpath = path.join(this.root, folder);
             if (!fs.existsSync(fpath)) {
-                logger.info(`creating folder ${fpath}`);
+                logger.info(`SuttaStore.suttsFolder() mkdir:${fpath}`);
                 fs.mkdirSync(fpath);
             }
             return fpath;
@@ -109,7 +141,7 @@
             } else {
                 var opts = args[0];
             }
-            var sutta_uid = this.suttaCentralApi.normalizeSuttaId(opts.sutta_uid);
+            var sutta_uid = SuttaCentralId.normalizeSuttaId(opts.sutta_uid);
             if (!sutta_uid) {
                 throw new Error('sutta_uid is required');
             }
@@ -121,7 +153,7 @@
             }
             var author_uid = opts.author_uid;
             if (!author_uid) {
-                throw new Error('author_uid is required');
+                throw new Error(`author_uid is required for: ${sutta_uid}`);
             }
             var authorPath = path.join(langPath, author_uid);
             if (!fs.existsSync(authorPath)) {

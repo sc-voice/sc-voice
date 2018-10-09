@@ -152,7 +152,6 @@
             var sutta = await scr.loadSutta({
                 scid:'ea12.1',
                 language: 'en', 
-                translator: 'mills'
             });
             should(sutta).instanceOf(Sutta);
             should.deepEqual(Object.keys(sutta).sort(), [
@@ -230,7 +229,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("loadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
+    it("TESTTESTloadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
             var language = 'en';
@@ -295,22 +294,6 @@
             should.deepEqual(scrs1.segments.slice(0,nCmp), scrp1.segments.slice(0,nCmp));
             should.deepEqual(sutta.sections, suttaPootl.sections);
 
-            done();
-        } catch(e) { done(e); } })();
-    });
-    it("normalizeSuttaId(id) returns normalized sutta_uid", function(done) {
-        this.timeout(5*1000);
-        (async function() { try {
-            var scr = await new SuttaCentralApi().initialize();
-            should(scr.normalizeSuttaId('an1.21-30')).equal('an1.21-30');
-            should(scr.normalizeSuttaId('AN 1.21-30')).equal('an1.21-30');
-            should(scr.normalizeSuttaId(' AN  1.21-30 ')).equal('an1.21-30');
-            should(scr.normalizeSuttaId('An 1.21-30')).equal('an1.21-30');
-            should(scr.normalizeSuttaId('Ds 1.1')).equal('ds1.1');
-            should(scr.normalizeSuttaId('fear')).equal(null);
-            should(scr.normalizeSuttaId('root of suffering')).equal(null);
-            should(scr.normalizeSuttaId('1986')).equal(null);
-            should(scr.normalizeSuttaId(' 1986')).equal(null);
             done();
         } catch(e) { done(e); } })();
     });

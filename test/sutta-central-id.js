@@ -20,7 +20,22 @@
         should(scid).instanceOf(SuttaCentralId);
         should(scid.toString()).equal(null);
     });
-    it("TESTTESTcompare(id1,id2) compares two ids", function() {
+    it("TESTTESTnormalizeSuttaId(id) returns normalized sutta_uid", function(done) {
+        (async function() { try {
+            should(SuttaCentralId.normalizeSuttaId('an2.12')).equal('an2.11-20');
+            should(SuttaCentralId.normalizeSuttaId('an1.21-30')).equal('an1.21-30');
+            should(SuttaCentralId.normalizeSuttaId('AN 1.21-30')).equal('an1.21-30');
+            should(SuttaCentralId.normalizeSuttaId(' AN  1.21-30 ')).equal('an1.21-30');
+            should(SuttaCentralId.normalizeSuttaId('An 1.21-30')).equal('an1.21-30');
+            should(SuttaCentralId.normalizeSuttaId('Ds 1.1')).equal('ds1.1');
+            should(SuttaCentralId.normalizeSuttaId('fear')).equal(null);
+            should(SuttaCentralId.normalizeSuttaId('root of suffering')).equal(null);
+            should(SuttaCentralId.normalizeSuttaId('1986')).equal(null);
+            should(SuttaCentralId.normalizeSuttaId(' 1986')).equal(null);
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("compare(id1,id2) compares two ids", function() {
         var cmp = (a,b,expected) => {
             should(SuttaCentralId.compare(a,b))[expected](0);
             if (expected === 'equal') {

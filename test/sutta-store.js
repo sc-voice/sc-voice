@@ -8,9 +8,10 @@
         SuttaCentralId,
     } = require("../index");
     const LANG = 'en';
-    const ROOT = path.join(__dirname, '..', 'local', 'suttas');
+    const LOCAL = path.join(__dirname, '..', 'local');
+    const ROOT = path.join(LOCAL, 'suttas');
 
-    it("TESTTESTinitialize() initializes SuttaStore", function(done) {
+    it("initialize() initializes SuttaStore", function(done) {
         (async function() { try {
             var store = new SuttaStore();
             should(store.isInitialized).equal(false);
@@ -20,7 +21,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsuttaPath(opts) returns sutta filepath", function(done) {
+    it("suttaPath(opts) returns sutta filepath", function(done) {
         (async function() { try {
             if (1) {
                 var suttaIdsPath = path.join(__dirname, '../src/node/sutta-ids.json');
@@ -60,7 +61,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsuttaPath(opts) throws Error", function(done) {
+    it("suttaPath(opts) throws Error", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             should.throws(() => store.suttaPath()); 
@@ -80,7 +81,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTcollectionIterator(collection) creates iterator", function(done) {
+    it("collectionIterator(collection) creates iterator", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var iter = store.collectionIterator();
@@ -92,6 +93,32 @@
                 value: 1,
                 done: false,
             });
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("updateSuttas(ids) updates suttas from SuttaCentral", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            await store.updateSuttas(['sn1.8', 'mn1','an1.1-10']);
+
+            var sn1_8path = path.join(ROOT, 'sn/en/sujato/sn1.8.json');
+            should(fs.existsSync(sn1_8path));
+            var stat = fs.statSync(sn1_8path);
+            var age = Date.now() - stat.mtime;
+            should(age).below(1000);
+
+            var mn1path = path.join(ROOT, 'mn/en/sujato/mn1.json');
+            should(fs.existsSync(mn1path));
+            var stat = fs.statSync(mn1path);
+            var age = Date.now() - stat.mtime;
+            should(age).below(1000);
+
+            var an1path = path.join(ROOT, 'an/en/sujato/an1.1-10.json');
+            should(fs.existsSync(an1path));
+            var stat = fs.statSync(an1path);
+            var age = Date.now() - stat.mtime;
+            should(age).below(1000);
+
             done(); 
         } catch(e) {done(e);} })();
     });

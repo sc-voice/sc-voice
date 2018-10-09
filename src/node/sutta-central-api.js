@@ -5,6 +5,7 @@
     const https = require('https');
     const Words = require('./words');
     const Sutta = require('./sutta');
+    const SuttaCentralId = require('./sutta-central-id');
     const PoParser = require('./po-parser');
     const GuidStore = require('./guid-store');
     const Definitions = require('./definitions');
@@ -61,13 +62,13 @@
             var age = stat && (Date.now() - stat.ctimeMs)/1000 || this.apiCacheSeconds;
             if (age < this.apiCacheSeconds) {
                 var res = JSON.parse(fs.readFileSync(cachedPath));
-                logger.debug(`loadJson() => cached response guid:${guid} url:${url}`);
+                logger.debug(`SuttaCentralApi.loadJson(${url}) => cached:${guid}`);
                 var result = Promise.resolve(res);
             } else {
                 var result = this.loadJsonRest(url);
                 result.then(res => {
                     fs.writeFileSync(cachedPath, JSON.stringify(res,null,2));
-                    logger.info(`loadJson() => updated apiStore guid:${guid} url:${url}`);
+                    logger.debug(`loadJson() => updated apiStore guid:${guid} url:${url}`);
                 });
             }
             return result;
@@ -90,7 +91,7 @@
                         // OK
                     } else {
                         error = new Error('Invalid content-type.\n' +
-                                          `Expected application/json but received ${contentType}`);
+                          `Expected application/json but received ${contentType}`);
                     }
                     if (error) {
                         res.resume(); // consume response data to free up memory
@@ -105,7 +106,7 @@
                     res.on('end', () => {
                         try {
                             var result = JSON.parse(rawData);
-                            logger.info(`loadJsonRest() ${url} => HTTP200`);
+                            logger.debug(`loadJsonRest() ${url} => HTTP200`);
                             resolve(result);
                         } catch (e) {
                             logger.error(e.stack);
@@ -190,27 +191,6 @@
             return this.expansion[0][abbr];
         }
 
-        normalizeSuttaId(id) {
-            if (!this.initialized) {
-                throw new Error('initialize() must be called');
-            }
-            var sutta_uid = null;
-            id = id.trim();
-            if (/[^0-9][1-9]/.test(id)) {
-                var tokens = id.toLowerCase().split(' ');
-                if (tokens.length === 1) {
-                    sutta_uid =  id;
-                } else {
-                    var matches = this.uid_expansion.filter(ue => 
-                        0 === ue.acro.toLowerCase().localeCompare(tokens[0]));
-                    if (matches.length > 0) {
-                        sutta_uid = `${matches[0].uid}${tokens.slice(1).join('')}`;
-                    }
-                }
-            }
-            return sutta_uid;
-        }
-
         suttaFromApiText(apiJson) {
             if (!this.initialized) {
                 throw new Error('initialize() must be called');
@@ -219,6 +199,7 @@
 
             var msStart = Date.now();
             var translation = apiJson.translation;
+            console.log('debug2 apiJson', apiJson.author_uid);
             var lang = translation.lang;
             var suttaplex = apiJson.suttaplex;
             var uid = suttaplex.uid;
@@ -318,7 +299,7 @@
             if (id == null) {
                 throw new Error('Sutta reference identifier is required');
             }
-            var scid = this.normalizeSuttaId(id);
+            var scid = SuttaCentralId.normalizeSuttaId(id);
             if (scid == null) {
                 throw new Error(`Keyword search is not yet implemented:${id}`);
             }
@@ -339,23 +320,18 @@
             };
         }
 
-        loadSuttaJson(opts={}, ...args) {
+        loadSuttaJson(id, language, translator) {
             var that = this;
             return new Promise((resolve, reject) => (async function(){ 
                 try {
-                    if (typeof opts === 'string') {
-                        opts = {
-                            scid: opts,
-                            language: args[0],
-                            translator: args[1],
-                        };
-                    }
                     var {
                         scid,
                         support,
-                    } = that.normalizeScid(opts.scid);
-                    var language = opts.language || that.language;
-                    var translator = opts.translator || that.translator;
+                    } = that.normalizeScid({
+                        scid: id,
+                        language,
+                        translator,
+                    });
                     var apiSuttas = `${that.apiUrl}/suttas`;
                     var request = `${apiSuttas}/${scid}`;
                     if (translator && translator !== ANY_TRANSLATOR) {
@@ -384,17 +360,73 @@
             })()); 
         }
 
-        loadSutta(opts={}, ...args) {
+        loadSuttaplexJson(scid, lang, author_uid) {
+            var that = this;
+            return new Promise((resolve, reject) => (async function(){ 
+                try {
+                    var sutta_uid = SuttaCentralId.normalizeSuttaId(scid);
+                    var request = `${that.apiUrl}/suttaplex/${sutta_uid}`;
+                    logger.debug(`loadSuttaPlexJson(${scid}) ${request}`);
+
+                    var result = await SuttaCentralApi.loadJson(request);
+                    var suttaplex = result[0];
+                    var translations = suttaplex && suttaplex.translations;
+                    if (translations == null || translations.length === 0) {
+                        throw new Error(`loadSuttaplexJson() no sutta found for id:${scid}`);
+                    }
+                    suttaplex.translations = 
+                        translations.filter(t => 
+                            (!lang || lang === ANY_LANGUAGE || t.lang === lang)
+                            &&
+                            (!author_uid || t.author_uid === author_uid)
+                        );
+                    translations.sort((a,b) => {
+                        if (a.segmented === b.segmented) {
+                            return (a.author_uid||'').localeCompare(b.author_uid||'');
+                        }
+                        return a.segmented ? 1 : -1;
+                    });
+                    logger.debug(`SuttaCentralApi.loadSuttaplexJson() `+
+                        `${JSON.stringify(suttaplex,null,2)}`);
+                    resolve(suttaplex);
+                } catch(e) {
+                    reject(e);
+                } 
+            })()); 
+        }
+
+        loadSutta(...args) {
             var that = this;
             return new Promise((resolve, reject) => { try {
                 (async function(){ try {
-                    var result = await that.loadSuttaJson(opts);
-                    var translations = result.suttaplex.translations;
+                    if (typeof args[0] === "string") {
+                        var opts = {
+                            scid: args[0],
+                            language: args[1] || that.language,
+                            translator: args[2] || that.translator,
+                        }
+                    } else {
+                        opts = args[0];
+                    }
+                    var sutta_uid = SuttaCentralId.normalizeSuttaId(opts.scid);
+                    var language = opts.language;
+                    var author_uid = opts.translator;
+                    var suttaplex = await that
+                        .loadSuttaplexJson(sutta_uid, language, author_uid);
+                    var translations = suttaplex.translations;
+                    author_uid = translations[0].author_uid;
+                    var result = await that.loadSuttaJson(sutta_uid, language, author_uid);
                     if (result.translation == null && translations.length>0) {
+                        var trans = translations.filter(t=>t.segmented)[0];
+                        if (trans == null) {
+                            console.log('debug3 no segmented');
+                            trans = translations[0];
+                        }
                         var {
                             author_uid,
                             lang,
-                        } = translations[0];
+                        } = trans;
+
                         var uid = result.suttaplex.uid;
                         // multiple translations found, using first
                         var result = await that.loadSuttaJson(uid, lang, author_uid);

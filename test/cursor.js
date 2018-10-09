@@ -18,12 +18,19 @@
         scid: 's:1.2',
         en:'c1 bc ac.',
     }]
-    var sutta = new Sutta({
+    var author_uid = 'testauth';
+    var suttaOpts = {
         sutta_uid: 'test',
+        author_uid,
+        translation: {
+            lang: 'en',
+            author_uid,
+        },
         segments,
-    });
+    };
 
     it("Cursor(sutta, opts) creates a cursor", function() {
+        var sutta = new Sutta(suttaOpts);
         var cursor = new Cursor(sutta);
         should(cursor.sutta).equal(sutta);
         should(cursor.scid).instanceOf(SuttaCentralId);
@@ -34,6 +41,7 @@
         ]);
     });
     it("next() advances cursor", function() {
+        var sutta = new Sutta(suttaOpts);
         var cursor = new Cursor(sutta);
 
         // return true if advanced
@@ -53,6 +61,7 @@
         ]);
     });
     it("back() moves cursor back", function() {
+        var sutta = new Sutta(suttaOpts);
         var cursor = new Cursor(sutta);
 
         // return true if moved back
@@ -71,6 +80,7 @@
         ]);
     });
     it("moveToScid(scid) moves cursor to segment", function() {
+        var sutta = new Sutta(suttaOpts);
         var cursor = new Cursor(sutta);
 
         // return true on success
@@ -103,6 +113,7 @@
         ]);
     });
     it("moveToIndex(index) moves cursor to index", function() {
+        var sutta = new Sutta(suttaOpts);
         var cursor = new Cursor(sutta);
 
         // return true on success
