@@ -57,14 +57,6 @@
                     if (!fs.existsSync(that.root)) {
                         fs.mkdirSync(that.root);
                     }
-                    //if (that.suttaIds == null) {
-                        //if (fs.existsSync(SUTTAIDS_PATH)) {
-                            //logger.debug(`SuttaStore.initialize() loading:${SUTTAIDS_PATH}`);
-                            //that.suttaIds = JSON.parse(fs.readFileSync(SUTTAIDS_PATH));
-                        //} else {
-                            //that.suttaIds = [];
-                        //}
-                    //}
                     resolve(that);
                 } catch(e) {reject(e);} })();
             });
@@ -87,23 +79,30 @@
                     for (let i = 0; i < suttaIds.length; i++) {
                         var id = suttaIds[i];
                         var sutta = await that.suttaCentralApi.loadSutta(id);
-                        var translation = sutta.translation;
-                        if (translation == null) {
-                            logger.info(`SuttaStore.updateSuttas() ${id} NO TRANSLATION`);
+                        if (sutta) {
+                            var translation = sutta.translation;
+                            if (translation == null) {
+                                logger.info(`SuttaStore.updateSuttas(${id}) NO TRANSLATION`);
+                            } else {
+                                var language = translation.lang;
+                                var author_uid = translation.author_uid;
+                                var spath = that.suttaPath(id, language, author_uid);
+                                var updateFile = !fs.existsSync(spath) || maxAge === 0;
+                                if (!updateFile) {
+                                    var stats = fs.statSync(spath);
+                                    var age = (Date.now() - stats.mtime)/1000;
+                                    updateFile = age > maxAge;
+                                }
+                                if (updateFile) {
+                                    fs.writeFileSync(spath, JSON.stringify(sutta, null, 2));
+                                    logger.info(`SuttaStore.updateSuttas(${id}) => `+
+                                        `${language} ${author_uid} OK`);
+                                } else {
+                                    logger.info(`SuttaStore.updateSuttas(${id}) (no change)`);
+                                }
+                            }
                         } else {
-                            var language = translation.lang;
-                            var author_uid = translation.author_uid;
-                            var spath = that.suttaPath(id, language, author_uid);
-                            var updateFile = !fs.existsSync(spath) || maxAge === 0;
-                            if (!updateFile) {
-                                var stats = fs.statSync(spath);
-                                var age = (Date.now() - stats.mtime)/1000;
-                                updateFile = age > maxAge;
-                            }
-                            if (updateFile) {
-                                fs.writeFileSync(spath, JSON.stringify(sutta, null, 2));
-                                logger.info(`SuttaStore.updateSuttas() ${id}`);
-                            }
+                            logger.info(`SuttaStore.updateSuttas(${id}) (no applicable sutta)`);
                         }
                     };
                     resolve(suttaIds);
@@ -115,10 +114,10 @@
             var group = sutta_uid.replace(/[^a-z]*/gu,'');
             var folder = Object.keys(COLLECTIONS).reduce((acc,key) => {
                 var c = COLLECTIONS[key];
-                return acc || c.folder===group && c.folder;
+                return acc || key===group && c.folder;
             }, null);
             if (!folder) {
-                throw new Error(`unsupported sutta: ${sutta_uid}`);
+                throw new Error(`unsupported sutta:${sutta_uid} group:${group}`);
             }
             var fpath = path.join(this.root, folder);
             if (!fs.existsSync(fpath)) {

@@ -96,10 +96,18 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("updateSuttas(ids) updates suttas from SuttaCentral", function(done) {
+    it("TESTTESTupdateSuttas(ids) updates suttas from SuttaCentral", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
-            await store.updateSuttas(['sn1.8', 'mn1','an1.1-10']);
+            await store.updateSuttas([
+                'thag1.1', 'sn39.1-15', 'sn12.93', 'an6.170-649', 
+                'sn1.8', 'mn1','an1.1-10']);
+
+            var thag1_1path = path.join(ROOT, 'kn/en/sujato-walton/thag1.1.json');
+            should(fs.existsSync(thag1_1path));
+            var stat = fs.statSync(thag1_1path);
+            var age = Date.now() - stat.mtime;
+            should(age).below(1000);
 
             var sn1_8path = path.join(ROOT, 'sn/en/sujato/sn1.8.json');
             should(fs.existsSync(sn1_8path));

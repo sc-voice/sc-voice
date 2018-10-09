@@ -68,7 +68,7 @@
                 var result = this.loadJsonRest(url);
                 result.then(res => {
                     fs.writeFileSync(cachedPath, JSON.stringify(res,null,2));
-                    logger.debug(`loadJson() => updated apiStore guid:${guid} url:${url}`);
+                    logger.info(`loadJson(${url}) => cached:${guid}`);
                 });
             }
             return result;
@@ -199,7 +199,6 @@
 
             var msStart = Date.now();
             var translation = apiJson.translation;
-            console.log('debug2 apiJson', apiJson.author_uid);
             var lang = translation.lang;
             var suttaplex = apiJson.suttaplex;
             var uid = suttaplex.uid;
@@ -372,7 +371,7 @@
                     var suttaplex = result[0];
                     var translations = suttaplex && suttaplex.translations;
                     if (translations == null || translations.length === 0) {
-                        throw new Error(`loadSuttaplexJson() no sutta found for id:${scid}`);
+                        throw new Error(`loadSuttaplexJson() sutta not found:${sutta_uid}`);
                     }
                     suttaplex.translations = 
                         translations.filter(t => 
@@ -414,6 +413,13 @@
                     var suttaplex = await that
                         .loadSuttaplexJson(sutta_uid, language, author_uid);
                     var translations = suttaplex.translations;
+                    if (translations == null || translations.length == 0) {
+                        logger.info(`SuttaCentralApi.loadSutta(${sutta_uid},${language}) `+
+                            `=> no translations`);
+                        resolve(null);
+                        return;
+                    }
+
                     author_uid = translations[0].author_uid;
                     var result = await that.loadSuttaJson(sutta_uid, language, author_uid);
                     if (result.translation == null && translations.length>0) {
