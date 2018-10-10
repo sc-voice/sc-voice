@@ -4,7 +4,10 @@
     const {
         logger,
     } = require('rest-bundle');
-    const Words = require('./words');
+    const {
+        exec,
+    } = require('child_process');
+    const Sutta = require('./sutta');
     const SuttaCentralApi = require('./sutta-central-api');
     const SuttaCentralId = require('./sutta-central-id');
     const SuttaFactory = require('./sutta-factory');
@@ -39,6 +42,7 @@
             });
             this.suttaIds = opts.suttaIds || SuttaCentralId.supportedSuttas;
             this.root = opts.root || ROOT;
+            this.maxResults = opts.maxResults || 5;
             Object.defineProperty(this, 'isInitialized', {
                 writable: true,
                 value: false,
@@ -131,14 +135,13 @@
             if (!this.isInitialized) {
                 throw new Error("SuttaStore.initialize() is required");
             }
-            if (typeof args[0] === 'string') {
+            var opts = args[0];
+            if (typeof opts === 'string') {
                 var opts = {
                     sutta_uid: args[0],
                     language: args[1],
                     author_uid: args[2],
                 }
-            } else {
-                var opts = args[0];
             }
             var sutta_uid = SuttaCentralId.normalizeSuttaId(opts.sutta_uid);
             if (!sutta_uid) {
@@ -162,6 +165,100 @@
                 return 0 === SuttaCentralId.compare(sutta_uid, id);
             })[0] || sutta_uid;
             return path.join(authorPath, `${fname}.json`);
+        }
+
+        static sanitizePattern(pattern) {
+            if (!pattern) {
+                throw new Error("SuttaStore.search() pattern is required");
+            }
+            const MAX_PATTERN = 1024;
+            var excess = pattern.length - MAX_PATTERN;
+            if (excess > 0) {
+                throw new Error(`Search text too long by ${excess} characters.`);
+            }
+            // normalize white space to space
+            pattern = pattern.replace(/[\s]+/g,' '); 
+
+            // remove control characters
+            pattern = pattern.replace(/[\u0000-\u001f\u007f]+/g,''); 
+
+            // replace quotes
+            pattern = pattern.replace(/["']/g,'.'); // sanitize
+            return pattern
+        }
+
+        search(...args) {
+            var that = this;
+            var opts = args[0];
+            if (typeof opts === 'string') {
+                opts = {
+                    pattern: args[0],
+                    maxResults: args[1],
+                };
+            }
+            var pattern = SuttaStore.sanitizePattern(opts.pattern);
+            var maxResults = opts.maxResults==null ? that.maxResults : opts.maxResults;
+            var maxResults = Number(maxResults);
+            if (isNaN(maxResults)) {
+                throw new Error("SuttaStore.search() maxResults must be a number");
+            }
+
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var rex = new RegExp(`\\b${pattern}\\b`);
+                    var grex = `\\<${pattern}\\>`;
+                    console.log(`rex:${rex}`);
+                    console.log(grex);
+                    var root = that.root.replace(ROOT, '');
+                    var cmd = `grep -rciE '${grex}' --exclude-dir=.git`+
+                        `|grep -v ':0'`+
+                        `|sort -r -k 2,2 -k 1,1 -t ':'`+
+                        `|head -${maxResults}`;
+                    logger.info(`SuttaStore.search() ${cmd}`);
+                    var opts = {
+                        cwd: that.root,
+                        shell: '/bin/bash',
+                    };
+                    var stdout = await new Promise((res,rej) => {
+                        exec(cmd, opts, (err,stdout,stderr) => {
+                            if (err) {
+                                logger.log(stderr);
+                                rej(err);
+                            } else {
+                                res(stdout.trim());
+                            }
+                        });
+                    });
+                    var results = stdout && stdout.split('\n').map(line => {
+                        var iColon = line.indexOf(':');
+                        var fname = path.join(ROOT,line.substring(0,iColon));
+                        var fnameparts = fname.split('/');
+                        var collection_id = fnameparts[fnameparts.length-4];
+                        var sutta = new Sutta(JSON.parse(fs.readFileSync(fname)));
+                        var suttaplex = sutta.suttaplex;
+                        var translation = sutta.translation;
+                        var lang = translation.lang;
+                        var quote = sutta.segments.filter(seg => 
+                            seg[lang].indexOf(pattern)>=0
+                        )[0];
+                        return {
+                            count: Number(line.substring(iColon+1)),
+                            uid: translation.uid,
+                            author: translation.author,
+                            author_short: translation.author_short,
+                            author_uid: translation.author_uid,
+                            author_blurb: translation.author_blurb,
+                            lang,
+                            title: translation.title,
+                            collection_id,
+                            suttaplex,
+                            quote: quote && quote[lang],
+                        }
+                    }) || [];
+
+                    resolve(results.filter(r => r.count));
+                } catch(e) {reject(e);} })();
+            });
         }
 
     }

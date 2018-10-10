@@ -96,7 +96,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTupdateSuttas(ids) updates suttas from SuttaCentral", function(done) {
+    it("updateSuttas(ids) updates suttas from SuttaCentral", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             await store.updateSuttas([
@@ -129,6 +129,87 @@
 
             done(); 
         } catch(e) {done(e);} })();
+    });
+    it("TESTTESTsearch(pattern) returns search results", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+
+            // multiple results
+            var results = await store.search('is the root of suffering');
+            should(results).instanceOf(Array);
+            should.deepEqual(results.map(r=>r.count), [5, 3, 2, 1]);
+            should.deepEqual(results.map(r=>r.uid), [
+                'sn42.11', 'mn105', 'mn1', 'mn66']);
+            should.deepEqual(results.map(r=>r.author_uid), [
+                'sujato', 'sujato', 'sujato', 'sujato', ]);
+            should.deepEqual(results.map(r=>r.suttaplex.acronym), [
+                'SN 42.11', 'MN 105', 'MN 1', 'MN 66', ]);
+            should(results[0].quote).match(/desire is the root of suffering/);
+            should(results[1].quote).match(/attachment is the root of suffering/);
+            should(results[2].quote).match(/relishing is the root of suffering/);
+            should(results[3].quote).match(/attachment is the root of suffering/);
+
+            // regular expression
+            var results = await store.search('is.*root.*suffering');
+            should(results).instanceOf(Array);
+            should.deepEqual(results.map(r=>r.count), [5, 3, 2, 1, 1]);
+            should.deepEqual(results.map(r=>r.uid), [
+                'sn42.11', 'mn105', 'mn1', 'sn12.51', 'mn66']);
+
+            // no results
+            var results = await store.search('not-in-suttas');
+            should(results.length).equal(0);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTsanitizePattern(pattern) prevents code injection attacks", function() {
+        var testPattern = (pattern,expected) => {
+            should(SuttaStore.sanitizePattern(pattern)).equal(expected);
+        }
+        testPattern('root of suffering', 'root of suffering');
+        testPattern('"doublequote"', '.doublequote.');
+        testPattern("'singlequote'", '.singlequote.');
+        testPattern("a\nb\n\r\n\rc", 'a b c');
+        testPattern("a\tb\t\t\rc", 'a b c');
+        testPattern("a$b", 'a$b');
+        testPattern("a.b", 'a.b');
+        testPattern("a.*b", 'a.*b');
+        testPattern("a\\'b", 'a\\.b');
+        testPattern("a.+b", 'a.+b');
+        testPattern("a\u0000b", 'ab');
+        testPattern("a\u0001b", 'ab');
+        testPattern("a\u007Fb", 'ab');
+        testPattern("sattānaṃ", "sattānaṃ");
+    });
+    it("TESTTESTsearch(pattern) is sanitized", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            var results = await store.search('"`echo doublequote`"');
+            should(results.length).equal(0);
+            var results = await store.search("'`echo singlequote`'");
+            should(results.length).equal(0);
+            var results = await store.search("${PATH}");
+            should(results.length).equal(0);
+            var results = await store.search("is\tthe\rroot\nof\nsuffering");
+            should.deepEqual(results.map(r=>r.uid), [
+                'sn42.11', 'mn105', 'mn1', 'mn66']);
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("search(pattern) is sanitized", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            var longstring = new Array(100).fill("abcdefghijklmnopqrstuvwxyz").join(" ");
+            await store.search(longstring);
+            done(new Error("expected failure"));
+        } catch(e) {
+            if (/text too long/.test(e.message)) {
+                done();
+            } else {
+                done(e);
+            }
+        } })();
     });
 
 })

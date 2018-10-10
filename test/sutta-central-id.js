@@ -20,7 +20,7 @@
         should(scid).instanceOf(SuttaCentralId);
         should(scid.toString()).equal(null);
     });
-    it("TESTTESTnormalizeSuttaId(id) returns normalized sutta_uid", function(done) {
+    it("normalizeSuttaId(id) returns normalized sutta_uid", function(done) {
         (async function() { try {
             should(SuttaCentralId.normalizeSuttaId('an2.12')).equal('an2.11-20');
             should(SuttaCentralId.normalizeSuttaId('an1.21-30')).equal('an1.21-30');

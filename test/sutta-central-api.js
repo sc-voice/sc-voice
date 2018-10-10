@@ -229,7 +229,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
+    it("loadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
             var language = 'en';
