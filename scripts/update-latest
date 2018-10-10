@@ -56,6 +56,18 @@ else
     popd
 fi
 
+if [ -e local/suttas]; then
+    echo -e "INIT\t: updating scv-suttas..."
+    pushd local/suttas
+    git pull
+    popd
+else
+    pushd local
+    echo -e "INIT\t: installing scv-suttas..."
+    git clone https://github.com/sc-voice/scv-suttas suttas
+    popd
+fi
+
 if [ "$REBOOT" == "1" ]; then
     sudo shutdown -r now
 fi
