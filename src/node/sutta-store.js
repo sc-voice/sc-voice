@@ -177,13 +177,17 @@
                 throw new Error(`Search text too long by ${excess} characters.`);
             }
             // normalize white space to space
-            pattern = pattern.replace(/[\s]+/g,' '); 
+            pattern = pattern.replace(/[\s]+/g,' +'); 
 
             // remove control characters
             pattern = pattern.replace(/[\u0000-\u001f\u007f]+/g,''); 
 
-            // replace quotes
-            pattern = pattern.replace(/["']/g,'.'); // sanitize
+            // replace quotes (code injection on grep argument)
+            pattern = pattern.replace(/["']/g,'.'); 
+
+            // must be valid
+            new RegExp(pattern); 
+
             return pattern
         }
 
@@ -205,8 +209,8 @@
 
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var rex = new RegExp(`\\b${pattern}\\b`);
-                    var grex = `\\<${pattern}\\>`;
+                    var rex = new RegExp(`\\b${pattern}\\b`,'i');
+                    var grex = `\\b${pattern}\\b`;
                     console.log(`rex:${rex}`);
                     console.log(grex);
                     var root = that.root.replace(ROOT, '');
@@ -239,8 +243,8 @@
                         var translation = sutta.translation;
                         var lang = translation.lang;
                         var quote = sutta.segments.filter(seg => 
-                            seg[lang].indexOf(pattern)>=0
-                        )[0];
+                            rex.test(seg[lang]) || rex.test(seg.pli)
+                        )[0] || '';
                         return {
                             count: Number(line.substring(iColon+1)),
                             uid: translation.uid,

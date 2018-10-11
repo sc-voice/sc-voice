@@ -156,6 +156,16 @@
             should.deepEqual(results.map(r=>r.uid), [
                 'sn42.11', 'mn105', 'mn1', 'sn12.51', 'mn66']);
 
+            // multiple spaces
+            var results = await store.search('adorned is');
+            should(results).instanceOf(Array);
+            should.deepEqual(results.map(r=>r.count), [1, 1, 1]);
+            should.deepEqual(results.map(r=>r.uid), [
+                'thag20.1', 'thag17.3', 'thag16.4', ]);
+            should(results[0].quote).match(/body all adorned  Is enough/);
+            should(results[1].quote).match(/body all adorned  Is enough/);
+            should(results[2].quote).match(/body all adorned  Is enough/);
+
             // no results
             var results = await store.search('not-in-suttas');
             should(results.length).equal(0);
@@ -167,11 +177,11 @@
         var testPattern = (pattern,expected) => {
             should(SuttaStore.sanitizePattern(pattern)).equal(expected);
         }
-        testPattern('root of suffering', 'root of suffering');
+        testPattern('root of suffering', 'root +of +suffering');
         testPattern('"doublequote"', '.doublequote.');
         testPattern("'singlequote'", '.singlequote.');
-        testPattern("a\nb\n\r\n\rc", 'a b c');
-        testPattern("a\tb\t\t\rc", 'a b c');
+        testPattern("a\nb\n\r\n\rc", 'a +b +c');
+        testPattern("a\tb\t\t\rc", 'a +b +c');
         testPattern("a$b", 'a$b');
         testPattern("a.b", 'a.b');
         testPattern("a.*b", 'a.*b');
@@ -181,6 +191,7 @@
         testPattern("a\u0001b", 'ab');
         testPattern("a\u007Fb", 'ab');
         testPattern("sattānaṃ", "sattānaṃ");
+        should.throws(() => SuttaStore.sanitizePattern("not [good"));
     });
     it("TESTTESTsearch(pattern) is sanitized", function(done) {
         (async function() { try {
@@ -197,7 +208,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) is sanitized", function(done) {
+    it("search(pattern) handles long text", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var longstring = new Array(100).fill("abcdefghijklmnopqrstuvwxyz").join(" ");
@@ -205,6 +216,19 @@
             done(new Error("expected failure"));
         } catch(e) {
             if (/text too long/.test(e.message)) {
+                done();
+            } else {
+                done(e);
+            }
+        } })();
+    });
+    it("TESTTESTsearch(pattern) handles invalid regexp", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            await store.search("not[good");
+            done(new Error("expected failure"));
+        } catch(e) {
+            if (/Invalid regular expression/.test(e.message)) {
                 done();
             } else {
                 done(e);
