@@ -72,7 +72,7 @@
                         this.getDownloadSutta, this.audioMIME),
                     this.resourceMethod("get", "sutta/:sutta_uid/:language/:translator", 
                         this.getSutta),
-                    this.resourceMethod("get", "search/:maxResults/:language/:pattern", 
+                    this.resourceMethod("get", "search/:pattern", 
                         this.getSearch),
 
                 ]),
@@ -263,12 +263,12 @@
 
         getSearch(req, res, next) {
             var that = this;
-            var language = req.params.language || 'en';
+            var language = req.query.language || 'en';
             var pattern = req.params.pattern;
             if (!pattern) {
                 return Promise.reject(new Error('Search pattern is required'));
             }
-            var maxResults = Number(req.params.maxResults);
+            var maxResults = Number(req.query.maxResults);
             if (isNaN(maxResults)) {
                 return Promise.reject(new Error('Expected number for maxResults'));
             }
