@@ -216,5 +216,24 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTGET /search/:maxResults/:language/:pattern suttaplexes found", function(done) {
+        var async = function* () { try {
+            var maxResults = 3;
+            var pattern = `root of suffering`;
+            var url = `/scv/search/${maxResults}/en/${pattern}`;
+            var response = yield supertest(app).get(url).expect((res) => {
+                res.statusCode.should.equal(200);
+                var results = res.body;
+                should(results).instanceOf(Array);
+                should(results.length).equal(3);
+                should.deepEqual(results.map(r => r.uid),[
+                    'sn42.11', 'mn105', 'mn1',
+                ]);
+                should.deepEqual(results.map(r => r.count),[ 5,3,2, ]);
+            }).end((e,r) => e ? async.throw(e) : async.next(r));
+            done();
+        } catch (e) { done(e); } }();
+        async.next();
+    });
 });
 

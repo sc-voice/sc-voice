@@ -12,6 +12,7 @@
     const Section = require('./section');
     const Sutta = require('./sutta');
     const SuttaFactory = require('./sutta-factory');
+    const SuttaStore = require('./sutta-store');
     const SuttaCentralApi = require('./sutta-central-api');
     const PoParser = require('./po-parser');
     const Voice = require('./voice');
@@ -42,9 +43,13 @@
                 storePath: PATH_SOUNDS,
                 suffix: this.audioSuffix,
             });
-            this.suttaCentralApi = opts.suttaCentralApi;
+            this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
+            });
+            this.suttaStore = new SuttaStore({
+                suttaCentralApi: this.suttaCentralApi,
+                suttaFactory: this.suttaFactory,
             });
             Object.defineProperty(this, "handlers", {
                 value: super.handlers.concat([
@@ -67,9 +72,26 @@
                         this.getDownloadSutta, this.audioMIME),
                     this.resourceMethod("get", "sutta/:sutta_uid/:language/:translator", 
                         this.getSutta),
+                    this.resourceMethod("get", "search/:maxResults/:language/:pattern", 
+                        this.getSearch),
 
                 ]),
             });
+        }
+
+        initialize() {
+            var that = this;
+            var promise = super.initialize();
+            promise.then(() => {
+                (async function(){ try {
+                    await that.suttaCentralApi.initialize();
+                    await that.suttaFactory.initialize();
+                    await that.suttaStore.initialize();
+                } catch(e) {
+                    logger.error(e.stack);
+                }})();
+            });
+            return promise;
         }
 
         getAudio(req, res, next) {
@@ -237,6 +259,28 @@
                     resolve(sutta);
                 } catch(e) { reject(e); } })();
             });
+        }
+
+        getSearch(req, res, next) {
+            var that = this;
+            var language = req.params.language || 'en';
+            var pattern = req.params.pattern;
+            if (!pattern) {
+                return Promise.reject(new Error('Search pattern is required'));
+            }
+            var maxResults = Number(req.params.maxResults);
+            if (isNaN(maxResults)) {
+                return Promise.reject(new Error('Expected number for maxResults'));
+            }
+            var promise = that.suttaStore.search({
+                pattern,
+                language,
+                maxResults,
+            });
+            promise.then(results => {
+                logger.info(`GET search(${pattern}) => ${results.map(r=>r.uid)}`);
+            });
+            return promise;
         }
     }
 
