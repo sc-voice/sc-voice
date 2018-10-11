@@ -144,10 +144,12 @@
                 'sujato', 'sujato', 'sujato', 'sujato', ]);
             should.deepEqual(results.map(r=>r.suttaplex.acronym), [
                 'SN 42.11', 'MN 105', 'MN 1', 'MN 66', ]);
-            should(results[0].quote).match(/desire is the root of suffering/);
-            should(results[1].quote).match(/attachment is the root of suffering/);
-            should(results[2].quote).match(/relishing is the root of suffering/);
-            should(results[3].quote).match(/attachment is the root of suffering/);
+            should(results[0].quote.en).match(/desire is the root of suffering/);
+            should(results[1].quote.en).match(/attachment is the root of suffering/);
+            should(results[2].quote.en).match(/relishing is the root of suffering/);
+            should(results[3].quote.en).match(/attachment is the root of suffering/);
+            var jsonPath = path.join(__dirname, '../public/search/test');
+            fs.writeFileSync(jsonPath, JSON.stringify(results, null, 2));
 
             // regular expression
             var results = await store.search('is.*root.*suffering');
@@ -162,9 +164,9 @@
             should.deepEqual(results.map(r=>r.count), [1, 1, 1]);
             should.deepEqual(results.map(r=>r.uid), [
                 'thag20.1', 'thag17.3', 'thag16.4', ]);
-            should(results[0].quote).match(/body all adorned  Is enough/);
-            should(results[1].quote).match(/body all adorned  Is enough/);
-            should(results[2].quote).match(/body all adorned  Is enough/);
+            should(results[0].quote.en).match(/body all adorned  Is enough/);
+            should(results[1].quote.en).match(/body all adorned  Is enough/);
+            should(results[2].quote.en).match(/body all adorned  Is enough/);
 
             // no results
             var results = await store.search('not-in-suttas');

@@ -8,14 +8,34 @@
           </div>
           <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
           <div v-if="error.search" class="scv-error" >
-              <search-help autofocus :title="errorSummary" :httpError="error.search.http" />
+              <search-help ref="refSearchHelp" :title="errorSummary" 
+                :search="search"
+                :httpError="error.search.http" />
               <v-btn icon @click="error.search=null" class="scv-icon-btn" :style="cssProps"
                 aria-label="Dismiss Error">
                 <v-icon>clear</v-icon>
               </v-btn>
           </div>
-          <details autofocus v-if="sections && sections[0]" class="scv-header">
-            <summary class="subheading scv-header-summary" >
+          <details v-show="searchResults">
+            <summary ref="refResults" class='title'>
+                {{searchResults && searchResults.length||'No'}} suttas found
+            </summary>
+            <details v-for="result in (searchResults||[])" :key="result.uid" 
+                class="scv-search-result" :style="cssProps">
+                <summary class="scv-search-result-summary">
+                    {{result.suttaplex.acronym}}
+                    {{result.title}}
+                    <span class="caption">&nbsp;matches:{{result.count}} </span>
+                </summary>
+                <div class="scv-search-result-lang">
+                    {{result.author}}
+                    {{result.quote.en}}
+                </div>
+                <div class="scv-search-result-pli">{{result.quote.pli}}</div>
+            </details>
+          </details>
+          <details v-if="sections && sections[0]" class="scv-header">
+            <summary ref="refSutta" class="subheading scv-header-summary" >
                 {{sutta.title}}
             </summary>
             <div class="scv-blurb">{{suttaplex.blurb}}</div>
@@ -156,6 +176,7 @@ export default {
             hasAudio: true,
             search: '',
             sectionAudioGuids,
+            searchResults: null,
             suttaAudioGuid: null,
             support: {
                 value: '(n/a)',
@@ -176,6 +197,7 @@ export default {
     methods: {
         clear() {
             this.error.search = null;
+            this.searchResults = null;
             for (var i = 0; i < MAX_SECTIONS; i++) {
                 this.error[i] = null;
                 this.sectionAudioGuids[i] = null;
@@ -246,6 +268,7 @@ export default {
                 this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
                 this.sutta.author = translation.author;
                 this.waiting = false;
+                this.$nextTick(() => this.$refs.refSutta.focus());
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
                     || `Not found.`;
@@ -255,6 +278,31 @@ export default {
                 };
                 console.error(e.stack, data);
                 this.waiting = false;
+                this.$nextTick(() => this.$refs.refSearchHelp.setFocus());
+            });
+
+        },
+        searchSuttas(search) {
+            var url = `./search/${search}`;
+            this.waiting = true;
+            this.$http.get(url).then(res => {
+                this.clear();
+                console.log('searchResults', res.data);
+                Vue.set(this, 'searchResults', res.data);
+                this.waiting = false;
+                this.$nextTick(() => {
+                    this.$refs.refResults.focus();
+                });
+            }).catch(e => {
+                var data = e.response && e.response.data && e.response.data.error 
+                    || `Not found.`;
+                this.error.search = {
+                    http: e.message,
+                    data,
+                };
+                console.error(e.stack, data);
+                this.waiting = false;
+                this.$nextTick(() => this.$refs.refSearchHelp.setFocus());
             });
 
         },
@@ -284,7 +332,7 @@ export default {
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
                     || `Sutta cannot be recited. Try again later.`;
-                this.error[iSection] = {
+                this.error.search = {
                     http: e.message,
                     data,
                 }
@@ -355,9 +403,12 @@ export default {
         this.$nextTick(() => {
             var search = this.scvOpts.search;
             Vue.set(this, 'search', search);
-            if (search) {
+            if (/[1-9]/.test(search)) {
                 console.log(`sutta.mounted() showSutta(${search})`);
                 this.showSutta(search);
+            } else if (search) {
+                console.log(`sutta.mounted() searchSuttas(${search})`);
+                this.searchSuttas(search);
             } else {
                 console.log(`sutta.mounted() no search`);
             } 
@@ -372,36 +423,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-summary {
-    padding-left: 0.2em;
-    padding-right: 0.2em;
-}
-button {
-    background-color: var(accentColor);
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-:focus {
-    background-color: #000 !important;
-}
-a {
-    color: white;
-    text-decoration: none;
-    padding-left: 0.2em;
-    padding-right: 0.2em;
-}
-a:visited {
-    color: white;
-}
-a:hover {
-    text-decoration: underline;
-}
 .scv-scid {
     display: inline-block;
     font-size: xx-small;
@@ -434,30 +455,11 @@ a:hover {
     padding-right: auto;
     padding-bottom: 100px;
 }
-.scv-text-button {
-    border-radius: 4px;
-    border: 1pt solid #888;
-    padding-left: 0.4em;
-    padding-right: 0.4em;
-    text-align: center;
-    margin-left: 1.2em;
-}
-.scv-text-button:focus {
-    border-color: var(--accent-color);
-    outline: 1pt solid var(--accent-color);
-}
 .scv-search-row {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
-}
-.scv-icon-btn {
-    margin: 0;
-}
-.scv-icon-btn:focus {
-    border-radius:5px;
-    border: 1pt solid var(--accent-color);
 }
 .scv-error {
     background-color: #403030 !important;
@@ -505,5 +507,26 @@ a:hover {
     display: flex;
     flex-flow: column;
     align-items: center;
+}
+.scv-search-result {
+    margin-top: 0.8em;
+    border-left: 3pt solid #444;
+    border-bottom-left-radius: 3pt;
+    padding-left: 0.5em;
+}
+.scv-search-result:focus-within {
+    border-left: 3pt solid var(--accent-color);
+}
+.scv-search-result-summary {
+    font-weight: bold;
+}
+.scv-search-result-lang {
+    margin-top: 0.5em;
+    padding-left: 2em;
+}
+.scv-search-result-pli {
+    font-style: italic !important;
+    padding-left: 2em;
+    margin-top: 0.5em;
 }
 </style>

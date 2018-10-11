@@ -1,0 +1,212 @@
+[
+  {
+    "count": 5,
+    "uid": "sn42.11",
+    "author": "Bhikkhu Sujato",
+    "author_short": "Sujato",
+    "author_uid": "sujato",
+    "author_blurb": {
+      "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+    },
+    "lang": "en",
+    "title": "Bhadraka",
+    "collection_id": "sn",
+    "suttaplex": {
+      "acronym": "SN 42.11",
+      "volpages": "SN iv 327",
+      "uid": "sn42.11",
+      "blurb": "The chief Bhadraka asks the Buddha about the origin and ending of suffering, and the Buddha points out that a loss among Bhadraka’s own community would cause him suffering, due to his attachment.",
+      "difficulty": null,
+      "original_title": "Bhadraka Sutta",
+      "root_lang": "pli",
+      "type": "text",
+      "from": null,
+      "translated_title": "Bhadraka",
+      "translations": [
+        {
+          "lang": "en",
+          "lang_name": "English",
+          "author": "Bhikkhu Sujato",
+          "author_short": "Sujato",
+          "author_uid": "sujato",
+          "id": "en_sn42.11_sujato",
+          "segmented": true,
+          "title": "Bhadraka"
+        }
+      ],
+      "parallel_count": 2,
+      "biblio": null,
+      "num": 11
+    },
+    "quote": {
+      "scid": "sn42.11:2.11",
+      "pli": "Chando hi mūlaṃ dukkhassa.",
+      "en": "For desire is the root of suffering."
+    }
+  },
+  {
+    "count": 3,
+    "uid": "mn105",
+    "author": "Bhikkhu Sujato",
+    "author_short": "Sujato",
+    "author_uid": "sujato",
+    "author_blurb": {
+      "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+    },
+    "lang": "en",
+    "title": "With Sunakkhatta",
+    "collection_id": "mn",
+    "suttaplex": {
+      "acronym": "MN 105",
+      "volpages": "MN ii 252",
+      "uid": "mn105",
+      "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on a irreversible letting go of the forces that lead to suffering.",
+      "difficulty": 2,
+      "original_title": "Sunakkhatta Sutta",
+      "root_lang": "pli",
+      "type": "text",
+      "from": null,
+      "translated_title": "With Sunakkhatta",
+      "translations": [
+        {
+          "lang": "en",
+          "lang_name": "English",
+          "author": "Bhikkhu Sujato",
+          "author_short": "Sujato",
+          "author_uid": "sujato",
+          "id": "en_mn105_sujato",
+          "segmented": true,
+          "title": "With Sunakkhatta"
+        }
+      ],
+      "parallel_count": 1,
+      "biblio": null,
+      "num": 5
+    },
+    "quote": {
+      "scid": "mn105:28.2",
+      "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—netaṃ ṭhānaṃ vijjati.",
+      "en": "Understanding that attachment is the root of suffering, they are freed with the end of attachments. It’s not possible that they would apply their body or interest their mind in any attachment."
+    }
+  },
+  {
+    "count": 2,
+    "uid": "mn1",
+    "author": "Bhikkhu Sujato",
+    "author_short": "Sujato",
+    "author_uid": "sujato",
+    "author_blurb": {
+      "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+    },
+    "lang": "en",
+    "title": "The Root of All Things",
+    "collection_id": "mn",
+    "suttaplex": {
+      "acronym": "MN 1",
+      "volpages": "MN i 1",
+      "uid": "mn1",
+      "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
+      "difficulty": 3,
+      "original_title": "Mūlapariyāya Sutta",
+      "root_lang": "pli",
+      "type": "text",
+      "from": null,
+      "translated_title": "The Root of All Things",
+      "translations": [
+        {
+          "lang": "en",
+          "lang_name": "English",
+          "author": "Bhikkhu Sujato",
+          "author_short": "Sujato",
+          "author_uid": "sujato",
+          "id": "en_mn1_sujato",
+          "segmented": true,
+          "title": "The Root of All Things"
+        },
+        {
+          "author": "Bhikkhu Bodhi",
+          "author_short": "Bodhi",
+          "author_uid": "bodhi",
+          "id": "en_mn1_bodhi",
+          "lang": "en",
+          "lang_name": "English",
+          "segmented": false,
+          "title": "The Root of All Things"
+        },
+        {
+          "author": "I.B. Horner",
+          "author_short": "Horner",
+          "author_uid": "horner",
+          "id": "en_mn1_horner",
+          "lang": "en",
+          "lang_name": "English",
+          "segmented": false,
+          "title": "Discourse on the Synopsis of Fundamentals"
+        }
+      ],
+      "parallel_count": 4,
+      "biblio": null,
+      "num": 1
+    },
+    "quote": {
+      "scid": "mn1:171.4",
+      "pli": "‘Nandī dukkhassa mūlan’ti—",
+      "en": "Because he has understood that relishing is the root of suffering,"
+    }
+  },
+  {
+    "count": 1,
+    "uid": "mn66",
+    "author": "Bhikkhu Sujato",
+    "author_short": "Sujato",
+    "author_uid": "sujato",
+    "author_blurb": {
+      "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+    },
+    "lang": "en",
+    "title": "The Simile of the Quail",
+    "collection_id": "mn",
+    "suttaplex": {
+      "acronym": "MN 66",
+      "volpages": "MN i 447",
+      "uid": "mn66",
+      "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous.",
+      "difficulty": 2,
+      "original_title": "Laṭukikopama Sutta",
+      "root_lang": "pli",
+      "type": "text",
+      "from": null,
+      "translated_title": "The Simile of the Quail",
+      "translations": [
+        {
+          "lang": "en",
+          "lang_name": "English",
+          "author": "Bhikkhu Sujato",
+          "author_short": "Sujato",
+          "author_uid": "sujato",
+          "id": "en_mn66_sujato",
+          "segmented": true,
+          "title": "The Simile of the Quail"
+        },
+        {
+          "author": "I.B. Horner",
+          "author_short": "Horner",
+          "author_uid": "horner",
+          "id": "en_mn66_horner",
+          "lang": "en",
+          "lang_name": "English",
+          "segmented": false,
+          "title": "Discourse on the Simile of the Quail"
+        }
+      ],
+      "parallel_count": 5,
+      "biblio": null,
+      "num": 6
+    },
+    "quote": {
+      "scid": "mn66:17.1",
+      "pli": "Idha panudāyi, ekacco puggalo ‘upadhi dukkhassa mūlan’ti—",
+      "en": "Take another person who, understanding that attachment is the root of suffering,"
+    }
+  }
+]

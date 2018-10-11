@@ -268,7 +268,7 @@
             if (!pattern) {
                 return Promise.reject(new Error('Search pattern is required'));
             }
-            var maxResults = Number(req.query.maxResults);
+            var maxResults = Number(req.query.maxResults || that.suttaStore.maxResults);
             if (isNaN(maxResults)) {
                 return Promise.reject(new Error('Expected number for maxResults'));
             }

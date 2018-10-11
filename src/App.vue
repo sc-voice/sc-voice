@@ -154,6 +154,18 @@ export default {
 }
 </script>
 <style >
+a {
+    color: #ffcc66 !important;
+    text-decoration: none;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
+a:visited {
+    color: #ffffff !important;
+}
+a:hover {
+    text-decoration: underline;
+}
 .scv-icon-btn:focus {
     border-radius:5px;
     border: 1pt solid var(--accent-color);
@@ -175,6 +187,16 @@ export default {
 }
 details.scv-dialog {
     margin-left: 1em;
+}
+summary {
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
+button {
+    background-color: var(accentColor);
+}
+:focus {
+    background-color: #000 !important;
 }
 .scv-content {
     position: relative;
@@ -198,6 +220,25 @@ details.scv-dialog {
 }
 .scv-settings {
     margin-left: 1em;
+}
+.scv-icon-btn {
+    margin: 0;
+}
+.scv-icon-btn:focus {
+    border-radius:5px;
+    border: 1pt solid var(--accent-color);
+}
+.scv-text-button {
+    border-radius: 4px;
+    border: 1pt solid #888;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    text-align: center;
+    margin-left: 1.2em;
+}
+.scv-text-button:focus {
+    border-color: var(--accent-color);
+    outline: 1pt solid var(--accent-color);
 }
 .fade-enter-active, .fade-leave-active {
     transition: opacity 10s linear !important;

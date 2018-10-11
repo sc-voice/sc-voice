@@ -1,33 +1,27 @@
 <template>
     <details>
-        <summary class="scv-help-title">{{title}}</summary>
+        <summary ref="refError" class="scv-help-title">{{search}} {{title}}</summary>
         <div class="ml-3">
             <div class=""> HTTP {{httpError}} </div>
-            <div class="scv-help-title">Instructions</div>
+            <div tabindex=0 class="scv-help-title">Instructions</div>
             <ul class="scv-help">
-                <li>Search for suttas by SuttaCentral identifier 
+                <li tabindex=0>Search for suttas by acronym or SuttaCentral identifier
                     such as 
-                    <i>mn1</i>, 
-                    <i>dn2</i>, 
+                    <i>DN 2</i>, 
+                    <i>mn1/en/sujato</i>, 
                     <i>sn39.1-15</i>
                 </li>
-                <li>Leave SuttaCentral Voice Assistant and continue search 
-                    at&nbsp;<a :href="searchSuttaCentral()">SuttaCentral.net</a>
-                </li>
-                <li class="scv-not-implemented">
+                <li  tabindex=0>
                     Search for suttas with keywords 
-                    such as <i>root of suffering</i>
-                    &nbsp;<span class="caption">NOT IMPLEMENTED</span>
+                    such as 
+                    <i>root of suffering</i>, 
+                    <i>jhāna</i>, 
+                    <i>Mūlapariyāya</i>, <i>Mūlapariyāya</i>
                 </li>
-                <li class="scv-not-implemented">
-                    Search for suttas exactly matching quoted text 
-                    such as "Root of All Things"
-                    &nbsp;<span class="caption">NOT IMPLEMENTED</span>
-                </li>
-                <li class="scv-not-implemented">
-                    Search for suttas with English or romanized Pali title such as
-                    <i>root of all things</i> or <i>mulapariyaya</i>
-                    &nbsp;<span class="caption">NOT IMPLEMENTED</span>
+                <li>
+                    <a :href="searchSuttaCentral()">
+                        Continue search for "{{search}}" on SuttaCentral.net
+                    </a>
                 </li>
             </ul>
         </div>
@@ -36,20 +30,26 @@
 
 <script>
 /* eslint no-console: 0*/
-import Vue from "vue";
-const MAX_SECTIONS = 100;
 
 export default {
     name: 'search-help',
     props: {
         httpError: null,
+        search: {   
+            default: "(search?)",
+        },
         title: {
             default: 'Help',
         },
     },
     methods: {
+        setFocus() {
+            console.log(`search-help setting focus`);
+            this.$nextTick(() => this.$refs.refError.focus());
+        },
         searchSuttaCentral() {
-            return `https://suttacentral.net/search?query=${this.$root.$data.scid}`;
+            console.log('searchSuttaCentral', this.search);
+            return `https://suttacentral.net/search?query=${this.search}`;
         },
     },
 }

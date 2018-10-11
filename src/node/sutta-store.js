@@ -256,7 +256,7 @@
                             title: translation.title,
                             collection_id,
                             suttaplex,
-                            quote: quote && quote[lang],
+                            quote,
                         }
                     }) || [];
 

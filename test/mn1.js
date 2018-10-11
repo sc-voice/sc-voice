@@ -98,7 +98,7 @@
             }, []);
             should.deepEqual(sectSegs, sutta2.segments);
 
-            var jsonPath = path.join(__dirname, '../public/sutta/test/en/sujato');
+            var jsonPath = path.join(__dirname, '../public/sutta/test1/en/sujato');
             fs.writeFileSync(jsonPath, JSON.stringify(sutta2, null, 2));
 
             done();

@@ -220,6 +220,7 @@
         var async = function* () { try {
             var maxResults = 3;
             var pattern = `root of suffering`;
+
             var url = `/scv/search/${pattern}?maxResults=${maxResults}`;
             var response = yield supertest(app).get(url).expect((res) => {
                 res.statusCode.should.equal(200);
@@ -230,6 +231,19 @@
                     'sn42.11', 'mn105', 'mn1',
                 ]);
                 should.deepEqual(results.map(r => r.count),[ 5,3,2, ]);
+            }).end((e,r) => e ? async.throw(e) : async.next(r));
+
+            // use default maxResults
+            var url = `/scv/search/${pattern}`;
+            var response = yield supertest(app).get(url).expect((res) => {
+                res.statusCode.should.equal(200);
+                var results = res.body;
+                should(results).instanceOf(Array);
+                should(results.length).equal(5);
+                should.deepEqual(results.map(r => r.uid),[
+                    'sn42.11', 'mn105', 'mn1', 'sn56.21', 'mn66',
+                ]);
+                should.deepEqual(results.map(r => r.count),[ 5,3,2,1,1 ]);
             }).end((e,r) => e ? async.throw(e) : async.next(r));
             done();
         } catch (e) { done(e); } }();
