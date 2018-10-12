@@ -216,5 +216,20 @@
             `<phoneme alphabet="ipa" ph="he\u03b8u">hetu</phoneme>${BREAK}?`,
         ]);
     });
+    it("speak(text) speaks Pali", function(done) {
+        (async function() { try {
+            var raveena = Voice.createVoice({
+                name: "raveena",
+                languageUnknown: "pli",
+            });
+            var text = `Idha panudāyi, ekacco puggalo ‘upadhi dukkhassa mūlan’ti—`;
+            var result = await raveena.speak(text, {usage:'recite'});
+            should(result).properties(['file','hits','misses','signature','cached']);
+            should(result.signature.text).match(/ph="ekɐcco"/);
+            should(result.signature.text).match(/ph="dʊk.kʰɐssa"/);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
 
 })

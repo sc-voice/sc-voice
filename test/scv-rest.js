@@ -216,7 +216,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /search/:pattern returns suttaplexes found", function(done) {
+    it("GET /search/:pattern returns suttaplexes found", function(done) {
         var async = function* () { try {
             var maxResults = 3;
             var pattern = `root of suffering`;

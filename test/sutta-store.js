@@ -6,6 +6,7 @@
         SuttaStore,
         SuttaCentralApi,
         SuttaCentralId,
+        Voice,
     } = require("../index");
     const LANG = 'en';
     const LOCAL = path.join(__dirname, '..', 'local');
@@ -130,7 +131,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) returns search results", function(done) {
+    it("search(pattern) returns search results", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -175,7 +176,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) finds metadata", function(done) {
+    it("search(pattern) finds metadata", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -205,7 +206,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsanitizePattern(pattern) prevents code injection attacks", function() {
+    it("sanitizePattern(pattern) prevents code injection attacks", function() {
         var testPattern = (pattern,expected) => {
             should(SuttaStore.sanitizePattern(pattern)).equal(expected);
         }
@@ -225,7 +226,7 @@
         testPattern("sattānaṃ", "sattānaṃ");
         should.throws(() => SuttaStore.sanitizePattern("not [good"));
     });
-    it("TESTTESTsearch(pattern) is sanitized", function(done) {
+    it("search(pattern) is sanitized", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var results = await store.search('"`echo doublequote`"');
@@ -254,7 +255,7 @@
             }
         } })();
     });
-    it("TESTTESTsearch(pattern) handles invalid regexp", function(done) {
+    it("search(pattern) handles invalid regexp", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             await store.search("not[good");
@@ -266,6 +267,25 @@
                 done(e);
             }
         } })();
+    });
+    it("TESTTESTsearch(pattern) returns voice guid", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var voice = Voice.createVoice({
+                language: 'en',
+                languageUnknown: 'pli',
+                usage: 'recite',
+            });
+            var store = await new SuttaStore({
+                voice,
+            }).initialize();
+
+            var results = await store.search('root of suffering');
+            should(results).instanceOf(Array);
+            should.deepEqual(results.map(r=>r.count), [5,3,2,1,1]);
+
+            done(); 
+        } catch(e) {done(e);} })();
     });
 
 })

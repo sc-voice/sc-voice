@@ -43,6 +43,7 @@
             this.suttaIds = opts.suttaIds || SuttaCentralId.supportedSuttas;
             this.root = opts.root || ROOT;
             this.maxResults = opts.maxResults || 5;
+            this.voice = opts.voice;
             Object.defineProperty(this, 'isInitialized', {
                 writable: true,
                 value: false,
@@ -265,6 +266,30 @@
             }) || [];
         }
 
+        voiceResults(searchResults, lang) {
+            var voice = this.voice;
+            if (voice == null) {
+                return Promise.resolve(searchResults);
+            }
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    for (var i = 0; i < searchResults.length; i++) {
+                        var result = searchResults[i];
+                        var text = [
+                            result.quote[lang], 
+                            result.quote.pli,
+                        ].join('\n\n');
+                        var {
+                            signature,
+                        } = await voice.speak(text);
+                        result.audio = signature.guid;
+                        logger.info(`voiceResults() ${result.audio} ${result.quote.scid}`);
+                    }
+                    resolve(searchResults);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
         search(...args) {
             var that = this;
             var opts = args[0];
@@ -293,12 +318,12 @@
                         language, 
                         searchMetadata
                     });
-                    var results = that.searchResults({
+                    var searchResults = that.searchResults({
                         stdout,
                         pattern,
                     });
-
-                    resolve(results.filter(r => r.count));
+                    var results = await that.voiceResults(searchResults, language);
+                    resolve(results);
                 } catch(e) {reject(e);} })();
             });
         }
