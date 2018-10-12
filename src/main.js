@@ -32,7 +32,7 @@ const scvState = {
     search: null,
     lang: 'en',
 };
-Object.defineProperty(scvState, 'url', {
+Object.defineProperty(scvState, 'hash', {
     value: (opts={}) => {
         var state = Object.assign({}, scvState, opts);
         var hash = Object.keys(state).reduce((acc,key) => {
@@ -47,6 +47,12 @@ Object.defineProperty(scvState, 'url', {
             }
             return acc;
         }, null);
+        return `${hash}`;
+    }
+});
+Object.defineProperty(scvState, 'url', {
+    value: (opts={}) => {
+        var hash = scvState.hash(opts);
         var loc = window.location;
         var r = Math.random();
         return `${loc.origin}${loc.pathname}?r=${r}${hash}`;

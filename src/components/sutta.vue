@@ -17,10 +17,11 @@
               </v-btn>
           </div>
           <details v-show="searchResults">
-            <summary ref="refResults" class='title'>
+            <summary role="heading" aria-level="1" ref="refResults" class='title'>
                 {{searchResults && searchResults.length||'No'}} suttas found
             </summary>
-            <details v-for="result in (searchResults||[])" :key="result.uid" 
+            <details role="heading" aria-level="2"
+                v-for="result in (searchResults||[])" :key="result.uid" 
                 class="scv-search-result" :style="cssProps">
                 <summary class="scv-search-result-summary">
                     {{result.suttaplex.acronym}}
@@ -28,10 +29,18 @@
                     <span class="caption">&nbsp;matches:{{result.count}} </span>
                 </summary>
                 <div class="scv-search-result-lang">
-                    {{result.author}}
-                    {{result.quote.en}}
+                    <a :href="resultLink(result)" target="_blank"> 
+                        {{result.quote.en}}
+                        <span v-if="scvOpts.showId" class='scv-scid'>
+                            &mdash;
+                            SC&nbsp;{{result.quote.scid}}
+                            {{result.author}}
+                        </span> 
+                    </a>
                 </div>
-                <div class="scv-search-result-pli">{{result.quote.pli}}</div>
+                <div class="scv-search-result-pli">
+                    <a href="/">{{result.quote.pli}}</a>
+                </div>
             </details>
           </details>
           <details v-if="sections && sections[0]" class="scv-header">
@@ -350,6 +359,15 @@ export default {
             console.log(`clickTranslation(${search})`,event);
             this.showSutta(search);
         },
+        resultLink(result) {
+            var uid = result.uid;
+            var lang = result.lang;
+            var auid = result.author_uid;
+            return this.scvOpts.url({
+                search: `${uid}/${lang}/${auid}`,
+                lang,
+            });
+        },
         translationLink(translation) {
             return this.scvOpts.url({
                 search: this.translationSearch(translation),
@@ -510,7 +528,7 @@ export default {
 }
 .scv-search-result {
     margin-top: 0.8em;
-    border-left: 3pt solid #444;
+    border-left: 3pt solid #3a3a3a;
     border-bottom-left-radius: 3pt;
     padding-left: 0.5em;
 }
@@ -522,11 +540,11 @@ export default {
 }
 .scv-search-result-lang {
     margin-top: 0.5em;
-    padding-left: 2em;
+    padding-left: 1.5em;
 }
 .scv-search-result-pli {
     font-style: italic !important;
-    padding-left: 2em;
+    padding-left: 1.5em;
     margin-top: 0.5em;
 }
 </style>
