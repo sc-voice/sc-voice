@@ -191,6 +191,80 @@
             return pattern
         }
 
+        grep(args) {
+            var {
+                pattern,
+                maxResults,
+                language,
+                searchMetadata,
+            } = args;
+            var grex = searchMetadata
+                ? `\\b${pattern}\\b`
+                : `"(${language}|pli)":.*\\b${pattern}\\b`;
+            var root = this.root.replace(ROOT, '');
+            var cmd = `grep -rciE '${grex}' --exclude-dir=.git`+
+                `|grep -v ':0'`+
+                `|sort -r -k 2,2 -k 1,1 -t ':'`+
+                `|head -${maxResults}`;
+            logger.info(`SuttaStore.search() ${cmd}`);
+            var opts = {
+                cwd: this.root,
+                shell: '/bin/bash',
+            };
+            return new Promise((res,rej) => {
+                exec(cmd, opts, (err,stdout,stderr) => {
+                    if (err) {
+                        logger.log(stderr);
+                        rej(err);
+                    } else {
+                        res(stdout.trim());
+                    }
+                });
+            });
+        }
+
+        searchResults(args) {
+            var {
+                stdout,
+                pattern,
+            } = args;
+            var rexlang = new RegExp(`\\b${pattern}\\b`,'i');
+            var rexpli = new RegExp(`\\b${pattern}`,'i');
+            return stdout && stdout.split('\n').map(line => {
+                var iColon = line.indexOf(':');
+                var fname = path.join(ROOT,line.substring(0,iColon));
+                var fnameparts = fname.split('/');
+                var collection_id = fnameparts[fnameparts.length-4];
+                var sutta = new Sutta(JSON.parse(fs.readFileSync(fname)));
+                var suttaplex = sutta.suttaplex;
+                var nSegments = sutta.segments.length;
+                var translation = sutta.translation;
+                var lang = translation.lang;
+                var quote = sutta.segments.filter(seg => 
+                    seg[lang] && 
+                    (rexlang.test(seg[lang]) || rexpli.test(seg.pli))
+                )[0];
+                if (quote == null || !quote[lang]) {
+                    // Pali search with no translated text
+                    quote = sutta.segments[1]; // usually title
+                }
+                return {
+                    count: Number(line.substring(iColon+1)),
+                    uid: translation.uid,
+                    author: translation.author,
+                    author_short: translation.author_short,
+                    author_uid: translation.author_uid,
+                    author_blurb: translation.author_blurb,
+                    lang,
+                    nSegments,
+                    title: translation.title,
+                    collection_id,
+                    suttaplex,
+                    quote,
+                }
+            }) || [];
+        }
+
         search(...args) {
             var that = this;
             var opts = args[0];
@@ -213,64 +287,16 @@
 
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var rexlang = new RegExp(`\\b${pattern}\\b`,'i');
-                    var rexpli = new RegExp(`\\b${pattern}`,'i');
-                    var grex = searchMetadata
-                        ? `\\b${pattern}\\b`
-                        : `"(${language}|pli)":.*\\b${pattern}\\b`;
-                    var root = that.root.replace(ROOT, '');
-                    var cmd = `grep -rciE '${grex}' --exclude-dir=.git`+
-                        `|grep -v ':0'`+
-                        `|sort -r -k 2,2 -k 1,1 -t ':'`+
-                        `|head -${maxResults}`;
-                    logger.info(`SuttaStore.search() ${cmd}`);
-                    var opts = {
-                        cwd: that.root,
-                        shell: '/bin/bash',
-                    };
-                    var stdout = await new Promise((res,rej) => {
-                        exec(cmd, opts, (err,stdout,stderr) => {
-                            if (err) {
-                                logger.log(stderr);
-                                rej(err);
-                            } else {
-                                res(stdout.trim());
-                            }
-                        });
+                    var stdout = await that.grep({
+                        pattern, 
+                        maxResults, 
+                        language, 
+                        searchMetadata
                     });
-                    var results = stdout && stdout.split('\n').map(line => {
-                        var iColon = line.indexOf(':');
-                        var fname = path.join(ROOT,line.substring(0,iColon));
-                        var fnameparts = fname.split('/');
-                        var collection_id = fnameparts[fnameparts.length-4];
-                        var sutta = new Sutta(JSON.parse(fs.readFileSync(fname)));
-                        var suttaplex = sutta.suttaplex;
-                        var nSegments = sutta.segments.length;
-                        var translation = sutta.translation;
-                        var lang = translation.lang;
-                        var quote = sutta.segments.filter(seg => 
-                            seg[lang] && 
-                            (rexlang.test(seg[lang]) || rexpli.test(seg.pli))
-                        )[0];
-                        if (quote == null || !quote[lang]) {
-                            // Pali search with no translated text
-                            quote = sutta.segments[1]; // usually title
-                        }
-                        return {
-                            count: Number(line.substring(iColon+1)),
-                            uid: translation.uid,
-                            author: translation.author,
-                            author_short: translation.author_short,
-                            author_uid: translation.author_uid,
-                            author_blurb: translation.author_blurb,
-                            lang,
-                            nSegments,
-                            title: translation.title,
-                            collection_id,
-                            suttaplex,
-                            quote,
-                        }
-                    }) || [];
+                    var results = that.searchResults({
+                        stdout,
+                        pattern,
+                    });
 
                     resolve(results.filter(r => r.count));
                 } catch(e) {reject(e);} })();
