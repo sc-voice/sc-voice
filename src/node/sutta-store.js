@@ -205,7 +205,7 @@
             var root = this.root.replace(ROOT, '');
             var cmd = `grep -rciE '${grex}' --exclude-dir=.git`+
                 `|grep -v ':0'`+
-                `|sort -r -k 2,2 -k 1,1 -t ':'`+
+                `|sort -g -r -k 2,2 -k 1,1 -t ':'`+
                 `|head -${maxResults}`;
             logger.info(`SuttaStore.search() ${cmd}`);
             var opts = {

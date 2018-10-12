@@ -287,5 +287,15 @@
             done(); 
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTsearch(pattern) sorts by numeric count", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            var results = await store.search('Sāriputta');
+            // numerical sort has 174 greater than 90
+            // standard sort has 90 greater than 174
+            should.deepEqual(results.map(r=>r.count), [174,90,87,80,71]);
+            done(); 
+        } catch(e) {done(e);} })();
+    });
 
 })
