@@ -9,6 +9,7 @@
       "en": "Translated for SuttaCentral by Sujato Bhikkhu"
     },
     "lang": "en",
+    "nSegments": 55,
     "title": "Bhadraka",
     "collection_id": "sn",
     "suttaplex": {
@@ -54,6 +55,7 @@
       "en": "Translated for SuttaCentral by Sujato Bhikkhu"
     },
     "lang": "en",
+    "nSegments": 188,
     "title": "With Sunakkhatta",
     "collection_id": "mn",
     "suttaplex": {
@@ -99,6 +101,7 @@
       "en": "Translated for SuttaCentral by Sujato Bhikkhu"
     },
     "lang": "en",
+    "nSegments": 334,
     "title": "The Root of All Things",
     "collection_id": "mn",
     "suttaplex": {
@@ -164,6 +167,7 @@
       "en": "Translated for SuttaCentral by Sujato Bhikkhu"
     },
     "lang": "en",
+    "nSegments": 202,
     "title": "The Simile of the Quail",
     "collection_id": "mn",
     "suttaplex": {

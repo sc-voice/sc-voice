@@ -18,19 +18,24 @@
           </div>
           <details v-show="searchResults">
             <summary role="heading" aria-level="1" ref="refResults" class='title'>
-                {{searchResults && searchResults.length||'No'}} suttas found
+                <span v-if="searchResults && searchResults.length">
+                    Top {{searchResults && searchResults.length}} suttas found
+                </span>
+                <span v-else>
+                    No suttas found
+                </span>
             </summary>
             <details role="heading" aria-level="2"
                 v-for="result in (searchResults||[])" :key="result.uid" 
                 class="scv-search-result" :style="cssProps">
                 <summary class="scv-search-result-summary">
-                    {{result.suttaplex.acronym}}
+                    {{result.suttaplex.acronym || result.uid}}
                     {{result.title}}
-                    <span class="caption">&nbsp;matches:{{result.count}} </span>
+                    <span class="caption">&nbsp;matches:{{result.count}} of {{result.nSegments}} </span>
                 </summary>
                 <div class="scv-search-result-lang">
                     <a :href="resultLink(result)" target="_blank"> 
-                        {{result.quote.en}}
+                        <span v-html="result.quote.en"></span>
                         <span v-if="scvOpts.showId" class='scv-scid'>
                             &mdash;
                             SC&nbsp;{{result.quote.scid}}
@@ -39,7 +44,9 @@
                     </a>
                 </div>
                 <div class="scv-search-result-pli">
-                    <a href="/">{{result.quote.pli}}</a>
+                    <a href="/">
+                        <span v-html="result.quote.pli"></span>
+                    </a>
                 </div>
             </details>
           </details>
@@ -292,7 +299,7 @@ export default {
 
         },
         searchSuttas(search) {
-            var url = `./search/${search}`;
+            var url = `./search/${search}?maxResults=${this.scvOpts.maxResults}`;
             this.waiting = true;
             this.$http.get(url).then(res => {
                 this.clear();
@@ -540,11 +547,11 @@ export default {
 }
 .scv-search-result-lang {
     margin-top: 0.5em;
-    padding-left: 1.5em;
+    padding-left: 1.6em;
 }
 .scv-search-result-pli {
     font-style: italic !important;
-    padding-left: 1.5em;
+    padding-left: 1.6em;
     margin-top: 0.5em;
 }
 </style>

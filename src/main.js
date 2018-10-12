@@ -30,6 +30,7 @@ const scvState = {
     iVoice: 0,
     scid: null,
     search: null,
+    maxResults: 5,
     lang: 'en',
 };
 Object.defineProperty(scvState, 'hash', {

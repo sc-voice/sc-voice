@@ -44,6 +44,16 @@
                     </v-radio-group>
                 </div>
             </details>
+            <details class="scv-dialog" >
+                <summary class="subheading">Search settings</summary>
+                <div class="scv-settings">
+                    <v-radio-group v-if="scvOpts" v-model="scvOpts.maxResults" column>
+                       <v-radio v-for="(mr,i) in maxResultsChoices" 
+                         :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
+                         </v-radio>
+                    </v-radio-group>
+                </div>
+            </details>
           </v-card-text>
           <v-card-actions>
             <button class="scv-dialog-button" :style="cssProps"
@@ -123,6 +133,21 @@ export default {
         scvOpts() {
             return this.$root && this.$root.$data;
         },
+        maxResultsChoices() {
+            return [{
+                label: "Return up to 3 search results",
+                value: 3,
+            },{
+                label: "Return up to 5 search results",
+                value: 5,
+            },{
+                label: "Return up to 10 search results",
+                value: 10,
+            },{
+                label: "Return up to 25 search results",
+                value: 25,
+            }];
+        },
         cssProps() {
             return {
                 '--accent-color': this.$vuetify.theme.accent,
@@ -137,6 +162,8 @@ export default {
         console.debug('App.mounted() with query:', query);
         if (query) {
             query.iVoice && Vue.set(this.scvOpts, "iVoice", Number(query.iVoice));
+            query.maxResults && Vue.set(this.scvOpts, "maxResults", 
+                Number(query.maxResults));
             query.showId != null && 
                 Vue.set(this.scvOpts, "showId", query.showId==='true');
             var search = query.scid || query.search || '';

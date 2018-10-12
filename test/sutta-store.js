@@ -175,6 +175,36 @@
             done(); 
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTsearch(pattern) finds metadata", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+
+            // author
+            var results = await store.search('jessica walton',3);
+            should(results).instanceOf(Array);
+            should.deepEqual(results.map(r=>r.count), [3, 3, 3]);
+            should.deepEqual(results.map(r=>r.uid), [
+                'thag9.1', 'thag8.3', 'thag8.2', ]);
+            should.deepEqual(results.map(r=>r.author_uid), [
+                'sujato-walton', 'sujato-walton', 'sujato-walton']);
+
+            // no metadata
+            var results = await store.search({
+                pattern: 'jessica walton',
+                searchMetadata: false,
+            });
+            should(results).instanceOf(Array);
+            should.deepEqual(results.map(r=>r.count), []);
+            var results = await store.search({
+                pattern: 'root of suffering',
+                searchMetadata: false,
+            });
+            should(results).instanceOf(Array);
+            should.deepEqual(results.map(r=>r.count), [5,3,2,1,1]);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
     it("TESTTESTsanitizePattern(pattern) prevents code injection attacks", function() {
         var testPattern = (pattern,expected) => {
             should(SuttaStore.sanitizePattern(pattern)).equal(expected);

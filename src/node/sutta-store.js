@@ -200,7 +200,11 @@
                     maxResults: args[1],
                 };
             }
+            var searchMetadata = opts.searchMetadata == null 
+                ? true 
+                : opts.searchMetadata == true || opts.searchMetadata === 'true';
             var pattern = SuttaStore.sanitizePattern(opts.pattern);
+            var language = opts.language || 'en';
             var maxResults = opts.maxResults==null ? that.maxResults : opts.maxResults;
             var maxResults = Number(maxResults);
             if (isNaN(maxResults)) {
@@ -209,10 +213,11 @@
 
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var rex = new RegExp(`\\b${pattern}\\b`,'i');
-                    var grex = `\\b${pattern}\\b`;
-                    console.log(`rex:${rex}`);
-                    console.log(grex);
+                    var rexlang = new RegExp(`\\b${pattern}\\b`,'i');
+                    var rexpli = new RegExp(`\\b${pattern}`,'i');
+                    var grex = searchMetadata
+                        ? `\\b${pattern}\\b`
+                        : `"(${language}|pli)":.*\\b${pattern}\\b`;
                     var root = that.root.replace(ROOT, '');
                     var cmd = `grep -rciE '${grex}' --exclude-dir=.git`+
                         `|grep -v ':0'`+
@@ -240,11 +245,17 @@
                         var collection_id = fnameparts[fnameparts.length-4];
                         var sutta = new Sutta(JSON.parse(fs.readFileSync(fname)));
                         var suttaplex = sutta.suttaplex;
+                        var nSegments = sutta.segments.length;
                         var translation = sutta.translation;
                         var lang = translation.lang;
                         var quote = sutta.segments.filter(seg => 
-                            rex.test(seg[lang]) || rex.test(seg.pli)
-                        )[0] || '';
+                            seg[lang] && 
+                            (rexlang.test(seg[lang]) || rexpli.test(seg.pli))
+                        )[0];
+                        if (quote == null || !quote[lang]) {
+                            // Pali search with no translated text
+                            quote = sutta.segments[1]; // usually title
+                        }
                         return {
                             count: Number(line.substring(iColon+1)),
                             uid: translation.uid,
@@ -253,6 +264,7 @@
                             author_uid: translation.author_uid,
                             author_blurb: translation.author_blurb,
                             lang,
+                            nSegments,
                             title: translation.title,
                             collection_id,
                             suttaplex,
