@@ -1,8 +1,9 @@
 <template>
   <v-app dark>
     <v-toolbar app flat dark >
-      <img src="/favicon.png" height=30px/>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <a href="./" aria-label="home">
+          <img aria-hidden="true" src="/favicon.png" height=30px/></a>
+      <v-toolbar-title >{{title}}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn tabindex=-1 id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
         aria-label="Settings"
@@ -71,10 +72,15 @@
           <Sutta />
         </v-content>
     </div>
-    <v-footer fixed>
+    <v-footer fixed class="pt-2">
       <div class="pl-2">{{scvOpts.scid}}</div>
       <v-spacer/>
+      <a href="http://suttacentral.net"
+        aria-label="suta central dot net"
+        ><span aria-hidden='true'>suttacentral.net</span></a>
+      <v-spacer/>
       <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+        role="contentinfo"
         aria-label="Settings"
         @click="dialogSettings = !dialogSettings"
         >

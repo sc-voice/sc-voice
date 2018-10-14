@@ -2,7 +2,13 @@
   <v-container fluid class="scv-sutta">
       <v-layout column align-left >
           <div class="scv-search-row">
-              <v-text-field placeholder="Enter sutta id" 
+              <v-text-field v-if="search" 
+                  placeholder="Enter sutta id" 
+                  v-model="search" v-on:keypress="onSearchKey($event)"
+                  label = "Search" ></v-text-field>
+              <v-text-field v-else 
+                  autofocus
+                  placeholder="Enter sutta id" 
                   v-model="search" v-on:keypress="onSearchKey($event)"
                   label = "Search" ></v-text-field>
           </div>
@@ -17,7 +23,7 @@
               </v-btn>
           </div>
           <details v-show="searchResults">
-            <summary role="heading" aria-level="1" ref="refResults" class='title'>
+            <summary role="main" aria-level="1" ref="refResults" class='title'>
                 <span v-if="searchResults && searchResults.length">
                     Top {{searchResults && searchResults.length}} suttas found
                 </span>
@@ -26,7 +32,7 @@
                 </span>
             </summary>
             <details role="heading" aria-level="2"
-                v-for="result in (searchResults||[])" :key="result.uid" 
+                v-for="(result,i) in (searchResults||[])" :key="result.uid" 
                 class="scv-search-result" :style="cssProps">
                 <summary class="scv-search-result-summary">
                     <div style="display: inline-block; width: 96%; ">
@@ -51,10 +57,10 @@
                                 {{result.author}}
                             </span> 
                         </a>
-                        {{language}}
                         <audio v-if="result.audio && result.audio[language]" 
+                            :ref="`audiolang${i}`"
                             style="display:block"
-                            controls class="ml-4 mt-1" 
+                            class="ml-4 mt-1" 
                             preload=auto
                             :aria-label="`play quote`">
                             <source type="audio/mp3"
@@ -62,11 +68,11 @@
                             <p>Your browser doesn't support HTML5 audio</p>
                         </audio>
                     </div>
-                    <v-btn icon 
+                    <v-btn icon @click="playQuote(`audiolang${i}`)"
                         :disabled="!result.audio || !result.audio[language]"
-                        @click="playQuote(result.audio[language])"
+                        tabindex="-1"
                         class="scv-icon-btn" :style="cssProps"
-                        aria-label="Play Quote">
+                        aria-hidden='true'>
                         <v-icon>volume_up</v-icon>
                     </v-btn>
                 </div>
@@ -75,8 +81,9 @@
                     <div>
                         <div v-html="result.quote.pli"></div>
                         <audio v-if="result.audio && result.audio.pli" 
+                            :ref="`audiopli${i}`"
                             style="display:block"
-                            controls class="ml-4 mt-1" 
+                            class="ml-4 mt-1" 
                             preload=auto
                             :aria-label="`play pali`">
                             <source type="audio/mp3"
@@ -84,7 +91,7 @@
                             <p>Your browser doesn't support HTML5 audio</p>
                         </audio>
                     </div>
-                    <v-btn icon @click="playQuote(result.audio.pli)"
+                    <v-btn icon @click="playQuote(`audiopli${i}`)"
                         :disabled="!result.audio || !result.audio.pli"
                         class="scv-icon-btn" :style="cssProps"
                         aria-label="Play Pali Quote">
@@ -268,8 +275,13 @@ export default {
             });
             this.segments = null;
         },
-        playQuote(guid) {
-            console.log(`playQuote(${guid})`);
+        playQuote(ref) {
+            var track = this.$refs[ref][0];
+            if (track.paused) {
+                track.play();
+            } else {
+                track.pause();
+            }
         },
         startWaiting() {
             var that = this;
