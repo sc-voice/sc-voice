@@ -51,6 +51,16 @@
                                 {{result.author}}
                             </span> 
                         </a>
+                        {{language}}
+                        <audio v-if="result.audio && result.audio[language]" 
+                            style="display:block"
+                            controls class="ml-4 mt-1" 
+                            preload=auto
+                            :aria-label="`play quote`">
+                            <source type="audio/mp3"
+                                :src="audioLink(result.audio[language])" />
+                            <p>Your browser doesn't support HTML5 audio</p>
+                        </audio>
                     </div>
                     <v-btn icon 
                         :disabled="!result.audio || !result.audio[language]"
@@ -59,17 +69,21 @@
                         aria-label="Play Quote">
                         <v-icon>volume_up</v-icon>
                     </v-btn>
-                    <audio v-if="result.audio && result.audio.pli" 
-                        controls class="ml-4 mt-1" 
-                        preload=auto
-                        :aria-label="`play pali`">
-                        <source :src="audioLink(result.audio.pli)" type="audio/mp3"/>
-                        <p>Your browser doesn't support HTML5 audio</p>
-                    </audio>
                 </div>
                 <div v-if="result.quote && result.quote.pli" 
                     class="scv-search-result-pli">
-                    <div v-html="result.quote.pli"></div>
+                    <div>
+                        <div v-html="result.quote.pli"></div>
+                        <audio v-if="result.audio && result.audio.pli" 
+                            style="display:block"
+                            controls class="ml-4 mt-1" 
+                            preload=auto
+                            :aria-label="`play pali`">
+                            <source type="audio/mp3"
+                                :src="audioLink(result.audio.pli)" />
+                            <p>Your browser doesn't support HTML5 audio</p>
+                        </audio>
+                    </div>
                     <v-btn icon @click="playQuote(result.audio.pli)"
                         :disabled="!result.audio || !result.audio.pli"
                         class="scv-icon-btn" :style="cssProps"
@@ -93,6 +107,7 @@
             <div class="scv-blurb"><span v-html="metaarea"></span></div>
             <div class="scv-play-controls">
                 <audio v-if="suttaAudioGuid" autoplay controls class="ml-4 mt-1" 
+                    style="display:block"
                     preload=auto
                     :aria-label="`play sutta`">
                     <source type="audio/mp3"
@@ -429,12 +444,11 @@ export default {
         audioLink(guid, sutta_uid){
             var lang = this.language;
             var trans = this.author_uid;
+            var link = `./audio/${guid}`;
             if (sutta_uid) {
-                var filename = `${this.sutta_uid}-${lang}-${trans}.mp3`;
-            } else {
-                var filename = `guid.mp3`;
+                link += `/${this.sutta_uid}-${lang}-${trans}.mp3`;
             }
-            return `./audio/${guid}/${filename}`;
+            return link;
         },
     },
     computed: {

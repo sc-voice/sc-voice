@@ -62,6 +62,8 @@
             Object.defineProperty(this, "handlers", {
                 value: super.handlers.concat([
                     this.resourceMethod("get", 
+                        "audio/:guid", this.getAudio, this.audioMIME),
+                    this.resourceMethod("get", 
                         "audio/:guid/:filename", this.getAudio, this.audioMIME),
                     this.resourceMethod("get", 
                         "recite/section/:sutta_uid/:language/:translator/:iSection", 
@@ -110,7 +112,8 @@
                 var data = fs.readFileSync(filePath);
                 res.set('accept-ranges', 'bytes');
                 res.set('do_stream', 'true');
-                res.set('Content-disposition', 'attachment; filename=' + filename);
+                filename && res.set('Content-disposition', 
+                    'attachment; filename=' + filename);
 
                 resolve(data);
             } catch (e) { reject(e) } });
