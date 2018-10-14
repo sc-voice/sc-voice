@@ -48,7 +48,7 @@
                 <summary class="subheading">Search settings</summary>
                 <div class="scv-settings">
                     <v-radio-group v-if="scvOpts" v-model="scvOpts.maxResults" column>
-                       <v-radio v-for="(mr,i) in maxResultsChoices" 
+                       <v-radio v-for="(mr) in maxResultsChoices" 
                          :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
                          </v-radio>
                     </v-radio-group>
@@ -182,13 +182,14 @@ export default {
 </script>
 <style >
 a {
-    color: #ffcc66 !important;
+    //color: #ffcc66 !important;
+    color: #ffffff !important;
     text-decoration: none;
     padding-left: 0.2em;
     padding-right: 0.2em;
 }
 a:visited {
-    color: #ffffff !important;
+    //color: #ffffff !important;
 }
 a:hover {
     text-decoration: underline;
@@ -250,9 +251,10 @@ button {
 }
 .scv-icon-btn {
     margin: 0;
+    border-radius:5px;
+    border: 1pt solid #222222;
 }
 .scv-icon-btn:focus {
-    border-radius:5px;
     border: 1pt solid var(--accent-color);
 }
 .scv-text-button {

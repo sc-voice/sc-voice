@@ -6,7 +6,7 @@
                   v-model="search" v-on:keypress="onSearchKey($event)"
                   label = "Search" ></v-text-field>
           </div>
-          <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
+          <v-progress-linear v-if="waiting" v-model="waiting"></v-progress-linear>
           <div v-if="error.search" class="scv-error" >
               <search-help ref="refSearchHelp" :title="errorSummary" 
                 :search="search"
@@ -29,24 +29,53 @@
                 v-for="result in (searchResults||[])" :key="result.uid" 
                 class="scv-search-result" :style="cssProps">
                 <summary class="scv-search-result-summary">
-                    {{result.suttaplex.acronym || result.uid}}
-                    {{result.title}}
-                    <span class="caption">&nbsp;matches:{{result.count}} of {{result.nSegments}} </span>
+                    <div style="display: inline-block; width: 96%; ">
+                        <div style="display:flex; justify-content: space-between; "> 
+                            <div>
+                                {{result.suttaplex.acronym || result.uid}} 
+                                {{result.title}}
+                            </div>
+                            <div class="caption">
+                               matches: {{result.count}} of {{result.nSegments}} 
+                            </div>
+                        </div>
+                    </div>
                 </summary>
                 <div class="scv-search-result-lang">
-                    <a :href="resultLink(result)" target="_blank"> 
-                        <span v-html="result.quote.en"></span>
-                        <span v-if="scvOpts.showId" class='scv-scid'>
-                            &mdash;
-                            SC&nbsp;{{result.quote.scid}}
-                            {{result.author}}
-                        </span> 
-                    </a>
+                    <div>
+                        <a :href="resultLink(result)" target="_blank"> 
+                            <span v-html="result.quote.en"></span>
+                            <span v-if="scvOpts.showId" class='scv-scid'>
+                                &mdash;
+                                SC&nbsp;{{result.quote.scid}}
+                                {{result.author}}
+                            </span> 
+                        </a>
+                    </div>
+                    <v-btn icon 
+                        :disabled="!result.audio || !result.audio[language]"
+                        @click="playQuote(result.audio[language])"
+                        class="scv-icon-btn" :style="cssProps"
+                        aria-label="Play Quote">
+                        <v-icon>volume_up</v-icon>
+                    </v-btn>
+                    <audio v-if="result.audio && result.audio.pli" 
+                        controls class="ml-4 mt-1" 
+                        preload=auto
+                        :aria-label="`play pali`">
+                        <source :src="audioLink(result.audio.pli)" type="audio/mp3"/>
+                        <p>Your browser doesn't support HTML5 audio</p>
+                    </audio>
                 </div>
-                <div class="scv-search-result-pli">
-                    <a href="/">
-                        <span v-html="result.quote.pli"></span>
-                    </a>
+                <div v-if="result.quote && result.quote.pli" 
+                    class="scv-search-result-pli">
+                    <div v-html="result.quote.pli"></div>
+                    <v-btn icon @click="playQuote(result.audio.pli)"
+                        :disabled="!result.audio || !result.audio.pli"
+                        class="scv-icon-btn" :style="cssProps"
+                        aria-label="Play Pali Quote">
+                        <v-icon>volume_up</v-icon>
+                    </v-btn>
                 </div>
             </details>
           </details>
@@ -66,14 +95,15 @@
                 <audio v-if="suttaAudioGuid" autoplay controls class="ml-4 mt-1" 
                     preload=auto
                     :aria-label="`play sutta`">
-                    <source :src="audioSuttaSrc" type="audio/mp3"/>
+                    <source type="audio/mp3"
+                        :src="audioLink(suttaAudioGuid, sutta_uid)" />
                     <p>Your browser doesn't support HTML5 audio</p>
                 </audio>
-                <button v-else :ref="`play`" @click="playSutta" :disabled="waiting"
+                <button v-else :ref="`play`" @click="playSutta()" :disabled="waiting"
                     class="scv-text-button mt-4 mb-4" :style="cssProps">
                     Play Sutta ({{voice.name}})
                 </button>
-                <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
+                <v-progress-linear v-if="waiting" v-model="waiting"></v-progress-linear>
             </div>
             <div class="scv-blurb-more">
                 <details>
@@ -134,14 +164,14 @@
                 <audio v-if="sectionAudioGuids[i]" autoplay controls class="ml-4 mt-1" 
                     preload=auto
                     :aria-label="`play section ${i}`">
-                    <source :src="`./audio/${sectionAudioGuids[i]}`" type="audio/mp3"/>
+                    <source :src="audioLink(sectionAudioGuids[i])" type="audio/mp3"/>
                     <p>Your browser doesn't support HTML5 audio</p>
                 </audio>
                 <button v-else :ref="`play${i}`" @click="playSection(i)" :disabled="waiting"
                     class="scv-text-button mt-4 mb-4" :style="cssProps">
                     Play Section {{i}} ({{voice.name}})
                 </button>
-                <v-progress-linear v-if="waiting" :indeterminate="true"></v-progress-linear>
+                <v-progress-linear v-if="waiting" v-model="waiting"></v-progress-linear>
             </div>
             <div v-if="error[i]" class="scv-error" 
                 style="margin-left: 1.2em" >
@@ -205,7 +235,7 @@ export default {
             sections: null,
             language: 'en',
             translator: 'sujato',
-            waiting: false,
+            waiting: 0,
             searchButtons: false,
         }
         return that;
@@ -223,6 +253,22 @@ export default {
             });
             this.segments = null;
         },
+        playQuote(guid) {
+            console.log(`playQuote(${guid})`);
+        },
+        startWaiting() {
+            var that = this;
+            return setInterval(() => {
+                // exponential smoothing 
+                var c = 0.9;
+                var waiting = (that.waiting||1) * c + (1-c)*100;
+                Vue.set(that, "waiting", waiting);
+            }, 100);
+        },
+        stopWaiting(timer){
+            clearInterval(timer);
+            Vue.set(this, "waiting", 0);
+        },
         playSection(iSection) {
             console.debug("playSection", iSection);
             var language = this.language;
@@ -233,10 +279,10 @@ export default {
                 vSvc = 'recite';
             }
             var url = `./${vSvc}/section/${this.sutta_uid}/${language}/${translator}/${iSection}?g=${g}`;
-            Vue.set(this, "waiting", true);
+            var timer = this.startWaiting();
             this.$http.get(url).then(res => {
                 Vue.set(this.sectionAudioGuids, iSection, res.data.guid);
-                Vue.set(this, "waiting", false);
+                this.stopWaiting(timer);
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
                     || `Section #${iSection} cannot be recited. Try again later.`;
@@ -245,7 +291,7 @@ export default {
                     data,
                 }
                 console.error(e.stack, data);
-                Vue.set(this, "waiting", false);
+                this.stopWaiting(timer);
             });
         },
         onSearchKey(event) {
@@ -258,7 +304,7 @@ export default {
             (tokens.length < 2) && tokens.push(this.scvOpts.lang);
             (tokens.length < 3) && tokens.push('sujato'); // TODO remove sujato
             var url = `./sutta/${tokens.join('/')}`;
-            this.waiting = true;
+            var timer = this.startWaiting();
             this.$http.get(url).then(res => {
                 this.clear();
                 var sections = this.sections = res.data.sections;
@@ -283,7 +329,7 @@ export default {
                 var seg0 = sections[0].segments[0];
                 this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
                 this.sutta.author = translation.author;
-                this.waiting = false;
+                this.stopWaiting(timer);
                 this.$nextTick(() => this.$refs.refSutta.focus());
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
@@ -293,19 +339,19 @@ export default {
                     data,
                 };
                 console.error(e.stack, data);
-                this.waiting = false;
+                this.stopWaiting(timer);
                 this.$nextTick(() => this.$refs.refSearchHelp.setFocus());
             });
 
         },
         searchSuttas(search) {
             var url = `./search/${search}?maxResults=${this.scvOpts.maxResults}`;
-            this.waiting = true;
+            var timer = this.startWaiting();
             this.$http.get(url).then(res => {
                 this.clear();
                 console.log('searchResults', res.data);
                 Vue.set(this, 'searchResults', res.data);
-                this.waiting = false;
+                this.stopWaiting(timer);
                 this.$nextTick(() => {
                     this.$refs.refResults.focus();
                 });
@@ -317,7 +363,7 @@ export default {
                     data,
                 };
                 console.error(e.stack, data);
-                this.waiting = false;
+                this.stopWaiting(timer);
                 this.$nextTick(() => this.$refs.refSearchHelp.setFocus());
             });
 
@@ -340,10 +386,10 @@ export default {
                 vSvc = 'recite';
             }
             var url = `./${vSvc}/sutta/${this.sutta_uid}/${language}/${translator}?g=${g}`;
-            Vue.set(this, "waiting", true);
+            var timer = this.startWaiting();
             this.$http.get(url).then(res => {
                 Vue.set(this, "suttaAudioGuid", res.data.guid);
-                Vue.set(this, "waiting", false);
+                this.stopWaiting(timer);
                 console.log(`playSutta ${res.data.guid}`);
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
@@ -353,7 +399,7 @@ export default {
                     data,
                 }
                 console.error(e.stack, data);
-                Vue.set(this, "waiting", false);
+                this.stopWaiting(timer);
             });
         },
         translationSearch(translation) {
@@ -380,15 +426,18 @@ export default {
                 search: this.translationSearch(translation),
             });
         },
-    },
-    computed: {
-        audioSuttaSrc(){
+        audioLink(guid, sutta_uid){
             var lang = this.language;
             var trans = this.author_uid;
-            var filename = `${this.sutta_uid}-${lang}-${trans}.mp3`;
-            var guid = this.suttaAudioGuid;
+            if (sutta_uid) {
+                var filename = `${this.sutta_uid}-${lang}-${trans}.mp3`;
+            } else {
+                var filename = `guid.mp3`;
+            }
             return `./audio/${guid}/${filename}`;
         },
+    },
+    computed: {
         audioUrl() {
             return `https://github.com/sc-voice/sc-voice/wiki/Audio-${this.sutta_uid}`;
         },
@@ -535,21 +584,29 @@ export default {
 }
 .scv-search-result {
     margin-top: 0.8em;
-    border-left: 3pt solid #3a3a3a;
-    border-bottom-left-radius: 3pt;
-    padding-left: 0.5em;
+    border: 1pt solid #333;
+    border-radius: 3pt;
+    padding: 0.5em;
 }
 .scv-search-result:focus-within {
-    border-left: 3pt solid var(--accent-color);
+    border: 1pt solid #666;
 }
 .scv-search-result-summary {
     font-weight: bold;
 }
 .scv-search-result-lang {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-start;
+    justify-content: space-between;
     margin-top: 0.5em;
     padding-left: 1.6em;
 }
 .scv-search-result-pli {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-start;
+    justify-content: space-between;
     font-style: italic !important;
     padding-left: 1.6em;
     margin-top: 0.5em;

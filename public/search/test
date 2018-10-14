@@ -43,6 +43,10 @@
       "scid": "sn42.11:2.11",
       "pli": "Chando hi mūlaṃ dukkhassa.",
       "en": "For desire is the root of suffering."
+    },
+    "audio": {
+      "en": "f6748940d6da091c67ef76c954e84ccf",
+      "pli": "3e131f7da5518ec2e4a98e9899c6521a"
     }
   },
   {
@@ -89,6 +93,10 @@
       "scid": "mn105:28.2",
       "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—netaṃ ṭhānaṃ vijjati.",
       "en": "Understanding that attachment is the root of suffering, they are freed with the end of attachments. It’s not possible that they would apply their body or interest their mind in any attachment."
+    },
+    "audio": {
+      "en": "bdb8a858203208b78ac30944c57eb5db",
+      "pli": "5d5fe3586b277d44ced595d2203960fc"
     }
   },
   {
@@ -155,6 +163,10 @@
       "scid": "mn1:171.4",
       "pli": "‘Nandī dukkhassa mūlan’ti—",
       "en": "Because he has understood that relishing is the root of suffering,"
+    },
+    "audio": {
+      "en": "aaee1f96bc2f157a42c2bad7b8e17bff",
+      "pli": "3510b90ced0e914f83c81d8f03e47c01"
     }
   },
   {
@@ -211,6 +223,10 @@
       "scid": "mn66:17.1",
       "pli": "Idha panudāyi, ekacco puggalo ‘upadhi dukkhassa mūlan’ti—",
       "en": "Take another person who, understanding that attachment is the root of suffering,"
+    },
+    "audio": {
+      "en": "fb475b65e6a21cc86dbf704103c89561",
+      "pli": "e9964771479b0da4d4c186573bb1cfd5"
     }
   }
 ]

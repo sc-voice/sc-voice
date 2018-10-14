@@ -49,6 +49,7 @@
         }
 
         static loadSuttaPootl(opts={}) {
+            logger.warn(`loadSuttaPootl({opts}) is deprecated`);
             return new SuttaFactory(opts).loadSuttaPootl(opts);
         }
 

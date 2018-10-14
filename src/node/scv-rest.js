@@ -47,9 +47,17 @@
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
             });
+            this.quoteVoice = Voice.createVoice({
+                name: 'Raveena',
+                usage: 'recite',
+                languageUnknown: "pli",
+                audioFormat: this.audioFormat,
+                audioSuffix: this.audioSuffix,
+            });
             this.suttaStore = new SuttaStore({
                 suttaCentralApi: this.suttaCentralApi,
                 suttaFactory: this.suttaFactory,
+                voice: this.quoteVoice,
             });
             Object.defineProperty(this, "handlers", {
                 value: super.handlers.concat([

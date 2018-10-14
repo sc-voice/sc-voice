@@ -1,0 +1,12 @@
+{
+  "api": "aws-polly",
+  "apiVersion": "v4",
+  "audioFormat": "mp3",
+  "voice": "Raveena",
+  "prosody": {
+    "rate": "-20%",
+    "pitch": "-0%"
+  },
+  "text": "<prosody rate=\"-20%\" pitch=\"-0%\"><phoneme alphabet=\"ipa\" ph=\"ɪθɪ\">iti</phoneme><break time=\"0.001s\"/> <phoneme alphabet=\"ipa\" ph=\"vɪdɪθvɑh\">viditvā</phoneme><break time=\"0.001s\"/> <phoneme alphabet=\"ipa\" ph=\"nɪɺupɐdʰɪ\">nirupadhi</phoneme><break time=\"0.001s\"/> <break time=\"0.001s\"/><phoneme alphabet=\"ipa\" ph=\"upɐdʰɪsɐṅkʰɐje\">upadhisaṅkhaye</phoneme><break time=\"0.001s\"/> <phoneme alphabet=\"ipa\" ph=\"vɪmuθθo\">vimutto</phoneme><break time=\"0.001s\"/> <break time=\"0.001s\"/><phoneme alphabet=\"ipa\" ph=\"upɐdʰɪsmɪṃ\">upadhismiṃ</phoneme><break time=\"0.001s\"/> <phoneme alphabet=\"ipa\" ph=\"vɑh\">vā</phoneme><break time=\"0.001s\"/> <phoneme alphabet=\"ipa\" ph=\"kɑjɐṃ\">kāyaṃ</phoneme><break time=\"0.001s\"/> <break time=\"0.001s\"/><phoneme alphabet=\"ipa\" ph=\"upɐsɐṃhɐɺɪssɐθɪ\">upasaṃharissati</phoneme><break time=\"0.001s\"/> <phoneme alphabet=\"ipa\" ph=\"cɪθθɐṃ\">cittaṃ</phoneme><break time=\"0.001s\"/> <phoneme alphabet=\"ipa\" ph=\"vɑh\">vā</phoneme><break time=\"0.001s\"/> <break time=\"0.001s\"/><phoneme alphabet=\"ipa\" ph=\"uppɑdessɐθiːθɪ\">uppādessatīti</phoneme><break time=\"0.001s\"/> — <phoneme alphabet=\"ipa\" ph=\"neθɐṃ\">netaṃ</phoneme><break time=\"0.001s\"/> <phoneme alphabet=\"ipa\" ph=\"ṭhɑnɐṃ\">ṭhānaṃ</phoneme><break time=\"0.001s\"/> <phoneme alphabet=\"ipa\" ph=\"vɪʝ.ʝɐθɪ\">vijjati</phoneme><break time=\"0.001s\"/>.</prosody>",
+  "guid": "5d5fe3586b277d44ced595d2203960fc"
+}

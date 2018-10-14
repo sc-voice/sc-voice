@@ -29,6 +29,8 @@
 
     var singleton;
 
+    var httpMonitor = 0;
+
     class SuttaCentralApi {
         constructor(opts={}) {
             this.language = opts.language || DEFAULT_LANGUAGE;
@@ -77,7 +79,16 @@
         loadJsonRest(url) {
             return new Promise((resolve, reject) => { try {
                 var httpx = url.startsWith('https') ? https : http;
+                httpMonitor++;
+                if (++httpMonitor > 2) {
+                    // We are overwhelming SuttaCentralApi
+                    // implement throttling using Queue (see abstract-tts.js)
+                    logger.warn(`SuttaCentralApi.loadJsonRest() `+
+                        `httpMonitor:${httpMonitor} ${url}`);
+                }
+                logger.info(`httpMonitor: ${httpMonitor}`);
                 var req = httpx.get(url, res => {
+                    httpMonitor--;
                     const { statusCode } = res;
                     const contentType = res.headers['content-type'];
 
@@ -114,6 +125,7 @@
                         }
                     });
                 }).on('error', (e) => {
+                    httpMonitor--;
                     reject(e);
                 }).on('timeout', (e) => {
                     logger.error(e.stack);

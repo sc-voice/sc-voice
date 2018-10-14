@@ -139,7 +139,6 @@
     it("GET /download/sutta/mn100/en/sujato/review returns download", function(done) {
         this.timeout(15*1000);
         var async = function* () { try {
-                console.log('debug1');
             var response = yield supertest(app)
                 .get("/scv/download/sutta/mn100/en/sujato/review")
                 .expect('Content-Type', /audio\/mp3/)
@@ -217,6 +216,7 @@
         } catch(e) {done(e);} })();
     });
     it("GET /search/:pattern returns suttaplexes found", function(done) {
+        this.timeout(10*1000);
         var async = function* () { try {
             var maxResults = 3;
             var pattern = `root of suffering`;

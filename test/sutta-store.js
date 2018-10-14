@@ -98,6 +98,8 @@
         } catch(e) {done(e);} })();
     });
     it("updateSuttas(ids) updates suttas from SuttaCentral", function(done) {
+        var maxseconds = 5;
+        this.timeout(maxseconds*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
             await store.updateSuttas([
@@ -108,32 +110,39 @@
             should(fs.existsSync(thag1_1path));
             var stat = fs.statSync(thag1_1path);
             var age = Date.now() - stat.mtime;
-            should(age).below(1000);
+            should(age).below(maxseconds*1000);
 
             var sn1_8path = path.join(ROOT, 'sn/en/sujato/sn1.8.json');
             should(fs.existsSync(sn1_8path));
             var stat = fs.statSync(sn1_8path);
             var age = Date.now() - stat.mtime;
-            should(age).below(1000);
+            should(age).below(maxseconds*1000);
 
             var mn1path = path.join(ROOT, 'mn/en/sujato/mn1.json');
             should(fs.existsSync(mn1path));
             var stat = fs.statSync(mn1path);
             var age = Date.now() - stat.mtime;
-            should(age).below(1000);
+            should(age).below(maxseconds*1000);
 
             var an1path = path.join(ROOT, 'an/en/sujato/an1.1-10.json');
             should(fs.existsSync(an1path));
             var stat = fs.statSync(an1path);
             var age = Date.now() - stat.mtime;
-            should(age).below(1000);
+            should(age).below(maxseconds*1000);
 
             done(); 
         } catch(e) {done(e);} })();
     });
     it("search(pattern) returns search results", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var voice = Voice.createVoice({
+                name: 'raveena',
+                languageUnknown: 'pli',
+                usage: 'recite',
+            });
+            var store = await new SuttaStore({
+                voice,
+            }).initialize();
 
             // multiple results
             var results = await store.search('is the root of suffering');
@@ -269,7 +278,7 @@
         } })();
     });
     it("TESTTESTsearch(pattern) returns voice guid", function(done) {
-        this.timeout(5*1000);
+        this.timeout(10*1000);
         (async function() { try {
             var voice = Voice.createVoice({
                 language: 'en',

@@ -275,15 +275,23 @@
                 (async function() { try {
                     for (var i = 0; i < searchResults.length; i++) {
                         var result = searchResults[i];
-                        var text = [
-                            result.quote[lang], 
-                            result.quote.pli,
-                        ].join('\n\n');
-                        var {
-                            signature,
-                        } = await voice.speak(text);
-                        result.audio = signature.guid;
-                        logger.info(`voiceResults() ${result.audio} ${result.quote.scid}`);
+                        var quote = result.quote;
+                        result.audio = {
+                            [lang]: null,
+                            pli: null,
+                        };
+                        if (quote[lang] != null) {
+                            var vr = await voice.speak(quote[lang]);
+                            result.audio[lang] = vr.signature.guid;
+                            logger.debug(`voiceResults(${quote.scid}) `+
+                                `${lang}:${vr.signature.guid}`);
+                        }
+                        if (quote.pli != null) {
+                            var vr = await voice.speak(quote.pli);
+                            result.audio.pli = vr.signature.guid;
+                            logger.debug(`voiceResults(${quote.scid}) `+
+                                `pli:${vr.signature.guid}`);
+                        }
                     }
                     resolve(searchResults);
                 } catch(e) {reject(e);} })();
