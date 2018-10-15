@@ -12,11 +12,18 @@
                     <i>sn39.1-15</i>
                 </li>
                 <li  tabindex=0>
-                    Search for suttas with keywords 
+                    Search for suttas by phrase or keyword
                     such as 
                     <i>root of suffering</i>, 
+                    <i>yellow blue red white</i>, 
                     <i>jhāna</i>, 
-                    <i>Mūlapariyāya</i>, <i>Mūlapariyāya</i>
+                    <i>Mūlapariyāya</i>, 
+                </li>
+                <li>
+                    <a href="https://github.com/sc-voice/sc-voice/wiki/Using-Search"
+                        target="_blank">
+                        View search documentation.
+                    </a>
                 </li>
                 <li>
                     <a :href="searchSuttaCentral()">

@@ -7,10 +7,17 @@
                   v-model="search" v-on:keypress="onSearchKey($event)"
                   label = "Search" ></v-text-field>
               <v-text-field v-else 
-                  autofocus
                   placeholder="Enter sutta id" 
                   v-model="search" v-on:keypress="onSearchKey($event)"
                   label = "Search" ></v-text-field>
+              <div v-if="!search" class="title scv-help">
+                <a href="https://github.com/sc-voice/sc-voice/wiki/Using-Search"
+                    aria-label="Help"
+                    style="background-color:rgba(0,0,0,0)"
+                    target="_blank">
+                    <v-icon >help</v-icon>
+                </a>
+              </div>
           </div>
           <v-progress-linear v-if="waiting" v-model="waiting"></v-progress-linear>
           <div v-if="error.search" class="scv-error" >
@@ -582,7 +589,7 @@ export default {
 }
 .scv-search-row {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row ;
     align-items: center;
     justify-content: center;
 }
@@ -664,5 +671,14 @@ export default {
     font-style: italic !important;
     padding-left: 1.6em;
     margin-top: 0.5em;
+}
+.scv-help {
+    margin: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.scv-help > a:hover {
+    text-decoration: none;
 }
 </style>
