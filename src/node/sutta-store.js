@@ -205,33 +205,95 @@
             var root = this.root.replace(ROOT, '');
             var cmd = `grep -rciE '${grex}' --exclude-dir=.git`+
                 `|grep -v ':0'`+
-                `|sort -g -r -k 2,2 -k 1,1 -t ':'`+
-                `|head -${maxResults}`;
+                `|sort -g -r -k 2,2 -k 1,1 -t ':'`;
+            maxResults && (cmd += `|head -${maxResults}`);
             logger.info(`SuttaStore.search() ${cmd}`);
             var opts = {
                 cwd: this.root,
                 shell: '/bin/bash',
             };
-            return new Promise((res,rej) => {
+            return new Promise((resolve,reject) => {
                 exec(cmd, opts, (err,stdout,stderr) => {
                     if (err) {
                         logger.log(stderr);
-                        rej(err);
+                        reject(err);
                     } else {
-                        res(stdout.trim());
+                        resolve(stdout && stdout.trim().split('\n') || []);
                     }
                 });
             });
         }
 
+        keywordSearch(args) {
+            var {
+                pattern,
+                maxResults,
+                language,
+                searchMetadata,
+            } = args;
+            var that = this;
+            var wordPat = pattern.replace(/[\s+-,!:?*]+/ugm,' ');
+            var words = wordPat.split(' ');
+            logger.info(`SuttaStore.keywordSearch(${words})`);
+            var wordArgs = Object.assign({}, args, {
+                maxResults: 0,
+            });
+            return new Promise((resolve,reject) => {
+                (async function() { try {
+                    var mrgOut = [];
+                    var mrgIn = [];
+                    for (var i=0; i< words.length; i++) {
+                        var word = words[i];
+                        var wordlines = await that.grep(Object.assign({}, wordArgs, {
+                            pattern: word,
+                        }));
+                        wordlines.sort();
+                        mrgOut = [];
+                        for (var iw = 0; iw < wordlines.length; iw++) {
+                            var lineparts = wordlines[iw].split(':');
+                            var fpath = lineparts[0];
+                            var count = Number(lineparts[1]);
+                            if (i === 0) {
+                                mrgOut.push({
+                                    fpath,
+                                    count,
+                                });
+                            } else if (mrgIn.length) {
+                                var cmp = mrgIn[0].fpath.localeCompare(fpath);
+                                if (cmp === 0) {
+                                    mrgOut.push({
+                                        fpath,
+                                        count: Math.min(mrgIn[0].count, count),
+                                    });
+                                    mrgIn.shift();
+                                } else if (cmp < 0) {
+                                    mrgIn.shift(); // discard left
+                                    if (mrgIn.length === 0) {
+                                        break;
+                                    }
+                                    iw--; // re-compare
+                                } else {
+                                    // discard right
+                                }
+                            }
+                        }
+                        mrgIn = mrgOut;
+                    }
+                    var lines = mrgOut.sort((a,b) => b.count - a.count)
+                        .map(v => `${v.fpath}:${v.count}`);
+                    resolve(lines.slice(0, maxResults));
+                } catch(e) {reject(e);} })();
+            });
+        }
+
         searchResults(args) {
             var {
-                stdout,
+                lines,
                 pattern,
             } = args;
             var rexlang = new RegExp(`\\b${pattern}\\b`,'i');
             var rexpli = new RegExp(`\\b${pattern}`,'i');
-            return stdout && stdout.split('\n').map(line => {
+            return lines.length && lines.map(line => {
                 var iColon = line.indexOf(':');
                 var fname = path.join(ROOT,line.substring(0,iColon));
                 var fnameparts = fname.split('/');
@@ -320,14 +382,18 @@
 
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var stdout = await that.grep({
+                    var grepOpts = {
                         pattern, 
                         maxResults, 
                         language, 
                         searchMetadata
-                    });
+                    };
+                    var lines = await that.grep(grepOpts);
+                    if (!lines.length) {
+                        lines = await that.keywordSearch(grepOpts);
+                    }
                     var searchResults = that.searchResults({
-                        stdout,
+                        lines,
                         pattern,
                     });
                     var results = await that.voiceResults(searchResults, language);

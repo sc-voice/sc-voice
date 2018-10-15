@@ -306,5 +306,37 @@
             done(); 
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTsearch(pattern) performs keyword search", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            var expected = [{
+                count: 6,
+                uid: 'mn77',
+            },{
+                count: 4,
+                uid: 'dn16',
+            },{
+                count: 4,
+                uid: 'an10.29',
+            },{
+                count: 3,
+                uid: 'mn99',
+            },{
+                count: 3,
+                uid: 'mn75',
+            }];
+            var results = await store.search('blue yellow');
+            should.deepEqual(results.map(r=> ({
+                uid:r.uid,
+                count:r.count,
+            })), expected);
+            var results = await store.search('yellow blue');
+            should.deepEqual(results.map(r=> ({
+                uid:r.uid,
+                count:r.count,
+            })), expected);
+            done(); 
+        } catch(e) {done(e);} })();
+    });
 
 })
