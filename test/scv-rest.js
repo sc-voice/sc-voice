@@ -224,7 +224,11 @@
             var url = `/scv/search/${pattern}?maxResults=${maxResults}`;
             var response = yield supertest(app).get(url).expect((res) => {
                 res.statusCode.should.equal(200);
-                var results = res.body;
+                var {
+                    method,
+                    results,
+                } = res.body;
+                should(method).equal('phrase');
                 should(results).instanceOf(Array);
                 should(results.length).equal(3);
                 should.deepEqual(results.map(r => r.uid),[
@@ -237,7 +241,11 @@
             var url = `/scv/search/${pattern}`;
             var response = yield supertest(app).get(url).expect((res) => {
                 res.statusCode.should.equal(200);
-                var results = res.body;
+                var {
+                    method,
+                    results,
+                } = res.body;
+                should(method).equal('phrase');
                 should(results).instanceOf(Array);
                 should(results.length).equal(5);
                 should.deepEqual(results.map(r => r.uid),[

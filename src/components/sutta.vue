@@ -24,15 +24,17 @@
           </div>
           <details v-show="searchResults">
             <summary role="main" aria-level="1" ref="refResults" class='title'>
-                <span v-if="searchResults && searchResults.length">
-                    Top {{searchResults && searchResults.length}} suttas found
+                <span v-if="searchResults && searchResults.results.length">
+                    Top {{searchResults && searchResults.results.length}} suttas found 
+                    for {{searchResults.method}}
                 </span>
                 <span v-else>
                     No suttas found
                 </span>
             </summary>
             <details role="heading" aria-level="2"
-                v-for="(result,i) in (searchResults||[])" :key="result.uid" 
+                v-for="(result,i) in (searchResults && searchResults.results||[])" 
+                :key="result.uid" 
                 class="scv-search-result" :style="cssProps">
                 <summary class="scv-search-result-summary">
                     <div style="display: inline-block; width: 96%; ">

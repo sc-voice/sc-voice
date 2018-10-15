@@ -133,7 +133,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) returns search results", function(done) {
+    it("TESTTESTsearch(pattern) returns search results", function(done) {
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
@@ -145,8 +145,12 @@
             }).initialize();
 
             // multiple results
-            var results = await store.search('is the root of suffering');
+            var {
+                method,
+                results,
+            } = await store.search('is the root of suffering');
             should(results).instanceOf(Array);
+            should(method).equal('phrase');
             should.deepEqual(results.map(r=>r.count), [5, 3, 2, 1]);
             should.deepEqual(results.map(r=>r.uid), [
                 'sn42.11', 'mn105', 'mn1', 'mn66']);
@@ -162,14 +166,21 @@
             fs.writeFileSync(jsonPath, JSON.stringify(results, null, 2));
 
             // regular expression
-            var results = await store.search('is.*root.*suffering');
+            var {
+                method,
+                results,
+            } = await store.search('is.*root.*suffering');
             should(results).instanceOf(Array);
+            should(method).equal('phrase');
             should.deepEqual(results.map(r=>r.count), [5, 3, 2, 1, 1]);
             should.deepEqual(results.map(r=>r.uid), [
                 'sn42.11', 'mn105', 'mn1', 'sn12.51', 'mn66']);
 
             // multiple spaces
-            var results = await store.search('adorned is');
+            var {
+                method,
+                results,
+            } = await store.search('adorned is');
             should(results).instanceOf(Array);
             should.deepEqual(results.map(r=>r.count), [1, 1, 1]);
             should.deepEqual(results.map(r=>r.uid), [
@@ -179,18 +190,24 @@
             should(results[2].quote.en).match(/body all adorned  Is enough/);
 
             // no results
-            var results = await store.search('not-in-suttas');
+            var {
+                method,
+                results,
+            } = await store.search('not-in-suttas');
             should(results.length).equal(0);
 
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) finds metadata", function(done) {
+    it("TESTTESTsearch(pattern) finds metadata", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
             // author
-            var results = await store.search('jessica walton',3);
+            var {
+                method,
+                results,
+            } = await store.search('jessica walton',3);
             should(results).instanceOf(Array);
             should.deepEqual(results.map(r=>r.count), [3, 3, 3]);
             should.deepEqual(results.map(r=>r.uid), [
@@ -199,13 +216,19 @@
                 'sujato-walton', 'sujato-walton', 'sujato-walton']);
 
             // no metadata
-            var results = await store.search({
+            var {
+                method,
+                results,
+            } = await store.search({
                 pattern: 'jessica walton',
                 searchMetadata: false,
             });
             should(results).instanceOf(Array);
             should.deepEqual(results.map(r=>r.count), []);
-            var results = await store.search({
+            var {
+                method,
+                results,
+            } = await store.search({
                 pattern: 'root of suffering',
                 searchMetadata: false,
             });
@@ -238,13 +261,25 @@
     it("search(pattern) is sanitized", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
-            var results = await store.search('"`echo doublequote`"');
+            var {
+                method,
+                results,
+            } = await store.search('"`echo doublequote`"');
             should(results.length).equal(0);
-            var results = await store.search("'`echo singlequote`'");
+            var {
+                method,
+                results,
+            } = await store.search("'`echo singlequote`'");
             should(results.length).equal(0);
-            var results = await store.search("${PATH}");
+            var {
+                method,
+                results,
+            } = await store.search("${PATH}");
             should(results.length).equal(0);
-            var results = await store.search("is\tthe\rroot\nof\nsuffering");
+            var {
+                method,
+                results,
+            } = await store.search("is\tthe\rroot\nof\nsuffering");
             should.deepEqual(results.map(r=>r.uid), [
                 'sn42.11', 'mn105', 'mn1', 'mn66']);
             done(); 
@@ -289,7 +324,10 @@
                 voice,
             }).initialize();
 
-            var results = await store.search('root of suffering');
+            var {
+                method,
+                results,
+            } = await store.search('root of suffering');
             should(results).instanceOf(Array);
             should.deepEqual(results.map(r=>r.count), [5,3,2,1,1]);
 
@@ -299,7 +337,10 @@
     it("TESTTESTsearch(pattern) sorts by numeric count", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
-            var results = await store.search('Sāriputta');
+            var {
+                method,
+                results,
+            } = await store.search('Sāriputta');
             // numerical sort has 174 greater than 90
             // standard sort has 90 greater than 174
             should.deepEqual(results.map(r=>r.count), [174,90,87,80,71]);
@@ -325,12 +366,18 @@
                 count: 3,
                 uid: 'mn75',
             }];
-            var results = await store.search('blue yellow');
+            var {
+                method,
+                results,
+            } = await store.search('blue yellow');
             should.deepEqual(results.map(r=> ({
                 uid:r.uid,
                 count:r.count,
             })), expected);
-            var results = await store.search('yellow blue');
+            var {
+                method,
+                results,
+            } = await store.search('yellow blue');
             should.deepEqual(results.map(r=> ({
                 uid:r.uid,
                 count:r.count,

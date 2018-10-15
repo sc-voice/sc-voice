@@ -359,6 +359,11 @@
             });
         }
 
+        phraseSearch(args) {
+            logger.info(`SuttaStore.phraseSearch(${args.pattern})`);
+            return this.grep(args);
+        }
+
         search(...args) {
             var that = this;
             var opts = args[0];
@@ -387,8 +392,10 @@
                         language, 
                         searchMetadata
                     };
-                    var lines = await that.grep(grepOpts);
+                    var method = 'phrase';
+                    var lines = await that.phraseSearch(grepOpts);
                     if (!lines.length) {
+                        var method = 'keyword';
                         lines = await that.keywordSearch(grepOpts);
                     }
                     var searchResults = that.searchResults({
@@ -396,7 +403,10 @@
                         pattern,
                     });
                     var results = await that.voiceResults(searchResults, language);
-                    resolve(results);
+                    resolve({
+                        method,
+                        results,
+                    });
                 } catch(e) {reject(e);} })();
             });
         }

@@ -288,8 +288,12 @@
                 language,
                 maxResults,
             });
-            promise.then(results => {
-                logger.info(`GET search(${pattern}) => ${results.map(r=>r.uid)}`);
+            promise.then(sr => {
+                var {
+                    method,
+                    results,
+                } = sr;
+                logger.info(`GET search(${pattern}) ${method} => ${results.map(r=>r.uid)}`);
             });
             return promise;
         }
