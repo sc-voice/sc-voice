@@ -40,6 +40,15 @@
             guid,
         });
     });
+    it("segmentSSML(text) returns SSML", function() {
+        var polly = new Polly({
+            languageUnknown: 'pli',
+        });
+        var ssml = polly.segmentSSML('mūlaṃ');
+        should.deepEqual(ssml, [
+            '<phoneme alphabet="ipa" ph="mʊːlɐṃ">mūlaṃ</phoneme><break time="0.001s"/>',
+        ]);
+    });
     it("synthesizeSSML(ssml) returns sound file", function(done) {
         this.timeout(3*1000);
         var polly = new Polly();

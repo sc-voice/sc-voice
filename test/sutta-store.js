@@ -133,7 +133,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) returns search results", function(done) {
+    it("search(pattern) returns search results", function(done) {
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
@@ -163,7 +163,10 @@
             should(results[2].quote.en).match(/relishing is the root of suffering/);
             should(results[3].quote.en).match(/attachment is the root of suffering/);
             var jsonPath = path.join(__dirname, '../public/search/test');
-            fs.writeFileSync(jsonPath, JSON.stringify(results, null, 2));
+            fs.writeFileSync(jsonPath, JSON.stringify({
+                method,
+                results,
+            }, null, 2));
 
             // regular expression
             var {
@@ -199,7 +202,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) finds metadata", function(done) {
+    it("search(pattern) finds metadata", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -312,7 +315,7 @@
             }
         } })();
     });
-    it("TESTTESTsearch(pattern) returns voice guid", function(done) {
+    it("search(pattern) returns voice guid", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var voice = Voice.createVoice({
@@ -334,7 +337,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) sorts by numeric count", function(done) {
+    it("search(pattern) sorts by numeric count", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {
@@ -347,7 +350,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) performs keyword search", function(done) {
+    it("search(pattern) performs keyword search", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var expected = [{
@@ -370,6 +373,7 @@
                 method,
                 results,
             } = await store.search('blue yellow');
+            should(method).equal('keywords');
             should.deepEqual(results.map(r=> ({
                 uid:r.uid,
                 count:r.count,

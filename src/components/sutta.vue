@@ -70,12 +70,15 @@
                             <p>Your browser doesn't support HTML5 audio</p>
                         </audio>
                     </div>
-                    <v-btn icon @click="playQuote(`audiolang${i}`)"
+                    <v-btn icon v-if="result.audio && result.audio[language]" 
+                        @click="playQuote(`audiolang${i}`)"
                         :disabled="!result.audio || !result.audio[language]"
                         tabindex="-1"
-                        class="scv-icon-btn" :style="cssProps"
+                        :class="btnAudioClass(`audiolang${i}`)" 
+                        :style="cssProps"
+                        v-on:ended.native="console.log('ended')"
                         aria-hidden='true'>
-                        <v-icon>volume_up</v-icon>
+                        <v-icon>{{audioIcon(`audiolang${i}`)}}</v-icon>
                     </v-btn>
                 </div>
                 <div v-if="result.quote && result.quote.pli" 
@@ -93,11 +96,13 @@
                             <p>Your browser doesn't support HTML5 audio</p>
                         </audio>
                     </div>
-                    <v-btn icon @click="playQuote(`audiopli${i}`)"
+                    <v-btn icon v-if="result.audio && result.audio.pli" 
+                        @click="playQuote(`audiopli${i}`)"
                         :disabled="!result.audio || !result.audio.pli"
-                        class="scv-icon-btn" :style="cssProps"
+                        :class="btnAudioClass(`audiopli${i}`)" 
+                        :style="cssProps"
                         aria-label="Play Pali Quote">
-                        <v-icon>volume_up</v-icon>
+                        <v-icon>{{audioIcon(`audiopli${i}`)}}</v-icon>
                     </v-btn>
                 </div>
             </details>
@@ -247,6 +252,7 @@ export default {
             search: '',
             sectionAudioGuids,
             searchResults: null,
+            refPlaying: null,
             suttaAudioGuid: null,
             support: {
                 value: '(n/a)',
@@ -265,6 +271,14 @@ export default {
         return that;
     },
     methods: {
+        audioIcon(ref) {
+            return ref === this.refPlaying ? 'volume_up' : 'volume_down';
+        },
+        btnAudioClass(ref) {
+            return ref === this.refPlaying 
+                ? 'scv-icon-btn scv-btn-playing' 
+                : 'scv-icon-btn ';
+        },
         clear() {
             this.error.search = null;
             this.searchResults = null;
@@ -279,10 +293,19 @@ export default {
         },
         playQuote(ref) {
             var track = this.$refs[ref][0];
+            var listener;
+            var handler = () => {
+                listener && track.removeEventListener(listener, handler);
+                listener = null;
+                this.refPlaying = null;
+            };
             if (track.paused) {
                 track.play();
+                this.refPlaying = ref;
+                listener = track.addEventListener("ended", handler);
             } else {
                 track.pause();
+                handler();
             }
         },
         startWaiting() {
@@ -629,6 +652,9 @@ export default {
     justify-content: space-between;
     margin-top: 0.5em;
     padding-left: 1.6em;
+}
+.scv-btn-playing {
+    color: var(--accent-color);
 }
 .scv-search-result-pli {
     display: flex;

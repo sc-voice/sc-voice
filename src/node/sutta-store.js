@@ -395,7 +395,7 @@
                     var method = 'phrase';
                     var lines = await that.phraseSearch(grepOpts);
                     if (!lines.length) {
-                        var method = 'keyword';
+                        var method = 'keywords';
                         lines = await that.keywordSearch(grepOpts);
                     }
                     var searchResults = that.searchResults({
