@@ -278,9 +278,12 @@
                         }
                         mrgIn = mrgOut;
                     }
-                    var lines = mrgOut.sort((a,b) => b.count - a.count)
-                        .map(v => `${v.fpath}:${v.count}`);
-                    resolve(lines.slice(0, maxResults));
+                    resolve({
+                        resultPattern: words.join('|'),
+                        lines: mrgOut.sort((a,b) => b.count - a.count)
+                            .map(v => `${v.fpath}:${v.count}`)
+                            .slice(0, maxResults),
+                    });
                 } catch(e) {reject(e);} })();
             });
         }
@@ -394,13 +397,16 @@
                     };
                     var method = 'phrase';
                     var lines = await that.phraseSearch(grepOpts);
+                    var resultPattern = pattern;
                     if (!lines.length) {
                         var method = 'keywords';
-                        lines = await that.keywordSearch(grepOpts);
+                        var data = await that.keywordSearch(grepOpts);
+                        lines = data.lines;
+                        resultPattern = data.resultPattern;
                     }
                     var searchResults = that.searchResults({
                         lines,
-                        pattern,
+                        pattern: resultPattern,
                     });
                     var results = await that.voiceResults(searchResults, language);
                     resolve({

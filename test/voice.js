@@ -185,7 +185,7 @@
         should(amy.services.navigate.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
     });
-    it("placeholder words are expanded with voice ipa", function() {
+    it("TESTTESTplaceholder words are expanded with voice ipa", function() {
         var raveena = Voice.createVoice("raveena");
         should(raveena).properties({
             name: "Raveena",
@@ -211,7 +211,7 @@
         tts.languageUnknown = "pli";
         var segments = tts.segmentSSML('Taṃ kissa hetu?');
         should.deepEqual(segments, [
-            `<phoneme alphabet="ipa" ph="\u03b8\u0250\u1e43">Taṃ</phoneme>${BREAK} ` +
+            `<phoneme alphabet="ipa" ph="\u03b8\u0250\u014b">Taṃ</phoneme>${BREAK} ` +
             `<phoneme alphabet="ipa" ph="k\u026assa">kissa</phoneme>${BREAK} ` +
             `<phoneme alphabet="ipa" ph="he\u03b8u">hetu</phoneme>${BREAK}?`,
         ]);

@@ -350,7 +350,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) performs keyword search", function(done) {
+    it("TESTTESTsearch(pattern) performs keyword search", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var expected = [{
@@ -386,6 +386,11 @@
                 uid:r.uid,
                 count:r.count,
             })), expected);
+            should(results[0].quote.en).match(/blue, with blue color/);
+            should(results[1].quote.en).match(/clad in blue, adorned with blue/);
+            should(results[2].quote.en).match(/the meditation on universal blue/);
+            should(results[3].quote.en).match(/or blue, yellow, red, or magenta/);
+            should(results[4].quote.en).match(/or blue, yellow, red, or magenta/);
             done(); 
         } catch(e) {done(e);} })();
     });
