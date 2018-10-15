@@ -232,8 +232,7 @@
                 searchMetadata,
             } = args;
             var that = this;
-            var wordPat = pattern.replace(/[\s+-,!:?*]+/ugm,' ');
-            var words = wordPat.split(' ');
+            var words = pattern.split(' +'); // the + was inserted by sanitizePattern();
             logger.info(`SuttaStore.keywordSearch(${words})`);
             var wordArgs = Object.assign({}, args, {
                 maxResults: 0,
