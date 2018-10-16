@@ -30,6 +30,7 @@
     var singleton;
 
     var httpMonitor = 0;
+    var DAY_SECONDS = 24*60*60;
 
     class SuttaCentralApi {
         constructor(opts={}) {
@@ -41,7 +42,7 @@
                 suffix: '.json',
                 storeName: 'api',
             });
-            this.apiCacheSeconds = opts.apiCacheSeconds || 24*60*60; 
+            this.apiCacheSeconds = opts.apiCacheSeconds || 7*DAY_SECONDS;
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });

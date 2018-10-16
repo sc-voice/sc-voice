@@ -1,4 +1,8 @@
 <template>
+<div>
+  <v-progress-linear v-model="waiting" height="4"
+    background-color="#000"
+    style="width:100%; margin-top:0"/>
   <v-container fluid class="scv-sutta">
       <v-layout column align-left >
           <div class="scv-search-row">
@@ -19,7 +23,6 @@
                 </a>
               </div>
           </div>
-          <v-progress-linear v-if="waiting" v-model="waiting"></v-progress-linear>
           <div v-if="error.search" class="scv-error" >
               <search-help ref="refSearchHelp" :title="errorSummary" 
                 :search="search"
@@ -135,11 +138,11 @@
                         :src="audioLink(suttaAudioGuid, sutta_uid)" />
                     <p>Your browser doesn't support HTML5 audio</p>
                 </audio>
-                <button v-else :ref="`play`" @click="playSutta()" :disabled="waiting"
+                <button v-else :ref="`play-sutta`" @click="playSutta()" 
+                    :disabled="waiting > 0"
                     class="scv-text-button mt-4 mb-4" :style="cssProps">
                     Play Sutta ({{voice.name}})
                 </button>
-                <v-progress-linear v-if="waiting" v-model="waiting"></v-progress-linear>
             </div>
             <div class="scv-blurb-more">
                 <details>
@@ -203,11 +206,11 @@
                     <source :src="audioLink(sectionAudioGuids[i])" type="audio/mp3"/>
                     <p>Your browser doesn't support HTML5 audio</p>
                 </audio>
-                <button v-else :ref="`play${i}`" @click="playSection(i)" :disabled="waiting"
+                <button v-else :ref="`play${i}`" @click="playSection(i)" 
+                    :disabled="waiting > 0"
                     class="scv-text-button mt-4 mb-4" :style="cssProps">
                     Play Section {{i}} ({{voice.name}})
                 </button>
-                <v-progress-linear v-if="waiting" v-model="waiting"></v-progress-linear>
             </div>
             <div v-if="error[i]" class="scv-error" 
                 style="margin-left: 1.2em" >
@@ -230,6 +233,7 @@
           </details>
       </v-layout>
   </v-container>
+</div>
 </template>
 
 <script>
@@ -505,6 +509,9 @@ export default {
             return `./download/sutta/${ref}/${usage}`;
         },
         sutta_uid() {
+            if (this.suttaplex) {
+                return this.suttaplex.uid;
+            } 
             var query = this.$route.query;
             var search = query && query.search || '';
             var tokens = search.split('/');

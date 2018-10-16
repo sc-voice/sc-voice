@@ -68,7 +68,7 @@
             <div v-if="bgShow" class="scv-background">
             </div>
         </transition>
-        <v-content class="">
+        <v-content class="" >
           <Sutta />
         </v-content>
     </div>
