@@ -67,9 +67,14 @@
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
     it("wordSSML(word) returns SSML text for word", function() {
-        var tts = new AbstractTTS();
+        var tts = new AbstractTTS({
+            languageUnknown: 'pli',
+        });
 
         // words without information
+        should(tts.wordSSML(`ariyasaccan’ti`))
+        .equal(`<phoneme alphabet="ipa" ph="ɐˈɺɪjɐsɐccɐn’tɪ">`+
+            `ariyasaccan’ti</phoneme><break time="0.001s"/>`);
         should(tts.wordSSML('meditation')).equal('meditation');
 
         // words with information

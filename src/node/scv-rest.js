@@ -194,6 +194,10 @@
                         audioSuffix: that.audioSuffix,
                     });
                     var msStart = Date.now();
+                    if (lines.length > 750) {
+                        logger.info(`synthesizeSutta()`+
+                            `lines:${lines.length} text:${text.length*2}B`);
+                    }
                     var result = await voice.speak(text, {
                         cache: true, // false: use TTS web service for every request
                         usage,

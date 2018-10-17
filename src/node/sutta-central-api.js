@@ -3,6 +3,7 @@
     const path = require('path');
     const http = require('http');
     const https = require('https');
+    const Queue = require('promise-queue');
     const Words = require('./words');
     const Sutta = require('./sutta');
     const SuttaCentralId = require('./sutta-central-id');
@@ -43,6 +44,7 @@
                 storeName: 'api',
             });
             this.apiCacheSeconds = opts.apiCacheSeconds || 7*DAY_SECONDS;
+            this.queue = new Queue(opts.maxConcurrentServiceCalls || 5, Infinity);
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
@@ -80,14 +82,12 @@
         loadJsonRest(url) {
             return new Promise((resolve, reject) => { try {
                 var httpx = url.startsWith('https') ? https : http;
-                httpMonitor++;
                 if (++httpMonitor > 2) {
                     // We are overwhelming SuttaCentralApi
                     // implement throttling using Queue (see abstract-tts.js)
                     logger.warn(`SuttaCentralApi.loadJsonRest() `+
                         `httpMonitor:${httpMonitor} ${url}`);
                 }
-                logger.info(`httpMonitor: ${httpMonitor}`);
                 var req = httpx.get(url, res => {
                     httpMonitor--;
                     const { statusCode } = res;

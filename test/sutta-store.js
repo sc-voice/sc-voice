@@ -350,7 +350,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) performs keyword search", function(done) {
+    it("search(pattern) performs keyword search", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var expected = [{

@@ -165,7 +165,7 @@
             done();
         })();
     });
-    it("placeholder words are expanded with voice ipa", function() {
+    it("TESTTESTplaceholder words are expanded with voice ipa", function() {
         /*
          * TTS services such as AWS Polly tend to speak IPA phonemes
          * in a voice-dependent manner. For example, the lower greek
@@ -177,15 +177,52 @@
          * This subtle change manifests via the wordSSML() function of
          * abstractTTS.
          */
-        var raveena = Voice.createVoice("en-IN");
+        var raveena = Voice.createVoice({
+            language: "en-IN",
+            languageUnknown: "pli",
+        });
+        var amy = Voice.createVoice({
+            language: "en-GB",
+            languageUnknown: "pli",
+        });
+        should(raveena.services.navigate.languageUnknown).equal('pli');
+        should(amy.services.navigate.languageUnknown).equal('pli');
+
+        should(raveena.services.recite.wordSSML(`Ubbhaṭaka`))
+        .equal(`<break time="0.001s"/><phoneme alphabet="ipa" ph="ubbʰɐtɐka">`+
+            `Ubbhaṭaka</phoneme><break time="0.001s"/>`);
+        should(amy.services.recite.wordSSML(`Ubbhaṭaka`))
+        .equal(`<break time="0.001s"/><phoneme alphabet="ipa" ph="ubbʰɐtɐka">`+
+            `Ubbhaṭaka</phoneme><break time="0.001s"/>`);
+
+        should(raveena.services.recite.wordSSML(`don't`))
+        .equal(`don't`);
+        should(amy.services.recite.wordSSML(`don't`))
+        .equal(`don't`);
+        should(raveena.services.recite.wordSSML(`don${Words.U_APOSTROPHE}t`))
+        .equal(`don${Words.U_APOSTROPHE}t`);
+        should(amy.services.recite.wordSSML(`don${Words.U_APOSTROPHE}t`))
+        .equal(`don${Words.U_APOSTROPHE}t`);
+
+        should(raveena.services.recite.wordSSML(`ariyasaccan’ti`))
+        .equal(`<phoneme alphabet="ipa" ph="ɐˈɺɪjɐsɐccɐn’θɪ">`+
+            `ariyasaccan’ti</phoneme><break time="0.001s"/>`);
+        should(amy.services.recite.wordSSML(`ariyasaccan’ti`))
+        .equal(`<phoneme alphabet="ipa" ph="ɐɺɪjɐsɐccɐn’tɪ">`+
+            `ariyasaccan’ti</phoneme><break time="0.001s"/>`);
+
         should(raveena.services.navigate.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>${BREAK}`);
+        should(raveena.services.navigate.wordSSML('Saṅgha'))
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250\u014bgʰa">Saṅgha</phoneme>${BREAK}`);
 
-        var amy = Voice.createVoice("en-GB");
         should(amy.services.navigate.wordSSML('sati'))
         .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
+        should(amy.services.navigate.wordSSML('Saṅgha'))
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250\u014bgʰa">Saṅgha</phoneme>${BREAK}`);
+
     });
-    it("TESTTESTplaceholder words are expanded with voice ipa", function() {
+    it("placeholder words are expanded with voice ipa", function() {
         var raveena = Voice.createVoice("raveena");
         should(raveena).properties({
             name: "Raveena",

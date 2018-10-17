@@ -25,7 +25,8 @@
             this._romanize = json.romanize || {};
             this.wordEnd = json.wordEnd;
             this.altMap = null;
-            this.alphabet = new RegExp(json.alphabet || '[a-z]*', "iu");
+            var wordQuotes = "'" + Words.U_RSQUOTE + Words.U_APOSTROPHE;
+            this.alphabet = new RegExp(json.alphabet || `[a-z${wordQuotes}]*`, "iu");
             var symAcc= Object.keys(this.symbols).reduce((acc,sym) => {
                 if (this.symbols[sym].isWord) {
                     // symbol is part of a word
@@ -47,6 +48,7 @@
         static get U_LDQUOTE() { return '\u201C'; }
         static get U_RDQUOTE() { return '\u201D'; }
         static get U_HYPHEN() { return '\u2010'; }
+        static get U_APOSTROPHE() { return '\u02BC'; }
         static get U_ENDASH() { return '\u2013'; }
         static get U_EMDASH() { return '\u2014'; }
         static get U_ELLIPSIS() { return '\u2026'; }
@@ -145,9 +147,17 @@
                     return acc || this.isForeignWord(w);
                 }, false);
             }
+            if (this.symbolPat.test(token)) {
+                return false;
+            }
+            if (!this.alphabet.test(token)) {
+                return true; 
+            }
             var info = this.wordInfo(token);
-            return !this.symbolPat.test(token) && 
-                (!this.alphabet.test(token) || info == null || info.language !== this.language);
+            if (info) {
+                return info.language !== this.language;
+            }
+            return true;
         }
 
         romanize(text) {

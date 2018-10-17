@@ -149,7 +149,9 @@
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
                     <div class="caption text-xs-center">
                         <div class="text-xs-center" v-if="hasAudio">
-                            <a :href="downloadUrl" download>
+                            <a :href="downloadUrl" ref="refDownload" 
+                                @click="downloadClick('refDownload')"
+                                download>
                                 Download {{sutta_uid}}-{{language}}-{{author_uid}}.mp3
                             </a>
                         </div>
@@ -289,6 +291,28 @@ export default {
             return ref === this.refPlaying 
                 ? 'scv-icon-btn scv-btn-playing' 
                 : 'scv-icon-btn ';
+        },
+        downloadClick(ref) {
+            var elt = this.$refs[ref];
+            // There are no events to mark download completion
+            //console.log(`downloadClick`, ref, elt);
+            //elt.addEventListener('close', (evt) => {
+            //elt.addEventListener('complete', (evt) => {
+            //elt.addEventListener('data', (evt) => {
+            //elt.addEventListener('downloading', (evt) => {
+            //elt.addEventListener('ended', (evt) => {
+            //elt.addEventListener('end', (evt) => {
+            //elt.addEventListener('loadend', (evt) => {
+            //elt.addEventListener('load', (evt) => {
+            //elt.addEventListener('message', (evt) => {
+            //elt.addEventListener('progress', (evt) => {
+            //elt.addEventListener('statechange', (evt) => {
+            //elt.addEventListener('storage', (evt) => {
+            //elt.addEventListener('success', (evt) => {
+            //elt.addEventListener('writeend', (evt) => {
+            //elt.addEventListener('end', (evt) => {
+             //   console.log(`event:${JSON.stringify(evt)}`);
+            //});
         },
         clear() {
             this.error.search = null;

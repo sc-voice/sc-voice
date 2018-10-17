@@ -37,10 +37,14 @@
                 writable: true,
             });
             var words = opts.words || null;
-            if (!(words instanceof Words)) {
+            if (words instanceof Words) {
+                // provided
+            } else {
                 words = new Words(words, {
                     language: this.language,
                 });
+                logger.info(`${this.constructor.name}() `+
+                    `default words:${Object.keys(words.words).length}`);
             }
             Object.defineProperty(this, 'words', {
                 value: words,
@@ -121,10 +125,13 @@
                     return word
                         .replace('{', '<say-as interpret-as="spell">')
                         .replace('}', '</say-as>');
-                } else if (this.words.isWord(word) && 
-                    this.languageUnknown !== this.language && 
-                    this.words.isForeignWord(word)) { 
-                    var ipa = this.words.ipa(word, this.languageUnknown); 
+                } else if (this.words.isWord(word)) {
+                    if (this.languageUnknown !== this.language && 
+                        this.words.isForeignWord(word)) { 
+                        var ipa = this.words.ipa(word, this.languageUnknown); 
+                    } else {
+                        var ipa = null;
+                    }
                 } else {
                     var ipa = null; 
                 }
@@ -167,8 +174,8 @@
         segment(tokens) {
             var symbols = this.words.symbols;
             var acc = tokens.reduce((acc,token) => {
+                var symbol = symbols[token];
                 if (token.length === 1 && !this.words.isWord(token) && !this.isNumber(token)) {
-                    var symbol = symbols[token];
                     if (symbol == null) {
                         throw new Error(`undefined symbol: ${token}`);
                     }
@@ -190,7 +197,9 @@
                         acc.segment = '';
                     }
                 } else {
-                    if (acc.cuddle === 'right') {
+                    if (symbol && symbol.cuddle === 'left') {
+                        acc.segment = acc.segment + token;
+                    } else if (acc.cuddle === 'right') {
                         acc.segment = acc.segment + token;
                     } else {
                         acc.segment = acc.segment ? acc.segment + ' ' + token : token;
@@ -371,7 +380,10 @@
                     var inpath = this.store.signaturePath(signature, ".txt");
                     fs.writeFileSync(inpath, inputs);
                     var cmd = `bash -c "ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`;
-                    exec(cmd, (err, stdout, stderr) => {
+                    var execOpts = {
+                        maxBuffer: 500*1024,
+                    };
+                    exec(cmd, execOpts, (err, stdout, stderr) => {
                         if (err) {
                             console.error(err.stack);
                             reject(err);
