@@ -2,6 +2,7 @@ import '@babel/polyfill'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
+import VueCookie from 'vue-cookie'
 import VueAxios from 'vue-axios'
 //import Vuetify from 'vuetify'
 import './plugins/vuetify'
@@ -20,6 +21,7 @@ const DEFAULT_VOICES = [{
 
 Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
+Vue.use(VueCookie);
 var router = new VueRouter();
 
 /*

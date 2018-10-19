@@ -6,12 +6,9 @@
   <v-container fluid class="scv-sutta">
       <v-layout column align-left >
           <div class="scv-search-row">
-              <v-text-field v-if="search" 
-                  placeholder="Enter sutta id" 
-                  v-model="search" v-on:keypress="onSearchKey($event)"
-                  label = "Search" ></v-text-field>
-              <v-text-field v-else 
-                  placeholder="Enter sutta id" 
+              <v-text-field 
+                  ref="refSearch"
+                  placeholder="Enter sutta id, phrase or keyword(s)" 
                   v-model="search" v-on:keypress="onSearchKey($event)"
                   label = "Search" ></v-text-field>
               <div v-if="!search" class="title scv-help">
@@ -27,7 +24,8 @@
               <search-help ref="refSearchHelp" :title="errorSummary" 
                 :search="search"
                 :httpError="error.search.http" />
-              <v-btn icon @click="error.search=null" class="scv-icon-btn" :style="cssProps"
+              <v-btn icon @click="error.search=null" 
+                class="scv-icon-btn" :style="cssProps"
                 aria-label="Dismiss Error">
                 <v-icon>clear</v-icon>
               </v-btn>
@@ -35,7 +33,8 @@
           <details v-show="searchResults">
             <summary role="main" aria-level="1" ref="refResults" class='title'>
                 <span v-if="searchResults && searchResults.results.length">
-                    Top {{searchResults && searchResults.results.length}} suttas found 
+                    Top {{searchResults && searchResults.results.length}} 
+                    suttas found 
                     for {{searchResults.method}}
                 </span>
                 <span v-else>
@@ -150,10 +149,15 @@
                     <div class="caption text-xs-center">
                         <div class="text-xs-center" v-if="hasAudio">
                             <a :href="downloadUrl" ref="refDownload" 
-                                @click="downloadClick('refDownload')"
+                                @click="downloadClick()"
                                 download>
                                 Download {{sutta_uid}}-{{language}}-{{author_uid}}.mp3
                             </a>
+                            <scv-downloader 
+                                ref="refScvDownloader"
+                                :filename="downloadFile"
+                                :focusElement="postDownloadFocus"
+                                /> 
                         </div>
                         <div v-for="translation in suttaplex.translations" 
                             class="text-xs-center"
@@ -241,7 +245,7 @@
 <script>
 /* eslint no-console: 0*/
 import Vue from "vue";
-
+import ScvDownloader from "./scv-downloader";
 import SearchHelp from "./search-help";
 const MAX_SECTIONS = 100;
 
@@ -292,27 +296,20 @@ export default {
                 ? 'scv-icon-btn scv-btn-playing' 
                 : 'scv-icon-btn ';
         },
-        downloadClick(ref) {
-            var elt = this.$refs[ref];
-            // There are no events to mark download completion
-            //console.log(`downloadClick`, ref, elt);
-            //elt.addEventListener('close', (evt) => {
-            //elt.addEventListener('complete', (evt) => {
-            //elt.addEventListener('data', (evt) => {
-            //elt.addEventListener('downloading', (evt) => {
-            //elt.addEventListener('ended', (evt) => {
-            //elt.addEventListener('end', (evt) => {
-            //elt.addEventListener('loadend', (evt) => {
-            //elt.addEventListener('load', (evt) => {
-            //elt.addEventListener('message', (evt) => {
-            //elt.addEventListener('progress', (evt) => {
-            //elt.addEventListener('statechange', (evt) => {
-            //elt.addEventListener('storage', (evt) => {
-            //elt.addEventListener('success', (evt) => {
-            //elt.addEventListener('writeend', (evt) => {
-            //elt.addEventListener('end', (evt) => {
-             //   console.log(`event:${JSON.stringify(evt)}`);
-            //});
+        downloadClick() {
+            var elt = this.$refs['refScvDownloader'];
+            console.log(`downloading:${this.downloadUrl}`, elt);
+            elt && elt.update('Downloading:');
+            this.startWaiting({
+                cookie: 'download-date',
+                onCookieChange: () => {
+                    elt && elt.update('Download completed:');
+                },
+                timeoutSec: 60,
+                onTimeout: () => {
+                    elt && elt.update('ERROR: Download timed out:');
+                },
+            });
         },
         clear() {
             this.error.search = null;
@@ -343,14 +340,29 @@ export default {
                 handler();
             }
         },
-        startWaiting() {
+        startWaiting(opts={}) {
             var that = this;
-            return setInterval(() => {
+            var cookie = opts.cookie;
+            var cookieStart = cookie && that.$cookie.get(cookie);
+            var timer = setInterval(() => {
                 // exponential smoothing 
                 var c = 0.9;
                 var waiting = (that.waiting||1) * c + (1-c)*100;
                 Vue.set(that, "waiting", waiting);
+                if (cookie && that.$cookie.get(cookie) !== cookieStart) {
+                    that.stopWaiting(timer);
+                    opts.onCookieChange && opts.onCookieChange();
+                }
             }, 100);
+            var timeoutSec = opts.timeoutSec;
+            if (timeoutSec) {
+                setTimeout(() => {
+                    console.log(`waiting timeout:${timeoutSec}s`);
+                    that.waiting && that.stopWaiting();
+                    opts.onTimeout && opts.onTimeout();
+                }, timeoutSec*1000);
+            }
+            return timer;
         },
         stopWaiting(timer){
             clearInterval(timer);
@@ -527,6 +539,12 @@ export default {
         audioUrl() {
             return `https://github.com/sc-voice/sc-voice/wiki/Audio-${this.sutta_uid}`;
         },
+        cookies() {
+            return document.cookies;
+        },
+        downloadFile() {
+            return `${this.sutta_uid}-${this.language}-${this.author_uid}.mp3`;
+        },
         downloadUrl() {
             var usage = ['recite','review'][this.scvOpts.iVoice];
             var ref = `${this.sutta_uid}/${this.language}/${this.author_uid}`;
@@ -561,10 +579,15 @@ export default {
                 ? 'scv-support scv-supported' 
                 : 'scv-support scv-legacy';
         },
+        postDownloadFocus() {
+            var vSearch = this.$refs.refSearch;
+            return vSearch && vSearch.$refs.input;
+        },
     },
     mounted() {
         this.$nextTick(() => {
             var search = this.scvOpts.search;
+            console.log(`cookies`, this.$cookie);
             Vue.set(this, 'search', search);
             if (/[1-9]/.test(search)) {
                 console.log(`sutta.mounted() showSutta(${search})`);
@@ -580,6 +603,7 @@ export default {
 
     components: {
         SearchHelp,
+        ScvDownloader,
     },
 }
 </script>

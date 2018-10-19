@@ -251,6 +251,7 @@
                     var data = fs.readFileSync(filePath);
                     res.set('Content-disposition', 'attachment; filename=' + filename);
                     logger.info(`GET download/sutta => ${filename} size:${data.length}`);
+                    res.cookie('download-date',new Date());
                     resolve(data);
                 } catch(e) {reject(e);} })();
             } catch(e) {reject(e);} });
