@@ -82,21 +82,6 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("collectionIterator(collection) creates iterator", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-            var iter = store.collectionIterator();
-            should.deepEqual(iter.next(), {
-                value: 0,
-                done: false,
-            });
-            should.deepEqual(iter.next(), {
-                value: 1,
-                done: false,
-            });
-            done(); 
-        } catch(e) {done(e);} })();
-    });
     it("updateSuttas(ids) updates suttas from SuttaCentral", function(done) {
         var maxseconds = 5;
         this.timeout(maxseconds*1000);
@@ -391,6 +376,71 @@
             should(results[2].quote.en).match(/the meditation on universal blue/);
             should(results[3].quote.en).match(/or blue, yellow, red, or magenta/);
             should(results[4].quote.en).match(/or blue, yellow, red, or magenta/);
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTpaliPattern(pattern) should return the Pali pattern", function(){
+        should(SuttaStore.paliPattern("jhana")).equal('jh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
+        should(SuttaStore.paliPattern("abcdefghijklmn"))
+        .equal('(a|ā)bcdefgh(i|ī)jk(l|ḷ)(m|ṁ)(n|ṅ|ñ|ṇ)')
+        should(SuttaStore.paliPattern("nopqrstuvwxyz"))
+        .equal('(n|ṅ|ñ|ṇ)opqrst(u|ū)vwxyz');
+        should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
+        .equal('[abcdefghijklmnopqrstuvwxyz]');
+    });
+    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            var {
+                method,
+                results,
+            } = await store.search('jhana');
+            should(method).equal('keywords');
+            should.deepEqual(results.map(r=> ({
+                uid:r.uid,
+                count:r.count,
+            })), [{
+                count: 20,
+                uid: 'thag16.7',
+            },{
+                count: 8,
+                uid: 'thag9.1',
+            },{
+                count: 5,
+                uid: 'thag18.1',
+            },{
+                count: 4,
+                uid: 'thag16.9',
+            },{
+                count: 3,
+                uid: 'an10.72',
+            }]);
+
+            var {
+                method,
+                results,
+            } = await store.search('third jhana');
+            should(method).equal('keywords');
+            should.deepEqual(results.map(r=> ({
+                uid:r.uid,
+                count:r.count,
+            })), [{
+                count: 2,
+                uid: 'sn28.3',
+            },{
+                count: 2,
+                uid: 'sn6.15',
+            },{
+                count: 1,
+                uid: 'an10.72',
+            },{
+                count: 1,
+                uid: 'an9.36',
+            },{
+                count: 1,
+                uid: 'an9.39',
+            }]);
+
             done(); 
         } catch(e) {done(e);} })();
     });

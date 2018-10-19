@@ -11,6 +11,7 @@
     const SuttaCentralApi = require('./sutta-central-api');
     const SuttaCentralId = require('./sutta-central-id');
     const SuttaFactory = require('./sutta-factory');
+    const Words = require('./words');
     const ROOT = path.join(__dirname, '..', '..', 'local', 'suttas');
     const SUTTAIDS_PATH = path.join(__dirname, '..', '..', 'src', 'node', 'sutta-ids.json');
     const COLLECTIONS = {
@@ -44,6 +45,7 @@
             this.root = opts.root || ROOT;
             this.maxResults = opts.maxResults || 5;
             this.voice = opts.voice;
+            this.words = opts.words || new Words();
             Object.defineProperty(this, 'isInitialized', {
                 writable: true,
                 value: false,
@@ -65,14 +67,6 @@
                     resolve(that);
                 } catch(e) {reject(e);} })();
             });
-        }
-
-        *collectionIterator(collection=null) {
-            const n = 10;
-            for (let i=0; i<n; i++) {
-                yield i;
-            }
-            return n;
         }
 
         updateSuttas(suttaIds, opts={}) {
@@ -191,6 +185,18 @@
 
             return pattern
         }
+        
+        static paliPattern(pattern) {
+            return /^[a-z]+$/i.test(pattern) 
+                ? pattern
+                    .replace(/a/iug, '(a|ā)')
+                    .replace(/i/iug, '(i|ī)')
+                    .replace(/u/iug, '(u|ū)')
+                    .replace(/m/iug, '(m|ṁ)')
+                    .replace(/n/iug, '(n|ṅ|ñ|ṇ)')
+                    .replace(/l/iug, '(l|ḷ)')
+                : pattern;
+        }
 
         grep(args) {
             var {
@@ -233,6 +239,10 @@
             } = args;
             var that = this;
             var words = pattern.split(' +'); // the + was inserted by sanitizePattern();
+            words = words.map(w => 
+                /^[a-z]+$/iu.test(w) && this.words.isForeignWord(w)
+                ? SuttaStore.paliPattern(w)
+                : w);
             logger.info(`SuttaStore.keywordSearch(${words})`);
             var wordArgs = Object.assign({}, args, {
                 maxResults: 0,
@@ -396,7 +406,10 @@
                         searchMetadata
                     };
                     var method = 'phrase';
-                    var lines = await that.phraseSearch(grepOpts);
+                    var lines = [];
+                    if (!lines.length && !/^[a-z]+$/iu.test(pattern)) {
+                        lines = await that.phraseSearch(grepOpts);
+                    }
                     var resultPattern = pattern;
                     if (!lines.length) {
                         var method = 'keywords';
