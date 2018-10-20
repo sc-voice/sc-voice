@@ -394,6 +394,7 @@
             var {
                 method,
                 results,
+                resultPattern,
             } = await store.search('jhana');
             should(method).equal('keywords');
             should.deepEqual(results.map(r=> ({
@@ -415,6 +416,7 @@
                 count: 3,
                 uid: 'an10.72',
             }]);
+            should(resultPattern).equal('jh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
 
             var {
                 method,

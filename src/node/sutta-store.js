@@ -425,6 +425,7 @@
                     resolve({
                         method,
                         results,
+                        resultPattern,
                     });
                 } catch(e) {reject(e);} })();
             });
