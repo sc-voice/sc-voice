@@ -206,8 +206,8 @@
                 searchMetadata,
             } = args;
             var grex = searchMetadata
-                ? `\\b${pattern}\\b`
-                : `"(${language}|pli)":.*\\b${pattern}\\b`;
+                ? pattern
+                : `"(${language}|pli)":.*${pattern}`;
             var root = this.root.replace(ROOT, '');
             var cmd = `grep -rciE '${grex}' --exclude-dir=.git`+
                 `|grep -v ':0'`+
@@ -238,12 +238,12 @@
                 searchMetadata,
             } = args;
             var that = this;
-            var words = pattern.split(' +'); // the + was inserted by sanitizePattern();
-            words = words.map(w => 
+            var keywords = pattern.split(' +'); // the + was inserted by sanitizePattern();
+            keywords = keywords.map(w => 
                 /^[a-z]+$/iu.test(w) && this.words.isForeignWord(w)
-                ? SuttaStore.paliPattern(w)
-                : w);
-            logger.info(`SuttaStore.keywordSearch(${words})`);
+                ? `\\b${SuttaStore.paliPattern(w)}`
+                : `\\b${w}\\b`);
+            logger.info(`SuttaStore.keywordSearch(${keywords})`);
             var wordArgs = Object.assign({}, args, {
                 maxResults: 0,
             });
@@ -251,10 +251,10 @@
                 (async function() { try {
                     var mrgOut = [];
                     var mrgIn = [];
-                    for (var i=0; i< words.length; i++) {
-                        var word = words[i];
+                    for (var i=0; i< keywords.length; i++) {
+                        var keyword = keywords[i];
                         var wordlines = await that.grep(Object.assign({}, wordArgs, {
-                            pattern: word,
+                            pattern: keyword,
                         }));
                         wordlines.sort();
                         mrgOut = [];
@@ -289,7 +289,7 @@
                         mrgIn = mrgOut;
                     }
                     resolve({
-                        resultPattern: words.join('|'),
+                        resultPattern: keywords.join('|'),
                         lines: mrgOut.sort((a,b) => b.count - a.count)
                             .map(v => `${v.fpath}:${v.count}`)
                             .slice(0, maxResults),
@@ -373,8 +373,11 @@
         }
 
         phraseSearch(args) {
-            logger.info(`SuttaStore.phraseSearch(${args.pattern})`);
-            return this.grep(args);
+            var pattern = `\\b${args.pattern}\\b`;
+            logger.info(`SuttaStore.phraseSearch(${pattern})`);
+            return this.grep(Object.assign({}, args, {
+                pattern,
+            }));
         }
 
         search(...args) {
@@ -399,7 +402,7 @@
 
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var grepOpts = {
+                    var searchOpts = {
                         pattern, 
                         maxResults, 
                         language, 
@@ -408,12 +411,12 @@
                     var method = 'phrase';
                     var lines = [];
                     if (!lines.length && !/^[a-z]+$/iu.test(pattern)) {
-                        lines = await that.phraseSearch(grepOpts);
+                        lines = await that.phraseSearch(searchOpts);
                     }
                     var resultPattern = pattern;
                     if (!lines.length) {
                         var method = 'keywords';
-                        var data = await that.keywordSearch(grepOpts);
+                        var data = await that.keywordSearch(searchOpts);
                         lines = data.lines;
                         resultPattern = data.resultPattern;
                     }

@@ -404,19 +404,19 @@
                 count: 20,
                 uid: 'thag16.7',
             },{
-                count: 8,
-                uid: 'thag9.1',
+                count: 17,
+                uid: 'an9.36',
             },{
-                count: 5,
-                uid: 'thag18.1',
+                count: 16,
+                uid: 'mn108',
             },{
-                count: 4,
-                uid: 'thag16.9',
+                count: 16,
+                uid: 'an6.60',
             },{
-                count: 3,
-                uid: 'an10.72',
+                count: 15,
+                uid: 'dn33',
             }]);
-            should(resultPattern).equal('jh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
+            should(resultPattern).equal('\\bjh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
 
             var {
                 method,
@@ -427,20 +427,20 @@
                 uid:r.uid,
                 count:r.count,
             })), [{
-                count: 2,
-                uid: 'sn28.3',
+                count: 15,
+                uid: 'dn33',
             },{
-                count: 2,
-                uid: 'sn6.15',
+                count: 9,
+                uid: 'dn34',
             },{
-                count: 1,
-                uid: 'an10.72',
+                count: 7,
+                uid: 'mn85',
             },{
-                count: 1,
-                uid: 'an9.36',
+                count: 7,
+                uid: 'sn40.3',
             },{
-                count: 1,
-                uid: 'an9.39',
+                count: 5,
+                uid: 'mn77',
             }]);
 
             done(); 
