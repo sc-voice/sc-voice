@@ -358,8 +358,10 @@ export default {
             if (timeoutSec) {
                 setTimeout(() => {
                     console.log(`waiting timeout:${timeoutSec}s`);
-                    that.waiting && that.stopWaiting();
-                    opts.onTimeout && opts.onTimeout();
+                    if (that.waiting) {
+                        that.stopWaiting();
+                        opts.onTimeout && opts.onTimeout();
+                    }
                 }, timeoutSec*1000);
             }
             return timer;
