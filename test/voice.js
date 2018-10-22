@@ -165,7 +165,7 @@
             done();
         })();
     });
-    it("TESTTESTplaceholder words are expanded with voice ipa", function() {
+    it("placeholder words are expanded with voice ipa", function() {
         /*
          * TTS services such as AWS Polly tend to speak IPA phonemes
          * in a voice-dependent manner. For example, the lower greek

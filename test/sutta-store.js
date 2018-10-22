@@ -379,7 +379,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTpaliPattern(pattern) should return the Pali pattern", function(){
+    it("paliPattern(pattern) should return the Pali pattern", function(){
         should(SuttaStore.paliPattern("jhana")).equal('jh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
         should(SuttaStore.paliPattern("abcdefghijklmn"))
         .equal('(a|ā)bcdefgh(i|ī)jk(l|ḷ)(m|ṁ)(n|ṅ|ñ|ṇ)')
@@ -388,7 +388,7 @@
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });
-    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", function(done) {
+    it("search(pattern) finds romanized Pali keywords ", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {

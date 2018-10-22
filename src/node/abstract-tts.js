@@ -126,12 +126,15 @@
                         .replace('{', '<say-as interpret-as="spell">')
                         .replace('}', '</say-as>');
                 } else if (this.words.isWord(word)) {
+                    var w = word.endsWith(`’`) ? word.substring(0,word.length-1) : word;
                     if (this.languageUnknown !== this.language && 
-                        this.words.isForeignWord(word)) { 
+                        this.words.isForeignWord(w)) { 
                         var ipa = this.words.ipa(word, this.languageUnknown); 
                     } else {
                         var ipa = null;
                     }
+                } else if (word.endsWith(`’`)) {
+                    var ipa = null; 
                 } else {
                     var ipa = null; 
                 }

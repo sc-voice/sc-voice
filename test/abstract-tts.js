@@ -66,10 +66,14 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("wordSSML(word) returns SSML text for word", function() {
+    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS({
             languageUnknown: 'pli',
         });
+
+        // word ending quote
+        should(tts.wordSSML(`identity’`))
+        .equal(`identity’`);
 
         // words without information
         should(tts.wordSSML(`ariyasaccan’ti`))
