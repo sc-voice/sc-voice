@@ -4,7 +4,7 @@ echo -e "UPDATE\t: $0 START `date`"
 
 sudo apt-get update
 
-REBOOT=0
+REBOOT=y
 OPTIND=1
 while getopts "r" opt; do
     case "$opt" in
@@ -68,7 +68,7 @@ else
     popd
 fi
 
-if [ "$REBOOT" == "1" ]; then
+if [ "$REBOOT" == "y" ]; then
     sudo shutdown -r now
 fi
 
