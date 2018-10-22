@@ -4,11 +4,11 @@ echo -e "UPDATE\t: $0 START `date`"
 
 sudo apt-get update
 
-REBOOT=
+REBOOT=0
 OPTIND=1
 while getopts "r" opt; do
     case "$opt" in
-    r)  REBOOT=1
+    r)  REBOOT=y
         ;;
     esac
 done
