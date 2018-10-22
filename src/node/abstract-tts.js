@@ -25,6 +25,7 @@
             this.audioSuffix = opts.audioSuffix || ".ogg";
             this.queue = new Queue(opts.maxConcurrentServiceCalls || 5, Infinity);
             this.usage = opts.usage || "recite";
+            this.maxSSML = opts.maxSSML || 5000;
             this.usages = opts.usages || {};
             this.mj = new MerkleJson({
                 hashTag: 'guid',
@@ -266,6 +267,21 @@
         }
 
         synthesizeSSML(ssmlFragment, opts={}) {
+            if (ssmlFragment.length > this.maxSSML) {
+                var oldLen = ssmlFragment.length;
+                ssmlFragment = ssmlFragment.replace(/>[^<]+<\/phoneme/iug, '/');
+                logger.info(`AbstractTts.synthesizeSSML() shrinking large SSML (1) `+
+                    `before:${oldLen} `+
+                    `after:${ssmlFragment.length} `);
+                if (ssmlFragment.length > this.maxSSML) {
+                    ssmlFragment = ssmlFragment.replace(/<break[^>]+>/iug, '');
+                    logger.info(`AbstractTts.synthesizeSSML() shrinking large SSML (2) `+
+                        `before:${oldLen} `+
+                        `after:${ssmlFragment.length} `);
+                }
+                logger.info(`AbstractTts.synthesizeSSML() shrinking large SSML (3) `+
+                    `ssml:${ssmlFragment}`);
+            }
             return new Promise((resolve, reject) => {
                 try {
                     var cache = opts.cache == null ? true : opts.cache;
@@ -288,7 +304,8 @@
                         this.misses++;
 
                         this.serviceSynthesize(resolve, e => {
-                            logger.warn(`synthesizeSSML() ${e.message} ssml:${ssmlFragment}`);
+                            logger.warn(`synthesizeSSML() ${e.message} `+
+                                `ssml:${ssmlFragment.length}utf16 ${ssmlFragment}`);
                             reject(e);
                         }, request);
                     }

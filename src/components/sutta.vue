@@ -60,7 +60,7 @@
                 </summary>
                 <div class="scv-search-result-lang">
                     <div>
-                        <a :href="resultLink(result)" target="_blank"> 
+                        <a :href="resultLink(result)" >
                             <span v-html="result.quote.en"></span>
                             <span v-if="scvOpts.showId" class='scv-scid'>
                                 &mdash;

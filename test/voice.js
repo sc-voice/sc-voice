@@ -268,5 +268,20 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTspeak(text) can handle lengthy Pali", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var raveena = Voice.createVoice({
+                name: "raveena",
+                languageUnknown: "pli",
+            });
+            var text = `Cuddasa kho panimāni yonipamukhasatasahassāni saṭṭhi ca satāni cha ca satāni pañca ca kammuno satāni pañca ca kammāni, tīṇi ca kammāni, kamme ca aḍḍhakamme ca dvaṭṭhipaṭipadā, dvaṭṭhantarakappā, chaḷābhijātiyo, aṭṭha purisabhūmiyo, ekūnapaññāsa ājīvakasate, ekūnapaññāsa paribbājakasate, ekūnapaññāsa nāgavāsasate, vīse indriyasate, tiṃse nirayasate, chattiṃsarajodhātuyo, satta saññīgabbhā, satta asaññīgabbhā, satta nigaṇṭhigabbhā, satta devā, satta mānusā, satta pesācā, satta sarā, satta pavuṭā, satta papātā, satta ca papātasatāni, satta supinā, satta supinasatāni, cullāsīti mahākappino satasahassāni, yāni bāle ca paṇḍite ca sandhāvitvā saṃsaritvā dukkhassantaṃ karissanti."`;
+            var result = await raveena.speak(text, {usage:'recite'});
+            should(result.signature.api).equal('ffmegConcat');
+            should(result.signature.files.length).equal(2);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
 
 })
