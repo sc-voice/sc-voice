@@ -4,7 +4,7 @@ echo -e "UPDATE\t: $0 START `date`"
 
 sudo apt-get update
 
-REBOOT=y
+REBOOT=
 OPTIND=1
 while getopts "r" opt; do
     case "$opt" in
@@ -56,7 +56,7 @@ else
     popd
 fi
 
-if [ -e local/suttas]; then
+if [ -e local/suttas ]; then
     echo -e "INIT\t: updating scv-suttas..."
     pushd local/suttas
     git pull
