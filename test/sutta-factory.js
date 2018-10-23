@@ -131,12 +131,23 @@
                 autoSection: true,
             });
             should(factory.autoSection).equal(true);
+            var sutta = await factory.loadSutta('sn35.66');
+            should(sutta.sections).instanceOf(Array);
+            should(sutta.sections.length).equal(2);
+            should(sutta.sections[0].segments.length + sutta.sections[1].segments.length)
+            .equal(sutta.segments.length);
+            should(sutta.sections[0].segments[0].en).equal('Linked Discourses 35');
+            should(sutta.sections[1].segments[0].en).match(/Sir, they speak of this thing/);
+
             var sutta = await factory.loadSutta('dn2');
             should(sutta.sections).instanceOf(Array);
-            should(sutta.sections.length).equal(36);
+            should(sutta.sections.length).equal(37);
+            should(sutta.sections[0].segments.length).equal(3);
             should(sutta.sections[0].segments[0].en).equal('Long Discourses 2');
+            should(sutta.sections[0].segments[1].en).match(/The Fruits of the Ascetic Life/);
+            should(sutta.sections[0].segments[2].en).match(/A Discussion With the King/);
             should(sutta.sections[1].segments[0].en)
-                .equal(`1. A Discussion With the King’s Ministers`);
+                .match(/So I have heard/);
             should(sutta.sections[2].segments[0].en)
                 .equal(`2. A Discussion With Jīvaka Komārabhacca`);
             should(sutta.sections[3].title)
