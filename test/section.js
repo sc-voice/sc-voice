@@ -34,14 +34,14 @@
     }];
 
 
-    it("Section(parms) creates a section", function() {
+    it("TESTTESTSection(parms) creates a section", function() {
         var section = new Section({
             segments, 
         });
         should(section).properties({
             segments,
             type: 'Section',
-            title: `a1 a2${Words.U_ELLIPSIS}`,
+            title: `a1 a2, a3`,
         });
     });
 

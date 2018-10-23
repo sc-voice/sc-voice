@@ -3,7 +3,7 @@
     const DEFAULT_PROP = 'en';
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS} *$`);
     const RE_TITLE_END = new RegExp(`[.?;,${Words.U_EMDASH}].*$`, 'u');
-    const MILLERS_LAW = 7; // cognitive limit
+    const MAX_TITLE_WORDS = 9; 
 
     class Section {
         constructor(opts={}) {
@@ -31,8 +31,10 @@
         }
 
         static titleOfText(text='(untitled)') {
-            var title = text.split(' ').slice(0,MILLERS_LAW).join(' ');
-            return title.replace(RE_TITLE_END, '') + Words.U_ELLIPSIS;
+            var splits = text.split(' ');
+            return splits.length > MAX_TITLE_WORDS
+                ? splits.slice(0,MAX_TITLE_WORDS).join(' ') + Words.U_ELLIPSIS
+                : splits.join(' ');
         }
 
         expandAll() {

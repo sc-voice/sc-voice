@@ -125,6 +125,25 @@
             done();
         } catch(e) { done(e); } })();
     });
+    it("TESTTESTloadSutta(id, opts) automatically sections a Sutta", function(done) {
+        (async function() { try {
+            var factory = new SuttaFactory({
+                autoSection: true,
+            });
+            should(factory.autoSection).equal(true);
+            var sutta = await factory.loadSutta('dn2');
+            should(sutta.sections).instanceOf(Array);
+            should(sutta.sections.length).equal(36);
+            should(sutta.sections[0].segments[0].en).equal('Long Discourses 2');
+            should(sutta.sections[1].segments[0].en)
+                .equal(`1. A Discussion With the King’s Ministers`);
+            should(sutta.sections[2].segments[0].en)
+                .equal(`2. A Discussion With Jīvaka Komārabhacca`);
+            should(sutta.sections[3].title)
+                .equal(`3. The Question About the Fruits of the Ascetic${Words.U_ELLIPSIS}`);
+            done();
+        } catch(e) { done(e); } })();
+    });
 
 });
 

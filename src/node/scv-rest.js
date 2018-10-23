@@ -46,6 +46,7 @@
             this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
+                autoSection: true,
             });
             this.quoteVoice = Voice.createVoice({
                 name: 'Raveena',

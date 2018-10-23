@@ -199,7 +199,7 @@
             v-for="(sect,i) in sections" :key="`sect${i}`" 
             v-if="i>0">
             <summary class="subheading" >
-                Section {{i}} 
+                Section 
                 <div v-if="scvOpts.showId" class='scv-scid'>
                     SC&nbsp;{{sect.segments[0].scid.split(":")[1]}}
                 </div> 

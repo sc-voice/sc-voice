@@ -32,7 +32,9 @@
     class SuttaFactory { 
         constructor(opts={}) {
             this.type = this.constructor.name;
-            this.prop = opts.prop || OPTS_EN.prop;
+            this.lang = opts.lang || 'en';
+            this.prop = opts.prop || this.lang;
+            this.autoSection = !!opts.autoSection;
             this.reHeader = opts.reHeader || Sutta.RE_HEADER;
             this.suttaCentralApi = opts.suttaCentralApi;
             this.pootleParser = new PoParser();
@@ -89,9 +91,31 @@
             });
         }
 
+        sectionSutta(sutta) {
+            var lang = this.lang;
+            var segStart = 0;
+            var segments = sutta.segments;
+            var numberedSegs = segments.reduce((acc,seg,i) => {
+                if (/^[1-9]/.test(seg[lang])) {
+                    acc.push(new Section({
+                        segments: segments.slice(segStart,i),
+                    }));
+                    segStart = i;
+                }
+                return acc;
+            }, []);
+            if (numberedSegs.length < 1) {
+                return sutta; // no sections
+            }
+            return new Sutta(Object.assign({}, sutta, {
+                sections: numberedSegs,
+            }));
+        }
+
         loadSutta(opts={}) {
             var that = this;
             var language = opts.language || 'en';
+            var autoSection = opts.autoSection == null ? this.autoSection : opts.autoSection;
             if (SUPPORTED_LANGUAGES[language] !== true) {
                 return Promise.reject(
                     new Error(`SC-Voice does not support language: ${language}`));
@@ -109,6 +133,9 @@
                         : await that.loadSuttaPootl(opts);
                     if (opts.expand && EXPANDABLE_SUTTAS[sutta.sutta_uid]) {
                         sutta = that.expandSutta(that.parseSutta(sutta))
+                    }
+                    if (autoSection) {
+                        sutta = that.sectionSutta(sutta);
                     }
                     resolve(sutta);
                 } catch(e) {reject(e);} })();

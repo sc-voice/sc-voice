@@ -58,7 +58,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /sutta/mn100/en/sujato returns sutta", function(done) {
+    it("TESTTESTGET /sutta/mn100/en/sujato returns sutta", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn100/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -73,7 +73,7 @@
                     prefix: "",
                     prop: 'en',
                     template: [],
-                    title: `Middle Discourses 100${Words.U_ELLIPSIS}`,
+                    title: `Middle Discourses 100`,
                     type: 'Section',
                     values: [],
                     segments: [{
