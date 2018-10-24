@@ -346,7 +346,7 @@ export default {
             var cookieStart = cookie && that.$cookie.get(cookie);
             var timer = setInterval(() => {
                 // exponential smoothing 
-                var c = 0.9;
+                var c = 0.97;
                 var waiting = (that.waiting||1) * c + (1-c)*100;
                 Vue.set(that, "waiting", waiting);
                 if (cookie && that.$cookie.get(cookie) !== cookieStart) {

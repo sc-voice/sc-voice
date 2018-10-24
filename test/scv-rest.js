@@ -91,7 +91,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /recite/sutta/mn1/en/sujato/2 returns recitation", function(done) {
+    it("GET /recite/section/mn1/en/sujato/2 returns recitation", function(done) {
         this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/recite/section/mn1/en/sujato/2")
@@ -256,6 +256,29 @@
             done();
         } catch (e) { done(e); } }();
         async.next();
+    });
+    it("TESTTESTGET /play/section/... returns playable section", function(done) {
+        this.timeout(30*1000);
+        (async function() { try {
+            var iSection = 2;
+            var iVoice = 0;
+            var url = `/scv/play/section/mn1/en/sujato/${iSection}/${iVoice}`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            should(res.body.segments.length).equal(98);
+            should(res.body.sutta_uid).equal('mn1');
+            should(res.body.voiceLang).equal('Amy');
+            should(res.body.voicePali).equal('Raveena');
+            should(res.body.section).equal(iSection);
+            should(res.body.maxSection).equal(10);
+            should(res.body.iVoice).equal(iVoice);
+            should(res.body.language).equal('en');
+            should(res.body.translator).equal('sujato');
+            should(res.body.segments[0].audio.en).match(/^82b006/);
+            should(res.body.segments[0].audio.pli).match(/^1783e/);
+            console.log(res.body.segments[0]);
+            done();
+        } catch(e) {done(e);} })();
     });
 });
 

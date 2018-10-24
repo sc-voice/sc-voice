@@ -22,7 +22,7 @@
             gender: 'female',
             rates: {
                 navigate: "+5%", 
-                recite: "-20%",
+                recite: "-30%",
             },
         });
         should(!!raveena.ipa).equal(true);

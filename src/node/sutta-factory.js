@@ -95,11 +95,10 @@
             var lang = this.lang;
             var segStart = 0;
             var segments = sutta.segments;
-            console.log(`dbg sectionSutta segments:${segments.length}`);
             var newSections = segments.reduce((acc,seg,i) => {
                 var scid = new SuttaCentralId(seg.scid);
                 if (segStart === 0 && scid.groups[0] === '0') {
-                    console.log(`section 0 ${scid}`);
+                    // don't split segment 0
                 } else if (segStart === 0 && scid.groups[0] !== '0' || 
                     /^[1-9]/.test(seg[lang])) {
                     acc.push(new Section({
