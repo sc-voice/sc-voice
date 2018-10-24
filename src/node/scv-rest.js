@@ -74,7 +74,7 @@
                         this.getReviewSection),
                     this.resourceMethod("get", 
                         "play/section/:sutta_uid/:language/:translator/:iSection", 
-                        this.getReviewSection),
+                        this.getPlaySection),
                     this.resourceMethod("get", 
                         "recite/sutta/:sutta_uid/:language/:translator", 
                         this.getReciteSutta),
@@ -124,18 +124,18 @@
         }
 
         suttaParms(req) {
-            return {
-                sutta_uid: req.params.sutta_uid || 'mn1',
-                language: req.params.language || 'en',
-                translator: req.params.translator || 'sujato', // TODO
-                usage: req.params.usage || 'recite',
-            };
+            var parms = Object.assign({
+                language: 'en',
+                usage: 'recite',
+                iSection: 0,
+            }, req.params);
+            parms.iSection = Number(parms.iSection);
+            return parms;
         }
 
         reciteSection(req, res, next, usage) {
             var that = this;
-            var { sutta_uid, language, translator } = that.suttaParms(req);
-            var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
+            var { sutta_uid, language, translator, iSection } = that.suttaParms(req);
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
@@ -230,6 +230,12 @@
 
         getReviewSection(req, res, next) {
             return this.reciteSection(req, res, next, 'review');
+        }
+
+        getPlaySection(req, res, next) {
+            var { sutta_uid, language, translator } = this.suttaParms(req);
+            logger.info(`GET play ${sutta_uid}/${language}/${translator}`);
+            return this.synthesizeSutta(sutta_uid, language, translator, 'review');
         }
 
         getReciteSutta(req, res, next) {
