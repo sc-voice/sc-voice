@@ -401,7 +401,7 @@ export default {
             }
         },
         showSutta(search) {
-            var tokens = search.split('/');
+            var tokens = search.toLowerCase().split('/');
             (tokens.length < 2) && tokens.push(this.scvOpts.lang);
             (tokens.length < 3) && tokens.push('sujato'); // TODO remove sujato
             var url = `./sutta/${tokens.join('/')}`;
