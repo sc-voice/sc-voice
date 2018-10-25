@@ -270,6 +270,8 @@ button {
     padding-right: 0.4em;
     text-align: center;
     margin-left: 1.2em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 .scv-text-button:focus {
     border-color: var(--accent-color);

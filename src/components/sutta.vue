@@ -139,7 +139,7 @@
                 </audio>
                 <button v-else :ref="`play-sutta`" @click="playSutta()" 
                     :disabled="waiting > 0"
-                    class="scv-text-button mt-4 mb-4" :style="cssProps">
+                    class="scv-text-button" :style="cssProps">
                     Play Sutta ({{voice.name}})
                 </button>
             </div>
@@ -218,6 +218,14 @@
                     Play Section {{i}} ({{voice.name}})
                 </button>
             </div>
+            <scv-player
+                :sutta_uid="sutta_uid"
+                :language="language"
+                :translator="translator"
+                :iSection="i"
+                :voice="voice"
+                :title="`${sutta.acronym} ${sutta.title}`"
+            />
             <div v-if="error[i]" class="scv-error" 
                 style="margin-left: 1.2em" >
               <div>
@@ -247,6 +255,7 @@
 import Vue from "vue";
 import ScvDownloader from "./scv-downloader";
 import SearchHelp from "./search-help";
+import ScvPlayer from "./scv-player";
 const MAX_SECTIONS = 100;
 
 export default {
@@ -606,6 +615,7 @@ export default {
     components: {
         SearchHelp,
         ScvDownloader,
+        ScvPlayer,
     },
 }
 </script>

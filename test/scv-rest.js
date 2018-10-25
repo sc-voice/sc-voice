@@ -15,6 +15,7 @@
 
     } = require("../index");
     const Queue = require('promise-queue');
+    const PUBLIC = path.join(__dirname, '../public');
     const SC = path.join(__dirname, '../local/sc');
     const app = require("../scripts/sc-voice.js"); // access cached instance 
 
@@ -265,18 +266,21 @@
             var url = `/scv/play/section/mn1/en/sujato/${iSection}/${iVoice}`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
-            should(res.body.segments.length).equal(98);
-            should(res.body.sutta_uid).equal('mn1');
-            should(res.body.voiceLang).equal('Amy');
-            should(res.body.voicePali).equal('Raveena');
-            should(res.body.section).equal(iSection);
-            should(res.body.maxSection).equal(10);
-            should(res.body.iVoice).equal(iVoice);
-            should(res.body.language).equal('en');
-            should(res.body.translator).equal('sujato');
-            should(res.body.segments[0].audio.en).match(/^82b006/);
-            should(res.body.segments[0].audio.pli).match(/^1783e/);
-            console.log(res.body.segments[0]);
+            var section = JSON.parse(res.body);
+            should(section.segments.length).equal(98);
+            should(section.sutta_uid).equal('mn1');
+            should(section.voiceLang).equal('Amy');
+            should(section.voicePali).equal('Raveena');
+            should(section.section).equal(iSection);
+            should(section.maxSection).equal(10);
+            should(section.iVoice).equal(iVoice);
+            should(section.language).equal('en');
+            should(section.translator).equal('sujato');
+            should(section.segments[0].audio.en).match(/^82b006/);
+            should(section.segments[0].audio.pli).match(/^1783e/);
+            var testPath = path.join(PUBLIC,
+                `play/section/mn1/en/sujato/${iSection}/${iVoice}`);
+            fs.writeFileSync(testPath, JSON.stringify(section, null,2));
             done();
         } catch(e) {done(e);} })();
     });
