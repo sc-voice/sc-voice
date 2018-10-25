@@ -1,0 +1,871 @@
+{
+  "sutta_uid": "mn1",
+  "language": "en",
+  "translator": "sujato",
+  "section": 2,
+  "maxSection": 10,
+  "iVoice": 0,
+  "segments": [
+    {
+      "scid": "mn1:3.1",
+      "pli": "“Idha, bhikkhave, assutavā puthujjano ariyānaṃ adassāvī ariyadhammassa akovido ariyadhamme avinīto, sappurisānaṃ adassāvī sappurisadhammassa akovido sappurisadhamme avinīto—",
+      "en": "“Take an uneducated ordinary person who has not seen the noble ones, and is neither skilled nor trained in the teaching of the noble ones. They’ve not seen good persons, and are neither skilled nor trained in the teaching of the good persons.",
+      "audio": {
+        "en": "82b006754a1432c6d01b2ac0bbf66166",
+        "pli": "1783e7f7b63887a543b5d7482f5902b6"
+      }
+    },
+    {
+      "scid": "mn1:3.2",
+      "pli": "pathaviṃ pathavito sañjānāti;",
+      "en": "They perceive earth as earth.",
+      "audio": {
+        "en": "2b56b01c7be6ee1e86e35b111f1daa16",
+        "pli": "8df1b6ded2a79c42a54be99e21c08d20"
+      }
+    },
+    {
+      "scid": "mn1:3.3",
+      "pli": "pathaviṃ pathavito saññatvā pathaviṃ maññati, pathaviyā maññati, pathavito maññati, pathaviṃ meti maññati, pathaviṃ abhinandati.",
+      "en": "But then they conceive earth, they conceive regarding earth, they conceive as earth, they conceive that ‘earth is mine’, they take pleasure in earth.",
+      "audio": {
+        "en": "b346f5ec2e9880f248868f3a42f193d0",
+        "pli": "ad3523e9ec388870a4e3897e45c8475a"
+      }
+    },
+    {
+      "scid": "mn1:3.4",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:3.5",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (1)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "f7439750aa58fec8a64ef4c2e9e42cca"
+      }
+    },
+    {
+      "scid": "mn1:4.1",
+      "pli": "Āpaṃ āpato sañjānāti;",
+      "en": "They perceive water as water.",
+      "audio": {
+        "en": "beff74d7ce1afb6d5c4c410b9db58357",
+        "pli": "f3b3cce490c223a081ddf07c982dc7e8"
+      }
+    },
+    {
+      "scid": "mn1:4.2.1",
+      "en": "But then they conceive water, they conceive regarding water, they conceive as water, they conceive that ‘water is mine’, they take pleasure in water.",
+      "expanded": true,
+      "audio": {
+        "en": "61aefce899a8f5c67e89f8b09e6afa2d"
+      }
+    },
+    {
+      "scid": "mn1:4.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:4.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (2)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "05493330115af5fdf98bdfcede5464ef"
+      }
+    },
+    {
+      "scid": "mn1:5.1",
+      "pli": "Tejaṃ tejato sañjānāti;",
+      "en": "They perceive fire as fire.",
+      "audio": {
+        "en": "ffbce2bde339c187f9271de860317b55",
+        "pli": "3b0aeb5da2b2bf621490443d166dec17"
+      }
+    },
+    {
+      "scid": "mn1:5.2.1",
+      "en": "But then they conceive fire, they conceive regarding fire, they conceive as fire, they conceive that ‘fire is mine’, they take pleasure in fire.",
+      "expanded": true,
+      "audio": {
+        "en": "a8336ede2fac2f88acabdf5236313dc1"
+      }
+    },
+    {
+      "scid": "mn1:5.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:5.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (3)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "cc44601928448b8b9fd71473103a6e8a"
+      }
+    },
+    {
+      "scid": "mn1:6.1",
+      "pli": "Vāyaṃ vāyato sañjānāti;",
+      "en": "They perceive air as air.",
+      "audio": {
+        "en": "cfb14b613c792b0fbbfeec5cc7925dc4",
+        "pli": "d35ac384142dbb585e9adffe98daa366"
+      }
+    },
+    {
+      "scid": "mn1:6.2.1",
+      "en": "But then they conceive air, they conceive regarding air, they conceive as air, they conceive that ‘air is mine’, they take pleasure in air.",
+      "expanded": true,
+      "audio": {
+        "en": "a451b962f0de5a3c860c43c5ec70f3f3"
+      }
+    },
+    {
+      "scid": "mn1:6.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:6.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (4)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "a7f7bb20d7a484b7aa6cf0f58fbe398e"
+      }
+    },
+    {
+      "scid": "mn1:7.1",
+      "pli": "Bhūte bhūtato sañjānāti;",
+      "en": "They perceive creatures as creatures.",
+      "audio": {
+        "en": "21d6f5f90aac8b7e04e094623d5a3a59",
+        "pli": "b46c7d7a7f4ce6efaefd2b78bba05d6f"
+      }
+    },
+    {
+      "scid": "mn1:7.2.1",
+      "en": "But then they conceive creatures, they conceive regarding creatures, they conceive as creatures, they conceive that ‘creatures is mine’, they take pleasure in creatures.",
+      "expanded": true,
+      "audio": {
+        "en": "3efdb4683cbcd2e1545e07b55aa68bd7"
+      }
+    },
+    {
+      "scid": "mn1:7.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:7.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (5)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "8722acb35624e8e32f3ad68fdc773180"
+      }
+    },
+    {
+      "scid": "mn1:8.1",
+      "pli": "Deve devato sañjānāti;",
+      "en": "They perceive gods as gods.",
+      "audio": {
+        "en": "e6f442d459d9d9b270218eddb868a7e9",
+        "pli": "eba0bd85abd70e1bcf0c113cf3563644"
+      }
+    },
+    {
+      "scid": "mn1:8.2.1",
+      "en": "But then they conceive gods, they conceive regarding gods, they conceive as gods, they conceive that ‘gods is mine’, they take pleasure in gods.",
+      "expanded": true,
+      "audio": {
+        "en": "47c086d490b044f46fd4284437d8e460"
+      }
+    },
+    {
+      "scid": "mn1:8.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:8.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (6)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "f3aac656a24cb0996ff100cb4da0adc6"
+      }
+    },
+    {
+      "scid": "mn1:9.1",
+      "pli": "Pajāpatiṃ pajāpatito sañjānāti;",
+      "en": "They perceive the Creator as the Creator.",
+      "audio": {
+        "en": "e0472f179abfb4d30bae64d90d528246",
+        "pli": "090fba9f3d6c50992e504159c06afe02"
+      }
+    },
+    {
+      "scid": "mn1:9.2.1",
+      "en": "But then they conceive the Creator, they conceive regarding the Creator, they conceive as the Creator, they conceive that ‘the Creator is mine’, they take pleasure in the Creator.",
+      "expanded": true,
+      "audio": {
+        "en": "1eeb8d1201f4429faf598218c8030ef9"
+      }
+    },
+    {
+      "scid": "mn1:9.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:9.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (7)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "cee8071593da9be60f288e6370f64ac3"
+      }
+    },
+    {
+      "scid": "mn1:10.1",
+      "pli": "Brahmaṃ brahmato sañjānāti;",
+      "en": "They perceive Brahmā as Brahmā.",
+      "audio": {
+        "en": "0586b6de06d8916c5205b501854e559c",
+        "pli": "3bb321b66398428475f1c3da2aafca04"
+      }
+    },
+    {
+      "scid": "mn1:10.2.1",
+      "en": "But then they conceive Brahmā, they conceive regarding Brahmā, they conceive as Brahmā, they conceive that ‘Brahmā is mine’, they take pleasure in Brahmā.",
+      "expanded": true,
+      "audio": {
+        "en": "1f63d4669b98079c8f21ba08e5f268b4"
+      }
+    },
+    {
+      "scid": "mn1:10.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:10.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (8)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "b9cf132a6255d24f7407a46bd33e022e"
+      }
+    },
+    {
+      "scid": "mn1:11.1",
+      "pli": "Ābhassare ābhassarato sañjānāti;",
+      "en": "They perceive the gods of streaming radiance as the gods of streaming radiance.",
+      "audio": {
+        "en": "54676e74605c6310613744146464bf85",
+        "pli": "de2866d5e050a559e9101e537e9bad1e"
+      }
+    },
+    {
+      "scid": "mn1:11.2.1",
+      "en": "But then they conceive the gods of streaming radiance, they conceive regarding the gods of streaming radiance, they conceive as the gods of streaming radiance, they conceive that ‘the gods of streaming radiance is mine’, they take pleasure in the gods of streaming radiance.",
+      "expanded": true,
+      "audio": {
+        "en": "cea2e8422db8dd14d66362ddcc97d6e0"
+      }
+    },
+    {
+      "scid": "mn1:11.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:11.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (9)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "698b42d70f1645a45d74e8a5f14ef7d6"
+      }
+    },
+    {
+      "scid": "mn1:12.1",
+      "pli": "Subhakiṇhe subhakiṇhato sañjānāti;",
+      "en": "They perceive the gods replete with glory as the gods replete with glory.",
+      "audio": {
+        "en": "1c176468bd243310f38d96e171cf6ef6",
+        "pli": "7f78756911e8612719fc4add0bd84a51"
+      }
+    },
+    {
+      "scid": "mn1:12.2.1",
+      "en": "But then they conceive the gods replete with glory, they conceive regarding the gods replete with glory, they conceive as the gods replete with glory, they conceive that ‘the gods replete with glory is mine’, they take pleasure in the gods replete with glory.",
+      "expanded": true,
+      "audio": {
+        "en": "ab8bd59ed0291be2674530be976e2841"
+      }
+    },
+    {
+      "scid": "mn1:12.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:12.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (10)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "822408b164a483c97b4aa1c20208895c"
+      }
+    },
+    {
+      "scid": "mn1:13.1",
+      "pli": "Vehapphale vehapphalato sañjānāti;",
+      "en": "They perceive the gods of abundant fruit as the gods of abundant fruit.",
+      "audio": {
+        "en": "88f8093896f5bed2e28389eedbe466d5",
+        "pli": "37f943cf059fdfc1fa3bf312f8b6803f"
+      }
+    },
+    {
+      "scid": "mn1:13.2.1",
+      "en": "But then they conceive the gods of abundant fruit, they conceive regarding the gods of abundant fruit, they conceive as the gods of abundant fruit, they conceive that ‘the gods of abundant fruit is mine’, they take pleasure in the gods of abundant fruit.",
+      "expanded": true,
+      "audio": {
+        "en": "1dbac30e7d150801053eb39c2b4341cd"
+      }
+    },
+    {
+      "scid": "mn1:13.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:13.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (11)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "ff2b8ff0d38abd2991c38fe3db8430dd"
+      }
+    },
+    {
+      "scid": "mn1:14.1",
+      "pli": "Abhibhuṃ abhibhuto sañjānāti;",
+      "en": "They perceive the Overlord as the Overlord.",
+      "audio": {
+        "en": "bcb5c73460c969508656216639d9b2f1",
+        "pli": "69dc7c327c76b48bb1bd7a1045f8d12c"
+      }
+    },
+    {
+      "scid": "mn1:14.2.1",
+      "en": "But then they conceive the Overlord, they conceive regarding the Overlord, they conceive as the Overlord, they conceive that ‘the Overlord is mine’, they take pleasure in the Overlord.",
+      "expanded": true,
+      "audio": {
+        "en": "d6a19b386b09fb924888b5d20c8818b9"
+      }
+    },
+    {
+      "scid": "mn1:14.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:14.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (12)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "d7694afd8183bb1c3e78ec888b9cc56f"
+      }
+    },
+    {
+      "scid": "mn1:15.1",
+      "pli": "Ākāsānañcāyatanaṃ ākāsānañcāyatanato sañjānāti;",
+      "en": "They perceive the dimension of infinite space as the dimension of infinite space.",
+      "audio": {
+        "en": "b6d1e10d143e6354cfde14de3f58cb55",
+        "pli": "f3768f976ca18cfbf9be020611661362"
+      }
+    },
+    {
+      "scid": "mn1:15.2.1",
+      "en": "But then they conceive the dimension of infinite space, they conceive regarding the dimension of infinite space, they conceive as the dimension of infinite space, they conceive that ‘the dimension of infinite space is mine’, they take pleasure in the dimension of infinite space.",
+      "expanded": true,
+      "audio": {
+        "en": "3179b6b319d2bc897158ca4b98551a3a"
+      }
+    },
+    {
+      "scid": "mn1:15.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:15.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (13)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "bb7d087fcc04538cc8514a0c632dba5d"
+      }
+    },
+    {
+      "scid": "mn1:16.1",
+      "pli": "Viññāṇañcāyatanaṃ viññāṇañcāyatanato sañjānāti;",
+      "en": "They perceive the dimension of infinite consciousness as the dimension of infinite consciousness.",
+      "audio": {
+        "en": "e0778b97dc0f5bfda74e78adbdd49530",
+        "pli": "b26a25cbf6c8f1daf0875f93879d96df"
+      }
+    },
+    {
+      "scid": "mn1:16.2.1",
+      "en": "But then they conceive the dimension of infinite consciousness, they conceive regarding the dimension of infinite consciousness, they conceive as the dimension of infinite consciousness, they conceive that ‘the dimension of infinite consciousness is mine’, they take pleasure in the dimension of infinite consciousness.",
+      "expanded": true,
+      "audio": {
+        "en": "698b5d3f90fd231ce995b9ce1510ba12"
+      }
+    },
+    {
+      "scid": "mn1:16.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:16.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (14)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "84f785322e5f9236d3a14393f0bc4bad"
+      }
+    },
+    {
+      "scid": "mn1:17.1",
+      "pli": "Ākiñcaññāyatanaṃ ākiñcaññāyatanato sañjānāti;",
+      "en": "They perceive the dimension of nothingness as the dimension of nothingness.",
+      "audio": {
+        "en": "4499dea461576443b984517b9639de8d",
+        "pli": "5f2555377b840d0400c401bb462ce795"
+      }
+    },
+    {
+      "scid": "mn1:17.2.1",
+      "en": "But then they conceive the dimension of nothingness, they conceive regarding the dimension of nothingness, they conceive as the dimension of nothingness, they conceive that ‘the dimension of nothingness is mine’, they take pleasure in the dimension of nothingness.",
+      "expanded": true,
+      "audio": {
+        "en": "e3addf74e9b6cc122e294392b6048f9c"
+      }
+    },
+    {
+      "scid": "mn1:17.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:17.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (15)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "be2dda676f26623edb4c4104c09ef8d9"
+      }
+    },
+    {
+      "scid": "mn1:18.1",
+      "pli": "Nevasaññānāsaññāyatanaṃ nevasaññānāsaññāyatanato sañjānāti;",
+      "en": "They perceive the dimension of neither perception nor non-perception as the dimension of neither perception nor non-perception.",
+      "audio": {
+        "en": "6d63a57e8b1bfe2ab4a2ff66e93982b2",
+        "pli": "263e06218ec7d716b83591e3295cafae"
+      }
+    },
+    {
+      "scid": "mn1:18.2.1",
+      "en": "But then they conceive the dimension of neither perception nor non-perception, they conceive regarding the dimension of neither perception nor non-perception, they conceive as the dimension of neither perception nor non-perception, they conceive that ‘the dimension of neither perception nor non-perception is mine’, they take pleasure in the dimension of neither perception nor non-perception.",
+      "expanded": true,
+      "audio": {
+        "en": "f8df9d3162d764d2c020d2de8b2f0f9f"
+      }
+    },
+    {
+      "scid": "mn1:18.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:18.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (16)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "a48d6a38036d23ec770ccaefc8e7cb87"
+      }
+    },
+    {
+      "scid": "mn1:19.1",
+      "pli": "Diṭṭhaṃ diṭṭhato sañjānāti;",
+      "en": "They perceive the seen as the seen.",
+      "audio": {
+        "en": "c26ddb76472f0eb3d781dfeafd7f1bd9",
+        "pli": "7de5cf005aeb439243966dc7e809b81d"
+      }
+    },
+    {
+      "scid": "mn1:19.2.1",
+      "en": "But then they conceive the seen, they conceive regarding the seen, they conceive as the seen, they conceive that ‘the seen is mine’, they take pleasure in the seen.",
+      "expanded": true,
+      "audio": {
+        "en": "c5e358fc36a62ecb855a92b1ed21a3e3"
+      }
+    },
+    {
+      "scid": "mn1:19.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:19.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (17)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "51710891e603a4583e50ab1724ef5889"
+      }
+    },
+    {
+      "scid": "mn1:20.1",
+      "pli": "Sutaṃ sutato sañjānāti;",
+      "en": "They perceive the heard as the heard.",
+      "audio": {
+        "en": "920a91e2902c7de66ecda24937dbea46",
+        "pli": "c4c2ec17bb3900b6c7211d9fb2a20c2c"
+      }
+    },
+    {
+      "scid": "mn1:20.2.1",
+      "en": "But then they conceive the heard, they conceive regarding the heard, they conceive as the heard, they conceive that ‘the heard is mine’, they take pleasure in the heard.",
+      "expanded": true,
+      "audio": {
+        "en": "a509716b5ff635283c750b96ce90d6e4"
+      }
+    },
+    {
+      "scid": "mn1:20.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:20.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (18)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "b9cf2aa41a5fa06739922e972ba4fa71"
+      }
+    },
+    {
+      "scid": "mn1:21.1",
+      "pli": "Mutaṃ mutato sañjānāti;",
+      "en": "They perceive the thought as the thought.",
+      "audio": {
+        "en": "0e938438ae97e13d49dbafe5f6838fd0",
+        "pli": "667fef49ee459013ada971b5bd9a44be"
+      }
+    },
+    {
+      "scid": "mn1:21.2.1",
+      "en": "But then they conceive the thought, they conceive regarding the thought, they conceive as the thought, they conceive that ‘the thought is mine’, they take pleasure in the thought.",
+      "expanded": true,
+      "audio": {
+        "en": "1703ce88f37f4c7a706ead9a69b7026e"
+      }
+    },
+    {
+      "scid": "mn1:21.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:21.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (19)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "808f26e1ed524fff329ab2fc964cea9c"
+      }
+    },
+    {
+      "scid": "mn1:22.1",
+      "pli": "Viññātaṃ viññātato sañjānāti;",
+      "en": "They perceive the cognized as the cognized.",
+      "audio": {
+        "en": "b6e3884bea37bcf3d732e06db9aff510",
+        "pli": "4aa496f0651f331a7c3372109306773d"
+      }
+    },
+    {
+      "scid": "mn1:22.2.1",
+      "en": "But then they conceive the cognized, they conceive regarding the cognized, they conceive as the cognized, they conceive that ‘the cognized is mine’, they take pleasure in the cognized.",
+      "expanded": true,
+      "audio": {
+        "en": "b680a49d1550fa4d73b1b2f2102ddabb"
+      }
+    },
+    {
+      "scid": "mn1:22.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:22.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (20)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "c58c48055863d98c453ed03c819195ce"
+      }
+    },
+    {
+      "scid": "mn1:23.1",
+      "pli": "Ekattaṃ ekattato sañjānāti;",
+      "en": "They perceive oneness as oneness.",
+      "audio": {
+        "en": "8c527257425e531410c2720feaff7fbb",
+        "pli": "b204fda92ddc245fbae8e15b190a0ee9"
+      }
+    },
+    {
+      "scid": "mn1:23.2.1",
+      "en": "But then they conceive oneness, they conceive regarding oneness, they conceive as oneness, they conceive that ‘oneness is mine’, they take pleasure in oneness.",
+      "expanded": true,
+      "audio": {
+        "en": "925f065b0b622861aee4f7c472a089bd"
+      }
+    },
+    {
+      "scid": "mn1:23.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:23.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (21)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "17874dd1a012ffc8f7c5d134e38784b5"
+      }
+    },
+    {
+      "scid": "mn1:24.1",
+      "pli": "Nānattaṃ nānattato sañjānāti;",
+      "en": "They perceive diversity as diversity.",
+      "audio": {
+        "en": "0b5762d82009a6e982d36c4c623ee47c",
+        "pli": "baab5fee6524b7c6f7b79047f5989eac"
+      }
+    },
+    {
+      "scid": "mn1:24.2.1",
+      "en": "But then they conceive diversity, they conceive regarding diversity, they conceive as diversity, they conceive that ‘diversity is mine’, they take pleasure in diversity.",
+      "expanded": true,
+      "audio": {
+        "en": "6fc9778b7f1a3e56cb47e94cee1c791f"
+      }
+    },
+    {
+      "scid": "mn1:24.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:24.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (22)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "26a622d1681d9402d5ec6357deb3dc63"
+      }
+    },
+    {
+      "scid": "mn1:25.1",
+      "pli": "Sabbaṃ sabbato sañjānāti;",
+      "en": "They perceive all as all.",
+      "audio": {
+        "en": "67f8f982125bcd67b21738f9db064551",
+        "pli": "6c77bd0ef720561a806b95cba068daad"
+      }
+    },
+    {
+      "scid": "mn1:25.2.1",
+      "en": "But then they conceive all, they conceive regarding all, they conceive as all, they conceive that ‘all is mine’, they take pleasure in all.",
+      "expanded": true,
+      "audio": {
+        "en": "82f5484ffbdda11eefc40fe748df0eeb"
+      }
+    },
+    {
+      "scid": "mn1:25.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:25.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (23)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "c47abebae2cdc468459b5f9de3771370"
+      }
+    },
+    {
+      "scid": "mn1:26.1",
+      "pli": "Nibbānaṃ nibbānato sañjānāti;",
+      "en": "They perceive extinguishment as extinguishment.",
+      "audio": {
+        "en": "357f093f095f8697c6fa1d821ea5fbf0",
+        "pli": "acbddfe303085b6000d6c4183d9c3b55"
+      }
+    },
+    {
+      "scid": "mn1:26.2",
+      "pli": "nibbānaṃ nibbānato saññatvā nibbānaṃ maññati, nibbānasmiṃ maññati, nibbānato maññati, nibbānaṃ meti maññati, nibbānaṃ abhinandati.",
+      "en": "But then they conceive extinguishment, they conceive regarding extinguishment, they conceive as extinguishment, they conceive that ‘extinguishment is mine’, they take pleasure in extinguishment.",
+      "audio": {
+        "en": "269a8dc9a123039c39e33a1a8ec16fe9",
+        "pli": "b352986bd5972f782d440be32035e2c1"
+      }
+    },
+    {
+      "scid": "mn1:26.3",
+      "pli": "Taṃ kissa hetu?",
+      "en": "Why is that?",
+      "audio": {
+        "en": "fd6d01dcf925247d9f655b83520e9851",
+        "pli": "92dc13dd36779d157c2a9be057718ba1"
+      }
+    },
+    {
+      "scid": "mn1:26.4",
+      "pli": "‘Apariññātaṃ tassā’ti vadāmi. (24)",
+      "en": "Because they haven’t completely understood it, I say.",
+      "audio": {
+        "en": "6d1211439554b19566bafd0e2c9a2356",
+        "pli": "c8b2cb5b560ea7cbb5ca290bac5d369c"
+      }
+    },
+    {
+      "scid": "mn1:26.5",
+      "pli": "Puthujjanavasena paṭhamanayabhūmiparicchedo niṭṭhito.",
+      "en": "",
+      "audio": {
+        "pli": "497cf76b368768f7357d524b48a62924"
+      }
+    }
+  ],
+  "voiceLang": "Amy",
+  "voicePali": "Raveena"
+}
