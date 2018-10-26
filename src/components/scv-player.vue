@@ -2,43 +2,52 @@
     <v-dialog persistent v-model="visible"
         max-width="35em" dark class="scv-player-section">
         <v-card>
-            <v-card-text v-if="section" >
+            <v-card-text >
                 <div class="subheading pl-2 pb-2">{{title}}</div>
                 <div class="scv-player-nav">
                     <button class="scv-text-button"
-                        :disabled="!section"
+                        :disabled="loading"
                         :style='cssProps({"width":"6em"})'
                         >Previous</button>
                     <div v-if="segment">
                         {{iSection}}/{{section.maxSection}} 
                     </div>
                     <button class="scv-text-button"
-                        :disabled="!section"
+                        :disabled="loading"
                         :style='cssProps({"width":"6em"})'
                         >Next</button>
                 </div>
-                <div class="body-2 mt-1 text-xs-center"> {{section.title}} </div>
+                <div v-if="section" class="body-2 mt-1 text-xs-center"> 
+                    {{section.title}} 
+                </div>
                 <v-slider thumb-label v-model="iSegment"
                     ref="refSlider"
+                    :disabled="loading || !paused"
                     always-dirty
                     class="pl-4 pr-4"
                     height="16"
-                    :max="section.segments.length-1"
+                    :max="section && section.segments.length-1"
                 />
                 <div class="scv-player-text scv-player-text-top">
-                    {{segment.pli}}
+                    <div v-if="segment">{{segment.pli}}</div>
                 </div>
                 <div class="scv-player-text">
-                    {{segment.en}}
+                    <div v-if="segment">{{segment[language]}}</div>
+                    <div v-else>Loading section {{iSection}}...</div>
                 </div>
             </v-card-text>
-            <v-card-text v-else>
-                Loading section {{iSection}}...
-            </v-card-text>
-            <v-card-actions class="pl-4 pr-4" >
-                <div>
+            <v-card-actions class="ml-3 mr-3 pb-3">
+                <div style="width:6em">
                     {{segment && segment.scid.split(':')[1]}}
                 </div>
+                <v-spacer/>
+                <v-btn icon @click="playAudio()" 
+                    class="scv-icon-btn" :style="cssProps()"
+                    aria-label="Play">
+                    <v-icon v-if="loading">hourglass_empty</v-icon>
+                    <v-icon v-if="!loading && paused">play_arrow</v-icon>
+                    <v-icon v-if="!loading && !paused">pause</v-icon>
+                </v-btn>
                 <v-spacer/>
                 <button class="scv-text-button"
                     :style='cssProps({"width":"6em"})'
@@ -46,6 +55,14 @@
                     Close
                 </button>
             </v-card-actions>
+            <audio ref="refAudioPali">
+                <source type="audio/mp3" :src="audioSrc('pli')"/>
+                <p>Your browser doesn't support HTML5 audio</p>
+            </audio>
+            <audio ref="refAudioLang">
+                <source type="audio/mp3" :src="audioSrc(language)"/>
+                <p>Your browser doesn't support HTML5 audio</p>
+            </audio>
             <audio ref="refProgressAudio">
                 <source type="audio/mp3" :src="progressSrc()"/>
                 <p>Your browser doesn't support HTML5 audio</p>
@@ -78,6 +95,8 @@ export default {
             iSection: 0,
             visible: false,
             progressTimer: null,
+            paused: true,
+            loadingAudio: 0,
         };
     },
     methods: {
@@ -132,6 +151,62 @@ export default {
                 '--success-color': this.$vuetify.theme.success,
             }, opts);
         },
+        endLang() {
+            console.log(`endLang()`);
+            this.paused = true;
+            if (this.iSegment < this.section.segments.length-1) {
+                Vue.set(this, "iSegment", this.iSegment+1);
+                console.log(`incrementing segment: ${this.iSegment}`);
+                this.$nextTick(() => {
+                    this.playAudio();
+                });
+            }
+        },
+        endPali() {
+            var refLang = this.$refs.refAudioLang;
+            console.log(`endPali() refLang.play() ready:`, refLang.readyState);
+            refLang.play().then(() => {
+                console.log(`refLang playing started`);
+            }).catch(e => {
+                this.paused = true;
+                console.log(`refLang playing failed`, e.stack);
+            });
+        },
+        playAudio() {
+            var refPli = this.$refs.refAudioPali;
+            var refLang = this.$refs.refAudioLang;
+            if (!this.paused && !refPli.paused) {
+                this.paused = true;
+                console.log(`pause lang`);
+                refPli.pause();
+                return;
+            }
+            if (!this.paused && !refLang.paused) {
+                this.paused = true;
+                console.log(`pause pli`);
+                refLang.pause();
+                return;
+            }
+            this.loadingAudio = 1;
+            refPli.load();
+            refLang.load();
+            console.log(`refPli.play() ready:`, refPli.readyState);
+            refPli.play().then(() => {
+                this.paused = false;
+                this.loadingAudio = 0;
+                console.log(`refPli playing started`);
+            }).catch(e => {
+                this.paused = true;
+                this.loadingAudio = 0;
+                console.log(`refPli playing failed`, e);
+            });
+        },
+        audioSrc(lang) {
+            var segment = this.section && this.section.segments[this.iSegment];
+            var url = segment ? `./audio/${segment.audio[lang]}` : '';
+            console.log(`audioSrc`, url);
+            return url;
+        },
         progressSrc() {
             switch (Number(this.scvOpts.ips)) {
                 case 0: return "";
@@ -141,12 +216,23 @@ export default {
         },
     },
     computed: {
+        loading() {
+            return this.section == null ||
+                this.segment == null ||
+                !!this.loadingAudio;
+        },
         segment() {
             return this.section && this.section.segments[this.iSegment];
         },
         scvOpts() {
             return this.$root.$data;
         },
+    },
+    mounted() {
+        var refPli = this.$refs.refAudioPali;
+        var refLang = this.$refs.refAudioLang;
+        refPli.addEventListener("ended", this.endPali);
+        refLang.addEventListener("ended", this.endLang);
     },
 }
 </script>
@@ -177,6 +263,15 @@ export default {
     justify-content: space-between;
     margin-left: -0.5em;
     margin-right: 0.5em;
+    align-items: center;
+}
+.scv-player-actions {
+    display: flex;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    padding-bottom: 1em;
+    flex-flow: row nowrap;
+    justify-content: space-between;
     align-items: center;
 }
 </style>
