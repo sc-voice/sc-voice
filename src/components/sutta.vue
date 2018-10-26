@@ -114,8 +114,8 @@
                         <v-icon>{{audioIcon(`audiopli${i}`)}}</v-icon>
                     </v-btn>
                 </div>
-            </details>
-          </details>
+            </details><!-- search result i -->
+          </details><!-- searchresults -->
           <details v-if="sections && sections[0]" class="scv-header">
             <summary ref="refSutta" class="subheading scv-header-summary" >
                 {{sutta.title}}
@@ -193,13 +193,12 @@
                         </a>
                     </div>
                 </details>
-            </div>
+            </div> <!-- scv-blurb-more -->
           </details>
           <details class="scv-section-body" 
             v-for="(sect,i) in sections" :key="`sect${i}`" 
             v-if="i>0">
-            <summary class="subheading" >
-                Section 
+            <summary class="subheading" :aria-label="sectionAriaLabel(sect)">
                 <div v-if="scvOpts.showId" class='scv-scid'>
                     SC&nbsp;{{sect.segments[0].scid.split(":")[1]}}
                 </div> 
@@ -217,15 +216,15 @@
                     class="scv-text-button mt-4 mb-4" :style="cssProps">
                     Play Section {{i}} ({{voice.name}})
                 </button>
+                <button
+                    :disabled="waiting > 0"
+                    @click="playSectionNew(i)"
+                    class="scv-text-button"
+                    :style="cssProps"
+                    >
+                    Play Section {{i}} {{voice.name}}/Raveena
+                </button>
             </div>
-            <scv-player
-                :sutta_uid="sutta_uid"
-                :language="language"
-                :translator="translator"
-                :iSection="i"
-                :voice="voice"
-                :title="`${sutta.acronym} ${sutta.title}`"
-            />
             <div v-if="error[i]" class="scv-error" 
                 style="margin-left: 1.2em" >
               <div>
@@ -244,7 +243,17 @@
                 </div> 
                 {{seg.en}}
             </div>
-          </details>
+          </details> <!-- section i -->
+          <scv-player v-if="sutta.title"
+            :ref="`refScvPlayer`"
+            :sutta_uid="sutta_uid"
+            :language="language"
+            :translator="translator"
+            :voice="voice"
+            :title="`${sutta.title}`"
+          />
+          <!--
+          -->
       </v-layout>
   </v-container>
 </div>
@@ -379,6 +388,12 @@ export default {
             clearInterval(timer);
             Vue.set(this, "waiting", 0);
         },
+        playSectionNew(iSection) {
+            this.$nextTick(() => {
+                var player = this.$refs[`refScvPlayer`];
+                player.playSection(iSection);
+            });
+        },
         playSection(iSection) {
             console.debug("playSection", iSection);
             var language = this.language;
@@ -410,6 +425,7 @@ export default {
             }
         },
         showSutta(search) {
+            console.log(`search ${search}`);
             var tokens = search.toLowerCase().split('/');
             (tokens.length < 2) && tokens.push(this.scvOpts.lang);
             (tokens.length < 3) && tokens.push('sujato'); // TODO remove sujato
@@ -544,6 +560,16 @@ export default {
                 link += `/${this.sutta_uid}-${lang}-${trans}.mp3`;
             }
             return link;
+        },
+        sectionAriaLabel(sect) {
+            var label =  `Section `;
+            if (this.scvOpts.showId) {
+                label += 'segment ';
+                label += sect.segments[0].scid.split(':')[1];
+            }
+            label += `${sect.title}`;
+
+            return label;
         },
     },
     computed: {

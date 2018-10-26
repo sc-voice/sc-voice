@@ -46,11 +46,16 @@
                 </div>
             </details>
             <details class="scv-dialog" >
-                <summary class="subheading">Search settings</summary>
+                <summary class="subheading">Other settings</summary>
                 <div class="scv-settings">
                     <v-radio-group v-if="scvOpts" v-model="scvOpts.maxResults" column>
                        <v-radio v-for="(mr) in maxResultsChoices" 
                          :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
+                         </v-radio>
+                    </v-radio-group>
+                    <v-radio-group v-if="scvOpts" v-model="scvOpts.ips" column>
+                       <v-radio v-for="(ips) in ipsChoices" 
+                         :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
                          </v-radio>
                     </v-radio-group>
                 </div>
@@ -139,6 +144,18 @@ export default {
         scvOpts() {
             return this.$root && this.$root.$data;
         },
+        ipsChoices() {
+            return [{
+                label: "Progress without sound",
+                value: 0,
+            },{
+                label: "Progress with Rainforest Ambience Glory Sunz (Public Domain)",
+                value: 1,
+            },{
+                label: "Progress with Indian Bell by Flemur (Sampling Plus 1.0)",
+                value: 2,
+            }];
+        },
         maxResultsChoices() {
             return [{
                 label: "Return up to 3 search results",
@@ -174,6 +191,8 @@ export default {
                 Vue.set(this.scvOpts, "showId", query.showId==='true');
             var search = query.scid || query.search || '';
             query.search && Vue.set(this.scvOpts, "search", search);
+            query.ips != null &&
+                Vue.set(this.scvOpts, "ips", Number(query.ips||0));
         }
     },
     created() {

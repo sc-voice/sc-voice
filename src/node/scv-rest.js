@@ -284,6 +284,7 @@
                         sutta_uid,
                         language,
                         translator,
+                        title: section.title,
                         section:iSection,
                         maxSection: sutta.sections.length,
                         iVoice,

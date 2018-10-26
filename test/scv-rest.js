@@ -266,7 +266,7 @@
             var url = `/scv/play/section/mn1/en/sujato/${iSection}/${iVoice}`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
-            var section = JSON.parse(res.body);
+            var section = res.body;
             should(section.segments.length).equal(98);
             should(section.sutta_uid).equal('mn1');
             should(section.voiceLang).equal('Amy');
