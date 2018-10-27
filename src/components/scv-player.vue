@@ -6,19 +6,19 @@
                 <div class="subheading pl-2 pb-2">{{title}}</div>
                 <div class="scv-player-nav">
                     <button class="scv-text-button"
-                        :disabled="loading"
+                        @click="playSection(iSection-1)"
                         :style='cssProps({"width":"6em"})'
                         >Previous</button>
-                    <div v-if="segment">
-                        {{iSection}}/{{section.maxSection}} 
+                    <div >
+                        {{iSection}}/{{section && section.maxSection || "(n/a)"}} 
                     </div>
                     <button class="scv-text-button"
-                        :disabled="loading"
+                        @click="playSection(iSection+1)"
                         :style='cssProps({"width":"6em"})'
                         >Next</button>
                 </div>
-                <div v-if="section" class="body-2 mt-1 text-xs-center"> 
-                    {{section.title}} 
+                <div class="body-2 mt-1 text-xs-center"> 
+                    {{section && section.title || "(n/a)"}} 
                 </div>
                 <v-slider thumb-label v-model="iSegment"
                     ref="refSlider"
@@ -28,12 +28,11 @@
                     height="16"
                     :max="section && section.segments.length-1"
                 />
-                <div class="scv-player-text scv-player-text-top">
-                    <div v-if="segment">{{segment.pli}}</div>
+                <div :class="paliTextClass" :style="cssProps()">
+                    <div >{{segment && segment.pli || "Loading..."}}</div>
                 </div>
-                <div class="scv-player-text">
-                    <div v-if="segment">{{segment[language]}}</div>
-                    <div v-else>Loading section {{iSection}}...</div>
+                <div :class="langTextClass" :style="cssProps()">
+                    <div >{{segment && segment[language] || "Loading..."}}</div>
                 </div>
             </v-card-text>
             <v-card-actions class="ml-3 mr-3 pb-3">
@@ -42,8 +41,9 @@
                 </div>
                 <v-spacer/>
                 <v-btn icon @click="playAudio()" 
+                    ref="refPlay"
                     class="scv-icon-btn" :style="cssProps()"
-                    aria-label="Play">
+                    aria-label="Play Section">
                     <v-icon v-if="loading">hourglass_empty</v-icon>
                     <v-icon v-if="!loading && paused">play_arrow</v-icon>
                     <v-icon v-if="!loading && !paused">pause</v-icon>
@@ -97,10 +97,17 @@ export default {
             progressTimer: null,
             paused: true,
             loadingAudio: 0,
+            paliTextClass: "",
+            langTextClass: "",
         };
     },
     methods: {
         playSection(iSection) {
+            this.pauseAudio();
+            if (iSection < 0 || this.section && this.section.maxSection < iSection) {
+                console.log(`playSection(${iSection}) ignored`);
+                return;
+            }
             this.iSection = iSection;
             console.log(`ScvPlayer.playSection(${iSection})`);
             this.visible = true;
@@ -119,11 +126,14 @@ export default {
                 this.scvOpts.iVoice,
             ].join('/');
             var url = `./play/section/${sectionRef}`;
-            console.log(`play() url:${url}`);
+            //console.log(`play() url:${url}`);
             this.$http.get(url).then(res => {
                 this.stopProgress();
+                Vue.set(this, "section", res.data);
                 this.$nextTick(() => {
-                    Vue.set(this, "section", res.data);
+                    var playBtn = this.$refs.refPlay.$el;
+                    console.log('playBtn', playBtn);
+                    playBtn.focus();
                 });
             }).catch(e => {
                 this.stopProgress();
@@ -142,6 +152,7 @@ export default {
             }
         },
         close() {
+            this.pauseAudio();
             this.stopProgress();
             this.visible = false;
         },
@@ -152,59 +163,99 @@ export default {
             }, opts);
         },
         endLang() {
-            console.log(`endLang()`);
+            //console.log(`endLang()`);
+            this.setTextClass();
             this.paused = true;
             if (this.iSegment < this.section.segments.length-1) {
                 Vue.set(this, "iSegment", this.iSegment+1);
-                console.log(`incrementing segment: ${this.iSegment}`);
+                //console.log(`incrementing segment: ${this.iSegment}`);
                 this.$nextTick(() => {
                     this.playAudio();
                 });
             }
         },
         endPali() {
+            if (this.segment.audio[this.language]) {
+                var refLang = this.$refs.refAudioLang;
+                refLang.play().then(() => {
+                    this.setTextClass();
+                    this.loadingAudio = 0;
+                    //console.log(`endPali() refLang playing started`);
+                }).catch(e => {
+                    this.paused = true;
+                    this.loadingAudio = 0;
+                    //console.log(`endPali() refLang playing failed`, e.stack);
+                });
+            } else {
+                //console.log(`endPali() no translation to play`);
+            }
+        },
+        pauseAudio() {
+            var refPli = this.$refs.refAudioPali;
             var refLang = this.$refs.refAudioLang;
-            console.log(`endPali() refLang.play() ready:`, refLang.readyState);
-            refLang.play().then(() => {
-                console.log(`refLang playing started`);
-            }).catch(e => {
+            var result = true;
+            if (!this.paused && !refPli.paused) {
                 this.paused = true;
-                console.log(`refLang playing failed`, e.stack);
-            });
+                refPli.pause();
+            } else if (!this.paused && !refLang.paused) {
+                this.paused = true;
+                refLang.pause();
+            } else {
+                result = false;
+            }
+            this.setTextClass();
+            result && console.log("pauseAudio()");
+            return result;
         },
         playAudio() {
             var refPli = this.$refs.refAudioPali;
             var refLang = this.$refs.refAudioLang;
-            if (!this.paused && !refPli.paused) {
-                this.paused = true;
-                console.log(`pause lang`);
-                refPli.pause();
+            if (this.pauseAudio()) {
                 return;
             }
-            if (!this.paused && !refLang.paused) {
-                this.paused = true;
-                console.log(`pause pli`);
-                refLang.pause();
-                return;
+            this.loadingAudio = 0;
+            var segment = this.segment;
+            if (segment.audio.pli) {
+                refPli.load();
+                this.loadingAudio++;
             }
-            this.loadingAudio = 1;
-            refPli.load();
-            refLang.load();
-            console.log(`refPli.play() ready:`, refPli.readyState);
-            refPli.play().then(() => {
-                this.paused = false;
-                this.loadingAudio = 0;
-                console.log(`refPli playing started`);
-            }).catch(e => {
-                this.paused = true;
-                this.loadingAudio = 0;
-                console.log(`refPli playing failed`, e);
-            });
+            var lang = this.language;
+            if (segment.audio[lang]) {
+                refLang.load();
+                this.loadingAudio++;
+            }
+            //console.log(`refPli.play() ready:`, refPli.readyState);
+            if (segment.audio.pli) {
+                refPli.play().then(() => {
+                    this.setTextClass();
+                    this.paused = false;
+                    this.loadingAudio = 0;
+                    //console.log(`refPli playing started`);
+                }).catch(e => {
+                    this.paused = true;
+                    this.loadingAudio = 0;
+                    //console.log(`refPli playing failed`, e);
+                });
+            } else {
+                this.endPali();
+            }
+        },
+        setTextClass() {
+            var refPli = this.$refs.refAudioPali;
+            this.paliTextClass = refPli == null || refPli.paused 
+                ? "scv-player-text scv-player-text-top"
+                : "scv-player-text scv-player-text-playing scv-player-text-top";
+            //console.log(`paliTextClass ${this.paliTextClass}`);
+            var refLang = this.$refs.refAudioLang;
+            this.langTextClass = refLang == null || refLang.paused 
+                ? "scv-player-text"
+                : "scv-player-text scv-player-text-playing";
+            //console.log(`langTextClass ${this.langTextClass}`);
         },
         audioSrc(lang) {
             var segment = this.section && this.section.segments[this.iSegment];
             var url = segment ? `./audio/${segment.audio[lang]}` : '';
-            console.log(`audioSrc`, url);
+            //console.log(`audioSrc`, url);
             return url;
         },
         progressSrc() {
@@ -229,10 +280,13 @@ export default {
         },
     },
     mounted() {
-        var refPli = this.$refs.refAudioPali;
-        var refLang = this.$refs.refAudioLang;
-        refPli.addEventListener("ended", this.endPali);
-        refLang.addEventListener("ended", this.endLang);
+        this.setTextClass();
+        this.$nextTick(() => {
+            var refPli = this.$refs.refAudioPali;
+            var refLang = this.$refs.refAudioLang;
+            refPli.addEventListener("ended", this.endPali);
+            refLang.addEventListener("ended", this.endLang);
+        });
     },
 }
 </script>
@@ -250,6 +304,9 @@ export default {
     margin-left: 0.6em;
     margin-right: 0.6em;
     min-height: 10em;
+}
+.scv-player-text-playing {
+    color: var(--accent-color);
 }
 .scv-player-text-top {
     display: flex;

@@ -129,6 +129,15 @@
             </div>
             <div class="scv-blurb"><span v-html="metaarea"></span></div>
             <div class="scv-play-controls">
+                <button
+                    :disabled="waiting > 0"
+                    @click="playSectionNew(0)"
+                    class="scv-text-button"
+                    :style="cssProps"
+                    >
+                    Play Introduction ({{voice.name}})
+                </button>
+            <!--
                 <audio v-if="suttaAudioGuid" autoplay controls class="ml-4 mt-1" 
                     style="display:block"
                     preload=auto
@@ -142,6 +151,7 @@
                     class="scv-text-button" :style="cssProps">
                     Play Sutta ({{voice.name}})
                 </button>
+            -->
             </div>
             <div class="scv-blurb-more">
                 <details>
@@ -205,6 +215,7 @@
                 <i>{{sect.title}}</i>
             </summary>
             <div class="scv-play-controls">
+                <!--
                 <audio v-if="sectionAudioGuids[i]" autoplay controls class="ml-4 mt-1" 
                     preload=auto
                     :aria-label="`play section ${i}`">
@@ -216,13 +227,14 @@
                     class="scv-text-button mt-4 mb-4" :style="cssProps">
                     Play Section {{i}} ({{voice.name}})
                 </button>
+                -->
                 <button
                     :disabled="waiting > 0"
                     @click="playSectionNew(i)"
                     class="scv-text-button"
                     :style="cssProps"
                     >
-                    Play Section {{i}} {{voice.name}}/Raveena
+                    Play Section {{i}} ({{voice.name}})
                 </button>
             </div>
             <div v-if="error[i]" class="scv-error" 
