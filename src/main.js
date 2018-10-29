@@ -33,7 +33,7 @@ const scvState = {
     scid: null,
     search: null,
     maxResults: 5,
-    ips: 1,
+    ips: 3,
     lang: 'en',
 };
 Object.defineProperty(scvState, 'hash', {

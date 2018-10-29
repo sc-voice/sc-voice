@@ -154,6 +154,9 @@ export default {
             },{
                 label: "Progress with Indian Bell by Flemur (Sampling Plus 1.0)",
                 value: 2,
+            },{
+                label: "Progress with Tibetan Singing Bowl by Horst (CC0)",
+                value: 3,
             }];
         },
         maxResultsChoices() {

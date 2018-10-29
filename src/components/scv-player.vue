@@ -6,13 +6,16 @@
                 <div class="subheading pl-2 pb-2">{{title}}</div>
                 <div class="scv-player-nav">
                     <button class="scv-text-button"
+                        ref="refPrevious"
                         @click="playSection(iSection-1)"
+                        @keydown.prevent="keydownPrevious($event)"
                         :style='cssProps({"width":"6em"})'
                         >Previous</button>
                     <div >
                         {{iSection}}/{{section && section.maxSection || "(n/a)"}} 
                     </div>
                     <button class="scv-text-button"
+                        ref="refNext"
                         @click="playSection(iSection+1)"
                         :style='cssProps({"width":"6em"})'
                         >Next</button>
@@ -25,19 +28,21 @@
                     :disabled="loading || !paused"
                     always-dirty
                     class="pl-4 pr-4"
+                    :label="`${iSegment}/${section && section.segments.length || '--'}`"
+                    inverse-label
                     height="16"
                     :max="section && section.segments.length-1"
                 />
                 <div :class="paliTextClass" :style="cssProps()">
-                    <div >{{segment && segment.pli || "Loading..."}}</div>
+                    <div >{{paliText}}</div>
                 </div>
                 <div :class="langTextClass" :style="cssProps()">
-                    <div >{{segment && segment[language] || "Loading..."}}</div>
+                    <div >{{langText}}</div>
                 </div>
             </v-card-text>
             <v-card-actions class="ml-3 mr-3 pb-3">
                 <div style="width:6em">
-                    {{segment && segment.scid.split(':')[1]}}
+                    {{segment && segment.scid}}
                 </div>
                 <v-spacer/>
                 <v-btn icon @click="playAudio()" 
@@ -50,7 +55,9 @@
                 </v-btn>
                 <v-spacer/>
                 <button class="scv-text-button"
+                    ref="refClose"
                     :style='cssProps({"width":"6em"})'
+                    @keydown.prevent="keydownClose($event)"
                     @click="close()">
                     Close
                 </button>
@@ -108,7 +115,8 @@ export default {
                 console.log(`playSection(${iSection}) ignored`);
                 return;
             }
-            this.iSection = iSection;
+            Vue.set(this, "iSection", iSection);
+            Vue.set(this, "iSegment", 0);
             console.log(`ScvPlayer.playSection(${iSection})`);
             this.visible = true;
             this.section = null;
@@ -168,7 +176,7 @@ export default {
             this.paused = true;
             if (this.iSegment < this.section.segments.length-1) {
                 Vue.set(this, "iSegment", this.iSegment+1);
-                //console.log(`incrementing segment: ${this.iSegment}`);
+                console.log(`incrementing segment: ${this.iSegment}`);
                 this.$nextTick(() => {
                     this.playAudio();
                 });
@@ -184,10 +192,10 @@ export default {
                 }).catch(e => {
                     this.paused = true;
                     this.loadingAudio = 0;
-                    //console.log(`endPali() refLang playing failed`, e.stack);
+                    console.log(`endPali() refLang playing failed`, e.stack);
                 });
             } else {
-                //console.log(`endPali() no translation to play`);
+                this.endLang();
             }
         },
         pauseAudio() {
@@ -234,7 +242,7 @@ export default {
                 }).catch(e => {
                     this.paused = true;
                     this.loadingAudio = 0;
-                    //console.log(`refPli playing failed`, e);
+                    console.log(`refPli playing failed`, e);
                 });
             } else {
                 this.endPali();
@@ -262,7 +270,30 @@ export default {
             switch (Number(this.scvOpts.ips)) {
                 case 0: return "";
                 case 1: return "./audio/rainforest-ambience-glory-sunz-public-domain.mp3";
-                default: return "./audio/indian-bell-flemur-sampling-plus-1.0.mp3";
+                case 2: return "./audio/indian-bell-flemur-sampling-plus-1.0.mp3";
+                default: return "./audio/tibetan-singing-bowl-horst-cc0.mp3";
+            }
+        },
+        keydownPrevious(evt) {
+            if (evt.key === 'Tab') {
+                var elt = evt.shiftKey 
+                    ? this.$refs.refClose
+                    : this.$refs.refNext;
+                elt && elt.focus();
+            } else if (evt.key === ' ') {
+                if (this.iSection > 0) {
+                    this.playSection(this.iSection - 1);
+                }
+            }
+        },
+        keydownClose(evt) {
+            if (evt.key === 'Tab') {
+                var elt = evt.shiftKey 
+                    ? this.$refs.refPlay.$el
+                    : this.$refs.refPrevious;
+                elt && elt.focus();
+            } else if (evt.key === ' ') {
+                this.close();
             }
         },
     },
@@ -278,6 +309,17 @@ export default {
         scvOpts() {
             return this.$root.$data;
         },
+        paliText() {
+            return this.segment && this.segment.pli || 
+                this.loading && "Loading..." ||
+                "(...expanded...)";
+        },
+        langText(){
+            var lang = this.language;
+            return this.segment && this.segment[lang] ||
+                this.loading && "Loading..." ||
+                "(no translation available)";
+        }
     },
     mounted() {
         this.setTextClass();
