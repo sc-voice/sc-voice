@@ -33,10 +33,10 @@
                     height="16"
                     :max="section && section.segments.length-1"
                 />
-                <div :class="paliTextClass" :style="cssProps()">
+                <div v-if="showPali" :class="paliTextClass" :style="cssProps()">
                     <div >{{paliText}}</div>
                 </div>
-                <div :class="langTextClass" :style="cssProps()">
+                <div v-if="showLang" :class="langTextClass" :style="cssProps()">
                     <div >{{langText}}</div>
                 </div>
             </v-card-text>
@@ -183,7 +183,8 @@ export default {
             }
         },
         endPali() {
-            if (this.segment.audio[this.language]) {
+            var playLang = this.showLang && this.segment.audio[this.language];
+            if (playLang) {
                 var refLang = this.$refs.refAudioLang;
                 refLang.play().then(() => {
                     this.setTextClass();
@@ -223,17 +224,19 @@ export default {
             }
             this.loadingAudio = 0;
             var segment = this.segment;
-            if (segment.audio.pli) {
+            var playPali = this.showPali && segment.audio.pli;
+            if (playPali) {
                 refPli.load();
                 this.loadingAudio++;
             }
             var lang = this.language;
-            if (segment.audio[lang]) {
+            var playLang = this.showLang && segment.audio[lang];
+            if (playLang) {
                 refLang.load();
                 this.loadingAudio++;
             }
             //console.log(`refPli.play() ready:`, refPli.readyState);
-            if (segment.audio.pli) {
+            if (playPali) {
                 refPli.play().then(() => {
                     this.setTextClass();
                     this.paused = false;
@@ -244,7 +247,7 @@ export default {
                     this.loadingAudio = 0;
                     console.log(`refPli playing failed`, e);
                 });
-            } else {
+            } else if (playLang) {
                 this.endPali();
             }
         },
@@ -308,6 +311,14 @@ export default {
         },
         scvOpts() {
             return this.$root.$data;
+        },
+        showPali( ){
+            var showLang = this.scvOpts && this.scvOpts.showLang || 0;
+            return showLang === 0 || showLang === 1;
+        },
+        showLang( ){
+            var showLang = this.scvOpts && this.scvOpts.showLang || 0;
+            return showLang === 0 || showLang === 2;
         },
         paliText() {
             return this.segment && this.segment.pli || 

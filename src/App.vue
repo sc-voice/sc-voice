@@ -33,6 +33,11 @@
                         :aria-checked="scvOpts.showId"
                         label="Show SuttaCentral text segment identifiers">
                     </v-checkbox>
+                    <v-radio-group v-model="scvOpts.showLang" column>
+                       <v-radio v-for="(sl,i) in showLangChoices" 
+                         :label="sl.label" :value="i" :key="`showLang${sl.value}`">
+                         </v-radio>
+                    </v-radio-group>
                 </div>
             </details>
             <details class="scv-dialog" >
@@ -144,6 +149,18 @@ export default {
         scvOpts() {
             return this.$root && this.$root.$data;
         },
+        showLangChoices() {
+            return [{
+                label: "Show both Pali text and translated text",
+                value: 0,
+            },{
+                label: "Show only Pali text",
+                value: 1,
+            },{
+                label: "Show only translated text",
+                value: 2,
+            }];
+        },
         ipsChoices() {
             return [{
                 label: "Progress without sound",
@@ -196,6 +213,8 @@ export default {
             query.search && Vue.set(this.scvOpts, "search", search);
             query.ips != null &&
                 Vue.set(this.scvOpts, "ips", Number(query.ips||0));
+            query.showLang &&
+                Vue.set(this.scvOpts, "showLang", Number(query.showLang||0));
         }
     },
     created() {

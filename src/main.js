@@ -31,6 +31,7 @@ const scvState = {
     showId: false,
     iVoice: 0,
     scid: null,
+    showLang: 0,
     search: null,
     maxResults: 5,
     ips: 3,
