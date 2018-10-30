@@ -73,6 +73,9 @@
                         "review/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReviewSection),
                     this.resourceMethod("get", 
+                        "play/segment/:sutta_uid/:language/:translator/:scid/:iVoice", 
+                        this.getPlaySegment),
+                    this.resourceMethod("get", 
                         "play/section/:sutta_uid/:language/:translator/:iSection/:iVoice", 
                         this.getPlaySection),
                     this.resourceMethod("get", 
@@ -128,10 +131,12 @@
                 language: 'en',
                 usage: 'recite',
                 iSection: 0,
+                scid: null,
                 iVoice: 0,
             }, req.params);
             parms.iSection = Number(parms.iSection);
             parms.iVoice = Number(parms.iVoice);
+            parms.sutta_uid = parms.sutta_uid || parms.scid && parms.scid.split(':')[0];
             return parms;
         }
 
@@ -240,7 +245,7 @@
                 sutta_uid, language, translator, iSection, iVoice 
             } = this.suttaParms(req);
             var suttaRef = `${sutta_uid}/${language}/${translator}`;
-            logger.info(`GET play ${suttaRef}/${iSection}/${iVoice}`);
+            logger.info(`GET play/section/${suttaRef}/${iSection}/${iVoice}`);
             var usage = ['recite','review'][iVoice] || 'recite';
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -289,6 +294,77 @@
                         maxSection: sutta.sections.length,
                         iVoice,
                         segments,
+                        voiceLang: voiceLang.name,
+                        voicePali: voicePali.name,
+                    });
+                } catch(e) { reject(e); } })();
+            });
+        }
+
+        getPlaySegment(req, res, next) {
+            var that = this;
+            var { 
+                sutta_uid, language, translator, scid, iVoice 
+            } = this.suttaParms(req);
+            var suttaRef = `${sutta_uid}/${language}/${translator}`;
+            logger.info(`GET play/segment/${suttaRef}/${scid}/${iVoice}`);
+            var usage = ['recite','review'][iVoice] || 'recite';
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var sutta = await that.suttaFactory.loadSutta({
+                        scid: sutta_uid,
+                        translator,
+                        language,
+                        expand: true,
+                    });
+                    if (iSection < 0 || sutta.sections.length <= iSection) {
+                        throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
+                    }
+                    var voiceLang = Voice.createVoice({
+                        language,
+                        usage,
+                        languageUnknown: "pli",
+                        audioFormat: that.audioFormat,
+                        audioSuffix: that.audioSuffix,
+                    });
+                    var voicePali = that.voicePali;
+                    var sections = sutta.sections;
+                    var iSegment = sutta.segments
+                        .reduce((acc,seg,i) => seg.scid == scid ? i : acc, null);
+                    if (iSegment == null) {
+                        throw new Error(`segment ${scid} not found`);
+                    }
+                    var segment = sutta.segments[iSegment];
+                    var iSection = 0;
+                    var section = sutta.sections[iSection];
+                    for (let i=iSegment; section && (section.segments.length <= i); ) {
+                        i -= section.segments.length;
+                        section = sutta.sections[++iSection];
+                    }
+                    segment.audio = {};
+                    if (segment[language]) {
+                        var speak = await voiceLang.speak(segment[language], {
+                            usage,
+                        });
+                        segment.audio[language] = speak.signature.guid;
+                    }
+                    if (segment.pli) {
+                        var speak = await voicePali.speak(segment.pli, {
+                            usage: 'recite',
+                        });
+                        segment.audio.pli = speak.signature.guid;
+                    }
+                    resolve({
+                        sutta_uid,
+                        scid,
+                        language,
+                        translator,
+                        title: section.title,
+                        section:iSection,
+                        maxSection: sutta.sections.length,
+                        iVoice,
+                        iSegment,
+                        segment,
                         voiceLang: voiceLang.name,
                         voicePali: voicePali.name,
                     });

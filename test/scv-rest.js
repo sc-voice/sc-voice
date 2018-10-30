@@ -284,5 +284,29 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
+        this.timeout(30*1000);
+        (async function() { try {
+            var scid = "mn1:52-74.23";
+            var iVoice = 0;
+            var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data.sutta_uid).equal('mn1');
+            should(data.voiceLang).equal('Amy');
+            should(data.voicePali).equal('Raveena');
+            should(data.iSegment).equal(299);
+            should(data.section).equal(4);
+            should(data.maxSection).equal(10);
+            should(data.iVoice).equal(iVoice);
+            should(data.language).equal('en');
+            should(data.translator).equal('sujato');
+            should(data.segment.en).match(/^They directly know extinguishment as/);
+            should(data.segment.audio.en).match(/^42cbae/);
+            should(data.segment.audio.pli).match(/^09431d/);
+            done();
+        } catch(e) {done(e);} })();
+    });
 });
 

@@ -323,7 +323,7 @@ export default {
         paliText() {
             return this.segment && this.segment.pli || 
                 this.loading && "Loading..." ||
-                "(...expanded...)";
+                "(...)";
         },
         langText(){
             var lang = this.language;
