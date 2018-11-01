@@ -221,7 +221,7 @@
                     class="scv-text-button mt-3"
                     :style="cssProps"
                     >
-                    Play Section {{i}} ({{voice.name}})
+                    Play Section {{i+1}} ({{voice.name}})
                 </button>
             </div>
             <div v-if="error[i]" class="scv-error" 

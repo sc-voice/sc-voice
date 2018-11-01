@@ -1,0 +1,22 @@
+{
+  "sutta_uid": "mn1",
+  "scid": "mn1:3.2",
+  "language": "en",
+  "translator": "sujato",
+  "title": "“Take an uneducated ordinary person who has not seen…",
+  "section": 2,
+  "nSections": 10,
+  "iVoice": 0,
+  "iSegment": 13,
+  "segment": {
+    "scid": "mn1:3.2",
+    "pli": "pathaviṃ pathavito sañjānāti;",
+    "en": "They perceive earth as earth.",
+    "audio": {
+      "en": "2b56b01c7be6ee1e86e35b111f1daa16",
+      "pli": "8df1b6ded2a79c42a54be99e21c08d20"
+    }
+  },
+  "voiceLang": "Amy",
+  "voicePali": "Raveena"
+}
