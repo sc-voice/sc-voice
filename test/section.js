@@ -34,7 +34,7 @@
     }];
 
 
-    it("TESTTESTSection(parms) creates a section", function() {
+    it("Section(parms) creates a section", function() {
         var section = new Section({
             segments, 
         });

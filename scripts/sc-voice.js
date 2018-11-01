@@ -31,11 +31,25 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, OPTIONS, PUT, POST");
     next();
 });
-app.use("/", express.static(path.join(__dirname, "../public")));
-app.use("/scv/", express.static(path.join(__dirname, "../dist")));
+app.use("/scv/index.html", 
+    express.static(path.join(__dirname, "../dist/index.html")));
+app.use("/scv/img", express.static(path.join(__dirname, "../dist/img")));
+app.use("/favicon.png", 
+    express.static(path.join(__dirname, "../dist/favicon.png")));
+app.use("/MaterialIcons.css", 
+    express.static(path.join(__dirname, "../dist/MaterialIcons.css")));
+app.use("/MaterialIcons.ttf", 
+    express.static(path.join(__dirname, "../dist/MaterialIcons.ttf")));
+app.use("/scv/img", express.static(path.join(__dirname, "../dist/img")));
+app.use("/scv/audio", express.static(path.join(__dirname, "../dist/audio")));
 app.use("/scv/js", express.static(path.join(__dirname, "../dist/js")));
 app.use("/scv/css", express.static(path.join(__dirname, "../dist/css")));
 app.use("/scv/sounds", express.static(path.join(__dirname, "../local/sounds")));
+
+app.get(["/","/scv"], function(req,res,next) {
+    res.redirect("/scv/index.html");
+    next();
+});
 (async function() {
     try {
         var suttaCentralApi = await new SuttaCentralApi().initialize();

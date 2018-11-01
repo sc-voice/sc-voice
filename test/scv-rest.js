@@ -59,7 +59,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /sutta/mn100/en/sujato returns sutta", function(done) {
+    it("GET /sutta/mn100/en/sujato returns sutta", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn100/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -258,7 +258,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /play/section/... returns playable section", function(done) {
+    it("TESTTESTGET /scv/play/section/... returns playable section", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iSection = 2;
@@ -272,12 +272,11 @@
             should(section.voiceLang).equal('Amy');
             should(section.voicePali).equal('Raveena');
             should(section.section).equal(iSection);
-            should(section.maxSection).equal(10);
+            should(section.nSections).equal(10);
             should(section.iVoice).equal(iVoice);
             should(section.language).equal('en');
             should(section.translator).equal('sujato');
-            should(section.segments[0].audio.en).match(/^82b006/);
-            should(section.segments[0].audio.pli).match(/^1783e/);
+            should.deepEqual(section.segments[0].audio, {});
             var testPath = path.join(PUBLIC,
                 `play/section/mn1/en/sujato/${iSection}/${iVoice}`);
             fs.writeFileSync(testPath, JSON.stringify(section, null,2));
@@ -298,13 +297,34 @@
             should(data.voicePali).equal('Raveena');
             should(data.iSegment).equal(299);
             should(data.section).equal(4);
-            should(data.maxSection).equal(10);
+            should(data.nSections).equal(10);
             should(data.iVoice).equal(iVoice);
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^They directly know extinguishment as/);
             should(data.segment.audio.en).match(/^42cbae/);
             should(data.segment.audio.pli).match(/^09431d/);
+
+            var scid = "mn1:3.1";
+            var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data.segment.en).match(/^.Take an uneducated ordinary/);
+            var testPath = path.join(PUBLIC,
+                `play/segment/mn1/en/sujato/${scid}/${iVoice}`);
+            fs.writeFileSync(testPath, JSON.stringify(data, null,2));
+
+            var scid = "mn1:3.2";
+            var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data.segment.en).match(/^They perceive earth as earth/);
+            var testPath = path.join(PUBLIC,
+                `play/segment/mn1/en/sujato/${scid}/${iVoice}`);
+            fs.writeFileSync(testPath, JSON.stringify(data, null,2));
+
             done();
         } catch(e) {done(e);} })();
     });

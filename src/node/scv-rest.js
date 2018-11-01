@@ -271,13 +271,13 @@
                     for (var iSeg = 0; iSeg < section.segments.length; iSeg++) {
                         var segment = Object.assign({}, section.segments[iSeg]);
                         segment.audio = {};
-                        if (segment[language]) {
+                        if (0 && segment[language]) {
                             var speak = await voiceLang.speak(segment[language], {
                                 usage,
                             });
                             segment.audio[language] = speak.signature.guid;
                         }
-                        if (segment.pli) {
+                        if (0 && segment.pli) {
                             var speak = await voicePali.speak(segment.pli, {
                                 usage: 'recite',
                             });
@@ -291,7 +291,7 @@
                         translator,
                         title: section.title,
                         section:iSection,
-                        maxSection: sutta.sections.length,
+                        nSections: sutta.sections.length,
                         iVoice,
                         segments,
                         voiceLang: voiceLang.name,
@@ -361,7 +361,7 @@
                         translator,
                         title: section.title,
                         section:iSection,
-                        maxSection: sutta.sections.length,
+                        nSections: sutta.sections.length,
                         iVoice,
                         iSegment,
                         segment,

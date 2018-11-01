@@ -12,7 +12,7 @@
                         :style='cssProps({"width":"6em"})'
                         >Previous</button>
                     <div >
-                        {{iSection}}/{{section && section.maxSection || "(n/a)"}} 
+                        {{iSection+1}}/{{section && section.nSections || "(n/a)"}} 
                     </div>
                     <button class="scv-text-button"
                         ref="refNext"
@@ -28,7 +28,7 @@
                     :disabled="loading || !paused"
                     always-dirty
                     class="pl-4 pr-4"
-                    :label="`${iSegment}/${section && section.segments.length || '--'}`"
+                    :label="`${iSegment+1}/${section && section.segments.length || '--'}`"
                     inverse-label
                     height="16"
                     :max="section && section.segments.length-1"
@@ -45,7 +45,7 @@
                     {{segment && segment.scid}}
                 </div>
                 <v-spacer/>
-                <v-btn icon @click="playAudio()" 
+                <v-btn icon @click="clickPlay()" 
                     ref="refPlay"
                     class="scv-icon-btn" :style="cssProps()"
                     aria-label="Play Section">
@@ -109,9 +109,9 @@ export default {
         };
     },
     methods: {
-        playSection(iSection) {
-            this.pauseAudio();
-            if (iSection < 0 || this.section && this.section.maxSection < iSection) {
+        playSection(iSection, paused=false) {
+            paused = paused || this.pauseAudio();
+            if (iSection < 0 || this.section && this.section.nSections <= iSection) {
                 console.log(`playSection(${iSection}) ignored`);
                 return;
             }
@@ -142,6 +142,9 @@ export default {
                     var playBtn = this.$refs.refPlay.$el;
                     console.log('playBtn', playBtn);
                     playBtn.focus();
+                    if (paused) {
+                        this.clickPlay();
+                    }
                 });
             }).catch(e => {
                 this.stopProgress();
@@ -180,6 +183,8 @@ export default {
                 this.$nextTick(() => {
                     this.playAudio();
                 });
+            } else if (this.iSection < this.section.nSections) {
+                this.$nextTick(() => this.playSection(this.iSection+1, true));
             }
         },
         endPali() {
@@ -216,40 +221,76 @@ export default {
             result && console.log("pauseAudio()");
             return result;
         },
-        playAudio() {
-            var refPli = this.$refs.refAudioPali;
-            var refLang = this.$refs.refAudioLang;
-            if (this.pauseAudio()) {
-                return;
-            }
-            this.loadingAudio = 0;
-            var segment = this.segment;
-            var playPali = this.showPali && segment.audio.pli;
-            if (playPali) {
-                refPli.load();
-                this.loadingAudio++;
-            }
-            var lang = this.language;
-            var playLang = this.showLang && segment.audio[lang];
-            if (playLang) {
-                refLang.load();
-                this.loadingAudio++;
-            }
-            //console.log(`refPli.play() ready:`, refPli.readyState);
-            if (playPali) {
-                refPli.play().then(() => {
-                    this.setTextClass();
-                    this.paused = false;
-                    this.loadingAudio = 0;
-                    //console.log(`refPli playing started`);
+        getSegmentAudio(scid) {
+            var that = this;
+            return new Promise((resolve, reject) => { try {
+                var segmentRef = [
+                    this.sutta_uid,
+                    this.language,
+                    this.translator,
+                    scid,
+                    this.scvOpts.iVoice,
+                ].join('/');
+                var url = `./play/segment/${segmentRef}`;
+                that.$http.get(url).then(res => {
+                    that.stopProgress();
+                    resolve(res.data);
                 }).catch(e => {
-                    this.paused = true;
-                    this.loadingAudio = 0;
-                    console.log(`refPli playing failed`, e);
+                    that.stopProgress();
+                    console.error(e.stack);
+                    reject(e);
                 });
-            } else if (playLang) {
-                this.endPali();
-            }
+            } catch(e) {reject(e);} });
+        },
+        clickPlay() {
+            this.playAudio();
+            var refPlay = this.$refs.refPlay.$el;
+            refPlay.focus();
+        },
+        playAudio() {
+            var that = this;
+            (async function() {
+                var refPli = that.$refs.refAudioPali;
+                var refLang = that.$refs.refAudioLang;
+                if (that.pauseAudio()) {
+                    return;
+                }
+                that.loadingAudio = 0;
+                var segment = that.segment;
+                if (segment.audio.en == null && segment.audio.pli == null) {
+                    var data = await that.getSegmentAudio(segment.scid);
+                    console.log(`data`, data);
+                    segment.audio = data.segment.audio;
+                }
+                var playPali = that.showPali && segment.audio.pli;
+                if (playPali) {
+                    refPli.load();
+                    that.loadingAudio++;
+                }
+                var lang = that.language;
+                var playLang = that.showLang && segment.audio[lang];
+                if (playLang) {
+                    refLang.load();
+                    that.loadingAudio++;
+                }
+                //console.log(`refPli.play() ready:`, refPli.readyState);
+                if (playPali) {
+                    refPli.play().then(() => {
+                        that.setTextClass();
+                        that.paused = false;
+                        that.loadingAudio = 0;
+                        //console.log(`refPli playing started`);
+                    }).catch(e => {
+                        that.paused = true;
+                        that.loadingAudio = 0;
+                        console.log(`refPli playing failed`, e);
+                    });
+                } else if (playLang) {
+                    that.endPali();
+                } else {
+                    console.log(`nothing to play`);
+                }
+            })();
         },
         setTextClass() {
             var refPli = this.$refs.refAudioPali;

@@ -267,6 +267,7 @@
         }
 
         synthesizeSSML(ssmlFragment, opts={}) {
+            var that = this;
             if (ssmlFragment.length > this.maxSSML) {
                 var oldLen = ssmlFragment.length;
                 ssmlFragment = ssmlFragment.replace(/>[^<]+<\/phoneme/iug, '/');
@@ -301,12 +302,21 @@
                         this.hits++;
                         resolve(this.createResponse(request, true));
                     } else {
-                        this.misses++;
+                        that.misses++;
 
-                        this.serviceSynthesize(resolve, e => {
-                            logger.warn(`synthesizeSSML() ${e.message} `+
-                                `ssml:${ssmlFragment.length}utf16 ${ssmlFragment}`);
-                            reject(e);
+                        that.serviceSynthesize(resolve, e => {
+                            if (/EAI_AGAIN/.test(e.message)) {
+                                logger.warn(`synthesizeSSML() ${e.message} (retrying...)`);
+                                that.serviceSynthesize(resolve, e => {
+                                    logger.warn(`synthesizeSSML() ${e.message} `+
+                                        `ssml:${ssmlFragment.length}utf16 ${ssmlFragment}`);
+                                    reject(e);
+                                }, request);
+                            } else {
+                                logger.warn(`synthesizeSSML() ${e.message} `+
+                                    `ssml:${ssmlFragment.length}utf16 ${ssmlFragment}`);
+                                reject(e);
+                            }
                         }, request);
                     }
                 } catch (e) {

@@ -125,7 +125,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTloadSutta(id, opts) automatically sections a Sutta", function(done) {
+    it("loadSutta(id, opts) automatically sections a Sutta", function(done) {
         (async function() { try {
             var factory = new SuttaFactory({
                 autoSection: true,
