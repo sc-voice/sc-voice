@@ -58,7 +58,7 @@
             this.suttaStore = new SuttaStore({
                 suttaCentralApi: this.suttaCentralApi,
                 suttaFactory: this.suttaFactory,
-                voice: this.voicePali,
+                voice: null,
             });
             Object.defineProperty(this, "handlers", {
                 value: super.handlers.concat([

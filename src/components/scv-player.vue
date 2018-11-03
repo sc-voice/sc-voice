@@ -36,7 +36,7 @@
                 <div v-if="showPali" :class="paliTextClass" :style="cssProps()">
                     <div >{{paliText}}</div>
                 </div>
-                <div v-if="showLang" :class="langTextClass" :style="cssProps()">
+                <div v-if="showTrans" :class="langTextClass" :style="cssProps()">
                     <div >{{langText}}</div>
                 </div>
             </v-card-text>
@@ -188,7 +188,7 @@ export default {
             }
         },
         endPali() {
-            var playLang = this.showLang && this.segment.audio[this.language];
+            var playLang = this.showTrans && this.segment.audio[this.language];
             if (playLang) {
                 var refLang = this.$refs.refAudioLang;
                 refLang.play().then(() => {
@@ -268,7 +268,7 @@ export default {
                     that.loadingAudio++;
                 }
                 var lang = that.language;
-                var playLang = that.showLang && segment.audio[lang];
+                var playLang = that.showTrans && segment.audio[lang];
                 if (playLang) {
                     refLang.load();
                     that.loadingAudio++;
@@ -357,7 +357,7 @@ export default {
             var showLang = this.scvOpts && this.scvOpts.showLang || 0;
             return showLang === 0 || showLang === 1;
         },
-        showLang( ){
+        showTrans( ){
             var showLang = this.scvOpts && this.scvOpts.showLang || 0;
             return showLang === 0 || showLang === 2;
         },

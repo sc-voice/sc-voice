@@ -58,39 +58,7 @@
                         </div>
                     </div>
                 </summary>
-                <div class="scv-search-result-lang">
-                    <div>
-                        <a :href="resultLink(result)" >
-                            <span v-html="result.quote.en"></span>
-                            <span v-if="scvOpts.showId" class='scv-scid'>
-                                &mdash;
-                                SC&nbsp;{{result.quote.scid}}
-                                {{result.author}}
-                            </span> 
-                        </a>
-                        <audio v-if="result.audio && result.audio[language]" 
-                            :ref="`audiolang${i}`"
-                            style="display:block"
-                            class="ml-4 mt-1" 
-                            preload=auto
-                            :aria-label="`play quote`">
-                            <source type="audio/mp3"
-                                :src="audioLink(result.audio[language])" />
-                            <p>Your browser doesn't support HTML5 audio</p>
-                        </audio>
-                    </div>
-                    <v-btn icon v-if="result.audio && result.audio[language]" 
-                        @click="playQuote(`audiolang${i}`)"
-                        :disabled="!result.audio || !result.audio[language]"
-                        tabindex="-1"
-                        :class="btnAudioClass(`audiolang${i}`)" 
-                        :style="cssProps"
-                        v-on:ended.native="console.log('ended')"
-                        aria-hidden='true'>
-                        <v-icon>{{audioIcon(`audiolang${i}`)}}</v-icon>
-                    </v-btn>
-                </div>
-                <div v-if="result.quote && result.quote.pli" 
+                <div v-if="result.quote && showPali && result.quote.pli" 
                     class="scv-search-result-pli">
                     <div>
                         <div v-html="result.quote.pli"></div>
@@ -105,14 +73,50 @@
                             <p>Your browser doesn't support HTML5 audio</p>
                         </audio>
                     </div>
-                    <v-btn icon v-if="result.audio && result.audio.pli" 
-                        @click="playQuote(`audiopli${i}`)"
-                        :disabled="!result.audio || !result.audio.pli"
+                    <v-btn icon v-if="result.quote.pli" 
+                        @click="playQuote(`audiopli${i}`, result)"
+                        :disabled="!result.quote.pli"
                         :class="btnAudioClass(`audiopli${i}`)" 
                         :style="cssProps"
                         aria-label="Play Pali Quote">
                         <v-icon>{{audioIcon(`audiopli${i}`)}}</v-icon>
                     </v-btn>
+                </div>
+                <div v-if="result.quote && showTrans && result.quote[language]"
+                    class="scv-search-result-lang">
+                    <div>
+                        <span v-html="result.quote.en"></span>
+                        <span v-if="scvOpts.showId" class='scv-scid'>
+                            &mdash;
+                            SC&nbsp;{{result.quote.scid}}
+                            {{result.author}}
+                        </span> 
+                        <audio v-if="result.audio && result.audio[language]" 
+                            :ref="`audiolang${i}`"
+                            style="display:block"
+                            class="ml-4 mt-1" 
+                            preload=auto
+                            :aria-label="`play quote`">
+                            <source type="audio/mp3"
+                                :src="audioLink(result.audio[language])" />
+                            <p>Your browser doesn't support HTML5 audio</p>
+                        </audio>
+                    </div>
+                    <v-btn icon v-if="result.quote[language]" 
+                        @click="playQuote(`audiolang${i}`, result)"
+                        :disabled="!result.quote[language]"
+                        tabindex="-1"
+                        :class="btnAudioClass(`audiolang${i}`)" 
+                        :style="cssProps"
+                        v-on:ended.native="console.log('ended')"
+                        aria-hidden='true'>
+                        <v-icon>{{audioIcon(`audiolang${i}`)}}</v-icon>
+                    </v-btn>
+                </div>
+                <div v-if="result.quote" class="text-xs-center pt-2">
+                    <a :href="resultLink(result)" >
+                        {{result.suttaplex.acronym}} {{result.title}}
+                    </a>
                 </div>
             </details><!-- search result i -->
           </details><!-- searchresults -->
@@ -340,22 +344,57 @@ export default {
             });
             this.segments = null;
         },
-        playQuote(ref) {
-            var track = this.$refs[ref][0];
-            var listener;
-            var handler = () => {
-                listener && track.removeEventListener(listener, handler);
-                listener = null;
-                this.refPlaying = null;
-            };
-            if (track.paused) {
-                track.play();
-                this.refPlaying = ref;
-                listener = track.addEventListener("ended", handler);
-            } else {
-                track.pause();
-                handler();
-            }
+        getResultAudio(result) {
+            var that = this;
+            return new Promise((resolve, reject) => { try {
+                var scid = result.quote.scid;
+                var segmentRef = [
+                    scid.split(':')[0],
+                    result.lang,
+                    result.author_uid,
+                    scid,
+                    this.scvOpts.iVoice,
+                ].join('/');
+                var url = `./play/segment/${segmentRef}`;
+                that.startWaiting();
+                that.$http.get(url).then(res => {
+                    that.stopWaiting();
+                    resolve(res.data);
+                }).catch(e => {
+                    that.stopWaiting();
+                    console.error(e.stack);
+                    reject(e);
+                });
+            } catch(e) {reject(e);} });
+        },
+        playQuote(ref, result) {
+            var that = this;
+            (async function() { try {
+                if (result.audio == null) {
+                    var data = await that.getResultAudio(result);
+                    Vue.set(result, "audio", data.segment.audio);
+                    console.log(`playQuote`, data);
+                }
+                that.$nextTick(() => {
+                    var track = that.$refs[ref][0];
+                    var listener;
+                    var handler = () => {
+                        listener && track.removeEventListener(listener, handler);
+                        listener = null;
+                        that.refPlaying = null;
+                    };
+                    if (track.paused) {
+                        track.play();
+                        that.refPlaying = ref;
+                        listener = track.addEventListener("ended", handler);
+                    } else {
+                        track.pause();
+                        handler();
+                    }
+                });
+            } catch(e) { 
+                console.log(`playQuote`, e.stack);
+            }})();
         },
         startWaiting(opts={}) {
             var that = this;
@@ -586,6 +625,14 @@ export default {
             var ref = `${this.sutta_uid}/${this.language}/${this.author_uid}`;
             return `./download/sutta/${ref}/${usage}`;
         },
+        showPali( ){
+            var showLang = this.scvOpts && this.scvOpts.showLang || 0;
+            return showLang === 0 || showLang === 1;
+        },
+        showTrans( ){
+            var showLang = this.scvOpts && this.scvOpts.showLang || 0;
+            return showLang === 0 || showLang === 2;
+        },
         sutta_uid() {
             if (this.suttaplex) {
                 return this.suttaplex.uid;
@@ -747,7 +794,7 @@ export default {
 .scv-search-result-lang {
     display: flex;
     flex-flow: row;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     margin-top: 0.5em;
     padding-left: 1.6em;
@@ -758,7 +805,7 @@ export default {
 .scv-search-result-pli {
     display: flex;
     flex-flow: row;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     font-style: italic !important;
     padding-left: 1.6em;

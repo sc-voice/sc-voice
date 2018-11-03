@@ -33,7 +33,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /sutta/mn1/en/sujato returns sutta", function(done) {
+    it("GET /sutta/mn1/en/sujato returns sutta", function(done) {
         this.timeout(5*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato").expect((res) => {
@@ -92,7 +92,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /recite/section/mn1/en/sujato/2 returns recitation", function(done) {
+    it("GET /recite/section/mn1/en/sujato/2 returns recitation", function(done) {
         this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/recite/section/mn1/en/sujato/2")
@@ -216,7 +216,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /search/:pattern returns suttaplexes found", function(done) {
+    it("TESTTESTGET /search/:pattern returns suttaplexes found", function(done) {
         this.timeout(10*1000);
         var async = function* () { try {
             var maxResults = 3;
@@ -249,6 +249,7 @@
                 should(method).equal('phrase');
                 should(results).instanceOf(Array);
                 should(results.length).equal(5);
+                should.deepEqual(results[0].audio,undefined);
                 should.deepEqual(results.map(r => r.uid),[
                     'sn42.11', 'mn105', 'mn1', 'sn56.21', 'mn66',
                 ]);
@@ -258,7 +259,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /scv/play/section/... returns playable section", function(done) {
+    it("GET /scv/play/section/... returns playable section", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iSection = 2;
@@ -283,7 +284,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
+    it("GET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "mn1:52-74.23";
@@ -328,7 +329,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
+    it("GET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
