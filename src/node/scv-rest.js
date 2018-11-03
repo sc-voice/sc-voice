@@ -49,7 +49,7 @@
                 autoSection: true,
             });
             this.voicePali = Voice.createVoice({
-                name: 'Raveena',
+                name: 'Aditi',
                 usage: 'recite',
                 languageUnknown: "pli",
                 audioFormat: this.audioFormat,

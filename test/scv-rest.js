@@ -258,7 +258,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /scv/play/section/... returns playable section", function(done) {
+    it("TESTTESTGET /scv/play/section/... returns playable section", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iSection = 2;
@@ -270,7 +270,7 @@
             should(section.segments.length).equal(98);
             should(section.sutta_uid).equal('mn1');
             should(section.voiceLang).equal('Amy');
-            should(section.voicePali).equal('Raveena');
+            should(section.voicePali).equal('Aditi');
             should(section.section).equal(iSection);
             should(section.nSections).equal(10);
             should(section.iVoice).equal(iVoice);
@@ -283,7 +283,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... returns playable segment", function(done) {
+    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "mn1:52-74.23";
@@ -294,7 +294,7 @@
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(data.sutta_uid).equal('mn1');
             should(data.voiceLang).equal('Amy');
-            should(data.voicePali).equal('Raveena');
+            should(data.voicePali).equal('Aditi');
             should(data.iSegment).equal(299);
             should(data.section).equal(4);
             should(data.nSections).equal(10);
@@ -303,7 +303,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^They directly know extinguishment as/);
             should(data.segment.audio.en).match(/^42cbae/);
-            should(data.segment.audio.pli).match(/^09431d/);
+            should(data.segment.audio.pli).match(/^142e5/);
 
             var scid = "mn1:3.1";
             var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
@@ -324,6 +324,32 @@
             var testPath = path.join(PUBLIC,
                 `play/segment/mn1/en/sujato/${scid}/${iVoice}`);
             fs.writeFileSync(testPath, JSON.stringify(data, null,2));
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
+        this.timeout(30*1000);
+        (async function() { try {
+            var scid = "an2.280-309:281.1.1";
+            var sutta_uid = scid.split(":")[0];
+            var iVoice = 0;
+            var url = `/scv/play/segment/${sutta_uid}/en/sujato/${scid}/${iVoice}`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data.sutta_uid).equal('an2.280-309');
+            should(data.voiceLang).equal('Amy');
+            should(data.voicePali).equal('Aditi');
+            should(data.iSegment).equal(8);
+            should(data.section).equal(2);
+            should(data.nSections).equal(3);
+            should(data.iVoice).equal(iVoice);
+            should(data.language).equal('en');
+            should(data.translator).equal('sujato');
+            should(data.segment.en).match(/^.For two reasons the Realized One/);
+            should(data.segment.audio.en).match(/^d55dd0/);
+            should(data.segment.audio.pli).match(/^ec04c0/);
 
             done();
         } catch(e) {done(e);} })();

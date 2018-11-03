@@ -273,15 +273,14 @@
                 ssmlFragment = ssmlFragment.replace(/>[^<]+<\/phoneme/iug, '/');
                 logger.info(`AbstractTts.synthesizeSSML() shrinking large SSML (1) `+
                     `before:${oldLen} `+
-                    `after:${ssmlFragment.length} `);
+                    `after:${ssmlFragment.length} `+
+                    `ssml:${ssmlFragment.substring(0, 500)}...`);
                 if (ssmlFragment.length > this.maxSSML) {
                     ssmlFragment = ssmlFragment.replace(/<break[^>]+>/iug, '');
                     logger.info(`AbstractTts.synthesizeSSML() shrinking large SSML (2) `+
                         `before:${oldLen} `+
                         `after:${ssmlFragment.length} `);
-                }
-                logger.info(`AbstractTts.synthesizeSSML() shrinking large SSML (3) `+
-                    `ssml:${ssmlFragment}`);
+                } 
             }
             return new Promise((resolve, reject) => {
                 try {
