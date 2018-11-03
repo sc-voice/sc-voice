@@ -33,7 +33,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /sutta/mn1/en/sujato returns sutta", function(done) {
+    it("TESTTESTGET /sutta/mn1/en/sujato returns sutta", function(done) {
         this.timeout(5*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato").expect((res) => {
@@ -92,7 +92,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /recite/section/mn1/en/sujato/2 returns recitation", function(done) {
+    it("TESTTESTGET /recite/section/mn1/en/sujato/2 returns recitation", function(done) {
         this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/recite/section/mn1/en/sujato/2")
@@ -258,7 +258,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /scv/play/section/... returns playable section", function(done) {
+    it("GET /scv/play/section/... returns playable section", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iSection = 2;
@@ -283,7 +283,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
+    it("GET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "mn1:52-74.23";

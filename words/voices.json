@@ -136,6 +136,71 @@
         }
     }
 },{
+    "language": "hi-IN",
+    "service": "aws-polly",
+    "name": "Aditi",
+    "gender": "female",
+    "rates": {
+        "navigate": "+5%", 
+        "recite": "-30%"
+    },
+    "usages": {
+        "navigate": {
+            "priority": 1,
+            "rate": "+5%",
+            "breaks": [0.001,0.1,0.2,0.3,0.4]
+        },
+        "recite": {
+            "rate": "-30%",
+            "breaks": [0.001,0.1,0.2,0.6,1]
+        },
+        "review": {
+            "priority": 1,
+            "rate": "-5%",
+            "breaks": [0.001,0.1,0.2,0.4,0.5]
+        }
+    },
+    "ipa": {
+        "pli": {
+            "a": "ə",
+            "\u0101": "\u0251",
+            "\u0101$": "\u0251h",
+            "bh": "b\u02b0",
+            "\u1e0d": "d",
+            "d": "ɖ",
+            "dh": "ɖʱ",
+            "\u012b": "i\u02d0",
+            "\u1e6d\u1e6dh": "\u0288\u0306\u0288\u02b0",
+            "gh": "g\u02b0",
+            "i": "\u026a",
+            "j": "\u029d",
+            "jj": "\u029d.\u029d",
+            "jha": "\u0284h\u0251",
+            "kh": "k\u02b0",
+            "kk": "k.k",
+            "kkh": "k.k\u02b0",
+            "ll": "l.l",
+            "\u00f1": "\u0272",
+            "\u1e37":"\u029f\u0308",
+            "\u1e47": "n'",
+            "ṅgh": "ŋgʰ",
+            "ng": "\u014bg",
+            "\u1e43": "\u014b",
+            "nu": "nu",
+            "\u1e45g": "\u014bg",
+            "\u1e45k": "\u014bk",
+            "sutta": "\u02ccsu\u03b8\u03b8a\u0308",
+            "r": "ɾ",
+            "t": "t̪",
+            "u":"ʊ",
+            "\u1e6d": "t",
+            "\u016b": "\u028a\u02d0",
+            "v": "ʋ",
+            "yi": "'ji",
+            "y": "j"
+        }
+    }
+},{
     "language": "en-US",
     "service": "aws-polly",
     "name": "Salli",

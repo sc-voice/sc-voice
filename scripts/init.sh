@@ -80,20 +80,7 @@ type aws
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: AWS CLI detected (OK)"
 else
-    pushd ~
-    BIN="`pwd`/bin"
-    echo $PATH | grep -E "~/bin|$BIN"
-    RC=$?; if [ "$RC" == "0" ]; then
-        echo -e "INIT\t: AWS CLI $BIN will installed in $BIN"
-        curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-        unzip awscli-bundle.zip
-        ./awscli-bundle/install -b ~/bin/aws
-    else
-        echo -e "INIT\t: $BIN cannot be used for installing AWS CLI for Polly"
-        echo -e "ERROR\t: Install AWS CLI manually and rerun this script"
-        exit 0
-    fi
-    popd
+    ./install-aws.sh
 fi
 
 if [ -e node_modules ]; then
@@ -125,14 +112,14 @@ if [ ! -e local/sc ]; then
     popd
 fi
 
-if [ -e local/awscli-bundle ]; then
-    echo -e "INIT\t: awscli-bundle folder exists (OK)"
-else
-    echo -e "INIT\t: Installing AWS CLI... "
-    pushd local
-    curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-    unzip awscli-bundle.zip
-    popd
-fi
+#if [ -e local/awscli-bundle ]; then
+    #echo -e "INIT\t: awscli-bundle folder exists (OK)"
+#else
+    #echo -e "INIT\t: Installing AWS CLI... "
+    #pushd local
+    #curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+    #unzip awscli-bundle.zip
+    #popd
+#fi
 
 echo -e "INIT\t: $0 END: `date`"

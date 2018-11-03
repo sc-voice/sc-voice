@@ -9,6 +9,11 @@
     } = require('../index');
     const BREAK = `<break time="0.001s"/>`;
 
+    function phoneme(ph,word) {
+        var ph = `<phoneme alphabet="ipa" ph="${ph}">${word}</phoneme>${BREAK}`;
+        return ph;
+    }
+
     it("loadVoices(voicePath) should return voices", function() {
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
@@ -235,7 +240,7 @@
         });
         var segments = tts.segmentSSML('sati');
         should.deepEqual(segments, [
-            `<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>${BREAK}`,
+            phoneme(`s\u0250\u03b8\u026a`,`sati`),
         ]);
 
         // Interpret unknown words as English
@@ -282,6 +287,29 @@
 
             done();
         } catch(e) {done(e);} })();
+    });
+    it("TESTTESTAmy phonemes", function() {
+        var amy = Voice.createVoice({
+            language: "en-GB",
+            languageUnknown: "pli",
+        });
+        should(amy.name).equal("Amy");
+        var recite = amy.services.recite;
+        should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
+    });
+    it("TESTTESTRaveena phonemes", function() {
+    return;  // TODO
+        var raveena = Voice.createVoice({
+            language: "en-IN",
+            languageUnknown: "pli",
+        });
+        should(raveena.name).equal("Raveena");
+        var recite = raveena.services.recite;
+        should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
+        should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑməɲcə","Nāmañca"));
+        should(recite.wordSSML(`anottappañca`)).match(/"anoθθəppəɲcə"/);
+        should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
+        should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
     });
 
 })
