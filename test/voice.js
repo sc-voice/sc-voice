@@ -288,7 +288,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTAmy phonemes", function() {
+    it("Amy phonemes", function() {
         var amy = Voice.createVoice({
             language: "en-GB",
             languageUnknown: "pli",
@@ -297,7 +297,7 @@
         var recite = amy.services.recite;
         should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
     });
-    it("TESTTESTRaveena phonemes", function() {
+    it("Raveena phonemes", function() {
     return;  // TODO
         var raveena = Voice.createVoice({
             language: "en-IN",

@@ -120,7 +120,7 @@
             }
             var fpath = path.join(this.root, folder);
             if (!fs.existsSync(fpath)) {
-                logger.info(`SuttaStore.suttsFolder() mkdir:${fpath}`);
+                logger.info(`SuttaStore.suttaFolder() mkdir:${fpath}`);
                 fs.mkdirSync(fpath);
             }
             return fpath;
@@ -298,13 +298,30 @@
             });
         }
 
+        static compareFilenames(a,b) {
+            var aprefix = a.substring(0,a.search(/[1-9]/));
+            var bprefix = b.substring(0,b.search(/[1-9]/));
+            var cmp = aprefix.localeCompare(bprefix);
+            if (cmp === 0) {
+                var adig = a.replace(/[^1-9]*([1-9]*.?[0-9]*).*/,"$1").split('.');
+                var bdig = b.replace(/[^1-9]*([1-9]*.?[0-9]*).*/,"$1").split('.');
+                var cmp = Number(adig[0]) - Number(bdig[0]);
+                if (cmp === 0) {
+                    cmp = Number(adig[1]) - Number(bdig[1]);
+                }
+            }
+            return cmp;
+        }
+
         searchResults(args) {
             var {
                 lines,
                 pattern,
+                sortLines,
             } = args;
             var rexlang = new RegExp(`\\b${pattern}\\b`,'i');
             var rexpli = new RegExp(`\\b${pattern}`,'i');
+            sortLines && lines.sort(sortLines);
             return lines.length && lines.map(line => {
                 var iColon = line.indexOf(':');
                 var fname = path.join(ROOT,line.substring(0,iColon));
@@ -396,6 +413,7 @@
             var language = opts.language || 'en';
             var maxResults = opts.maxResults==null ? that.maxResults : opts.maxResults;
             var maxResults = Number(maxResults);
+            var sortLines = opts.sortLines;
             if (isNaN(maxResults)) {
                 throw new Error("SuttaStore.search() maxResults must be a number");
             }
@@ -422,6 +440,7 @@
                     }
                     var searchResults = that.searchResults({
                         lines,
+                        sortLines,
                         pattern: resultPattern,
                     });
                     var results = await that.voiceResults(searchResults, language);
