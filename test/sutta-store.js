@@ -446,7 +446,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("compareFilenames(a,b) compares sutta file names", function(){
+    it("TESTTESTcompareFilenames(a,b) compares sutta file names", function(){
         var filenames = [
             'sn/en/sujato/sn29.1', // 0
             'sn/en/sujato/sn29.10', // 1
@@ -485,10 +485,23 @@
         should(SuttaStore.compareFilenames(filenames[8], 'sn29.20')).equal(1);
         should(SuttaStore.compareFilenames(filenames[8], 'sn29.21')).equal(0);
         should(SuttaStore.compareFilenames(filenames[8], 'sn29.22')).equal(-1);
+
+        should(SuttaStore.compareFilenames("an1.1-10", "an1.1-10")).equal(0);
+        should(SuttaStore.compareFilenames("an1.1", "an1.1-10")).equal(0);
+
+    });
+    it("TESTTESTsutta_uidSuccessor(sutta_uid) returns following sutta_uid", function() {
+        should(SuttaStore.sutta_uidSuccessor('thag16.1')).equal('thag16.2');
+        should(SuttaStore.sutta_uidSuccessor('thag16.1-10')).equal('thag16.11');
     });
     it("TESTTESTsuttaFile(pattern) finds sutta file", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
+            var first = store._suttaFiles[0];
+            should(store.suttaFile(first)).equal(first);
+            var last = store._suttaFiles[store._suttaFiles.length-2];
+            should(store.suttaFile(last)).equal(last);
+
             should(store.suttaFile("sn29.1")).equal("sn29.1");
             should(store.suttaFile("sn29.10")).equal("sn29.10");
             should(store.suttaFile("sn29.11")).equal("sn29.11-20");
@@ -498,10 +511,15 @@
             should(store.suttaFile("sn29.21")).equal("sn29.21-50");
             should(store.suttaFile("sn29.50")).equal("sn29.21-50");
             should(store.suttaFile("sn29.51")).equal("sn29.21-50");
+
+            // bounds
+            should(store.suttaFile("z999")).equal(null);
+            should(store.suttaFile("a1")).equal(null);
+
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsuttaFiles(pattern) finds listed suttas", function(done) {
+    it("TESESTsuttaFiles(pattern) finds listed suttas", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             should.deepEqual(

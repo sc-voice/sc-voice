@@ -81,9 +81,15 @@
                             }
                         });
                     });
+                    if (that._suttaFiles.length === 0) {
+                        throw new Error(`SuttaStore.initialize() no sutta files:${root}`);
+                    }
                     //console.log(`find elapsed:${Date.now() -msStart}`);
                     that._suttaFiles = that._suttaFiles.map(f=> 
                         f.replace(/.*\//,'').replace(/\.json/,''));
+                    var uidLast = that._suttaFiles[that._suttaFiles.length-1];
+                    var uidEnd = SuttaStore.sutta_uidSuccessor(uidLast);
+                    that._suttaFiles.push(uidEnd); // sentinel is non-existent sutta
                     that._suttaFiles.sort(SuttaStore.compareFilenames);
 
                     resolve(that);
@@ -335,30 +341,54 @@
             return cmp;
         }
 
+        static sutta_uidSuccessor(sutta_uid) {
+            var suffixParts = sutta_uid.split(".");
+            var iSuffix = suffixParts.length-1;
+            var rangeParts = sutta_uid.split("-");
+            var rangeLast = rangeParts.length - 1;
+            suffixParts[iSuffix] = (rangeParts.length < 2) 
+                ? `${Number(suffixParts[iSuffix])+1}`
+                : `${Number(rangeParts[rangeLast])+1}`;
+            return suffixParts.join(".");
+        }
+
         suttaFile(sutta_uid) {
             var i = this.suttaFileIndex(sutta_uid);
-            return this._suttaFiles[i];
+            return this._suttaFiles[i] || null;
         }
+
         suttaFileIndex(sutta_uid) {
             if (!this.isInitialized) {
                 throw new Error("SuttaStore.initialize() is required");
             }
+            var iEnd = this._suttaFiles.length;
             var i1 = 0;
-            var i2 = this._suttaFiles.length-1;
-            while (i1 < i2) {
-                var i = Math.round((i1 + i2)/2);
+            var i2 = iEnd;
+            var cmp;
+            while (i1 <= i2) {
+                var i = Math.trunc((i1+i2)/2);
                 var sf = this._suttaFiles[i];
-                var cmp = SuttaStore.compareFilenames(sutta_uid, sf);
+                cmp = SuttaStore.compareFilenames(sutta_uid, sf);
                 if (cmp === 0) {
-                    return i;
+                    return i === iEnd-1 ? null : i;
                 }
                 if (cmp < 0) {
-                    i2 = i - 1;
-                } else {
+                    if (i < i2) {
+                        i2 = i;
+                    } else {
+                        break;
+                    }
+                } else if (i1 < i) { // cmp > 0
                     i1 = i;
+                } else {
+                    break;
                 }
             }
-            return i1;
+            //console.log('cmp', cmp, i, i1, i2, sutta_uid);
+            if (i === 0 && cmp < 0) {
+                return null;
+            }
+            return i+1 === iEnd ? null : i; // sentinel is not a sutta
         }
 
         suttaFiles(list) {
