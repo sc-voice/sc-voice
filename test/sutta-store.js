@@ -22,7 +22,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsuttaPath(opts) returns sutta filepath", function(done) {
+    it("suttaPath(opts) returns sutta filepath", function(done) {
         (async function() { try {
             if (1) {
                 var suttaIdsPath = path.join(__dirname, '../src/node/sutta-ids.json');
@@ -388,7 +388,7 @@
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });
-    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", function(done) {
+    it("search(pattern) finds romanized Pali keywords ", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {
@@ -446,15 +446,17 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTcompareFilenames(a,b) compares sutta file names", function(){
+    it("compareFilenames(a,b) compares sutta file names", function(){
         var filenames = [
-            'sn/en/sujato/sn29.1.json',
-            'sn/en/sujato/sn29.10.json',
-            'sn/en/sujato/sn29.11-20.json',
-            'sn/en/sujato/sn22.1.json',
-            'an/en/sujato/an22.1.json',
-            'xx/en/sujato/sn22.1.json',
-            'xx/en/sujato/an22.1.json',
+            'sn/en/sujato/sn29.1', // 0
+            'sn/en/sujato/sn29.10', // 1
+            'sn/en/sujato/sn29.11-20', // 2
+            'sn/en/sujato/sn22.1', // 3
+            'an/en/sujato/an22.1', // 4
+            'xx/en/sujato/sn22.1', // 5
+            'xx/en/sujato/an22.1', // 6
+            'sn29.11-20', // 7
+            'sn29.21', // 8
         ];
 
         // collection
@@ -474,13 +476,50 @@
         should(SuttaStore.compareFilenames(filenames[2], filenames[0])).equal(10);
         should(SuttaStore.compareFilenames(filenames[1], filenames[2])).equal(-1);
         should(SuttaStore.compareFilenames(filenames[2], filenames[1])).equal(1);
+
+        // ranges
+        should(SuttaStore.compareFilenames(filenames[7], filenames[7])).equal(0);
+        should(SuttaStore.compareFilenames(filenames[7], 'sn29.10')).equal(1);
+        should(SuttaStore.compareFilenames(filenames[7], 'sn29.11')).equal(0);
+        should(SuttaStore.compareFilenames(filenames[7], 'sn29.12')).equal(-1);
+        should(SuttaStore.compareFilenames(filenames[8], 'sn29.20')).equal(1);
+        should(SuttaStore.compareFilenames(filenames[8], 'sn29.21')).equal(0);
+        should(SuttaStore.compareFilenames(filenames[8], 'sn29.22')).equal(-1);
     });
-    it("TESTTESTsearch(pattern) finds suttas in range", function(done) {
+    it("TESTTESTsuttaFile(pattern) finds sutta file", function(done) {
         (async function() { try {
-            var maxResults = 45;
+            var store = await new SuttaStore().initialize();
+            should(store.suttaFile("sn29.1")).equal("sn29.1");
+            should(store.suttaFile("sn29.10")).equal("sn29.10");
+            should(store.suttaFile("sn29.11")).equal("sn29.11-20");
+            should(store.suttaFile("sn29.12")).equal("sn29.11-20");
+            should(store.suttaFile("sn29.19")).equal("sn29.11-20");
+            should(store.suttaFile("sn29.20")).equal("sn29.11-20");
+            should(store.suttaFile("sn29.21")).equal("sn29.21-50");
+            should(store.suttaFile("sn29.50")).equal("sn29.21-50");
+            should(store.suttaFile("sn29.51")).equal("sn29.21-50");
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTsuttaFiles(pattern) finds listed suttas", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            should.deepEqual(
+                store.suttaFiles(['sn29.1', 'sn29.12', 'sn29.2']),
+                ['sn29.1', 'sn29.2', 'sn29.11-20']);
+            should.deepEqual(
+                store.suttaFiles(['sn29.1', 'sn29.12', 'sn29.10-21', 'mn33']),
+                ['mn33', 'sn29.1', 'sn29.10', 'sn29.11-20', 'sn29.21-50']);
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("search(pattern) finds suttas in range", function(done) {
+        (async function() { try {
+            var msStart = Date.now();
             var store = await new SuttaStore({
                 maxResults,
             }).initialize();
+            var maxResults = 45;
             var {
                 method,
                 results,
@@ -489,6 +528,7 @@
                 pattern: 'scid.*sn29',
                 sortLines: SuttaStore.compareFilenames,
             });
+            console.log(`elapsed: ${Date.now()-msStart}`);
             done(); return;
             should.deepEqual(results.map(r=>r.uid),[
                 'sn29.1', 

@@ -64,6 +64,28 @@
                     if (!fs.existsSync(that.root)) {
                         fs.mkdirSync(that.root);
                     }
+
+                    var cmd = `find . -name '*.json'`;
+                    var findOpts = {
+                        cwd: that.root,
+                        shell: '/bin/bash',
+                    };
+                    var msStart = Date.now();
+                    that._suttaFiles = await new Promise((resolve, reject) => {
+                        exec(cmd, findOpts, (err,stdout,stderr) => {
+                            if (err) {
+                                logger.log(stderr);
+                                reject(err);
+                            } else {
+                                resolve(stdout && stdout.trim().split('\n') || []);
+                            }
+                        });
+                    });
+                    //console.log(`find elapsed:${Date.now() -msStart}`);
+                    that._suttaFiles = that._suttaFiles.map(f=> 
+                        f.replace(/.*\//,'').replace(/\.json/,''));
+                    that._suttaFiles.sort(SuttaStore.compareFilenames);
+
                     resolve(that);
                 } catch(e) {reject(e);} })();
             });
@@ -311,6 +333,49 @@
                 }
             }
             return cmp;
+        }
+
+        suttaFile(sutta_uid) {
+            var i = this.suttaFileIndex(sutta_uid);
+            return this._suttaFiles[i];
+        }
+        suttaFileIndex(sutta_uid) {
+            if (!this.isInitialized) {
+                throw new Error("SuttaStore.initialize() is required");
+            }
+            var i1 = 0;
+            var i2 = this._suttaFiles.length-1;
+            while (i1 < i2) {
+                var i = Math.round((i1 + i2)/2);
+                var sf = this._suttaFiles[i];
+                var cmp = SuttaStore.compareFilenames(sutta_uid, sf);
+                if (cmp === 0) {
+                    return i;
+                }
+                if (cmp < 0) {
+                    i2 = i - 1;
+                } else {
+                    i1 = i;
+                }
+            }
+            return i1;
+        }
+
+        suttaFiles(list) {
+            var files = list.reduce((acc,item,i) => {
+                var parts = item.split('-');
+                acc[this.suttaFile(parts[0])] = true;
+                if (parts.length > 1) {
+                    var prefix = item.split('.')[0];
+                    var endUid = `${prefix}.${parts[1]}`;
+                    var iEnd = this.suttaFileIndex(endUid);
+                    for (var i = this.suttaFileIndex(parts[0]); ++i<=iEnd; ) {
+                        acc[this._suttaFiles[i]] = true;
+                    }
+                }
+                return acc;
+            }, {});
+            return Object.keys(files).sort(SuttaStore.compareFilenames);
         }
 
         searchResults(args) {
