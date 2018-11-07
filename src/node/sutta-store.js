@@ -190,6 +190,19 @@
             return path.join(authorPath, `${fname}.json`);
         }
 
+        static isUidPattern(pattern) {
+            var commaParts = pattern.toLowerCase().split(',').map(p=>p.trim());
+            return commaParts.reduce((acc,part) => {
+                if (acc) {
+                    var iId = part.search(/\.?[1-9]/);
+                    if (iId <= 0 || COLLECTIONS[part.substring(0,iId)]==null) {
+                        acc = false;
+                    }
+                }
+                return acc;
+            }, true);
+        }
+
         static sanitizePattern(pattern) {
             if (!pattern) {
                 throw new Error("SuttaStore.search() pattern is required");
@@ -334,7 +347,7 @@
                 var adig = a.replace(/[^1-9]*([1-9]*.?[0-9]*).*/,"$1").split('.');
                 var bdig = b.replace(/[^1-9]*([1-9]*.?[0-9]*).*/,"$1").split('.');
                 var cmp = Number(adig[0]) - Number(bdig[0]);
-                if (cmp === 0) {
+                if (cmp === 0 && adig.length>1 && bdig.length>1) {
                     cmp = Number(adig[1]) - Number(bdig[1]);
                 }
             }
@@ -369,6 +382,7 @@
                 var i = Math.trunc((i1+i2)/2);
                 var sf = this._suttaFiles[i];
                 cmp = SuttaStore.compareFilenames(sutta_uid, sf);
+
                 if (cmp === 0) {
                     return i === iEnd-1 ? null : i;
                 }
@@ -385,10 +399,13 @@
                 }
             }
             //console.log('cmp', cmp, i, i1, i2, sutta_uid);
-            if (i === 0 && cmp < 0) {
-                return null;
-            }
-            return i+1 === iEnd ? null : i; // sentinel is not a sutta
+            if (cmp < 0) {
+                return i === 0 ? null : i;
+            } 
+            console.log('cmp', cmp, i, i1, i2, sutta_uid);
+            var uidNext = SuttaStore.sutta_uidSuccessor(this._suttaFiles[i]);
+            var cmpNext = SuttaStore.compareFilenames(sutta_uid, uidNext);
+            return cmpNext < 0 ? i : null;
         }
 
         suttaFiles(list) {
