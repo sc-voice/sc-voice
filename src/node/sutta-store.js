@@ -88,7 +88,7 @@
                     that._suttaFiles = that._suttaFiles.map(f=> 
                         f.replace(/.*\//,'').replace(/\.json/,''));
                     var uidLast = that._suttaFiles[that._suttaFiles.length-1];
-                    var uidEnd = SuttaStore.sutta_uidSuccessor(uidLast);
+                    var uidEnd = that.sutta_uidSuccessor(uidLast, true);
                     that._suttaFiles.push(uidEnd); // sentinel is non-existent sutta
                     that._suttaFiles.sort(SuttaStore.compareFilenames);
 
@@ -344,8 +344,8 @@
             var bprefix = b.substring(0,b.search(/[1-9]/));
             var cmp = aprefix.localeCompare(bprefix);
             if (cmp === 0) {
-                var adig = a.replace(/[^1-9]*([1-9]*.?[0-9]*).*/,"$1").split('.');
-                var bdig = b.replace(/[^1-9]*([1-9]*.?[0-9]*).*/,"$1").split('.');
+                var adig = a.replace(/[^1-9]*([0-9]*.?[0-9]*).*/,"$1").split('.');
+                var bdig = b.replace(/[^1-9]*([0-9]*.?[0-9]*).*/,"$1").split('.');
                 var cmp = Number(adig[0]) - Number(bdig[0]);
                 if (cmp === 0 && adig.length>1 && bdig.length>1) {
                     cmp = Number(adig[1]) - Number(bdig[1]);
@@ -354,15 +354,27 @@
             return cmp;
         }
 
-        static sutta_uidSuccessor(sutta_uid) {
-            var suffixParts = sutta_uid.split(".");
-            var iSuffix = suffixParts.length-1;
+        sutta_uidSuccessor(sutta_uid, logical) {
+            var prefix = sutta_uid.replace(/[-0-9.:]*$/u, '');
+            var dotParts = sutta_uid.substring(prefix.length).split(".");
+            var dotLast = dotParts.length-1;
             var rangeParts = sutta_uid.split("-");
             var rangeLast = rangeParts.length - 1;
-            suffixParts[iSuffix] = (rangeParts.length < 2) 
-                ? `${Number(suffixParts[iSuffix])+1}`
-                : `${Number(rangeParts[rangeLast])+1}`;
-            return suffixParts.join(".");
+            if (logical) { // logical
+                dotParts[dotParts.length-1] = (rangeParts.length < 2) 
+                    ? `${Number(dotParts[dotLast])+1}`
+                    : `${Number(rangeParts[rangeLast])+1}`;
+                var uidEnd = prefix+dotParts.join(".");
+                return uidEnd;
+            } else { // physical
+                dotParts[dotParts.length-1] = (rangeParts.length < 2) 
+                    ? `${Number(dotParts[dotLast])}`
+                    : `${Number(rangeParts[rangeLast])}`;
+                var uidLast = prefix+dotParts.join(".");
+                var iLast = this.suttaFileIndex(uidLast, false);
+                var uidNext = this._suttaFiles[iLast+1];
+                return uidNext;
+            }
         }
 
         suttaFile(sutta_uid) {
@@ -370,7 +382,7 @@
             return this._suttaFiles[i] || null;
         }
 
-        suttaFileIndex(sutta_uid) {
+        suttaFileIndex(sutta_uid, strict=true) {
             if (!this.isInitialized) {
                 throw new Error("SuttaStore.initialize() is required");
             }
@@ -398,31 +410,56 @@
                     break;
                 }
             }
-            //console.log('cmp', cmp, i, i1, i2, sutta_uid);
             if (cmp < 0) {
                 return i === 0 ? null : i;
             } 
-            console.log('cmp', cmp, i, i1, i2, sutta_uid);
-            var uidNext = SuttaStore.sutta_uidSuccessor(this._suttaFiles[i]);
-            var cmpNext = SuttaStore.compareFilenames(sutta_uid, uidNext);
-            return cmpNext < 0 ? i : null;
+            if (strict) {
+                var uidNext = this.sutta_uidSuccessor(this._suttaFiles[i], true);
+                var cmpNext = SuttaStore.compareFilenames(sutta_uid, uidNext);
+                return cmpNext < 0 ? i : null;
+            }
+            return i;
         }
 
         suttaFiles(list) {
-            var files = list.reduce((acc,item,i) => {
-                var parts = item.split('-');
-                acc[this.suttaFile(parts[0])] = true;
-                if (parts.length > 1) {
-                    var prefix = item.split('.')[0];
-                    var endUid = `${prefix}.${parts[1]}`;
-                    var iEnd = this.suttaFileIndex(endUid);
-                    for (var i = this.suttaFileIndex(parts[0]); ++i<=iEnd; ) {
-                        acc[this._suttaFiles[i]] = true;
+            var majorList = list.reduce((acc,item) => {
+                if (item.indexOf('.') >= 0) {
+                    acc.push(item);
+                } else {
+                    var rangeParts = item.split('-');
+                    if (rangeParts.length === 1) {
+                        acc.push(item);
+                    } else {
+                        var prefix = rangeParts[0].replace(/[-0-9.:]*$/,'');
+                        var first = Number(rangeParts[0].substring(prefix.length));
+                        var last = Number(rangeParts[1]);
+                        if (isNaN(first) || isNaN(last)) {
+                            acc.push(item);
+                        } else {
+                            last < first && ({last,first} = {first,last});
+                            for (var i = first; i <= last; i++) {
+                                acc.push(`${prefix}${i}`);
+                            }
+                        }
                     }
                 }
                 return acc;
-            }, {});
-            return Object.keys(files).sort(SuttaStore.compareFilenames);
+            }, []);
+            var files = majorList.reduce((acc,item,i) => {
+                var iCur = this.suttaFileIndex(item, false);
+                if (iCur == null) {
+                    throw new Error(`Sutta ${item} not found`);
+                }
+                var nextUid = this.sutta_uidSuccessor(item);
+                var iNext = this.suttaFileIndex(nextUid, false);
+                var iLast = iNext-1;
+                var iNext = this.suttaFileIndex(nextUid);
+                for (var i = iCur; i < iNext; i++) {
+                    acc.push(this._suttaFiles[i]);
+                }
+                return acc;
+            }, []);
+            return files;
         }
 
         searchResults(args) {

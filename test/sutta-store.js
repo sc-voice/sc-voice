@@ -446,7 +446,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTcompareFilenames(a,b) compares sutta file names", function(){
+    it("compareFilenames(a,b) compares sutta file names", function(){
         // Standalone 
         should(SuttaStore.compareFilenames('mn33', 'mn33')).equal(0);
         should(SuttaStore.compareFilenames('mn33', 'mn34')).equal(-1);
@@ -475,6 +475,9 @@
             'sn/en/sujato/sn29.1')).equal(-7);
 
         // subchapter numbering
+        should(SuttaStore.compareFilenames(
+            'sn/en/sujato/sn30.1', 
+            'sn/en/sujato/sn30.2')).equal(-1);
         should(SuttaStore.compareFilenames(
             'sn/en/sujato/sn29.1', 
             'sn/en/sujato/sn29.10')).equal(-9);
@@ -507,14 +510,22 @@
         should(SuttaStore.compareFilenames("an1.1", "an1.1-10")).equal(0);
 
     });
-    it("sutta_uidSuccessor(sutta_uid) returns following sutta_uid", function() {
-        should(SuttaStore.sutta_uidSuccessor('thag16.1')).equal('thag16.2');
-        should(SuttaStore.sutta_uidSuccessor('thag16.1-10')).equal('thag16.11');
+    it("sutta_uidSuccessor(sutta_uid) returns following sutta_uid", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            should(store.sutta_uidSuccessor('mn33',true)).equal('mn34');
+            should(store.sutta_uidSuccessor('mn33',false)).equal('mn34');
+            should(store.sutta_uidSuccessor('sn29.10-21',true)).equal('sn29.22');
+            should(store.sutta_uidSuccessor('sn29.10-21')).equal('sn30.1');
+            should(store.sutta_uidSuccessor('sn29.10-21',false)).equal('sn30.1');
+            should(store.sutta_uidSuccessor('thag16.1')).equal('thag16.2');
+            should(store.sutta_uidSuccessor('thag16.1-10')).equal('thag17.1');
+            done(); 
+        } catch(e) {done(e);} })();
     });
     it("suttaFile(pattern) finds sutta file", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
-            should(store.suttaFile("mn33")).equal("mn33");
 
             var first = store._suttaFiles[0];
             should(store.suttaFile(first)).equal(first);
@@ -546,6 +557,8 @@
         should(SuttaStore.isUidPattern('an1')).equal(true);
         should(SuttaStore.isUidPattern('sn22.1')).equal(true);
         should(SuttaStore.isUidPattern('sn22.1-20')).equal(true);
+        should(SuttaStore.isUidPattern('mn8-11')).equal(true);
+        should(SuttaStore.isUidPattern('mn8-11,mn9-12')).equal(true);
 
         // not a sutta_uid pattern
         should(SuttaStore.isUidPattern('red')).equal(false);
@@ -563,15 +576,36 @@
         should(SuttaStore.isUidPattern('sn22.1-20    ,   red')).equal(false);
         should(SuttaStore.isUidPattern('red,sn22.1-20')).equal(false);
     });
-    it("suttaFiles(pattern) finds listed suttas", function(done) {
+    it("TESTTESTsuttaFiles(pattern) finds listed suttas", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
-            should.deepEqual(
-                store.suttaFiles(['sn29.1', 'sn29.12', 'sn29.2']),
-                ['sn29.1', 'sn29.2', 'sn29.11-20']);
-            should.deepEqual(
-                store.suttaFiles(['sn29.1', 'sn29.12', 'sn29.10-21', 'mn33']),
-                ['mn33', 'sn29.1', 'sn29.10', 'sn29.11-20', 'sn29.21-50']);
+
+            should.deepEqual( store.suttaFiles(
+                ['sn28.8-10']), // sub-chapter range (exact)
+                ['sn28.8', 'sn28.9', 'sn28.10']);
+            should.deepEqual( store.suttaFiles(
+                ['sn28.8-999']), // sub-chapter range (right over)
+                ['sn28.8', 'sn28.9', 'sn28.10']);
+            should.deepEqual( store.suttaFiles(
+                ['sn29.1', 'mn33', 'sn29.2']), // order as entered
+                ['sn29.1', 'mn33', 'sn29.2']);
+            should.deepEqual( store.suttaFiles(
+                ['sn29.1', 'sn29.12', 'sn29.2']), // within range
+                ['sn29.1', 'sn29.11-20', 'sn29.2']);
+            should.deepEqual( store.suttaFiles(
+                ['sn29.9-11']), // expand sub-chapter range
+                ['sn29.9', 'sn29.10', 'sn29.11-20']);
+            should.deepEqual( store.suttaFiles(
+                ['sn29.1', 'sn29.1', 'sn29.2']), // duplicates
+                ['sn29.1', 'sn29.1', 'sn29.2']);
+
+            should.deepEqual(store.suttaFiles(
+                ['mn9-11']), // major number range
+                ['mn9','mn10','mn11']); 
+            should.deepEqual(store.suttaFiles(
+                ['mn9-11', 'mn10-12']), // major number range
+                ['mn9','mn10','mn11','mn10','mn11','mn12']); 
+
             done(); 
         } catch(e) {done(e);} })();
     });
