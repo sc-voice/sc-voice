@@ -41,7 +41,6 @@
         }
     }
 
-    var suttaPaths;
     var supportedSuttas;
 
     class SuttaStore {
@@ -79,8 +78,8 @@
                         cwd: that.root,
                         shell: '/bin/bash',
                     };
-                    if (suttaPaths == null) {
-                        suttaPaths = await new Promise((resolve, reject) => {
+                    if (supportedSuttas == null) {
+                        var suttaPaths = await new Promise((resolve, reject) => {
                             exec(cmd, findOpts, (err,stdout,stderr) => {
                                 if (err) {
                                     logger.log(stderr);
@@ -93,15 +92,17 @@
                         if (suttaPaths.length === 0) {
                             throw new Error(`SuttaStore.initialize() no sutta files:${root}`);
                         }
-                        supportedSuttas = suttaPaths.map(sp => {
-                            return sp.replace(/.*\//,'').replace('.json','');
-                        });
-                        supportedSuttas.sort(SuttaStore.compareSuttaUids);
+                        // eliminate multi-lingual duplicates
+                        var uids = suttaPaths.reduce((acc,sp) => { 
+                            var uid = sp.replace(/.*\//,'').replace('.json','');
+                            acc[uid] = true;
+                            return acc;
+                        },{});
+                        supportedSuttas = Object.keys(uids).sort(SuttaStore.compareSuttaUids);
                         var uidLast = supportedSuttas[supportedSuttas.length-1];
                         var uidEnd = that.sutta_uidSuccessor(uidLast, true);
                         supportedSuttas.push(uidEnd); // sentinel is non-existent sutta
                     }
-                    that.suttaPaths = suttaPaths;
                     that.supportedSuttas = supportedSuttas;
 
                     resolve(that);
