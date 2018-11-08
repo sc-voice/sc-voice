@@ -17,21 +17,27 @@
     const COLLECTIONS = {
         an: {
             folder: 'an',
+            subchapters: true,
         },
         mn: {
             folder: 'mn',
+            subchapters: false,
         },
         dn: {
             folder: 'dn',
+            subchapters: false,
         },
         sn: {
             folder: 'sn',
+            subchapters: true,
         },
         thig: {
             folder: 'kn',
+            subchapters: true,
         },
         thag: {
             folder: 'kn',
+            subchapters: true,
         }
     }
 
@@ -422,15 +428,25 @@
         }
 
         suttaFiles(list) {
+            if (typeof list === 'string') {
+                list = list.split(',');
+            }
             var majorList = list.reduce((acc,item) => {
+                item = item.trim().toLowerCase();
                 if (item.indexOf('.') >= 0) {
                     acc.push(item);
                 } else {
                     var rangeParts = item.split('-');
+                    var prefix = rangeParts[0].replace(/[-0-9.:]*$/,'');
                     if (rangeParts.length === 1) {
-                        acc.push(item);
+                        var coll = COLLECTIONS[prefix];
+                        if (coll && coll.subchapters) {
+                            var uid = `${item}.1-999`; 
+                            acc.push(uid);
+                        } else {
+                            acc.push(item);
+                        }
                     } else {
-                        var prefix = rangeParts[0].replace(/[-0-9.:]*$/,'');
                         var first = Number(rangeParts[0].substring(prefix.length));
                         var last = Number(rangeParts[1]);
                         if (isNaN(first) || isNaN(last)) {
@@ -462,7 +478,7 @@
             return files;
         }
 
-        searchResults(args) {
+        grepSearchResults(args) {
             var {
                 lines,
                 pattern,
@@ -506,15 +522,15 @@
             }) || [];
         }
 
-        voiceResults(searchResults, lang) {
+        voiceResults(grepSearchResults, lang) {
             var voice = this.voice;
             if (voice == null) {
-                return Promise.resolve(searchResults);
+                return Promise.resolve(grepSearchResults);
             }
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    for (var i = 0; i < searchResults.length; i++) {
-                        var result = searchResults[i];
+                    for (var i = 0; i < grepSearchResults.length; i++) {
+                        var result = grepSearchResults[i];
                         var quote = result.quote;
                         result.audio = {
                             [lang]: null,
@@ -533,7 +549,7 @@
                                 `pli:${vr.signature.guid}`);
                         }
                     }
-                    resolve(searchResults);
+                    resolve(grepSearchResults);
                 } catch(e) {reject(e);} })();
             });
         }
@@ -566,33 +582,43 @@
             if (isNaN(maxResults)) {
                 throw new Error("SuttaStore.search() maxResults must be a number");
             }
+            var searchOpts = {
+                pattern, 
+                maxResults, 
+                language, 
+                searchMetadata
+            };
 
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var searchOpts = {
-                        pattern, 
-                        maxResults, 
-                        language, 
-                        searchMetadata
-                    };
-                    var method = 'phrase';
-                    var lines = [];
-                    if (!lines.length && !/^[a-z]+$/iu.test(pattern)) {
-                        lines = await that.phraseSearch(searchOpts);
+                    if (SuttaStore.isUidPattern(pattern)) {
+                        var method = 'sutta_uid';
+                        var uids = that.suttaFiles(pattern).slice(0, maxResults);
+                        var results = uids.map(uid => {
+                            return {
+                                uid,
+                            }
+                        });
+                    } else {
+                        var method = 'phrase';
+                        var lines = [];
+                        if (!lines.length && !/^[a-z]+$/iu.test(pattern)) {
+                            lines = await that.phraseSearch(searchOpts);
+                        }
+                        var resultPattern = pattern;
+                        if (!lines.length) {
+                            var method = 'keywords';
+                            var data = await that.keywordSearch(searchOpts);
+                            lines = data.lines;
+                            resultPattern = data.resultPattern;
+                        }
+                        var grepSearchResults = that.grepSearchResults({
+                            lines,
+                            sortLines,
+                            pattern: resultPattern,
+                        });
+                        var results = await that.voiceResults(grepSearchResults, language);
                     }
-                    var resultPattern = pattern;
-                    if (!lines.length) {
-                        var method = 'keywords';
-                        var data = await that.keywordSearch(searchOpts);
-                        lines = data.lines;
-                        resultPattern = data.resultPattern;
-                    }
-                    var searchResults = that.searchResults({
-                        lines,
-                        sortLines,
-                        pattern: resultPattern,
-                    });
-                    var results = await that.voiceResults(searchResults, language);
                     resolve({
                         method,
                         results,

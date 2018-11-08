@@ -11,6 +11,7 @@
     const LANG = 'en';
     const LOCAL = path.join(__dirname, '..', 'local');
     const ROOT = path.join(LOCAL, 'suttas');
+    const MAXRESULTS = 5;
 
     it("initialize() initializes SuttaStore", function(done) {
         (async function() { try {
@@ -581,16 +582,24 @@
             var store = await new SuttaStore().initialize();
 
             should.deepEqual( store.suttaFiles(
-                ['sn28.8-10']), // sub-chapter range (exact)
+                ['sn29']), // implied sub-chapters
+                ['sn29.1', 'sn29.2', 'sn29.3', 'sn29.4', 'sn29.5',
+                    'sn29.6', 'sn29.7', 'sn29.8', 'sn29.9', 'sn29.10',
+                    'sn29.11-20', 'sn29.21-50', ]);
+            should.deepEqual( store.suttaFiles(
+                ['SN28.8-10']), // sub-chapter range (exact)
                 ['sn28.8', 'sn28.9', 'sn28.10']);
             should.deepEqual( store.suttaFiles(
                 ['sn28.8-999']), // sub-chapter range (right over)
                 ['sn28.8', 'sn28.9', 'sn28.10']);
             should.deepEqual( store.suttaFiles(
-                ['sn29.1', 'mn33', 'sn29.2']), // order as entered
+                ['sn29.1', 'mn33', 'SN29.2']), // order as entered
                 ['sn29.1', 'mn33', 'sn29.2']);
             should.deepEqual( store.suttaFiles(
                 ['sn29.1', 'sn29.12', 'sn29.2']), // within range
+                ['sn29.1', 'sn29.11-20', 'sn29.2']);
+            should.deepEqual( store.suttaFiles(
+                'sn29.1, sn29.12, sn29.2'), // String
                 ['sn29.1', 'sn29.11-20', 'sn29.2']);
             should.deepEqual( store.suttaFiles(
                 ['sn29.9-11']), // expand sub-chapter range
@@ -600,7 +609,7 @@
                 ['sn29.1', 'sn29.1', 'sn29.2']);
 
             should.deepEqual(store.suttaFiles(
-                ['mn9-11']), // major number range
+                ['MN9-11']), // major number range
                 ['mn9','mn10','mn11']); 
             should.deepEqual(store.suttaFiles(
                 ['mn9-11', 'mn10-12']), // major number range
@@ -609,40 +618,22 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) finds suttas in range", function(done) {
+    it("TESTTESTsearch(pattern) finds suttas in range", function(done) {
         (async function() { try {
-            var msStart = Date.now();
-            var store = await new SuttaStore({
-                maxResults,
-            }).initialize();
-            var maxResults = 45;
-            var {
-                method,
-                results,
-                resultPattern,
-            } = await store.search({
-                pattern: 'scid.*sn29',
-                sortLines: SuttaStore.compareFilenames,
-            });
-            console.log(`elapsed: ${Date.now()-msStart}`);
-            done(); return;
-            should.deepEqual(results.map(r=>r.uid),[
-                'sn29.1', 
-                'sn29.2', 
-                'sn29.3', 
-                'sn29.4', 
-                'sn29.5', 
-                'sn29.6', 
-                'sn29.7', 
-                'sn29.8', 
-                'sn29.9',
-                'sn29.10', 
-                'sn29.11-20',
-                'sn29.21-50',
-                ]);
-            should(resultPattern).equal('scid.*sn29');
-            should(results.length).equal(12);
-            should(method).equal('phrase');
+            var store = await new SuttaStore().initialize();
+
+            var data = await store.search({ pattern: 'sn29.9-999', });
+            should.deepEqual(data.results.map(r=>r.uid),
+                ['sn29.9', 'sn29.10', 'sn29.11-20', 'sn29.21-50']);
+            should(data.results.length).equal(4);
+            should(data.method).equal('sutta_uid');
+
+            // maxResults
+            var data = await store.search({ pattern: 'sn29', });
+            should.deepEqual(data.results.map(r=>r.uid),
+                ['sn29.1', 'sn29.2', 'sn29.3', 'sn29.4', 'sn29.5']);
+            should(data.results.length).equal(MAXRESULTS);
+            should(data.method).equal('sutta_uid');
 
             done(); 
         } catch(e) {done(e);} })();

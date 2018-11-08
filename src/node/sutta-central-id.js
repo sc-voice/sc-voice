@@ -22,11 +22,11 @@
                 return;
             }
             if (fs.existsSync(SUTTAIDS_PATH)) {
-                logger.info(`SuttaStore.initialize() loading:${SUTTAIDS_PATH}`);
+                logger.info(`SuttaCentralId.initialize() loading:${SUTTAIDS_PATH}`);
                 suttaIds = JSON.parse(fs.readFileSync(SUTTAIDS_PATH));
             }
             if (fs.existsSync(UID_EXPANSION_PATH)) {
-                logger.info(`SuttaStore.initialize() loading:${UID_EXPANSION_PATH}`);
+                logger.info(`SuttaCentralId.initialize() loading:${UID_EXPANSION_PATH}`);
                 uid_expansion = JSON.parse(fs.readFileSync(UID_EXPANSION_PATH));
             }
         }
