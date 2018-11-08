@@ -76,8 +76,7 @@
                         cwd: that.root,
                         shell: '/bin/bash',
                     };
-                    var msStart = Date.now();
-                    that._suttaFiles = await new Promise((resolve, reject) => {
+                    that.suttaPaths = await new Promise((resolve, reject) => {
                         exec(cmd, findOpts, (err,stdout,stderr) => {
                             if (err) {
                                 logger.log(stderr);
@@ -87,16 +86,15 @@
                             }
                         });
                     });
-                    if (that._suttaFiles.length === 0) {
+                    if (that.suttaPaths.length === 0) {
                         throw new Error(`SuttaStore.initialize() no sutta files:${root}`);
                     }
-                    //console.log(`find elapsed:${Date.now() -msStart}`);
-                    that._suttaFiles = that._suttaFiles.map(f=> 
-                        f.replace(/.*\//,'').replace(/\.json/,''));
-                    var uidLast = that._suttaFiles[that._suttaFiles.length-1];
+                    that.supportedSuttas = SuttaCentralId.supportedSuttas;
+                    that.supportedSuttas = that.supportedSuttas.map(f=>f); // copy
+                    var uidLast = that.supportedSuttas[that.supportedSuttas.length-1];
                     var uidEnd = that.sutta_uidSuccessor(uidLast, true);
-                    that._suttaFiles.push(uidEnd); // sentinel is non-existent sutta
-                    that._suttaFiles.sort(SuttaStore.compareFilenames);
+                    that.supportedSuttas.push(uidEnd); // sentinel is non-existent sutta
+                    that.supportedSuttas.sort(SuttaStore.compareFilenames);
 
                     resolve(that);
                 } catch(e) {reject(e);} })();
@@ -377,28 +375,28 @@
                     ? `${Number(dotParts[dotLast])}`
                     : `${Number(rangeParts[rangeLast])}`;
                 var uidLast = prefix+dotParts.join(".");
-                var iLast = this.suttaFileIndex(uidLast, false);
-                var uidNext = this._suttaFiles[iLast+1];
+                var iLast = this.suttaIndex(uidLast, false);
+                var uidNext = this.supportedSuttas[iLast+1];
                 return uidNext;
             }
         }
 
         suttaFile(sutta_uid) {
-            var i = this.suttaFileIndex(sutta_uid);
-            return this._suttaFiles[i] || null;
+            var i = this.suttaIndex(sutta_uid);
+            return this.supportedSuttas[i] || null;
         }
 
-        suttaFileIndex(sutta_uid, strict=true) {
+        suttaIndex(sutta_uid, strict=true) {
             if (!this.isInitialized) {
                 throw new Error("SuttaStore.initialize() is required");
             }
-            var iEnd = this._suttaFiles.length;
+            var iEnd = this.supportedSuttas.length;
             var i1 = 0;
             var i2 = iEnd;
             var cmp;
             while (i1 <= i2) {
                 var i = Math.trunc((i1+i2)/2);
-                var sf = this._suttaFiles[i];
+                var sf = this.supportedSuttas[i];
                 cmp = SuttaStore.compareFilenames(sutta_uid, sf);
 
                 if (cmp === 0) {
@@ -420,14 +418,14 @@
                 return i === 0 ? null : i;
             } 
             if (strict) {
-                var uidNext = this.sutta_uidSuccessor(this._suttaFiles[i], true);
+                var uidNext = this.sutta_uidSuccessor(this.supportedSuttas[i], true);
                 var cmpNext = SuttaStore.compareFilenames(sutta_uid, uidNext);
                 return cmpNext < 0 ? i : null;
             }
             return i;
         }
 
-        suttaFiles(list) {
+        suttaList(list) {
             if (typeof list === 'string') {
                 list = list.split(',');
             }
@@ -462,16 +460,16 @@
                 return acc;
             }, []);
             var files = majorList.reduce((acc,item,i) => {
-                var iCur = this.suttaFileIndex(item, false);
+                var iCur = this.suttaIndex(item, false);
                 if (iCur == null) {
                     throw new Error(`Sutta ${item} not found`);
                 }
                 var nextUid = this.sutta_uidSuccessor(item);
-                var iNext = this.suttaFileIndex(nextUid, false);
+                var iNext = this.suttaIndex(nextUid, false);
                 var iLast = iNext-1;
-                var iNext = this.suttaFileIndex(nextUid);
+                var iNext = this.suttaIndex(nextUid);
                 for (var i = iCur; i < iNext; i++) {
-                    acc.push(this._suttaFiles[i]);
+                    acc.push(this.supportedSuttas[i]);
                 }
                 return acc;
             }, []);
@@ -593,7 +591,7 @@
                 (async function() { try {
                     if (SuttaStore.isUidPattern(pattern)) {
                         var method = 'sutta_uid';
-                        var uids = that.suttaFiles(pattern).slice(0, maxResults);
+                        var uids = that.suttaList(pattern).slice(0, maxResults);
                         var results = uids.map(uid => {
                             return {
                                 uid,

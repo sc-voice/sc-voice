@@ -524,13 +524,13 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("suttaFile(pattern) finds sutta file", function(done) {
+    it("TESTTESTsuttaList(pattern) finds sutta file", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
-            var first = store._suttaFiles[0];
-            should(store.suttaFile(first)).equal(first);
-            var last = store._suttaFiles[store._suttaFiles.length-2];
+            var suttas = SuttaCentralId.supportedSuttas;
+            should(store.suttaFile(suttas[0])).equal(suttas[0]);
+            var last = suttas[suttas.length-1];
             should(store.suttaFile(last)).equal(last);
 
             should(store.suttaFile("sn29.1")).equal("sn29.1");
@@ -577,41 +577,41 @@
         should(SuttaStore.isUidPattern('sn22.1-20    ,   red')).equal(false);
         should(SuttaStore.isUidPattern('red,sn22.1-20')).equal(false);
     });
-    it("TESTTESTsuttaFiles(pattern) finds listed suttas", function(done) {
+    it("TESTTESTsuttaList(pattern) finds listed suttas", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
-            should.deepEqual( store.suttaFiles(
+            should.deepEqual( store.suttaList(
                 ['sn29']), // implied sub-chapters
                 ['sn29.1', 'sn29.2', 'sn29.3', 'sn29.4', 'sn29.5',
                     'sn29.6', 'sn29.7', 'sn29.8', 'sn29.9', 'sn29.10',
                     'sn29.11-20', 'sn29.21-50', ]);
-            should.deepEqual( store.suttaFiles(
+            should.deepEqual( store.suttaList(
                 ['SN28.8-10']), // sub-chapter range (exact)
                 ['sn28.8', 'sn28.9', 'sn28.10']);
-            should.deepEqual( store.suttaFiles(
+            should.deepEqual( store.suttaList(
                 ['sn28.8-999']), // sub-chapter range (right over)
                 ['sn28.8', 'sn28.9', 'sn28.10']);
-            should.deepEqual( store.suttaFiles(
+            should.deepEqual( store.suttaList(
                 ['sn29.1', 'mn33', 'SN29.2']), // order as entered
                 ['sn29.1', 'mn33', 'sn29.2']);
-            should.deepEqual( store.suttaFiles(
+            should.deepEqual( store.suttaList(
                 ['sn29.1', 'sn29.12', 'sn29.2']), // within range
                 ['sn29.1', 'sn29.11-20', 'sn29.2']);
-            should.deepEqual( store.suttaFiles(
+            should.deepEqual( store.suttaList(
                 'sn29.1, sn29.12, sn29.2'), // String
                 ['sn29.1', 'sn29.11-20', 'sn29.2']);
-            should.deepEqual( store.suttaFiles(
+            should.deepEqual( store.suttaList(
                 ['sn29.9-11']), // expand sub-chapter range
                 ['sn29.9', 'sn29.10', 'sn29.11-20']);
-            should.deepEqual( store.suttaFiles(
+            should.deepEqual( store.suttaList(
                 ['sn29.1', 'sn29.1', 'sn29.2']), // duplicates
                 ['sn29.1', 'sn29.1', 'sn29.2']);
 
-            should.deepEqual(store.suttaFiles(
+            should.deepEqual(store.suttaList(
                 ['MN9-11']), // major number range
                 ['mn9','mn10','mn11']); 
-            should.deepEqual(store.suttaFiles(
+            should.deepEqual(store.suttaList(
                 ['mn9-11', 'mn10-12']), // major number range
                 ['mn9','mn10','mn11','mn10','mn11','mn12']); 
 
