@@ -447,68 +447,68 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("compareFilenames(a,b) compares sutta file names", function(){
+    it("compareSuttaUids(a,b) compares sutta file names", function(){
         // Standalone 
-        should(SuttaStore.compareFilenames('mn33', 'mn33')).equal(0);
-        should(SuttaStore.compareFilenames('mn33', 'mn34')).equal(-1);
-        should(SuttaStore.compareFilenames('mn34', 'mn33')).equal(1);
+        should(SuttaStore.compareSuttaUids('mn33', 'mn33')).equal(0);
+        should(SuttaStore.compareSuttaUids('mn33', 'mn34')).equal(-1);
+        should(SuttaStore.compareSuttaUids('mn34', 'mn33')).equal(1);
 
         // collection
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'sn/en/sujato/sn22.1', 
             'an/en/sujato/an22.1')).equal(1);
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'an/en/sujato/an22.1', 
             'sn/en/sujato/sn22.1')).equal(-1);
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'xx/en/sujato/sn22.1', 
             'xx/en/sujato/an22.1')).equal(1);
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'xx/en/sujato/an22.1', 
             'xx/en/sujato/sn22.1')).equal(-1);
 
         // major number
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'sn/en/sujato/sn29.1', 
             'sn/en/sujato/sn22.1')).equal(7);
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'sn/en/sujato/sn22.1', 
             'sn/en/sujato/sn29.1')).equal(-7);
 
         // subchapter numbering
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'sn/en/sujato/sn30.1', 
             'sn/en/sujato/sn30.2')).equal(-1);
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'sn/en/sujato/sn29.1', 
             'sn/en/sujato/sn29.10')).equal(-9);
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'sn/en/sujato/sn29.10', 
             'sn/en/sujato/sn29.1')).equal(9);
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'sn/en/sujato/sn29.1', 
             'sn/en/sujato/sn29.11-20')).equal(-10);
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'sn/en/sujato/sn29.11-20', 
             'sn/en/sujato/sn29.1')).equal(10);
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'sn/en/sujato/sn29.10', 
             'sn/en/sujato/sn29.11-20')).equal(-1);
-        should(SuttaStore.compareFilenames(
+        should(SuttaStore.compareSuttaUids(
             'sn/en/sujato/sn29.11-20', 
             'sn/en/sujato/sn29.10')).equal(1);
 
         // ranges
-        should(SuttaStore.compareFilenames('sn29.11-20', 'sn29.11-20')).equal(0);
-        should(SuttaStore.compareFilenames('sn29.11-20', 'sn29.10')).equal(1);
-        should(SuttaStore.compareFilenames('sn29.11-20', 'sn29.11')).equal(0);
-        should(SuttaStore.compareFilenames('sn29.11-20', 'sn29.12')).equal(-1);
-        should(SuttaStore.compareFilenames('sn29.21', 'sn29.20')).equal(1);
-        should(SuttaStore.compareFilenames('sn29.21', 'sn29.21')).equal(0);
-        should(SuttaStore.compareFilenames('sn29.21', 'sn29.22')).equal(-1);
+        should(SuttaStore.compareSuttaUids('sn29.11-20', 'sn29.11-20')).equal(0);
+        should(SuttaStore.compareSuttaUids('sn29.11-20', 'sn29.10')).equal(1);
+        should(SuttaStore.compareSuttaUids('sn29.11-20', 'sn29.11')).equal(0);
+        should(SuttaStore.compareSuttaUids('sn29.11-20', 'sn29.12')).equal(-1);
+        should(SuttaStore.compareSuttaUids('sn29.21', 'sn29.20')).equal(1);
+        should(SuttaStore.compareSuttaUids('sn29.21', 'sn29.21')).equal(0);
+        should(SuttaStore.compareSuttaUids('sn29.21', 'sn29.22')).equal(-1);
 
-        should(SuttaStore.compareFilenames("an1.1-10", "an1.1-10")).equal(0);
-        should(SuttaStore.compareFilenames("an1.1", "an1.1-10")).equal(0);
+        should(SuttaStore.compareSuttaUids("an1.1-10", "an1.1-10")).equal(0);
+        should(SuttaStore.compareSuttaUids("an1.1", "an1.1-10")).equal(0);
 
     });
     it("sutta_uidSuccessor(sutta_uid) returns following sutta_uid", function(done) {

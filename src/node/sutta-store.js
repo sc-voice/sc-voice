@@ -41,6 +41,9 @@
         }
     }
 
+    var suttaPaths;
+    var supportedSuttas;
+
     class SuttaStore {
         constructor(opts={}) {
             this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
@@ -76,25 +79,30 @@
                         cwd: that.root,
                         shell: '/bin/bash',
                     };
-                    that.suttaPaths = await new Promise((resolve, reject) => {
-                        exec(cmd, findOpts, (err,stdout,stderr) => {
-                            if (err) {
-                                logger.log(stderr);
-                                reject(err);
-                            } else {
-                                resolve(stdout && stdout.trim().split('\n') || []);
-                            }
+                    if (suttaPaths == null) {
+                        suttaPaths = await new Promise((resolve, reject) => {
+                            exec(cmd, findOpts, (err,stdout,stderr) => {
+                                if (err) {
+                                    logger.log(stderr);
+                                    reject(err);
+                                } else {
+                                    resolve(stdout && stdout.trim().split('\n') || []);
+                                }
+                            });
                         });
-                    });
-                    if (that.suttaPaths.length === 0) {
-                        throw new Error(`SuttaStore.initialize() no sutta files:${root}`);
+                        if (suttaPaths.length === 0) {
+                            throw new Error(`SuttaStore.initialize() no sutta files:${root}`);
+                        }
+                        supportedSuttas = suttaPaths.map(sp => {
+                            return sp.replace(/.*\//,'').replace('.json','');
+                        });
+                        supportedSuttas.sort(SuttaStore.compareSuttaUids);
+                        var uidLast = supportedSuttas[supportedSuttas.length-1];
+                        var uidEnd = that.sutta_uidSuccessor(uidLast, true);
+                        supportedSuttas.push(uidEnd); // sentinel is non-existent sutta
                     }
-                    that.supportedSuttas = SuttaCentralId.supportedSuttas;
-                    that.supportedSuttas = that.supportedSuttas.map(f=>f); // copy
-                    var uidLast = that.supportedSuttas[that.supportedSuttas.length-1];
-                    var uidEnd = that.sutta_uidSuccessor(uidLast, true);
-                    that.supportedSuttas.push(uidEnd); // sentinel is non-existent sutta
-                    that.supportedSuttas.sort(SuttaStore.compareFilenames);
+                    that.suttaPaths = suttaPaths;
+                    that.supportedSuttas = supportedSuttas;
 
                     resolve(that);
                 } catch(e) {reject(e);} })();
@@ -343,13 +351,13 @@
             });
         }
 
-        static compareFilenames(a,b) {
-            var aprefix = a.substring(0,a.search(/[1-9]/));
-            var bprefix = b.substring(0,b.search(/[1-9]/));
+        static compareSuttaUids(a,b) {
+            var aprefix = a.substring(0,a.search(/[0-9]/));
+            var bprefix = b.substring(0,b.search(/[0-9]/));
             var cmp = aprefix.localeCompare(bprefix);
             if (cmp === 0) {
-                var adig = a.replace(/[^1-9]*([0-9]*.?[0-9]*).*/,"$1").split('.');
-                var bdig = b.replace(/[^1-9]*([0-9]*.?[0-9]*).*/,"$1").split('.');
+                var adig = a.replace(/[^0-9]*([0-9]*.?[0-9]*).*/,"$1").split('.');
+                var bdig = b.replace(/[^0-9]*([0-9]*.?[0-9]*).*/,"$1").split('.');
                 var cmp = Number(adig[0]) - Number(bdig[0]);
                 if (cmp === 0 && adig.length>1 && bdig.length>1) {
                     cmp = Number(adig[1]) - Number(bdig[1]);
@@ -397,7 +405,7 @@
             while (i1 <= i2) {
                 var i = Math.trunc((i1+i2)/2);
                 var sf = this.supportedSuttas[i];
-                cmp = SuttaStore.compareFilenames(sutta_uid, sf);
+                cmp = SuttaStore.compareSuttaUids(sutta_uid, sf);
 
                 if (cmp === 0) {
                     return i === iEnd-1 ? null : i;
@@ -419,7 +427,7 @@
             } 
             if (strict) {
                 var uidNext = this.sutta_uidSuccessor(this.supportedSuttas[i], true);
-                var cmpNext = SuttaStore.compareFilenames(sutta_uid, uidNext);
+                var cmpNext = SuttaStore.compareSuttaUids(sutta_uid, uidNext);
                 return cmpNext < 0 ? i : null;
             }
             return i;
