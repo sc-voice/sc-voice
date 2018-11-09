@@ -23,7 +23,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("suttaPath(opts) returns sutta filepath", function(done) {
+    it("TESTTESTsuttaPath(opts) returns sutta filepath", function(done) {
         (async function() { try {
             if (1) {
                 var suttaIdsPath = path.join(__dirname, '../src/node/sutta-ids.json');
@@ -47,13 +47,13 @@
 
             // opts.suttaIds controls suttaPath
             var suttaIds = [
-                "an1.1-5",
+                "an1.1-10",
             ];
             var store = await new SuttaStore({
                 suttaIds,
             }).initialize();
             var spath = store.suttaPath('an1.1','en','test');
-            should(spath).equal(path.join(ROOT,'an/en/test/an1.1-5.json'));
+            should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
 
             // src/node/sutta-ids.json controls suttaPath
             var store = await new SuttaStore().initialize();
@@ -83,13 +83,13 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("updateSuttas(ids) updates suttas from SuttaCentral", function(done) {
+    it("TESTTESTupdateSuttas(ids) updates suttas from SuttaCentral", function(done) {
         var maxseconds = 5;
         this.timeout(maxseconds*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
             await store.updateSuttas([
-                'thag1.1', 'sn39.1-15', 'sn12.93', 'an6.170-649', 
+                'thag1.1', 'sn39.1-15', 
                 'sn1.8', 'mn1','an1.1-10']);
 
             var thag1_1path = path.join(ROOT, 'kn/en/sujato-walton/thag1.1.json');
