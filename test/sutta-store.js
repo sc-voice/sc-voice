@@ -552,12 +552,20 @@
             should(store.supportedSutta("z999")).equal(null);
             should(store.supportedSutta("a1")).equal(null);
 
+            // fully specified suttas
+            should(store.supportedSutta("mn1/en/sujato")).equal("mn1");
+            should(store.supportedSutta("mn1/en/bodhi")).equal("mn1");
+
             done(); 
         } catch(e) {done(e);} })();
     });
     it("TESTTESTisUidPattern(pattern) is true for sutta_uid patterns", function() {
         // unsupported sutta
         should(SuttaStore.isUidPattern('t1670b2.8')).equal(true);
+
+        // fully specified sutta
+        should(SuttaStore.isUidPattern('mn1/en/sujato')).equal(true);
+        should(SuttaStore.isUidPattern('mn1/en/sujato,mn1/en/bodhi')).equal(true);
 
         // valid collection with a number
         should(SuttaStore.isUidPattern('mn2000')).equal(true);
@@ -632,6 +640,22 @@
     it("TESTTESTsearch(pattern) finds suttas in range", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
+
+            // fully specified unsupported
+            var data = await store.search({ pattern: 'mn1/en/bodhi', });
+            should.deepEqual(data.results.map(r=>r.uid), ['mn1']);
+            should.deepEqual(data.results.map(r=>r.lang), ['en']);
+            should.deepEqual(data.results.map(r=>r.author_uid), ['bodhi']);
+            should.deepEqual(data.results.map(r=>r.sutta.segments.length), [55]);
+            should(data.results.length).equal(1);
+
+            // fully specified
+            var data = await store.search({ pattern: 'mn1/en/sujato', });
+            should.deepEqual(data.results.map(r=>r.uid), ['mn1']);
+            should.deepEqual(data.results.map(r=>r.lang), ['en']);
+            should.deepEqual(data.results.map(r=>r.author_uid), ['sujato']);
+            should.deepEqual(data.results.map(r=>r.sutta.segments.length), [840]);
+            should(data.results.length).equal(1);
 
             var data = await store.search({ pattern: 'sn29.9-999', });
             should.deepEqual(data.results.map(r=>r.uid),

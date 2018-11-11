@@ -212,14 +212,7 @@
         static isUidPattern(pattern) {
             var commaParts = pattern.toLowerCase().split(',').map(p=>p.trim());
             return commaParts.reduce((acc,part) => {
-                //if (acc) {
-                    return acc && /^[a-z]+[0-9]+[-0-9a-z.:]*$/i.test(part);
-                    //var iId = part.search(/\.?[1-9]/);
-                    //if (iId <= 0 || COLLECTIONS[part.substring(0,iId)]==null) {
-                        //acc = false;
-                    //}
-                //}
-                return acc;
+                return acc && /^[a-z]+[0-9]+[-0-9a-z.:\/]*$/i.test(part);
             }, true);
         }
 
@@ -402,10 +395,11 @@
             return this.suttaIds[i] || null;
         }
 
-        suttaIndex(sutta_uid, strict=true) {
+        suttaIndex(suttaRef, strict=true) {
             if (!this.isInitialized) {
                 throw new Error("SuttaStore.initialize() is required");
             }
+            var sutta_uid = suttaRef.split('/')[0];
             var iEnd = this.suttaIds.length;
             var i1 = 0;
             var i2 = iEnd;
@@ -452,6 +446,8 @@
                 item = item.trim().toLowerCase();
                 if (item.indexOf('.') >= 0) {
                     acc.push(item);
+                } else if (item.indexOf('/') >= 0) {
+                    acc.push(item); // fully specified reference (e.g., mn1/en/bodhi)
                 } else {
                     var rangeParts = item.split('-');
                     var prefix = rangeParts[0].replace(/[-0-9.:]*$/,'');
@@ -479,16 +475,20 @@
                 return acc;
             }, []);
             var files = majorList.reduce((acc,item,i) => {
-                var iCur = this.suttaIndex(item, false);
-                if (iCur == null) {
-                    throw new Error(`Sutta ${item} not found`);
-                }
-                var nextUid = this.sutta_uidSuccessor(item);
-                var iNext = this.suttaIndex(nextUid, false);
-                var iLast = iNext-1;
-                var iNext = this.suttaIndex(nextUid);
-                for (var i = iCur; i < iNext; i++) {
-                    acc.push(this.suttaIds[i]);
+                if (item.indexOf('/') >= 0) {
+                    acc.push(item); // e.g., mn1/en/bodhi
+                } else {
+                    var iCur = this.suttaIndex(item, false);
+                    if (iCur == null) {
+                        throw new Error(`Sutta ${item} not found`);
+                    }
+                    var nextUid = this.sutta_uidSuccessor(item);
+                    var iNext = this.suttaIndex(nextUid, false);
+                    var iLast = iNext-1;
+                    var iNext = this.suttaIndex(nextUid);
+                    for (var i = iCur; i < iNext; i++) {
+                        acc.push(this.suttaIds[i]);
+                    }
                 }
                 return acc;
             }, []);
@@ -535,13 +535,14 @@
                     collection_id,
                     suttaplex,
                     quote,
+                    sutta
                 }
             }) || [];
         }
 
         suttaSearchResults(args) {
             var {
-                suttaIds,
+                suttaRefs,
                 lang,
                 maxResults,
             } = args;
@@ -549,19 +550,24 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var results = [];
-                    for (var i = 0; i < Math.min(maxResults,suttaIds.length); i++) {
-                        var uid = suttaIds[i];
-                        var localPath = suttaPaths[that.root]
-                            .filter(sp => sp.indexOf(uid) >= 0)[0];
-                        var suttaPath = path.join(that.root, localPath);
-                        var spParts = suttaPath.split('/');
-                        var translator = spParts[spParts.length-2];
+                    for (var i = 0; i < Math.min(maxResults,suttaRefs.length); i++) {
+                        var ref = suttaRefs[i];
+                        var refParts = ref.split('/');
+                        var uid = refParts[0];
+                        var refLang = refParts[1] || lang;
+                        var refTranslator = refParts[2];
+                        if (refTranslator == null) {
+                            var localPath = suttaPaths[that.root]
+                                .filter(sp => sp.indexOf(uid) >= 0)[0];
+                            var suttaPath = path.join(that.root, localPath);
+                            var spParts = suttaPath.split('/');
+                            refTranslator = spParts[spParts.length-2];
+                        }
                         var collection_id = uid.replace(/[-0-9.:]*$/,'');
-                        var suttaJson = JSON.parse(fs.readFileSync(suttaPath));
                         var sutta = await that.suttaFactory.loadSutta({
                             scid: uid,
-                            translator,
-                            language: lang,
+                            translator: refTranslator,
+                            language: refLang,
                             expand: true,
                         });
                         var suttaplex = sutta.suttaplex;
@@ -580,6 +586,7 @@
                             collection_id,
                             suttaplex,
                             quote: sutta.segments[1], // usually title
+                            sutta,
                         });
                     }
                     resolve(results);
@@ -660,7 +667,7 @@
                         var method = 'sutta_uid';
                         var uids = that.suttaList(pattern).slice(0, maxResults);
                         var results = await that.suttaSearchResults({
-                            suttaIds: uids, 
+                            suttaRefs: uids, 
                             lang: language,
                             maxResults,
                         });
