@@ -514,45 +514,51 @@
     it("sutta_uidSuccessor(sutta_uid) returns following sutta_uid", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
+
+            // logical
             should(store.sutta_uidSuccessor('mn33',true)).equal('mn34');
-            should(store.sutta_uidSuccessor('mn33',false)).equal('mn34');
             should(store.sutta_uidSuccessor('sn29.10-21',true)).equal('sn29.22');
             should(store.sutta_uidSuccessor('sn29.10-21')).equal('sn30.1');
+
+            should(store.sutta_uidSuccessor('mn33',false)).equal('mn34');
             should(store.sutta_uidSuccessor('sn29.10-21',false)).equal('sn30.1');
             should(store.sutta_uidSuccessor('thag16.1')).equal('thag16.2');
             should(store.sutta_uidSuccessor('thag16.1-10')).equal('thag17.1');
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsuttaList(pattern) finds sutta file", function(done) {
+    it("TESTTESTsupportedSutta(pattern) return supported sutta uid", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
             var suttas = SuttaCentralId.supportedSuttas;
-            should(store.suttaFile(suttas[0])).equal(suttas[0]);
+            should(store.supportedSutta(suttas[0])).equal(suttas[0]);
             var last = suttas[suttas.length-1];
-            should(store.suttaFile(last)).equal(last);
+            should(store.supportedSutta(last)).equal(last);
 
-            should(store.suttaFile("sn29.1")).equal("sn29.1");
-            should(store.suttaFile("sn29.10")).equal("sn29.10");
-            should(store.suttaFile("sn29.11")).equal("sn29.11-20");
-            should(store.suttaFile("sn29.12")).equal("sn29.11-20");
-            should(store.suttaFile("sn29.19")).equal("sn29.11-20");
-            should(store.suttaFile("sn29.20")).equal("sn29.11-20");
-            should(store.suttaFile("sn29.21")).equal("sn29.21-50");
-            should(store.suttaFile("sn29.49")).equal("sn29.21-50");
-            should(store.suttaFile("sn29.50")).equal("sn29.21-50");
-            should(store.suttaFile("mn33")).equal("mn33");
+            should(store.supportedSutta("sn29.1")).equal("sn29.1");
+            should(store.supportedSutta("sn29.10")).equal("sn29.10");
+            should(store.supportedSutta("sn29.11")).equal("sn29.11-20");
+            should(store.supportedSutta("sn29.12")).equal("sn29.11-20");
+            should(store.supportedSutta("sn29.19")).equal("sn29.11-20");
+            should(store.supportedSutta("sn29.20")).equal("sn29.11-20");
+            should(store.supportedSutta("sn29.21")).equal("sn29.21-50");
+            should(store.supportedSutta("sn29.49")).equal("sn29.21-50");
+            should(store.supportedSutta("sn29.50")).equal("sn29.21-50");
+            should(store.supportedSutta("mn33")).equal("mn33");
 
             // bounds
-            should(store.suttaFile("sn29.51")).equal(null);
-            should(store.suttaFile("z999")).equal(null);
-            should(store.suttaFile("a1")).equal(null);
+            should(store.supportedSutta("sn29.51")).equal(null);
+            should(store.supportedSutta("z999")).equal(null);
+            should(store.supportedSutta("a1")).equal(null);
 
             done(); 
         } catch(e) {done(e);} })();
     });
     it("TESTTESTisUidPattern(pattern) is true for sutta_uid patterns", function() {
+        // unsupported sutta
+        should(SuttaStore.isUidPattern('t1670b2.8')).equal(true);
+
         // valid collection with a number
         should(SuttaStore.isUidPattern('mn2000')).equal(true);
         should(SuttaStore.isUidPattern('an1')).equal(true);
@@ -561,12 +567,14 @@
         should(SuttaStore.isUidPattern('mn8-11')).equal(true);
         should(SuttaStore.isUidPattern('mn8-11,mn9-12')).equal(true);
 
+        // unknown but valid sutta 
+        should(SuttaStore.isUidPattern('a1')).equal(true);
+        should(SuttaStore.isUidPattern('mn01')).equal(true);
+
         // not a sutta_uid pattern
         should(SuttaStore.isUidPattern('red')).equal(false);
-        should(SuttaStore.isUidPattern('a1')).equal(false);
         should(SuttaStore.isUidPattern('thig')).equal(false);
         should(SuttaStore.isUidPattern('mn')).equal(false);
-        should(SuttaStore.isUidPattern('mn01')).equal(false);
 
         // lists
         should(SuttaStore.isUidPattern('sn22-25')).equal(true);
@@ -581,6 +589,9 @@
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
+            //should.deepEqual( store.suttaList(
+                //['t1670b2.8']), // unsupported sutta
+                //['t1670b2.8']);
             should.deepEqual( store.suttaList(
                 ['sn29']), // implied sub-chapters
                 ['sn29.1', 'sn29.2', 'sn29.3', 'sn29.4', 'sn29.5',
@@ -634,6 +645,20 @@
                 ['sn29.1', 'sn29.2', 'sn29.3', 'sn29.4', 'sn29.5']);
             should(data.results.length).equal(MAXRESULTS);
             should(data.method).equal('sutta_uid');
+            var result0 = data.results[0];
+            should(result0.author).equal('Bhikkhu Sujato');
+            should(result0.author_short).equal('Sujato');
+            should(result0.author_uid).equal('sujato');
+            should(result0.author_blurb.en).equal(
+                'Translated for SuttaCentral by Sujato Bhikkhu');
+            should(result0.lang).equal('en');
+            should(result0.nSegments).equal(9);
+            should(result0.title).equal('Plain Version');
+            should(result0.collection_id).equal('sn');
+            should(result0.suttaplex.acronym).equal('SN 29.1');
+            should(result0.suttaplex.uid).equal('sn29.1');
+            should(result0.suttaplex.original_title).equal('Suddhika Sutta');
+            should(result0.suttaplex.root_lang).equal('pli');
 
             done(); 
         } catch(e) {done(e);} })();

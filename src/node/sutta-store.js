@@ -212,12 +212,13 @@
         static isUidPattern(pattern) {
             var commaParts = pattern.toLowerCase().split(',').map(p=>p.trim());
             return commaParts.reduce((acc,part) => {
-                if (acc) {
-                    var iId = part.search(/\.?[1-9]/);
-                    if (iId <= 0 || COLLECTIONS[part.substring(0,iId)]==null) {
-                        acc = false;
-                    }
-                }
+                //if (acc) {
+                    return acc && /^[a-z]+[0-9]+[-0-9a-z.:]*$/i.test(part);
+                    //var iId = part.search(/\.?[1-9]/);
+                    //if (iId <= 0 || COLLECTIONS[part.substring(0,iId)]==null) {
+                        //acc = false;
+                    //}
+                //}
                 return acc;
             }, true);
         }
@@ -396,7 +397,7 @@
             }
         }
 
-        suttaFile(sutta_uid) {
+        supportedSutta(sutta_uid) {
             var i = this.suttaIndex(sutta_uid);
             return this.suttaIds[i] || null;
         }
@@ -538,6 +539,54 @@
             }) || [];
         }
 
+        suttaSearchResults(args) {
+            var {
+                suttaIds,
+                lang,
+                maxResults,
+            } = args;
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var results = [];
+                    for (var i = 0; i < Math.min(maxResults,suttaIds.length); i++) {
+                        var uid = suttaIds[i];
+                        var localPath = suttaPaths[that.root]
+                            .filter(sp => sp.indexOf(uid) >= 0)[0];
+                        var suttaPath = path.join(that.root, localPath);
+                        var spParts = suttaPath.split('/');
+                        var translator = spParts[spParts.length-2];
+                        var collection_id = uid.replace(/[-0-9.:]*$/,'');
+                        var suttaJson = JSON.parse(fs.readFileSync(suttaPath));
+                        var sutta = await that.suttaFactory.loadSutta({
+                            scid: uid,
+                            translator,
+                            language: lang,
+                            expand: true,
+                        });
+                        var suttaplex = sutta.suttaplex;
+                        var nSegments = sutta.segments.length;
+                        var translation = sutta.translation;
+                        results.push({
+                            count: 1,
+                            uid: translation.uid,
+                            author: translation.author,
+                            author_short: translation.author_short,
+                            author_uid: translation.author_uid,
+                            author_blurb: translation.author_blurb,
+                            lang,
+                            nSegments,
+                            title: translation.title,
+                            collection_id,
+                            suttaplex,
+                            quote: sutta.segments[1], // usually title
+                        });
+                    }
+                    resolve(results);
+                } catch(e) { reject(e); } })();
+            });
+        }
+
         voiceResults(grepSearchResults, lang) {
             var voice = this.voice;
             if (voice == null) {
@@ -610,10 +659,10 @@
                     if (SuttaStore.isUidPattern(pattern)) {
                         var method = 'sutta_uid';
                         var uids = that.suttaList(pattern).slice(0, maxResults);
-                        var results = uids.map(uid => {
-                            return {
-                                uid,
-                            }
+                        var results = await that.suttaSearchResults({
+                            suttaIds: uids, 
+                            lang: language,
+                            maxResults,
                         });
                     } else {
                         var method = 'phrase';
