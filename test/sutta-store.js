@@ -83,7 +83,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTupdateSuttas(ids) updates suttas from SuttaCentral", function(done) {
+    it("updateSuttas(ids) updates suttas from SuttaCentral", function(done) {
         var maxseconds = 5;
         this.timeout(maxseconds*1000);
         (async function() { try {
@@ -527,7 +527,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsupportedSutta(pattern) return supported sutta uid", function(done) {
+    it("supportedSutta(pattern) return supported sutta uid", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -559,7 +559,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTisUidPattern(pattern) is true for sutta_uid patterns", function() {
+    it("isUidPattern(pattern) is true for sutta_uid patterns", function() {
         // unsupported sutta
         should(SuttaStore.isUidPattern('t1670b2.8')).equal(true);
 
@@ -601,6 +601,9 @@
                 //['t1670b2.8']), // unsupported sutta
                 //['t1670b2.8']);
             should.deepEqual( store.suttaList(
+                ['an2.3']), // sub-chapter embedded 
+                ['an2.1-10']);
+            should.deepEqual( store.suttaList(
                 ['sn29']), // implied sub-chapters
                 ['sn29.1', 'sn29.2', 'sn29.3', 'sn29.4', 'sn29.5',
                     'sn29.6', 'sn29.7', 'sn29.8', 'sn29.9', 'sn29.10',
@@ -637,7 +640,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) finds suttas in range", function(done) {
+    it("search(pattern) finds suttas in range", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
