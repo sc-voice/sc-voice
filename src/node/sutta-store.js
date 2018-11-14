@@ -249,6 +249,7 @@
                     .replace(/m/iug, '(m|ṁ)')
                     .replace(/n/iug, '(n|ṅ|ñ|ṇ)')
                     .replace(/l/iug, '(l|ḷ)')
+                    .replace(/t/iug, '(t|ṭ)')
                 : pattern;
         }
 

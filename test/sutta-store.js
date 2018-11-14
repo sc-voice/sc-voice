@@ -380,12 +380,12 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("paliPattern(pattern) should return the Pali pattern", function(){
+    it("TESTTESTpaliPattern(pattern) should return the Pali pattern", function(){
         should(SuttaStore.paliPattern("jhana")).equal('jh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
         should(SuttaStore.paliPattern("abcdefghijklmn"))
         .equal('(a|ā)bcdefgh(i|ī)jk(l|ḷ)(m|ṁ)(n|ṅ|ñ|ṇ)')
         should(SuttaStore.paliPattern("nopqrstuvwxyz"))
-        .equal('(n|ṅ|ñ|ṇ)opqrst(u|ū)vwxyz');
+        .equal('(n|ṅ|ñ|ṇ)opqrs(t|ṭ)(u|ū)vwxyz');
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });

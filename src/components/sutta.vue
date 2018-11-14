@@ -462,7 +462,33 @@ export default {
                 this.search && this.onSearch();
             }
         },
-        showSutta(search) {
+        showSutta(sutta) {
+            this.clear();
+            var sections = this.sections = sutta.sections;
+            Object.assign(this.support, sutta.support);
+            this.metaarea = sutta.metaarea;
+            var suttaplex = this.suttaplex = 
+                Object.assign(this.suttaplex, sutta.suttaplex);
+
+            var author_uid = this.author_uid = sutta.author_uid;
+            var acronym = suttaplex.acronym || suttaplex.uid.toUpperCase();
+            var translation = suttaplex.translations
+                .filter(t => t.author_uid === author_uid)[0] || {
+                lang: this.language,
+            };
+            this.suttaCode = sutta.suttaCode || '';
+            this.language = translation.lang;
+            this.translator = translation.author_uid;
+            var title = translation.title || suttaplex.translated_title;
+            this.sutta.acronym = acronym;
+            this.sutta.title = `${acronym}: ${title}`;
+            this.sutta.original_title = suttaplex.original_title || "?";
+            var seg0 = sections[0].segments[0];
+            this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
+            this.sutta.author = translation.author;
+            this.$nextTick(() => this.$refs.refSutta.focus());
+        },
+        loadSutta(search) {
             console.log(`search ${search}`);
             var tokens = search.toLowerCase().split('/');
             (tokens.length < 2) && tokens.push(this.scvOpts.lang);
@@ -470,31 +496,8 @@ export default {
             var url = `./sutta/${tokens.join('/')}`;
             var timer = this.startWaiting();
             this.$http.get(url).then(res => {
-                this.clear();
-                var sections = this.sections = res.data.sections;
-                Object.assign(this.support, res.data.support);
-                this.metaarea = res.data.metaarea;
-                var suttaplex = this.suttaplex = 
-                    Object.assign(this.suttaplex, res.data.suttaplex);
-
-                var author_uid = this.author_uid = res.data.author_uid;
-                var acronym = suttaplex.acronym || suttaplex.uid.toUpperCase();
-                var translation = suttaplex.translations
-                    .filter(t => t.author_uid === author_uid)[0] || {
-                    lang: this.language,
-                };
-                this.suttaCode = res.data.suttaCode || '';
-                this.language = translation.lang;
-                this.translator = translation.author_uid;
-                var title = translation.title || suttaplex.translated_title;
-                this.sutta.acronym = acronym;
-                this.sutta.title = `${acronym}: ${title}`;
-                this.sutta.original_title = suttaplex.original_title || "?";
-                var seg0 = sections[0].segments[0];
-                this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
-                this.sutta.author = translation.author;
+                this.showSutta(res.data);
                 this.stopWaiting(timer);
-                this.$nextTick(() => this.$refs.refSutta.focus());
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
                     || `Not found.`;
@@ -574,7 +577,7 @@ export default {
         clickTranslation(translation,event) {
             var search = this.translationSearch(translation);
             console.log(`clickTranslation(${search})`,event);
-            this.showSutta(search);
+            this.loadSutta(search);
         },
         resultLink(result) {
             var uid = result.uid;
@@ -673,8 +676,8 @@ export default {
             console.log(`cookies`, this.$cookie);
             Vue.set(this, 'search', search);
             if (/[1-9]/.test(search)) {
-                console.log(`sutta.mounted() showSutta(${search})`);
-                this.showSutta(search);
+                console.log(`sutta.mounted() loadSutta(${search})`);
+                this.loadSutta(search);
             } else if (search) {
                 console.log(`sutta.mounted() searchSuttas(${search})`);
                 this.searchSuttas(search);
