@@ -234,6 +234,7 @@
                 audioFormat: this.audioFormat,
                 voice: this.voice,
                 prosody: this.prosody,
+                language: this.language,
                 text,
             };
             signature[this.mj.hashTag] = this.mj.hash(signature);

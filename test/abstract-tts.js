@@ -28,6 +28,7 @@
             api: null,
             apiVersion: null,
             audioFormat: 'audio/ogg',
+            language: 'en',
             voice: null,
             prosody: {
                 rate: '-10%',

@@ -51,6 +51,7 @@
             this.voicePali = Voice.createVoice({
                 name: 'Aditi',
                 usage: 'recite',
+                language: 'hi-IN',
                 languageUnknown: "pli",
                 audioFormat: this.audioFormat,
                 audioSuffix: this.audioSuffix,

@@ -13,6 +13,7 @@
             super(Object.assign({
                 audioFormat: 'mp3', // iPhone does not support OGG
                 audioSuffix: '.mp3', // iPhone does not support OGG
+                language: 'en-GB', // Amy
             }, opts));
             this.voice = opts.voice || 'Amy';
             this.api = opts.api || 'aws-polly';
@@ -33,6 +34,7 @@
                 TextType: 'ssml',
                 OutputFormat: that.audioFormat,
                 VoiceId: that.voice,
+                LanguageCode: that.language,
             }
 
             that.polly.synthesizeSpeech(params, (err, data) => {

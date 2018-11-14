@@ -35,7 +35,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTcompareLow(a,b) compares sutta file names", function(){
+    it("compareLow(a,b) compares sutta file names", function(){
         var cmp = SuttaCentralId.compareLow;
 
         // misc
@@ -95,7 +95,7 @@
         should(cmp("an1.10", "an1.1-10")).equal(9);
 
     });
-    it("TESTTESTcompareHigh(a,b) compares sutta file names", function(){
+    it("compareHigh(a,b) compares sutta file names", function(){
         var cmp = SuttaCentralId.compareHigh;
 
         // misc

@@ -107,7 +107,8 @@
             var voiceOpts = Object.assign({}, voiceJson, opts);
             voiceOpts.language = voiceJson.language;
             voiceOpts.name = voiceJson.name;
-            return new Voice(voiceOpts);
+            var voice = new Voice(voiceOpts);
+            return voice;
         }
 
         get services() {

@@ -303,8 +303,8 @@
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^They directly know extinguishment as/);
-            should(data.segment.audio.en).match(/^42cbae/);
-            should(data.segment.audio.pli).match(/^142e5/);
+            should(data.segment.audio.en).match(/^3f8996/);
+            should(data.segment.audio.pli).match(/^19525/);
 
             var scid = "mn1:3.1";
             var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
@@ -329,7 +329,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles large segment", function(done) {
+    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
@@ -349,8 +349,8 @@
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
-            should(data.segment.audio.en).match(/^d55dd0/);
-            should(data.segment.audio.pli).match(/^ec04c0/);
+            should(data.segment.audio.en).match(/^85a9c6/);
+            should(data.segment.audio.pli).match(/^fde0158/);
 
             done();
         } catch(e) {done(e);} })();

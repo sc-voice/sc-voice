@@ -12,10 +12,10 @@
     // deleting local/sounds
     var cache = true; 
 
-    it("constructor", function() {
+    it("TESTTESTconstructor", function() {
         var polly = new Polly();
         should(polly).properties({
-            language: 'en',
+            language: 'en-GB',
             voice: 'Amy',
             audioFormat: 'mp3',
             audioSuffix: '.mp3',
@@ -24,8 +24,9 @@
             },
         });
     });
-    it("signature(text) returns signature that identifies synthesized speech", function() {
+    it("TESTTESTsignature(text) returns TTS synthesis signature", function() {
         var polly = new Polly();
+        should(polly.language).equal('en-GB');
         var sig = polly.signature('hello world');
         var guid = polly.mj.hash(sig);
         should.deepEqual(sig, {
@@ -33,6 +34,7 @@
             apiVersion: 'v4',
             audioFormat: 'mp3',
             voice: 'Amy',
+            language: 'en-GB',
             prosody: {
                 rate: '-20%',
             },
