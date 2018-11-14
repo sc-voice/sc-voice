@@ -107,7 +107,7 @@
                             return acc;
                         },{});
                         suttaIds = supportedSuttas[that.root] = 
-                            Object.keys(uids).sort(SuttaStore.compareSuttaUids);
+                            Object.keys(uids).sort(SuttaCentralId.compareLow);
                     }
                     that.suttaIds = that.suttaIds || suttaIds;
 
@@ -204,7 +204,7 @@
                 fs.mkdirSync(authorPath);
             }
             var fname = this.suttaIds.filter(id => {
-                return 0 === SuttaStore.compareSuttaUids(sutta_uid, id);
+                return 0 === SuttaCentralId.compareLow(sutta_uid, id);
             })[0] || sutta_uid;
             return path.join(authorPath, `${fname}.json`);
         }
@@ -407,7 +407,7 @@
             while (i1 <= i2) {
                 var i = Math.trunc((i1+i2)/2);
                 var sf = this.suttaIds[i];
-                cmp = SuttaStore.compareSuttaUids(sutta_uid, sf);
+                cmp = SuttaCentralId.compareLow(sutta_uid, sf);
 
                 if (cmp === 0) {
                     return i;
@@ -429,7 +429,7 @@
             } 
             if (strict) {
                 var uidNext = this.sutta_uidSuccessor(this.suttaIds[i], true);
-                var cmpNext = SuttaStore.compareSuttaUids(sutta_uid, uidNext);
+                var cmpNext = SuttaCentralId.compareLow(sutta_uid, uidNext);
                 if (cmpNext < 0) {
                     return i;
                 }

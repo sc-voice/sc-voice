@@ -35,36 +35,125 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("compare(id1,id2) compares two ids", function() {
-        var cmp = (a,b,expected) => {
-            should(SuttaCentralId.compare(a,b))[expected](0);
-            if (expected === 'equal') {
-                should(SuttaCentralId.compare(b,a)).equal(0);
-            } else if (expected === 'above') {
-                should(SuttaCentralId.compare(b,a)).below(0);
-            } else {
-                should(SuttaCentralId.compare(b,a)).above(0);
-            }
-        };
-        cmp('an1.1', 'an2.11-20', 'below');
-        cmp('an1.1', 'an2.011-20', 'below');
-        cmp('an1.100', 'an2.11-20', 'below');
-        cmp('an1.100', 'an2.011-020', 'below');
-        cmp('an2.1', 'an2.11-20', 'below');
-        cmp('an2.1', 'an2.011-020', 'below');
-        cmp('an2.5', 'an2.11-20', 'below');
-        cmp('an2.10', 'an2.11-20', 'below');
-        cmp('an2.11', 'an2.11-20', 'equal');
-        cmp('an2.15', 'an2.11-20', 'equal');
-        cmp('an2.20', 'an2.11-20', 'equal');
-        cmp('an2.21', 'an2.11-20', 'above');
-        cmp('an2.100', 'an2.11-20', 'above');
-        cmp('an3.1', 'an2.11-20', 'above');
-        cmp('an3.1', 'an2.011-020', 'above');
-        cmp('an1', 'dn2', 'below');
-        cmp('an9.1', 'dn2', 'below');
-        cmp('dn2', 'mn1', 'below');
-        cmp('an2.1-10', 'an2.11-20', 'below');
+    it("TESTTESTcompareLow(a,b) compares sutta file names", function(){
+        var cmp = SuttaCentralId.compareLow;
+
+        // misc
+        should(cmp('an1.1', 'an2.11-20')).equal(-1);
+        should(cmp('an1.1', 'an2.011-20')).equal(-1);
+        should(cmp('an1.100', 'an2.11-20')).equal(-1);
+        should(cmp('an1.100', 'an2.011-020')).equal(-1);
+        should(cmp('an2.1', 'an2.11-20')).equal(-10);
+        should(cmp('an2.1', 'an2.011-020')).equal(-10); 
+        should(cmp('an2.5', 'an2.11-20')).equal(-6);
+        should(cmp('an2.10', 'an2.11-20')).equal(-1);
+        should(cmp('an2.11', 'an2.11-20')).equal(0);
+        should(cmp('an2.21', 'an2.11-20')).equal(10);
+        should(cmp('an2.100', 'an2.11-20')).equal(89);
+        should(cmp('an3.1', 'an2.11-20')).equal(1);
+        should(cmp('an3.1', 'an2.011-020')).equal(1);
+        should(cmp('an1', 'dn2')).equal(-1);
+        should(cmp('an9.1', 'dn2')).equal(-1);
+        should(cmp('dn2', 'mn1')).equal(-1);
+        should(cmp('an2.1-10', 'an2.11-20')).equal(-10);
+
+        // Standalone 
+        should(cmp('mn33', 'mn33')).equal(0);
+        should(cmp('mn33', 'mn34')).equal(-1);
+        should(cmp('mn34', 'mn33')).equal(1);
+
+        // collection
+        should(cmp( 'sn/en/sujato/sn22.1', 'an/en/sujato/an22.1')).equal(1);
+        should(cmp( 'an/en/sujato/an22.1', 'sn/en/sujato/sn22.1')).equal(-1);
+        should(cmp( 'xx/en/sujato/sn22.1', 'xx/en/sujato/an22.1')).equal(1);
+        should(cmp( 'xx/en/sujato/an22.1', 'xx/en/sujato/sn22.1')).equal(-1);
+
+        // major number
+        should(cmp( 'sn/en/sujato/sn29.1', 'sn/en/sujato/sn22.1')).equal(7);
+        should(cmp( 'sn/en/sujato/sn22.1', 'sn/en/sujato/sn29.1')).equal(-7);
+
+        // subchapter numbering
+        should(cmp( 'sn/en/sujato/sn30.1', 'sn/en/sujato/sn30.2')).equal(-1);
+        should(cmp( 'sn/en/sujato/sn29.1', 'sn/en/sujato/sn29.10')).equal(-9);
+        should(cmp( 'sn/en/sujato/sn29.10', 'sn/en/sujato/sn29.1')).equal(9);
+        should(cmp( 'sn/en/sujato/sn29.1', 'sn/en/sujato/sn29.11-20')).equal(-10);
+        should(cmp( 'sn/en/sujato/sn29.11-20', 'sn/en/sujato/sn29.1')).equal(10);
+        should(cmp( 'sn/en/sujato/sn29.10', 'sn/en/sujato/sn29.11-20')).equal(-1);
+        should(cmp( 'sn/en/sujato/sn29.11-20', 'sn/en/sujato/sn29.10')).equal(1);
+
+        // ranges
+        should(cmp('sn29.11-20', 'sn29.11-20')).equal(0);
+        should(cmp('sn29.11-20', 'sn29.10')).equal(1);
+        should(cmp('sn29.11-20', 'sn29.11')).equal(0);
+        should(cmp('sn29.11-20', 'sn29.12')).equal(-1);
+        should(cmp('sn29.21', 'sn29.20')).equal(1);
+        should(cmp('sn29.21', 'sn29.21')).equal(0);
+        should(cmp('sn29.21', 'sn29.22')).equal(-1);
+
+        should(cmp("an1.1-10", "an1.1-10")).equal(0);
+        should(cmp("an1.1", "an1.1-10")).equal(0);
+        should(cmp("an1.10", "an1.1-10")).equal(9);
+
+    });
+    it("TESTTESTcompareHigh(a,b) compares sutta file names", function(){
+        var cmp = SuttaCentralId.compareHigh;
+
+        // misc
+        should(cmp('an1.1', 'an2.11-20')).equal(-1);
+        should(cmp('an1.1', 'an2.011-20')).equal(-1);
+        should(cmp('an1.100', 'an2.11-20')).equal(-1);
+        should(cmp('an1.100', 'an2.011-020')).equal(-1);
+        should(cmp('an2.1', 'an2.11-20')).equal(-19);
+        should(cmp('an2.1', 'an2.011-020')).equal(-19); 
+        should(cmp('an2.5', 'an2.11-20')).equal(-15);
+        should(cmp('an2.10', 'an2.11-20')).equal(-10);
+        should(cmp('an2.11', 'an2.11-20')).equal(-9);
+        should(cmp('an2.21', 'an2.11-20')).equal(1);
+        should(cmp('an2.100', 'an2.11-20')).equal(80);
+        should(cmp('an3.1', 'an2.11-20')).equal(1);
+        should(cmp('an3.1', 'an2.011-020')).equal(1);
+        should(cmp('an1', 'dn2')).equal(-1);
+        should(cmp('an9.1', 'dn2')).equal(-1);
+        should(cmp('dn2', 'mn1')).equal(-1);
+        should(cmp('an2.1-10', 'an2.11-20')).equal(-10);
+
+        // Standalone 
+        should(cmp('mn33', 'mn33')).equal(0);
+        should(cmp('mn33', 'mn34')).equal(-1);
+        should(cmp('mn34', 'mn33')).equal(1);
+
+        // collection
+        should(cmp( 'sn/en/sujato/sn22.1', 'an/en/sujato/an22.1')).equal(1);
+        should(cmp( 'an/en/sujato/an22.1', 'sn/en/sujato/sn22.1')).equal(-1);
+        should(cmp( 'xx/en/sujato/sn22.1', 'xx/en/sujato/an22.1')).equal(1);
+        should(cmp( 'xx/en/sujato/an22.1', 'xx/en/sujato/sn22.1')).equal(-1);
+
+        // major number
+        should(cmp( 'sn/en/sujato/sn29.1', 'sn/en/sujato/sn22.1')).equal(7);
+        should(cmp( 'sn/en/sujato/sn22.1', 'sn/en/sujato/sn29.1')).equal(-7);
+
+        // subchapter numbering
+        should(cmp( 'sn/en/sujato/sn30.1', 'sn/en/sujato/sn30.2')).equal(-1);
+        should(cmp( 'sn/en/sujato/sn29.1', 'sn/en/sujato/sn29.10')).equal(-9);
+        should(cmp( 'sn/en/sujato/sn29.10', 'sn/en/sujato/sn29.1')).equal(9);
+        should(cmp( 'sn/en/sujato/sn29.1', 'sn/en/sujato/sn29.11-20')).equal(-19);
+        should(cmp( 'sn/en/sujato/sn29.11-20', 'sn/en/sujato/sn29.1')).equal(19);
+        should(cmp( 'sn/en/sujato/sn29.10', 'sn/en/sujato/sn29.11-20')).equal(-10);
+        should(cmp( 'sn/en/sujato/sn29.11-20', 'sn/en/sujato/sn29.10')).equal(10);
+
+        // ranges
+        should(cmp('sn29.11-20', 'sn29.11-20')).equal(0);
+        should(cmp('sn29.11-20', 'sn29.10')).equal(10);
+        should(cmp('sn29.11-20', 'sn29.11')).equal(9);
+        should(cmp('sn29.11-20', 'sn29.12')).equal(8);
+        should(cmp('sn29.21', 'sn29.20')).equal(1);
+        should(cmp('sn29.21', 'sn29.21')).equal(0);
+        should(cmp('sn29.21', 'sn29.22')).equal(-1);
+
+        should(cmp("an1.1-10", "an1.1-10")).equal(0);
+        should(cmp("an1.1", "an1.1-10")).equal(-9);
+        should(cmp("an1.10", "an1.1-10")).equal(0);
+
     });
     it("sutta return sutta id", function() {
         var scid = new SuttaCentralId();
