@@ -113,10 +113,12 @@
                         <v-icon>{{audioIcon(`audiolang${i}`)}}</v-icon>
                     </v-btn>
                 </div>
-                <div v-if="result.quote" class="text-xs-center pt-2">
-                    <a :href="resultLink(result)" >
-                        {{result.suttaplex.acronym}} {{result.title}}
-                    </a>
+                <div style="display:flex; justify-content: space-around">
+                    <v-btn v-if="result.quote" 
+                        :href="resultLink(result)"
+                        class="scv-text-button" :style="cssProps" small>
+                        {{result.suttaplex.acronym}}...
+                    </v-btn>
                 </div>
             </details><!-- search result i -->
           </details><!-- searchresults -->
@@ -141,21 +143,6 @@
                     >
                     Play Introduction ({{voice.name}})
                 </button>
-            <!--
-                <audio v-if="suttaAudioGuid" autoplay controls class="ml-4 mt-1" 
-                    style="display:block"
-                    preload=auto
-                    :aria-label="`play sutta`">
-                    <source type="audio/mp3"
-                        :src="audioLink(suttaAudioGuid, sutta_uid)" />
-                    <p>Your browser doesn't support HTML5 audio</p>
-                </audio>
-                <button v-else :ref="`play-sutta`" @click="playSutta()" 
-                    :disabled="waiting > 0"
-                    class="scv-text-button" :style="cssProps">
-                    Play Sutta ({{voice.name}})
-                </button>
-            -->
             </div>
             <div class="scv-blurb-more">
                 <details>

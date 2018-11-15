@@ -12,7 +12,7 @@
     // deleting local/sounds
     var cache = true; 
 
-    it("TESTTESTconstructor", function() {
+    it("constructor", function() {
         var polly = new Polly();
         should(polly).properties({
             language: 'en-GB',
@@ -24,7 +24,7 @@
             },
         });
     });
-    it("TESTTESTsignature(text) returns TTS synthesis signature", function() {
+    it("signature(text) returns TTS synthesis signature", function() {
         var polly = new Polly();
         should(polly.language).equal('en-GB');
         var sig = polly.signature('hello world');

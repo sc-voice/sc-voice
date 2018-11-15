@@ -52,6 +52,7 @@
                 name: 'Aditi',
                 usage: 'recite',
                 language: 'hi-IN',
+                speakNumbers: false,
                 languageUnknown: "pli",
                 audioFormat: this.audioFormat,
                 audioSuffix: this.audioSuffix,

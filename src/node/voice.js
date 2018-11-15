@@ -12,6 +12,7 @@
 
     class Voice { 
         constructor(opts={}) {
+            this.speakNumbers = opts.speakNumbers == null || opts.speakNumbers;
             this.language = opts.language || 'en-IN';
             this.languageUnknown = opts.languageUnknown || this.language;
             this.service = opts.service || 'aws-polly';
@@ -122,6 +123,7 @@
                             words,
                             language: this.language,
                             languageUnknown: this.languageUnknown,
+                            speakNumbers: this.speakNumbers,
                             voice: this.name,
                             usage: key,
                             breaks: usage.breaks,

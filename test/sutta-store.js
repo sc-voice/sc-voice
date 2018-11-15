@@ -227,7 +227,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsanitizePattern(pattern) prevents code injection attacks", function() {
+    it("sanitizePattern(pattern) prevents code injection attacks", function() {
         var testPattern = (pattern,expected) => {
             should(SuttaStore.sanitizePattern(pattern)).equal(expected);
         }
@@ -243,7 +243,7 @@
         testPattern("sattānaṃ", "sattānaṃ");
         should.throws(() => SuttaStore.sanitizePattern("not [good"));
     });
-    it("TESTTESTnormalizePattern(pattern) prevents code injection attacks", function() {
+    it("normalizePattern(pattern) prevents code injection attacks", function() {
         var testPattern = (pattern,expected) => {
             should(SuttaStore.normalizePattern(pattern)).equal(expected);
         }
@@ -256,7 +256,7 @@
         testPattern("a.+b", 'a.+b');
         testPattern("sattānaṃ", "sattānaṃ");
     });
-    it("TESTTESTsearch(pattern) is sanitized", function(done) {
+    it("search(pattern) is sanitized", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {
@@ -504,7 +504,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTisUidPattern(pattern) is true for sutta_uid patterns", function() {
+    it("isUidPattern(pattern) is true for sutta_uid patterns", function() {
         // unsupported sutta
         should(SuttaStore.isUidPattern('t1670b2.8')).equal(true);
 

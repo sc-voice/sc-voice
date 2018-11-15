@@ -284,11 +284,19 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... returns playable segment", function(done) {
+    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
-            var scid = "mn1:52-74.23";
             var iVoice = 0;
+            var scid = "mn1:0.1";
+            var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data.segment.en).match(/^Middle Discourses 1/);
+            should(data.segment.audio.pli).match(/^9014a3a/); // no numbers
+
+            var scid = "mn1:52-74.23";
             var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
@@ -329,7 +337,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
+    it("GET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";

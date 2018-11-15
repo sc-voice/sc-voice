@@ -311,5 +311,21 @@
         should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
     });
+    it("TESTTESTspeak(text) can ignore numbers", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var raveena = Voice.createVoice({
+                name: "raveena",
+                speakNumbers: false,
+                languageUnknown: "pli",
+            });
+            var text = `Bhikkhu 123`;
+            var result = await raveena.speak(text, {usage:'recite'});
+            should(result.signature.api).equal('aws-polly');
+            should(result.signature.guid).match(/^dabf5bb/);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
 
 })
