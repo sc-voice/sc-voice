@@ -225,20 +225,25 @@
             if (excess > 0) {
                 throw new Error(`Search text too long by ${excess} characters.`);
             }
-            // normalize white space to space
-            pattern = pattern.replace(/[\s]+/g,' +'); 
-
-            // remove control characters
-            pattern = pattern.replace(/[\u0000-\u001f\u007f]+/g,''); 
-
             // replace quotes (code injection on grep argument)
             pattern = pattern.replace(/["']/g,'.'); 
-
+            // eliminate tabs, newlines and carriage returns
+            pattern = pattern.replace(/\s/g,' '); 
+            // remove control characters
+            pattern = pattern.replace(/[\u0000-\u001f\u007f]+/g,''); 
             // must be valid
-            new RegExp(pattern); 
+            new RegExp(pattern);
 
-            return pattern
+            return pattern;
         }
+
+        static normalizePattern(pattern) {
+            // normalize white space to space
+            pattern = pattern.replace(/[\s]+/g,' +'); 
+            
+            return pattern;
+        }
+
         
         static paliPattern(pattern) {
             return /^[a-z]+$/i.test(pattern) 
@@ -293,7 +298,7 @@
                 searchMetadata,
             } = args;
             var that = this;
-            var keywords = pattern.split(' +'); // the + was inserted by sanitizePattern();
+            var keywords = pattern.split(' +'); // + was inserted by normalizePattern();
             keywords = keywords.map(w => 
                 /^[a-z]+$/iu.test(w) && this.words.isForeignWord(w)
                 ? `\\b${SuttaStore.paliPattern(w)}`
@@ -655,13 +660,6 @@
             if (isNaN(maxResults)) {
                 throw new Error("SuttaStore.search() maxResults must be a number");
             }
-            var searchOpts = {
-                pattern, 
-                maxResults, 
-                language, 
-                searchMetadata
-            };
-
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     if (SuttaStore.isUidPattern(pattern)) {
@@ -675,6 +673,14 @@
                     } else {
                         var method = 'phrase';
                         var lines = [];
+                        pattern = SuttaStore.normalizePattern(pattern);
+                        var searchOpts = {
+                            pattern, 
+                            maxResults, 
+                            language, 
+                            searchMetadata
+                        };
+
                         if (!lines.length && !/^[a-z]+$/iu.test(pattern)) {
                             lines = await that.phraseSearch(searchOpts);
                         }

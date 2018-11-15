@@ -512,15 +512,22 @@ export default {
 
         },
         searchSuttas(search) {
-            var url = `./search/${search}?maxResults=${this.scvOpts.maxResults}`;
+            var uriSearch = encodeURIComponent(search);
+            var url = `./search/${uriSearch}?maxResults=${this.scvOpts.maxResults}`;
             var timer = this.startWaiting();
             this.$http.get(url).then(res => {
                 this.clear();
-                console.log('searchResults', res.data);
-                Vue.set(this, 'searchResults', res.data);
+                var data = res.data;
+                console.log('searchResults', data);
+                Vue.set(this, 'searchResults', data);
                 this.stopWaiting(timer);
                 this.$nextTick(() => {
-                    this.$refs.refResults.focus();
+                    if (data.results.length === 1)  {
+                        console.log(`searchSuttas(${search}) showSutta`);
+                        this.showSutta(data.results[0].sutta);
+                    } else {
+                        this.$refs.refResults.focus();
+                    }
                 });
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
@@ -675,7 +682,7 @@ export default {
             var search = this.scvOpts.search;
             console.log(`cookies`, this.$cookie);
             Vue.set(this, 'search', search);
-            if (/[1-9]/.test(search)) {
+            if (0 && /[1-9]/.test(search)) {
                 console.log(`sutta.mounted() loadSutta(${search})`);
                 this.loadSutta(search);
             } else if (search) {

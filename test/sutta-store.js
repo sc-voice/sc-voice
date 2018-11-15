@@ -227,27 +227,36 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("sanitizePattern(pattern) prevents code injection attacks", function() {
+    it("TESTTESTsanitizePattern(pattern) prevents code injection attacks", function() {
         var testPattern = (pattern,expected) => {
             should(SuttaStore.sanitizePattern(pattern)).equal(expected);
         }
-        testPattern('root of suffering', 'root +of +suffering');
         testPattern('"doublequote"', '.doublequote.');
         testPattern("'singlequote'", '.singlequote.');
-        testPattern("a\nb\n\r\n\rc", 'a +b +c');
-        testPattern("a\tb\t\t\rc", 'a +b +c');
         testPattern("a$b", 'a$b');
         testPattern("a.b", 'a.b');
         testPattern("a.*b", 'a.*b');
         testPattern("a\\'b", 'a\\.b');
-        testPattern("a.+b", 'a.+b');
         testPattern("a\u0000b", 'ab');
         testPattern("a\u0001b", 'ab');
         testPattern("a\u007Fb", 'ab');
         testPattern("sattānaṃ", "sattānaṃ");
         should.throws(() => SuttaStore.sanitizePattern("not [good"));
     });
-    it("search(pattern) is sanitized", function(done) {
+    it("TESTTESTnormalizePattern(pattern) prevents code injection attacks", function() {
+        var testPattern = (pattern,expected) => {
+            should(SuttaStore.normalizePattern(pattern)).equal(expected);
+        }
+        testPattern('root of suffering', 'root +of +suffering');
+        testPattern("a\nb\n\r\n\rc", 'a +b +c');
+        testPattern("a\tb\t\t\rc", 'a +b +c');
+        testPattern("a$b", 'a$b');
+        testPattern("a.b", 'a.b');
+        testPattern("a.*b", 'a.*b');
+        testPattern("a.+b", 'a.+b');
+        testPattern("sattānaṃ", "sattānaṃ");
+    });
+    it("TESTTESTsearch(pattern) is sanitized", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {
@@ -495,7 +504,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("isUidPattern(pattern) is true for sutta_uid patterns", function() {
+    it("TESTTESTisUidPattern(pattern) is true for sutta_uid patterns", function() {
         // unsupported sutta
         should(SuttaStore.isUidPattern('t1670b2.8')).equal(true);
 
@@ -521,6 +530,7 @@
         should(SuttaStore.isUidPattern('mn')).equal(false);
 
         // lists
+        should(SuttaStore.isUidPattern('mn1, mn2')).equal(true);
         should(SuttaStore.isUidPattern('sn22-25')).equal(true);
         should(SuttaStore.isUidPattern('sn22.1-20,mn1')).equal(true);
         should(SuttaStore.isUidPattern('sn22.1-20   ,   mn1')).equal(true);
