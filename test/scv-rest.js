@@ -137,7 +137,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /download/sutta/mn100/en/sujato/review returns download", function(done) {
+    it("TESTTESTGET /download/sutta/mn100/en/sujato/review returns download", function(done) {
         this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app)
@@ -294,7 +294,7 @@
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(data.segment.en).match(/^Middle Discourses 1/);
-            should(data.segment.audio.pli).match(/^9014a3a/); // no numbers
+            should(data.segment.audio.pli).match(/^aa54dd5/); // no numbers
 
             var scid = "mn1:52-74.23";
             var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
@@ -312,7 +312,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^They directly know extinguishment as/);
             should(data.segment.audio.en).match(/^3f8996/);
-            should(data.segment.audio.pli).match(/^19525/);
+            should(data.segment.audio.pli).match(/^aee79e/);
 
             var scid = "mn1:3.1";
             var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
@@ -337,7 +337,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles large segment", function(done) {
+    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";

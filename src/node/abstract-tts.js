@@ -21,7 +21,8 @@
             this.misses = 0;
             this.voice = null;
             this.api = opts.api || null;
-            this.speakNumbers = opts.speakNumbers == null || opts.speakNumbers;
+            this.stripNumbers = opts.stripNumbers;
+            this.stripQuotes = opts.stripQuotes;
             this.apiVersion = opts.apiVersion || null;
             this.audioSuffix = opts.audioSuffix || ".ogg";
             this.queue = new Queue(opts.maxConcurrentServiceCalls || 5, Infinity);
@@ -160,8 +161,11 @@
         }
 
         tokensSSML(text) {
-            if (!this.speakNumbers) {
+            if (this.stripNumbers) {
                 text = text.replace(/[0-9.]+/ug,' ');
+            }
+            if (this.stripQuotes) {
+                text = text.replace(/[„“‟‘‛'’"”»«]+/ug,' ');
             }
             var tokens = text instanceof Array ? text : this.tokenize(text);
             var tokensSSML = tokens.reduce((acc, token) => {

@@ -316,13 +316,29 @@
         (async function() { try {
             var raveena = Voice.createVoice({
                 name: "raveena",
-                speakNumbers: false,
+                stripNumbers: true,
                 languageUnknown: "pli",
             });
             var text = `Bhikkhu 123`;
             var result = await raveena.speak(text, {usage:'recite'});
             should(result.signature.api).equal('aws-polly');
-            should(result.signature.guid).match(/^dabf5bb/);
+            should(result.signature.text).not.match(/123/);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTspeak(text) can ignore quotes", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var raveena = Voice.createVoice({
+                name: "raveena",
+                stripQuotes: true,
+                languageUnknown: "pli",
+            });
+            var text = `“'‘Bhikkhu’'”`;
+            var result = await raveena.speak(text, {usage:'recite'});
+            should(result.signature.api).equal('aws-polly');
+            should(result.signature.text).not.match(/[“'‘’'”]/);
 
             done();
         } catch(e) {done(e);} })();

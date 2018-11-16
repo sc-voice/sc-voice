@@ -12,6 +12,11 @@
     // deleting local/sounds
     var cache = true; 
 
+    function phoneme(ph, text) {
+        return `<phoneme alphabet="ipa" ph="${ph}">${text}</phoneme>`+
+            `<break time="0.001s"/>`;
+    }
+
     it("constructor", function() {
         var polly = new Polly();
         should(polly).properties({
@@ -42,14 +47,16 @@
             guid,
         });
     });
-    it("segmentSSML(text) returns SSML", function() {
+    it("TESTTESTsegmentSSML(text) returns SSML", function() {
         var polly = new Polly({
             languageUnknown: 'pli',
+            stripQuotes: true,
         });
-        var ssml = polly.segmentSSML('mūlaṃ');
-        should.deepEqual(ssml, [
-            '<phoneme alphabet="ipa" ph="mʊːlɐṃ">mūlaṃ</phoneme><break time="0.001s"/>',
-        ]);
+        should.deepEqual(polly.segmentSSML('“Bhadante”ti'), [
+            phoneme('bʰɐdɐnte', 'Bhadante') + " " +
+            phoneme('tɪ', 'ti')]);
+        should.deepEqual(polly.segmentSSML('mūlaṃ'),
+            [phoneme('mʊːlɐṃ', 'mūlaṃ')]);
     });
     it("synthesizeSSML(ssml) returns sound file", function(done) {
         this.timeout(3*1000);
