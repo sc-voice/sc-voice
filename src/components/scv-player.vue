@@ -45,7 +45,7 @@
                     {{segment && segment.scid}}
                 </div>
                 <v-spacer/>
-                <v-btn icon @click="clickPlay()" 
+                <v-btn icon @click="clickPlayPause()" 
                     ref="refPlay"
                     class="scv-icon-btn" :style="cssProps()"
                     aria-label="Play Section">
@@ -143,7 +143,7 @@ export default {
                     console.log('playBtn', playBtn);
                     playBtn.focus();
                     if (paused) {
-                        this.clickPlay();
+                        this.clickPlayPause();
                     }
                 });
             }).catch(e => {
@@ -173,52 +173,52 @@ export default {
                 '--success-color': this.$vuetify.theme.success,
             }, opts);
         },
-        endLang() {
-            //console.log(`endLang()`);
+        onEndLang(event) {
             this.setTextClass();
-            this.paused = true;
-            if (this.iSegment < this.section.segments.length-1) {
-                Vue.set(this, "iSegment", this.iSegment+1);
-                console.log(`incrementing segment: ${this.iSegment}`);
-                this.$nextTick(() => {
-                    this.playAudio();
-                });
-            } else if (this.iSection < this.section.nSections) {
-                this.$nextTick(() => this.playSection(this.iSection+1, true));
+            if (this.paused) {
+                console.log(`onEndLang() finished`, event);
+            } else {
+                this.paused = true;
+                if (this.iSegment < this.section.segments.length-1) {
+                    Vue.set(this, "iSegment", this.iSegment+1);
+                    //console.log(`onEndLang() incrementing segment: ${this.iSegment}`);
+                    this.$nextTick(() => {
+                        this.toggleAudio();
+                    });
+                } else if (this.iSection < this.section.nSections) {
+                    this.$nextTick(() => this.playSection(this.iSection+1, true));
+                }
             }
         },
-        endPali() {
+        onEndPali(event) {
             var playLang = this.showTrans && this.segment.audio[this.language];
             if (playLang) {
                 var refLang = this.$refs.refAudioLang;
                 refLang.play().then(() => {
                     this.setTextClass();
                     this.loadingAudio = 0;
-                    //console.log(`endPali() refLang playing started`);
+                    //console.log(`onEndPali() refLang playing started`);
                 }).catch(e => {
                     this.paused = true;
                     this.loadingAudio = 0;
-                    console.log(`endPali() refLang playing failed`, e.stack);
+                    console.log(`onEndPali() refLang playing failed`, e.stack);
                 });
             } else {
-                this.endLang();
+                this.onEndLang();
             }
         },
         pauseAudio() {
             var refPli = this.$refs.refAudioPali;
             var refLang = this.$refs.refAudioLang;
             var result = true;
-            if (!this.paused && !refPli.paused) {
+            if (!this.paused) { // playing
                 this.paused = true;
-                refPli.pause();
-            } else if (!this.paused && !refLang.paused) {
-                this.paused = true;
-                refLang.pause();
+                !refPli.paused && refPli.pause();
+                !refLang.paused && refLang.pause();
             } else {
                 result = false;
             }
             this.setTextClass();
-            result && console.log("pauseAudio()");
             return result;
         },
         getSegmentAudio(scid) {
@@ -242,24 +242,28 @@ export default {
                 });
             } catch(e) {reject(e);} });
         },
-        clickPlay() {
-            this.playAudio();
+        clickPlayPause() {
+            this.toggleAudio();
             var refPlay = this.$refs.refPlay.$el;
             refPlay.focus();
         },
-        playAudio() {
+        toggleAudio() {
             var that = this;
+            console.log(`toggleAudio ${that.paused}`);
             (async function() {
                 var refPli = that.$refs.refAudioPali;
                 var refLang = that.$refs.refAudioLang;
                 if (that.pauseAudio()) {
+                    console.log("toggleAudio() paused");
                     return;
                 }
+                //console.log("toggleAudio() playing");
                 that.loadingAudio = 0;
+                var lang = that.language;
                 var segment = that.segment;
-                if (segment.audio.en == null && segment.audio.pli == null) {
+                if (segment.audio[lang] == null && segment.audio.pli == null) {
                     var data = await that.getSegmentAudio(segment.scid);
-                    console.log(`data`, data);
+                    //console.log(`toggleAudio() getSegmentAudio():`, data);
                     segment.audio = data.segment.audio;
                 }
                 var playPali = that.showPali && segment.audio.pli;
@@ -267,17 +271,16 @@ export default {
                     refPli.load();
                     that.loadingAudio++;
                 }
-                var lang = that.language;
                 var playLang = that.showTrans && segment.audio[lang];
                 if (playLang) {
                     refLang.load();
                     that.loadingAudio++;
                 }
                 //console.log(`refPli.play() ready:`, refPli.readyState);
+                that.paused = false;
                 if (playPali) {
                     refPli.play().then(() => {
                         that.setTextClass();
-                        that.paused = false;
                         that.loadingAudio = 0;
                         //console.log(`refPli playing started`);
                     }).catch(e => {
@@ -286,7 +289,7 @@ export default {
                         console.log(`refPli playing failed`, e);
                     });
                 } else if (playLang) {
-                    that.endPali();
+                    that.onEndPali();
                 } else {
                     console.log(`nothing to play`);
                 }
@@ -378,8 +381,8 @@ export default {
         this.$nextTick(() => {
             var refPli = this.$refs.refAudioPali;
             var refLang = this.$refs.refAudioLang;
-            refPli.addEventListener("ended", this.endPali);
-            refLang.addEventListener("ended", this.endLang);
+            refPli.addEventListener("ended", this.onEndPali);
+            refLang.addEventListener("ended", this.onEndLang);
         });
     },
 }

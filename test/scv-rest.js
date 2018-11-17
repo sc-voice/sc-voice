@@ -137,7 +137,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /download/sutta/mn100/en/sujato/review returns download", function(done) {
+    it("GET /download/sutta/mn100/en/sujato/review returns download", function(done) {
         this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app)
@@ -284,7 +284,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
+    it("GET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iVoice = 0;
@@ -337,7 +337,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
+    it("GET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
