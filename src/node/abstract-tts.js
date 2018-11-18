@@ -23,6 +23,7 @@
             this.api = opts.api || null;
             this.stripNumbers = opts.stripNumbers;
             this.stripQuotes = opts.stripQuotes;
+            this.stripChars = opts.stripChars || /[\u200b]/g;
             this.apiVersion = opts.apiVersion || null;
             this.audioSuffix = opts.audioSuffix || ".ogg";
             this.queue = new Queue(opts.maxConcurrentServiceCalls || 5, Infinity);
@@ -58,7 +59,7 @@
             };
             var usage = this.usages[this.usage] || {};
             this.breaks = opts.breaks || usage.breaks || [0.001,0.1,0.2,0.6,1];
-            this.reNumber = /^[-+]?[0-9]+(\.[0-9]+)?$/;
+            this.reNumber = /^[-+]?[0-9]+([.–][0-9]+)?$/;
             var vowels = this.words._ipa.vowels || "aeiou";
             this.reVowels1 = new RegExp(`^[${vowels}].*`, 'u');
         }
@@ -128,6 +129,8 @@
                     return word
                         .replace('{', '<say-as interpret-as="spell">')
                         .replace('}', '</say-as>');
+                } else if (word.trim() === '') {
+                    var ipa = null;
                 } else if (this.words.isWord(word)) {
                     var w = word.endsWith(`’`) ? word.substring(0,word.length-1) : word;
                     if (this.languageUnknown !== this.language && 
@@ -162,12 +165,16 @@
 
         tokensSSML(text) {
             if (this.stripNumbers) {
-                text = text.replace(/[0-9.]+/ug,' ');
+                text = text.replace(/[0-9.–]+/ug,' ');
             }
             if (this.stripQuotes) {
                 text = text.replace(/[„“‟‘‛'’"”»«]+/ug,' ');
             }
+            text = text.replace(this.stripChars, '');
             var tokens = text instanceof Array ? text : this.tokenize(text);
+            if (tokens.length === 0) {
+                tokens.push(' ');
+            }
             var tokensSSML = tokens.reduce((acc, token) => {
                 if (RE_PARA_EOL.test(token)) {
                     acc.length && acc.push('\n');
@@ -354,9 +361,11 @@
                         });
                         result = await Promise.all(promises);
                     } else if (text instanceof Array) {
+                        if (text.length === 0) {
+                            throw new Error(`synthesizeText(${text}) no text`);
+                        }
                         var textArray = text;
                         var segments = [];
-                        //var promises = textArray.map(t => that.synthesizeText(t, opts));
                         var promises = textArray.reduce((acc, t) => {
                             var segs = that.segmentSSML(that.stripHtml(t));
                             segs.forEach(ssml => {
@@ -368,7 +377,7 @@
                         }, []);
                         result = await Promise.all(promises);
                     }
-                    if (result) {
+                    if (result && result.length) {
                         if (result.length === 1) {
                             result = result[0];
                         } else {
@@ -381,7 +390,7 @@
                             segments,
                         }, result));
                     } else {
-                        reject(new Error("synthesizeText(text?) expected string or Array"));
+                        reject(new Error(`synthesizeText(${text}) expected string or Array`));
                     }
                 } catch(e) { reject(e);} })();
             });
@@ -392,6 +401,9 @@
         }
 
         ffmpegConcat(files, opts = {}) {
+            if (files == null || !files.length) {
+                return Promise.reject(new Error(`ffmpegConcat(no-files?)`));
+            }
             return new Promise((resolve, reject) => {
                 var inputs = `file '${files.join("'\nfile '")}'\n`;
                 var signature = {

@@ -71,6 +71,14 @@
         var tts = new AbstractTTS({
             languageUnknown: 'pli',
         });
+        var ttsStrip = new AbstractTTS({
+            languageUnknown: 'pli',
+            stripNumbers: true,
+        });
+
+        // numbers
+        should(tts.wordSSML('281–309')).equal('281–309');
+        should(ttsStrip.wordSSML('281–309')).equal('281–309');
 
         // word ending quote
         should(tts.wordSSML(`identity’`))
@@ -153,6 +161,7 @@
         should(tts.isNumber('.123')).equal(false);
         should(tts.isNumber('123\n')).equal(false);
         should(tts.isNumber('\n123')).equal(false);
+        should(tts.isNumber('281–309')).equal(true);
 
         should(tts.isNumber('1')).equal(true);
         should(tts.isNumber('123')).equal(true);
@@ -196,8 +205,18 @@
             'j \u2018k,\u2019 l 5 m',
         ]);
     });
-    it("segmentSSML(text) returns array of SSML text segments", function() {
+    it("TESTTESTsegmentSSML(text) returns array of SSML text segments", function() {
         var tts = new AbstractTTS();
+        var ttsStrip = new AbstractTTS({
+            languageUnknown: 'pli',
+            stripNumbers: true,
+        });
+
+        // nothing
+        var ssml = tts.segmentSSML('123');
+        should.deepEqual(ssml, ['123']);
+        var ssml = ttsStrip.segmentSSML('123');
+        should.deepEqual(ssml, [' ']);
 
         // a paragraph of sentences
         var ssml = tts.segmentSSML([
@@ -238,6 +257,9 @@
     });
     it("tokenize(text) returns array of tokens", function() {
         var tts = new AbstractTTS();
+        should.deepEqual(tts.tokenize('281–309'), [
+            '281–309',
+        ]);
         should.deepEqual(tts.tokenize(`he does'nt conceive`), [
             'he', `does'nt`, 'conceive', 
         ]);

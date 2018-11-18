@@ -294,7 +294,7 @@
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(data.segment.en).match(/^Middle Discourses 1/);
-            should(data.segment.audio.pli).match(/^4f859/); // no numbers
+            should(data.segment.audio.pli).match(/^e76bd/); // no numbers
 
             var scid = "mn1:52-74.23";
             var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
@@ -312,7 +312,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^They directly know extinguishment as/);
             should(data.segment.audio.en).match(/^3f8996/);
-            should(data.segment.audio.pli).match(/^fc4cc3a/);
+            should(data.segment.audio.pli).match(/^a777fb/);
 
             var scid = "mn1:3.1";
             var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
@@ -358,7 +358,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
             should(data.segment.audio.en).match(/^85a9c6/);
-            should(data.segment.audio.pli).match(/^382c0b/);
+            should(data.segment.audio.pli).match(/^b89cc/);
 
             done();
         } catch(e) {done(e);} })();

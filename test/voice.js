@@ -311,7 +311,21 @@
         should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
     });
-    it("TESTTESTspeak(text) can ignore numbers", function(done) {
+    it("TESTTESTAditi phonemes", function() {
+        var aditi = Voice.createVoice({
+            name: "aditi",
+            languageUnknown: "pli",
+        });
+        should(aditi.name).equal("Aditi");
+        var recite = aditi.services.recite;
+        should(recite.wordSSML(`vasala`)).equal(phoneme("ʋəsə la","vasala"));
+        should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
+        should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑːməɲcə","Nāmañca"));
+        should(recite.wordSSML(`anottappañca`)).match(/"ənot̪t̪əppəɲcə"/);
+        should(recite.wordSSML(`Atthi`)).match(/"ət̪.t̪ʰɪ"/);
+        should(recite.wordSSML(`hoti`)).match(/"hot̪ɪ"/);
+    });
+    it("speak(text) can ignore numbers", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var raveena = Voice.createVoice({
@@ -327,7 +341,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeak(text) can ignore quotes", function(done) {
+    it("speak(text) can ignore quotes", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var raveena = Voice.createVoice({

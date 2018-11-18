@@ -129,7 +129,7 @@
         }
                             
         isWord(token) {
-            return !this.symbolPat.test(token) && !/^[0-9]*$/.test(token);
+            return !this.symbolPat.test(token) && !/^[0-9.–]*$/.test(token);
         }
 
         wordInfo(word) {

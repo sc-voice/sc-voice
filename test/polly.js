@@ -11,10 +11,11 @@
     // the following value to false. You can clear the cache by
     // deleting local/sounds
     var cache = true; 
+    const BREAK='<break time="0.001s"/>';
 
     function phoneme(ph, text) {
         return `<phoneme alphabet="ipa" ph="${ph}">${text}</phoneme>`+
-            `<break time="0.001s"/>`;
+            `${BREAK}`;
     }
 
     it("constructor", function() {
@@ -47,11 +48,18 @@
             guid,
         });
     });
-    it("TESTTESTsegmentSSML(text) returns SSML", function() {
+    it("segmentSSML(text) returns SSML", function() {
         var polly = new Polly({
             languageUnknown: 'pli',
             stripQuotes: true,
         });
+        should.deepEqual(polly.segmentSSML('281'),
+            ['281']),
+        should(polly.isNumber('281–309')).equal(true);
+        should.deepEqual(polly.segmentSSML('281–​309'),
+            ['281–309']);
+        should.deepEqual(polly.segmentSSML('ye'),
+            [BREAK+phoneme('je', 'ye')]);
         should.deepEqual(polly.segmentSSML('“Bhadante”ti'), [
             phoneme('bʰɐdɐnte', 'Bhadante') + " " +
             phoneme('tɪ', 'ti')]);
@@ -75,9 +83,9 @@
             done();
         })();
     });
-    it("synthesizeText([text]) returns sound file for array of text", function(done) {
+    it("TESTTESTsynthesizeText([text]) returns sound file for array of text", function(done) {
         this.timeout(3*1000);
-        (async function() {
+        (async function() { try {
             var polly = new Polly();
             var text = [
                 "Tomatoes are",
@@ -93,7 +101,7 @@
             should(fs.statSync(result.signature.files[3]).size).greaterThan(1000); // Broccoli is green.
             should(fs.statSync(result.file).size).greaterThan(5000);
             done();
-        })();
+        } catch(e) { done(e);} })();
     });
 
 })
