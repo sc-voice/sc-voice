@@ -45,7 +45,7 @@
                 <div class="scv-settings">
                     <v-radio-group v-model="scvOpts.iVoice" column>
                        <v-radio v-for="(v,i) in scvOpts.voices" 
-                         :label="v.label" :value="i" :key="`voice${v.value}`">
+                         :label="v.label" :value="i" :key="`voice${i}`">
                          </v-radio>
                     </v-radio-group>
                 </div>

@@ -23,11 +23,11 @@
         name: 'Amy',
         usage: 'recite',
     },{
-        name: 'Raveena',
-        usage: 'review',
-    },{
         name: 'Nicole',
         usage: 'recite',
+    },{
+        name: 'Raveena',
+        usage: 'review',
     }];
 
     class ScvRest extends RestBundle { 

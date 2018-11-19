@@ -234,11 +234,12 @@
                 {{seg.en}}
             </div>
           </details> <!-- section i -->
-          <scv-player v-if="sutta.title"
+          <scv-player v-if="tracks"
             :ref="`refScvPlayer`"
             :sutta_uid="sutta_uid"
             :language="language"
             :translator="translator"
+            :tracks="tracks"
             :voice="voice"
             :title="`${sutta.title}`"
           />
@@ -289,6 +290,7 @@ export default {
             metaarea: '',
             sections: null,
             language: 'en',
+            tracks: null,
             translator: 'sujato',
             waiting: 0,
             searchButtons: false,
@@ -342,7 +344,7 @@ export default {
                     scid,
                     this.scvOpts.iVoice,
                 ].join('/');
-                var url = `./play/segment/${segmentRef}`;
+                var url = that.url(`play/segment/${segmentRef}`);
                 that.startWaiting();
                 that.$http.get(url).then(res => {
                     that.stopWaiting();
@@ -414,8 +416,12 @@ export default {
             Vue.set(this, "waiting", 0);
         },
         playSectionNew(iSection) {
+            var player = this.$refs[`refScvPlayer`];
+            if (player == null) {
+                throw new Error('refScvPlayer not found');
+            }
             this.$nextTick(() => {
-                var player = this.$refs[`refScvPlayer`];
+                console.log(`dbg3`, player);
                 player.playSection(iSection);
             });
         },
@@ -428,7 +434,8 @@ export default {
             if (vSvc !== 'recite' && vSvc !== 'review' && vSvc !== 'navigate') {
                 vSvc = 'recite';
             }
-            var url = `./${vSvc}/section/${this.sutta_uid}/${language}/${translator}/${iSection}?g=${g}`;
+            var url = this.url(`${vSvc}/section/${this.sutta_uid}/`+
+                `${language}/${translator}/${iSection}?g=${g}`);
             var timer = this.startWaiting();
             this.$http.get(url).then(res => {
                 Vue.set(this.sectionAudioGuids, iSection, res.data.guid);
@@ -473,6 +480,13 @@ export default {
             var seg0 = sections[0].segments[0];
             this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
             this.sutta.author = translation.author;
+            this.tracks = sections.map((sect,i) => ({
+                sutta_uid: this.sutta_uid,
+                title: this.sutta.title,
+                language: this.language,
+                translator: this.translator,
+                iSection: i,
+            }));
             this.$nextTick(() => this.$refs.refSutta.focus());
         },
         loadSutta(search) {
@@ -480,7 +494,7 @@ export default {
             var tokens = search.toLowerCase().split('/');
             (tokens.length < 2) && tokens.push(this.scvOpts.lang);
             (tokens.length < 3) && tokens.push('sujato'); // TODO remove sujato
-            var url = `./sutta/${tokens.join('/')}`;
+            var url = this.url(`sutta/${tokens.join('/')}`);
             var timer = this.startWaiting();
             this.$http.get(url).then(res => {
                 this.showSutta(res.data);
@@ -498,9 +512,15 @@ export default {
             });
 
         },
+        url(path) {
+            return window.location.origin === 'http://localhost:8080'
+                ? `http://localhost/scv/${path}`
+                : `./${path}`;
+        },
         searchSuttas(search) {
             var uriSearch = encodeURIComponent(search);
-            var url = `./search/${uriSearch}?maxResults=${this.scvOpts.maxResults}`;
+            var url = this.url(`search/${uriSearch}`+
+                `?maxResults=${this.scvOpts.maxResults}`);
             var timer = this.startWaiting();
             this.$http.get(url).then(res => {
                 this.clear();
@@ -546,7 +566,8 @@ export default {
             if (vSvc !== 'recite' && vSvc !== 'review' && vSvc !== 'navigate') {
                 vSvc = 'recite';
             }
-            var url = `./${vSvc}/sutta/${this.sutta_uid}/${language}/${translator}?g=${g}`;
+            var url = this.url(`${vSvc}/sutta/${this.sutta_uid}`+
+                `/${language}/${translator}?g=${g}`);
             var timer = this.startWaiting();
             this.$http.get(url).then(res => {
                 Vue.set(this, "suttaAudioGuid", res.data.guid);

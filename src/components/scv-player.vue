@@ -87,6 +87,7 @@ export default {
     props: {
         title: String,
         sutta_uid: String,
+        tracks: Array,
         language: {
             default: 'en',
         },
@@ -133,8 +134,17 @@ export default {
                 this.iSection,
                 this.scvOpts.iVoice,
             ].join('/');
-            var url = `./play/section/${sectionRef}`;
-            //console.log(`play() url:${url}`);
+            var url = this.url(`play/section/${sectionRef}`);
+            var track = this.tracks[iSection];
+            var trackRef = [
+                track.sutta_uid,
+                track.language,
+                track.translator,
+                track.iSection,
+                this.scvOpts.iVoice,
+            ].join('/');
+            console.log(`playSection() trackRef:`, trackRef, track.sutta_uid, track.translator);
+            console.log(`playSection() url:`, url);
             this.$http.get(url).then(res => {
                 this.stopProgress();
                 Vue.set(this, "section", res.data);
@@ -150,6 +160,11 @@ export default {
                 this.stopProgress();
                 console.error(e.stack);
             });
+        },
+        url(path) {
+            return window.location.origin === 'http://localhost:8080'
+                ? `http://localhost/scv/${path}`
+                : `./${path}`;
         },
         stopProgress() {
             var progressAudio = this.$refs.refProgressAudio;
@@ -186,7 +201,9 @@ export default {
                         this.toggleAudio();
                     });
                 } else if (this.iSection < this.section.nSections) {
-                    this.$nextTick(() => this.playSection(this.iSection+1, true));
+                    this.$nextTick(() => {
+                        this.playSection(this.iSection+1, true);
+                    });
                 }
             }
         },
@@ -201,7 +218,7 @@ export default {
                 }).catch(e => {
                     this.paused = true;
                     this.loadingAudio = 0;
-                    console.log(`onEndPali() refLang playing failed`, e.stack);
+                    console.log(`onEndPali(${!!event}) refLang playing failed`, e.stack);
                 });
             } else {
                 this.onEndLang();
@@ -231,7 +248,7 @@ export default {
                     scid,
                     this.scvOpts.iVoice,
                 ].join('/');
-                var url = `./play/segment/${segmentRef}`;
+                var url = that.url(`play/segment/${segmentRef}`);
                 that.$http.get(url).then(res => {
                     that.stopProgress();
                     resolve(res.data);
@@ -309,7 +326,7 @@ export default {
         },
         audioSrc(lang) {
             var segment = this.section && this.section.segments[this.iSegment];
-            var url = segment ? `./audio/${segment.audio[lang]}` : '';
+            var url = this.url(segment ? `audio/${segment.audio[lang]}` : '');
             //console.log(`audioSrc`, url);
             return url;
         },
@@ -378,6 +395,7 @@ export default {
     },
     mounted() {
         this.setTextClass();
+        console.log(`mounted`, this.tracks);
         this.$nextTick(() => {
             var refPli = this.$refs.refAudioPali;
             var refLang = this.$refs.refAudioLang;
