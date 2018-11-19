@@ -19,6 +19,17 @@
     const SuttaCentralId = require('./sutta-central-id');
     const PATH_SOUNDS = path.join(__dirname, '../../local/sounds/');
 
+    const VOICES = [{
+        name: 'Amy',
+        usage: 'recite',
+    },{
+        name: 'Raveena',
+        usage: 'review',
+    },{
+        name: 'Nicole',
+        usage: 'recite',
+    }];
+
     class ScvRest extends RestBundle { 
         constructor(opts = {
             audioFormat: 'mp3',
@@ -249,7 +260,8 @@
             } = this.suttaParms(req);
             var suttaRef = `${sutta_uid}/${language}/${translator}`;
             logger.info(`GET play/section/${suttaRef}/${iSection}/${iVoice}`);
-            var usage = ['recite','review'][iVoice] || 'recite';
+            var usage = VOICES[iVoice].usage || 'recite';
+            var voiceName = VOICES[iVoice].name || 'Amy';
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
@@ -261,31 +273,12 @@
                     if (iSection < 0 || sutta.sections.length <= iSection) {
                         throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
                     }
-                    var voiceLang = Voice.createVoice({
-                        language,
-                        usage,
-                        languageUnknown: "pli",
-                        audioFormat: that.audioFormat,
-                        audioSuffix: that.audioSuffix,
-                    });
                     var voicePali = that.voicePali;
                     var section = sutta.sections[iSection];
                     var segments = [];
                     for (var iSeg = 0; iSeg < section.segments.length; iSeg++) {
                         var segment = Object.assign({}, section.segments[iSeg]);
                         segment.audio = {};
-                        if (0 && segment[language]) {
-                            var speak = await voiceLang.speak(segment[language], {
-                                usage,
-                            });
-                            segment.audio[language] = speak.signature.guid;
-                        }
-                        if (0 && segment.pli) {
-                            var speak = await voicePali.speak(segment.pli, {
-                                usage: 'recite',
-                            });
-                            segment.audio.pli = speak.signature.guid;
-                        }
                         segments.push(segment);
                     }
                     resolve({
@@ -297,7 +290,7 @@
                         nSections: sutta.sections.length,
                         iVoice,
                         segments,
-                        voiceLang: voiceLang.name,
+                        voiceLang: VOICES[iVoice].name,
                         voicePali: voicePali.name,
                     });
                 } catch(e) { reject(e); } })();
@@ -311,7 +304,7 @@
             } = this.suttaParms(req);
             var suttaRef = `${sutta_uid}/${language}/${translator}`;
             logger.info(`GET play/segment/${suttaRef}/${scid}/${iVoice}`);
-            var usage = ['recite','review'][iVoice] || 'recite';
+            var usage = VOICES[iVoice].usage || 'recite';
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
@@ -324,7 +317,7 @@
                         throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
                     }
                     var voiceLang = Voice.createVoice({
-                        language,
+                        name: VOICES[iVoice].name,
                         usage,
                         languageUnknown: "pli",
                         audioFormat: that.audioFormat,

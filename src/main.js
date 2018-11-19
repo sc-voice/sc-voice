@@ -12,11 +12,15 @@ import App from './App.vue'
 const DEFAULT_VOICES = [{
     name: 'Amy',
     value: 'recite',
-    label: 'Amy for meditation and contemplation',
+    label: 'Amy for meditation and contemplation (slow)',
+},{
+    name: 'Nicole',
+    value: 'recite',
+    label: 'Nicole for general listening (medium)',
 },{
     name: 'Raveena',
     value: 'review',
-    label: 'Raveena for review and study',
+    label: 'Raveena for review and study (fast)',
 }];
 
 Vue.use(VueAxios, axios);
