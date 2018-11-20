@@ -41,6 +41,16 @@
                     No suttas found
                 </span>
             </summary>
+            <div style="display:flex; justify-content:space-around">
+                <v-btn @click="playAll"
+                    class="scv-text-button" :style="cssProps" small>
+                    Play All
+                </v-btn>
+            </div>
+            <audio ref="refIntroSound" preload=auto v-if="audioPlay">
+                <source type="audio/mp3" :src="audioPlay" />
+                <p>Your browser doesn't support HTML5 audio</p>
+            </audio>
             <details role="heading" aria-level="2"
                 v-for="(result,i) in (searchResults && searchResults.results||[])" 
                 :key="result.uid" 
@@ -137,17 +147,13 @@
             <div class="scv-play-controls">
                 <button
                     :disabled="waiting > 0"
-                    @click="launchSuttaPlayer(0)"
+                    @click="launchSuttaPlayer()"
                     class="scv-text-button"
                     :style="cssProps"
                     >
                     Play Introduction ({{voice.name}})
                 </button>
             </div>
-            <audio ref="refIntroSound" preload=auto v-if="audioPlay">
-                <source type="audio/mp3" :src="audioPlay" />
-                <p>Your browser doesn't support HTML5 audio</p>
-            </audio>
             <div class="scv-blurb-more">
                 <details>
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
@@ -328,6 +334,25 @@ export default {
             });
             this.segments = null;
         },
+        playAll() {
+            var tracks = [];
+            var results = this.searchResults.results;
+            results.forEach(r => {
+                var sutta = r.sutta;
+                sutta.sections.forEach((sect,i) => {
+                    tracks.push({
+                        sutta_uid: sutta.sutta_uid,
+                        title: sutta.translation.title,
+                        language: sutta.translation.lang,
+                        translator: sutta.author_uid,
+                        iSection: i,
+                    });
+                });
+                console.log(`playAll ${sutta.sutta_uid} ${tracks.length}`, Object.keys(sutta));
+            });
+            this.tracks = tracks;
+            this.launchSuttaPlayer();
+        },
         getResultAudio(result) {
             var that = this;
             return new Promise((resolve, reject) => { try {
@@ -410,44 +435,15 @@ export default {
             clearInterval(timer);
             Vue.set(this, "waiting", 0);
         },
-        launchSuttaPlayer(iSection) {
+        launchSuttaPlayer(iTrack=0) {
             var introSound = this.$refs[`refIntroSound`];
-            console.log(`introSound`, introSound);
-            if (introSound) {
-                introSound.play();
-            }
-            var player = this.$refs[`refScvPlayer`];
-            if (player == null) {
-                throw new Error('refScvPlayer not found');
-            }
             this.$nextTick(() => {
-                player.playSection(iSection);
-            });
-        },
-        playSection(iSection) {
-            console.debug("playSection", iSection);
-            var language = this.language;
-            var translator = this.translator;
-            var g = Math.random();
-            var vSvc = this.voice.value;
-            if (vSvc !== 'recite' && vSvc !== 'review' && vSvc !== 'navigate') {
-                vSvc = 'recite';
-            }
-            var url = this.url(`${vSvc}/section/${this.sutta_uid}/`+
-                `${language}/${translator}/${iSection}?g=${g}`);
-            var timer = this.startWaiting();
-            this.$http.get(url).then(res => {
-                Vue.set(this.sectionAudioGuids, iSection, res.data.guid);
-                this.stopWaiting(timer);
-            }).catch(e => {
-                var data = e.response && e.response.data && e.response.data.error 
-                    || `Section #${iSection} cannot be recited. Try again later.`;
-                this.error[iSection] = {
-                    http: e.message,
-                    data,
+                introSound && introSound.play();
+                var player = this.$refs[`refScvPlayer`];
+                if (player == null) {
+                    throw new Error('refScvPlayer not found');
                 }
-                console.error(e.stack, data);
-                this.stopWaiting(timer);
+                player.playTrack(iTrack);
             });
         },
         onSearchKey(event) {

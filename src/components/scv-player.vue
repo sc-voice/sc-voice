@@ -7,16 +7,16 @@
                 <div class="scv-player-nav">
                     <button class="scv-text-button"
                         ref="refPrevious"
-                        @click="playSection(iSection-1)"
+                        @click="playTrack(iTrack-1)"
                         @keydown.prevent="keydownPrevious($event)"
                         :style='cssProps({"width":"6em"})'
                         >Previous</button>
                     <div >
-                        {{iSection+1}}/{{section && section.nSections || "(n/a)"}} 
+                        {{iTrack+1}}/{{section && this.tracks.length || "(n/a)"}} 
                     </div>
                     <button class="scv-text-button"
                         ref="refNext"
-                        @click="playSection(iSection+1)"
+                        @click="playTrack(iTrack+1)"
                         :style='cssProps({"width":"6em"})'
                         >Next</button>
                 </div>
@@ -92,7 +92,7 @@ export default {
         return {
             section: null,
             iSegment: 0,
-            iSection: 0,
+            iTrack: 0,
             visible: false,
             progressTimer: null,
             paused: true,
@@ -102,15 +102,15 @@ export default {
         };
     },
     methods: {
-        playSection(iSection, paused=false) {
+        playTrack(iTrack, paused=false) {
             paused = paused || this.pauseAudio();
-            if (iSection < 0 || this.section && this.section.nSections <= iSection) {
-                console.log(`playSection(${iSection}) ignored`);
+            if (iTrack < 0 || this.section && this.tracks.length <= iTrack) {
+                console.log(`playTrack(${iTrack}) ignored`);
                 return;
             }
-            Vue.set(this, "iSection", iSection);
+            Vue.set(this, "iTrack", iTrack);
             Vue.set(this, "iSegment", 0);
-            console.log(`ScvPlayer.playSection(${iSection})`);
+            console.log(`ScvPlayer.playTrack(${iTrack} of ${this.tracks.length})`);
             this.visible = true;
             this.section = null;
             this.progressTimer = setTimeout(() => {
@@ -121,7 +121,7 @@ export default {
 
             var trackRef = this.trackRef();
             var url = this.url(`play/section/${trackRef}`);
-            //console.log(`playSection() url:`, url);
+            //console.log(`playTrack() url:`, url);
             this.$http.get(url).then(res => {
                 this.stopProgress();
                 Vue.set(this, "section", res.data);
@@ -137,16 +137,16 @@ export default {
                 console.error(e.stack);
             });
         },
-        track(iSection=this.iSection) {
-            return this.tracks[iSection];
+        track(iTrack=this.iTrack) {
+            return this.tracks[iTrack];
         },
-        trackRef(iSection=this.iSection) {
-            var track = this.track();
+        trackRef(iTrack=this.iTrack) {
+            var track = this.track(iTrack);
             return [
                 track.sutta_uid,
                 track.language,
                 track.translator,
-                iSection,
+                track.iSection,
                 this.scvOpts.iVoice,
             ].join('/');
         },
@@ -189,9 +189,9 @@ export default {
                     this.$nextTick(() => {
                         this.toggleAudio();
                     });
-                } else if (this.iSection < this.section.nSections) {
+                } else if (this.iTrack < this.tracks.length) {
                     this.$nextTick(() => {
-                        this.playSection(this.iSection+1, true);
+                        this.playTrack(this.iTrack+1, true);
                     });
                 }
             }
@@ -249,13 +249,13 @@ export default {
             } catch(e) {reject(e);} });
         },
         clickPlayPause() {
+            console.log(`clickPlayPause() ${this.paused ? "play" : "pause"}`);
             this.toggleAudio();
             var refPlay = this.$refs.refPlay.$el;
             refPlay.focus();
         },
         toggleAudio() {
             var that = this;
-            console.log(`toggleAudio ${that.paused}`);
             (async function() {
                 var refPli = that.$refs.refAudioPali;
                 var refLang = that.$refs.refAudioLang;
@@ -263,7 +263,6 @@ export default {
                     console.log("toggleAudio() paused");
                     return;
                 }
-                //console.log("toggleAudio() playing");
                 that.loadingAudio = 0;
                 var lang = that.language;
                 var segment = that.segment;
@@ -334,8 +333,8 @@ export default {
                     : this.$refs.refNext;
                 elt && elt.focus();
             } else if (evt.key === ' ') {
-                if (this.iSection > 0) {
-                    this.playSection(this.iSection - 1);
+                if (this.iTrack > 0) {
+                    this.playTrack(this.iTrack - 1);
                 }
             }
         },
