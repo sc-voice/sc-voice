@@ -26,36 +26,16 @@
           </v-card-title>
           <v-card-text>
             <details class="scv-dialog" >
-                <summary class="subheading">Content settings</summary>
-                <div class="scv-settings">
-                    <v-checkbox v-if="scvOpts" 
-                        v-model="scvOpts.showId" role="checkbox" 
-                        :aria-checked="scvOpts.showId"
-                        label="Show SuttaCentral text segment identifiers">
-                    </v-checkbox>
-                    <v-radio-group v-model="scvOpts.showLang" column>
-                       <v-radio v-for="(sl,i) in showLangChoices" 
-                         :label="sl.label" :value="i" :key="`showLang${sl.value}`">
-                         </v-radio>
-                    </v-radio-group>
-                </div>
-            </details>
-            <details class="scv-dialog" >
-                <summary class="subheading">Voice settings</summary>
+                <summary class="subheading">Sutta Player settings</summary>
                 <div class="scv-settings">
                     <v-radio-group v-model="scvOpts.iVoice" column>
                        <v-radio v-for="(v,i) in scvOpts.voices" 
                          :label="v.label" :value="i" :key="`voice${i}`">
                          </v-radio>
                     </v-radio-group>
-                </div>
-            </details>
-            <details class="scv-dialog" >
-                <summary class="subheading">Other settings</summary>
-                <div class="scv-settings">
-                    <v-radio-group v-if="scvOpts" v-model="scvOpts.maxResults" column>
-                       <v-radio v-for="(mr) in maxResultsChoices" 
-                         :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
+                    <v-radio-group v-model="scvOpts.showLang" column>
+                       <v-radio v-for="(sl,i) in showLangChoices" 
+                         :label="sl.label" :value="i" :key="`showLang${sl.value}`">
                          </v-radio>
                     </v-radio-group>
                     <v-radio-group v-if="scvOpts" v-model="scvOpts.ips" column>
@@ -63,6 +43,26 @@
                          :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
                          </v-radio>
                     </v-radio-group>
+                </div>
+            </details>
+            <details class="scv-dialog" >
+                <summary class="subheading">Search settings</summary>
+                <div class="scv-settings">
+                    <v-radio-group v-if="scvOpts" v-model="scvOpts.maxResults" column>
+                       <v-radio v-for="(mr) in maxResultsChoices" 
+                         :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
+                         </v-radio>
+                    </v-radio-group>
+                </div>
+            </details>
+            <details class="scv-dialog" >
+                <summary class="subheading">Content settings</summary>
+                <div class="scv-settings">
+                    <v-checkbox v-if="scvOpts" 
+                        v-model="scvOpts.showId" role="checkbox" 
+                        :aria-checked="scvOpts.showId"
+                        label="Show SuttaCentral text segment identifiers">
+                    </v-checkbox>
                 </div>
             </details>
           </v-card-text>
@@ -162,23 +162,11 @@ export default {
             }];
         },
         ipsChoices() {
-            return [{
-                label: "Progress without sound",
-                value: 0,
-            },{
-                label: "Progress with Rainforest Ambience Glory Sunz (Public Domain)",
-                value: 1,
-            },{
-                label: "Progress with Indian Bell by Flemur (Sampling Plus 1.0)",
-                value: 2,
-            },{
-                label: "Progress with Tibetan Singing Bowl by Horst (CC0)",
-                value: 3,
-            }];
+            return this.scvOpts.ipsChoices;
         },
         maxResultsChoices() {
             return [{
-                label: "Return up to 3 search results",
+                label: "Return up to 3 search results (fast)",
                 value: 3,
             },{
                 label: "Return up to 5 search results",
@@ -187,7 +175,7 @@ export default {
                 label: "Return up to 10 search results",
                 value: 10,
             },{
-                label: "Return up to 25 search results",
+                label: "Return up to 25 search results (slow)",
                 value: 25,
             }];
         },

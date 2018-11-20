@@ -1,6 +1,6 @@
 <template>
     <v-dialog persistent v-model="visible"
-        max-width="35em" dark class="scv-player-section">
+        max-width="38em" dark class="scv-player-section">
         <v-card>
             <v-card-text >
                 <div class="subheading pl-2 pb-2">{{title}}</div>
@@ -85,15 +85,7 @@ import Vue from "vue";
 export default {
     name: 'scv-player',
     props: {
-        title: String,
-        sutta_uid: String,
         tracks: Array,
-        language: {
-            default: 'en',
-        },
-        translator: {
-            default: 'sujato',
-        },
         voice: Object,
     },
     data: function() {
@@ -127,30 +119,14 @@ export default {
                 progressAudio.play();
             }, 1000);
 
-            var sectionRef = [
-                this.sutta_uid,
-                this.language,
-                this.translator,
-                this.iSection,
-                this.scvOpts.iVoice,
-            ].join('/');
-            var url = this.url(`play/section/${sectionRef}`);
-            var track = this.tracks[iSection];
-            var trackRef = [
-                track.sutta_uid,
-                track.language,
-                track.translator,
-                track.iSection,
-                this.scvOpts.iVoice,
-            ].join('/');
-            console.log(`playSection() trackRef:`, trackRef, track.sutta_uid, track.translator);
-            console.log(`playSection() url:`, url);
+            var trackRef = this.trackRef();
+            var url = this.url(`play/section/${trackRef}`);
+            //console.log(`playSection() url:`, url);
             this.$http.get(url).then(res => {
                 this.stopProgress();
                 Vue.set(this, "section", res.data);
                 this.$nextTick(() => {
                     var playBtn = this.$refs.refPlay.$el;
-                    console.log('playBtn', playBtn);
                     playBtn.focus();
                     if (paused) {
                         this.clickPlayPause();
@@ -160,6 +136,19 @@ export default {
                 this.stopProgress();
                 console.error(e.stack);
             });
+        },
+        track(iSection=this.iSection) {
+            return this.tracks[iSection];
+        },
+        trackRef(iSection=this.iSection) {
+            var track = this.track();
+            return [
+                track.sutta_uid,
+                track.language,
+                track.translator,
+                iSection,
+                this.scvOpts.iVoice,
+            ].join('/');
         },
         url(path) {
             return window.location.origin === 'http://localhost:8080'
@@ -362,6 +351,18 @@ export default {
         },
     },
     computed: {
+        title() {
+            return this.track().title;
+        },
+        language() {
+            return this.track().language;
+        },
+        translator() {
+            return this.track().translator;
+        },
+        sutta_uid() {
+            return this.track().sutta_uid;
+        },
         loading() {
             return this.section == null ||
                 this.segment == null ||

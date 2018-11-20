@@ -137,13 +137,17 @@
             <div class="scv-play-controls">
                 <button
                     :disabled="waiting > 0"
-                    @click="playSectionNew(0)"
+                    @click="launchSuttaPlayer(0)"
                     class="scv-text-button"
                     :style="cssProps"
                     >
                     Play Introduction ({{voice.name}})
                 </button>
             </div>
+            <audio ref="refIntroSound" preload=auto v-if="audioPlay">
+                <source type="audio/mp3" :src="audioPlay" />
+                <p>Your browser doesn't support HTML5 audio</p>
+            </audio>
             <div class="scv-blurb-more">
                 <details>
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
@@ -208,7 +212,7 @@
             <div class="scv-play-controls">
                 <button
                     :disabled="waiting > 0"
-                    @click="playSectionNew(i)"
+                    @click="launchSuttaPlayer(i)"
                     class="scv-text-button mt-3"
                     :style="cssProps"
                     >
@@ -235,16 +239,7 @@
             </div>
           </details> <!-- section i -->
           <scv-player v-if="tracks"
-            :ref="`refScvPlayer`"
-            :sutta_uid="sutta_uid"
-            :language="language"
-            :translator="translator"
-            :tracks="tracks"
-            :voice="voice"
-            :title="`${sutta.title}`"
-          />
-          <!--
-          -->
+            :ref="`refScvPlayer`" :tracks="tracks" :voice="voice" />
       </v-layout>
   </v-container>
 </div>
@@ -415,13 +410,17 @@ export default {
             clearInterval(timer);
             Vue.set(this, "waiting", 0);
         },
-        playSectionNew(iSection) {
+        launchSuttaPlayer(iSection) {
+            var introSound = this.$refs[`refIntroSound`];
+            console.log(`introSound`, introSound);
+            if (introSound) {
+                introSound.play();
+            }
             var player = this.$refs[`refScvPlayer`];
             if (player == null) {
                 throw new Error('refScvPlayer not found');
             }
             this.$nextTick(() => {
-                console.log(`dbg3`, player);
                 player.playSection(iSection);
             });
         },
@@ -638,6 +637,12 @@ export default {
         downloadFile() {
             return `${this.sutta_uid}-${this.language}-${this.author_uid}.mp3`;
         },
+        ipsChoices() {
+            return this.scvOpts.ipsChoices;
+        },
+        audioPlay() {
+            return this.ipsChoices[this.scvOpts.ips].url;
+        },
         downloadUrl() {
             var usage = ['recite','review'][this.scvOpts.iVoice];
             var ref = `${this.sutta_uid}/${this.language}/${this.author_uid}`;
@@ -690,10 +695,7 @@ export default {
             var search = this.scvOpts.search;
             console.log(`cookies`, this.$cookie);
             Vue.set(this, 'search', search);
-            if (0 && /[1-9]/.test(search)) {
-                console.log(`sutta.mounted() loadSutta(${search})`);
-                this.loadSutta(search);
-            } else if (search) {
+            if (search) {
                 console.log(`sutta.mounted() searchSuttas(${search})`);
                 this.searchSuttas(search);
             } else {

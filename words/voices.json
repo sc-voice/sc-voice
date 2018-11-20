@@ -275,8 +275,8 @@
 },{
     "language": "en-AU",
     "service": "aws-polly",
-    "name": "Nicole",
-    "gender": "female",
+    "name": "Russell",
+    "gender": "male",
     "rates": {
         "navigate": "-0%", 
         "recite": "-20%"

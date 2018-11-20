@@ -23,7 +23,7 @@
         name: 'Amy',
         usage: 'recite',
     },{
-        name: 'Nicole',
+        name: 'Russell',
         usage: 'recite',
     },{
         name: 'Raveena',

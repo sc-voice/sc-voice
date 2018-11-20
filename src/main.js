@@ -14,13 +14,31 @@ const DEFAULT_VOICES = [{
     value: 'recite',
     label: 'Amy for meditation and contemplation (slow)',
 },{
-    name: 'Nicole',
+    name: 'Russell',
     value: 'recite',
-    label: 'Nicole for general listening (medium)',
+    label: 'Russell for general listening and high-frequency hearing loss (medium)',
 },{
     name: 'Raveena',
     value: 'review',
     label: 'Raveena for review and study (fast)',
+}];
+
+const IPS = [{
+    url: '',
+    label: "Launch Sutta Player without sound",
+    value: 0,
+},{
+    url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
+    label: "Launch Sutta Player with Rainforest Ambience Glory Sunz (Public Domain)",
+    value: 1,
+},{
+    url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
+    label: "Launch Sutta Player with Indian Bell by Flemur (Sampling Plus 1.0)",
+    value: 2,
+},{
+    url: '/audio/tibetan-singing-bowl-horst-cc0.mp3',
+    label: "Launch Sutta Player with Tibetan Singing Bowl by Horst (CC0)",
+    value: 3,
 }];
 
 Vue.use(VueAxios, axios);
@@ -82,6 +100,10 @@ Object.defineProperty(scvState, "voices", {
 Object.defineProperty(scvState, "title", {
     writable: true,
     value: "no title",
+});
+Object.defineProperty(scvState, "ipsChoices", {
+    writable: true,
+    value: IPS,
 });
 
 Vue.config.productionTip = false
