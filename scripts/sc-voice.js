@@ -35,6 +35,7 @@ app.all('*', function(req, res, next) {
 app.use("/scv/index.html", 
     express.static(path.join(__dirname, "../dist/index.html")));
 app.use("/scv/img", express.static(path.join(__dirname, "../dist/img")));
+app.use("/scv/audio", express.static(path.join(__dirname, "../dist/img")));
 app.use(favicon(path.join(__dirname, "../dist/img/favicon.png")));
 app.use("/MaterialIcons.css", 
     express.static(path.join(__dirname, "../dist/MaterialIcons.css")));
