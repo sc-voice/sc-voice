@@ -20,7 +20,7 @@
                     <i>Mūlapariyāya</i>, 
                 </li>
                 <li>
-                    <a href="https://github.com/sc-voice/sc-voice/wiki/Using-Search"
+                    <a href="https://github.com/sc-voice/sc-voice/wiki/Search"
                         target="_blank">
                         View search documentation.
                     </a>

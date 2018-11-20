@@ -12,7 +12,7 @@
                   v-model="search" v-on:keypress="onSearchKey($event)"
                   label = "Search" ></v-text-field>
               <div v-if="!search" class="title scv-help">
-                <a href="https://github.com/sc-voice/sc-voice/wiki/Using-Search"
+                <a href="https://github.com/sc-voice/sc-voice/wiki/Search"
                     aria-label="Help"
                     style="background-color:rgba(0,0,0,0)"
                     target="_blank">
