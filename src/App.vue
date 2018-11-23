@@ -7,6 +7,7 @@
       <v-spacer></v-spacer>
       <v-btn tabindex=-1 id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
         aria-label="Settings"
+        title="Settings"
         @click="dialogSettings = !dialogSettings"
         >
         <v-icon>settings</v-icon>
