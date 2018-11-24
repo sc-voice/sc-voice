@@ -6,18 +6,21 @@
   <v-container fluid class="scv-sutta">
       <v-layout column align-left >
           <div class="scv-search-row">
-              <v-text-field 
-                  ref="refSearch"
-                  placeholder="Enter sutta id, phrase or keyword(s)" 
-                  v-model="search" v-on:keypress="onSearchKey($event)"
-                  label = "Search" ></v-text-field>
-              <div v-if="!search" class="title scv-help">
-                <a href="https://github.com/sc-voice/sc-voice/wiki/Search"
-                    aria-label="Help"
-                    style="background-color:rgba(0,0,0,0)"
-                    target="_blank">
-                    <v-icon >help</v-icon>
-                </a>
+              <div class="scv-search-row2">
+                  <v-text-field style="width:22em; margin-right:-2.0em"
+                      ref="refSearch"
+                      placeholder="Enter sutta id, phrase or keyword(s)" 
+                      v-model="search" v-on:keypress="onSearchKey($event)"
+                      label = "Search" >
+                  </v-text-field>
+                  <div v-if="!search" class="title scv-help">
+                    <a href="https://github.com/sc-voice/sc-voice/wiki/Home"
+                        aria-label="Help"
+                        style="background-color:rgba(0,0,0,0)"
+                        target="_blank">
+                        <v-icon >help</v-icon>
+                    </a>
+                  </div>
               </div>
           </div>
           <div v-if="error.search" class="scv-error" >
@@ -29,6 +32,11 @@
                 aria-label="Dismiss Error">
                 <v-icon>clear</v-icon>
               </v-btn>
+          </div>
+          <div v-if="!search" style="display: flex; justify-content: space-around; margin-top: 5em">
+            <div class="text-xs-center caption">
+                <a :href="dedicationUrl">Dedicated to <i>the dark bound for light</i></a>
+            </div>
           </div>
           <details v-show="searchResults">
             <summary role="main" aria-level="1" ref="refResults" class='title'>
@@ -627,6 +635,11 @@ export default {
         audioUrl() {
             return `https://github.com/sc-voice/sc-voice/wiki/Audio-${this.sutta_uid}`;
         },
+        dedicationUrl() {
+            return `./?r=${Math.random}/#/?`+
+                `search=%20dark%20and%20bound%20for%20light&`+
+                `lang=${this.language}`;
+        },
         cookies() {
             return document.cookies;
         },
@@ -745,8 +758,12 @@ export default {
 .scv-search-row {
     display: flex;
     flex-flow: row ;
+    justify-content: space-around;
+}
+.scv-search-row2 {
+    display: flex;
+    flex-flow: row ;
     align-items: center;
-    justify-content: center;
 }
 .scv-error {
     background-color: #403030 !important;
