@@ -35,7 +35,10 @@
           </div>
           <div v-if="!search" style="display: flex; justify-content: space-around; margin-top: 5em">
             <div class="text-xs-center caption">
-                <a :href="dedicationUrl">Dedicated to <i>the dark bound for light</i></a>
+                Dedicated to<br/>
+                <a :href="dedicationUrl[0]"><i>the dark bound for light</i></a><br/>
+                and to those for whom<br/>
+                <a :href="dedicationUrl[1]"><i>darkness vanished and light appeared</i></a>
             </div>
           </div>
           <details v-show="searchResults">
@@ -636,9 +639,15 @@ export default {
             return `https://github.com/sc-voice/sc-voice/wiki/Audio-${this.sutta_uid}`;
         },
         dedicationUrl() {
-            return `./?r=${Math.random}/#/?`+
+            return [
+                `./?r=${Math.random}/#/?`+
                 `search=%20dark%20and%20bound%20for%20light&`+
-                `lang=${this.language}`;
+                `lang=${this.language}`,
+                `./?r=${Math.random}/#/?`+
+                `search=darkness%20vanished%20and%20light%20appeared&`+
+                `lang=${this.language}`,
+            ];
+
         },
         cookies() {
             return document.cookies;
