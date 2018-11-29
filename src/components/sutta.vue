@@ -66,7 +66,7 @@
                 </span>
             </summary>
             <div style="display:flex; justify-content:space-around">
-                <v-btn @click="playAll"
+                <v-btn @click="playAll()"
                     class="scv-text-button" :style="cssProps" small>
                     Play All
                 </v-btn>
@@ -148,14 +148,21 @@
                     </v-btn>
                 </div>
                 <div style="display:flex; justify-content: space-around">
+                    </v-btn>
+                        <v-btn v-if="result.quote" 
+                        @click="playOne(result)"
+                        class="scv-text-button" :style="cssProps" small>
+                        Play {{result.suttaplex.acronym}}
+                    </v-btn>
                     <v-btn v-if="result.quote" 
                         :href="resultLink(result)"
                         class="scv-text-button" :style="cssProps" small>
-                        {{result.suttaplex.acronym}}...
+                        View {{result.suttaplex.acronym}}
                     </v-btn>
                 </div>
             </details><!-- search result i -->
           </details><!-- searchresults -->
+
           <details v-if="sections && sections[0]" class="scv-header">
             <summary ref="refSutta" class="subheading scv-header-summary" >
                 {{sutta.title}}
@@ -373,23 +380,29 @@ export default {
             });
             this.segments = null;
         },
-        playAll() {
-            var tracks = [];
-            var results = this.searchResults.results;
-            results.forEach(r => {
-                var sutta = r.sutta;
-                sutta.sections.forEach((sect,i) => {
-                    tracks.push({
-                        sutta_uid: sutta.sutta_uid,
-                        title: sutta.translation.title,
-                        language: sutta.translation.lang,
-                        translator: sutta.author_uid,
-                        iSection: i,
-                    });
+        suttaTracks(sutta) {
+            var tracks = sutta.sections.reduce((acc,sect,i) => {
+                acc.push({
+                    sutta_uid: sutta.sutta_uid,
+                    title: sutta.translation.title,
+                    language: sutta.translation.lang,
+                    translator: sutta.author_uid,
+                    iSection: i,
                 });
-                console.log(`playAll ${sutta.sutta_uid} ${tracks.length}`, Object.keys(sutta));
-            });
-            this.tracks = tracks;
+                return acc;
+            },[]);
+            console.log(`suttaTracks ${sutta.sutta_uid} ${tracks.length}`);
+            return tracks;
+        },
+        playOne(result) {
+            this.tracks = this.suttaTracks(result.sutta);
+            this.launchSuttaPlayer();
+        },
+        playAll() {
+            var results = this.searchResults.results;
+            this.tracks = results.reduce((acc,r) => {
+                return acc.concat(this.suttaTracks(r.sutta));
+            }, []);
             this.launchSuttaPlayer();
         },
         getResultAudio(result) {
@@ -404,12 +417,12 @@ export default {
                     this.scvOpts.iVoice,
                 ].join('/');
                 var url = that.url(`play/segment/${segmentRef}`);
-                that.startWaiting();
+                var timer = that.startWaiting();
                 that.$http.get(url).then(res => {
-                    that.stopWaiting();
+                    that.stopWaiting(timer);
                     resolve(res.data);
                 }).catch(e => {
-                    that.stopWaiting();
+                    that.stopWaiting(timer);
                     console.error(e.stack);
                     reject(e);
                 });
@@ -421,7 +434,7 @@ export default {
                 if (result.audio == null) {
                     var data = await that.getResultAudio(result);
                     Vue.set(result, "audio", data.segment.audio);
-                    console.log(`playQuote`, data);
+                    console.log(`playQuote audio:`, data.segment.audio);
                 }
                 that.$nextTick(() => {
                     var track = that.$refs[ref][0];
@@ -432,10 +445,12 @@ export default {
                         that.refPlaying = null;
                     };
                     if (track.paused) {
+                        console.log('playQuote nextTick playing', track);
                         track.play();
                         that.refPlaying = ref;
                         listener = track.addEventListener("ended", handler);
                     } else {
+                        console.log('playQuote nextTick paused', track);
                         track.pause();
                         handler();
                     }
@@ -463,7 +478,7 @@ export default {
                 setTimeout(() => {
                     console.log(`waiting timeout:${timeoutSec}s`);
                     if (that.waiting) {
-                        that.stopWaiting();
+                        that.stopWaiting(timer);
                         opts.onTimeout && opts.onTimeout();
                     }
                 }, timeoutSec*1000);
@@ -650,7 +665,7 @@ export default {
             if (sutta_uid) {
                 link += `/${this.sutta_uid}-${lang}-${trans}.mp3`;
             }
-            return link;
+            return this.url(link);
         },
         sectionAriaLabel(sect) {
             var label =  `Section `;
