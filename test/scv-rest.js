@@ -363,5 +363,32 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTGET /examples/:n return search examples", function(done) {
+        this.timeout(3*1000);
+        (async function() { try {
+            var n = 3;
+            var url = `/scv/examples/${n}`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data instanceof Array);
+            should(data.length).equal(3);
+            for (var i = 3; i-- > 0; ) { // at least one trial must be different
+                var res2 = await supertest(app).get(url);
+                try {
+                    res2.statusCode.should.equal(200);
+                    var data2 = res2.body instanceof Buffer 
+                        ? JSON.parse(res2.body) : res2.body;
+                    should(data).not.eql(data2);
+                    break;
+                } catch(e) {
+                    if (i === 0) {
+                        throw e;
+                    }
+                }
+            }
+            done();
+        } catch(e) {done(e);} })();
+    });
 });
 

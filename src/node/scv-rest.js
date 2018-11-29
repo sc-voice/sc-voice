@@ -18,6 +18,7 @@
     const Voice = require('./voice');
     const SuttaCentralId = require('./sutta-central-id');
     const PATH_SOUNDS = path.join(__dirname, '../../local/sounds/');
+    const PATH_EXAMPLES = path.join(__dirname, `../../words/examples/`);
 
     const VOICES = [{
         name: 'Amy',
@@ -49,6 +50,7 @@
             } else {
                 throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
             }
+            this.examples = opts.examples;
             this.soundStore = new GuidStore({
                 storeName: 'sounds',
                 storePath: PATH_SOUNDS,
@@ -105,6 +107,8 @@
                         this.getSutta),
                     this.resourceMethod("get", "search/:pattern", 
                         this.getSearch),
+                    this.resourceMethod("get", "examples/:n", 
+                        this.getExamples),
 
                 ]),
             });
@@ -442,6 +446,35 @@
                 logger.info(`GET search(${pattern}) ${method} => ${results.map(r=>r.uid)}`);
             });
             return promise;
+        }
+
+        getExamples(req, res, next) {
+            var language = req.query.language || 'en';
+            var n = Number(req.params.n);
+            n = Math.max(1, isNaN(n) ? 3 : n);
+            var examples = this.examples;
+            if (examples == null) {
+                var fname = `examples-${language}.txt`;
+                var fpath = path.join(PATH_EXAMPLES, fname);
+                if (fs.existsSync(fpath)) {
+                    examples = this.examples = fs.readFileSync(fpath)
+                        .toString()
+                        .trim()
+                        .split('\n');
+                } else {
+                    logger.warn(`File not found: ${fpath}`);
+                    throw new Error(`File not found: ${fname}`);
+                }
+            }
+            var nShuffle = examples.length;
+            for (var i = 0; i < nShuffle; i++) {
+                var j = Math.trunc(Math.random() * examples.length);
+                var t = examples[i];
+                examples[i] = examples[j];
+                examples[j] = t;
+            }
+            
+            return examples.slice(0, n);
         }
     }
 

@@ -7,13 +7,13 @@
       <v-layout column align-left >
           <div class="scv-search-row">
               <div class="scv-search-row2">
-                  <v-text-field style="width:22em; margin-right:-2.0em"
-                      ref="refSearch"
+                  <v-text-field ref="refSearch"
+                      style="width:24em;"
                       placeholder="Enter sutta id, phrase or keyword(s)" 
                       v-model="search" v-on:keypress="onSearchKey($event)"
                       label = "Search" >
                   </v-text-field>
-                  <div v-if="!search" class="title scv-help">
+                  <div class="title scv-help">
                     <a href="https://github.com/sc-voice/sc-voice/wiki/Home"
                         aria-label="Help"
                         style="background-color:rgba(0,0,0,0)"
@@ -33,13 +33,26 @@
                 <v-icon>clear</v-icon>
               </v-btn>
           </div>
-          <div v-if="!search" style="display: flex; justify-content: space-around; margin-top: 5em">
-            <div class="text-xs-center caption">
-                Dedicated to<br/>
-                <a :href="dedicationUrl[0]"><i>the dark bound for light</i></a><br/>
-                and to those for whom<br/>
-                <a :href="dedicationUrl[1]"><i>darkness vanished and light appeared</i></a>
-            </div>
+          <div v-if="!searchResults && !sections" class="scv-home-blurb" >
+              <div class="text-xs-center caption">
+                  <v-btn @click="clickExamples()"
+                      class="scv-text-button" :style="cssProps" small>
+                      Examples
+                  </v-btn>
+              </div>
+              <div v-for="(ex,i) in examples" 
+                  class="text-xs-center caption">
+                  <a :href="searchUrl(`${ex}`)" :ref="`refExample${i}`" >
+                      {{i+1}}. {{ex}}</a>
+              </div>
+              <div v-if="!examples" class="text-xs-center caption">
+                  Dedicated to<br/>
+                  <a :href="searchUrl('the dark bound for light')">
+                      <i>the dark bound for light</i></a><br/>
+                  and to those for whom<br/>
+                  <a :href="searchUrl('darkness vanished and light appeared')">
+                      <i>darkness vanished and light appeared</i></a>
+              </div>
           </div>
           <details v-show="searchResults">
             <summary role="main" aria-level="1" ref="refResults" class='title'>
@@ -286,6 +299,7 @@ export default {
         }
         var that = {
             error,
+            examples: null,
             hasAudio: true,
             search: '',
             sectionAudioGuids,
@@ -310,6 +324,19 @@ export default {
         return that;
     },
     methods: {
+        clickExamples() {
+            var that = this;
+            var url = this.url(`examples/3`);
+            this.$http.get(url).then(res => {
+                Vue.set(this, "examples", res.data);
+                this.$nextTick(() => {
+                    var elt = that.$refs['refExample0'][0];
+                    elt.focus();
+                });
+            }).catch(e => {
+                console.error(e.stack);
+            });
+        },
         audioIcon(ref) {
             return ref === this.refPlaying ? 'volume_up' : 'volume_down';
         },
@@ -335,6 +362,7 @@ export default {
         },
         clear() {
             this.error.search = null;
+            this.sections = null;
             this.searchResults = null;
             for (var i = 0; i < MAX_SECTIONS; i++) {
                 this.error[i] = null;
@@ -459,6 +487,7 @@ export default {
         },
         onSearchKey(event) {
             if (event.key === "Enter") {
+                this.clear();
                 this.search && this.onSearch();
             }
         },
@@ -633,21 +662,16 @@ export default {
 
             return label;
         },
+        searchUrl(pat) {
+            var search = encodeURIComponent(pat);
+            return `./?r=${Math.random}/#/?`+
+                `search=${search}&`+
+                `lang=${this.language}`;
+        },
     },
     computed: {
         audioUrl() {
             return `https://github.com/sc-voice/sc-voice/wiki/Audio-${this.sutta_uid}`;
-        },
-        dedicationUrl() {
-            return [
-                `./?r=${Math.random}/#/?`+
-                `search=%20dark%20and%20bound%20for%20light&`+
-                `lang=${this.language}`,
-                `./?r=${Math.random}/#/?`+
-                `search=darkness%20vanished%20and%20light%20appeared&`+
-                `lang=${this.language}`,
-            ];
-
         },
         cookies() {
             return document.cookies;
@@ -773,6 +797,7 @@ export default {
     display: flex;
     flex-flow: row ;
     align-items: center;
+    justify-content: space-around;
 }
 .scv-error {
     background-color: #403030 !important;
@@ -854,12 +879,15 @@ export default {
     margin-top: 0.5em;
 }
 .scv-help {
-    margin: 2em;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+    margin: 0em;
 }
 .scv-help > a:hover {
     text-decoration: none;
+}
+.scv-home-blurb {
+    display: flex; 
+    flex-flow: column;
+    justify-content: space-around; 
+    margin-top: 5em;
 }
 </style>
