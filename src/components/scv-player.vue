@@ -268,7 +268,6 @@ export default {
                 var segment = that.segment;
                 if (segment.audio[lang] == null && segment.audio.pli == null) {
                     var data = await that.getSegmentAudio(segment.scid);
-                    //console.log(`toggleAudio() getSegmentAudio():`, data);
                     segment.audio = data.segment.audio;
                 }
                 var playPali = that.showPali && segment.audio.pli;
@@ -281,22 +280,18 @@ export default {
                     refLang.load();
                     that.loadingAudio++;
                 }
-                //console.log(`refPli.play() ready:`, refPli.readyState);
                 that.paused = false;
                 if (playPali) {
                     refPli.play().then(() => {
                         that.setTextClass();
                         that.loadingAudio = 0;
-                        //console.log(`refPli playing started`);
                     }).catch(e => {
                         that.paused = true;
                         that.loadingAudio = 0;
                         console.log(`refPli playing failed`, e);
                     });
-                } else if (playLang) {
-                    that.onEndPali();
                 } else {
-                    console.log(`nothing to play`);
+                    that.onEndPali();
                 }
             })();
         },
