@@ -11,8 +11,10 @@
                         @keydown.prevent="keydownPrevious($event)"
                         :style='cssProps({"width":"6em"})'
                         >Previous</button>
-                    <div >
+                    <div class="scv-timelapse">
                         {{iTrack+1}}/{{section && this.tracks.length || "(n/a)"}} 
+                        <v-icon small class="ml-1 mr-1">timelapse</v-icon>
+                        {{timeRemaining}}
                     </div>
                     <button class="scv-text-button"
                         ref="refNext"
@@ -386,7 +388,47 @@ export default {
             return this.segment && this.segment[lang] ||
                 this.loading && "Loading..." ||
                 "(no translation available)";
-        }
+        },
+        segmentsElapsed(){
+            return this.tracks && this.tracks.reduce((acc, track, i) => {
+                if (this.iTrack < i) {
+                    return acc;
+                }
+                if (i < this.iTrack) {
+                    return acc + track.nSegments;
+                }
+                return acc + this.iSegment + 1;
+            }, 0) || 0;
+        },
+        segmentsTotal(){
+            return this.tracks && this.tracks.reduce((acc, track) => {
+                return acc + track.nSegments;
+            }, 0) || 0;
+        },
+        timeRemaining(){
+            var remaining = this.segmentsTotal - this.segmentsElapsed;
+            const DN33_PACE = (2*3600 + 0*60 + 27)/(1158);
+            var secondsPerSegment =
+                (this.showPali ? DN33_PACE * 1.5 : 0) +
+                (this.showTrans ? DN33_PACE : 0);
+            var seconds = Math.trunc(remaining * secondsPerSegment);
+            var hours = Math.trunc(seconds / 3600);
+            seconds -= hours * 3600;
+            var minutes = Math.trunc(seconds / 60);
+            seconds -= minutes * 60;
+            var mm = ("0" + minutes);
+            var ss = ("0" + seconds);
+            if (hours) {
+                return `${hours}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`
+            }
+            if (minutes) {
+                return `--:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`;
+            } 
+            if (seconds) {
+                return `--:--:${ss.substring(ss.length-2)}`;
+            }
+            return `--:--:--`;
+        },
     },
     mounted() {
         this.setTextClass();
@@ -439,6 +481,10 @@ export default {
     padding-bottom: 1em;
     flex-flow: row nowrap;
     justify-content: space-between;
+    align-items: center;
+}
+.scv-timelapse {
+    display: flex;
     align-items: center;
 }
 </style>

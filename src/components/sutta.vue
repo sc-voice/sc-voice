@@ -388,6 +388,7 @@ export default {
                     language: sutta.translation.lang,
                     translator: sutta.author_uid,
                     iSection: i,
+                    nSegments: sect.segments.length,
                 });
                 return acc;
             },[]);
@@ -536,6 +537,7 @@ export default {
                 language: this.language,
                 translator: this.translator,
                 iSection: i,
+                nSegments: sect.segments.length,
             }));
             this.$nextTick(() => this.$refs.refSutta.focus());
         },
