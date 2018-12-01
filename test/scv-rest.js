@@ -363,7 +363,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /examples/:n return search examples", function(done) {
+    it("GET /examples/:n return search examples", function(done) {
         this.timeout(3*1000);
         (async function() { try {
             var n = 3;

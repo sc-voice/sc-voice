@@ -311,7 +311,7 @@
         should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
     });
-    it("TESTTESTAditi phonemes", function() {
+    it("Aditi phonemes", function() {
         var aditi = Voice.createVoice({
             name: "aditi",
             languageUnknown: "pli",

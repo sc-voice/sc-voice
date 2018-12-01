@@ -83,7 +83,7 @@
             done();
         })();
     });
-    it("TESTTESTsynthesizeText([text]) returns sound file for array of text", function(done) {
+    it("synthesizeText([text]) returns sound file for array of text", function(done) {
         this.timeout(3*1000);
         (async function() { try {
             var polly = new Polly();

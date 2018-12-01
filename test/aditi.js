@@ -18,7 +18,7 @@
             `${BREAK}`;
     }
 
-    it("TESTTESTsegmentSSML(text) returns SSML", function() {
+    it("segmentSSML(text) returns SSML", function() {
         var aditi = new Polly({
             name: 'Aditi',
             languageUnknown: 'pli',

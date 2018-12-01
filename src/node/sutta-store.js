@@ -450,8 +450,9 @@
             }
             var majorList = list.reduce((acc,item) => {
                 item = item.trim().toLowerCase();
-                if (item.indexOf('.') >= 0) {
-                    acc.push(item);
+                if (/[1-9]\./.test(item)) {
+                    var suttaNum = item.replace(/ /g, "");
+                    acc.push(suttaNum);
                 } else if (item.indexOf('/') >= 0) {
                     acc.push(item); // fully specified reference (e.g., mn1/en/bodhi)
                 } else {

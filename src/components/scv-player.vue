@@ -409,7 +409,7 @@ export default {
             var remaining = this.segmentsTotal - this.segmentsElapsed;
             const DN33_PACE = (2*3600 + 0*60 + 27)/(1158);
             var secondsPerSegment =
-                (this.showPali ? DN33_PACE * 1.5 : 0) +
+                (this.showPali ? DN33_PACE * 1.8 : 0) +
                 (this.showTrans ? DN33_PACE : 0);
             var seconds = Math.trunc(remaining * secondsPerSegment);
             var hours = Math.trunc(seconds / 3600);

@@ -539,13 +539,14 @@
         should(SuttaStore.isUidPattern('sn22.1-20    ,   red')).equal(false);
         should(SuttaStore.isUidPattern('red,sn22.1-20')).equal(false);
     });
-    it("suttaList(pattern) finds listed suttas", function(done) {
+    it("TESTTESTsuttaList(pattern) finds listed suttas", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
-            //should.deepEqual( store.suttaList(
-                //['t1670b2.8']), // unsupported sutta
-                //['t1670b2.8']);
+            should.deepEqual( store.suttaList(
+                ['AN 5.179', 'sn29.1']), // spaces
+                ['an5.179', 'sn29.1']);
+
             should.deepEqual( store.suttaList(
                 ['an2.3']), // sub-chapter embedded 
                 ['an2.1-10']);
@@ -575,6 +576,9 @@
             should.deepEqual( store.suttaList(
                 ['sn29.1', 'sn29.1', 'sn29.2']), // duplicates
                 ['sn29.1', 'sn29.1', 'sn29.2']);
+            should.deepEqual( store.suttaList(
+                ['AN5.179', 'sn29.1']), // spaces
+                ['an5.179', 'sn29.1']);
 
             should.deepEqual(store.suttaList(
                 ['MN9-11']), // major number range

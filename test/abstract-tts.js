@@ -205,7 +205,7 @@
             'j \u2018k,\u2019 l 5 m',
         ]);
     });
-    it("TESTTESTsegmentSSML(text) returns array of SSML text segments", function() {
+    it("segmentSSML(text) returns array of SSML text segments", function() {
         var tts = new AbstractTTS();
         var ttsStrip = new AbstractTTS({
             languageUnknown: 'pli',
