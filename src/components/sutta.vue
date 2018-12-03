@@ -71,10 +71,6 @@
                     Play All
                 </v-btn>
             </div>
-            <audio ref="refIntroSound" preload=auto v-if="audioPlay">
-                <source type="audio/mp3" :src="audioPlay" />
-                <p>Your browser doesn't support HTML5 audio</p>
-            </audio>
             <details role="heading" aria-level="2"
                 v-for="(result,i) in (searchResults && searchResults.results||[])" 
                 :key="result.uid" 
@@ -491,9 +487,7 @@ export default {
             Vue.set(this, "waiting", 0);
         },
         launchSuttaPlayer(iTrack=0) {
-            var introSound = this.$refs[`refIntroSound`];
             this.$nextTick(() => {
-                introSound && introSound.play();
                 var player = this.$refs[`refScvPlayer`];
                 if (player == null) {
                     throw new Error('refScvPlayer not found');
@@ -695,12 +689,6 @@ export default {
         },
         downloadFile() {
             return `${this.sutta_uid}-${this.language}-${this.author_uid}.mp3`;
-        },
-        ipsChoices() {
-            return this.scvOpts.ipsChoices;
-        },
-        audioPlay() {
-            return this.ipsChoices[this.scvOpts.ips].url;
         },
         downloadUrl() {
             var usage = ['recite','review'][this.scvOpts.iVoice];

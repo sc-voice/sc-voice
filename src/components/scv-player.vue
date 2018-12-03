@@ -2,6 +2,10 @@
     <v-dialog persistent v-model="visible"
         max-width="38em" dark class="scv-player-section">
         <v-card>
+            <audio ref="refIntroSound" preload=auto v-if="introAudioUrl">
+                <source type="audio/mp3" :src="introAudioUrl" />
+                <p>Your browser doesn't support HTML5 audio</p>
+            </audio>
             <v-card-text >
                 <div class="subheading pl-2 pb-2">{{title}}</div>
                 <div class="scv-player-nav">
@@ -429,11 +433,20 @@ export default {
             }
             return `--:--:--`;
         },
+        ipsChoices() {
+            return this.scvOpts.ipsChoices;
+        },
+        introAudioUrl() {
+            var ips = this.ipsChoices[this.scvOpts.ips];
+            return ips && ips.url;
+        },
     },
     mounted() {
         this.setTextClass();
         console.log(`mounted`, this.tracks);
+        var introSound = this.$refs[`refIntroSound`];
         this.$nextTick(() => {
+            introSound && introSound.play();
             var refPli = this.$refs.refAudioPali;
             var refLang = this.$refs.refAudioLang;
             refPli.addEventListener("ended", this.onEndPali);
