@@ -40,7 +40,7 @@
                       Examples
                   </v-btn>
               </div>
-              <div v-for="(ex,i) in examples" 
+              <div v-for="(ex,i) in examples"  :key="`example${i}`"
                   class="text-xs-center caption">
                   <a :href="searchUrl(`${ex}`)" :ref="`refExample${i}`" >
                       {{i+1}}. {{ex}}</a>
@@ -144,8 +144,7 @@
                     </v-btn>
                 </div>
                 <div style="display:flex; justify-content: space-around">
-                    </v-btn>
-                        <v-btn v-if="result.quote" 
+                    <v-btn v-if="result.quote" 
                         @click="playOne(result)"
                         class="scv-text-button" :style="cssProps" small>
                         Play {{result.suttaplex.acronym}}
@@ -492,7 +491,7 @@ export default {
                 if (player == null) {
                     throw new Error('refScvPlayer not found');
                 }
-                player.playTrack(iTrack);
+                player.launch(iTrack);
             });
         },
         onSearchKey(event) {
@@ -602,33 +601,6 @@ export default {
         },
         segClass(seg) {
             return seg.expanded ? "scv-para scv-para-expanded" : "scv-para";
-        },
-        playSutta() {
-            console.debug("playSutta");
-            var language = this.language;
-            var translator = this.translator;
-            var g = Math.random();
-            var vSvc = this.voice.value;
-            if (vSvc !== 'recite' && vSvc !== 'review' && vSvc !== 'navigate') {
-                vSvc = 'recite';
-            }
-            var url = this.url(`${vSvc}/sutta/${this.sutta_uid}`+
-                `/${language}/${translator}?g=${g}`);
-            var timer = this.startWaiting();
-            this.$http.get(url).then(res => {
-                Vue.set(this, "suttaAudioGuid", res.data.guid);
-                this.stopWaiting(timer);
-                console.log(`playSutta ${res.data.guid}`);
-            }).catch(e => {
-                var data = e.response && e.response.data && e.response.data.error 
-                    || `Sutta cannot be recited. Try again later.`;
-                this.error.search = {
-                    http: e.message,
-                    data,
-                }
-                console.error(e.stack, data);
-                this.stopWaiting(timer);
-            });
         },
         translationSearch(translation) {
             var author_uid = translation.author_uid;

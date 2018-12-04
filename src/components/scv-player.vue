@@ -128,7 +128,8 @@ export default {
             var trackRef = this.trackRef();
             var url = this.url(`play/section/${trackRef}`);
             //console.log(`playTrack() url:`, url);
-            this.$http.get(url).then(res => {
+            var promise = this.$http.get(url);
+            promise.then(res => {
                 this.stopProgress();
                 Vue.set(this, "section", res.data);
                 this.$nextTick(() => {
@@ -142,6 +143,7 @@ export default {
                 this.stopProgress();
                 console.error(e.stack);
             });
+            return promise;
         },
         track(iTrack=this.iTrack) {
             return this.tracks[iTrack];
@@ -173,6 +175,8 @@ export default {
             }
         },
         close() {
+            var introAudio = this.$refs[`refIntroSound`];
+            introAudio && !introAudio.paused && introAudio.pause();
             this.pauseAudio();
             this.stopProgress();
             this.visible = false;
@@ -254,8 +258,33 @@ export default {
                 });
             } catch(e) {reject(e);} });
         },
+        launch(iTrack) {
+            var introAudio = this.$refs[`refIntroSound`];
+            var that = this;
+            if (introAudio) {
+                var onEndIntro = () => {
+                    onEndIntro && introAudio.removeEventListener("ended", onEndIntro);
+                    onEndIntro = null;
+                    if (that.paused) {
+                        that.clickPlayPause();
+                    }
+                }
+                introAudio.addEventListener("ended", onEndIntro);
+                var ips = this.ipsChoices[this.scvOpts.ips];
+                introAudio.volume = ips.volume;
+                introAudio.load();
+                introAudio.play();
+                this.playTrack(iTrack);
+            } else {
+                this.playTrack(iTrack).then(() => {
+                    that.clickPlayPause();
+                });
+            }
+        },
         clickPlayPause() {
             console.log(`clickPlayPause() ${this.paused ? "play" : "pause"}`);
+            var introAudio = this.$refs[`refIntroSound`];
+            introAudio && !introAudio.paused && introAudio.pause();
             this.toggleAudio();
             var refPlay = this.$refs.refPlay.$el;
             refPlay.focus();
@@ -444,9 +473,7 @@ export default {
     mounted() {
         this.setTextClass();
         console.log(`mounted`, this.tracks);
-        var introSound = this.$refs[`refIntroSound`];
         this.$nextTick(() => {
-            introSound && introSound.play();
             var refPli = this.$refs.refAudioPali;
             var refLang = this.$refs.refAudioLang;
             refPli.addEventListener("ended", this.onEndPali);

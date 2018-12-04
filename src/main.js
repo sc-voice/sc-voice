@@ -30,15 +30,23 @@ const IPS = [{
 },{
     url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
     label: "Launch Sutta Player with Rainforest Ambience Glory Sunz (Public Domain)",
+    volume: 0.1,
     value: 1,
 },{
     url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
     label: "Launch Sutta Player with Indian Bell by Flemur (Sampling Plus 1.0)",
+    volume: 0.1,
     value: 2,
 },{
     url: '/audio/tibetan-singing-bowl-horst-cc0.mp3',
     label: "Launch Sutta Player with Tibetan Singing Bowl by Horst (CC0)",
+    volume: 0.3,
     value: 3,
+},{
+    url: '/audio/jetrye-bell-meditation-cleaned-CC0.mp3',
+    label: "Launch Sutta Player with Bell Meditation Cleaned by JetRye (CC0)",
+    volume: 0.1,
+    value: 4,
 }];
 
 Vue.use(VueAxios, axios);
@@ -56,7 +64,7 @@ const scvState = {
     showLang: 0,
     search: null,
     maxResults: 5,
-    ips: 3,
+    ips: 4,
     lang: 'en',
 };
 Object.defineProperty(scvState, 'hash', {
