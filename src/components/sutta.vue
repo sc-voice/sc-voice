@@ -665,7 +665,7 @@ export default {
         downloadUrl() {
             var usage = ['recite','review'][this.scvOpts.iVoice];
             var ref = `${this.sutta_uid}/${this.language}/${this.author_uid}`;
-            return `./download/sutta/${ref}/${usage}`;
+            return this.url(`download/sutta/${ref}/${usage}`);
         },
         showPali( ){
             var showLang = this.scvOpts && this.scvOpts.showLang || 0;
