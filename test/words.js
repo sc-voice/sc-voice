@@ -173,7 +173,7 @@
         ipaCompare(`Ākaṅkheyyasutta`,`ɑk\u0250\u1e45k\u02b0ejjɐ${sutta}`);
         ipaCompare(`jhana`,`\u029dh\u0250na\u0308`);
     });
-    it("add(word, language) return IPA for word", function() {
+    it("TESTTESTadd(word, language) return IPA for word", function() {
         var filePath = path.join(__dirname, 'data/en.json');
         var words = new Words(null, { filePath });
 
@@ -193,7 +193,7 @@
             'center', 'centre',
         ]);
 
-        var pali = 'Mūlapariyāyasutta';
+        var pali = 'Mūlapariyāya';
         var paliRoman = words.romanize(pali);
         words.add(pali, {
             language: 'pli',

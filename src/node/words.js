@@ -24,6 +24,7 @@
                         words: {},
                     };
                 json = Object.assign({}, commonJson, json);
+                json.words = Object.assign({}, commonJson.words, json.words);
             } 
             this.symbols = json.symbols;
             this.words = json.words;
