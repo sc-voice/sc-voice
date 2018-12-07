@@ -25,7 +25,7 @@ var words = new Words(undefined, {
     var title = '8. Mit Sudatta';
 
     var voice = Voice.createVoice({
-        name: "marlene",
+        name: "vicki",
         languageUnknown: "pli",
     });
     var scr = await new SuttaCentralApi().initialize();

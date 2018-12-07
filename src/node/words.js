@@ -17,6 +17,7 @@
                 if (!fs.existsSync(filePath)) {
                     var filePath = path.join(__dirname, `../../words/en.json`);
                 }
+
                 json = fs.existsSync(filePath)
                     ? JSON.parse(fs.readFileSync(filePath))
                     : {

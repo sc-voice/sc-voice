@@ -251,6 +251,27 @@
         should(pat.test('asfd Bikkhu Tathagata asdf')).equal(true); // alternate spelling
 
     });
+    it("TESTTESTWords() loads de.json", function() {
+        var words = new Words(undefined, {
+            language: 'de',
+        });
+        should(words.language).equal('de');
+        should.deepEqual(words.wordInfo('mit'), {
+            language: 'de',
+        });
+        should(words.isWord('mit')).equal(true);
+        should(words.isWord('füßen')).equal(true);
+        should(words.isWord('wäldchen')).equal(true);
+        should(words.isWord('hörte')).equal(true);
+        should(words.isForeignWord('mit')).equal(false);
+        should(words.isForeignWord('füßen')).equal(false);
+        should(words.isForeignWord('wäldchen')).equal(false);
+        should(words.isForeignWord('hörte')).equal(false);
+        should(words.romanize('mit')).equal('mit');
+        should(words.romanize('füßen')).equal('füßen');
+        should(words.romanize('wäldchen')).equal('wäldchen');
+        should(words.romanize('hörte')).equal('hörte');
+    });
     
 
 })

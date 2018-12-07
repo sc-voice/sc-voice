@@ -1,4 +1,6 @@
 {
+    "alphabet": "^[a-z'\u02bc\u2019]*$",
+    "wordEnd": "([^a-zA-Z].*)?$",
     "words": {
         "amy": {"language":"en"},
         "raveena": {"language":"en"},

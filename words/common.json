@@ -1,6 +1,4 @@
 {
-    "alphabet": "^[a-z'\u02bc\u2019]*$",
-    "wordEnd": "([^a-zA-Z].*)?$",
     "ipa": {
         "vowels":"aeiouj",
         "pli": {

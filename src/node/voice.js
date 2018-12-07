@@ -144,7 +144,9 @@
         }
 
         voiceWords() {
-            var words = new Words();
+            var words = new Words(undefined, {
+                language: this.language.split('-')[0],
+            });
             words._ipa = this.ipa;
             return words;
         }
