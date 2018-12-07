@@ -20,6 +20,7 @@
         "sn12.23": true,
     };
     const SUPPORTED_TRANSLATORS = {
+        sabbamitta: true,
         sujato: true,
         bodhi: true,
         horner: true,

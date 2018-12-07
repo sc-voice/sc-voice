@@ -298,4 +298,51 @@
             done();
         } catch(e) { done(e); } })();
     });
+    it("TESTTESTsuttaFromHtml(html, opts) should parse HTML", function(done) {
+        (async function() { try {
+            var scr = await new SuttaCentralApi().initialize();
+            var text = [
+                'hello',
+                'there\n',
+            ].join('\n');
+            var sutta = scr.suttaFromHtml(text, {
+                uid: 'sn12.23',
+                suttaplex: {
+                    uid: 'sn12.23',
+                    original_title: 'Sudattasutta',
+                },
+                translation: {
+                    title: '8. Mit Sudatta',
+                    author_uid: 'sabbamitta',
+                    lang: 'de',
+                },
+            });
+            should.deepEqual(Object.keys(sutta).sort(), [
+                'author_uid', 'sections', 'support', 'suttaCode', 'sutta_uid', 
+                'translation',
+            ].sort());
+            should(sutta.author_uid).equal('sabbamitta');
+            should(sutta.sections.length).equal(2);
+            should(sutta.sutta_uid).equal('sn12.23');
+            should(sutta.segments.length).equal(4);
+            should.deepEqual(sutta.segments[0], {
+                scid: 'sn12.23:0.1',
+                de: 'Saṃyutta Nikāya 12.23',
+            });
+            should.deepEqual(sutta.segments[1], {
+                scid: 'sn12.23:0.2',
+                de: '8. Mit Sudatta',
+                pli: 'Sudattasutta',
+            });
+            should.deepEqual(sutta.segments[2], {
+                scid: 'sn12.23:1.0.1',
+                de: 'hello',
+            });
+            should.deepEqual(sutta.segments[3], {
+                scid: 'sn12.23:1.0.2',
+                de: 'there',
+            });
+            done();
+        } catch(e) { done(e); } })();
+    });
 })

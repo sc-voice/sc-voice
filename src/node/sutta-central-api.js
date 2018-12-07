@@ -204,19 +204,41 @@
             return this.expansion[0][abbr];
         }
 
+        suttaFromHtml(html, opts={}) {
+            if (!this.initialized) {
+                throw new Error('initialize() must be called');
+            }
+            var apiText = Object.assign({
+                lang: "en",
+                uid: "uid?",
+            }, opts);
+            apiText.translation = Object.assign({
+                title: "title?",
+                text: html,
+                lang: 'en',
+                author_uid: 'sujato',
+            }, opts.translation);
+            apiText.suttaplex = Object.assign({
+                uid: "suttaplex.uid?",
+                root_lang: "pli",
+                original_title: "suttaplex.original_title?",
+            }, opts.suttaplex);
+            return this.suttaFromApiText(apiText);
+        }
+
         suttaFromApiText(apiJson) {
             if (!this.initialized) {
                 throw new Error('initialize() must be called');
             }
-            var debug = 0;
-
-            var msStart = Date.now();
             var translation = apiJson.translation;
             var lang = translation.lang;
             var suttaplex = apiJson.suttaplex;
             var uid = suttaplex.uid;
+            var author_uid = translation.author_uid;
+            var html = translation.text.trim();
 
-            var html = translation.text;
+            var debug = 0;
+            var msStart = Date.now();
             var resultAside = (/<aside/um).exec(html);
             if (resultAside) {
                 let start = html.indexOf('>', resultAside.index)+1;
@@ -241,7 +263,8 @@
 
             var ipLast = html.lastIndexOf('</p>');
             var pEnd = '</p>';
-            html = html.substring(0, html.lastIndexOf(pEnd)+pEnd.length);
+            var ipEnd = html.lastIndexOf(pEnd);
+            ipEnd >= 0 && (html = html.substring(0, ipEnd+pEnd.length));
             var lines = html.split('\n');
 
             var debug1 = 0;
@@ -292,13 +315,14 @@
             var collName = collNames && collNames[collNames.length-1];
             var headerSegments = [{
                 scid:`${uid}:0.1`,
-                [lang]: `${collName || colId} ${collNum}`,
+                [lang]: `${collName || collId} ${collNum}`,
             },{
                 scid:`${uid}:0.2`,
                 [lang]: `${translation.title}`,
                 [suttaplex.root_lang]: `${suttaplex.original_title}`,
             }];
             return new Sutta({
+                author_uid,
                 sutta_uid: uid,
                 support: Definitions.SUPPORT_LEVELS.Legacy,
                 metaarea,

@@ -2,9 +2,15 @@
     const fs = require('fs');
     const path = require('path');
 
+
     class Words { 
         constructor(json, opts={}) {
             this.language = opts.language || 'en';
+            var commonJson = {};
+            var commonPath = path.join(__dirname, `../../words/common.json`);
+            if (fs.existsSync(commonPath)) {
+                commonJson  = JSON.parse(fs.readFileSync(commonPath));
+            }
             if (json == null) {
                 var filePath = opts.filePath 
                     || path.join(__dirname, `../../words/${this.language}.json`);
@@ -17,6 +23,7 @@
                         symbols: {},
                         words: {},
                     };
+                json = Object.assign({}, commonJson, json);
             } 
             this.symbols = json.symbols;
             this.words = json.words;

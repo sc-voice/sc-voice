@@ -121,7 +121,11 @@
             if (opts.prop != null) {
                 var prevgid = null;
                 return segments.reduce((acc, seg, i) => {
-                    var segtext = seg[opts.prop];
+                    var segtext = seg[opts.prop] || '';
+                    if (segtext == null) {
+                        throw new Error(`Expected property "${opts.prop}" `+
+                            `in ${JSON.stringify(seg)}`);
+                    }
                     var scid = new SuttaCentralId(seg.scid);
                     var curgid = scid.parent.scid;
 
