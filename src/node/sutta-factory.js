@@ -17,6 +17,7 @@
         mn1: true,
         mn41: true, 
         mn8: false, // very difficult to expand because of grammatical changes
+        "sn12.23": true,
     };
     const SUPPORTED_TRANSLATORS = {
         sujato: true,
