@@ -298,7 +298,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTsuttaFromHtml(html, opts) should parse HTML", function(done) {
+    it("suttaFromHtml(html, opts) should parse HTML", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi().initialize();
             var text = [

@@ -149,7 +149,7 @@
             'Life', 'is', 'good', '&amp;', 'happy', '.',
         ]);
     });
-    it("isNumber(text) returns true if text is a number", function() {
+    it("TESTTESTisNumber(text) returns true if text is a number", function() {
         var tts = new AbstractTTS();
 
         should(tts.isNumber(' ')).equal(false);
@@ -162,6 +162,7 @@
         should(tts.isNumber('123\n')).equal(false);
         should(tts.isNumber('\n123')).equal(false);
         should(tts.isNumber('281–309')).equal(true);
+        should(tts.isNumber('1,234')).equal(true);
 
         should(tts.isNumber('1')).equal(true);
         should(tts.isNumber('123')).equal(true);
@@ -255,10 +256,13 @@
         should(tts.break(0)).equal('<break time="0.001s"/>');
         should(tts.break(1)).equal('<break time="0.1s"/>');
     });
-    it("tokenize(text) returns array of tokens", function() {
+    it("TESTTESTtokenize(text) returns array of tokens", function() {
         var tts = new AbstractTTS();
         should.deepEqual(tts.tokenize('281–309'), [
             '281–309',
+        ]);
+        should.deepEqual(tts.tokenize('1,234'), [
+            '1,234',
         ]);
         should.deepEqual(tts.tokenize(`he does'nt conceive`), [
             'he', `does'nt`, 'conceive', 

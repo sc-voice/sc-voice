@@ -539,7 +539,7 @@
         should(SuttaStore.isUidPattern('sn22.1-20    ,   red')).equal(false);
         should(SuttaStore.isUidPattern('red,sn22.1-20')).equal(false);
     });
-    it("TESTTESTsuttaList(pattern) finds listed suttas", function(done) {
+    it("suttaList(pattern) finds listed suttas", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 

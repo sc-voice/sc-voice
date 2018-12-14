@@ -40,7 +40,7 @@
         should.deepEqual(words.lookup('bikkhu'), bhikkhu);
         should.deepEqual(words.lookup('bhikku'), bhikkhu);
     });
-    it("isWord(token) return true if token is a word", function() {
+    it("TESTTESTisWord(token) return true if token is a word", function() {
         var words = new Words();
 
         // strings with symbols
@@ -49,11 +49,37 @@
 
         // strings without symbols
         should(words.isWord('abc')).equal(true);
+
+        // numbers
         should(words.isWord('123')).equal(false);
         should(words.isWord('1.23')).equal(false);
+        should(words.isWord('1,234')).equal(false);
 
         // xml
         should(words.isWord('&amp;')).equal(false);
+    });
+    it("TESTTESTisNumber(text) returns true if text is a number", function() {
+        var words = new Words();
+
+        should(words.isNumber(' ')).equal(false);
+        should(words.isNumber('\n')).equal(false);
+        should(words.isNumber('a')).equal(false);
+        should(words.isNumber('a1')).equal(false);
+        should(words.isNumber('1a')).equal(false);
+        should(words.isNumber('123.')).equal(false);
+        should(words.isNumber('.123')).equal(false);
+        should(words.isNumber('123\n')).equal(false);
+        should(words.isNumber('\n123')).equal(false);
+        should(words.isNumber('281–309')).equal(true);
+        should(words.isNumber('1,234')).equal(true);
+
+        should(words.isNumber('1')).equal(true);
+        should(words.isNumber('123')).equal(true);
+        should(words.isNumber('-123')).equal(true);
+        should(words.isNumber('+123')).equal(true);
+        should(words.isNumber('+123.45')).equal(true);
+        should(words.isNumber('123.45')).equal(true);
+        should(words.isNumber('-0.45')).equal(true);
     });
     it("isForeignWord(token) return true if token is a word in foreign alphabet", function() {
         var words = new Words();
@@ -119,8 +145,16 @@
             .equal(`${Words.U_LSQUOTE}nandi dukkhassa mulan${Words.U_RSQUOTE}ti${Words.U_EMDASH}`);
 
     });
-    it("tokenize(text) returns array of tokens", function() {
+    it("TESTTESTtokenize(text) returns array of tokens", function() {
         var words = new Words();
+        var tokens = words.tokenize('and 6,000, and 600');
+        should.deepEqual(tokens, [
+            'and',
+            '6,000,',
+            'and',
+            '600',
+        ]);
+
         var tokens = words.tokenize('Hello {mn1.2-en-test} world.');
         should.deepEqual(tokens, [
             'Hello', '{mn1.2-en-test}', 'world', '.',
@@ -173,7 +207,7 @@
         ipaCompare(`Ākaṅkheyyasutta`,`ɑk\u0250\u1e45k\u02b0ejjɐ${sutta}`);
         ipaCompare(`jhana`,`\u029dh\u0250na\u0308`);
     });
-    it("TESTTESTadd(word, language) return IPA for word", function() {
+    it("add(word, language) return IPA for word", function() {
         var filePath = path.join(__dirname, 'data/en.json');
         var words = new Words(null, { filePath });
 
@@ -251,7 +285,7 @@
         should(pat.test('asfd Bikkhu Tathagata asdf')).equal(true); // alternate spelling
 
     });
-    it("TESTTESTWords() loads de.json", function() {
+    it("Words() loads de.json", function() {
         var words = new Words(undefined, {
             language: 'de',
         });

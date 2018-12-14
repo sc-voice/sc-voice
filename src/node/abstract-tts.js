@@ -12,7 +12,6 @@
     const { exec } = require('child_process');
     const RE_PARA = new RegExp(`^[${Words.U_RSQUOTE}${Words.U_RDQUOTE}]*\n$`,'u');
     const RE_PARA_EOL = /^\n\n+$/u;
-    const RE_ISNUMBER = new RegExp(`^${Words.PAT_NUMBER}$`);
     const RE_NUMBER = new RegExp(Words.PAT_NUMBER);
 
     class AbstractTTS {
@@ -88,7 +87,7 @@
         }
 
         isNumber(text) {
-            return !!text.match(RE_ISNUMBER);
+            return this.words.isNumber(text); 
         }
 
         break(index) {

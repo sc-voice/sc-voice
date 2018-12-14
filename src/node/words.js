@@ -1,8 +1,10 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const PAT_NUMBER = '[-+]?[0-9]+([.–][0-9]+)?';
+    const PAT_NUMBER = '[-+]?[0-9]+([.–,][0-9]+)?';
+    const RE_ISNUMBER = new RegExp(`^${PAT_NUMBER}$`);
     const RE_NUMBER = new RegExp(PAT_NUMBER);
+    const RE_NUMBERTOKEN = new RegExp(`^${PAT_NUMBER}[,]?$`);
 
     class Words { 
         constructor(json, opts={}) {
@@ -143,6 +145,10 @@
             return !this.symbolPat.test(token) && !RE_NUMBER.test(token);
         }
 
+        isNumber(text) {
+            return !!text.match(RE_ISNUMBER);
+        }
+
         wordInfo(word) {
             word = word && word.toLowerCase();
             var wordValue = word && this.words[word];
@@ -195,6 +201,9 @@
                         if (matches.index < tok.length-1 && (
                             c === Words.U_RSQUOTE || c === Words.U_RDQUOTE
                             || c === "'" || c === '"')) {
+                            acc.push(tok);
+                            tok = "";
+                        } else if (RE_NUMBERTOKEN.test(tok)) {
                             acc.push(tok);
                             tok = "";
                         } else {
