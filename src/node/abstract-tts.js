@@ -12,6 +12,8 @@
     const { exec } = require('child_process');
     const RE_PARA = new RegExp(`^[${Words.U_RSQUOTE}${Words.U_RDQUOTE}]*\n$`,'u');
     const RE_PARA_EOL = /^\n\n+$/u;
+    const RE_ISNUMBER = new RegExp(`^${Words.PAT_NUMBER}$`);
+    const RE_NUMBER = new RegExp(Words.PAT_NUMBER);
 
     class AbstractTTS {
         constructor(opts={}) {
@@ -59,7 +61,6 @@
             };
             var usage = this.usages[this.usage] || {};
             this.breaks = opts.breaks || usage.breaks || [0.001,0.1,0.2,0.6,1];
-            this.reNumber = /^[-+]?[0-9]+([.–][0-9]+)?$/;
             var vowels = this.words._ipa.vowels || "aeiou";
             this.reVowels1 = new RegExp(`^[${vowels}].*`, 'u');
         }
@@ -87,7 +88,7 @@
         }
 
         isNumber(text) {
-            return !!text.match(this.reNumber);
+            return !!text.match(RE_ISNUMBER);
         }
 
         break(index) {
@@ -165,7 +166,7 @@
 
         tokensSSML(text) {
             if (this.stripNumbers) {
-                text = text.replace(/[0-9.–]+/ug,' ');
+                text = text.replace(RE_NUMBER,' ');
             }
             if (this.stripQuotes) {
                 text = text.replace(/[„“‟‘‛'’"”»«]+/ug,' ');

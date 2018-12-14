@@ -1,7 +1,8 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-
+    const PAT_NUMBER = '[-+]?[0-9]+([.–][0-9]+)?';
+    const RE_NUMBER = new RegExp(PAT_NUMBER);
 
     class Words { 
         constructor(json, opts={}) {
@@ -50,6 +51,7 @@
             this.symbolPat = new RegExp(`[${symAcc.syms}]`);
         }
 
+        static get PAT_NUMBER() { return PAT_NUMBER; }
         static get RE_ACRONYM() { return /\{[^}]*\}/u };
 
         static get U_LSQUOTE() { return '\u2018'; }
@@ -138,7 +140,7 @@
         }
                             
         isWord(token) {
-            return !this.symbolPat.test(token) && !/^[0-9.–]*$/.test(token);
+            return !this.symbolPat.test(token) && !RE_NUMBER.test(token);
         }
 
         wordInfo(word) {
