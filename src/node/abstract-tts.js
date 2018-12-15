@@ -13,6 +13,7 @@
     const RE_PARA = new RegExp(`^[${Words.U_RSQUOTE}${Words.U_RDQUOTE}]*\n$`,'u');
     const RE_PARA_EOL = /^\n\n+$/u;
     const RE_NUMBER = new RegExp(Words.PAT_NUMBER);
+    const RE_STRIPNUMBER = new RegExp(`\\(?${Words.PAT_NUMBER}\\)?`);
 
     class AbstractTTS {
         constructor(opts={}) {
@@ -165,7 +166,7 @@
 
         tokensSSML(text) {
             if (this.stripNumbers) {
-                text = text.replace(RE_NUMBER,' ');
+                text = text.replace(RE_STRIPNUMBER,' ');
             }
             if (this.stripQuotes) {
                 text = text.replace(/[„“‟‘‛'’"”»«]+/ug,' ');

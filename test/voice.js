@@ -325,7 +325,7 @@
         should(recite.wordSSML(`Atthi`)).match(/"ət̪.t̪ʰɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hot̪ɪ"/);
     });
-    it("speak(text) can ignore numbers", function(done) {
+    it("TESTTESTspeak(text) can ignore numbers", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var raveena = Voice.createVoice({
@@ -337,6 +337,11 @@
             var result = await raveena.speak(text, {usage:'recite'});
             should(result.signature.api).equal('aws-polly');
             should(result.signature.text).not.match(/123/);
+
+            var text = `Bhikkhu (123)`;
+            var result = await raveena.speak(text, {usage:'recite'});
+            should(result.signature.api).equal('aws-polly');
+            should(result.signature.text).not.match(/\(.*\)/);
 
             done();
         } catch(e) {done(e);} })();
