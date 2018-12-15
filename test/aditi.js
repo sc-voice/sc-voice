@@ -4,6 +4,7 @@
     const path = require('path');
     const {
         Polly,
+        Voice,
     } = require("../index");
 
 
@@ -14,19 +15,27 @@
     const BREAK='<break time="0.001s"/>';
 
     function phoneme(ph, text) {
-        return `<phoneme alphabet="ipa" ph="${ph}">${text}</phoneme>`+
-            `${BREAK}`;
+        return new RegExp(`<phoneme alphabet="ipa" ph="${ph}">${text}</phoneme>`);
     }
 
-    it("segmentSSML(text) returns SSML", function() {
-        var aditi = new Polly({
+    function testPhoneme(recite, ph, text) {
+        var ssml = recite.segmentSSML(text)[0];
+        should(ssml).match((phoneme(ph,text) ));
+    }
+
+    it("TESTTESTsegmentSSML(text) returns SSML", function() {
+        var aditi = Voice.createVoice({
             name: 'Aditi',
+            usage: 'recite',
+            language: 'hi-IN',
             languageUnknown: 'pli',
             stripQuotes: true,
         });
+        should(aditi.name).equal('Aditi');
+        should(aditi.language).equal('hi-IN');
+        var recite = aditi.services['recite'];
 
-        var ssml = aditi.segmentSSML('saṁghe');
-        console.log(ssml);
-        should.deepEqual(ssml, [ phoneme('sɐṁgʰe','saṁghe') ]);
+        testPhoneme(recite, 'eɪso','eso');
+        testPhoneme(recite, 'səŋgʰe','saṁghe');
     });
 })
