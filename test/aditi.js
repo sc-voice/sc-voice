@@ -35,7 +35,17 @@
         should(aditi.language).equal('hi-IN');
         var recite = aditi.services['recite'];
 
+        // stops
+        testPhoneme(recite, 'bʰɪk.kʰʊsəŋgʰo','bhikkhusaṅgho');
+        testPhoneme(recite, 'səŋgʰe','saṃghe');
+        testPhoneme(recite, 'pəɲɲə','Pañña');
+        testPhoneme(recite, 'səŋkʰɑːɾə','saṅkhāra');
+        testPhoneme(recite, 'bɾɑːhməɳəŋ','brāhmaṇaṃ');
+        testPhoneme(recite, 'gɪʝʄhɑku:ʈe','gijjhakūṭe');
+        testPhoneme(recite, 'cɪt̪t̪əssə','cittassa');
+        testPhoneme(recite, 'chənnoʋɑːɖə','Channovāda');
+
+        // vowels
         testPhoneme(recite, 'eɪso','eso');
-        testPhoneme(recite, 'səŋgʰe','saṁghe');
     });
 })

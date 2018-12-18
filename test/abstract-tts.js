@@ -149,7 +149,7 @@
             'Life', 'is', 'good', '&amp;', 'happy', '.',
         ]);
     });
-    it("TESTTESTisNumber(text) returns true if text is a number", function() {
+    it("isNumber(text) returns true if text is a number", function() {
         var tts = new AbstractTTS();
 
         should(tts.isNumber(' ')).equal(false);
@@ -256,7 +256,7 @@
         should(tts.break(0)).equal('<break time="0.001s"/>');
         should(tts.break(1)).equal('<break time="0.1s"/>');
     });
-    it("TESTTESTtokenize(text) returns array of tokens", function() {
+    it("tokenize(text) returns array of tokens", function() {
         var tts = new AbstractTTS();
         should.deepEqual(tts.tokenize('281–309'), [
             '281–309',

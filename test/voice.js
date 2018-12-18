@@ -325,7 +325,7 @@
         should(recite.wordSSML(`Atthi`)).match(/"ət̪.t̪ʰɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hot̪ɪ"/);
     });
-    it("TESTTESTspeak(text) can ignore numbers", function(done) {
+    it("speak(text) can ignore numbers", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var raveena = Voice.createVoice({

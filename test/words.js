@@ -40,7 +40,7 @@
         should.deepEqual(words.lookup('bikkhu'), bhikkhu);
         should.deepEqual(words.lookup('bhikku'), bhikkhu);
     });
-    it("TESTTESTisWord(token) return true if token is a word", function() {
+    it("isWord(token) return true if token is a word", function() {
         var words = new Words();
 
         // strings with symbols
@@ -58,7 +58,7 @@
         // xml
         should(words.isWord('&amp;')).equal(false);
     });
-    it("TESTTESTisNumber(text) returns true if text is a number", function() {
+    it("isNumber(text) returns true if text is a number", function() {
         var words = new Words();
 
         should(words.isNumber(' ')).equal(false);
@@ -145,7 +145,7 @@
             .equal(`${Words.U_LSQUOTE}nandi dukkhassa mulan${Words.U_RSQUOTE}ti${Words.U_EMDASH}`);
 
     });
-    it("TESTTESTtokenize(text) returns array of tokens", function() {
+    it("tokenize(text) returns array of tokens", function() {
         var words = new Words();
         var tokens = words.tokenize('and 6,000, and 600');
         should.deepEqual(tokens, [
