@@ -306,6 +306,28 @@
         should(words.romanize('wäldchen')).equal('wäldchen');
         should(words.romanize('hörte')).equal('hörte');
     });
+    it("TESTTESTpartitions list of phrases", function() {
+        var joyPath = path.join(__dirname, "data", "joy.txt");
+        var lines = fs.readFileSync(joyPath).toString().trim().split('\n');
+        lines = lines.map(line=>line.trim().toLowerCase());
+        should(lines.length).equal(80);
+        var dict = {};
+        var pat = 'joy';
+        var minLength = 8; // pat.length+1;
+        var rePat = new RegExp(pat);
+        for (var i = 0; i < lines.length; i++) {
+            for (var j = i+1; j < lines.length; j++) {
+                var phrase = Words.commonPhrase(
+                    lines[i], lines[j], minLength);
+                //if (phrase && rePat.test(phrase)) {
+                if (phrase) {
+                    var count = dict[phrase] || 1;
+                    dict[phrase] = count + 1;
+                }
+            }
+        }
+        console.log(dict);
+    });
     
 
 })
