@@ -43,7 +43,17 @@
         testPhoneme(recite, 'bɾɑːhməɳəŋ','brāhmaṇaṃ');
         testPhoneme(recite, 'gɪʝʄhɑku:ʈe','gijjhakūṭe');
         testPhoneme(recite, 'cɪt̪t̪əssə','cittassa');
-        testPhoneme(recite, 'chənnoʋɑːɖə','Channovāda');
+        testPhoneme(recite, 'chənnoʋɑːd̪ə','Channovāda');
+        testPhoneme(recite, 'phəggʊɳə','Phagguṇa');
+        testPhoneme(recite, 'sət̪ɪ','sati'); // memory;mindfulness
+        testPhoneme(recite, 'səʈ.ʈʰɪ','saṭṭhi'); // sixty
+        testPhoneme(recite, 'sət̪.t̪ʰɪ','satthi'); // the thigh
+        testPhoneme(recite, 'd̪əɳɖəkə','daṇḍaka');
+        testPhoneme(recite, 'd̪ʱəmmə','Dhamma');
+        testPhoneme(recite, 'd̪ʱəmə', 'Dhama'); // blowing
+        testPhoneme(recite, 'siɾɪʋəɖɖhə', 'sirivaḍḍha'); // blowing
+        testPhoneme(recite, 'bɑːləkə', 'bālaka'); 
+        testPhoneme(recite, 'bʰəl.lɪkə', 'bhallika'); 
 
         // vowels
         testPhoneme(recite, 'eɪso','eso');

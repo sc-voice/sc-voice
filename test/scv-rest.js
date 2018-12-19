@@ -284,7 +284,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... returns playable segment", function(done) {
+    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iVoice = 0;
@@ -294,7 +294,7 @@
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(data.segment.en).match(/^Middle Discourses 1/);
-            should(data.segment.audio.pli).match(/^3aa16/); // no numbers
+            should(data.segment.audio.pli).match(/^e76bdc/); // no numbers
 
             var scid = "mn1:52-74.23";
             var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
@@ -337,7 +337,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles large segment", function(done) {
+    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
@@ -358,7 +358,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
             should(data.segment.audio.en).match(/^85a9c6/);
-            should(data.segment.audio.pli).match(/^89e7cd/);
+            should(data.segment.audio.pli).match(/^243122/);
 
             done();
         } catch(e) {done(e);} })();
