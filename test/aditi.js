@@ -54,6 +54,12 @@
         testPhoneme(recite, 'siɾɪʋəɖɖhə', 'sirivaḍḍha'); // blowing
         testPhoneme(recite, 'bɑːləkə', 'bālaka'); 
         testPhoneme(recite, 'bʰəl.lɪkə', 'bhallika'); 
+        testPhoneme(recite, 'd̪eʋəd̪əhə', 'devadaha'); 
+        testPhoneme(recite, 'jəsə', 'yasa'); 
+        testPhoneme(recite, 'ʊpəkɑːʟ̈ə', 'upakāḷa'); 
+        testPhoneme(recite, 'nɑːʟ̈ənd̪ɑː', 'nāḷandā'); 
+        testPhoneme(recite, 'nɑːlənd̪ɑː', 'nālandā'); 
+        testPhoneme(recite, 'nəʟ̈həŋ', 'naḷhaṃ'); 
 
         // vowels
         testPhoneme(recite, 'eɪso','eso');
