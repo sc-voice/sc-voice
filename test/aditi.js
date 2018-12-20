@@ -29,11 +29,14 @@
             usage: 'recite',
             language: 'hi-IN',
             languageUnknown: 'pli',
+            stripNumbers: true,
             stripQuotes: true,
         });
         should(aditi.name).equal('Aditi');
         should(aditi.language).equal('hi-IN');
+        should(aditi.fullStopComma).equal(true);
         var recite = aditi.services['recite'];
+        should(recite.fullStopComma).equal(true);
 
         // stops
         testPhoneme(recite, 'bʰɪk.kʰʊsəŋgʰo','bhikkhusaṅgho');
@@ -63,5 +66,11 @@
 
         // vowels
         testPhoneme(recite, 'eɪso','eso');
+
+        // punctuation
+        var ssml = recite.segmentSSML('dve, dve');
+        should(ssml.length).equal(2);
+        var ssml = recite.segmentSSML('2. Dve');
+        should(ssml.length).equal(1);
     });
 })

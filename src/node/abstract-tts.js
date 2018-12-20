@@ -23,6 +23,7 @@
             this.misses = 0;
             this.voice = null;
             this.api = opts.api || null;
+            this.fullStopComma = opts.fullStopComma;
             this.stripNumbers = opts.stripNumbers;
             this.stripQuotes = opts.stripQuotes;
             this.stripChars = opts.stripChars || /[\u200b]/g;
@@ -171,6 +172,9 @@
             if (this.stripQuotes) {
                 text = text.replace(/[„“‟‘‛'’"”»«]+/ug,' ');
             }
+            if (this.fullStopComma) {
+                text = text.replace(/, /ug,'. ');
+            }
             text = text.replace(this.stripChars, '');
             var tokens = text instanceof Array ? text : this.tokenize(text);
             if (tokens.length === 0) {
@@ -188,6 +192,10 @@
                 }
                 return acc;
             }, []);
+            if (tokensSSML[0] === '.') {
+                tokensSSML.shift();
+            }
+
             return tokensSSML;
         }
 

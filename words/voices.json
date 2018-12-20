@@ -151,6 +151,7 @@
     "name": "Aditi",
     "gender": "female",
     "pitch": "-10%",
+    "fullStopComma": true,
     "rates": {
         "navigate": "+5%", 
         "recite": "-30%"

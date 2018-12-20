@@ -306,7 +306,7 @@
         should(words.romanize('wäldchen')).equal('wäldchen');
         should(words.romanize('hörte')).equal('hörte');
     });
-    it("TESTTESTpartitions list of phrases", function() {
+    it("partitions list of phrases", function() {
         return; // TODO
         var joyPath = path.join(__dirname, "data", "joy.txt");
         var lines = fs.readFileSync(joyPath).toString().trim().split('\n');

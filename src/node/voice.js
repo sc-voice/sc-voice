@@ -16,6 +16,7 @@
             this.stripQuotes = opts.stripQuotes;
             this.language = opts.language || 'en-IN';
             this.languageUnknown = opts.languageUnknown || this.language;
+            this.fullStopComma = opts.fullStopComma;
             this.service = opts.service || 'aws-polly';
             this.name = opts.name || 'Raveena';
             this.rates = opts.rates || {
@@ -124,6 +125,7 @@
                             words,
                             language: this.language,
                             languageUnknown: this.languageUnknown,
+                            fullStopComma: this.fullStopComma,
                             stripNumbers: this.stripNumbers,
                             stripQuotes: this.stripQuotes,
                             voice: this.name,
