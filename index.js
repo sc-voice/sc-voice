@@ -2,6 +2,7 @@ module.exports = {
     AbstractTTS: require("./src/node/abstract-tts"),
     Cursor: require('./src/node/cursor'),
     Definitions: require('./src/node/definitions'),
+    MdAria: require("./src/node/md-aria"),
     Polly: require("./src/node/polly"),
     PoParser: require('./src/node/po-parser'),
     ScvRest: require('./src/node/scv-rest'),
