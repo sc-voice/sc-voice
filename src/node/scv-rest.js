@@ -2,6 +2,9 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
+    const URL = require('url');
+    const http = require('http');
+    const https = require('https');
     const {
         logger,
         RestBundle,
@@ -14,6 +17,7 @@
     const SuttaFactory = require('./sutta-factory');
     const SuttaStore = require('./sutta-store');
     const SuttaCentralApi = require('./sutta-central-api');
+    const MdAria = require('./md-aria');
     const PoParser = require('./po-parser');
     const Voice = require('./voice');
     const SuttaCentralId = require('./sutta-central-id');
@@ -50,6 +54,8 @@
             } else {
                 throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
             }
+            this.wikiUrl = opts.wikiUrl || 'https://github.com/sc-voice/sc-voice/wiki';
+            this.wikiUrl = opts.wikiUrl || 'https://raw.githubusercontent.com/wiki/sc-voice/sc-voice';
             this.examples = opts.examples;
             this.soundStore = new GuidStore({
                 storeName: 'sounds',
@@ -61,6 +67,7 @@
                 suttaCentralApi: this.suttaCentralApi,
                 autoSection: true,
             });
+            this.mdAria = opts.mdAria || new MdAria();
             this.voicePali = Voice.createVoice({
                 name: 'Aditi',
                 usage: 'recite',
@@ -109,6 +116,8 @@
                         this.getSearch),
                     this.resourceMethod("get", "examples/:n", 
                         this.getExamples),
+                    this.resourceMethod("get", "wiki-aria/:page", 
+                        this.getWikiAria),
 
                 ]),
             });
@@ -475,6 +484,69 @@
             }
             
             return examples.slice(0, n);
+        }
+
+        getWikiAria(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var page = req.query.page || 'Home.md';
+                    var result = `${page} not found`;
+                    var wikiUrl  = `${that.wikiUrl}/${page}`;
+                    var httpx = wikiUrl.startsWith('https') ? https : http;
+                    var httpOpts = Object.assign({
+                        headers: {
+                            "Cache-Control": "no-cache",
+                            //"Pragma": "no-cache",
+                        },
+                    }, URL.parse(wikiUrl));
+                    var wikiReq = httpx.get(httpOpts, function(wikiRes) {
+                        const { statusCode } = wikiRes;
+                        const contentType = wikiRes.headers['content-type'];
+
+                        let error;
+                        if (statusCode !== 200 && statusCode !== 302) {
+                            error = new Error('Request Failed.\n' +
+                                              `Status Code: ${statusCode}`);
+                        } else if (/^text\/html/.test(contentType)) {
+                            // OK
+                        } else if (/^text\/plain/.test(contentType)) {
+                            // OK
+                        } else {
+                            error = new Error('Invalid content-type.\n' +
+                              `Expected application/json but received ${contentType}`);
+                        }
+                        if (error) {
+                            wikiRes.resume(); // consume response data to free up memory
+                            logger.error(error.stack);
+                            reject(error);
+                            return;
+                        }
+
+                        wikiRes.setEncoding('utf8');
+                        let rawData = '';
+                        wikiRes.on('data', (chunk) => { rawData += chunk; });
+                        wikiRes.on('end', () => {
+                            try {
+                                var md = rawData.toString();
+                                var html = that.mdAria.toHtml(md);
+                                resolve({
+                                    url: wikiUrl,
+                                    html:html,
+                                });
+                            } catch (e) {
+                                logger.error(e.stack);
+                                reject(e);
+                            }
+                        });
+                    }).on('error', (e) => {
+                        reject(e);
+                    }).on('timeout', (e) => {
+                        logger.error(e.stack);
+                        wikiReq.abort();
+                    });
+                } catch(e) { reject(e); } })();
+            });
         }
     }
 

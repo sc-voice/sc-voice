@@ -390,5 +390,20 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTGET /wiki-aria/:page return Aria for wiki page", function(done) {
+        this.timeout(3*1000);
+        (async function() { try {
+            var url = `/scv/wiki-aria/Home.md`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var html = res.body.html;
+            var WIKIURL = 'https://raw.githubusercontent.com/wiki/sc-voice/sc-voice';
+            should(res.body.url).equal(`${WIKIURL}/Home.md`);
+            var html = res.body.html;
+            should(html).match(/<summary>About<.summary>/);
+            should(html).match(/<summary>Using SuttaCentral Voice<.summary>/);
+            done();
+        } catch(e) {done(e);} })();
+    });
 });
 
