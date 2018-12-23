@@ -9,22 +9,24 @@
             <v-card-text >
                 <div class="subheading pl-2 pb-2">{{title}}</div>
                 <div class="scv-player-nav">
-                    <button class="scv-text-button"
+                    <v-btn icon class="scv-icon-btn"
                         ref="refPrevious"
+                        aria-label='Previous Section'
                         @click="playTrack(iTrack-1)"
                         @keydown.prevent="keydownPrevious($event)"
-                        :style='cssProps({"width":"6em"})'
-                        >Previous</button>
+                        :style='cssProps()'
+                        ><v-icon>fast_rewind</v-icon></v-btn>
                     <div class="scv-timelapse">
                         {{iTrack+1}}/{{section && this.tracks.length || "(n/a)"}} 
                         <v-icon small class="ml-1 mr-1">timelapse</v-icon>
                         {{timeRemaining}}
                     </div>
-                    <button class="scv-text-button"
+                    <v-btn icon class="scv-icon-btn"
                         ref="refNext"
+                        aria-label='Next Section'
                         @click="playTrack(iTrack+1)"
-                        :style='cssProps({"width":"6em"})'
-                        >Next</button>
+                        :style='cssProps()'
+                        ><v-icon>fast_forward</v-icon></v-btn>
                 </div>
                 <div class="body-2 mt-1 text-xs-center"> 
                     {{section && section.title || "(n/a)"}} 
@@ -47,10 +49,6 @@
                 </div>
             </v-card-text>
             <v-card-actions class="ml-3 mr-3 pb-3">
-                <div style="width:6em">
-                    {{segment && segment.scid}}
-                </div>
-                <v-spacer/>
                 <v-btn icon @click="clickPlayPause()" 
                     ref="refPlay"
                     class="scv-icon-btn" :style="cssProps()"
@@ -60,13 +58,16 @@
                     <v-icon v-if="!loading && !paused">pause</v-icon>
                 </v-btn>
                 <v-spacer/>
-                <button class="scv-text-button"
+                <div> {{segment && segment.scid}} </div>
+                <v-spacer/>
+                <v-btn icon class="scv-icon-btn"
                     ref="refClose"
-                    :style='cssProps({"width":"6em"})'
+                    :style='cssProps()'
+                    aria-label='cloze'
                     @keydown.prevent="keydownClose($event)"
                     @click="close()">
-                    Close
-                </button>
+                    <v-icon>close</v-icon>
+                </v-btn>
             </v-card-actions>
             <audio ref="refAudioPali">
                 <source type="audio/mp3" :src="audioSrc('pli')"/>
@@ -200,9 +201,10 @@ export default {
                         this.toggleAudio();
                     });
                 } else if (this.iTrack < this.tracks.length) {
-                    this.$nextTick(() => {
+                    const NEW_SECTION_PAUSE = 1000;
+                    setTimeout(() => {
                         this.playTrack(this.iTrack+1, true);
-                    });
+                    }, NEW_SECTION_PAUSE);
                 }
             }
         },
@@ -359,8 +361,8 @@ export default {
         keydownPrevious(evt) {
             if (evt.key === 'Tab') {
                 var elt = evt.shiftKey 
-                    ? this.$refs.refClose
-                    : this.$refs.refNext;
+                    ? this.$refs.refClose.$el
+                    : this.$refs.refNext.$el;
                 elt && elt.focus();
             } else if (evt.key === ' ') {
                 if (this.iTrack > 0) {
@@ -372,7 +374,7 @@ export default {
             if (evt.key === 'Tab') {
                 var elt = evt.shiftKey 
                     ? this.$refs.refPlay.$el
-                    : this.$refs.refPrevious;
+                    : this.$refs.refPrevious.$el;
                 elt && elt.focus();
             } else if (evt.key === ' ') {
                 this.close();

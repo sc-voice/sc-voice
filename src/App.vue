@@ -3,7 +3,12 @@
     <v-toolbar app flat dark >
       <a href="./" aria-label="home">
           <img aria-hidden="true" src="img/favicon.png" height=30px/></a>
-      <v-toolbar-title >{{title}}</v-toolbar-title>
+      <v-toolbar-title >
+        <div >
+            <div class="caption" stle>SuttaCentral</div>
+            <div class="title" style="margin-top:-2px">Voice Assistant</div>
+        </div>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn tabindex=-1 id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
         aria-label="Settings"
