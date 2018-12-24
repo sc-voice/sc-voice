@@ -400,8 +400,7 @@
             var WIKIURL = 'https://raw.githubusercontent.com/wiki/sc-voice/sc-voice';
             should(res.body.url).equal(`${WIKIURL}/Home.md`);
             var html = res.body.html;
-            should(html).match(/<summary>About<.summary>/);
-            should(html).match(/<summary>Using SuttaCentral Voice<.summary>/);
+            should(html).match(/<summary>Navigating the texts<.summary>/);
             done();
         } catch(e) {done(e);} })();
     });

@@ -21,10 +21,8 @@
             '<summary>b</summary>',
             'b1',
             '</detail>',
-            '<detail>',
-            '<summary>c</summary>',
+            '<h2>c</h2>',
             'c1',
-            '</detail>',
         ]);
     });
     it("TESTTESTcreates <ul> from starred lines", function(){

@@ -50,15 +50,22 @@
 
             lines.forEach((line,i) => {
                 if (line.startsWith('#')) {
+                    isUL && endUL();
                     if (detailCount) {
                         html.push('</detail>');
+                        detailCount--;
                     }
-                    isUL && endUL();
-                    pLines && endP();
-                    detailCount++;
-                    html.push('<detail>');
-                    var summary = line.replace(/^#+/u,'').trim();
-                    html.push(`<summary>${summary}</summary>`);
+                    var title = line.replace(/^#+/u,'').trim();
+                    if (/^# /.test(line)) {
+                        pLines && endP();
+                        detailCount++;
+                        html.push('<detail>');
+                        html.push(`<summary>${title}</summary>`);
+                    } else {
+                        var spaceParts = line.split(' ');
+                        var h = `h${spaceParts[0].length}`;
+                        html.push(`<${h}>${title}</${h}>`);
+                    }
                 } else if (line.trim() === '') {
                     isUL && endUL();
                     if (pLines) {

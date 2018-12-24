@@ -63,6 +63,7 @@
         testPhoneme(recite, 'nɑːʟ̈ənd̪ɑː', 'nāḷandā'); 
         testPhoneme(recite, 'nɑːlənd̪ɑː', 'nālandā'); 
         testPhoneme(recite, 'nəʟ̈həŋ', 'naḷhaṃ'); 
+        testPhoneme(recite, 'əcchəɾɪjə\'abbʰʊt̪əsʊt̪t̪ə', 'acchariyaabbhutasutta'); 
 
         // vowels
         testPhoneme(recite, 'eɪso','eso');
