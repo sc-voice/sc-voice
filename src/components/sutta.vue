@@ -10,20 +10,13 @@
                   <v-text-field ref="refSearch"
                       placeholder="Enter sutta id or keyword(s)" 
                       v-model="search" v-on:keypress="onSearchKey($event)"
+                      aria-label="Enter sootta i d or keywords"
                       label = "Search" >
                   </v-text-field>
-                  <div class="title scv-help">
-                    <a href="https://github.com/sc-voice/sc-voice/wiki/Home"
-                        aria-label="Help"
-                        style="background-color:rgba(0,0,0,0)"
-                        target="_blank">
-                        <v-icon >help</v-icon>
-                    </a>
-                  </div>
               </div>
           </div>
           <div v-if="error.search" class="scv-error" >
-              <search-help ref="refSearchHelp" :title="errorSummary" 
+              <error-help ref="refErrorHelp" :title="errorSummary" 
                 :search="search"
                 :httpError="error.search.http" />
               <v-btn icon @click="error.search=null" 
@@ -33,9 +26,9 @@
               </v-btn>
           </div>
           <div v-if="!searchResults && !sections" class="scv-home-blurb" >
-              <div class="text-xs-center caption">
+              <div class="text-xs-center caption pr-2">
                   <v-btn @click="clickExamples()"
-                      class="scv-text-button" :style="cssProps" small>
+                      class="scv-text-button " :style="cssProps" small>
                       Examples
                   </v-btn>
               </div>
@@ -43,14 +36,6 @@
                   class="text-xs-center caption">
                   <a :href="searchUrl(`${ex}`)" :ref="`refExample${i}`" >
                       {{i+1}}. {{ex}}</a>
-              </div>
-              <div v-if="!examples" class="text-xs-center caption">
-                  Dedicated to<br/>
-                  <a :href="searchUrl('the dark bound for light')">
-                      <i>the dark bound for light</i></a><br/>
-                  and to those for whom<br/>
-                  <a :href="searchUrl('darkness vanished and light appeared')">
-                      <i>darkness vanished and light appeared</i></a>
               </div>
           </div>
           <details v-show="searchResults">
@@ -151,7 +136,7 @@
                     <v-btn v-if="result.quote" 
                         :href="resultLink(result)"
                         class="scv-text-button" :style="cssProps" small>
-                        View {{result.suttaplex.acronym}}
+                        Show {{result.suttaplex.acronym}}
                     </v-btn>
                 </div>
             </details><!-- search result i -->
@@ -281,6 +266,7 @@
 import Vue from "vue";
 import ScvDownloader from "./scv-downloader";
 import SearchHelp from "./search-help";
+import ErrorHelp from "./error-help";
 import ScvPlayer from "./scv-player";
 const MAX_SECTIONS = 100;
 
@@ -552,7 +538,7 @@ export default {
                 };
                 console.error(e.stack, data);
                 this.stopWaiting(timer);
-                this.$nextTick(() => this.$refs.refSearchHelp.setFocus());
+                this.$nextTick(() => this.$refs.refErrorHelp.setFocus());
             });
 
         },
@@ -589,7 +575,7 @@ export default {
                 };
                 console.error(e.stack, data);
                 this.stopWaiting(timer);
-                this.$nextTick(() => this.$refs.refSearchHelp.setFocus());
+                this.$nextTick(() => this.$refs.refErrorHelp.setFocus());
             });
 
         },
@@ -709,21 +695,31 @@ export default {
         },
     },
     mounted() {
-        this.$nextTick(() => {
-            var search = this.scvOpts.search;
-            console.log(`cookies`, this.$cookie);
-            Vue.set(this, 'search', search);
+        var that = this;
+        that.$nextTick(() => {
+            var search = that.scvOpts.search;
+            console.log(`cookies`, that.$cookie);
+            Vue.set(that, 'search', search);
             if (search) {
                 console.log(`sutta.mounted() searchSuttas(${search})`);
-                this.searchSuttas(search);
+                that.searchSuttas(search);
             } else {
                 console.log(`sutta.mounted() no search`);
             } 
+            that.$nextTick( () => {
+                var vSearch = this.$refs.refSearch;
+                var input = vSearch && vSearch.$refs.input;
+                if (input) {
+                    console.log('selected search', input);
+                    input.focus();
+                }
+            });
         });
     },
 
     components: {
         SearchHelp,
+        ErrorHelp,
         ScvDownloader,
         ScvPlayer,
     },
@@ -854,10 +850,10 @@ export default {
     padding-left: 1.6em;
     margin-top: 0.5em;
 }
-.scv-help {
+.scv-error-help {
     margin: 0em;
 }
-.scv-help > a:hover {
+.scv-error-help > a:hover {
     text-decoration: none;
 }
 .scv-home-blurb {

@@ -2,22 +2,49 @@
   <v-app dark>
     <v-toolbar app flat dark >
       <a href="./" aria-label="home">
-          <img aria-hidden="true" src="img/favicon.png" height=30px/></a>
+          <img aria-hidden="true" src="img/favicon.png" height=30px/>
+      </a>
       <v-toolbar-title >
         <div >
-            <div class="caption" stle>SuttaCentral</div>
+            <div class="caption">SuttaCentral</div>
             <div class="title" style="margin-top:-2px">Voice Assistant</div>
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn tabindex=-1 id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+      <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
+        aria-label="Help"
+        role="contentinfo"
+        title="About and Help"
+        @click="openHelp()"
+        >
+        <v-icon>help</v-icon>
+      </v-btn>
+      <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
         aria-label="Settings"
+        role="contentinfo"
         title="Settings"
         @click="dialogSettings = !dialogSettings"
         >
         <v-icon>settings</v-icon>
       </v-btn>
     </v-toolbar>
+    <v-dialog v-model="dialogHelp" persistent>
+        <v-card>
+          <v-card-title class="title scv-dialog-title">
+              About &amp; Help
+              <v-spacer/>
+              <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+                aria-label="Close Help"
+                @click="closeDialog()"
+                >
+                <v-icon>close</v-icon>
+              </v-btn>
+          </v-card-title>
+          <v-card-text>
+          <span v-html="helpHtml"/>
+          </v-card-text>
+        </v-card>
+    </v-dialog>
     <v-dialog v-model="dialogSettings" fullscreen persistent>
         <v-card>
           <v-card-title class="title scv-dialog-title">
@@ -88,20 +115,15 @@
           <Sutta />
         </v-content>
     </div>
-    <v-footer fixed class="pt-2">
-      <div class="pl-2">{{scvOpts.scid}}</div>
+    <v-footer fixed class="pt-2 pl-2 pr-2 caption" app >
+      <div style="margin-top:-0.35em" >
+          <a :href="searchUrl('the dark bound for light')"
+            aria-label="dedicated to the dark bound for light">
+              To <i>the dark bound for light</i>
+          </a>
+      </div>
       <v-spacer/>
-      <a href="http://suttacentral.net"
-        aria-label="suta central dot net"
-        ><span aria-hidden='true'>suttacentral.net</span></a>
-      <v-spacer/>
-      <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
-        role="contentinfo"
-        aria-label="Settings"
-        @click="dialogSettings = !dialogSettings"
-        >
-        <v-icon>settings</v-icon>
-      </v-btn>
+      <div class="pl-2" style="margin-top:-0.35em" >{{scvOpts.search}}</div>
     </v-footer>
   </v-app>
 </template>
@@ -120,11 +142,13 @@ export default {
     data () {
         return {
             dialogSettings: false,
+            dialogHelp: false,
             focused: {
                 'settings': false,
             },
             identity: {
             },
+            helpHtml: "(...help...)",
             items: [{
                 title:'red',
             },{
@@ -146,6 +170,30 @@ export default {
         closeDialog() {
             console.log('closeDialog()');
             this.scvOpts.reload();
+        },
+        openHelp() {
+            var that = this;
+            (async function() {
+                console.log('openHelp()');
+                that.dialogHelp = true;
+                var url = that.url('wiki-aria/Home');
+                that.$http.get(url).then(res => {
+                    Vue.set(that, "helpHtml", res.data.html);
+                }).catch(e => {
+                    console.error(e.stack);
+                });
+            })();
+        },
+        url(path) {
+            return window.location.origin === 'http://localhost:8080'
+                ? `http://localhost/scv/${path}`
+                : `./${path}`;
+        },
+        searchUrl(pat) {
+            var search = encodeURIComponent(pat);
+            return `./?r=${Math.random}/#/?`+
+                `search=${search}&`+
+                `lang=${this.language}`;
         },
     },
     computed: {
@@ -188,6 +236,7 @@ export default {
         cssProps() {
             return {
                 '--accent-color': this.$vuetify.theme.accent,
+                'margin': '0',
             };
         },
     },
@@ -317,6 +366,12 @@ button {
 }
 .fade-enter {
     opacity: 0;
+}
+.scv-help {
+    margin: 0em;
+}
+.scv-help > a:hover {
+    text-decoration: none;
 }
 
 </style>
