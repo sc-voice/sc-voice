@@ -28,8 +28,8 @@
         <v-icon>settings</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-dialog v-model="dialogHelp" persistent>
-        <v-card>
+    <v-dialog v-model="dialogHelp" persistent max-width="45em">
+        <v-card >
           <v-card-title class="title scv-dialog-title">
               About &amp; Help
               <v-spacer/>

@@ -265,7 +265,6 @@
 /* eslint no-console: 0*/
 import Vue from "vue";
 import ScvDownloader from "./scv-downloader";
-import SearchHelp from "./search-help";
 import ErrorHelp from "./error-help";
 import ScvPlayer from "./scv-player";
 const MAX_SECTIONS = 100;
@@ -719,7 +718,6 @@ export default {
     },
 
     components: {
-        SearchHelp,
         ErrorHelp,
         ScvDownloader,
         ScvPlayer,
