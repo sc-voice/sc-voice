@@ -706,7 +706,8 @@ export default {
             } else {
                 console.log(`sutta.mounted() no search`);
             } 
-            that.$nextTick( () => {
+            var FOCUS_SEARCH = false;
+            FOCUS_SEARCH && that.$nextTick( () => {
                 var vSearch = this.$refs.refSearch;
                 var input = vSearch && vSearch.$refs.input;
                 if (input) {
