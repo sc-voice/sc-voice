@@ -251,7 +251,7 @@
                     .replace(/a/iug, '(a|ā)')
                     .replace(/i/iug, '(i|ī)')
                     .replace(/u/iug, '(u|ū)')
-                    .replace(/m/iug, '(m|ṁ)')
+                    .replace(/m/iug, '(m|ṁ|ṃ)')
                     .replace(/n/iug, '(n|ṅ|ñ|ṇ)')
                     .replace(/l/iug, '(l|ḷ)')
                     .replace(/t/iug, '(t|ṭ)')

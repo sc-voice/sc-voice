@@ -67,6 +67,31 @@ const scvState = {
     ips: 4,
     lang: 'en',
 };
+var vueRoot;
+Object.defineProperty(scvState, "changed", {
+    value: (prop) => {
+        var v = scvState[prop];
+        if (v != null) {
+            if (vueRoot && (scvState.useCookies || prop === 'useCookies')) {
+                vueRoot.$cookie.set(prop, v);
+                console.log(`setting cookie (${prop}):${v} ${vueRoot.$cookie.get(prop)}`, typeof vueRoot.$cookie.get(prop));
+            }
+        } else {
+            console.log(`changed ignored (${prop}):${v}`);
+        }
+    },
+});
+
+Vue.config.productionTip = false
+
+// global options
+
+vueRoot = new Vue({
+    render: h => h(App),
+    router,
+    data: scvState,
+}).$mount('#app')
+
 Object.defineProperty(scvState, 'hash', {
     value: (opts={}) => {
         var state = Object.assign({}, scvState, opts);
@@ -113,15 +138,12 @@ Object.defineProperty(scvState, "ipsChoices", {
     writable: true,
     value: IPS,
 });
+Object.defineProperty(scvState, "useCookies", {
+    writable: true,
+    value: vueRoot.$cookie.get("useCookies") === 'true',
+});
+console.log("useCookies initial value:", scvState.useCookies, 
+    vueRoot.$cookie.get('useCookies'),
+    typeof vueRoot.$cookie.get('useCookies')
+    );
 
-Vue.config.productionTip = false
-
-//Vue.use(Vuetify);
-
-// global options
-
-new Vue({
-    render: h => h(App),
-    router,
-    data: scvState,
-}).$mount('#app')

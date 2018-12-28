@@ -79,18 +79,13 @@
                 </div>
             </details>
             <details class="scv-dialog" >
-                <summary class="subheading">Search settings</summary>
+                <summary class="subheading">General settings</summary>
                 <div class="scv-settings">
                     <v-radio-group v-if="scvOpts" v-model="scvOpts.maxResults" column>
                        <v-radio v-for="(mr) in maxResultsChoices" 
                          :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
                          </v-radio>
                     </v-radio-group>
-                </div>
-            </details>
-            <details class="scv-dialog" >
-                <summary class="subheading">Content settings</summary>
-                <div class="scv-settings">
                     <v-checkbox v-if="scvOpts" 
                         v-model="scvOpts.showId" role="checkbox" 
                         :aria-checked="scvOpts.showId"
@@ -98,6 +93,13 @@
                     </v-checkbox>
                 </div>
             </details>
+            <v-checkbox v-if="scvOpts && !scvOpts.useCookies" 
+                v-model="scvOpts.useCookies" role="checkbox" 
+                v-on:change="scvOpts.changed('useCookies')"
+                :aria-checked="scvOpts.useCookies"
+                style="margin-left: 0.8em"
+                label="Store settings using web browser cookies ">
+            </v-checkbox>
           </v-card-text>
           <v-card-actions>
             <button class="scv-dialog-button" :style="cssProps"
