@@ -58,7 +58,7 @@ var router = new VueRouter();
  * SC-Voice shared state
  */
 const scvState = {
-    showId: false,
+    showId: null,
     iVoice: 0,
     scid: null,
     showLang: 0,
@@ -74,10 +74,10 @@ Object.defineProperty(scvState, "changed", {
         if (v != null) {
             if (vueRoot && (scvState.useCookies || prop === 'useCookies')) {
                 vueRoot.$cookie.set(prop, v);
-                console.log(`setting cookie (${prop}):${v} ${vueRoot.$cookie.get(prop)}`, typeof vueRoot.$cookie.get(prop));
+                console.log(`setting cookie (${prop}):${v}`,
+                    `${vueRoot.$cookie.get(prop)}`, 
+                    typeof vueRoot.$cookie.get(prop));
             }
-        } else {
-            console.log(`changed ignored (${prop}):${v}`);
         }
     },
 });
@@ -92,6 +92,11 @@ vueRoot = new Vue({
     data: scvState,
 }).$mount('#app')
 
+var cookie = vueRoot.$cookie;
+var useCookies = cookie.get('useCookies') === 'true';
+if (useCookies) {
+    Vue.set(scvState, "showId", cookie.get('showId') === 'true');
+}
 Object.defineProperty(scvState, 'hash', {
     value: (opts={}) => {
         var state = Object.assign({}, scvState, opts);
@@ -140,10 +145,10 @@ Object.defineProperty(scvState, "ipsChoices", {
 });
 Object.defineProperty(scvState, "useCookies", {
     writable: true,
-    value: vueRoot.$cookie.get("useCookies") === 'true',
+    value: cookie.get("useCookies") === 'true',
 });
 console.log("useCookies initial value:", scvState.useCookies, 
-    vueRoot.$cookie.get('useCookies'),
-    typeof vueRoot.$cookie.get('useCookies')
+    cookie.get('useCookies'),
+    typeof cookie.get('useCookies')
     );
 

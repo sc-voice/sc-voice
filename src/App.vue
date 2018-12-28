@@ -89,11 +89,12 @@
                     <v-checkbox v-if="scvOpts" 
                         v-model="scvOpts.showId" role="checkbox" 
                         :aria-checked="scvOpts.showId"
+                        v-on:change="scvOpts.changed('showId')"
                         label="Show SuttaCentral text segment identifiers">
                     </v-checkbox>
                 </div>
             </details>
-            <v-checkbox v-if="scvOpts && !scvOpts.useCookies" 
+            <v-checkbox v-if="scvOpts" 
                 v-model="scvOpts.useCookies" role="checkbox" 
                 v-on:change="scvOpts.changed('useCookies')"
                 :aria-checked="scvOpts.useCookies"
@@ -252,8 +253,10 @@ export default {
             query.iVoice && Vue.set(this.scvOpts, "iVoice", Number(query.iVoice));
             query.maxResults && Vue.set(this.scvOpts, "maxResults", 
                 Number(query.maxResults));
-            query.showId != null && 
-                Vue.set(this.scvOpts, "showId", query.showId==='true');
+            if (!this.scvOpts.useCookies) {
+                query.showId != null && 
+                    Vue.set(this.scvOpts, "showId", query.showId==='true');
+            }
             var search = query.scid || query.search || '';
             query.search && Vue.set(this.scvOpts, "search", search);
             query.ips != null &&
