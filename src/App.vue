@@ -246,8 +246,11 @@ export default {
                 label: "Return up to 10 search results",
                 value: 10,
             },{
-                label: "Return up to 25 search results (slow)",
+                label: "Return up to 25 search results",
                 value: 25,
+            },{
+                label: "Return up to 50 search results (slow)",
+                value: 50,
             }];
         },
         cssProps() {

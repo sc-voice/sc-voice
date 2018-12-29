@@ -58,7 +58,7 @@ var router = new VueRouter();
  * SC-Voice shared state
  */
 const scvState = {
-    showId: 0,
+    showId: false,
     iVoice: 0,
     scid: null,
     showLang: 0,
@@ -80,7 +80,11 @@ Object.defineProperty(scvState, "deleteCookies", {
 Object.defineProperty(scvState, "loadCookie", {
     value: (prop) => {
         var v = vueRoot.$cookie.get(prop);
-        if (v != null) {
+        if (v === 'false') {
+            Vue.set(scvState, prop, false);
+        } else if (v === 'true') {
+            Vue.set(scvState, prop, true);
+        } else if (v != null) {
             var vnum = Number(v);
             Vue.set(scvState, prop, `${vnum}`===v ? vnum : v);
         }
