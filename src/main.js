@@ -23,7 +23,7 @@ const DEFAULT_VOICES = [{
     label: 'Raveena for review and study (fast)',
 }];
 
-const IPS = [{
+const IPS_CHOICES = [{
     url: '',
     label: "Launch Sutta Player without sound",
     value: 0,
@@ -58,7 +58,7 @@ var router = new VueRouter();
  * SC-Voice shared state
  */
 const scvState = {
-    showId: null,
+    showId: 0,
     iVoice: 0,
     scid: null,
     showLang: 0,
@@ -68,18 +68,54 @@ const scvState = {
     lang: 'en',
 };
 var vueRoot;
+Object.defineProperty(scvState, "deleteCookies", {
+    value: () => {
+        vueRoot.$cookie.delete('useCookies');
+        Object.keys(scvState).forEach(key => {
+            vueRoot.$cookie.delete(key);
+        });
+        console.log('cookies deleted');
+    },
+});
+Object.defineProperty(scvState, "loadCookie", {
+    value: (prop) => {
+        var v = vueRoot.$cookie.get(prop);
+        if (v != null) {
+            var vnum = Number(v);
+            Vue.set(scvState, prop, `${vnum}`===v ? vnum : v);
+        }
+    },
+});
 Object.defineProperty(scvState, "changed", {
     value: (prop) => {
+        var cookie = vueRoot.$cookie;
         var v = scvState[prop];
-        if (v != null) {
-            if (vueRoot && (scvState.useCookies || prop === 'useCookies')) {
-                vueRoot.$cookie.set(prop, v);
+        if (v != null && vueRoot) {
+            if (scvState.useCookies) {
+                cookie.set(prop, v);
                 console.log(`setting cookie (${prop}):${v}`,
                     `${vueRoot.$cookie.get(prop)}`, 
                     typeof vueRoot.$cookie.get(prop));
             }
+            if (prop === 'useCookies') {
+                if (v) {
+                    cookie.set( "showId", scvState.showId);
+                    cookie.set( "iVoice", scvState.iVoice);
+                    cookie.set( "maxResults", scvState.maxResults);
+                    cookie.set( "showLang", scvState.showLang);
+                    cookie.set( "ips", scvState.ips);
+                    cookie.set( "useCookies", scvState.useCookies);
+                    console.log(`saved settings to cookies`, cookie);
+                } else {
+                    cookie.delete( 'useCookies' );
+                }
+            }
         }
     },
+});
+Object.defineProperty(scvState, "ipsChoices", {
+    writable: true,
+    value: IPS_CHOICES,
 });
 
 Vue.config.productionTip = false
@@ -95,23 +131,33 @@ vueRoot = new Vue({
 var cookie = vueRoot.$cookie;
 var useCookies = cookie.get('useCookies') === 'true';
 if (useCookies) {
-    Vue.set(scvState, "showId", cookie.get('showId') === 'true');
+    scvState.loadCookie('showId');
+    scvState.loadCookie('iVoice');
+    scvState.loadCookie('maxResults');
+    scvState.loadCookie('showLang');
+    scvState.loadCookie('ips');
 }
 Object.defineProperty(scvState, 'hash', {
     value: (opts={}) => {
         var state = Object.assign({}, scvState, opts);
-        var hash = Object.keys(state).reduce((acc,key) => {
-            var val = state[key];
-            if (val != null) {
-                if (acc == null) {
-                    acc = `#/?`;
-                } else {
-                    acc = acc + '&';
+        var hash = '';
+        if (scvState.useCookies) {
+            var search = state.search || '';
+            hash = `#/?search=${search}`;
+        } else {
+            hash = Object.keys(state).reduce((acc,key) => {
+                var val = state[key];
+                if (val != null) {
+                    if (acc == null) {
+                        acc = `#/?`;
+                    } else {
+                        acc = acc + '&';
+                    }
+                    acc += `${key}=${state[key]}`;
                 }
-                acc += `${key}=${state[key]}`;
-            }
-            return acc;
-        }, null);
+                return acc;
+            }, null);
+        }
         return `${hash}`;
     }
 });
@@ -119,6 +165,7 @@ Object.defineProperty(scvState, 'url', {
     value: (opts={}) => {
         var hash = scvState.hash(opts);
         var loc = window.location;
+        //return `${loc.origin}${loc.pathname}${hash}`;
         var r = Math.random();
         return `${loc.origin}${loc.pathname}?r=${r}${hash}`;
     }
@@ -139,16 +186,8 @@ Object.defineProperty(scvState, "title", {
     writable: true,
     value: "no title",
 });
-Object.defineProperty(scvState, "ipsChoices", {
-    writable: true,
-    value: IPS,
-});
 Object.defineProperty(scvState, "useCookies", {
     writable: true,
     value: cookie.get("useCookies") === 'true',
 });
-console.log("useCookies initial value:", scvState.useCookies, 
-    cookie.get('useCookies'),
-    typeof cookie.get('useCookies')
-    );
 

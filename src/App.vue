@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-toolbar app flat dark >
-      <a href="./" aria-label="home">
+      <a :href="homeHref" @click="clickHome()" aria-label="home">
           <img aria-hidden="true" src="img/favicon.png" height=30px/>
       </a>
       <v-toolbar-title >
@@ -61,17 +61,23 @@
             <details class="scv-dialog" >
                 <summary class="subheading">Sutta Player settings</summary>
                 <div class="scv-settings">
-                    <v-radio-group v-model="scvOpts.iVoice" column>
+                    <v-radio-group v-model="scvOpts.iVoice" 
+                        @change="scvOpts.changed('iVoice')"
+                        column>
                        <v-radio v-for="(v,i) in scvOpts.voices" 
                          :label="v.label" :value="i" :key="`voice${i}`">
                          </v-radio>
                     </v-radio-group>
-                    <v-radio-group v-model="scvOpts.showLang" column>
+                    <v-radio-group v-model="scvOpts.showLang" 
+                        @change="scvOpts.changed('showLang')"
+                        column>
                        <v-radio v-for="(sl,i) in showLangChoices" 
                          :label="sl.label" :value="i" :key="`showLang${sl.value}`">
                          </v-radio>
                     </v-radio-group>
-                    <v-radio-group v-if="scvOpts" v-model="scvOpts.ips" column>
+                    <v-radio-group v-model="scvOpts.ips" 
+                        @change="scvOpts.changed('ips')"
+                        column>
                        <v-radio v-for="(ips) in ipsChoices" 
                          :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
                          </v-radio>
@@ -81,7 +87,9 @@
             <details class="scv-dialog" >
                 <summary class="subheading">General settings</summary>
                 <div class="scv-settings">
-                    <v-radio-group v-if="scvOpts" v-model="scvOpts.maxResults" column>
+                    <v-radio-group v-if="scvOpts" v-model="scvOpts.maxResults" 
+                        @change="scvOpts.changed('maxResults')"
+                        column>
                        <v-radio v-for="(mr) in maxResultsChoices" 
                          :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
                          </v-radio>
@@ -164,6 +172,9 @@ export default {
         }
     },
     methods: {
+        clickHome() {
+            this.scvOpts.deleteCookies();
+        },
         onfocus(id) {
             this.focused[id] = true;
         },
@@ -218,6 +229,9 @@ export default {
                 value: 2,
             }];
         },
+        homeHref(){
+            return `./?r=${Math.random()}#/?`;
+        },
         ipsChoices() {
             return this.scvOpts.ipsChoices;
         },
@@ -250,19 +264,20 @@ export default {
         var query = this.$route.query;
         console.debug('App.mounted() with query:', query);
         if (query) {
-            query.iVoice && Vue.set(this.scvOpts, "iVoice", Number(query.iVoice));
-            query.maxResults && Vue.set(this.scvOpts, "maxResults", 
-                Number(query.maxResults));
             if (!this.scvOpts.useCookies) {
                 query.showId != null && 
                     Vue.set(this.scvOpts, "showId", query.showId==='true');
+                query.iVoice && 
+                    Vue.set(this.scvOpts, "iVoice", Number(query.iVoice||0));
+                query.maxResults && 
+                    Vue.set(this.scvOpts, "maxResults", Number(query.maxResults));
+                query.showLang &&
+                    Vue.set(this.scvOpts, "showLang", Number(query.showLang||0));
+                query.ips != null &&
+                    Vue.set(this.scvOpts, "ips", Number(query.ips));
             }
             var search = query.scid || query.search || '';
             query.search && Vue.set(this.scvOpts, "search", search);
-            query.ips != null &&
-                Vue.set(this.scvOpts, "ips", Number(query.ips||0));
-            query.showLang &&
-                Vue.set(this.scvOpts, "showLang", Number(query.showLang||0));
         }
     },
     created() {
