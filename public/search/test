@@ -12,7 +12,7 @@
       },
       "lang": "en",
       "nSegments": 55,
-      "title": "Bhadraka",
+      "title": "With Bhadraka",
       "collection_id": "sn",
       "suttaplex": {
         "acronym": "SN 42.11",
@@ -24,7 +24,7 @@
         "root_lang": "pli",
         "type": "text",
         "from": null,
-        "translated_title": "Bhadraka",
+        "translated_title": "With Bhadraka",
         "translations": [
           {
             "lang": "en",
@@ -34,7 +34,7 @@
             "author_uid": "sujato",
             "id": "en_sn42.11_sujato",
             "segmented": true,
-            "title": "Bhadraka"
+            "title": "With Bhadraka"
           }
         ],
         "parallel_count": 2,
@@ -63,7 +63,7 @@
           "root_lang": "pli",
           "type": "text",
           "from": null,
-          "translated_title": "Bhadraka",
+          "translated_title": "With Bhadraka",
           "translations": [
             {
               "lang": "en",
@@ -73,7 +73,7 @@
               "author_uid": "sujato",
               "id": "en_sn42.11_sujato",
               "segmented": true,
-              "title": "Bhadraka"
+              "title": "With Bhadraka"
             }
           ],
           "parallel_count": 2,
@@ -89,7 +89,7 @@
             "en": "Translated for SuttaCentral by Sujato Bhikkhu"
           },
           "lang": "en",
-          "title": "Bhadraka",
+          "title": "With Bhadraka",
           "next": {
             "author_uid": "sujato",
             "lang": "en",
@@ -99,7 +99,7 @@
           "previous": {
             "author_uid": "sujato",
             "lang": "en",
-            "name": "Maṇicūḷaka",
+            "name": "With Maṇicūḷaka",
             "uid": "sn42.10"
           }
         },
@@ -119,7 +119,7 @@
               {
                 "scid": "sn42.11:0.3",
                 "pli": "11. Bhadrakasutta",
-                "en": "11. Bhadraka"
+                "en": "11. With Bhadraka"
               }
             ],
             "type": "Section",
@@ -128,7 +128,7 @@
             "template": [],
             "expanded": false,
             "prop": "en",
-            "title": "Linked Discourses 42…",
+            "title": "Linked Discourses 42",
             "expandable": false
           },
           {
@@ -366,7 +366,7 @@
               {
                 "scid": "sn42.11:5.2",
                 "pli": "ciravāsimātuyā te vadhena vā bandhena vā jāniyā vā garahāya vā uppajjeyyuṃ sokaparidevadukkhadomanassupāyāsā”ti?",
-                "en": "If Ciravāsi was executed, imprisoned, fined, or censured, would it cause you sorrow, lamentation, pain, sadness, and distress?”"
+                "en": "If Ciravāsi’s mother was executed, imprisoned, fined, or censured, would it cause you sorrow, lamentation, pain, sadness, and distress?”"
               },
               {
                 "scid": "sn42.11:5.3",
@@ -400,7 +400,7 @@
             "template": [],
             "expanded": false,
             "prop": "en",
-            "title": "At one time the Buddha was staying…",
+            "title": "At one time the Buddha was staying in the…",
             "expandable": false
           }
         ],
@@ -428,7 +428,7 @@
         "acronym": "MN 105",
         "volpages": "MN ii 252",
         "uid": "mn105",
-        "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on a irreversible letting go of the forces that lead to suffering.",
+        "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering.",
         "difficulty": 2,
         "original_title": "Sunakkhatta Sutta",
         "root_lang": "pli",
@@ -454,7 +454,7 @@
       "quote": {
         "scid": "mn105:28.2",
         "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—netaṃ ṭhānaṃ vijjati.",
-        "en": "Understanding that attachment is the root of suffering, they are freed with the end of attachments. It’s not possible that they would apply their body or interest their mind in any attachment."
+        "en": "Understanding that attachment is the root of suffering, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment."
       },
       "sutta": {
         "sutta_uid": "mn105",
@@ -467,7 +467,7 @@
           "acronym": "MN 105",
           "volpages": "MN ii 252",
           "uid": "mn105",
-          "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on a irreversible letting go of the forces that lead to suffering.",
+          "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering.",
           "difficulty": 2,
           "original_title": "Sunakkhatta Sutta",
           "root_lang": "pli",
@@ -533,7 +533,7 @@
             "template": [],
             "expanded": false,
             "prop": "en",
-            "title": "Middle Discourses 105…",
+            "title": "Middle Discourses 105",
             "expandable": false
           },
           {
@@ -666,7 +666,7 @@
               {
                 "scid": "mn105:6.2",
                 "pli": "yaṃ bhagavā dhammaṃ deseyya. Bhagavato sutvā bhikkhū dhāressantī”ti.",
-                "en": "Let the Buddha teach Dhamma. The mendicants will listen and remember it.”"
+                "en": "Let the Buddha teach the Dhamma. The mendicants will listen and remember it.”"
               },
               {
                 "scid": "mn105:6.3",
@@ -736,7 +736,7 @@
               {
                 "scid": "mn105:8.3",
                 "pli": "āneñjapaṭisaṃyuttāya ca pana kathāya kacchamānāya na sussūsati, na sotaṃ odahati, na aññā cittaṃ upaṭṭhāpeti, na ca taṃ purisaṃ bhajati, na ca tena vittiṃ āpajjati.",
-                "en": "But when talk connected with the imperturbable is going on they don’t want to listen. They don’t pay attention or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
+                "en": "But when talk connected with the imperturbable is going on they don’t want to listen. They don’t lend an ear or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
               },
               {
                 "scid": "mn105:9.1",
@@ -766,7 +766,7 @@
               {
                 "scid": "mn105:9.6",
                 "pli": "api nu so puriso tassa purisassa sussūseyya, sotaṃ odaheyya, aññā cittaṃ upaṭṭhāpeyya, tañca purisaṃ bhajeyya, tena ca vittiṃ āpajjeyyā”ti?",
-                "en": "Would that person want to listen to that other person? Would they pay attention and apply their minds to understand? Would they associate with that person, and find it satisfying?”"
+                "en": "Would that person want to listen to that other person? Would they lend an ear and apply their minds to understand? Would they associate with that person, and find it satisfying?”"
               },
               {
                 "scid": "mn105:9.7",
@@ -786,7 +786,7 @@
               {
                 "scid": "mn105:9.10",
                 "pli": "āneñjapaṭisaṃyuttāya ca pana kathāya kacchamānāya na sussūsati, na sotaṃ odahati, na aññā cittaṃ upaṭṭhāpeti, na ca taṃ purisaṃ bhajati, na ca tena vittiṃ āpajjati.",
-                "en": "But when talk connected with the imperturbable is going on they don’t want to listen. They don’t pay attention or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
+                "en": "But when talk connected with the imperturbable is going on they don’t want to listen. They don’t lend an ear or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
               },
               {
                 "scid": "mn105:9.11",
@@ -796,7 +796,7 @@
               {
                 "scid": "mn105:9.12",
                 "pli": "‘āneñjasaṃyojanena hi kho visaṃyutto lokāmisādhimutto purisapuggalo’ti.",
-                "en": "‘That individual is intent on carnal pleasures, for they’re not interested in things connected with the imperturbable.’"
+                "en": "‘That individual is intent on carnal pleasures, for they’re detached from things connected with the imperturbable.’"
               },
               {
                 "scid": "mn105:10.1",
@@ -811,7 +811,7 @@
               {
                 "scid": "mn105:10.3",
                 "pli": "lokāmisapaṭisaṃyuttāya ca pana kathāya kacchamānāya na sussūsati, na sotaṃ odahati, na aññā cittaṃ upaṭṭhāpeti, na ca taṃ purisaṃ bhajati, na ca tena vittiṃ āpajjati.",
-                "en": "But when talk connected with carnal pleasures is going on they don’t want to listen. They don’t pay attention or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
+                "en": "But when talk connected with carnal pleasures is going on they don’t want to listen. They don’t lend an ear or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
               },
               {
                 "scid": "mn105:11.1",
@@ -831,7 +831,7 @@
               {
                 "scid": "mn105:11.4",
                 "pli": "‘lokāmisasaṃyojanena hi kho visaṃyutto āneñjādhimutto purisapuggalo’ti.",
-                "en": "‘That individual is intent on the imperturbable, for they’re not interested in things connected with carnal pleasures.’"
+                "en": "‘That individual is intent on the imperturbable, for they’re detached from things connected with carnal pleasures.’"
               },
               {
                 "scid": "mn105:12.1",
@@ -846,12 +846,12 @@
               {
                 "scid": "mn105:12.3",
                 "pli": "āneñjapaṭisaṃyuttāya ca pana kathāya kacchamānāya na sussūsati, na sotaṃ odahati, na aññā cittaṃ upaṭṭhāpeti, na ca taṃ purisaṃ bhajati, na ca tena vittiṃ āpajjati.",
-                "en": "But when talk connected with the imperturbable is going on they don’t want to listen. They don’t pay attention or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
+                "en": "But when talk connected with the imperturbable is going on they don’t want to listen. They don’t lend an ear or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
               },
               {
                 "scid": "mn105:13.1",
                 "pli": "Seyyathāpi, sunakkhatta, puthusilā dvedhābhinnā appaṭisandhikā hoti;",
-                "en": "Suppose there was a large rock that had been broken in half. It cannot be put back together again."
+                "en": "Suppose there was a broad rock that had been broken in half, so that it could not be put back together again."
               },
               {
                 "scid": "mn105:13.2",
@@ -866,7 +866,7 @@
               {
                 "scid": "mn105:13.4",
                 "pli": "‘āneñjasaṃyojanena hi kho visaṃyutto ākiñcaññāyatanādhimutto purisapuggalo’ti.",
-                "en": "‘That individual is intent on the dimension of nothingness, for they’re not interested in things connected with the imperturbable.’"
+                "en": "‘That individual is intent on the dimension of nothingness, for they’re detached from things connected with the imperturbable.’"
               },
               {
                 "scid": "mn105:14.1",
@@ -881,7 +881,7 @@
               {
                 "scid": "mn105:14.3",
                 "pli": "ākiñcaññāyatanapaṭisaṃyuttāya ca pana kathāya kacchamānāya na sussūsati, na sotaṃ odahati, na aññā cittaṃ upaṭṭhāpeti, na ca taṃ purisaṃ bhajati, na ca tena vittiṃ āpajjati.",
-                "en": "But when talk connected with the dimension of nothingness is going on they don’t want to listen. They don’t pay attention or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
+                "en": "But when talk connected with the dimension of nothingness is going on they don’t want to listen. They don’t lend an ear or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
               },
               {
                 "scid": "mn105:15.1",
@@ -926,7 +926,7 @@
               {
                 "scid": "mn105:15.9",
                 "pli": "‘ākiñcaññāyatanasaṃyojanena hi kho visaṃyutto nevasaññānāsaññāyatanādhimutto purisapuggalo’ti.",
-                "en": "‘That individual is intent on the dimension of neither perception nor non-perception, for they’re not interested in things connected with the dimension of nothingness.’"
+                "en": "‘That individual is intent on the dimension of neither perception nor non-perception, for they’re detached from things connected with the dimension of nothingness.’"
               },
               {
                 "scid": "mn105:16.1",
@@ -941,7 +941,7 @@
               {
                 "scid": "mn105:16.3",
                 "pli": "nevasaññānāsaññāyatanapaṭisaṃyuttāya ca pana kathāya kacchamānāya na sussūsati, na sotaṃ odahati, na aññā cittaṃ upaṭṭhāpeti, na ca taṃ purisaṃ bhajati, na ca tena vittiṃ āpajjati.",
-                "en": "But when talk connected with the dimension of neither perception nor non-perception is going on they don’t want to listen. They don’t pay attention or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
+                "en": "But when talk connected with the dimension of neither perception nor non-perception is going on they don’t want to listen. They don’t lend an ear or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
               },
               {
                 "scid": "mn105:17.1",
@@ -951,7 +951,7 @@
               {
                 "scid": "mn105:17.2",
                 "pli": "evameva kho, sunakkhatta, sammā nibbānādhimuttassa purisapuggalassa ye nevasaññānāsaññāyatanasaṃyojane se ucchinnamūle tālāvatthukate anabhāvaṃkate āyatiṃ anuppādadhamme.",
-                "en": "In the same way, an individual rightly intent on extinguishment has cut off the connection with the dimension of neither perception nor non-perception at the root, made it like a palm stump, exterminated it, so it’s unable to arise in the future."
+                "en": "In the same way, an individual rightly intent on extinguishment has cut off the connection with the dimension of neither perception nor non-perception at the root, made it like a palm stump, obliterated it, so it’s unable to arise in the future."
               },
               {
                 "scid": "mn105:17.3",
@@ -961,7 +961,7 @@
               {
                 "scid": "mn105:17.4",
                 "pli": "‘nevasaññānāsaññāyatanasaṃyojanena hi kho visaṃyutto sammā nibbānādhimutto purisapuggalo’ti.",
-                "en": "‘That individual is rightly intent on extinguishment, for they’re not interested in things connected with the dimension of neither perception nor non-perception.’"
+                "en": "‘That individual is rightly intent on extinguishment, for they’re detached from things connected with the dimension of neither perception nor non-perception.’"
               },
               {
                 "scid": "mn105:18.1",
@@ -1321,7 +1321,7 @@
               {
                 "scid": "mn105:27.2",
                 "pli": "Ayaṃyevettha attho—",
-                "en": "And this is the point."
+                "en": "And this is the point:"
               },
               {
                 "scid": "mn105:27.3",
@@ -1361,7 +1361,7 @@
               {
                 "scid": "mn105:28.2",
                 "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—netaṃ ṭhānaṃ vijjati.",
-                "en": "Understanding that attachment is the root of suffering, they are freed with the end of attachments. It’s not possible that they would apply their body or interest their mind in any attachment."
+                "en": "Understanding that attachment is the root of suffering, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment."
               },
               {
                 "scid": "mn105:29.1",
@@ -1406,7 +1406,7 @@
               {
                 "scid": "mn105:29.9",
                 "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—netaṃ ṭhānaṃ vijjati.",
-                "en": "Understanding that attachment is the root of suffering, they are freed with the end of attachments. It’s not possible that they would apply their body or interest their mind in any attachment."
+                "en": "Understanding that attachment is the root of suffering, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment."
               },
               {
                 "scid": "mn105:30.1",
@@ -1446,7 +1446,7 @@
               {
                 "scid": "mn105:30.8",
                 "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—",
-                "en": "Understanding that attachment is the root of suffering, they are freed with the end of attachments. It’s not possible that they would apply their body or interest their mind in any attachment.”"
+                "en": "Understanding that attachment is the root of suffering, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment.”"
               },
               {
                 "scid": "mn105:30.9",
@@ -1475,14 +1475,14 @@
             "template": [],
             "expanded": false,
             "prop": "en",
-            "title": "So I have heard…",
+            "title": "So I have heard.",
             "expandable": false
           }
         ],
         "suttaCode": "mn105/en/sujato"
       },
       "audio": {
-        "en": "7edc6f7404c8f0bbf146cea5a26090a2",
+        "en": "924c0a641a1969d72cc4d8688bd1e37e",
         "pli": "4546f223f7eec272764fa066da391c40"
       }
     },
@@ -3468,7 +3468,7 @@
             "template": [],
             "expanded": false,
             "prop": "en",
-            "title": "Middle Discourses 66…",
+            "title": "Middle Discourses 66",
             "expandable": false
           },
           {
@@ -3556,7 +3556,7 @@
               {
                 "scid": "mn66:5.6",
                 "pli": "Ahu kho so, bhante, samayo yaṃ bhagavā bhikkhū āmantesi:",
-                "en": "But then there came a time when the Buddha addressed the mendicants:"
+                "en": "But then there came a time when the Buddha addressed the mendicants, saying:"
               },
               {
                 "scid": "mn66:5.7",
@@ -3586,7 +3586,7 @@
               {
                 "scid": "mn66:5.12",
                 "pli": "Ahu kho so, bhante, samayo yaṃ bhagavā bhikkhū āmantesi:",
-                "en": "But then there came a time when the Buddha addressed the mendicants:"
+                "en": "But then there came a time when the Buddha addressed the mendicants, saying:"
               },
               {
                 "scid": "mn66:5.13",
@@ -4026,7 +4026,7 @@
               {
                 "scid": "mn66:14.1",
                 "pli": "Idhudāyi, ekacco puggalo upadhipahānāya paṭipanno hoti upadhipaṭinissaggāya.",
-                "en": "Take a certain person practicing to give up and let go attachments."
+                "en": "Take a certain person practicing to give up and let go of attachments."
               },
               {
                 "scid": "mn66:14.2",
@@ -4036,7 +4036,7 @@
               {
                 "scid": "mn66:14.3",
                 "pli": "So te adhivāseti, nappajahati, na vinodeti, na byantīkaroti, na anabhāvaṃ gameti.",
-                "en": "They tolerate them and don’t give them up, get rid of them, eliminate them, and exterminate them."
+                "en": "They tolerate them and don’t give them up, get rid of them, eliminate them, and obliterate them."
               },
               {
                 "scid": "mn66:14.4",
@@ -4056,7 +4056,7 @@
               {
                 "scid": "mn66:15.1",
                 "pli": "Idha panudāyi, ekacco puggalo upadhipahānāya paṭipanno hoti upadhipaṭinissaggāya.",
-                "en": "Take another person practicing to give up and let go attachments."
+                "en": "Take another person practicing to give up and let go of attachments."
               },
               {
                 "scid": "mn66:15.2",
@@ -4066,7 +4066,7 @@
               {
                 "scid": "mn66:15.3",
                 "pli": "So te nādhivāseti, pajahati, vinodeti, byantīkaroti, anabhāvaṃ gameti.",
-                "en": "They don’t tolerate them, but give them up, get rid of them, eliminate them, and exterminate them."
+                "en": "They don’t tolerate them, but give them up, get rid of them, eliminate them, and obliterate them."
               },
               {
                 "scid": "mn66:15.4",
@@ -4086,7 +4086,7 @@
               {
                 "scid": "mn66:16.1",
                 "pli": "Idha panudāyi, ekacco puggalo upadhipahānāya paṭipanno hoti upadhipaṭinissaggāya.",
-                "en": "Take another person practicing to give up and let go attachments."
+                "en": "Take another person practicing to give up and let go of attachments."
               },
               {
                 "scid": "mn66:16.2",
@@ -4101,7 +4101,7 @@
               {
                 "scid": "mn66:16.4",
                 "pli": "Atha kho naṃ khippameva pajahati, vinodeti, byantīkaroti, anabhāvaṃ gameti.",
-                "en": "but they quickly give up, get rid of, eliminate, and exterminate those thoughts."
+                "en": "but they quickly give up, get rid of, eliminate, and obliterate those thoughts."
               },
               {
                 "scid": "mn66:16.5",
@@ -4116,7 +4116,7 @@
               {
                 "scid": "mn66:16.7",
                 "pli": "Evameva kho, udāyi, idhekacco puggalo upadhipahānāya paṭipanno hoti upadhipaṭinissaggāya.",
-                "en": "In the same way, take a person practicing to give up and let go attachments."
+                "en": "In the same way, take a person practicing to give up and let go of attachments."
               },
               {
                 "scid": "mn66:16.8",
@@ -4131,7 +4131,7 @@
               {
                 "scid": "mn66:16.10",
                 "pli": "Atha kho naṃ khippameva pajahati, vinodeti, byantīkaroti, anabhāvaṃ gameti.",
-                "en": "but they quickly give them up, get rid of, eliminate, and exterminate those thoughts."
+                "en": "but they quickly give them up, get rid of, eliminate, and obliterate those thoughts."
               },
               {
                 "scid": "mn66:16.11",
@@ -4480,7 +4480,7 @@
             "template": [],
             "expanded": false,
             "prop": "en",
-            "title": "So I have heard…",
+            "title": "So I have heard.",
             "expandable": false
           }
         ],

@@ -6,7 +6,7 @@
         MdAria,
     } = require('../index');
 
-    it("TESTTESTcreates <detail> from headings", function(){
+    it("creates <detail> from headings", function(){
         var mdAria = new MdAria();
         var html = mdAria.toHtml([
             'a',
@@ -25,7 +25,7 @@
             'c1',
         ]);
     });
-    it("TESTTESTcreates <ul> from starred lines", function(){
+    it("creates <ul> from starred lines", function(){
         var mdAria = new MdAria();
         var html = mdAria.toHtml([
             'a',
@@ -45,7 +45,7 @@
             '</p>',
         ]);
     });
-    it("TESTTESTcreates <p> from blank lines", function(){
+    it("creates <p> from blank lines", function(){
         var mdAria = new MdAria();
         var html = mdAria.toHtml([
             '',
@@ -75,7 +75,7 @@
             '</p>',
         ]);
     });
-    it("TESTTESTcreates <p> from blank lines", function(){
+    it("creates <p> from blank lines", function(){
         var mdAria = new MdAria();
         var html = mdAria.toHtml([
             'x [x1](x2) x3',

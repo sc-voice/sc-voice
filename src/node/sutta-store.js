@@ -7,6 +7,7 @@
     const {
         exec,
     } = require('child_process');
+    const Playlist = require('./playlist');
     const Sutta = require('./sutta');
     const SuttaCentralApi = require('./sutta-central-api');
     const SuttaCentralId = require('./sutta-central-id');
@@ -641,7 +642,130 @@
             }));
         }
 
-        search(...args) {
+        createPlaylist(...args) {
+            var that = this;
+            var opts = args[0];
+            if (typeof opts === 'string') {
+                opts = {
+                    pattern: args[0],
+                    maxResults: args[1],
+                };
+            }
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var {
+                        language,
+                        method,
+                        suttaRefs,
+                        suttas,
+                        resultPattern,
+                    } = await that.findSuttas(opts);
+                    var playlist = new Playlist({
+                        languages: opts.languages || [language, 'pli'],
+                    });
+                    suttas.forEach(sutta => {
+                        playlist.addSutta(sutta);
+                    });
+                    resolve(playlist);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        findSuttas(...args) {
+            var that = this;
+            var opts = args[0];
+            if (typeof opts === 'string') {
+                opts = {
+                    pattern: args[0],
+                    maxResults: args[1],
+                };
+            }
+            var searchMetadata = opts.searchMetadata == null 
+                ? true 
+                : opts.searchMetadata == true || opts.searchMetadata === 'true';
+            var pattern = SuttaStore.sanitizePattern(opts.pattern);
+            var language = opts.language || 'en';
+            var maxResults = Number(
+                opts.maxResults==null ? that.maxResults : opts.maxResults);
+            if (isNaN(maxResults)) {
+                throw new Error("SuttaStore.search() maxResults must be a number");
+            }
+            var sortLines = opts.sortLines;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    if (SuttaStore.isUidPattern(pattern)) {
+                        var method = 'sutta_uid';
+                        var uids = that.suttaList(pattern).slice(0, maxResults);
+                        var suttaRefs = uids.map(ref => {
+                            var refParts = ref.split('/');
+                            var uid = refParts[0];
+                            var refLang = refParts[1] || language;
+                            var refTranslator = refParts[2];
+                            if (refTranslator == null) {
+                                var localPath = suttaPaths[that.root]
+                                    .filter(sp => sp.indexOf(uid) >= 0)[0];
+                                var suttaPath = path.join(that.root, localPath);
+                                var spParts = suttaPath.split('/');
+                                refTranslator = spParts[spParts.length-2];
+                            }
+                            return `${uid}/${refLang}/${refTranslator}`;
+                        });
+                    } else {
+                        var method = 'phrase';
+                        var lines = [];
+                        pattern = SuttaStore.normalizePattern(pattern);
+                        var searchOpts = {
+                            pattern, 
+                            maxResults, 
+                            language, 
+                            searchMetadata
+                        };
+
+                        if (!lines.length && !/^[a-z]+$/iu.test(pattern)) {
+                            lines = await that.phraseSearch(searchOpts);
+                        }
+                        var resultPattern = pattern;
+                        if (!lines.length) {
+                            var method = 'keywords';
+                            var data = await that.keywordSearch(searchOpts);
+                            lines = data.lines;
+                            resultPattern = data.resultPattern;
+                        }
+                        sortLines && lines.sort(sortLines);
+                        var suttaRefs = lines.map(line => {
+                            var iColon = line.indexOf(':');
+                            var pathParts = line.substring(0,iColon).split('/');
+                            var suttaRef = 
+                                pathParts[3].replace(/.json/,'') + '/' +
+                                pathParts[1] + '/' +
+                                pathParts[2];
+                            return suttaRef;
+                        });
+                    }
+                    var suttas = [];
+                    for (var i = 0; i < suttaRefs.length; i++) {
+                        var refParts = suttaRefs[i].split('/');
+                        var sutta = await that.suttaFactory.loadSutta({
+                            scid: refParts[0],
+                            language: refParts[1],
+                            translator: refParts[2],
+                            expand: true,
+                        });
+                        suttas.push(sutta);
+                    }
+                    resolve({
+                        method,
+                        suttaRefs,
+                        suttas,
+                        resultPattern,
+                        language,
+                    });
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        search(...args) { 
+            // implementation deprecated. should use findSuttas
             var that = this;
             var opts = args[0];
             if (typeof opts === 'string') {

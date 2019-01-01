@@ -23,7 +23,7 @@
         should(ssml).match((phoneme(ph,text) ));
     }
 
-    it("TESTTESTsegmentSSML(text) returns SSML", function() {
+    it("segmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice({
             name: 'Aditi',
             usage: 'recite',

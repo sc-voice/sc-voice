@@ -3,6 +3,8 @@
     const fs = require('fs');
     const path = require('path');
     const {
+        Playlist,
+        Sutta,
         SuttaStore,
         SuttaCentralApi,
         SuttaCentralId,
@@ -341,7 +343,7 @@
             } = await store.search('Sāriputta');
             // numerical sort has 174 greater than 90
             // standard sort has 90 greater than 174
-            should.deepEqual(results.map(r=>r.count), [174,90,87,80,71]);
+            should.deepEqual(results.map(r=>r.count), [174,92,87,80,71]);
             done(); 
         } catch(e) {done(e);} })();
     });
@@ -392,7 +394,7 @@
     it("paliPattern(pattern) should return the Pali pattern", function(){
         should(SuttaStore.paliPattern("jhana")).equal('jh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
         should(SuttaStore.paliPattern("abcdefghijklmn"))
-        .equal('(a|ā)bcdefgh(i|ī)jk(l|ḷ)(m|ṁ)(n|ṅ|ñ|ṇ)')
+        .equal('(a|ā)bcdefgh(i|ī)jk(l|ḷ)(m|ṁ|ṃ)(n|ṅ|ñ|ṇ)')
         should(SuttaStore.paliPattern("nopqrstuvwxyz"))
         .equal('(n|ṅ|ñ|ṇ)opqrs(t|ṭ)(u|ū)vwxyz');
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
@@ -636,6 +638,121 @@
             should(result0.suttaplex.uid).equal('sn29.1');
             should(result0.suttaplex.original_title).equal('Suddhika Sutta');
             should(result0.suttaplex.root_lang).equal('pli');
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("findSuttas(opts) finds suttas matching pattern", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            function checkSuttas(data) {
+                should(data.suttas.length).equal(data.suttaRefs.length);
+                for (var i = 0; i < data.suttaRefs.length; i++) {
+                    var refParts = data.suttaRefs[i].split('/');
+                    var sutta = data.suttas[i];
+                    should(sutta).instanceOf(Sutta);
+                    should(sutta.sutta_uid).equal(refParts[0]);
+                    should(sutta.translation.lang).equal(refParts[1]);
+                    should(sutta.translation.author_uid).equal(refParts[2]);
+                }
+            }
+
+            // Search phrase
+            var data = await store.findSuttas({ pattern: 'root of suffering', });
+            should(data.method).equal('phrase');
+            should.deepEqual(data.suttaRefs, [
+                'sn42.11/en/sujato',
+                'mn105/en/sujato',
+                'mn1/en/sujato',
+                'sn56.21/en/sujato',
+                'mn66/en/sujato',
+            ]);
+            checkSuttas(data);
+
+            // Search keywords
+            var data = await store.findSuttas({ pattern: 'root suffering', });
+            should(data.method).equal('keywords');
+            should.deepEqual(data.suttaRefs, [
+                'dn14/en/sujato',
+                'mn9/en/sujato',
+                'dn16/en/sujato',
+                'sn42.11/en/sujato',
+                'dn33/en/sujato',
+            ]);
+            checkSuttas(data);
+
+            // Search sutta uid list
+            var data = await store.findSuttas({ pattern: 'mn2,mn1', });
+            should(data.method).equal('sutta_uid');
+            should.deepEqual(data.suttaRefs, [
+                'mn2/en/sujato',
+                'mn1/en/sujato',
+            ]);
+            checkSuttas(data);
+
+            // Search sutta uid range
+            var data = await store.findSuttas({ pattern: 'an3', });
+            should.deepEqual(data.suttaRefs, [
+                'an3.1/en/sujato',
+                'an3.2/en/sujato',
+                'an3.3/en/sujato',
+                'an3.4/en/sujato',
+                'an3.5/en/sujato',
+            ]);
+            checkSuttas(data);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTcreatePlaylist(opts) creates playlist", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            var playlist = await store.createPlaylist({ pattern: 'an3.2-5', });
+            should(playlist.tracks.length).equal(8);
+            should.deepEqual(
+                playlist.tracks.map(track => track.segments[0].scid), [
+                'an3.2:0.1',
+                'an3.2:1.1',
+                'an3.3:0.1',
+                'an3.3:1.1',
+                'an3.4:0.1',
+                'an3.4:1.1',
+                'an3.5:0.1',
+                'an3.5:1.1',
+            ]);
+            should.deepEqual(playlist.stats(), {
+                tracks: 8,
+                seconds: 1076,
+                segments: {
+                    pli: 63,
+                    en: 59,
+                }
+            });
+
+            // Pali only
+            var playlist = await store.createPlaylist({ 
+                pattern: 'an3.2-5', 
+                languages: ['pli'],
+            });
+            should(playlist.tracks.length).equal(8);
+            should.deepEqual(
+                playlist.tracks.map(track => track.segments[0].scid), [
+                'an3.2:0.1',
+                'an3.2:1.1',
+                'an3.3:0.1',
+                'an3.3:1.1',
+                'an3.4:0.1',
+                'an3.4:1.1',
+                'an3.5:0.1',
+                'an3.5:1.1',
+            ]);
+            should.deepEqual(playlist.stats(), {
+                tracks: 8,
+                seconds: 708,
+                segments: {
+                    pli: 63,
+                }
+            });
 
             done(); 
         } catch(e) {done(e);} })();

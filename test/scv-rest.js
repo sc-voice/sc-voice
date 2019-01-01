@@ -390,7 +390,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /wiki-aria/:page return Aria for wiki page", function(done) {
+    it("GET /wiki-aria/:page return Aria for wiki page", function(done) {
         this.timeout(3*1000);
         (async function() { try {
             var url = `/scv/wiki-aria/Home.md`;

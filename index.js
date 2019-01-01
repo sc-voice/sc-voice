@@ -9,6 +9,7 @@ module.exports = {
     SectionParser: require('./src/node/section-parser'),
     Section: require('./src/node/section'),
     GuidStore: require("./src/node/guid-store"),
+    Playlist: require('./src/node/playlist'),
     SuttaCentralApi: require('./src/node/sutta-central-api'),
     SuttaCentralId: require("./src/node/sutta-central-id"),
     SuttaFactory: require("./src/node/sutta-factory"),
