@@ -137,7 +137,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /download/sutta/mn100/en/sujato/review returns download", function(done) {
+    it("TESTTESTGET /download/sutta/mn100/en/sujato/review returns download", function(done) {
         this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app)

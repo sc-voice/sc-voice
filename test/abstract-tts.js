@@ -256,6 +256,10 @@
         should(tts.break(0)).equal('<break time="0.001s"/>');
         should(tts.break(1)).equal('<break time="0.1s"/>');
     });
+    it("sectionBreak() returns longest SSML break", function() {
+        var tts = new AbstractTTS();
+        should(tts.sectionBreak()).equal('<break time="1s"/>');
+    });
     it("tokenize(text) returns array of tokens", function() {
         var tts = new AbstractTTS();
         should.deepEqual(tts.tokenize('281–309'), [
@@ -274,7 +278,7 @@
             'Why', 'is', 'that', '?',
         ]);
     });
-    it("ffmpegConcat(files) returns sound file", function(done) {
+    it("TESTTESTffmpegConcat(files) returns sound file", function(done) {
         var abstractTTS = new AbstractTTS();
         var files = [
             path.join(__dirname, 'data/1d4e09ef9cd91470da56c84c2da481b0.ogg'),
@@ -285,8 +289,10 @@
             should(fs.existsSync(files[1])).equal(true);
             var cache = true;
             var result = await abstractTTS.ffmpegConcat(files, { cache });
-            should(result).properties(['file','cached','hits','misses']);
-            should(fs.existsSync(result.file)).equal(true);
+            should(result).properties(['file','cached','hits','misses','signature']);
+            should(fs.existsSync(result.file)).equal(true); // output file guid
+            should(result.file).match(
+                new RegExp(`.*${result.signature.guid}.*`));  // output guid
 
             done();
         })();

@@ -722,7 +722,7 @@
             ]);
             should.deepEqual(playlist.stats(), {
                 tracks: 8,
-                seconds: 1076,
+                duration: 1076,
                 segments: {
                     pli: 63,
                     en: 59,
@@ -748,7 +748,7 @@
             ]);
             should.deepEqual(playlist.stats(), {
                 tracks: 8,
-                seconds: 708,
+                duration: 708,
                 segments: {
                     pli: 63,
                 }

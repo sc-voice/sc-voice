@@ -13,6 +13,7 @@
     const Words = require('./words');
     const GuidStore = require('./guid-store');
     const Section = require('./section');
+    const SoundStore = require('./sound-store');
     const Sutta = require('./sutta');
     const SuttaFactory = require('./sutta-factory');
     const SuttaStore = require('./sutta-store');
@@ -43,25 +44,11 @@
                 srcPkg,
             }, opts));
             logger.info(`ScvRest.ctor(${this.name})`);
-            if (opts.audioFormat === 'ogg') {
-                this.audioSuffix = '.ogg';
-                this.audioFormat = 'ogg_vorbis';
-                this.audioMIME = 'audio/ogg';
-            } else if (opts.audioFormat == null || opts.audioFormat === 'mp3') {
-                this.audioSuffix = '.mp3';
-                this.audioFormat = 'mp3';
-                this.audioMIME = 'audio/mp3';
-            } else {
-                throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
-            }
             this.wikiUrl = opts.wikiUrl || 'https://github.com/sc-voice/sc-voice/wiki';
             this.wikiUrl = opts.wikiUrl || 'https://raw.githubusercontent.com/wiki/sc-voice/sc-voice';
             this.examples = opts.examples;
-            this.soundStore = new GuidStore({
-                storeName: 'sounds',
-                storePath: PATH_SOUNDS,
-                suffix: this.audioSuffix,
-            });
+            this.soundStore = new SoundStore(opts);
+            this.audioMIME = this.soundStore.audioMIME;
             this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
@@ -75,8 +62,8 @@
                 stripNumbers: true,
                 stripQuotes: true,
                 languageUnknown: "pli",
-                audioFormat: this.audioFormat,
-                audioSuffix: this.audioSuffix,
+                audioFormat: this.soundStore.audioFormat,
+                audioSuffix: this.soundStore.audioSuffix,
             });
             this.suttaStore = new SuttaStore({
                 suttaCentralApi: this.suttaCentralApi,
@@ -144,7 +131,7 @@
         getAudio(req, res, next) {
             return new Promise((resolve, reject) => { try {
                 var guid = req.params.guid;
-                var filePath = this.soundStore.guidPath(guid, this.audioSuffix);
+                var filePath = this.soundStore.guidPath(guid, this.soundStore.audioSuffix);
                 var filename = req.params.filename;
                 var data = fs.readFileSync(filePath);
                 res.set('accept-ranges', 'bytes');
@@ -191,8 +178,8 @@
                         language,
                         usage,
                         languageUnknown: "pli",
-                        audioFormat: that.audioFormat,
-                        audioSuffix: that.audioSuffix,
+                        audioFormat: that.soundStore.audioFormat,
+                        audioSuffix: that.soundStore.audioSuffix,
                     });
                     var result = await voice.speak(text, {
                         cache: true, // false: use TTS web service for every request
@@ -231,8 +218,8 @@
                         language,
                         usage,
                         languageUnknown: "pli",
-                        audioFormat: that.audioFormat,
-                        audioSuffix: that.audioSuffix,
+                        audioFormat: that.soundStore.audioFormat,
+                        audioSuffix: that.soundStore.audioSuffix,
                     });
                     var msStart = Date.now();
                     if (lines.length > 750) {
@@ -336,8 +323,8 @@
                         name: VOICES[iVoice].name,
                         usage,
                         languageUnknown: "pli",
-                        audioFormat: that.audioFormat,
-                        audioSuffix: that.audioSuffix,
+                        audioFormat: that.soundStore.audioFormat,
+                        audioSuffix: that.soundStore.audioSuffix,
                     });
                     var voicePali = that.voicePali;
                     var sections = sutta.sections;
@@ -403,8 +390,9 @@
                     var {
                         guid,
                     } = await that.synthesizeSutta(sutta_uid, language, translator, usage);
-                    var filePath = that.soundStore.guidPath(guid, that.audioSuffix);
-                    var filename = `${sutta_uid}-${language}-${translator}${that.audioSuffix}`;
+                    var audioSuffix = that.soundStore.audioSuffix;
+                    var filePath = that.soundStore.guidPath(guid, audioSuffix);
+                    var filename = `${sutta_uid}-${language}-${translator}${audioSuffix}`;
                     var data = fs.readFileSync(filePath);
                     res.set('Content-disposition', 'attachment; filename=' + filename);
                     logger.info(`GET download/sutta => ${filename} size:${data.length}`);

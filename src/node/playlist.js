@@ -1,19 +1,21 @@
 (function(exports) {
     const Sutta = require('./sutta');
+    const Voice = require('./voice');
     const DN33_EN_SECONDS_PER_SEGMENT = (2*3600 + 0*60 + 27)/(1158);
 
     class Playlist { 
         constructor(opts={}) {
-            this.tracks = [];
+            this.tracks = opts.tracks || [];
             this.languages = opts.languages || ['en','pli'];
             this.maxSeconds = opts.maxSeconds || 0;
+            this.voices = opts.voices || [];
         }
 
         stats() {
             var result = {
                 segments: {},
                 tracks: this.tracks.length,
-                seconds: 0,
+                duration: 0,
             };
             var languages = this.languages;
             languages.forEach(lang => {
@@ -31,15 +33,57 @@
             });
             languages.forEach(lang => {
                 if (lang === 'pli') {
-                    result.seconds += result.segments[lang] *
+                    result.duration += result.segments[lang] *
                         1.8 * DN33_EN_SECONDS_PER_SEGMENT;
                 } else { 
-                    result.seconds += result.segments[lang] *
+                    result.duration += result.segments[lang] *
                         DN33_EN_SECONDS_PER_SEGMENT;
                 }
             });
-            result.seconds = Math.ceil(result.seconds);
+            result.duration = Math.ceil(result.duration);
             return result;
+        }
+
+        speak(opts) {
+            var that = this;
+            var voices = opts.voices || that.voices;
+            
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var opts = opts || {
+                        usage: "recite",
+                    };
+                    var tts = that.languages.reduce((acc,lang) => {
+                        return acc || voices[lang];
+                    }, null).services.recite;
+                    var trackAudioFiles = [];
+                    var sectionBreak = await tts.synthesizeSSML(tts.sectionBreak());
+                    for (var iTrack = 0; iTrack < that.tracks.length; iTrack++) {
+                        var track = that.tracks[iTrack];
+                        var segmentAudioFiles = [];
+                        for (var iSeg = 0; iSeg < track.segments.length; iSeg++) {
+                            var segment = track.segments[iSeg];
+                            for (var iLang = 0; iLang < that.languages.length; iLang++) {
+                                var lang = that.languages[iLang];
+                                var voice = voices[lang];
+                                var text = segment[lang];
+                                if (voice && text) {
+                                    var vdata = await voice.speak(text, opts);
+                                    segmentAudioFiles.push(vdata.file);
+                                    segment.audio = segment.audio || {};
+                                    segment.audio[lang] = vdata.signature.guid;
+                                }
+                            }
+                        }
+                        segmentAudioFiles.push(sectionBreak.file);
+                        var audio = await tts.ffmpegConcat(segmentAudioFiles);
+                        track.audio = audio;
+                        trackAudioFiles.push(audio.file);
+                    }
+                    that.audio = await tts.ffmpegConcat(trackAudioFiles);
+                    resolve(that.audio);
+                } catch(e) {reject(e);} })();
+            });
         }
 
         addSutta(sutta) {

@@ -7,6 +7,7 @@
         Sutta,
         SuttaCentralApi,
         SuttaFactory,
+        Voice,
     } = require('../index');
 
     var suttas = [
@@ -38,6 +39,27 @@
                 },{
                     scid: 'test2:1.2',
                     pli: 'test2:pli1.2',
+                }],
+            }],
+        }),
+        new Sutta({
+            sutta_uid: 'test3',
+            author_uid: 'test',
+            sections: [{
+                segments: [{
+                    scid: 'test3:1.1',
+                    pli: 'Taṃ kissa hetu?',
+                    en: 'Why is that?',
+                }],
+            },{
+                segments: [{
+                    scid: 'test3:2.1',
+                    pli: 'abhikkantaṃ, bhante',
+                    en: 'Excellent, sir!',
+                },{
+                    scid: 'test3:2.2',
+                    pli: 'Nandī dukkhassa mūlan’ti',
+                    en: 'Delight is the root of suffering',
                 }],
             }],
         }),
@@ -81,7 +103,7 @@
 
         should.deepEqual(pl.stats(),{
             tracks: 0,
-            seconds: 0,
+            duration: 0,
             segments: {
                 de: 0,
                 pli: 0,
@@ -91,7 +113,7 @@
         pl.addSutta(suttas[0]);
         should.deepEqual(pl.stats(),{
             tracks: 1,
-            seconds: 35,
+            duration: 35,
             segments: {
                 de: 2,
                 pli: 2,
@@ -101,7 +123,7 @@
         pl.addSutta(suttas[1]);
         should.deepEqual(pl.stats(),{
             tracks: 2,
-            seconds: 64,
+            duration: 64,
             segments: {
                 de: 3,
                 pli: 4,
@@ -124,8 +146,33 @@
                     en: 1118,
                     pli: 1156,
                 },
-                seconds: 19964,
+                duration: 19964,
             });
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTspeak(opts) adds voice audio", function(done) {
+        this.timeout(2*1000);
+        (async function() { try {
+            var voices = {
+                pli: Voice.createVoice({
+                    name:'aditi',
+                    usage: 'recite',
+                    language: 'hi-IN',
+                    languageUnknown: 'pli',
+                    stripNumbers: true,
+                    stripQuotes: true,
+                }),
+                en: Voice.createVoice({name:'amy'}),
+            };
+            var pl = new Playlist({
+                languages: ['pli', 'en'], // speaking order 
+            });
+            pl.addSutta(suttas[2]);
+            var result = await pl.speak({
+                voices,
+            });
+            should(result.signature.guid).match(/fa2a2d/);
             done();
         } catch(e) { done(e); } })();
     });

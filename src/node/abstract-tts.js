@@ -97,6 +97,10 @@
             return `<break time="${t}s"/>`;
         }
 
+        sectionBreak() {
+            return this.break(this.breaks.length-1);
+        }
+
         wordInfo(word) {
             word = word && word.toLowerCase();
             var wordValue = word && this.words.words[word];
