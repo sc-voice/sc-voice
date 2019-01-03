@@ -11,11 +11,12 @@
         constructor(opts) {
             super((opts = SoundStore.options(opts)));
             logger.info(`SoundStore.ctor(${this.name})`);
-            if (opts.audioFormat === 'ogg') {
+            this.audioFormat = opts.audioFormat || 'mp3';
+            if (this.audioFormat === 'ogg') {
                 this.audioSuffix = '.ogg';
                 this.audioFormat = 'ogg_vorbis';
                 this.audioMIME = 'audio/ogg';
-            } else if (opts.audioFormat == null || opts.audioFormat === 'mp3') {
+            } else if (this.audioFormat === 'mp3') {
                 this.audioSuffix = '.mp3';
                 this.audioFormat = 'mp3';
                 this.audioMIME = 'audio/mp3';
