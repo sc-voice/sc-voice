@@ -2,11 +2,13 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const { MerkleJson } = require("merkle-json");
     const {
         GuidStore,
         SoundStore,
     } = require("../index");
     const LOCAL = path.join(__dirname, '..', 'local');
+    var mj = new MerkleJson();
 
     it("TESTTESTSoundStore() creates default GuidStore for sounds", function() {
         var store = new SoundStore();
@@ -29,5 +31,11 @@
         should(store.audioSuffix).equal('.ogg');
         should(store.audioFormat).equal('ogg_vorbis');
         should(store.audioMIME).equal('audio/ogg');
+    });
+    it("TESTTESTguidPath(guid) returns file path of guid", function() {
+        var store = new SoundStore();
+        var guid = mj.hash("hello world");
+        var dirPath = path.join(LOCAL, 'sounds', guid.substring(0,2), guid);
+        should(store.guidPath(guid)).equal(`${dirPath}.mp3`);
     });
 })

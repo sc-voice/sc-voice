@@ -31,6 +31,10 @@
                 suffix: this.audioSuffix,
             }, opts);
         }
+
+        guidPath(guid, opts) {
+            return super.guidPath(guid, opts || this.audioSuffix);
+        }
     }
 
     module.exports = exports.SoundStore = SoundStore;

@@ -131,7 +131,7 @@
         getAudio(req, res, next) {
             return new Promise((resolve, reject) => { try {
                 var guid = req.params.guid;
-                var filePath = this.soundStore.guidPath(guid, this.soundStore.audioSuffix);
+                var filePath = this.soundStore.guidPath(guid);
                 var filename = req.params.filename;
                 var data = fs.readFileSync(filePath);
                 res.set('accept-ranges', 'bytes');
@@ -390,8 +390,8 @@
                     var {
                         guid,
                     } = await that.synthesizeSutta(sutta_uid, language, translator, usage);
+                    var filePath = that.soundStore.guidPath(guid);
                     var audioSuffix = that.soundStore.audioSuffix;
-                    var filePath = that.soundStore.guidPath(guid, audioSuffix);
                     var filename = `${sutta_uid}-${language}-${translator}${audioSuffix}`;
                     var data = fs.readFileSync(filePath);
                     res.set('Content-disposition', 'attachment; filename=' + filename);
