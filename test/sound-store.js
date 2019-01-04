@@ -124,11 +124,11 @@
             var store = new SoundStore({
                 suffixes: ['.txt'],
                 ephemeralInterval,
-                ephemeralAge: 1,
+                ephemeralAge: ephemeralInterval/2,
             });
             should.deepEqual(store.ephemerals, []);
             should(store.ephemeralInterval).equal(ephemeralInterval);
-            should(store.ephemeralAge).equal(1);
+            should(store.ephemeralAge).equal(ephemeralInterval/2);
             var data = [1,2,3].map(i => {
                 var name = `ephemeral-${i}`;
                 var guid = mj.hash(name);
@@ -153,11 +153,19 @@
             should(fs.existsSync(data[1].fpath)).equal(true);
             should(fs.existsSync(data[2].fpath)).equal(true);
 
-            await new Promise((resolve, reject) => {
-                setTimeout(() => {resolve(true);}, ephemeralInterval);
-            });
+            // one of the ephemeral files gets refreshed
+            await new Promise(r=>setTimeout(()=>r(1), ephemeralInterval/2));
+            fs.writeFileSync(data[0].fpath, data[0].name); // refresh
+            await new Promise(r=>setTimeout(()=>r(1), ephemeralInterval/2));
+            should(fs.existsSync(data[0].fpath)).equal(true); // refreshed
+            should(fs.existsSync(data[1].fpath)).equal(false);
+            should(fs.existsSync(data[2].fpath)).equal(false);
+            should.deepEqual(store.ephemerals, [
+                data[0].guid,
+            ]);
 
-            should.deepEqual(store.ephemerals, []);
+            // all of the ephemerals become stale
+            await new Promise(r=>setTimeout(()=>r(1), ephemeralInterval));
             should(fs.existsSync(data[0].fpath)).equal(false);
             should(fs.existsSync(data[1].fpath)).equal(false);
             should(fs.existsSync(data[2].fpath)).equal(false);
