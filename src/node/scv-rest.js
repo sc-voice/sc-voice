@@ -47,7 +47,7 @@
             this.wikiUrl = opts.wikiUrl || 'https://github.com/sc-voice/sc-voice/wiki';
             this.wikiUrl = opts.wikiUrl || 'https://raw.githubusercontent.com/wiki/sc-voice/sc-voice';
             this.examples = opts.examples;
-            this.soundStore = new SoundStore(opts);
+            this.soundStore = opts.soundStore || new SoundStore(opts);
             this.audioMIME = this.soundStore.audioMIME;
             this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
             this.suttaFactory = new SuttaFactory({
@@ -59,6 +59,7 @@
                 name: 'Aditi',
                 usage: 'recite',
                 language: 'hi-IN',
+                soundStore: this.soundStore,
                 stripNumbers: true,
                 stripQuotes: true,
                 languageUnknown: "pli",
@@ -177,6 +178,7 @@
                     var voice = Voice.createVoice({
                         language,
                         usage,
+                        soundStore: that.soundStore,
                         languageUnknown: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
@@ -217,6 +219,7 @@
                     var voice = Voice.createVoice({
                         language,
                         usage,
+                        soundStore: that.soundStore,
                         languageUnknown: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
@@ -322,6 +325,7 @@
                     var voiceLang = Voice.createVoice({
                         name: VOICES[iVoice].name,
                         usage,
+                        soundStore: that.soundStore,
                         languageUnknown: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,

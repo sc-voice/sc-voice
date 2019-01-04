@@ -7,6 +7,7 @@
         Definitions,
         ScvRest,
         Section,
+        SoundStore,
         Sutta,
         SuttaCentralApi,
         SuttaCentralId,
@@ -19,6 +20,15 @@
     const SC = path.join(__dirname, '../local/sc');
     const app = require("../scripts/sc-voice.js"); // access cached instance 
 
+    it("TESTTESTScvRest maintains a SoundStore singleton", function() {
+        var scvRest = app.locals.scvRest;
+        should(scvRest).instanceOf(ScvRest);
+        var soundStore = scvRest.soundStore;
+        should(soundStore).instanceOf(SoundStore);
+        should(scvRest.voicePali.soundStore).equal(soundStore);
+        should(scvRest.voicePali.services.recite.soundStore).equal(soundStore);
+        should(scvRest.voicePali.services.review.soundStore).equal(soundStore);
+    });
     it("GET /identity returns restbundle identity JSON", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/identity").expect((res) => {

@@ -63,6 +63,7 @@ app.get(["/","/scv"], function(req,res,next) {
         };
         //opts = undefined;
         var scvRest = new ScvRest(opts);
+        app.locals.scvRest = scvRest;
         await scvRest.initialize();
         restBundles.push(scvRest);
 

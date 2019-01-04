@@ -29,6 +29,7 @@
 
         static options(opts={}) {
             return Object.assign({}, {
+                type: 'SoundStore',
                 storeName: 'sounds',
                 storePath: PATH_SOUNDS,
                 suffix: this.audioSuffix,
@@ -53,7 +54,6 @@
                     var fstat = fs.statSync(fpath);
                     if (fstat.ctime <= ctime) {
                         fs.unlinkSync(fpath);
-                        console.log('deleting ', guid, fstat.ctime);
                     } else if (ephemerals[ephemerals.length-1] !== guid) {
                         ephemerals.push(guid);
                     }

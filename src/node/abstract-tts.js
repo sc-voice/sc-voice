@@ -6,7 +6,7 @@
     const {
         logger,
     } = require('rest-bundle');
-    const GuidStore = require('./guid-store');
+    const SoundStore = require('./sound-store');
     const Words = require('./words');
     const ABSTRACT_METHOD = "abstract method must be overridden and implemented by base class";
     const { exec } = require('child_process');
@@ -36,10 +36,7 @@
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
-            this.store = opts.store || new GuidStore({
-                type: 'SoundStore',
-                storeName: 'sounds',
-            });
+            this.soundStore = opts.soundStore || new SoundStore(opts);
             Object.defineProperty(this, 'credentials', {
                 writable: true,
             });
@@ -283,7 +280,7 @@
 
         createResponse(request, cached = false) {
             var signature = request.signature;
-            var jsonPath = this.store.signaturePath(signature, ".json");
+            var jsonPath = this.soundStore.signaturePath(signature, ".json");
             fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2)+'\n');
             var response = {
                 file: request.outpath,
@@ -318,7 +315,7 @@
                     var pitch = this.prosody.pitch || "0%";
                     var ssml = `<prosody rate="${rate}" pitch="${pitch}">${ssmlFragment}</prosody>`;
                     var signature = this.signature(ssml);
-                    var outpath = this.store.signaturePath(signature, this.audioSuffix);
+                    var outpath = this.soundStore.signaturePath(signature, this.audioSuffix);
                     var request = {
                         ssml,
                         signature,
@@ -424,7 +421,7 @@
                     files,
                 }
                 signature[this.mj.hashTag] = this.mj.hash(signature);
-                var outpath = this.store.signaturePath(signature, this.audioSuffix);
+                var outpath = this.soundStore.signaturePath(signature, this.audioSuffix);
                 var stats = fs.existsSync(outpath) && fs.statSync(outpath);
                 var cache = opts.cache == null ? true : opts.cache;
                 var request = {
@@ -437,10 +434,10 @@
                     resolve(this.createResponse(request, true));
                 } else {
                     if (opts.ssmlAll) {
-                        var ssmlPath = this.store.signaturePath(signature, ".ssml");
+                        var ssmlPath = this.soundStore.signaturePath(signature, ".ssml");
                         fs.writeFileSync(ssmlPath, JSON.stringify(opts.ssmlAll, null, 2));
                     }
-                    var inpath = this.store.signaturePath(signature, ".txt");
+                    var inpath = this.soundStore.signaturePath(signature, ".txt");
                     fs.writeFileSync(inpath, inputs);
                     var cmd = `bash -c "ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`;
                     var execOpts = {

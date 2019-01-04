@@ -3,6 +3,7 @@
     const path = require('path');
     const Polly = require('./polly');
     const Words = require('./words');
+    const SoundStore = require('./sound-store');
 
     function eqIgnoreCase(a,b) {
         a = a.toLocaleLowerCase();
@@ -24,6 +25,7 @@
                 recite: Voice.RATE_SLOW,
             }
             this.gender = opts.gender || "female";
+            this.soundStore = opts.soundStore || new SoundStore(opts);
             this.ipa = opts.ipa || {};
             this.pitch = opts.pitch || "-0%";
             this.usage = opts.usage || 'recite';
@@ -129,6 +131,7 @@
                             stripNumbers: this.stripNumbers,
                             stripQuotes: this.stripQuotes,
                             voice: this.name,
+                            soundStore: this.soundStore,
                             usage: key,
                             breaks: usage.breaks,
                             prosody: {

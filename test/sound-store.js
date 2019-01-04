@@ -16,6 +16,8 @@
         should(store).instanceof(GuidStore);
         should(store.storePath).equal(path.join(LOCAL, 'sounds'));
         should(fs.existsSync(store.storePath)).equal(true);
+        should(store.type).equal('SoundStore');
+        should(store.storeName).equal('sounds');
         should(store.audioSuffix).equal('.mp3');
         should(store.audioFormat).equal('mp3');
         should(store.audioMIME).equal('audio/mp3');
@@ -27,6 +29,8 @@
         should(store).instanceof(SoundStore);
         should(store).instanceof(GuidStore);
         should(store.storePath).equal(path.join(LOCAL, 'sounds'));
+        should(store.type).equal('SoundStore');
+        should(store.storeName).equal('sounds');
         should(fs.existsSync(store.storePath)).equal(true);
         should(store.audioSuffix).equal('.ogg');
         should(store.audioFormat).equal('ogg_vorbis');
