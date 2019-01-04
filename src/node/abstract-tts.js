@@ -456,6 +456,7 @@
                             console.error(`ffmpegConcat() failed ${outpath}`, stats.size, err);
                             reject(new Error(err));
                         } else {
+                            this.soundStore.addEphemeral(signature.guid);
                             resolve(this.createResponse(request, false));
                         }
                     });

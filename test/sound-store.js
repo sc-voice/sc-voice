@@ -75,7 +75,7 @@
         });
         should.deepEqual(store.ephemerals, []);
         should(store.ephemeralInterval).equal(1*60*1000);
-        should(store.ephemeralAge).equal(60*60*1000);
+        should(store.ephemeralAge).equal(5*60*1000);
         var data = [1,2,3].map(i => {
             var name = `ephemeral-${i}`;
             var guid = mj.hash(name);

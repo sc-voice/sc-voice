@@ -26,7 +26,7 @@
                 throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
             }
             that.ephemerals = [];
-            that.ephemeralAge = opts.ephemeralAge || 60*MS_MINUTES;
+            that.ephemeralAge = opts.ephemeralAge || 5*MS_MINUTES;
             that.ephemeralInterval = opts.ephemeralInterval || 1*MS_MINUTES;
             that.ephemeralInterval && setInterval(() => {
                 var ctime = new Date(Date.now() - that.ephemeralAge);
@@ -34,7 +34,7 @@
                     ctime,
                 });
             }, that.ephemeralInterval);
-            that.suffixes = opts.suffixes || [that.audioSuffix];
+            that.suffixes = opts.suffixes || [that.audioSuffix, '.json', '.txt', '.ssml'];
         }
 
         static options(opts={}) {
