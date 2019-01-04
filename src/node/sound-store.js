@@ -10,21 +10,30 @@
     class SoundStore extends GuidStore { 
         constructor(opts) {
             super((opts = SoundStore.options(opts)));
-            logger.info(`SoundStore.ctor(${this.storePath})`);
-            this.audioFormat = opts.audioFormat || 'mp3';
-            if (this.audioFormat === 'ogg') {
-                this.audioSuffix = '.ogg';
-                this.audioFormat = 'ogg_vorbis';
-                this.audioMIME = 'audio/ogg';
-            } else if (this.audioFormat === 'mp3') {
-                this.audioSuffix = '.mp3';
-                this.audioFormat = 'mp3';
-                this.audioMIME = 'audio/mp3';
+            var that = this;
+            logger.info(`SoundStore.ctor(${that.storePath})`);
+            that.audioFormat = opts.audioFormat || 'mp3';
+            if (that.audioFormat === 'ogg') {
+                that.audioSuffix = '.ogg';
+                that.audioFormat = 'ogg_vorbis';
+                that.audioMIME = 'audio/ogg';
+            } else if (that.audioFormat === 'mp3') {
+                that.audioSuffix = '.mp3';
+                that.audioFormat = 'mp3';
+                that.audioMIME = 'audio/mp3';
             } else {
                 throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
             }
-            this.ephemerals = [];
-            this.suffixes = opts.suffixes || [this.audioSuffix];
+            that.ephemerals = [];
+            that.ephemeralAge = opts.ephemeralAge || 60*60*1000;
+            that.ephemeralInterval = opts.ephemeralInterval || 5*60*1000;
+            that.ephemeralInterval && setInterval(() => {
+                var ctime = new Date(Date.now() - that.ephemeralAge);
+                that.clearEphemerals({
+                    ctime,
+                });
+            }, that.ephemeralInterval);
+            that.suffixes = opts.suffixes || [that.audioSuffix];
         }
 
         static options(opts={}) {
