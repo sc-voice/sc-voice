@@ -6,6 +6,7 @@
     } = require('rest-bundle');
     const GuidStore = require('./guid-store');
     const PATH_SOUNDS = path.join(__dirname, '../../local/sounds');
+    const MS_MINUTES = 60 * 1000;
 
     class SoundStore extends GuidStore { 
         constructor(opts) {
@@ -25,8 +26,8 @@
                 throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
             }
             that.ephemerals = [];
-            that.ephemeralAge = opts.ephemeralAge || 60*60*1000;
-            that.ephemeralInterval = opts.ephemeralInterval || 5*60*1000;
+            that.ephemeralAge = opts.ephemeralAge || 60*MS_MINUTES;
+            that.ephemeralInterval = opts.ephemeralInterval || 1*MS_MINUTES;
             that.ephemeralInterval && setInterval(() => {
                 var ctime = new Date(Date.now() - that.ephemeralAge);
                 that.clearEphemerals({
