@@ -10,7 +10,7 @@
     class SoundStore extends GuidStore { 
         constructor(opts) {
             super((opts = SoundStore.options(opts)));
-            logger.info(`SoundStore.ctor(${this.name})`);
+            logger.info(`SoundStore.ctor(${this.storePath})`);
             this.audioFormat = opts.audioFormat || 'mp3';
             if (this.audioFormat === 'ogg') {
                 this.audioSuffix = '.ogg';
@@ -23,6 +23,8 @@
             } else {
                 throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
             }
+            this.ephemerals = [];
+            this.suffixes = opts.suffixes || [this.audioSuffix];
         }
 
         static options(opts={}) {
@@ -33,9 +35,33 @@
             }, opts);
         }
 
-        guidPath(guid, opts) {
-            return super.guidPath(guid, opts || this.audioSuffix);
+        guidPath(guid, suffix) {
+            return super.guidPath(guid, suffix || this.audioSuffix);
         }
+
+        addEphemeral(guid) {
+            this.ephemerals.push(guid);
+        }
+
+        clearEphemerals(opts={}) {
+            var ctime = opts.ctime || Date.now();
+            var suffixes = opts.suffixes || this.suffixes;
+            var ephemerals = [];
+            this.ephemerals.forEach(guid => {
+                suffixes.forEach(suffix => {
+                    var fpath = this.guidPath(guid, suffix);
+                    var fstat = fs.statSync(fpath);
+                    if (fstat.ctime <= ctime) {
+                        fs.unlinkSync(fpath);
+                        console.log('deleting ', guid, fstat.ctime);
+                    } else if (ephemerals[ephemerals.length-1] !== guid) {
+                        ephemerals.push(guid);
+                    }
+                });
+            });
+            this.ephemerals = ephemerals;
+        }
+
     }
 
     module.exports = exports.SoundStore = SoundStore;
