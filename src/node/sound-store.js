@@ -61,11 +61,14 @@
             this.ephemerals.forEach(guid => {
                 suffixes.forEach(suffix => {
                     var fpath = this.guidPath(guid, suffix);
-                    var fstat = fs.statSync(fpath);
-                    if (fstat.ctime <= ctime) {
-                        fs.unlinkSync(fpath);
-                    } else if (ephemerals[ephemerals.length-1] !== guid) {
-                        ephemerals.push(guid);
+                    if (fs.existsSync(fpath)) {
+                        var fstat = fs.statSync(fpath);
+                        if (fstat.ctime <= ctime) {
+                            fs.unlinkSync(fpath);
+                            logger.info(`clearEphemerals unlinkSync:${fpath}`);
+                        } else if (ephemerals[ephemerals.length-1] !== guid) {
+                            ephemerals.push(guid);
+                        } 
                     }
                 });
             });

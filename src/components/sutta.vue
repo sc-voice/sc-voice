@@ -76,25 +76,7 @@
                     class="scv-search-result-pli">
                     <div>
                         <div v-html="result.quote.pli"></div>
-                        <audio v-if="result.audio && result.audio.pli" 
-                            :ref="`audiopli${i}`"
-                            style="display:block"
-                            class="ml-4 mt-1" 
-                            preload=auto
-                            :aria-label="`play pali`">
-                            <source type="audio/mp3"
-                                :src="audioLink(result.audio.pli)" />
-                            <p>Your browser doesn't support HTML5 audio</p>
-                        </audio>
                     </div>
-                    <v-btn icon v-if="result.quote.pli" 
-                        @click="playQuote(`audiopli${i}`, result)"
-                        :disabled="!result.quote.pli"
-                        :class="btnAudioClass(`audiopli${i}`)" 
-                        :style="cssProps"
-                        aria-label="Play Pali Quote">
-                        <v-icon>{{audioIcon(`audiopli${i}`)}}</v-icon>
-                    </v-btn>
                 </div>
                 <div v-if="result.quote && showTrans && result.quote[language]"
                     class="scv-search-result-lang">
@@ -105,38 +87,27 @@
                             SC&nbsp;{{result.quote.scid}}
                             {{result.author}}
                         </span> 
-                        <audio v-if="result.audio && result.audio[language]" 
-                            :ref="`audiolang${i}`"
-                            style="display:block"
-                            class="ml-4 mt-1" 
-                            preload=auto
-                            :aria-label="`play quote`">
-                            <source type="audio/mp3"
-                                :src="audioLink(result.audio[language])" />
-                            <p>Your browser doesn't support HTML5 audio</p>
-                        </audio>
                     </div>
-                    <v-btn icon v-if="result.quote[language]" 
-                        @click="playQuote(`audiolang${i}`, result)"
-                        :disabled="!result.quote[language]"
-                        tabindex="-1"
-                        :class="btnAudioClass(`audiolang${i}`)" 
-                        :style="cssProps"
-                        v-on:ended.native="console.log('ended')"
-                        aria-hidden='true'>
-                        <v-icon>{{audioIcon(`audiolang${i}`)}}</v-icon>
-                    </v-btn>
                 </div>
-                <div style="display:flex; justify-content: space-around">
-                    <v-btn v-if="result.quote" 
-                        @click="playOne(result)"
-                        class="scv-text-button" :style="cssProps" small>
-                        Play {{result.suttaplex.acronym}}
+                <div class="ml-3" style="display:flex; justify-content: flex-start">
+                    <v-btn icon v-if="result.quote" 
+                        @click="playQuotes(i, result)"
+                        :class="btnPlayQuotesClass(i)" :style="cssProps" small>
+                        <v-icon>textsms</v-icon>
                     </v-btn>
-                    <v-btn v-if="result.quote" 
+                    <v-btn icon v-if="result.quote" 
+                        @click="playOne(result)"
+                        class="scv-icon-btn" :style="cssProps" small>
+                        <v-icon>play_circle_outline</v-icon>
+                    </v-btn>
+                    <v-btn icon v-if="result.quote" 
                         :href="resultLink(result)"
-                        class="scv-text-button" :style="cssProps" small>
-                        Show {{result.suttaplex.acronym}}
+                        class="scv-icon-btn" :style="cssProps" small>
+                        <v-icon>open_in_new</v-icon>
+                    </v-btn>
+                    <v-btn icon v-if="result.quote" 
+                        class="scv-icon-btn" :style="cssProps" small>
+                        <v-icon>cloud_download</v-icon>
                     </v-btn>
                 </div>
             </details><!-- search result i -->
@@ -326,6 +297,11 @@ export default {
         audioIcon(ref) {
             return ref === this.refPlaying ? 'volume_up' : 'volume_down';
         },
+        btnPlayQuotesClass(i) {
+            return this.refPlaying === `audioQuote${i}`
+                ? 'scv-icon-btn scv-btn-playing' 
+                : 'scv-icon-btn ';
+        },
         btnAudioClass(ref) {
             return ref === this.refPlaying 
                 ? 'scv-icon-btn scv-btn-playing' 
@@ -408,6 +384,63 @@ export default {
                 });
             } catch(e) {reject(e);} });
         },
+        playQuotes(i, result) {
+            var that = this;
+            (async function() { try {
+                if (result.audio == null) {
+                    var ref = `audioQuote${i}`;
+                    var data = await that.getResultAudio(result);
+                    var links = [];
+                    var lang = that.language;
+                    var dsa = data.segment.audio;
+                    dsa.pli && links.push(that.audioLink(dsa.pli));
+                    dsa[lang] && links.push(that.audioLink(dsa[lang]));
+                    var audio = links.map(link => new Audio(link));
+                    var handler1 = () => {
+                        audio[1].removeEventListener("ended", handler1);
+                        that.refPlaying = null;
+                        console.log(`playQuotes ended1`, audio[1]);
+                    };
+                    var handler0 = () => {
+                        audio[0].removeEventListener("ended", handler0);
+                        that.refPlaying = null;
+                        console.log(`playQuotes ended0`, audio[0]);
+                        if (audio[1]) {
+                            var handler1 = () => {
+                                audio[1].removeEventListener("ended", handler1);
+                                that.refPlaying = null;
+                                console.log(`playQuotes ended`, audio[1]);
+                            };
+                            if (audio[1].paused) {
+                                console.log('playQuotes nextTick playing', audio[1]);
+                                audio[1].play();
+                                that.refPlaying = ref;
+                                audio[1].addEventListener("ended", handler1);
+                            } else {
+                                console.log('playQuotes nextTick paused', audio[1]);
+                                audio[1].pause();
+                                handler1();
+                            }
+                        }
+                    };
+                    if (audio[0].paused) {
+                        console.log('playQuotes nextTick playing', audio[0]);
+                        audio[0].play();
+                        that.refPlaying = ref;
+                        audio[0].addEventListener("ended", handler0);
+                    } else {
+                        console.log('playQuotes nextTick paused', audio[0]);
+                        audio[0].pause();
+                        handler0();
+                    }
+
+                    //Vue.set(result, "audio", data.segment.audio);
+                    console.log(`playQuotes audio:`, data.segment.audio);
+                }
+            } catch(e) { 
+                console.log(`playQuote`, e.stack);
+            }})();
+        },
         playQuote(ref, result) {
             var that = this;
             (async function() { try {
@@ -417,21 +450,21 @@ export default {
                     console.log(`playQuote audio:`, data.segment.audio);
                 }
                 that.$nextTick(() => {
-                    var track = that.$refs[ref][0];
+                    var audio = that.$refs[ref][0];
                     var listener;
                     var handler = () => {
-                        listener && track.removeEventListener(listener, handler);
+                        listener && audio.removeEventListener(listener, handler);
                         listener = null;
                         that.refPlaying = null;
                     };
-                    if (track.paused) {
-                        console.log('playQuote nextTick playing', track);
-                        track.play();
+                    if (audio.paused) {
+                        console.log('playQuote nextTick playing', audio);
+                        audio.play();
                         that.refPlaying = ref;
-                        listener = track.addEventListener("ended", handler);
+                        listener = audio.addEventListener("ended", handler);
                     } else {
-                        console.log('playQuote nextTick paused', track);
-                        track.pause();
+                        console.log('playQuote nextTick paused', audio);
+                        audio.pause();
                         handler();
                     }
                 });

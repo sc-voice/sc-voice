@@ -12,7 +12,7 @@ import App from './App.vue'
 const DEFAULT_VOICES = [{
     name: 'Amy',
     value: 'recite',
-    label: 'Amy for meditation and contemplation (slow)',
+    label: 'Amy (slower)',
 },{
     name: 'Russell',
     value: 'recite',
@@ -20,7 +20,7 @@ const DEFAULT_VOICES = [{
 },{
     name: 'Raveena',
     value: 'review',
-    label: 'Raveena for review and study (fast)',
+    label: 'Raveena (faster)',
 }];
 
 const IPS_CHOICES = [{
