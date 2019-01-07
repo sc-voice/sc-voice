@@ -93,7 +93,7 @@
                     <v-btn icon v-if="result.quote" 
                         @click="playQuotes(i, result)"
                         :class="btnPlayQuotesClass(i)" :style="cssProps" small>
-                        <v-icon>textsms</v-icon>
+                        <v-icon>sms</v-icon>
                     </v-btn>
                     <v-btn icon v-if="result.quote" 
                         @click="playOne(result)"
