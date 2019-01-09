@@ -4,6 +4,10 @@
     const path = require('path');
     const supertest = require('supertest');
     const {
+        logger,
+    } = require('rest-bundle');
+    logger.level = 'info';
+    const {
         Definitions,
         ScvRest,
         Section,
@@ -20,7 +24,15 @@
     const SC = path.join(__dirname, '../local/sc');
     const app = require("../scripts/sc-voice.js"); // access cached instance 
 
-    it("TESTTESTScvRest maintains a SoundStore singleton", function() {
+    it("ScvRest must be initialized", function(done) {
+        (async function() { try {
+            var scvRest = app.locals.scvRest;
+            await(scvRest.initialize());
+            should(scvRest.initialized).equal(true);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("ScvRest maintains a SoundStore singleton", function() {
         var scvRest = app.locals.scvRest;
         should(scvRest).instanceOf(ScvRest);
         var soundStore = scvRest.soundStore;
@@ -147,15 +159,37 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /download/sutta/mn100/en/sujato/review returns download", function(done) {
+    it("GET /download/sutta/mn100/en/sujato/review returns download", function(done) {
         this.timeout(15*1000);
+        var scvRest = app.locals.scvRest;
         var async = function* () { try {
+            var apiModel = yield  scvRest.initialize()
+                .then(r=>async.next(r)).catch(e=>async.throw(e));
             var response = yield supertest(app)
                 .get("/scv/download/sutta/mn100/en/sujato/review")
                 .expect('Content-Type', /audio\/mp3/)
                 .expect('Content-Disposition', /attachment; filename=mn100-en-sujato.mp3/)
                 .expect('Content-Length', /9[0-9][0-9][0-9][0-9][0-9][0-9]/)
                 .end((e,r) => e ? async.throw(e) : async.next(r));
+            should(response.statusCode).equal(200);
+            done();
+        } catch (e) { done(e); } }();
+        async.next();
+    });
+    it("TESTTESTGET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
+        var scvRest = app.locals.scvRest;
+        this.timeout(20*1000);
+        var async = function* () { try {
+            var apiModel = yield  scvRest.initialize()
+                .then(r=>async.next(r)).catch(e=>async.throw(e));
+            var res = yield supertest(app)
+                .get("/scv/download/playlist/pli+en/amy/an3.76-77")
+                .expect('Content-Type', /audio\/mp3/)
+                .expect('Content-Disposition', 
+                    'attachment; filename=an3.76-77_pli+en_amy.mp3')
+                .expect('Content-Length', /3495[0-9][0-9][0-9]/)
+                .end((e,r) => e ? async.throw(e) : async.next(r));
+            should(res.statusCode).equal(200);
             done();
         } catch (e) { done(e); } }();
         async.next();
@@ -163,7 +197,8 @@
     it("GET /sutta/an2.1-10/en/sujato returns sutta", function(done) {
         done(); return; // TODO
         var async = function* () { try {
-            var response = yield supertest(app).get("/scv/sutta/an2.1-10/en/sujato").expect((res) => {
+            var response = yield supertest(app)
+                .get("/scv/sutta/an2.1-10/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
                 should(res.body).properties([
                     "sections"

@@ -593,6 +593,7 @@
         } catch(e) {done(e);} })();
     });
     it("search(pattern) finds suttas in range", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -704,7 +705,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTcreatePlaylist(opts) creates playlist", function(done) {
+    it("createPlaylist(opts) creates playlist", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var playlist = await store.createPlaylist({ pattern: 'an3.2-5', });

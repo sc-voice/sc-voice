@@ -99,7 +99,7 @@
                         "download/sutta/:sutta_uid/:language/:translator/:usage", 
                         this.getDownloadSutta, this.audioMIME),
                     this.resourceMethod("get", 
-                        "download/playlist/:pattern",
+                        "download/playlist/:langs/:voice/:pattern",
                         this.getDownloadPlaylist, this.audioMIME),
                     this.resourceMethod("get", "sutta/:sutta_uid/:language/:translator", 
                         this.getSutta),
@@ -118,17 +118,21 @@
 
         initialize() {
             var that = this;
-            var promise = super.initialize();
-            promise.then(() => {
-                (async function(){ try {
+            logger.info(`ScvRest initialize() BEGIN`);
+            var superInit = super.initialize;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
                     await that.suttaCentralApi.initialize();
                     await that.suttaFactory.initialize();
                     await that.suttaStore.initialize();
+                    var result = await superInit.call(that);
+                    logger.info(`ScvRest initialize() COMPLETED`);
+                    resolve(result);
                 } catch(e) {
                     logger.error(e.stack);
+                    reject(e);
                 }})();
             });
-            return promise;
         }
 
         getAudio(req, res, next) {
@@ -457,28 +461,65 @@
 
         getDownloadPlaylist(req, res, next) {
             var that = this;
-            var language = req.query.language || 'en';
+            if (!that.initialized) {
+                return Promise.reject(new Error(
+                    `${that.constructor.name} is not initialized`));
+            }
+            var langs = (req.params.langs || 'pli+en').toLowerCase().split('+');
+            var language = req.query.lang || 'en';
+            var vname = (req.params.voice || 'Amy').toLowerCase();
             var pattern = req.params.pattern;
             if (!pattern) {
                 return Promise.reject(new Error('Search pattern is required'));
             }
+            var usage = req.query.usage || 'recite';
             var maxResults = Number(req.query.maxResults || that.suttaStore.maxResults);
             if (isNaN(maxResults)) {
                 return Promise.reject(new Error('Expected number for maxResults'));
             }
-            var promise = that.suttaStore.search({
-                pattern,
-                language,
-                maxResults,
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var playlist = await that.suttaStore.createPlaylist({
+                        pattern,
+                        languages: langs,
+                        language,
+                        maxResults,
+                    });
+                    var voiceLang = Voice.createVoice({
+                        name: vname,
+                        usage,
+                        soundStore: that.soundStore,
+                        languageUnknown: "pli",
+                        audioFormat: that.soundStore.audioFormat,
+                        audioSuffix: that.soundStore.audioSuffix,
+                    });
+                    var audio = await playlist.speak({
+                        voices: {
+                            pli: that.voicePali,
+                            [language]: voiceLang,
+                        }
+                    });
+                    var result = {
+                        audio,
+                    }
+                    var guid = audio.signature.guid;
+                    var filePath = that.soundStore.guidPath(guid);
+                    var audioSuffix = that.soundStore.audioSuffix;
+                    var uriPattern = encodeURIComponent(
+                        pattern.replace(/[ ,\t]/g,'_')
+                    );
+                    var filename = `${uriPattern}_${langs.join('+')}_${vname}`+
+                        `${audioSuffix}`;
+                    var data = fs.readFileSync(filePath);
+                    res.set('Content-disposition', 'attachment; filename=' + filename);
+                    logger.info(`GET download/${langs}/${pattern} => ` +
+                        `${filename} size:${data.length} ${guid}`);
+                    res.cookie('download-date',new Date());
+                    resolve(data);
+                } catch(e) {
+                    reject(e);
+                } })();
             });
-            promise.then(sr => {
-                var {
-                    method,
-                    results,
-                } = sr;
-                logger.info(`GET search(${pattern}) ${method} => ${results.map(r=>r.uid)}`);
-            });
-            return promise;
         }
 
         getExamples(req, res, next) {
@@ -566,7 +607,7 @@
                     }).on('error', (e) => {
                         reject(e);
                     }).on('timeout', (e) => {
-                        logger.error(e.stack);
+                        logger.error(e);
                         wikiReq.abort();
                     });
                 } catch(e) { reject(e); } })();

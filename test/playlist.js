@@ -64,14 +64,14 @@
             }],
         }),
     ];
-    it("TESTTESTplaylist() constructs a playlist", function() {
+    it("playlist() constructs a playlist", function() {
         var pl = new Playlist();
         should(pl).instanceOf(Playlist);
-        should.deepEqual(pl.languages, ['en','pli']);
+        should.deepEqual(pl.languages, ['pli', 'en']);
         should.deepEqual(pl.tracks, []);
         should(pl.maxSeconds).equal(0); // unlimited
     });
-    it("TESTTESTplaylist(opts) constructs custom playlist", function() {
+    it("playlist(opts) constructs custom playlist", function() {
         var pl = new Playlist({
             languages: ['de','fr'],
         });
@@ -80,7 +80,7 @@
         should.deepEqual(pl.tracks, []);
         should(pl.maxSeconds).equal(0); // unlimited
     });
-    it("TESTTESTaddSutta(sutta) adds a sutta", function() {
+    it("addSutta(sutta) adds a sutta", function() {
         var pl = new Playlist();
 
         pl.addSutta(suttas[0]);
@@ -96,7 +96,7 @@
              'test2',
         ]);
     });
-    it("TESTTESTstats() adds a sutta", function() {
+    it("stats() adds a sutta", function() {
         var pl = new Playlist({
             languages:['de','pli'],
         });
@@ -130,7 +130,7 @@
             },
         });
     });
-    it("TESTTESTaddSutta(sutta) adds dn33", function(done) {
+    it("addSutta(sutta) adds dn33", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
@@ -151,7 +151,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTspeak(opts) adds voice audio", function(done) {
+    it("speak(opts) adds voice audio", function(done) {
         this.timeout(2*1000);
         (async function() { try {
             var voices = {

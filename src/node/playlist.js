@@ -6,9 +6,9 @@
     class Playlist { 
         constructor(opts={}) {
             this.tracks = opts.tracks || [];
-            this.languages = opts.languages || ['en','pli'];
+            this.languages = opts.languages || ['pli', 'en'];
             this.maxSeconds = opts.maxSeconds || 0;
-            this.voices = opts.voices || [];
+            this.voices = opts.voices || {};
         }
 
         stats() {

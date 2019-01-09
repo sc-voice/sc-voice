@@ -278,7 +278,7 @@
             'Why', 'is', 'that', '?',
         ]);
     });
-    it("TESTTESTffmpegConcat(files) returns sound file", function(done) {
+    it("ffmpegConcat(files) returns sound file", function(done) {
         var abstractTTS = new AbstractTTS();
         var files = [
             path.join(__dirname, 'data/1d4e09ef9cd91470da56c84c2da481b0.ogg'),

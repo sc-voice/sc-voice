@@ -661,7 +661,7 @@
                         resultPattern,
                     } = await that.findSuttas(opts);
                     var playlist = new Playlist({
-                        languages: opts.languages || [language, 'pli'],
+                        languages: opts.languages || ['pli', language],
                     });
                     suttas.forEach(sutta => {
                         playlist.addSutta(sutta);
