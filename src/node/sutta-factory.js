@@ -22,6 +22,7 @@
     const SUPPORTED_TRANSLATORS = {
         sabbamitta: true,
         sujato: true,
+        'sujato-walton': true,
         bodhi: true,
         horner: true,
         thanissaro: true,

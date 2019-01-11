@@ -705,53 +705,74 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("createPlaylist(opts) creates playlist", function(done) {
+    it("TESTTESTcreatePlaylist(opts) creates playlist", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
-            var playlist = await store.createPlaylist({ pattern: 'an3.2-5', });
-            should(playlist.tracks.length).equal(8);
+            var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
+            should(playlist.tracks.length).equal(4);
             should.deepEqual(
                 playlist.tracks.map(track => track.segments[0].scid), [
-                'an3.2:0.1',
-                'an3.2:1.1',
-                'an3.3:0.1',
-                'an3.3:1.1',
-                'an3.4:0.1',
-                'an3.4:1.1',
-                'an3.5:0.1',
-                'an3.5:1.1',
+                'an3.76:0.1',
+                'an3.76:1.1',
+                'an3.77:0.1',
+                'an3.77:1.1',
             ]);
             should.deepEqual(playlist.stats(), {
-                tracks: 8,
-                duration: 1076,
+                tracks: 4,
+                duration: 687,
                 segments: {
-                    pli: 63,
-                    en: 59,
+                    pli: 40,
+                    en: 38,
                 }
             });
 
             // Pali only
             var playlist = await store.createPlaylist({ 
-                pattern: 'an3.2-5', 
+                pattern: 'an3.76-77', 
                 languages: ['pli'],
             });
-            should(playlist.tracks.length).equal(8);
+            should(playlist.tracks.length).equal(4);
             should.deepEqual(
                 playlist.tracks.map(track => track.segments[0].scid), [
-                'an3.2:0.1',
-                'an3.2:1.1',
-                'an3.3:0.1',
-                'an3.3:1.1',
-                'an3.4:0.1',
-                'an3.4:1.1',
-                'an3.5:0.1',
-                'an3.5:1.1',
+                'an3.76:0.1',
+                'an3.76:1.1',
+                'an3.77:0.1',
+                'an3.77:1.1',
             ]);
             should.deepEqual(playlist.stats(), {
-                tracks: 8,
-                duration: 708,
+                tracks: 4,
+                duration: 450,
                 segments: {
-                    pli: 63,
+                    pli: 40,
+                }
+            });
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTmaxDuration limits createPlaylist()", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore({
+                maxDuration: 450,
+            }).initialize();
+            var eCaught;
+            try {
+                var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
+            } catch (e) {
+                eCaught = e;
+            }
+            should(!!eCaught).equal(true);
+
+            // Pali only
+            var playlist = await store.createPlaylist({ 
+                pattern: 'an3.76-77', 
+                languages: ['pli'],
+            });
+            should.deepEqual(playlist.stats(), {
+                tracks: 4,
+                duration: 450,
+                segments: {
+                    pli: 40,
                 }
             });
 

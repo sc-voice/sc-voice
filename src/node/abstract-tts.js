@@ -9,6 +9,7 @@
     const SoundStore = require('./sound-store');
     const Words = require('./words');
     const ABSTRACT_METHOD = "abstract method must be overridden and implemented by base class";
+    const maxBuffer = 4 * 1024 * 1024;
     const { exec } = require('child_process');
     const RE_PARA = new RegExp(`^[${Words.U_RSQUOTE}${Words.U_RDQUOTE}]*\n$`,'u');
     const RE_PARA_EOL = /^\n\n+$/u;
@@ -441,7 +442,7 @@
                     fs.writeFileSync(inpath, inputs);
                     var cmd = `bash -c "ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`;
                     var execOpts = {
-                        maxBuffer: 500*1024,
+                        maxBuffer,
                     };
                     exec(cmd, execOpts, (err, stdout, stderr) => {
                         if (err) {

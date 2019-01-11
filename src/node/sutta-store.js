@@ -14,6 +14,7 @@
     const SuttaFactory = require('./sutta-factory');
     const Words = require('./words');
     const ROOT = path.join(__dirname, '..', '..', 'local', 'suttas');
+    const maxBuffer = 10 * 1024 * 1024;
     const SUTTAIDS_PATH = path.join(__dirname, '..', '..', 'src', 'node', 'sutta-ids.json');
     const COLLECTIONS = {
         an: {
@@ -52,6 +53,7 @@
                 suttaCentralApi: this.suttaCentralApi,
             });
             this.suttaIds = opts.suttaIds;
+            this.maxDuration = opts.maxDuration || 3 ^ 60 * 60;
             this.root = opts.root || ROOT;
             this.maxResults = opts.maxResults || 5;
             this.voice = opts.voice;
@@ -83,6 +85,7 @@
                             var findOpts = {
                                 cwd: that.root,
                                 shell: '/bin/bash',
+                                maxBuffer,
                             };
                             var sp = await new Promise((resolve, reject) => {
                                 exec(cmd, findOpts, (err,stdout,stderr) => {
@@ -278,6 +281,7 @@
             var opts = {
                 cwd: this.root,
                 shell: '/bin/bash',
+                maxBuffer,
             };
             return new Promise((resolve,reject) => {
                 exec(cmd, opts, (err,stdout,stderr) => {
@@ -660,12 +664,18 @@
                         suttas,
                         resultPattern,
                     } = await that.findSuttas(opts);
+                    var maxDuration = opts.maxDuration || that.maxDuration;
                     var playlist = new Playlist({
                         languages: opts.languages || ['pli', language],
                     });
                     suttas.forEach(sutta => {
                         playlist.addSutta(sutta);
                     });
+                    var duration = playlist.stats().duration;
+                    if (duration > that.maxDuration) {
+                        var e = `Playlist duration:${duration} max:${maxDuration}`;
+                        throw new Error(e);
+                    }
                     resolve(playlist);
                 } catch(e) {reject(e);} })();
             });
