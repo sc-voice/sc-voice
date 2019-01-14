@@ -176,7 +176,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
+    it("GET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
         var scvRest = app.locals.scvRest;
         this.timeout(20*1000);
         var async = function* () { try {

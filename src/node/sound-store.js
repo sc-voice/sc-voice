@@ -25,6 +25,8 @@
             } else {
                 throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
             }
+
+            // every minute, delete ephemerals older than 5 minutes
             that.ephemerals = [];
             that.ephemeralAge = opts.ephemeralAge || 5*MS_MINUTES;
             that.ephemeralInterval = opts.ephemeralInterval || 1*MS_MINUTES;

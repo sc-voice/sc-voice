@@ -151,6 +151,22 @@
             done();
         } catch(e) { done(e); } })();
     });
+    it("addTrack(sutta_uid, segmentsOrMessage) adds a track", function(done) {
+        this.timeout(10*1000);
+        (async function() { try {
+            var pl = new Playlist();
+            pl.addTrack("error123", "this is a test");
+            should.deepEqual(pl.stats(), {
+                tracks: 1,
+                segments: {
+                    en: 1,
+                    pli: 0,
+                },
+                duration: 7,
+            });
+            done();
+        } catch(e) { done(e); } })();
+    });
     it("speak(opts) adds voice audio", function(done) {
         this.timeout(2*1000);
         (async function() { try {

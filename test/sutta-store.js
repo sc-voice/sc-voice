@@ -18,6 +18,7 @@
     it("initialize() initializes SuttaStore", function(done) {
         (async function() { try {
             var store = new SuttaStore();
+            should(store.maxDuration).equal(3*60*60);
             should(store.isInitialized).equal(false);
             should(await store.initialize()).equal(store);
             should(store.suttaCentralApi).instanceOf(SuttaCentralApi);
@@ -705,7 +706,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTcreatePlaylist(opts) creates playlist", function(done) {
+    it("createPlaylist(opts) creates playlist", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
@@ -750,18 +751,28 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTmaxDuration limits createPlaylist()", function(done) {
+    it("maxDuration limits createPlaylist()", function(done) {
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
             }).initialize();
             var eCaught;
-            try {
-                var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
-            } catch (e) {
-                eCaught = e;
-            }
-            should(!!eCaught).equal(true);
+            var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
+            should.deepEqual(playlist.stats(), {
+                tracks: 1,
+                duration: 7,
+                segments: {
+                    en: 1, // error message
+                }
+            });
+            should.deepEqual(playlist.tracks[0],{
+                sutta_uid: "createPlaylist_error1",
+                segments: [{
+                    en: "Play list is too long to be played. All play lists "+
+                        "must be less than 8 minutes long",
+                    scid: "createPlaylist_error1:0.1",
+                }],
+            });
 
             // Pali only
             var playlist = await store.createPlaylist({ 

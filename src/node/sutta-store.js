@@ -53,7 +53,7 @@
                 suttaCentralApi: this.suttaCentralApi,
             });
             this.suttaIds = opts.suttaIds;
-            this.maxDuration = opts.maxDuration || 3 ^ 60 * 60;
+            this.maxDuration = opts.maxDuration || 3 * 60 * 60;
             this.root = opts.root || ROOT;
             this.maxResults = opts.maxResults || 5;
             this.voice = opts.voice;
@@ -673,8 +673,13 @@
                     });
                     var duration = playlist.stats().duration;
                     if (duration > that.maxDuration) {
-                        var e = `Playlist duration:${duration} max:${maxDuration}`;
-                        throw new Error(e);
+                        playlist = new Playlist({
+                            languages: opts.languages || [language],
+                        });
+                        var minutes = (that.maxDuration / 60).toFixed(0);
+                        playlist.addTrack("createPlaylist_error1", 
+                            `Play list is too long to be played. `+
+                            `All play lists must be less than ${minutes} minutes long`);
                     }
                     resolve(playlist);
                 } catch(e) {reject(e);} })();

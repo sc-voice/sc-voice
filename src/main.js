@@ -68,6 +68,9 @@ const scvState = {
     lang: 'en',
 };
 var vueRoot;
+Object.defineProperty(scvState, "voices", {
+    value: DEFAULT_VOICES,
+});
 Object.defineProperty(scvState, "deleteCookies", {
     value: () => {
         vueRoot.$cookie.delete('useCookies');
@@ -182,9 +185,6 @@ Object.defineProperty(scvState, 'reload', {
         window.location.href = url;
         return;
     }
-});
-Object.defineProperty(scvState, "voices", {
-    value: DEFAULT_VOICES,
 });
 Object.defineProperty(scvState, "title", {
     writable: true,

@@ -86,6 +86,20 @@
             });
         }
 
+        addTrack(sutta_uid, segmentsOrMessage) {
+            var lang = this.languages[this.languages.length-1];
+            var segments = segmentsOrMessage instanceof Array
+                ? segmentsOrMessage
+                : [{
+                    scid: `${sutta_uid}:0.1`,
+                    [lang]: `${segmentsOrMessage}`,
+                }];
+            this.tracks.push({
+                sutta_uid,
+                segments,
+            });
+        }
+
         addSutta(sutta) {
             sutta.sections.forEach(section => {
                 var segments = [];
@@ -99,10 +113,7 @@
                     segments.push(seg);
                 });
 
-                this.tracks.push({
-                    sutta_uid: sutta.sutta_uid,
-                    segments,
-                });
+                this.addTrack(sutta.sutta_uid, segments);
             });
         }
 

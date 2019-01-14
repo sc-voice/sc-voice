@@ -54,10 +54,17 @@
                     class="scv-text-button" :style="cssProps" small>
                     Play All
                 </v-btn>
+                <v-btn 
+                    :href="downloadUrl(search)"
+                    target="_blank"
+                    @click="downloadClick(search)"
+                    class="scv-text-button" :style="cssProps" small>
+                    Download All
+                </v-btn>
             </div>
             <details role="heading" aria-level="2"
                 v-for="(result,i) in (searchResults && searchResults.results||[])" 
-                :key="result.uid" 
+                :key="`${result.uid}_${i}`" 
                 class="scv-search-result" :style="cssProps">
                 <summary class="scv-search-result-summary">
                     <div style="display: inline-block; width: 96%; ">
@@ -106,7 +113,8 @@
                         <v-icon>open_in_new</v-icon>
                     </v-btn>
                     <v-btn icon v-if="result.quote" 
-                        :href="resultLink(result)"
+                        :href="downloadUrl(resultRef(result))"
+                        @click="downloadClick(resultRef(result))"
                         class="scv-icon-btn" :style="cssProps" small>
                         <v-icon>arrow_downward</v-icon>
                     </v-btn>
@@ -127,7 +135,7 @@
             </div>
             <div class="scv-blurb"><span v-html="metaarea"></span></div>
             <div class="scv-play-controls">
-                <button
+                <button v-if="this.scvOpts.voices"
                     :disabled="waiting > 0"
                     @click="launchSuttaPlayer()"
                     class="scv-text-button"
@@ -140,7 +148,7 @@
                 <details>
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
                     <div class="caption text-xs-center">
-                        <div class="text-xs-center" v-if="hasAudio">
+                        <div class="text-xs-center" v-if="hasAudio && scvOpts.voices">
                             <a :href="downloadUrl()" ref="refDownload" 
                                 @click="downloadClick()"
                                 download>
@@ -193,7 +201,7 @@
             v-if="i>0">
             <summary class="subheading" :aria-label="sectionAriaLabel(sect)">
                 <div v-if="scvOpts.showId" class='scv-scid'>
-                    SC&nbsp;{{sect.segments[0].scid.split(":")[1]}}
+                    SC&nbsp;{{section_scid(sect)}}
                 </div> 
                 <i>{{sect.title}}</i>
             </summary>
@@ -289,7 +297,7 @@ export default {
                 Vue.set(this, "examples", res.data);
                 this.$nextTick(() => {
                     var elt = that.$refs['refExample0'][0];
-                    elt.focus();
+                    elt && elt.focus();
                 });
             }).catch(e => {
                 console.error(e.stack);
@@ -374,7 +382,7 @@ export default {
         getResultAudio(result) {
             var that = this;
             return new Promise((resolve, reject) => { try {
-                var scid = result.quote.scid;
+                var scid = result.quote.scid || 'getResultAudio_error1';
                 var segmentRef = [
                     scid.split(':')[0],
                     result.lang,
@@ -412,7 +420,7 @@ export default {
                         console.log(`playQuotes ended1`, audio[1]);
                     };
                     var handler0 = () => {
-                        audio[0].removeEventListener("ended", handler0);
+                        audio[0] && audio[0].removeEventListener("ended", handler0);
                         that.refPlaying = null;
                         console.log(`playQuotes ended0`, audio[0]);
                         if (audio[1]) {
@@ -433,15 +441,17 @@ export default {
                             }
                         }
                     };
-                    if (audio[0].paused) {
-                        console.log('playQuotes nextTick playing', audio[0]);
-                        audio[0].play();
-                        that.refPlaying = ref;
-                        audio[0].addEventListener("ended", handler0);
-                    } else {
-                        console.log('playQuotes nextTick paused', audio[0]);
-                        audio[0].pause();
-                        handler0();
+                    if (audio[0] != null) {
+                        if (audio[0].paused) {
+                            console.log('playQuotes nextTick playing', audio[0]);
+                            audio[0].play();
+                            that.refPlaying = ref;
+                            audio[0].addEventListener("ended", handler0);
+                        } else {
+                            console.log('playQuotes nextTick paused', audio[0]);
+                            audio[0].pause();
+                            handler0();
+                        }
                     }
 
                     //Vue.set(result, "audio", data.segment.audio);
@@ -460,7 +470,7 @@ export default {
                     console.log(`playQuote audio:`, data.segment.audio);
                 }
                 that.$nextTick(() => {
-                    var audio = that.$refs[ref][0];
+                    var audio = that.$refs[ref] && that.$refs[ref][0];
                     var listener;
                     var handler = () => {
                         listener && audio.removeEventListener(listener, handler);
@@ -536,11 +546,11 @@ export default {
                 Object.assign(this.suttaplex, sutta.suttaplex);
 
             var author_uid = this.author_uid = sutta.author_uid;
-            var acronym = suttaplex.acronym || suttaplex.uid.toUpperCase();
-            var translation = suttaplex.translations
-                .filter(t => t.author_uid === author_uid)[0] || {
-                lang: this.language,
-            };
+            var suid = suttaplex.uid && suttaplex.uid.toUpperCase() || "NOSUID";
+            var acronym = suttaplex.acronym || suid;
+            var trans_author = suttaplex.translations
+                .filter(t => t.author_uid === author_uid);
+            var translation = trans_author[0] || {lang: this.language};
             this.suttaCode = sutta.suttaCode || '';
             this.language = translation.lang;
             this.translator = translation.author_uid;
@@ -548,7 +558,7 @@ export default {
             this.sutta.acronym = acronym;
             this.sutta.title = `${acronym}: ${title}`;
             this.sutta.original_title = suttaplex.original_title || "?";
-            var seg0 = sections[0].segments[0];
+            var seg0 = sections[0] && sections[0].segments[0] || {};
             this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
             this.sutta.author = translation.author;
             this.tracks = sections.map((sect,i) => ({
@@ -634,9 +644,12 @@ export default {
             console.log(`clickTranslation(${search})`,event);
             this.loadSutta(search);
         },
+        resultRef(result) {
+            return this.suttaRef(result.uid, result.lang, result.author_uid);
+        },
         resultLink(result) {
             return this.scvOpts.url({
-                search: this.suttaRef(result.uid, result.lang, result.author_uid),
+                search: this.resultRef(result),
                 lang: result.lang,
             });
         },
@@ -673,6 +686,11 @@ export default {
         suttaRef(suid = this.sutta_uid, lang = this.language, auid = this.author_uid) {
             return `${suid}/${lang}/${auid}`;
         },
+        section_scid(sect={}) {
+            var seg0 = sect.segments && sect.segments[0] || {};
+            var scid = seg0.scid || "section_scid_error1";
+            return scid.split(":")[1] || "section_scid_errro2";
+        },
     },
     computed: {
         audioUrl() {
@@ -693,16 +711,28 @@ export default {
             return showLang === 0 || showLang === 2;
         },
         sutta_uid() {
-            if (this.suttaplex) {
-                return this.suttaplex.uid;
-            } 
             var query = this.$route.query;
             var search = query && query.search || '';
+            if (this.suttaplex) {
+                var uid = this.suttaplex.uid;
+                if (uid) {
+                    return uid;
+                }
+            } 
             var tokens = search.split('/');
-            return tokens[0];
+            return tokens[0] || "sutta_uid_error2";
         },
         voice() {
-            return this.scvOpts.voices[this.scvOpts.iVoice];
+            if (this.scvOpts == null) {
+                throw new Error("voice_error1");
+            }
+            if (this.scvOpts.voices == null) {
+                throw new Error("voice_error2");
+            }
+            var voice = this.scvOpts.voices[this.scvOpts.iVoice];
+            return voice || {
+                name: `voice_error3_${this.scvOpts.iVoice}`,
+            };
         },
         scvOpts() {
             return this.$root.$data;

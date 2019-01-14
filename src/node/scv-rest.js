@@ -479,12 +479,19 @@
             }
             return new Promise((resolve, reject) => {
                 (async function() { try {
+                    try {
                     var playlist = await that.suttaStore.createPlaylist({
                         pattern,
                         languages: langs,
                         language,
                         maxResults,
                     });
+                    } catch(e) {
+                        console.log(`oopsie`, e.stack);
+                        resolve(e.stack.toString());
+                        return;
+                    }
+                    var stats = playlist.stats();
                     var voiceLang = Voice.createVoice({
                         name: vname,
                         usage,
@@ -515,7 +522,7 @@
                     var data = fs.readFileSync(filePath);
                     res.set('Content-disposition', 'attachment; filename=' + filename);
                     logger.info(`GET download/${langs}/${pattern} => ` +
-                        `${filename} size:${data.length} ${guid}`);
+                        `${filename} size:${data.length} secs:${stats.duration} ${guid}`);
                     res.cookie('download-date',new Date());
                     resolve(data);
                 } catch(e) {
