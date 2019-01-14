@@ -506,7 +506,9 @@
                     var filePath = that.soundStore.guidPath(guid);
                     var audioSuffix = that.soundStore.audioSuffix;
                     var uriPattern = encodeURIComponent(
-                        pattern.replace(/[ ,\t]/g,'_')
+                        decodeURIComponent(pattern)
+                            .replace(/[ ,\t]/g,'_')
+                            .replace(/[\/]/g, '-')
                     );
                     var filename = `${uriPattern}_${langs.join('+')}_${vname}`+
                         `${audioSuffix}`;

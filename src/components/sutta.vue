@@ -93,7 +93,7 @@
                     <v-btn icon v-if="result.quote" 
                         @click="playQuotes(i, result)"
                         :class="btnPlayQuotesClass(i)" :style="cssProps" small>
-                        <v-icon>sms</v-icon>
+                        <v-icon>chat_bubble_outline</v-icon>
                     </v-btn>
                     <v-btn icon v-if="result.quote" 
                         @click="playOne(result)"
@@ -106,8 +106,9 @@
                         <v-icon>open_in_new</v-icon>
                     </v-btn>
                     <v-btn icon v-if="result.quote" 
+                        :href="resultLink(result)"
                         class="scv-icon-btn" :style="cssProps" small>
-                        <v-icon>cloud_download</v-icon>
+                        <v-icon>arrow_downward</v-icon>
                     </v-btn>
                 </div>
             </details><!-- search result i -->
@@ -140,7 +141,7 @@
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
                     <div class="caption text-xs-center">
                         <div class="text-xs-center" v-if="hasAudio">
-                            <a :href="downloadUrl" ref="refDownload" 
+                            <a :href="downloadUrl()" ref="refDownload" 
                                 @click="downloadClick()"
                                 download>
                                 Download {{sutta_uid}}-{{language}}-{{author_uid}}.mp3
@@ -307,9 +308,18 @@ export default {
                 ? 'scv-icon-btn scv-btn-playing' 
                 : 'scv-icon-btn ';
         },
-        downloadClick() {
+        downloadUrl(search) {
+            var langs = [];
+            this.showPali && langs.push('pli');
+            this.showTrans && langs.push(this.language);
+            var voice = this.voice.name;
+            search = encodeURIComponent(search || this.suttaRef());
+            var url = `download/playlist/${langs.join('+')}/${voice}/${search}`;
+            return this.url(url);
+        },
+        downloadClick(search) {
             var elt = this.$refs['refScvDownloader'];
-            console.log(`downloading:${this.downloadUrl}`, elt);
+            console.log(`downloading:${this.downloadUrl(search)}`, elt);
             elt && elt.update('Downloading:');
             this.startWaiting({
                 cookie: 'download-date',
@@ -619,28 +629,20 @@ export default {
         segClass(seg) {
             return seg.expanded ? "scv-para scv-para-expanded" : "scv-para";
         },
-        translationSearch(translation) {
-            var author_uid = translation.author_uid;
-            var lang = translation.lang;
-            return `${this.sutta_uid}/${lang}/${author_uid}`;
-        },
-        clickTranslation(translation,event) {
-            var search = this.translationSearch(translation);
+        clickTranslation(trans,event) {
+            var search = this.suttaRef(this.sutta_uid, trans.lang, trans.author_uid);
             console.log(`clickTranslation(${search})`,event);
             this.loadSutta(search);
         },
         resultLink(result) {
-            var uid = result.uid;
-            var lang = result.lang;
-            var auid = result.author_uid;
             return this.scvOpts.url({
-                search: `${uid}/${lang}/${auid}`,
-                lang,
+                search: this.suttaRef(result.uid, result.lang, result.author_uid),
+                lang: result.lang,
             });
         },
-        translationLink(translation) {
+        translationLink(trans) {
             return this.scvOpts.url({
-                search: this.translationSearch(translation),
+                search: this.suttaRef(this.sutta_uid, trans.lang, trans.author_uid),
             });
         },
         audioLink(guid, sutta_uid){
@@ -668,6 +670,9 @@ export default {
                 `search=${search}&`+
                 `lang=${this.language}`;
         },
+        suttaRef(suid = this.sutta_uid, lang = this.language, auid = this.author_uid) {
+            return `${suid}/${lang}/${auid}`;
+        },
     },
     computed: {
         audioUrl() {
@@ -678,11 +683,6 @@ export default {
         },
         downloadFile() {
             return `${this.sutta_uid}-${this.language}-${this.author_uid}.mp3`;
-        },
-        downloadUrl() {
-            var usage = ['recite','review'][this.scvOpts.iVoice];
-            var ref = `${this.sutta_uid}/${this.language}/${this.author_uid}`;
-            return this.url(`download/sutta/${ref}/${usage}`);
         },
         showPali( ){
             var showLang = this.scvOpts && this.scvOpts.showLang || 0;
