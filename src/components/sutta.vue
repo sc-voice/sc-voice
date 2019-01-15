@@ -6,13 +6,42 @@
   <v-container fluid class="scv-sutta">
       <v-layout column align-left >
           <div class="scv-search-row">
-              <div class="scv-search-row2">
+              <div class="scv-search-col">
                   <v-text-field ref="refSearch"
                       placeholder="Enter sutta id or keyword(s)" 
                       v-model="search" v-on:keypress="onSearchKey($event)"
                       aria-label="Enter sootta i d or keywords"
                       label = "Search" >
                   </v-text-field>
+          <div class="mb-3" v-if="sutta_uid && !searchResults"
+            style="display:flex; justify-content: flex-start">
+            <v-btn icon 
+                ref="refSutta" 
+                @click="playBlurb()"
+                :aria-label="`listen to summary of ${resultId()}`"
+                class="scv-icon-btn" :style="cssProps" small>
+                <v-icon>chat_bubble_outline</v-icon>
+            </v-btn>
+            <v-btn icon 
+                :disabled="waiting > 0"
+                @click="launchSuttaPlayer()"
+                :aria-label="`play ${resultId()}`"
+                class="scv-icon-btn" :style="cssProps" small>
+                <v-icon>play_circle_outline</v-icon>
+            </v-btn>
+            <v-btn icon 
+                :href="downloadUrl()"
+                @click="downloadClick()"
+                :aria-label="`download ${resultId()}`"
+                class="scv-icon-btn" :style="cssProps" small>
+                <v-icon>arrow_downward</v-icon>
+            </v-btn>
+            <v-btn icon 
+                :aria-label="`show other resources for ${resultId()}`"
+                class="scv-icon-btn" :style="cssProps" small>
+                <v-icon>folder_open</v-icon>
+            </v-btn>
+          </div>
               </div>
           </div>
           <div v-if="error.search" class="scv-error" >
@@ -38,14 +67,14 @@
                       {{i+1}}. {{ex}}</a>
               </div>
           </div>
-          <details v-show="searchResults">
+          <details v-show="searchResults" open>
             <summary role="main" aria-level="1" ref="refResults" class='title'>
-                <span v-if="searchResults && searchResults.results.length">
-                    Top {{searchResults && searchResults.results.length}} 
-                    suttas found 
-                    for {{searchResults.method}}
+                <span v-if="resultCount"
+                    :aria-label="`Found ${resultCount} sootas`">
+                    Found {{resultCount}} suttas 
                 </span>
-                <span v-else>
+                <span v-else
+                    aria-label="No sootas found">
                     No suttas found
                 </span>
             </summary>
@@ -70,7 +99,7 @@
                     <div style="display: inline-block; width: 96%; ">
                         <div style="display:flex; justify-content: space-between; "> 
                             <div>
-                                {{result.suttaplex.acronym || result.uid}} 
+                                {{resultId(result)}}
                                 {{result.title}}
                             </div>
                             <div class="caption">
@@ -123,8 +152,8 @@
           </details><!-- searchresults -->
 
           <details v-if="sections && sections[0]" class="scv-header">
-            <summary ref="refSutta" class="subheading scv-header-summary" >
-                {{sutta.title}}
+            <summary class="subheading scv-header-summary" >
+                {{suttaTitle}}
             </summary>
             <div class="scv-blurb">{{suttaplex.blurb}}</div>
             <div class="title pt-4 pb-2 text-xs-center">
@@ -134,16 +163,6 @@
                 Translated by {{sutta.author}}
             </div>
             <div class="scv-blurb"><span v-html="metaarea"></span></div>
-            <div class="scv-play-controls">
-                <button v-if="this.scvOpts.voices"
-                    :disabled="waiting > 0"
-                    @click="launchSuttaPlayer()"
-                    class="scv-text-button"
-                    :style="cssProps"
-                    >
-                    Play Introduction ({{voice.name}})
-                </button>
-            </div>
             <div class="scv-blurb-more">
                 <details>
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
@@ -569,7 +588,10 @@ export default {
                 iSection: i,
                 nSegments: sect.segments.length,
             }));
-            this.$nextTick(() => this.$refs.refSutta.focus());
+            this.$nextTick(() => {
+                var refSutta = this.$refs.refSutta.$el;
+                refSutta.focus();
+            });
         },
         loadSutta(search) {
             console.log(`search ${search}`);
@@ -691,6 +713,23 @@ export default {
             var scid = seg0.scid || "section_scid_error1";
             return scid.split(":")[1] || "section_scid_errro2";
         },
+        resultId(result) {
+            var id = result
+                ? result.suttaplex.acronym || result.uid
+                : this.sutta_uid;
+            var idchars = [];
+            var number = /[0-9.]/;
+            for (var i=0; i<id.length; i++) {
+                var c = id.charAt(i);
+                var iend = idchars.length-1;
+                if (number.test(idchars[iend]) && number.test(c)) {
+                    idchars[iend] += c;
+                } else {
+                    idchars.push(c);
+                }
+            }
+            return idchars.join('\u200b');
+        },
     },
     computed: {
         audioUrl() {
@@ -754,6 +793,18 @@ export default {
         postDownloadFocus() {
             var vSearch = this.$refs.refSearch;
             return vSearch && vSearch.$refs.input;
+        },
+        resultCount() {
+            return this.searchResults && this.searchResults.results.length || 0;
+        },
+        suttaTitle() {
+            var titleParts = this.sutta.title.split(':');
+            if (titleParts.length > 1) {
+                titleParts[0] = this.resultId().toUpperCase();
+                return titleParts.join(": ");
+            } else {
+                return titleParts[0];
+            }
         },
     },
     mounted() {
@@ -827,11 +878,10 @@ export default {
     flex-flow: row ;
     justify-content: space-around;
 }
-.scv-search-row2 {
+.scv-search-col {
     display: flex;
-    flex-flow: row ;
-    align-items: center;
-    justify-content: space-around;
+    flex-flow: column ;
+    align-items: flex-start;
 }
 .scv-error {
     background-color: #403030 !important;
