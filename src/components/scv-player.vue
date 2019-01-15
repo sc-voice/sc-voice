@@ -52,7 +52,7 @@
                 <v-btn icon @click="clickPlayPause()" 
                     ref="refPlay"
                     class="scv-icon-btn" :style="cssProps()"
-                    aria-label="Play Section">
+                    aria-label="Play">
                     <v-icon v-if="loading">hourglass_empty</v-icon>
                     <v-icon v-if="!loading && paused">play_arrow</v-icon>
                     <v-icon v-if="!loading && !paused">pause</v-icon>
@@ -94,6 +94,7 @@ export default {
     props: {
         tracks: Array,
         voice: Object,
+        closeFocus: Function,
     },
     data: function() {
         return {
@@ -378,6 +379,10 @@ export default {
                 elt && elt.focus();
             } else if (evt.key === ' ') {
                 this.close();
+                var closeFocus = this.closeFocus && this.closeFocus();
+                if (closeFocus) {
+                    closeFocus.focus();
+                }
             }
         },
     },

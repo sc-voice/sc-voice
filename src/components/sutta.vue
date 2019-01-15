@@ -15,16 +15,17 @@
                   </v-text-field>
           <div class="mb-3" v-if="sutta_uid && !searchResults"
             style="display:flex; justify-content: flex-start">
-            <v-btn icon 
+            <!--v-btn icon 
                 ref="refSutta" 
                 @click="playBlurb()"
                 :aria-label="`listen to summary of ${resultId()}`"
                 class="scv-icon-btn" :style="cssProps" small>
                 <v-icon>chat_bubble_outline</v-icon>
-            </v-btn>
+            </v-btn-->
             <v-btn icon 
                 :disabled="waiting > 0"
                 @click="launchSuttaPlayer()"
+                ref="refPlaySutta" 
                 :aria-label="`play ${resultId()}`"
                 class="scv-icon-btn" :style="cssProps" small>
                 <v-icon>play_circle_outline</v-icon>
@@ -36,11 +37,11 @@
                 class="scv-icon-btn" :style="cssProps" small>
                 <v-icon>arrow_downward</v-icon>
             </v-btn>
-            <v-btn icon 
+            <!--v-btn icon 
                 :aria-label="`show other resources for ${resultId()}`"
                 class="scv-icon-btn" :style="cssProps" small>
                 <v-icon>folder_open</v-icon>
-            </v-btn>
+            </v-btn-->
           </div>
               </div>
           </div>
@@ -254,7 +255,9 @@
             </div>
           </details> <!-- section i -->
           <scv-player v-if="tracks"
-            :ref="`refScvPlayer`" :tracks="tracks" :voice="voice" />
+            :ref="`refScvPlayer`" :tracks="tracks" :voice="voice" 
+            :closeFocus="playerCloseFocus"
+            />
       </v-layout>
   </v-container>
 </div>
@@ -589,8 +592,12 @@ export default {
                 nSegments: sect.segments.length,
             }));
             this.$nextTick(() => {
-                var refSutta = this.$refs.refSutta.$el;
-                refSutta.focus();
+                var refPlaySutta = this.$refs.refPlaySutta;
+                if (refPlaySutta) {
+                    refPlaySutta.$el.focus();
+                } else {
+                    console.log("no refPlaySutta");
+                }
             });
         },
         loadSutta(search) {
@@ -601,8 +608,8 @@ export default {
             var url = this.url(`sutta/${tokens.join('/')}`);
             var timer = this.startWaiting();
             this.$http.get(url).then(res => {
-                this.showSutta(res.data);
                 this.stopWaiting(timer);
+                this.showSutta(res.data);
             }).catch(e => {
                 var data = e.response && e.response.data && e.response.data.error 
                     || `Not found.`;
@@ -729,6 +736,10 @@ export default {
                 }
             }
             return idchars.join('\u200b');
+        },
+        playerCloseFocus() {
+            var refClose = this.$refs.refPlaySutta;
+            return refClose && refClose.$el;
         },
     },
     computed: {
