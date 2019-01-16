@@ -17,9 +17,10 @@
                         :style='cssProps()'
                         ><v-icon>fast_rewind</v-icon></v-btn>
                     <div class="scv-timelapse">
-                        {{iTrack+1}}/{{section && this.tracks.length || "(n/a)"}} 
-                        <v-icon small class="ml-1 mr-1">timelapse</v-icon>
-                        {{timeRemaining}}
+                        {{iTrack+1}} of {{section && this.tracks.length || "(n/a)"}} 
+                        &nbsp;
+                        <!--v-icon small class="ml-1 mr-1">timelapse</v-icon-->
+                        ({{timeRemaining}})
                     </div>
                     <v-btn icon class="scv-icon-btn"
                         ref="refNext"
@@ -456,16 +457,14 @@ export default {
             seconds -= hours * 3600;
             var minutes = Math.trunc(seconds / 60);
             seconds -= minutes * 60;
-            var mm = ("0" + minutes);
-            var ss = ("0" + seconds);
             if (hours) {
-                return `${hours}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`
+                return `${hours}h ${minutes}m ${seconds}s`
             }
             if (minutes) {
-                return `--:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`;
+                return `${minutes}m ${seconds}s`;
             } 
             if (seconds) {
-                return `--:--:${ss.substring(ss.length-2)}`;
+                return `${seconds}s`;
             }
             return `--:--:--`;
         },

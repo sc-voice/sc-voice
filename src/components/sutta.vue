@@ -7,44 +7,51 @@
       <v-layout column align-left >
           <div class="scv-search-row">
               <div class="scv-search-col">
+          segmentCount {{segmentCount}}
                   <v-text-field ref="refSearch"
                       placeholder="Enter sutta id or keyword(s)" 
                       v-model="search" v-on:keypress="onSearchKey($event)"
                       aria-label="Enter sootta i d or keywords"
                       label = "Search" >
                   </v-text-field>
-          <div class="mb-3" v-if="sutta_uid && !searchResults"
-            style="display:flex; justify-content: flex-start">
-            <!--v-btn icon 
-                ref="refSutta" 
-                @click="playBlurb()"
-                :aria-label="`listen to summary of ${resultId()}`"
-                class="scv-icon-btn" :style="cssProps" small>
-                <v-icon>chat_bubble_outline</v-icon>
-            </v-btn-->
-            <v-btn icon 
-                :disabled="waiting > 0"
-                @click="launchSuttaPlayer()"
-                ref="refPlaySutta" 
-                :aria-label="`play ${resultId()}`"
-                class="scv-icon-btn" :style="cssProps" small>
-                <v-icon>play_circle_outline</v-icon>
-            </v-btn>
-            <v-btn icon 
-                :href="downloadUrl()"
-                @click="downloadClick()"
-                :aria-label="`download ${resultId()}`"
-                class="scv-icon-btn" :style="cssProps" small>
-                <v-icon>arrow_downward</v-icon>
-            </v-btn>
-            <!--v-btn icon 
-                :aria-label="`show other resources for ${resultId()}`"
-                class="scv-icon-btn" :style="cssProps" small>
-                <v-icon>folder_open</v-icon>
-            </v-btn-->
-          </div>
+                  <div class="mb-3" 
+                    v-if="waiting<=0 && sutta_uid && !searchResults"
+                    style="display:flex; justify-content: flex-start">
+                    <!--v-btn icon 
+                        ref="refSutta" 
+                        @click="playBlurb()"
+                        :aria-label="`listen to summary of ${resultId()}`"
+                        class="scv-icon-btn" :style="cssProps" small>
+                        <v-icon>chat_bubble_outline</v-icon>
+                    </v-btn-->
+                    <v-btn icon 
+                        :disabled="waiting > 0"
+                        @click="launchSuttaPlayer()"
+                        ref="refPlaySutta" 
+                        :aria-label="`play ${resultId()}`"
+                        class="scv-icon-btn" :style="cssProps" small>
+                        <v-icon>play_circle_outline</v-icon>
+                    </v-btn>
+                    <v-btn icon 
+                        :href="downloadUrl()"
+                        @click="downloadClick()"
+                        :aria-label="`download ${resultId()}`"
+                        class="scv-icon-btn" :style="cssProps" small>
+                        <v-icon>arrow_downward</v-icon>
+                    </v-btn>
+                    <!--v-btn icon 
+                        :aria-label="`show other resources for ${resultId()}`"
+                        class="scv-icon-btn" :style="cssProps" small>
+                        <v-icon>folder_open</v-icon>
+                    </v-btn-->
+                  </div>
               </div>
           </div>
+          <scv-downloader 
+            ref="refScvDownloader"
+            :filename="downloadFile"
+            :focusElement="postDownloadFocus"
+            /> 
           <div v-if="error.search" class="scv-error" >
               <error-help ref="refErrorHelp" :title="errorSummary" 
                 :search="search"
@@ -86,7 +93,6 @@
                 </v-btn>
                 <v-btn 
                     :href="downloadUrl(search)"
-                    target="_blank"
                     @click="downloadClick(search)"
                     class="scv-text-button" :style="cssProps" small>
                     Download All
@@ -174,11 +180,6 @@
                                 download>
                                 Download {{sutta_uid}}-{{language}}-{{author_uid}}.mp3
                             </a>
-                            <scv-downloader 
-                                ref="refScvDownloader"
-                                :filename="downloadFile"
-                                :focusElement="postDownloadFocus"
-                                /> 
                         </div>
                         <div v-for="translation in suttaplex.translations" 
                             class="text-xs-center"
@@ -750,7 +751,7 @@ export default {
             return document.cookies;
         },
         downloadFile() {
-            return `${this.sutta_uid}-${this.language}-${this.author_uid}.mp3`;
+            return `${this.sutta_uid}`;
         },
         showPali( ){
             var showLang = this.scvOpts && this.scvOpts.showLang || 0;
@@ -770,7 +771,7 @@ export default {
                 }
             } 
             var tokens = search.split('/');
-            return tokens[0] || "sutta_uid_error2";
+            return tokens[0]; 
         },
         voice() {
             if (this.scvOpts == null) {
@@ -815,6 +816,20 @@ export default {
                 return titleParts.join(": ");
             } else {
                 return titleParts[0];
+            }
+        },
+        segmentCount() {
+            var results = this.searchResults && this.searchResults.results;
+            if (results) {
+                return results.reduce((acc,r) => {
+                    return acc + r.nSegments;
+                }, 0);
+            } else if (this.sections) {
+                return this.sections.reduce((acc,sect) => {
+                    return acc + sect.segments.length;
+                }, 0);
+            } else {
+                return 0;
             }
         },
     },
