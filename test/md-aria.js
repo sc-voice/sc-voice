@@ -6,7 +6,7 @@
         MdAria,
     } = require('../index');
 
-    it("creates <detail> from headings", function(){
+    it("TESTTESTcreates <detail> from headings", function(){
         var mdAria = new MdAria();
         var html = mdAria.toHtml([
             'a',
@@ -25,7 +25,7 @@
             'c1',
         ]);
     });
-    it("creates <ul> from starred lines", function(){
+    it("TESTTESTcreates <ul> from starred lines", function(){
         var mdAria = new MdAria();
         var html = mdAria.toHtml([
             'a',
@@ -45,7 +45,7 @@
             '</p>',
         ]);
     });
-    it("creates <p> from blank lines", function(){
+    it("TESTTESTcreates <p> from blank lines", function(){
         var mdAria = new MdAria();
         var html = mdAria.toHtml([
             '',
@@ -75,7 +75,7 @@
             '</p>',
         ]);
     });
-    it("creates <p> from blank lines", function(){
+    it("TESTTESTcreates <p> from blank lines", function(){
         var mdAria = new MdAria();
         var html = mdAria.toHtml([
             'x [x1](x2) x3',
@@ -87,5 +87,42 @@
             `<li>y <a href="y2">y1</a> y3</li>`,
             '</ul>',
         ]);
+    });
+    it("TESTTESTreplaces mispronounced words", function(){
+        var mdAria = new MdAria();
+        var html = mdAria.toHtml(`Hear this on SuttaCentral Voice`);
+        should.deepEqual(html, [
+            "Hear this on ",
+            '<span aria-label="soota central"> </span>',
+            '<span aria-hidden="true">SuttaCentral</span>',
+            " Voice",
+        ].join(""));
+
+        var html = mdAria.toHtml(`Hear these suttas:`);
+        should.deepEqual(html, [
+            "Hear these ",
+            '<span aria-label="sootas"> </span>',
+            '<span aria-hidden="true">suttas</span>',
+            ":",
+        ].join(""));
+
+        var html = mdAria.toHtml(`Hear this sutta?`);
+        should.deepEqual(html, [
+            "Hear this ",
+            '<span aria-label="soota"> </span>',
+            '<span aria-hidden="true">sutta</span>',
+            "?",
+        ].join(""));
+
+        var html = mdAria.toHtml(`http://suttacentral.net/mn1`);
+        should.deepEqual(html, [
+            `http://%73uttacentral.net/mn1`,
+        ].join(""));
+        
+        var html = mdAria.toHtml(`suttacentral-voice-assistant`);
+        should.deepEqual(html, [
+            '%73uttacentral-voice-assistant',
+        ].join(""));
+        
     });
 })

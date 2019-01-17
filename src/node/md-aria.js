@@ -1,4 +1,14 @@
 (function(exports) {
+    const ARIA_EXCEPTION = {
+        "suttacentral.net": "%73uttacentral.net",
+        "suttacentral-voice": "%73uttacentral-voice",
+    };
+    const ARIA_LABEL = {
+        "suttacentral": "soota central",
+        "sutta\\b": "soota",
+        "suttas": "sootas",
+    };
+
     class MdAria {
         constructor(opts={}) {
         }
@@ -99,7 +109,19 @@
                 html.push('</detail>');
             }
 
-            return html.join('\n');
+            var result = html.join('\n');
+            Object.keys(ARIA_EXCEPTION).forEach(pat => {
+                var re = new RegExp(pat, "ugi");
+                result = result.replace(re, ARIA_EXCEPTION[pat]);
+            });
+            Object.keys(ARIA_LABEL).forEach(pat => {
+                var re = new RegExp(pat, "ugi");
+                result = result.replace(re, 
+                    `<span aria-label="${ARIA_LABEL[pat]}"> </span>`+
+                    `<span aria-hidden="true">$&</span>`
+                );
+            });
+            return result;
         }
 
     }

@@ -2,11 +2,11 @@
   <v-app dark>
     <v-toolbar app flat dark >
       <a :href="homeHref" @click="clickHome()" aria-label="home">
-          <img aria-hidden="true" src="img/favicon.png" height=30px/>
+          <img aria-hidden="true" class="pt-1" src="img/favicon.png" height=30px/>
       </a>
       <v-toolbar-title >
-        <div >
-            <div class="caption">SuttaCentral</div>
+        <div style="position: relative; margin-top:-4px; ">
+            <div class="caption" style="">SuttaCentral</div>
             <div class="title" style="margin-top:-2px">Voice Assistant</div>
         </div>
       </v-toolbar-title>
