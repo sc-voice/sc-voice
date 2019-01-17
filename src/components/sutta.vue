@@ -7,7 +7,6 @@
       <v-layout column align-left >
           <div class="scv-search-row">
               <div class="scv-search-col">
-          segmentCount {{segmentCount}}
                   <v-text-field ref="refSearch"
                       placeholder="Enter sutta id or keyword(s)" 
                       v-model="search" v-on:keypress="onSearchKey($event)"
@@ -76,23 +75,29 @@
               </div>
           </div>
           <details v-show="searchResults" open>
-            <summary role="main" aria-level="1" ref="refResults" class='title'>
-                <span v-if="resultCount"
-                    :aria-label="`Found ${resultCount} sootas`">
-                    Found {{resultCount}} suttas 
-                </span>
-                <span v-else
-                    aria-label="No sootas found">
-                    No suttas found
-                </span>
+            <summary v-if="resultCount" 
+                role="main" 
+                ref="refResults" 
+                aria-level="1" 
+                :aria-label="`Found ${resultCount} sootas ${playlistDuration.aria}`"
+                class='title pt-1 pb-1'>
+                Found {{resultCount}} sootas
+                ({{playlistDuration.display}})
             </summary>
-            <div style="display:flex; justify-content:space-around">
+            <summary v-else
+                role="main" ref="refResults" 
+                aria-level="1" :aria-label="`No suttas found`"
+                class='title'>
+                No suttas found
+            </summary>
+            <div class='scv-playlist'>
                 <v-btn @click="playAll()"
                     class="scv-text-button" :style="cssProps" small>
                     Play All
                 </v-btn>
                 <v-btn 
                     :href="downloadUrl(search)"
+                    v-show="playlistDuration.totalSeconds < 3*3600"
                     @click="downloadClick(search)"
                     class="scv-text-button" :style="cssProps" small>
                     Download All
@@ -125,7 +130,7 @@
                     class="scv-search-result-lang">
                     <div>
                         <span v-html="result.quote.en"></span>
-                        <span v-if="scvOpts.showId" class='scv-scid'>
+                        <span v-if="gscv.showId" class='scv-scid'>
                             &mdash;
                             SC&nbsp;{{result.quote.scid}}
                             {{result.author}}
@@ -174,7 +179,7 @@
                 <details>
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
                     <div class="caption text-xs-center">
-                        <div class="text-xs-center" v-if="hasAudio && scvOpts.voices">
+                        <div class="text-xs-center" v-if="hasAudio && gscv.voices">
                             <a :href="downloadUrl()" ref="refDownload" 
                                 @click="downloadClick()"
                                 download>
@@ -221,7 +226,7 @@
             v-for="(sect,i) in sections" :key="`sect${i}`" 
             v-if="i>0">
             <summary class="subheading" :aria-label="sectionAriaLabel(sect)">
-                <div v-if="scvOpts.showId" class='scv-scid'>
+                <div v-if="gscv.showId" class='scv-scid'>
                     SC&nbsp;{{section_scid(sect)}}
                 </div> 
                 <i>{{sect.title}}</i>
@@ -249,7 +254,7 @@
               </v-btn>
             </div>
             <div v-for="(seg,j) in sect.segments" :key="seg+j" :class="segClass(seg)">
-                <div v-show="scvOpts.showId" class='scv-scid'>
+                <div v-show="gscv.showId" class='scv-scid'>
                     SC&nbsp;{{seg.scid.split(":")[1]}}
                 </div> 
                 {{seg.en}}
@@ -411,7 +416,7 @@ export default {
                     result.lang,
                     result.author_uid,
                     scid,
-                    this.scvOpts.iVoice,
+                    this.gscv.iVoice,
                 ].join('/');
                 var url = that.url(`play/segment/${segmentRef}`);
                 var timer = that.startWaiting();
@@ -604,7 +609,7 @@ export default {
         loadSutta(search) {
             console.log(`search ${search}`);
             var tokens = search.toLowerCase().split('/');
-            (tokens.length < 2) && tokens.push(this.scvOpts.lang);
+            (tokens.length < 2) && tokens.push(this.gscv.lang);
             (tokens.length < 3) && tokens.push('sujato'); // TODO remove sujato
             var url = this.url(`sutta/${tokens.join('/')}`);
             var timer = this.startWaiting();
@@ -632,7 +637,7 @@ export default {
         searchSuttas(search) {
             var uriSearch = encodeURIComponent(search);
             var url = this.url(`search/${uriSearch}`+
-                `?maxResults=${this.scvOpts.maxResults}`);
+                `?maxResults=${this.gscv.maxResults}`);
             var timer = this.startWaiting();
             this.$http.get(url).then(res => {
                 this.clear();
@@ -662,7 +667,7 @@ export default {
 
         },
         onSearch() {
-            this.scvOpts.reload({
+            this.gscv.reload({
                 search: this.search,
             });
         },
@@ -678,13 +683,13 @@ export default {
             return this.suttaRef(result.uid, result.lang, result.author_uid);
         },
         resultLink(result) {
-            return this.scvOpts.url({
+            return this.gscv.url({
                 search: this.resultRef(result),
                 lang: result.lang,
             });
         },
         translationLink(trans) {
-            return this.scvOpts.url({
+            return this.gscv.url({
                 search: this.suttaRef(this.sutta_uid, trans.lang, trans.author_uid),
             });
         },
@@ -699,7 +704,7 @@ export default {
         },
         sectionAriaLabel(sect) {
             var label =  `Section `;
-            if (this.scvOpts.showId) {
+            if (this.gscv.showId) {
                 label += 'segment ';
                 label += sect.segments[0].scid.split(':')[1];
             }
@@ -754,11 +759,11 @@ export default {
             return `${this.sutta_uid}`;
         },
         showPali( ){
-            var showLang = this.scvOpts && this.scvOpts.showLang || 0;
+            var showLang = this.gscv && this.gscv.showLang || 0;
             return showLang === 0 || showLang === 1;
         },
         showTrans( ){
-            var showLang = this.scvOpts && this.scvOpts.showLang || 0;
+            var showLang = this.gscv && this.gscv.showLang || 0;
             return showLang === 0 || showLang === 2;
         },
         sutta_uid() {
@@ -774,18 +779,18 @@ export default {
             return tokens[0]; 
         },
         voice() {
-            if (this.scvOpts == null) {
+            if (this.gscv == null) {
                 throw new Error("voice_error1");
             }
-            if (this.scvOpts.voices == null) {
+            if (this.gscv.voices == null) {
                 throw new Error("voice_error2");
             }
-            var voice = this.scvOpts.voices[this.scvOpts.iVoice];
+            var voice = this.gscv.voices[this.gscv.iVoice];
             return voice || {
-                name: `voice_error3_${this.scvOpts.iVoice}`,
+                name: `voice_error3_${this.gscv.iVoice}`,
             };
         },
-        scvOpts() {
+        gscv() {
             return this.$root.$data;
         },
         cssProps() {
@@ -832,11 +837,14 @@ export default {
                 return 0;
             }
         },
+        playlistDuration() {
+            return this.gscv && this.gscv.duration(this.segmentCount) || {};
+        },
     },
     mounted() {
         var that = this;
         that.$nextTick(() => {
-            var search = that.scvOpts.search;
+            var search = that.gscv.search;
             console.log(`cookies`, that.$cookie);
             Vue.set(that, 'search', search);
             if (search) {
@@ -891,6 +899,12 @@ export default {
 .scv-para-expanded {
     padding-right: 1em;
     border-right: 2pt solid #444;
+}
+.scv-playlist {
+    margin-top: 0.5em;
+    display: flex; 
+    justify-content: space-around;
+    align-items: center;
 }
 .scv-sutta {
     position: relative;

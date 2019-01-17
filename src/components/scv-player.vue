@@ -158,7 +158,7 @@ export default {
                 track.language,
                 track.translator,
                 track.iSection,
-                this.scvOpts.iVoice,
+                this.gscv.iVoice,
             ].join('/');
         },
         url(path) {
@@ -249,7 +249,7 @@ export default {
                     this.language,
                     this.translator,
                     scid,
-                    this.scvOpts.iVoice,
+                    this.gscv.iVoice,
                 ].join('/');
                 var url = that.url(`play/segment/${segmentRef}`);
                 that.$http.get(url).then(res => {
@@ -274,7 +274,7 @@ export default {
                     }
                 }
                 introAudio.addEventListener("ended", onEndIntro);
-                var ips = this.ipsChoices[this.scvOpts.ips];
+                var ips = this.ipsChoices[this.gscv.ips];
                 introAudio.volume = ips.volume;
                 introAudio.load();
                 introAudio.play();
@@ -353,7 +353,7 @@ export default {
             return url;
         },
         progressSrc() {
-            switch (Number(this.scvOpts.ips)) {
+            switch (Number(this.gscv.ips)) {
                 case 0: return "";
                 case 1: return "./audio/rainforest-ambience-glory-sunz-public-domain.mp3";
                 case 2: return "./audio/indian-bell-flemur-sampling-plus-1.0.mp3";
@@ -408,16 +408,14 @@ export default {
         segment() {
             return this.section && this.section.segments[this.iSegment];
         },
-        scvOpts() {
+        gscv() {
             return this.$root.$data;
         },
         showPali( ){
-            var showLang = this.scvOpts && this.scvOpts.showLang || 0;
-            return showLang === 0 || showLang === 1;
+            return this.gscv && this.gscv.showPali;
         },
         showTrans( ){
-            var showLang = this.scvOpts && this.scvOpts.showLang || 0;
-            return showLang === 0 || showLang === 2;
+            return this.gscv && this.gscv.showTrans;
         },
         paliText() {
             return this.segment && this.segment.pli || 
@@ -448,31 +446,13 @@ export default {
         },
         timeRemaining(){
             var remaining = this.segmentsTotal - this.segmentsElapsed;
-            const DN33_PACE = (2*3600 + 0*60 + 27)/(1158);
-            var secondsPerSegment =
-                (this.showPali ? DN33_PACE * 1.8 : 0) +
-                (this.showTrans ? DN33_PACE : 0);
-            var seconds = Math.trunc(remaining * secondsPerSegment);
-            var hours = Math.trunc(seconds / 3600);
-            seconds -= hours * 3600;
-            var minutes = Math.trunc(seconds / 60);
-            seconds -= minutes * 60;
-            if (hours) {
-                return `${hours}h ${minutes}m ${seconds}s`
-            }
-            if (minutes) {
-                return `${minutes}m ${seconds}s`;
-            } 
-            if (seconds) {
-                return `${seconds}s`;
-            }
-            return `--:--:--`;
+            return this.gscv && this.gscv.duration(remaining).display || '--';
         },
         ipsChoices() {
-            return this.scvOpts.ipsChoices;
+            return this.gscv.ipsChoices;
         },
         introAudioUrl() {
-            var ips = this.ipsChoices[this.scvOpts.ips];
+            var ips = this.ipsChoices[this.gscv.ips];
             return ips && ips.url;
         },
     },

@@ -40,7 +40,7 @@
     }];
 
     class ScvSingleton { 
-        constructor(g, opts={}) {
+        constructor(g) {
             this.showId = false;
             this.iVoice = 0;
             this.scid = null;
@@ -71,30 +71,38 @@
 
         get useCookies() {
             var g = this.g;
-            return g.vueRoot.$cookie.get("useCookies") === 'true';
+            return this.vueRoot 
+                ? this.vueRoot.$cookie.get("useCookies") === 'true'
+                : false;
+        }
+
+        get showPali( ){
+            return this.showLang === 0 || this.showLang === 1;
+        }
+
+        get showTrans(){
+            return this.showLang === 0 || this.showLang === 2;
         }
 
         set useCookies(value) {
-            var g = this.g;
             if (value) {
-                g.vueRoot.$cookie.set("useCookies", value);
+                this.vueRoot.$cookie.set("useCookies", value);
             } else {
-                g.vueRoot.$cookie.delete("useCookies");
+                this.vueRoot.$cookie.delete("useCookies");
             }
         }
 
         deleteCookies() {
-            var g = this.g;
-            g.vueRoot.$cookie.delete('useCookies');
+            this.vueRoot.$cookie.delete('useCookies');
             Object.keys(this).forEach(key => {
-                g.vueRoot.$cookie.delete(key);
+                this.vueRoot.$cookie.delete(key);
             });
             console.log('cookies deleted');
         }
 
         loadCookie(prop) {
             var g = this.g;
-            var v = g.vueRoot.$cookie.get(prop);
+            var v = this.vueRoot.$cookie.get(prop);
             if (v === 'false') {
                 g.Vue.set(this, prop, false);
             } else if (v === 'true') {
@@ -106,15 +114,14 @@
         }
 
         changed(prop) {
-            var g = this.g;
-            var cookie = g.vueRoot.$cookie;
+            var cookie = this.vueRoot.$cookie;
             var v = this[prop];
-            if (v != null && g.vueRoot) {
+            if (v != null && this.vueRoot) {
                 if (this.useCookies) {
                     cookie.set(prop, v);
                     console.log(`setting cookie (${prop}):${v}`,
-                        `${g.vueRoot.$cookie.get(prop)}`, 
-                        typeof g.vueRoot.$cookie.get(prop));
+                        `${this.vueRoot.$cookie.get(prop)}`, 
+                        typeof this.vueRoot.$cookie.get(prop));
                 }
                 if (prop === 'useCookies') {
                     if (v) {
@@ -174,41 +181,50 @@
             return;
         }
 
-        mounted() {
-            var g = this.g;
+        mounted(vueRoot) {
+            this.vueRoot = vueRoot;
             if (this.useCookies) {
                 Object.keys(this).forEach(key => {
                     this.loadCookie(key);
                 });
             }
         }
-/*
-var vueRoot;
-*/
-/*
 
-Vue.config.productionTip = false
-
-// global options
-
-vueRoot = new Vue({
-    render: h => h(App),
-    router,
-    data: scvState,
-}).$mount('#app')
-
-var cookie = vueRoot.$cookie;
-var useCookies = cookie.get('useCookies') === 'true';
-if (useCookies) {
-    scvState.loadCookie('showId');
-    scvState.loadCookie('iVoice');
-    scvState.loadCookie('maxResults');
-    scvState.loadCookie('showLang');
-    scvState.loadCookie('ips');
-}
-*/
-
-
+        duration(nSegments){
+            const DN33_PACE = (2*3600 + 0*60 + 27)/(1158);
+            var secondsPerSegment =
+                (this.showPali ? DN33_PACE * 1.8 : 0) +
+                (this.showTrans ? DN33_PACE : 0);
+            var totalSeconds = Math.trunc(nSegments * secondsPerSegment);
+            var seconds = totalSeconds;
+            var hours = Math.trunc(seconds / 3600);
+            seconds -= hours * 3600;
+            var minutes = hours 
+                ? Math.ceil(seconds / 60)
+                : Math.trunc(seconds / 60);
+            seconds = hours ? 0 : seconds - minutes * 60;
+            if (hours) {
+                var display =  `${hours}h ${minutes}m`; 
+                var aria = `${hours} hours and ${minutes} minutes`;
+            } else if (minutes) {
+                var display =  `${minutes}m ${seconds}s`;
+                var aria = `${minutes} minutes and ${seconds} seconds`;
+            } else if (seconds) {
+                var display =  `${seconds}s`;
+                var aria = `${seconds} seconds`;
+            } else {
+                var display = `--`;
+                var aria = `0 seconds`;
+            }
+            return {
+                totalSeconds,
+                hours,
+                minutes,
+                seconds,
+                display,
+                aria,
+            }
+        }
     }
 
     module.exports = exports.ScvSingleton = ScvSingleton;
