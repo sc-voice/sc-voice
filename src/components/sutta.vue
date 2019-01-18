@@ -81,7 +81,7 @@
                 aria-level="1" 
                 :aria-label="`Found ${resultCount} sootas ${playlistDuration.aria}`"
                 class='title pt-1 pb-1'>
-                Found {{resultCount}} sootas
+                Found {{resultCount}} suttas
                 ({{playlistDuration.display}})
             </summary>
             <summary v-else
