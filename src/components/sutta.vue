@@ -570,8 +570,8 @@ export default {
             var sections = this.sections = sutta.sections;
             Object.assign(this.support, sutta.support);
             this.metaarea = sutta.metaarea;
-            var suttaplex = this.suttaplex = 
-                Object.assign(this.suttaplex, sutta.suttaplex);
+            var suttaplex = Object.assign({}, this.suttaplex, sutta.suttaplex);
+            Vue.set(this, "suttaplex", suttaplex);
 
             var author_uid = this.author_uid = sutta.author_uid;
             var suid = suttaplex.uid && suttaplex.uid.toUpperCase() || "NOSUID";
@@ -647,8 +647,9 @@ export default {
                 this.stopWaiting(timer);
                 this.$nextTick(() => {
                     if (data.results.length === 1)  {
-                        console.log(`searchSuttas(${search}) showSutta`);
-                        this.showSutta(data.results[0].sutta);
+                        var sutta = data.results[0].sutta;
+                        console.log(`searchSuttas(${search}) showSutta`, sutta);
+                        this.showSutta(sutta);
                     } else {
                         this.$refs.refResults.focus();
                     }
@@ -727,9 +728,10 @@ export default {
             return scid.split(":")[1] || "section_scid_errro2";
         },
         resultId(result) {
-            var id = result
-                ? result.suttaplex.acronym || result.uid
-                : this.sutta_uid;
+            var id = this.sutta_uid || 
+                result && result.uid ||
+                result && result.suttaplex && result.suttaplex.acronym;
+            console.log('dbg resultId', id, result, this.sutta_uid); 
             var idchars = [];
             var number = /[0-9.]/;
             for (var i=0; i<id.length; i++) {
@@ -769,8 +771,9 @@ export default {
         sutta_uid() {
             var query = this.$route.query;
             var search = query && query.search || '';
-            if (this.suttaplex) {
-                var uid = this.suttaplex.uid;
+            var suttaplex = this.suttaplex;
+            if (suttaplex) {
+                var uid = suttaplex.uid;
                 if (uid) {
                     return uid;
                 }
@@ -817,6 +820,7 @@ export default {
         suttaTitle() {
             var titleParts = this.sutta.title.split(':');
             if (titleParts.length > 1) {
+                console.log('dbg titleParts', titleParts);
                 titleParts[0] = this.resultId().toUpperCase();
                 return titleParts.join(": ");
             } else {
