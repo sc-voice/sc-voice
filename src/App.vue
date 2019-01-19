@@ -173,7 +173,7 @@ export default {
     },
     methods: {
         clickHome() {
-            this.scvOpts.deleteCookies();
+            Vue.set(this.scvOpts, "search", null);
         },
         onfocus(id) {
             this.focused[id] = true;
