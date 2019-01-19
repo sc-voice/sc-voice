@@ -111,7 +111,7 @@
                     <div style="display: inline-block; width: 96%; ">
                         <div style="display:flex; justify-content: space-between; "> 
                             <div>
-                                {{resultId(result)}}
+                                {{resultId(result).toUpperCase()}}
                                 {{result.title}}
                             </div>
                             <div class="caption">
@@ -731,6 +731,9 @@ export default {
             var id = this.sutta_uid || 
                 result && result.uid ||
                 result && result.suttaplex && result.suttaplex.acronym;
+            var id = result
+                ? result.uid || result.suttaplex && result.suttaplex.acronym
+                : this.sutta_uid;
             console.log('dbg resultId', id, result, this.sutta_uid); 
             var idchars = [];
             var number = /[0-9.]/;
