@@ -39,6 +39,10 @@
         value: 4,
     }];
 
+    const EXPIRES = {
+        expires: "10Y",
+    };
+
     class ScvSingleton { 
         constructor(g) {
             this.showId = false;
@@ -90,7 +94,7 @@
 
         set useCookies(value) {
             if (value) {
-                this.vueRoot.$cookie.set("useCookies", value);
+                this.vueRoot.$cookie.set("useCookies", value, EXPIRES);
             } else {
                 this.vueRoot.$cookie.delete("useCookies");
             }
@@ -122,19 +126,19 @@
             var v = this[prop];
             if (v != null && this.vueRoot) {
                 if (this.useCookies) {
-                    cookie.set(prop, v);
+                    cookie.set(prop, v, EXPIRES);
                     console.log(`setting cookie (${prop}):${v}`,
                         `${this.vueRoot.$cookie.get(prop)}`, 
                         typeof this.vueRoot.$cookie.get(prop));
                 }
                 if (prop === 'useCookies') {
                     if (v) {
-                        cookie.set( "showId", this.showId);
-                        cookie.set( "iVoice", this.iVoice);
-                        cookie.set( "maxResults", this.maxResults);
-                        cookie.set( "showLang", this.showLang);
-                        cookie.set( "ips", this.ips);
-                        cookie.set( "useCookies", this.useCookies);
+                        cookie.set( "showId", this.showId, EXPIRES);
+                        cookie.set( "iVoice", this.iVoice, EXPIRES);
+                        cookie.set( "maxResults", this.maxResults, EXPIRES);
+                        cookie.set( "showLang", this.showLang, EXPIRES);
+                        cookie.set( "ips", this.ips, EXPIRES);
+                        cookie.set( "useCookies", this.useCookies, EXPIRES);
                         console.log(`saved settings to cookies`, cookie);
                     } else {
                         Object.keys(this).forEach(key => {

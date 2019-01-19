@@ -728,13 +728,9 @@ export default {
             return scid.split(":")[1] || "section_scid_errro2";
         },
         resultId(result) {
-            var id = this.sutta_uid || 
-                result && result.uid ||
-                result && result.suttaplex && result.suttaplex.acronym;
             var id = result
                 ? result.uid || result.suttaplex && result.suttaplex.acronym
                 : this.sutta_uid;
-            console.log('dbg resultId', id, result, this.sutta_uid); 
             var idchars = [];
             var number = /[0-9.]/;
             for (var i=0; i<id.length; i++) {
