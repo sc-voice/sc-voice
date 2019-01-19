@@ -52,6 +52,10 @@
             if (g == null) {
                 throw new Error(`g is required`);
             }
+            Object.defineProperty(this, "vueRoot", {
+                writable: true,
+                value: null,
+            });
             Object.defineProperty(this, "g", {
                 value: g,
             });

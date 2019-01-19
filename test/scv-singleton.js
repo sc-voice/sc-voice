@@ -50,6 +50,7 @@
             ips: 4,
             lang: 'en',
         });
+        scv.mounted(mockVueRoot);
         should.deepEqual(Object.keys(scv).sort(), [
             "showId",
             "iVoice",
@@ -139,6 +140,7 @@
     });
     it("TESTTESThash(opts) returns URL hash path", function() {
         var scv = new ScvSingleton(g);
+        scv.mounted(mockVueRoot);
         Object.keys(scv).forEach(key => {
             delete mockVueRoot.$cookie[key];
         });
@@ -194,6 +196,17 @@
         var scv = new ScvSingleton(g);
         scv.title = "titletest";
         should(scv.title).equal('titletest');
+        should(scv).properties({
+            showId: false,
+            iVoice: 0,
+            scid: null,
+            showLang: 0,
+            search: null,
+            maxResults: 5,
+            ips: 4,
+            lang: 'en',
+        });
+        scv.mounted(mockVueRoot);
         should(scv).properties({
             showId: false,
             iVoice: 0,
