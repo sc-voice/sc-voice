@@ -40,7 +40,7 @@
     }];
 
     const EXPIRES = {
-        expires: "10Y",
+        expires: "100Y",
     };
 
     class ScvSingleton { 
