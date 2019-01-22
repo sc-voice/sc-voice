@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
+const fs = require("fs");
 const path = require("path");
+const https = require("https");
 const compression = require("compression");
 const express = require('express');
 const favicon = require('serve-favicon');
@@ -17,6 +19,12 @@ const {
 
 global.__appdir = path.dirname(__dirname);
 RbServer.logDefault();
+
+var sslPath = path.join(__dirname, '..', 'ssl');
+var sslOpts = {
+    cert: fs.readFileSync(path.join(sslPath, 'server.crt')),
+    key: fs.readFileSync(path.join(sslPath, 'server.key')),
+};
 
 app.use(compression());
 
@@ -68,8 +76,12 @@ app.get(["/","/scv"], function(req,res,next) {
         restBundles.push(scvRest);
 
         // create http server and web socket
-        var ports = [80, 8081].concat(new Array(100).fill(3000).map((p,i)=>p+i));
-        rbServer.listen(app, restBundles, ports); 
+        if (argv.some((a) => a === '--ssl')) {
+            rbServer.listenSSL(app, restBundles); 
+        } else {
+            var ports = [80, 8081].concat(new Array(100).fill(3000).map((p,i)=>p+i));
+            rbServer.listen(app, restBundles, ports); 
+        }
         await rbServer.initialize();
     } catch(e) {
         logger.error(e.stack);

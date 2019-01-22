@@ -12,7 +12,7 @@ rm -f $SCVLOG
 ln -sf ${LOGFILE} $SCVLOG
 echo -e "`date` START sc-voice" | tee -a ${LOGFILE}
 
-${SCRIPT_DIR}/sc-voice.js 2>&1 | tee -a ${LOGFILE}
+${SCRIPT_DIR}/sc-voice.js --ssl 2>&1 | tee -a ${LOGFILE}
 
 echo -e "`date` EXIT sc-voice" | tee -a ${LOGFILE}
 
