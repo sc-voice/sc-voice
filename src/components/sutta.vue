@@ -8,7 +8,7 @@
           <div class="scv-search-row">
               <div class="scv-search-col">
                   <v-text-field ref="refSearch"
-                      placeholder="Enter sutta id or keyword(s)" 
+                      placeholder="Enter sutta id or keywords" 
                       v-model="search" v-on:keypress="onSearchKey($event)"
                       aria-label="Enter sootta i d or keywords"
                       label = "Search" >
