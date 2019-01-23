@@ -62,7 +62,7 @@
             var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    if (that.suttaCentralApi) {
+                    if (that.suttaCentralApi && that.suttaCentralApi.initialized == null) {
                         await that.suttaCentralApi.initialize();
                     }
                     resolve(that);

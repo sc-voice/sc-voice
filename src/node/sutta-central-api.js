@@ -48,7 +48,6 @@
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
-            this.initialized = false;
             this.apiUrl = opts.apiUrl || DEFAULT_API_URL;
         }
 
@@ -182,16 +181,23 @@
 
         initialize() {
             var that = this;
+            if (this.initialized === false) {
+                throw new Error("initialize() in progress");
+            }
+            if (this.initialized === true) {
+                return Promise.resolve(this);
+            }
+            this.initialized = false;
             return new Promise((resolve,reject) => { try {
                 (async function() {
+                    logger.info(`SuttaCentralApi.initialize() apiUrl:${that.apiUrl}`);
                     await SuttaCentralApi.loadExpansion(that.apiUrl).then(res => {
                         that.expansion = res;
-                        that.initialized = true;
                     }).catch(e => reject(e));
                     await SuttaCentralApi.loadUidExpansion().then(res => {
                         that.uid_expansion = res;
-                        that.initialized = true;
                     }).catch(e => reject(e));
+                    that.initialized = true;
                     resolve(that);
                 })();
             } catch(e) {reject(e);} });
