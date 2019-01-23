@@ -20,12 +20,6 @@ const {
 global.__appdir = path.dirname(__dirname);
 RbServer.logDefault();
 
-var sslPath = path.join(__dirname, '..', 'ssl');
-var sslOpts = {
-    cert: fs.readFileSync(path.join(sslPath, 'server.crt')),
-    key: fs.readFileSync(path.join(sslPath, 'server.key')),
-};
-
 app.use(compression());
 
 // ensure argv is actually for script instead of mocha
