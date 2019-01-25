@@ -146,7 +146,7 @@
                                 if (updateFile) {
                                     fs.writeFileSync(spath, JSON.stringify(sutta, null, 2));
                                     logger.info(`SuttaStore.updateSuttas(${id}) => `+
-                                        `${language} ${author_uid} OK`);
+                                        `${spath} OK`);
                                 } else {
                                     logger.info(`SuttaStore.updateSuttas(${id}) (no change)`);
                                 }

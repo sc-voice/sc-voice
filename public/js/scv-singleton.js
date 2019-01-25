@@ -19,24 +19,29 @@
         value: 0,
     },{
         url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
-        label: "Launch Sutta Player with Rainforest Ambience Glory Sunz (Public Domain)",
+        label: "Play Rainforest Ambience Glory Sunz (Public Domain)",
         volume: 0.1,
         value: 1,
     },{
         url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
-        label: "Launch Sutta Player with Indian Bell by Flemur (Sampling Plus 1.0)",
+        label: "Play Indian Bell by Flemur (Sampling Plus 1.0)",
         volume: 0.1,
         value: 2,
     },{
         url: '/audio/tibetan-singing-bowl-horst-cc0.mp3',
-        label: "Launch Sutta Player with Tibetan Singing Bowl by Horst (CC0)",
+        label: "Play Tibetan Singing Bowl by Horst (CC0)",
         volume: 0.3,
         value: 3,
     },{
         url: '/audio/jetrye-bell-meditation-cleaned-CC0.mp3',
-        label: "Launch Sutta Player with Bell Meditation Cleaned by JetRye (CC0)",
+        label: "Play Bell Meditation Cleaned by JetRye (CC0)",
         volume: 0.1,
         value: 4,
+    },{
+        url: '/audio/STE-004-Coemgenu.mp3',
+        label: "Play Mid-range Singing Bell by Coemgenu (Public Domain)",
+        volume: 0.5,
+        value: 5,
     }];
 
     const EXPIRES = {

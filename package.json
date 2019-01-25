@@ -47,6 +47,7 @@
     "serve": "vue-cli-service serve",
     "start": "npm run build; scripts/sc-voice.js",
     "start:ssl": "npm run build; scripts/sc-voice.js --ssl",
+    "start:staging": "npm run build; scripts/sc-voice.js --staging",
     "test": "npm run test:verbose",
     "test:test": "mocha -w -R min --inline-diffs -g TEST",
     "test:verbose": "mocha --inline-diffs",

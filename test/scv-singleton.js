@@ -186,7 +186,7 @@
         var scv = new ScvSingleton(g);
         should.deepEqual(scv.ipsChoices[1], {
             url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
-            label: "Launch Sutta Player with Rainforest "+
+            label: "Play Rainforest "+
                 "Ambience Glory Sunz (Public Domain)",
             volume: 0.1,
             value: 1,

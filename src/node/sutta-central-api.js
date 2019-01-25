@@ -101,8 +101,8 @@
                     } else if (/^text\/plain/.test(contentType)) {
                         // OK
                     } else {
-                        error = new Error('Invalid content-type.\n' +
-                          `Expected application/json but received ${contentType}`);
+                        error = new Error(`Invalid content-type:${contentType}\n` +
+                          `Expected application/json for url:${url}`);
                     }
                     if (error) {
                         res.resume(); // consume response data to free up memory
@@ -428,7 +428,8 @@
                         }
                         return a.segmented ? 1 : -1;
                     });
-                    logger.debug(`SuttaCentralApi.loadSuttaplexJson() `+
+                    logger.debug(`SuttaCentralApi.loadSuttaplexJson`+
+                        `(${scid}, ${lang}, ${author_uid}) `+
                         `${JSON.stringify(suttaplex,null,2)}`);
                     resolve(suttaplex);
                 } catch(e) {

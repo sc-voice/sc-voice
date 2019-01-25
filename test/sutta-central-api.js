@@ -122,7 +122,7 @@
         apiUrl: 'http://staging.suttacentral.net/api',
     };
 
-    it("TESTTESTloadSutta(opts) returns list of english translations for Snp1.8", function(done) {
+    it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
@@ -138,7 +138,7 @@
             should.deepEqual(translations, TRANSLATIONS_SNP1_8_2019); done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) returns english translations for Snp1.8", function(done) {
+    it("loadSutta(opts) returns english translations for Snp1.8", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             var language = 'en';
@@ -188,7 +188,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) returns english translations for ea12.1", function(done) {
+    it("loadSutta(opts) returns english translations for ea12.1", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
@@ -236,7 +236,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) returns Error if sutta not found", function(done) {
+    it("loadSutta(opts) returns Error if sutta not found", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
 
@@ -273,7 +273,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
+    it("loadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             var language = 'en';
@@ -297,7 +297,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTexpandAbbreviation(abbr) expands abbreviation", function(done) {
+    it("expandAbbreviation(abbr) expands abbreviation", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             should.deepEqual(scr.expandAbbreviation('sk'), [
@@ -307,7 +307,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) loads MN79", function(done) {
+    it("loadSutta(opts) loads MN79", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
@@ -368,7 +368,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTsuttaFromHtml(html, opts) should parse HTML", function(done) {
+    it("suttaFromHtml(html, opts) should parse HTML", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             var text = [

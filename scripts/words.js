@@ -11,10 +11,15 @@ var opts = {
     words,
 };
 
+var argv = process.argv[1].match(__filename) && process.argv || [];
+
 (async function() { try {
+    var langOpt = argv.find(a => /--lang=/.test(a));
+    var lang = langOpt && langOpt.substring(7) || 'en';
     var text = fs.readFileSync(0).toString();
+    var lines = text.split('\n');
     var dict = {};
-    text.split('\n').forEach(line => {
+    lines.forEach(line => {
         if (line) {
             var tokens = words.tokenize(line);
             tokens.forEach(token => {
@@ -29,7 +34,7 @@ var opts = {
         }
     });
     Object.keys(dict).sort().forEach(word => {
-        console.log(`"${word}": { "language": "de" },`);
+        console.log(`"${word}": { "language": lang },`);
     });
 } catch(e) {
     console.log(e.stack);

@@ -55,7 +55,12 @@ app.get(["/","/scv"], function(req,res,next) {
 });
 (async function() {
     try {
-        var suttaCentralApi = await new SuttaCentralApi().initialize();
+        var apiUrl = argv.some((a) => a === '--staging')
+            ? 'http://staging.suttacentral.net/api'
+            : 'http://suttacentral.net/api';
+        var suttaCentralApi = await new SuttaCentralApi({
+            apiUrl,
+        }).initialize();
         var rbServer =  app.locals.rbServer = new RbServer();
 
         // create RestBundles

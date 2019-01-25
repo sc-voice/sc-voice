@@ -819,7 +819,6 @@ export default {
         suttaTitle() {
             var titleParts = this.sutta.title.split(':');
             if (titleParts.length > 1) {
-                console.log('dbg titleParts', titleParts);
                 titleParts[0] = this.resultId().toUpperCase();
                 return titleParts.join(": ");
             } else {
