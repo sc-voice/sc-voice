@@ -158,6 +158,21 @@
             return wordValue || null;
         }
 
+        isForeignAlphabet(token) {
+            if (token.indexOf('-') > 0) {
+                return token.split('-').reduce((acc,w) => {
+                    return acc || this.isForeignAlphabet(w);
+                }, false);
+            }
+            if (this.symbolPat.test(token)) {
+                return false;
+            }
+            if (!this.alphabet.test(token)) {
+                return true; 
+            }
+            return false;
+        }
+
         isForeignWord(token) {
             if (token.indexOf('-') > 0) {
                 return token.split('-').reduce((acc,w) => {
