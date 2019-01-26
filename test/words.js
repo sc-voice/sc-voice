@@ -81,7 +81,28 @@
         should(words.isNumber('123.45')).equal(true);
         should(words.isNumber('-0.45')).equal(true);
     });
-    it("isForeignWord(token) return true if token is a word in foreign alphabet", function() {
+    it("TESTTESTisForeignAlphabet(token) return true if token is a word in foreign alphabet", function() {
+        var words = new Words();
+        // punctuation
+        should(words.isForeignAlphabet('!')).equal(false);
+
+        // native word
+        should(words.isForeignAlphabet('thirty')).equal(false);
+        should(words.isForeignAlphabet('Thirty')).equal(false);
+        should(words.isForeignAlphabet('htirty')).equal(false);
+        should(words.isForeignAlphabet('hTirty')).equal(false);
+
+        // foreign word
+        should(words.isForeignAlphabet('Brahm\u0101')).equal(true);
+        should(words.isForeignAlphabet('brahm\u0101')).equal(true);
+        should(words.isForeignAlphabet('rBahm\u0101')).equal(true);
+        should(words.isForeignAlphabet('rbahm\u0101')).equal(true);
+
+        // hyphenated
+        should(words.isForeignAlphabet('thirty-three')).equal(false);
+        should(words.isForeignAlphabet('well-to-do')).equal(false);
+    });
+    it("TESTTESTisForeignWord(token) return true if token is a foreign word", function() {
         var words = new Words();
         // punctuation
         should(words.isForeignWord('!')).equal(false);
@@ -89,10 +110,14 @@
         // native word
         should(words.isForeignWord('thirty')).equal(false);
         should(words.isForeignWord('Thirty')).equal(false);
+        should(words.isForeignWord('htirty')).equal(true); // in dictionary
+        should(words.isForeignWord('hTirty')).equal(true); // in dictionary
 
         // foreign word
         should(words.isForeignWord('Brahm\u0101')).equal(true);
         should(words.isForeignWord('brahm\u0101')).equal(true);
+        should(words.isForeignWord('rBahm\u0101')).equal(true);
+        should(words.isForeignWord('rbahm\u0101')).equal(true);
 
         // hyphenated
         should(words.isForeignWord('thirty-three')).equal(false);
