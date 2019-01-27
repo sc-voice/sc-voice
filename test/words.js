@@ -81,7 +81,7 @@
         should(words.isNumber('123.45')).equal(true);
         should(words.isNumber('-0.45')).equal(true);
     });
-    it("TESTTESTisForeignAlphabet(token) return true if token is a word in foreign alphabet", function() {
+    it("isForeignAlphabet(token) return true if token is a word in foreign alphabet", function() {
         var words = new Words();
         // punctuation
         should(words.isForeignAlphabet('!')).equal(false);
@@ -102,7 +102,7 @@
         should(words.isForeignAlphabet('thirty-three')).equal(false);
         should(words.isForeignAlphabet('well-to-do')).equal(false);
     });
-    it("TESTTESTisForeignWord(token) return true if token is a foreign word", function() {
+    it("isForeignWord(token) return true if token is a foreign word", function() {
         var words = new Words();
         // punctuation
         should(words.isForeignWord('!')).equal(false);
@@ -170,15 +170,21 @@
             .equal(`${Words.U_LSQUOTE}nandi dukkhassa mulan${Words.U_RSQUOTE}ti${Words.U_EMDASH}`);
 
     });
-    it("tokenize(text) returns array of tokens", function() {
+    it("TESTTESTtokenize(text) handles numbers", function() {
         var words = new Words();
-        var tokens = words.tokenize('and 6,000, and 600');
+        var tokens = words.tokenize('8,400,000,000 cars 2,400,000 and 6,000, and 600');
         should.deepEqual(tokens, [
+            '8,400,000,000',
+            'cars',
+            '2,400,000',
             'and',
             '6,000,',
             'and',
             '600',
         ]);
+    });
+    it("tokenize(text) returns array of tokens", function() {
+        var words = new Words();
 
         var tokens = words.tokenize('Hello {mn1.2-en-test} world.');
         should.deepEqual(tokens, [

@@ -1,7 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const PAT_NUMBER = '[-+]?[0-9]+([.–,][0-9]+)?';
+    const PAT_NUMBER = '[-+]?[0-9]+([.–,0-9]+)?';
     const RE_ISNUMBER = new RegExp(`^${PAT_NUMBER}$`);
     const RE_NUMBER = new RegExp(PAT_NUMBER);
     const RE_NUMBERTOKEN = new RegExp(`^${PAT_NUMBER}[,]?$`);
