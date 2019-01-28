@@ -172,13 +172,23 @@
     });
     it("TESTTESTtokenize(text) handles numbers", function() {
         var words = new Words();
+        var tokens = words.tokenize('one of 80,000—all');
+        should.deepEqual(tokens, [
+            'one',
+            'of',
+            '80,000',
+            '—',
+            'all',
+        ]);
+
         var tokens = words.tokenize('8,400,000,000 cars 2,400,000 and 6,000, and 600');
         should.deepEqual(tokens, [
             '8,400,000,000',
             'cars',
             '2,400,000',
             'and',
-            '6,000,',
+            '6,000',
+            ',',
             'and',
             '600',
         ]);

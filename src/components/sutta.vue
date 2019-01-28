@@ -439,8 +439,8 @@ export default {
                     var links = [];
                     var lang = that.language;
                     var dsa = data.segment.audio;
-                    dsa.pli && links.push(that.audioLink(dsa.pli));
-                    dsa[lang] && links.push(that.audioLink(dsa[lang]));
+                    that.showPali && dsa.pli && links.push(that.audioLink(dsa.pli));
+                    that.showTrans && dsa[lang] && links.push(that.audioLink(dsa[lang]));
                     var audio = links.map(link => new Audio(link));
                     var handler1 = () => {
                         audio[1].removeEventListener("ended", handler1);
@@ -486,7 +486,7 @@ export default {
                     console.log(`playQuotes audio:`, data.segment.audio);
                 }
             } catch(e) { 
-                console.log(`playQuote`, e.stack);
+                console.log(`playQuotes`, e.stack);
             }})();
         },
         playQuote(ref, result) {
