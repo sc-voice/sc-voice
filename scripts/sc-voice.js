@@ -7,6 +7,8 @@ const compression = require("compression");
 const express = require('express');
 const favicon = require('serve-favicon');
 const app = module.exports = express();
+const jwt = require('express-jwt');
+
 const {
     logger,
     RestBundle,
@@ -34,6 +36,15 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, OPTIONS, PUT, POST");
     next();
 });
+
+app.get('/scv/auth',
+    jwt({secret: 'shhhhhhared-secret'}),
+    (req, res) => {
+        if (!req.user.admin) {
+            return res.sendStatus(401);
+        }
+        res.sendStatus(200);
+    });
 app.use("/scv/index.html", 
     express.static(path.join(__dirname, "../dist/index.html")));
 app.use("/scv/img", express.static(path.join(__dirname, "../dist/img")));

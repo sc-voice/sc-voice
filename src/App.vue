@@ -28,6 +28,7 @@
         <v-icon>settings</v-icon>
       </v-btn>
     </v-toolbar>
+
     <v-dialog v-model="dialogHelp" persistent max-width="45em">
         <v-card >
           <v-card-title class="title scv-dialog-title">
@@ -123,7 +124,7 @@
             </div>
         </transition>
         <v-content class="" >
-          <Sutta />
+            <router-view></router-view>
         </v-content>
     </div>
     <v-footer fixed class="pt-2 pl-2 pr-2 caption" app >
@@ -134,7 +135,15 @@
           </a>
       </div>
       <v-spacer/>
-      <div class="pl-2" style="margin-top:-0.35em" >{{scvOpts.search}}</div>
+      <div class="pl-2" style="margin-top:-0.35em" >
+        {{scvOpts.search}}
+        <router-link to="/app" v-if="isAdmin" aria-hidden=true >
+            &equiv;
+        </router-link>
+        <router-link to="/admin" v-else aria-hidden=true >
+            &equiv;
+        </router-link>
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -259,6 +268,11 @@ export default {
                 'margin': '0',
             };
         },
+        isAdmin() {
+            var cr = this.$route;
+            console.log(`dbg isAdmin`, cr);
+            return cr && cr.path==='/admin' || false;
+        }
     },
     mounted() {
         this.$nextTick(() => {
@@ -334,7 +348,7 @@ summary {
     padding-right: 0.2em;
 }
 button {
-    background-color: var(accentColor);
+    background-color: var(--accent-color);
 }
 :focus {
     background-color: #000 !important;

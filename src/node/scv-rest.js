@@ -5,6 +5,7 @@
     const URL = require('url');
     const http = require('http');
     const https = require('https');
+    var jwt = require('jsonwebtoken');
     const {
         logger,
         RestBundle,
@@ -111,6 +112,8 @@
                         this.getWikiAria),
                     this.resourceMethod("get", "debug/ephemerals", 
                         this.getDebugEphemerals),
+                    this.resourceMethod("post", "login", 
+                        this.postLogin),
 
                 ]),
             });
@@ -629,6 +632,14 @@
                 ephemeralInterval: this.soundStore.ephemeralInterval,
                 ephemerals: this.soundStore.ephemerals,
             }
+        }
+
+        postLogin(req, res, next) {
+            var data = {
+                user: 'testuser',
+            };
+            //var token = jwt.sign(data, 'shhhhh');
+            return data;
         }
     }
 
