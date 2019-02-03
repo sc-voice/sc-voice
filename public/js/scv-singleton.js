@@ -76,6 +76,7 @@
                 writable: true,
                 value: "no title",
             });
+            console.log('dbg ScvSingleton()');
         }
 
         get token() {

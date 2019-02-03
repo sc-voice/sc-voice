@@ -181,6 +181,7 @@
                     <div class="caption text-xs-center">
                         <div class="text-xs-center" v-if="hasAudio && gscv.voices">
                             <a :href="downloadUrl()" ref="refDownload" 
+                                class="scv-a"
                                 @click="downloadClick()"
                                 download>
                                 Download {{sutta_uid}}-{{language}}-{{author_uid}}.mp3
@@ -191,6 +192,7 @@
                             :key="translation.id"
                             v-show="author_uid !== translation.author_uid">
                             <a :href="translationLink(translation)"
+                                class="scv-a"
                                 v-on:click="clickTranslation(translation,$event)">
                                 {{translation.author}} 
                                 &nbsp;&bull;&nbsp; 
@@ -198,17 +200,18 @@
                             </a>
                         </div>
                         <div class="text-xs-center" v-if="hasAudio">
-                            <a :href="audioUrl" target="_blank"> 
+                            <a class="scv-a" :href="audioUrl" target="_blank"> 
                                 {{sutta_uid.toUpperCase()}} audio recordings
                             </a>
                         </div>
                         <div class="text-xs-center">
                             <a :href="`https://suttacentral.net/${sutta_uid}`"
+                                class="scv-a"
                                 target="_blank"> 
                                 {{sutta_uid.toUpperCase()}} at SuttaCentral.net
                             </a>
                         </div>
-                        <a class="text-xs-center" :style="cssProps"
+                        <a class="text-xs-center scv-a" :style="cssProps"
                             target="_blank"
                             href="https://github.com/sc-voice/sc-voice/wiki/Support-Policy/">
                             <span v-if="support.value==='Legacy'">

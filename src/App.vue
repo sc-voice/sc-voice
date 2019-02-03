@@ -132,6 +132,7 @@
     <v-footer fixed class="pt-2 pl-2 pr-2 caption" app >
       <div style="margin-top:-0.35em" >
           <a :href="searchUrl('the dark bound for light')"
+            class="scv-a"
             aria-label="dedicated to the dark bound for light">
               To <i>the dark bound for light</i>
           </a>
@@ -311,8 +312,6 @@ export default {
 </script>
 <style >
 a {
-    //color: #ffcc66 !important;
-    color: #ffffff !important;
     text-decoration: none;
     padding-left: 0.2em;
     padding-right: 0.2em;
@@ -418,6 +417,9 @@ button {
     margin-left: 2px;
     font-size: 11px;
     font-variant: small-caps;
+}
+.scv-a {
+    color: #ffffff;
 }
 
 </style>

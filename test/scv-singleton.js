@@ -368,5 +368,13 @@
             lang: 'de',
         });
     });
+    it("TESTTESTtoken stores the JWT token", function() {
+        var scv = new ScvSingleton(g);
+        should(scv.token).equal(null);
+        scv.mounted(mockVueRoot);
+        should(scv.token).equal(null);
+        scv.token = 'asdf';
+        should(scv.token).equal('asdf');
+    });
 });
 

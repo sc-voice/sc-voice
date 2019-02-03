@@ -7,7 +7,8 @@
         <v-card-text>
             <v-text-field label="Username" v-model="username">
             </v-text-field>
-            <v-text-field label="Password" v-model="password" type="password" >
+            <v-text-field label="Password" v-model="password" type="password"   
+                autocomplete>
             </v-text-field>
             <v-alert type="warning" :value="loginError">
                 {{loginError}}
@@ -25,8 +26,16 @@
     </v-card>
     <v-card width="40em" light v-if="token">
         <v-card-text>
-        Welcome.
-        {{token}}
+        <v-tabs light fixed-tabs v-model="tabsModel">
+            <v-tab> Admin </v-tab>
+            <v-tab> Translator </v-tab>
+            <v-tab-item>
+                Admin ...
+            </v-tab-item>
+            <v-tab-item>
+                Translator ...
+            </v-tab-item>
+        </v-tabs>
         </v-card-text>
     </v-card>
 </form>
@@ -42,7 +51,8 @@ export default {
         return {
             username: "",
             password: "",
-            token: null,
+            tabsModel: null,
+            token: null, 
             loginError: null,
         }
     },
@@ -58,11 +68,8 @@ export default {
             var that = this;
             this.loginError = null;
             this.$http.post(url, data).then(res => {
-                //this.gscv.token = res.data;
-                this.$nextTick(() => {
-                    Vue.set(this, "token", res.data);
-                });
-                console.log(`login user:${username}`, res);
+                this.gscv.token = res.data;
+                Vue.set(this, "token", res.data);
             }).catch(e => {
                 Vue.set(that, "loginError", "Invalid Username/Password");
                 console.error(e.stack);
@@ -76,15 +83,11 @@ export default {
     },
     mounted() {
         Vue.set(this, "token", this.gscv.token);
-        console.log('dbg admin mounted');
     },
     computed: {
         gscv() {
             return this.$root.$data;
         },
-        //token() {
-            //return this.gscv.token;
-        //},
     },
 }
 </script>
@@ -95,5 +98,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+a.v-tabs__item {
+    color: #ff00ff !important;
 }
 </style>
