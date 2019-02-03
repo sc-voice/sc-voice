@@ -61,6 +61,10 @@
             if (g == null) {
                 throw new Error(`g is required`);
             }
+            Object.defineProperty(this, "_token", {
+                writable: true,
+                value: null,
+            });
             Object.defineProperty(this, "vueRoot", {
                 writable: true,
                 value: null,
@@ -72,6 +76,15 @@
                 writable: true,
                 value: "no title",
             });
+        }
+
+        get token() {
+            return this._token;
+        }
+
+        set token(value) {
+            var g = this.g;
+            g.Vue.set(this, "_token", value);
         }
 
         get ipsChoices() {

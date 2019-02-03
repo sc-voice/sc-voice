@@ -37,6 +37,8 @@
         usage: 'review',
     }];
 
+    const SECRET = `JWT${Math.random()}`;
+
     class ScvRest extends RestBundle { 
         constructor(opts = {
             audioFormat: 'mp3',
@@ -634,12 +636,35 @@
             }
         }
 
+        authenticate(username, password) {
+            if (username === 'good' && password === 'times') {
+                logger.info(`login ${username} OK`);
+                return true;
+            }
+            logger.info(`login attempt for ${username} failed`);
+            return false;
+        }
+
         postLogin(req, res, next) {
-            var data = {
-                user: 'testuser',
-            };
-            //var token = jwt.sign(data, 'shhhhh');
-            return data;
+            var {
+                username,
+                password,
+            } = req.body || {};
+
+            return new Promise((resolve, reject) => { try {
+                if (!this.authenticate(username, password)) {
+                    throw new Error('Invalid username/password');
+                }
+                var data = {
+                    username,
+                    isAdmin: true,
+                    isTranslator: true,
+                };
+                var token = jwt.sign(data, SECRET, {
+                    expiresIn: '1h',
+                });
+                resolve(token);
+            } catch(e) {reject(e);} });
         }
     }
 

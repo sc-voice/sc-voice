@@ -5,9 +5,11 @@
           <img aria-hidden="true" class="pt-1" src="img/favicon.png" height=30px/>
       </a>
       <v-toolbar-title >
-        <div style="position: relative; margin-top:-4px; ">
-            <div class="caption" style="">SuttaCentral</div>
-            <div class="title" style="margin-top:-2px">Voice Assistant</div>
+        <div style="position: relative; margin-top:-2px; ">
+            <div class="scv-logo-large" style="">
+                voice<span style="color:orange">.</span>
+            </div>
+            <div class="scv-logo-small">suttacentral.net</div>
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -350,9 +352,6 @@ summary {
 button {
     background-color: var(--accent-color);
 }
-:focus {
-    background-color: #000 !important;
-}
 .scv-content {
     position: relative;
     height: 100%;
@@ -409,6 +408,16 @@ button {
 }
 .scv-help > a:hover {
     text-decoration: none;
+}
+.scv-logo-large {
+    margin-top: -5px;
+    font-size: 22px;
+}
+.scv-logo-small {
+    margin-top: -8px;
+    margin-left: 2px;
+    font-size: 11px;
+    font-variant: small-caps;
 }
 
 </style>
