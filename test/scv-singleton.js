@@ -368,7 +368,7 @@
             lang: 'de',
         });
     });
-    it("TESTTESTtoken stores the JWT token", function() {
+    it("token stores the JWT token", function() {
         var scv = new ScvSingleton(g);
         should(scv.token).equal(null);
         scv.mounted(mockVueRoot);

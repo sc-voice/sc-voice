@@ -9,6 +9,7 @@
     const {
         logger,
         RestBundle,
+        UserStore,
     } = require('rest-bundle');
     const srcPkg = require("../../package.json");
     const Words = require('./words');
@@ -25,6 +26,11 @@
     const SuttaCentralId = require('./sutta-central-id');
     const PATH_SOUNDS = path.join(__dirname, '../../local/sounds/');
     const PATH_EXAMPLES = path.join(__dirname, `../../words/examples/`);
+    const DEFAULT_USER = {
+        username: "admin",
+        isAdmin: true,
+        credentials: '{"hash":"13YYGuRGjiQad/G1+MOOmxmLC/1znGYBcHWh2vUgkdq7kzTAZ6dk76S3zpP0OwZq1eofgUUJ2kq45+TxOx5tvvag","salt":"Qf1NbN3Jblo8sCL9bo32yFmwiApHSeRkr3QOJZu3KJ0Q8hbWMXAaHdoQLUWceW83tOS0jN4tuUXqWQWCH2lNCx0S","keyLength":66,"hashMethod":"pbkdf2","iterations":748406}',
+    };
 
     const VOICES = [{
         name: 'Amy',
@@ -56,6 +62,9 @@
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
                 autoSection: true,
+            });
+            this.userStore = opts.userStore || new UserStore({
+                defaultUser: DEFAULT_USER,
             });
             this.mdAria = opts.mdAria || new MdAria();
             this.voicePali = Voice.createVoice({
@@ -637,34 +646,32 @@
         }
 
         authenticate(username, password) {
-            if (username === 'good' && password === 'times') {
-                logger.info(`login ${username} OK`);
-                return true;
-            }
-            logger.info(`login attempt for ${username} failed`);
-            return false;
+            logger.info(`ScvRest.authenticate(${username})`);
+            return this.userStore.authenticate(username, password);
         }
 
         postLogin(req, res, next) {
+            var that = this;
             var {
                 username,
                 password,
             } = req.body || {};
 
-            return new Promise((resolve, reject) => { try {
-                if (!this.authenticate(username, password)) {
-                    throw new Error('Invalid username/password');
-                }
-                var data = {
-                    username,
-                    isAdmin: true,
-                    isTranslator: true,
-                };
-                var token = jwt.sign(data, SECRET, {
-                    expiresIn: '1h',
-                });
-                resolve(token);
-            } catch(e) {reject(e);} });
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var authuser = await that.authenticate(username, password);
+                    if (authuser == null) {
+                        res.locals.status = 401;
+                        logger.warn(`POST login ${username} => HTTP401 UNAUTHORIZED`);
+                        throw new Error('Invalid username/password');
+                    }
+                    logger.info(`POST login ${username} => OK`);
+                    var token = jwt.sign(authuser, SECRET, {
+                        expiresIn: '1h',
+                    });
+                    resolve(token);
+                } catch(e) {reject(e);} })();
+            });
         }
     }
 

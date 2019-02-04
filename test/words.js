@@ -170,7 +170,7 @@
             .equal(`${Words.U_LSQUOTE}nandi dukkhassa mulan${Words.U_RSQUOTE}ti${Words.U_EMDASH}`);
 
     });
-    it("TESTTESTtokenize(text) handles numbers", function() {
+    it("tokenize(text) handles numbers", function() {
         var words = new Words();
         var tokens = words.tokenize('one of 80,000—all');
         should.deepEqual(tokens, [

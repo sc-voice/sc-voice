@@ -99,11 +99,13 @@
                 'thag1.1', 'sn39.1-15', 
                 'sn1.8', 'mn1','an1.1-10']);
 
+            /*
             var thag1_1path = path.join(ROOT, 'kn/en/sujato-walton/thag1.1.json');
             should(fs.existsSync(thag1_1path));
             var stat = fs.statSync(thag1_1path);
             var age = Date.now() - stat.mtime;
             should(age).below(maxseconds*1000);
+            */
 
             var sn1_8path = path.join(ROOT, 'sn/en/sujato/sn1.8.json');
             should(fs.existsSync(sn1_8path));
@@ -274,7 +276,9 @@
                 searchMetadata: false,
             });
             should(results).instanceOf(Array);
-            should.deepEqual(results.map(r=>r.count), []);
+            should.deepEqual(results.map(r=>r.count), [1]);
+            should.deepEqual(results.map(r=>r.uid), [
+                'thag1.1' ]);
             var {
                 method,
                 results,
@@ -687,8 +691,8 @@
             should(result0.author).equal('Bhikkhu Sujato');
             should(result0.author_short).equal('Sujato');
             should(result0.author_uid).equal('sujato');
-            should(result0.author_blurb.en).equal(
-                'Translated for SuttaCentral by Sujato Bhikkhu');
+            should(result0.author_blurb.en).match(
+                /Translated for SuttaCentral by Bhikkhu Sujato/);
             should(result0.lang).equal('en');
             should(result0.nSegments).equal(9);
             should(result0.title).equal('Plain Version');
