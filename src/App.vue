@@ -141,10 +141,16 @@
       <div class="pl-2" style="margin-top:-0.35em" >
         {{scvOpts.search}}
         <router-link to="/app" v-if="isAdmin" aria-hidden=true >
-            &equiv;
+            <v-btn icon 
+                class="scv-icon-btn deep-orange darken-3" :style="cssProps" small>
+                <v-icon>supervisor_account</v-icon>
+            </v-btn>
         </router-link>
         <router-link to="/admin" v-else aria-hidden=true >
-            &equiv;
+            <v-btn icon 
+                class="scv-icon-btn" :style="cssProps" small>
+                <v-icon>supervisor_account</v-icon>
+            </v-btn>
         </router-link>
       </div>
     </v-footer>

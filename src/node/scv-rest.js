@@ -665,6 +665,7 @@
                         logger.warn(`POST login ${username} => HTTP401 UNAUTHORIZED`);
                         throw new Error('Invalid username/password');
                     }
+                    delete authuser.credentials;
                     logger.info(`POST login ${username} => OK`);
                     var token = jwt.sign(authuser, SECRET, {
                         expiresIn: '1h',
