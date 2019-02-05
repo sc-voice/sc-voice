@@ -51,6 +51,7 @@
             this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
             this.suttaFactory = opts.suttaFactory || new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
+                autoSection: true,
             });
             this.suttaIds = opts.suttaIds;
             this.maxDuration = opts.maxDuration || 3 * 60 * 60;
@@ -146,7 +147,7 @@
                                 if (updateFile) {
                                     fs.writeFileSync(spath, JSON.stringify(sutta, null, 2));
                                     logger.info(`SuttaStore.updateSuttas(${id}) => `+
-                                        `${language} ${author_uid} OK`);
+                                        `${spath} OK`);
                                 } else {
                                     logger.info(`SuttaStore.updateSuttas(${id}) (no change)`);
                                 }
@@ -522,6 +523,7 @@
                 var fnameparts = fname.split('/');
                 var collection_id = fnameparts[fnameparts.length-4];
                 var sutta = new Sutta(JSON.parse(fs.readFileSync(fname)));
+                sutta = this.suttaFactory.sectionSutta(sutta);
                 var suttaplex = sutta.suttaplex;
                 var nSegments = sutta.segments.length;
                 var translation = sutta.translation;

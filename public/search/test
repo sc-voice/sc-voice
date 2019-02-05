@@ -8,7 +8,7 @@
       "author_short": "Sujato",
       "author_uid": "sujato",
       "author_blurb": {
-        "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+        "en": "Translated for SuttaCentral by Bhikkhu Sujato, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
       },
       "lang": "en",
       "nSegments": 55,
@@ -22,6 +22,7 @@
         "difficulty": null,
         "original_title": "Bhadraka Sutta",
         "root_lang": "pli",
+        "root_lang_name": "Pāli",
         "type": "text",
         "from": null,
         "translated_title": "With Bhadraka",
@@ -29,12 +30,15 @@
           {
             "lang": "en",
             "lang_name": "English",
+            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "Sujato",
             "author_uid": "sujato",
+            "publication_date": "2018",
             "id": "en_sn42.11_sujato",
             "segmented": true,
-            "title": "With Bhadraka"
+            "title": "With Bhadraka",
+            "volpage": null
           }
         ],
         "parallel_count": 2,
@@ -61,6 +65,7 @@
           "difficulty": null,
           "original_title": "Bhadraka Sutta",
           "root_lang": "pli",
+          "root_lang_name": "Pāli",
           "type": "text",
           "from": null,
           "translated_title": "With Bhadraka",
@@ -68,12 +73,15 @@
             {
               "lang": "en",
               "lang_name": "English",
+              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "Sujato",
               "author_uid": "sujato",
+              "publication_date": "2018",
               "id": "en_sn42.11_sujato",
               "segmented": true,
-              "title": "With Bhadraka"
+              "title": "With Bhadraka",
+              "volpage": null
             }
           ],
           "parallel_count": 2,
@@ -86,7 +94,7 @@
           "author_short": "Sujato",
           "author_uid": "sujato",
           "author_blurb": {
-            "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+            "en": "Translated for SuttaCentral by Bhikkhu Sujato, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
           },
           "lang": "en",
           "title": "With Bhadraka",
@@ -196,7 +204,7 @@
               {
                 "scid": "sn42.11:2.2",
                 "pli": "atthi te uruvelakappe manussā yesaṃ te vadhena vā bandhena vā jāniyā vā garahāya vā uppajjeyyuṃ sokaparidevadukkhadomanassupāyāsā”ti?",
-                "en": "Are there any people here in Uruvelakappa who, if they were executed, imprisoned, fined, or censured, it would cause you sorrow, lamentation, pain, sadness, and distress?”"
+                "en": "Are there any people here in Uruvelakappa who, if they were executed, imprisoned, fined, or condemned, it would cause you sorrow, lamentation, pain, sadness, and distress?”"
               },
               {
                 "scid": "sn42.11:2.3",
@@ -206,7 +214,7 @@
               {
                 "scid": "sn42.11:2.4",
                 "pli": "“Atthi pana te, gāmaṇi, uruvelakappe manussā yesaṃ te vadhena vā bandhena vā jāniyā vā garahāya vā nuppajjeyyuṃ sokaparidevadukkhadomanassupāyāsā”ti?",
-                "en": "“But are there any people here in Uruvelakappa who, if they were executed, imprisoned, fined, or censured, it would not cause you sorrow, lamentation, pain, sadness, and distress?”"
+                "en": "“But are there any people here in Uruvelakappa who, if they were executed, imprisoned, fined, or condemned, it would not cause you sorrow, lamentation, pain, sadness, and distress?”"
               },
               {
                 "scid": "sn42.11:2.5",
@@ -306,7 +314,7 @@
               {
                 "scid": "sn42.11:3.2",
                 "pli": "ciravāsissa kumārassa vadhena vā bandhena vā jāniyā vā garahāya vā uppajjeyyuṃ sokaparidevadukkhadomanassupāyāsā”ti?",
-                "en": "If Ciravāsi was executed, imprisoned, fined, or censured, would it cause you sorrow, lamentation, pain, sadness, and distress?”"
+                "en": "If Ciravāsi was executed, imprisoned, fined, or condemned, would it cause you sorrow, lamentation, pain, sadness, and distress?”"
               },
               {
                 "scid": "sn42.11:3.3",
@@ -366,7 +374,7 @@
               {
                 "scid": "sn42.11:5.2",
                 "pli": "ciravāsimātuyā te vadhena vā bandhena vā jāniyā vā garahāya vā uppajjeyyuṃ sokaparidevadukkhadomanassupāyāsā”ti?",
-                "en": "If Ciravāsi’s mother was executed, imprisoned, fined, or censured, would it cause you sorrow, lamentation, pain, sadness, and distress?”"
+                "en": "If Ciravāsi’s mother was executed, imprisoned, fined, or condemned, would it cause you sorrow, lamentation, pain, sadness, and distress?”"
               },
               {
                 "scid": "sn42.11:5.3",
@@ -418,7 +426,7 @@
       "author_short": "Sujato",
       "author_uid": "sujato",
       "author_blurb": {
-        "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+        "en": "Translated for SuttaCentral by Bhikkhu Sujato, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
       },
       "lang": "en",
       "nSegments": 188,
@@ -432,6 +440,7 @@
         "difficulty": 2,
         "original_title": "Sunakkhatta Sutta",
         "root_lang": "pli",
+        "root_lang_name": "Pāli",
         "type": "text",
         "from": null,
         "translated_title": "With Sunakkhatta",
@@ -439,12 +448,15 @@
           {
             "lang": "en",
             "lang_name": "English",
+            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "Sujato",
             "author_uid": "sujato",
+            "publication_date": "2018",
             "id": "en_mn105_sujato",
             "segmented": true,
-            "title": "With Sunakkhatta"
+            "title": "With Sunakkhatta",
+            "volpage": null
           }
         ],
         "parallel_count": 1,
@@ -471,6 +483,7 @@
           "difficulty": 2,
           "original_title": "Sunakkhatta Sutta",
           "root_lang": "pli",
+          "root_lang_name": "Pāli",
           "type": "text",
           "from": null,
           "translated_title": "With Sunakkhatta",
@@ -478,12 +491,15 @@
             {
               "lang": "en",
               "lang_name": "English",
+              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "Sujato",
               "author_uid": "sujato",
+              "publication_date": "2018",
               "id": "en_mn105_sujato",
               "segmented": true,
-              "title": "With Sunakkhatta"
+              "title": "With Sunakkhatta",
+              "volpage": null
             }
           ],
           "parallel_count": 1,
@@ -496,7 +512,7 @@
           "author_short": "Sujato",
           "author_uid": "sujato",
           "author_blurb": {
-            "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+            "en": "Translated for SuttaCentral by Bhikkhu Sujato, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
           },
           "lang": "en",
           "title": "With Sunakkhatta",
@@ -726,7 +742,7 @@
               {
                 "scid": "mn105:8.1",
                 "pli": "Ṭhānaṃ kho panetaṃ, sunakkhatta, vijjati yaṃ idhekacco purisapuggalo lokāmisādhimutto assa.",
-                "en": "It’s possible that a certain individual may be intent on carnal pleasures."
+                "en": "It’s possible that a certain individual may be intent on material pleasures."
               },
               {
                 "scid": "mn105:8.2",
@@ -776,7 +792,7 @@
               {
                 "scid": "mn105:9.8",
                 "pli": "“Evameva kho, sunakkhatta, ṭhānametaṃ vijjati yaṃ idhekacco purisapuggalo lokāmisādhimutto assa.",
-                "en": "“In the same way, it’s possible that a certain individual may be intent on carnal pleasures."
+                "en": "“In the same way, it’s possible that a certain individual may be intent on material pleasures."
               },
               {
                 "scid": "mn105:9.9",
@@ -796,7 +812,7 @@
               {
                 "scid": "mn105:9.12",
                 "pli": "‘āneñjasaṃyojanena hi kho visaṃyutto lokāmisādhimutto purisapuggalo’ti.",
-                "en": "‘That individual is intent on carnal pleasures, for they’re detached from things connected with the imperturbable.’"
+                "en": "‘That individual is intent on material pleasures, for they’re detached from things connected with the imperturbable.’"
               },
               {
                 "scid": "mn105:10.1",
@@ -811,7 +827,7 @@
               {
                 "scid": "mn105:10.3",
                 "pli": "lokāmisapaṭisaṃyuttāya ca pana kathāya kacchamānāya na sussūsati, na sotaṃ odahati, na aññā cittaṃ upaṭṭhāpeti, na ca taṃ purisaṃ bhajati, na ca tena vittiṃ āpajjati.",
-                "en": "But when talk connected with carnal pleasures is going on they don’t want to listen. They don’t lend an ear or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
+                "en": "But when talk connected with material pleasures is going on they don’t want to listen. They don’t lend an ear or apply their minds to understand it. They don’t associate with that kind of person, and they don’t find it satisfying."
               },
               {
                 "scid": "mn105:11.1",
@@ -821,7 +837,7 @@
               {
                 "scid": "mn105:11.2",
                 "pli": "evameva kho, sunakkhatta, āneñjādhimuttassa purisapuggalassa ye lokāmisasaṃyojane se pavutte.",
-                "en": "In the same way, an individual intent on the imperturbable has dropped the connection with carnal pleasures."
+                "en": "In the same way, an individual intent on the imperturbable has dropped the connection with material pleasures."
               },
               {
                 "scid": "mn105:11.3",
@@ -831,7 +847,7 @@
               {
                 "scid": "mn105:11.4",
                 "pli": "‘lokāmisasaṃyojanena hi kho visaṃyutto āneñjādhimutto purisapuggalo’ti.",
-                "en": "‘That individual is intent on the imperturbable, for they’re detached from things connected with carnal pleasures.’"
+                "en": "‘That individual is intent on the imperturbable, for they’re detached from things connected with material pleasures.’"
               },
               {
                 "scid": "mn105:12.1",
@@ -1493,7 +1509,7 @@
       "author_short": "Sujato",
       "author_uid": "sujato",
       "author_blurb": {
-        "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+        "en": "Translated for SuttaCentral by Bhikkhu Sujato, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
       },
       "lang": "en",
       "nSegments": 334,
@@ -1507,6 +1523,7 @@
         "difficulty": 3,
         "original_title": "Mūlapariyāya Sutta",
         "root_lang": "pli",
+        "root_lang_name": "Pāli",
         "type": "text",
         "from": null,
         "translated_title": "The Root of All Things",
@@ -1514,21 +1531,27 @@
           {
             "lang": "en",
             "lang_name": "English",
+            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "Sujato",
             "author_uid": "sujato",
+            "publication_date": "2018",
             "id": "en_mn1_sujato",
             "segmented": true,
-            "title": "The Root of All Things"
+            "title": "The Root of All Things",
+            "volpage": null
           },
           {
             "author": "Bhikkhu Bodhi",
             "author_short": "Bodhi",
             "author_uid": "bodhi",
             "id": "en_mn1_bodhi",
+            "is_root": false,
             "lang": "en",
             "lang_name": "English",
+            "publication_date": "2009",
             "segmented": false,
+            "volpage": null,
             "title": "The Root of All Things"
           },
           {
@@ -1536,9 +1559,12 @@
             "author_short": "Horner",
             "author_uid": "horner",
             "id": "en_mn1_horner",
+            "is_root": false,
             "lang": "en",
             "lang_name": "English",
+            "publication_date": "2017",
             "segmented": false,
+            "volpage": null,
             "title": "Discourse on the Synopsis of Fundamentals"
           }
         ],
@@ -1566,6 +1592,7 @@
           "difficulty": 3,
           "original_title": "Mūlapariyāya Sutta",
           "root_lang": "pli",
+          "root_lang_name": "Pāli",
           "type": "text",
           "from": null,
           "translated_title": "The Root of All Things",
@@ -1573,21 +1600,27 @@
             {
               "lang": "en",
               "lang_name": "English",
+              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "Sujato",
               "author_uid": "sujato",
+              "publication_date": "2018",
               "id": "en_mn1_sujato",
               "segmented": true,
-              "title": "The Root of All Things"
+              "title": "The Root of All Things",
+              "volpage": null
             },
             {
               "author": "Bhikkhu Bodhi",
               "author_short": "Bodhi",
               "author_uid": "bodhi",
               "id": "en_mn1_bodhi",
+              "is_root": false,
               "lang": "en",
               "lang_name": "English",
+              "publication_date": "2009",
               "segmented": false,
+              "volpage": null,
               "title": "The Root of All Things"
             },
             {
@@ -1595,9 +1628,12 @@
               "author_short": "Horner",
               "author_uid": "horner",
               "id": "en_mn1_horner",
+              "is_root": false,
               "lang": "en",
               "lang_name": "English",
+              "publication_date": "2017",
               "segmented": false,
+              "volpage": null,
               "title": "Discourse on the Synopsis of Fundamentals"
             }
           ],
@@ -1611,7 +1647,7 @@
           "author_short": "Sujato",
           "author_uid": "sujato",
           "author_blurb": {
-            "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+            "en": "Translated for SuttaCentral by Bhikkhu Sujato, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
           },
           "lang": "en",
           "title": "The Root of All Things",
@@ -1711,7 +1747,7 @@
               {
                 "scid": "mn1:3.3",
                 "pli": "pathaviṃ pathavito saññatvā pathaviṃ maññati, pathaviyā maññati, pathavito maññati, pathaviṃ meti maññati, pathaviṃ abhinandati.",
-                "en": "But then they conceive earth, they conceive regarding earth, they conceive as earth, they conceive that ‘earth is mine’, they take pleasure in earth."
+                "en": "But then they identify with earth, they identify regarding earth, they identify as earth, they identify that ‘earth is mine’, they take pleasure in earth."
               },
               {
                 "scid": "mn1:3.4",
@@ -1731,7 +1767,7 @@
               {
                 "scid": "mn1:4.2",
                 "pli": "āpaṃ āpato saññatvā āpaṃ maññati, āpasmiṃ maññati, āpato maññati, āpaṃ meti maññati, āpaṃ abhinandati.",
-                "en": "But then they conceive water …"
+                "en": "But then they identify with water …"
               },
               {
                 "scid": "mn1:4.3",
@@ -1751,7 +1787,7 @@
               {
                 "scid": "mn1:5.2",
                 "pli": "tejaṃ tejato saññatvā tejaṃ maññati, tejasmiṃ maññati, tejato maññati, tejaṃ meti maññati, tejaṃ abhinandati.",
-                "en": "But then they conceive fire …"
+                "en": "But then they identify with fire …"
               },
               {
                 "scid": "mn1:5.3",
@@ -1771,7 +1807,7 @@
               {
                 "scid": "mn1:6.2",
                 "pli": "vāyaṃ vāyato saññatvā vāyaṃ maññati, vāyasmiṃ maññati, vāyato maññati, vāyaṃ meti maññati, vāyaṃ abhinandati.",
-                "en": "But then they conceive air …"
+                "en": "But then they identify with air …"
               },
               {
                 "scid": "mn1:6.3",
@@ -1791,7 +1827,7 @@
               {
                 "scid": "mn1:7.2",
                 "pli": "bhūte bhūtato saññatvā bhūte maññati, bhūtesu maññati, bhūtato maññati, bhūte meti maññati, bhūte abhinandati.",
-                "en": "But then they conceive creatures …"
+                "en": "But then they identify with creatures …"
               },
               {
                 "scid": "mn1:7.3",
@@ -1811,7 +1847,7 @@
               {
                 "scid": "mn1:8.2",
                 "pli": "deve devato saññatvā deve maññati, devesu maññati, devato maññati, deve meti maññati, deve abhinandati.",
-                "en": "But then they conceive gods …"
+                "en": "But then they identify with gods …"
               },
               {
                 "scid": "mn1:8.3",
@@ -1831,7 +1867,7 @@
               {
                 "scid": "mn1:9.2",
                 "pli": "pajāpatiṃ pajāpatito saññatvā pajāpatiṃ maññati, pajāpatismiṃ maññati, pajāpatito maññati, pajāpatiṃ meti maññati, pajāpatiṃ abhinandati.",
-                "en": "But then they conceive the Creator …"
+                "en": "But then they identify with the Creator …"
               },
               {
                 "scid": "mn1:9.3",
@@ -1851,7 +1887,7 @@
               {
                 "scid": "mn1:10.2",
                 "pli": "brahmaṃ brahmato saññatvā brahmaṃ maññati, brahmasmiṃ maññati, brahmato maññati, brahmaṃ meti maññati, brahmaṃ abhinandati.",
-                "en": "But then they conceive Brahmā …"
+                "en": "But then they identify with Brahmā …"
               },
               {
                 "scid": "mn1:10.3",
@@ -1871,7 +1907,7 @@
               {
                 "scid": "mn1:11.2",
                 "pli": "ābhassare ābhassarato saññatvā ābhassare maññati, ābhassaresu maññati, ābhassarato maññati, ābhassare meti maññati, ābhassare abhinandati.",
-                "en": "But then they conceive the gods of streaming radiance …"
+                "en": "But then they identify with the gods of streaming radiance …"
               },
               {
                 "scid": "mn1:11.3",
@@ -1891,7 +1927,7 @@
               {
                 "scid": "mn1:12.2",
                 "pli": "subhakiṇhe subhakiṇhato saññatvā subhakiṇhe maññati, subhakiṇhesu maññati, subhakiṇhato maññati, subhakiṇhe meti maññati, subhakiṇhe abhinandati.",
-                "en": "But then they conceive the gods replete with glory …"
+                "en": "But then they identify with the gods replete with glory …"
               },
               {
                 "scid": "mn1:12.3",
@@ -1911,7 +1947,7 @@
               {
                 "scid": "mn1:13.2",
                 "pli": "vehapphale vehapphalato saññatvā vehapphale maññati, vehapphalesu maññati, vehapphalato maññati, vehapphale meti maññati, vehapphale abhinandati.",
-                "en": "But then they conceive the gods of abundant fruit …"
+                "en": "But then they identify with the gods of abundant fruit …"
               },
               {
                 "scid": "mn1:13.3",
@@ -1931,7 +1967,7 @@
               {
                 "scid": "mn1:14.2",
                 "pli": "abhibhuṃ abhibhuto saññatvā abhibhuṃ maññati, abhibhusmiṃ maññati, abhibhuto maññati, abhibhuṃ meti maññati, abhibhuṃ abhinandati.",
-                "en": "But then they conceive the Overlord …"
+                "en": "But then they identify with the Overlord …"
               },
               {
                 "scid": "mn1:14.3",
@@ -1951,7 +1987,7 @@
               {
                 "scid": "mn1:15.2",
                 "pli": "ākāsānañcāyatanaṃ ākāsānañcāyatanato saññatvā ākāsānañcāyatanaṃ maññati, ākāsānañcāyatanasmiṃ maññati, ākāsānañcāyatanato maññati, ākāsānañcāyatanaṃ meti maññati, ākāsānañcāyatanaṃ abhinandati.",
-                "en": "But then they conceive the dimension of infinite space …"
+                "en": "But then they identify with the dimension of infinite space …"
               },
               {
                 "scid": "mn1:15.3",
@@ -1971,7 +2007,7 @@
               {
                 "scid": "mn1:16.2",
                 "pli": "viññāṇañcāyatanaṃ viññāṇañcāyatanato saññatvā viññāṇañcāyatanaṃ maññati, viññāṇañcāyatanasmiṃ maññati, viññāṇañcāyatanato maññati, viññāṇañcāyatanaṃ meti maññati, viññāṇañcāyatanaṃ abhinandati.",
-                "en": "But then they conceive the dimension of infinite consciousness …"
+                "en": "But then they identify with the dimension of infinite consciousness …"
               },
               {
                 "scid": "mn1:16.3",
@@ -1991,7 +2027,7 @@
               {
                 "scid": "mn1:17.2",
                 "pli": "ākiñcaññāyatanaṃ ākiñcaññāyatanato saññatvā ākiñcaññāyatanaṃ maññati, ākiñcaññāyatanasmiṃ maññati, ākiñcaññāyatanato maññati, ākiñcaññāyatanaṃ meti maññati, ākiñcaññāyatanaṃ abhinandati.",
-                "en": "But then they conceive the dimension of nothingness …"
+                "en": "But then they identify with the dimension of nothingness …"
               },
               {
                 "scid": "mn1:17.3",
@@ -2011,7 +2047,7 @@
               {
                 "scid": "mn1:18.2",
                 "pli": "nevasaññānāsaññāyatanaṃ nevasaññānāsaññāyatanato saññatvā nevasaññānāsaññāyatanaṃ maññati, nevasaññānāsaññāyatanasmiṃ maññati, nevasaññānāsaññāyatanato maññati, nevasaññānāsaññāyatanaṃ meti maññati, nevasaññānāsaññāyatanaṃ abhinandati.",
-                "en": "But then they conceive the dimension of neither perception nor non-perception …"
+                "en": "But then they identify with the dimension of neither perception nor non-perception …"
               },
               {
                 "scid": "mn1:18.3",
@@ -2031,7 +2067,7 @@
               {
                 "scid": "mn1:19.2",
                 "pli": "diṭṭhaṃ diṭṭhato saññatvā diṭṭhaṃ maññati, diṭṭhasmiṃ maññati, diṭṭhato maññati, diṭṭhaṃ meti maññati, diṭṭhaṃ abhinandati.",
-                "en": "But then they conceive the seen …"
+                "en": "But then they identify with the seen …"
               },
               {
                 "scid": "mn1:19.3",
@@ -2051,7 +2087,7 @@
               {
                 "scid": "mn1:20.2",
                 "pli": "sutaṃ sutato saññatvā sutaṃ maññati, sutasmiṃ maññati, sutato maññati, sutaṃ meti maññati, sutaṃ abhinandati.",
-                "en": "But then they conceive the heard …"
+                "en": "But then they identify with the heard …"
               },
               {
                 "scid": "mn1:20.3",
@@ -2071,7 +2107,7 @@
               {
                 "scid": "mn1:21.2",
                 "pli": "mutaṃ mutato saññatvā mutaṃ maññati, mutasmiṃ maññati, mutato maññati, mutaṃ meti maññati, mutaṃ abhinandati.",
-                "en": "But then they conceive the thought …"
+                "en": "But then they identify with the thought …"
               },
               {
                 "scid": "mn1:21.3",
@@ -2086,12 +2122,12 @@
               {
                 "scid": "mn1:22.1",
                 "pli": "Viññātaṃ viññātato sañjānāti;",
-                "en": "They perceive the cognized as the cognized."
+                "en": "They perceive the known as the known."
               },
               {
                 "scid": "mn1:22.2",
                 "pli": "viññātaṃ viññātato saññatvā viññātaṃ maññati, viññātasmiṃ maññati, viññātato maññati, viññātaṃ meti maññati, viññātaṃ abhinandati.",
-                "en": "But then they conceive the cognized …"
+                "en": "But then they identify with the known …"
               },
               {
                 "scid": "mn1:22.3",
@@ -2111,7 +2147,7 @@
               {
                 "scid": "mn1:23.2",
                 "pli": "ekattaṃ ekattato saññatvā ekattaṃ maññati, ekattasmiṃ maññati, ekattato maññati, ekattaṃ meti maññati, ekattaṃ abhinandati.",
-                "en": "But then they conceive oneness …"
+                "en": "But then they identify with oneness …"
               },
               {
                 "scid": "mn1:23.3",
@@ -2131,7 +2167,7 @@
               {
                 "scid": "mn1:24.2",
                 "pli": "nānattaṃ nānattato saññatvā nānattaṃ maññati, nānattasmiṃ maññati, nānattato maññati, nānattaṃ meti maññati, nānattaṃ abhinandati.",
-                "en": "But then they conceive diversity …"
+                "en": "But then they identify with diversity …"
               },
               {
                 "scid": "mn1:24.3",
@@ -2151,7 +2187,7 @@
               {
                 "scid": "mn1:25.2",
                 "pli": "sabbaṃ sabbato saññatvā sabbaṃ maññati, sabbasmiṃ maññati, sabbato maññati, sabbaṃ meti maññati, sabbaṃ abhinandati.",
-                "en": "But then they conceive all …"
+                "en": "But then they identify with all …"
               },
               {
                 "scid": "mn1:25.3",
@@ -2171,7 +2207,7 @@
               {
                 "scid": "mn1:26.2",
                 "pli": "nibbānaṃ nibbānato saññatvā nibbānaṃ maññati, nibbānasmiṃ maññati, nibbānato maññati, nibbānaṃ meti maññati, nibbānaṃ abhinandati.",
-                "en": "But then they conceive extinguishment, they conceive regarding extinguishment, they conceive as extinguishment, they conceive that ‘extinguishment is mine’, they take pleasure in extinguishment."
+                "en": "But then they identify with extinguishment, they identify regarding extinguishment, they identify as extinguishment, they identify that ‘extinguishment is mine’, they take pleasure in extinguishment."
               },
               {
                 "scid": "mn1:26.3",
@@ -2196,7 +2232,7 @@
               {
                 "scid": "mn1:27.2",
                 "pli": "pathaviṃ pathavito abhiññāya pathaviṃ mā maññi, pathaviyā mā maññi, pathavito mā maññi, pathaviṃ meti mā maññi, pathaviṃ mābhinandi.",
-                "en": "But they shouldn’t conceive earth, they shouldn’t conceive regarding earth, they shouldn’t conceive as earth, they shouldn’t conceive that ‘earth is mine’, they shouldn’t take pleasure in earth."
+                "en": "But they shouldn’t identify with earth, they shouldn’t identify regarding earth, they shouldn’t identify as earth, they shouldn’t identify that ‘earth is mine’, they shouldn’t take pleasure in earth."
               },
               {
                 "scid": "mn1:27.3",
@@ -2301,7 +2337,7 @@
               {
                 "scid": "mn1:28-49.19",
                 "pli": "viññātaṃ …",
-                "en": "the cognized …"
+                "en": "the known …"
               },
               {
                 "scid": "mn1:28-49.20",
@@ -2326,7 +2362,7 @@
               {
                 "scid": "mn1:50.1",
                 "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ mā maññi, nibbānasmiṃ mā maññi, nibbānato mā maññi, nibbānaṃ meti mā maññi, nibbānaṃ mābhinandi.",
-                "en": "But they shouldn’t conceive extinguishment, they shouldn’t conceive regarding extinguishment, they shouldn’t conceive as extinguishment, they shouldn’t conceive that ‘extinguishment is mine’, they shouldn’t take pleasure in extinguishment."
+                "en": "But they shouldn’t identify with extinguishment, they shouldn’t identify regarding extinguishment, they shouldn’t identify as extinguishment, they shouldn’t identify that ‘extinguishment is mine’, they shouldn’t take pleasure in extinguishment."
               },
               {
                 "scid": "mn1:50.2",
@@ -2351,7 +2387,7 @@
               {
                 "scid": "mn1:51.2",
                 "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-                "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+                "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth."
               },
               {
                 "scid": "mn1:51.3",
@@ -2456,7 +2492,7 @@
               {
                 "scid": "mn1:52-74.19",
                 "pli": "viññātaṃ …",
-                "en": "the cognized …"
+                "en": "the known …"
               },
               {
                 "scid": "mn1:52-74.20",
@@ -2481,7 +2517,7 @@
               {
                 "scid": "mn1:52-74.24",
                 "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-                "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+                "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
               },
               {
                 "scid": "mn1:52-74.25",
@@ -2506,7 +2542,7 @@
               {
                 "scid": "mn1:75.2",
                 "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-                "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+                "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth."
               },
               {
                 "scid": "mn1:75.3",
@@ -2611,7 +2647,7 @@
               {
                 "scid": "mn1:76-98.19",
                 "pli": "viññātaṃ …",
-                "en": "the cognized …"
+                "en": "the known …"
               },
               {
                 "scid": "mn1:76-98.20",
@@ -2636,7 +2672,7 @@
               {
                 "scid": "mn1:76-98.24",
                 "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-                "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+                "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
               },
               {
                 "scid": "mn1:76-98.25",
@@ -2661,7 +2697,7 @@
               {
                 "scid": "mn1:99.2",
                 "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-                "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+                "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth."
               },
               {
                 "scid": "mn1:99.3",
@@ -2766,7 +2802,7 @@
               {
                 "scid": "mn1:100-122.19",
                 "pli": "viññātaṃ …",
-                "en": "the cognized …"
+                "en": "the known …"
               },
               {
                 "scid": "mn1:100-122.20",
@@ -2791,7 +2827,7 @@
               {
                 "scid": "mn1:100-122.24",
                 "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-                "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+                "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
               },
               {
                 "scid": "mn1:100-122.25",
@@ -2816,7 +2852,7 @@
               {
                 "scid": "mn1:123.2",
                 "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-                "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+                "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth."
               },
               {
                 "scid": "mn1:123.3",
@@ -2921,7 +2957,7 @@
               {
                 "scid": "mn1:124-146.19",
                 "pli": "viññātaṃ …",
-                "en": "the cognized …"
+                "en": "the known …"
               },
               {
                 "scid": "mn1:124-146.20",
@@ -2946,7 +2982,7 @@
               {
                 "scid": "mn1:124-146.24",
                 "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-                "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+                "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
               },
               {
                 "scid": "mn1:124-146.25",
@@ -2971,7 +3007,7 @@
               {
                 "scid": "mn1:147.2",
                 "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-                "en": "But he doesn’t conceive earth, he doesn’t conceive regarding earth, he doesn’t conceive as earth, he doesn’t conceive that ‘earth is mine’, he doesn’t take pleasure in earth."
+                "en": "But he doesn’t identify with earth, he doesn’t identify regarding earth, he doesn’t identify as earth, he doesn’t identify that ‘earth is mine’, he doesn’t take pleasure in earth."
               },
               {
                 "scid": "mn1:147.3",
@@ -3076,7 +3112,7 @@
               {
                 "scid": "mn1:148-170.19",
                 "pli": "viññātaṃ …",
-                "en": "the cognized …"
+                "en": "the known …"
               },
               {
                 "scid": "mn1:148-170.20",
@@ -3101,7 +3137,7 @@
               {
                 "scid": "mn1:148-170.24",
                 "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-                "en": "But he doesn’t conceive extinguishment, he doesn’t conceive regarding extinguishment, he doesn’t conceive as extinguishment, he doesn’t conceive that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment."
+                "en": "But he doesn’t identify with extinguishment, he doesn’t identify regarding extinguishment, he doesn’t identify as extinguishment, he doesn’t identify that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment."
               },
               {
                 "scid": "mn1:148-170.25",
@@ -3126,7 +3162,7 @@
               {
                 "scid": "mn1:171.2",
                 "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-                "en": "But he doesn’t conceive earth, he doesn’t conceive regarding earth, he doesn’t conceive as earth, he doesn’t conceive that ‘earth is mine’, he doesn’t take pleasure in earth."
+                "en": "But he doesn’t identify with earth, he doesn’t identify regarding earth, he doesn’t identify as earth, he doesn’t identify that ‘earth is mine’, he doesn’t take pleasure in earth."
               },
               {
                 "scid": "mn1:171.3",
@@ -3241,7 +3277,7 @@
               {
                 "scid": "mn1:172-194.19",
                 "pli": "viññātaṃ …",
-                "en": "the cognized …"
+                "en": "the known …"
               },
               {
                 "scid": "mn1:172-194.20",
@@ -3266,7 +3302,7 @@
               {
                 "scid": "mn1:172-194.24",
                 "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-                "en": "But he doesn’t conceive extinguishment, he doesn’t conceive regarding extinguishment, he doesn’t conceive as extinguishment, he doesn’t conceive that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment."
+                "en": "But he doesn’t identify with extinguishment, he doesn’t identify regarding extinguishment, he doesn’t identify as extinguishment, he doesn’t identify that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment."
               },
               {
                 "scid": "mn1:172-194.25",
@@ -3333,7 +3369,7 @@
       "author_short": "Sujato",
       "author_uid": "sujato",
       "author_blurb": {
-        "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+        "en": "Translated for SuttaCentral by Bhikkhu Sujato, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
       },
       "lang": "en",
       "nSegments": 202,
@@ -3347,6 +3383,7 @@
         "difficulty": 2,
         "original_title": "Laṭukikopama Sutta",
         "root_lang": "pli",
+        "root_lang_name": "Pāli",
         "type": "text",
         "from": null,
         "translated_title": "The Simile of the Quail",
@@ -3354,21 +3391,27 @@
           {
             "lang": "en",
             "lang_name": "English",
+            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "Sujato",
             "author_uid": "sujato",
+            "publication_date": "2018",
             "id": "en_mn66_sujato",
             "segmented": true,
-            "title": "The Simile of the Quail"
+            "title": "The Simile of the Quail",
+            "volpage": null
           },
           {
             "author": "I.B. Horner",
             "author_short": "Horner",
             "author_uid": "horner",
             "id": "en_mn66_horner",
+            "is_root": false,
             "lang": "en",
             "lang_name": "English",
+            "publication_date": "2017",
             "segmented": false,
+            "volpage": null,
             "title": "Discourse on the Simile of the Quail"
           }
         ],
@@ -3396,6 +3439,7 @@
           "difficulty": 2,
           "original_title": "Laṭukikopama Sutta",
           "root_lang": "pli",
+          "root_lang_name": "Pāli",
           "type": "text",
           "from": null,
           "translated_title": "The Simile of the Quail",
@@ -3403,21 +3447,27 @@
             {
               "lang": "en",
               "lang_name": "English",
+              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "Sujato",
               "author_uid": "sujato",
+              "publication_date": "2018",
               "id": "en_mn66_sujato",
               "segmented": true,
-              "title": "The Simile of the Quail"
+              "title": "The Simile of the Quail",
+              "volpage": null
             },
             {
               "author": "I.B. Horner",
               "author_short": "Horner",
               "author_uid": "horner",
               "id": "en_mn66_horner",
+              "is_root": false,
               "lang": "en",
               "lang_name": "English",
+              "publication_date": "2017",
               "segmented": false,
+              "volpage": null,
               "title": "Discourse on the Simile of the Quail"
             }
           ],
@@ -3431,7 +3481,7 @@
           "author_short": "Sujato",
           "author_uid": "sujato",
           "author_blurb": {
-            "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+            "en": "Translated for SuttaCentral by Bhikkhu Sujato, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
           },
           "lang": "en",
           "title": "The Simile of the Quail",
@@ -4256,17 +4306,17 @@
               {
                 "scid": "mn66:22.2",
                 "pli": "idaṃ kho ahaṃ, udāyi, iñjitasmiṃ vadāmi.",
-                "en": "This belongs to what is not imperturbable, I say."
+                "en": "This belongs to the perturbable, I say."
               },
               {
                 "scid": "mn66:22.3",
                 "pli": "Kiñca tattha iñjitasmiṃ?",
-                "en": "And what there belongs to what is not imperturbable?"
+                "en": "And what there belongs to the perturbable?"
               },
               {
                 "scid": "mn66:22.4",
                 "pli": "Yadeva tattha vitakkavicārā aniruddhā honti idaṃ tattha iñjitasmiṃ.",
-                "en": "Whatever placing of the mind and keeping it connected has not ceased there is what belongs to what is not imperturbable."
+                "en": "Whatever placing of the mind and keeping it connected has not ceased there is what belongs to the perturbable."
               },
               {
                 "scid": "mn66:23.1",
@@ -4276,17 +4326,17 @@
               {
                 "scid": "mn66:23.2",
                 "pli": "idampi kho ahaṃ, udāyi, iñjitasmiṃ vadāmi.",
-                "en": "This belongs to what is not imperturbable, I say."
+                "en": "This belongs to the perturbable, I say."
               },
               {
                 "scid": "mn66:23.3",
                 "pli": "Kiñca tattha iñjitasmiṃ?",
-                "en": "And what there belongs to what is not imperturbable?"
+                "en": "And what there belongs to the perturbable?"
               },
               {
                 "scid": "mn66:23.4",
                 "pli": "Yadeva tattha pītisukhaṃ aniruddhaṃ hoti idaṃ tattha iñjitasmiṃ.",
-                "en": "Whatever rapture and bliss has not ceased there is what belongs to what is not imperturbable."
+                "en": "Whatever rapture and bliss has not ceased there is what belongs to the perturbable."
               },
               {
                 "scid": "mn66:24.1",
@@ -4296,17 +4346,17 @@
               {
                 "scid": "mn66:24.2",
                 "pli": "idampi kho ahaṃ, udāyi, iñjitasmiṃ vadāmi.",
-                "en": "This pertains to what is not imperturbable."
+                "en": "This belongs to the perturbable."
               },
               {
                 "scid": "mn66:24.3",
                 "pli": "Kiñca tattha iñjitasmiṃ?",
-                "en": "And what there pertains to what is not imperturbable?"
+                "en": "And what there belongs to the perturbable?"
               },
               {
                 "scid": "mn66:24.4",
                 "pli": "Yadeva tattha upekkhāsukhaṃ aniruddhaṃ hoti idaṃ tattha iñjitasmiṃ.",
-                "en": "Whatever equanimous bliss has not ceased there is what pertains to what is not imperturbable."
+                "en": "Whatever equanimous bliss has not ceased there is what belongs to the perturbable."
               },
               {
                 "scid": "mn66:24.5",
@@ -4316,7 +4366,7 @@
               {
                 "scid": "mn66:24.6",
                 "pli": "idaṃ kho ahaṃ, udāyi, aniñjitasmiṃ vadāmi.",
-                "en": "This pertains to what is imperturbable."
+                "en": "This belongs to the perturbable."
               },
               {
                 "scid": "mn66:26.1",

@@ -169,8 +169,10 @@
                 .get("/scv/download/sutta/mn100/en/sujato/review")
                 .expect('Content-Type', /audio\/mp3/)
                 .expect('Content-Disposition', /attachment; filename=mn100-en-sujato.mp3/)
-                .expect('Content-Length', /9[0-9][0-9][0-9][0-9][0-9][0-9]/)
                 .end((e,r) => e ? async.throw(e) : async.next(r));
+            var contentLength = Number(response.headers['content-length']);
+            should(contentLength).above(9400000);
+            should(contentLength).below(9600000);
             should(response.statusCode).equal(200);
             done();
         } catch (e) { done(e); } }();
@@ -187,8 +189,10 @@
                 .expect('Content-Type', /audio\/mp3/)
                 .expect('Content-Disposition', 
                     'attachment; filename=an3.76-77_pli+en_amy.mp3')
-                .expect('Content-Length', /3495[0-9][0-9][0-9]/)
                 .end((e,r) => e ? async.throw(e) : async.next(r));
+            var contentLength = Number(res.headers['content-length']);
+            should(contentLength).above(3500000);
+            should(contentLength).below(3600000);
             should(res.statusCode).equal(200);
             done();
         } catch (e) { done(e); } }();

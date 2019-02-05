@@ -7,12 +7,27 @@ import VueAxios from 'vue-axios'
 //import Vuetify from 'vuetify'
 import './plugins/vuetify'
 import App from './App.vue'
+import Admin from './components/admin.vue'
+import Sutta from './components/sutta.vue'
 // eslint no-console 0 
 
 Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 Vue.use(VueCookie);
-var router = new VueRouter();
+var routes = [{
+    path: "/admin",
+    component: Admin,
+},{
+    path: "/sutta",
+    component: Sutta,
+},{
+    path: "*",
+    redirect: "/sutta",
+}];
+
+var router = new VueRouter({
+    routes,
+});
 
 Vue.config.productionTip = false;
 

@@ -13,6 +13,7 @@
     "difficulty": 3,
     "original_title": "Mūlapariyāya Sutta",
     "root_lang": "pli",
+    "root_lang_name": "Pāli",
     "type": "text",
     "from": null,
     "translated_title": "The Root of All Things",
@@ -20,21 +21,27 @@
       {
         "lang": "en",
         "lang_name": "English",
+        "is_root": false,
         "author": "Bhikkhu Sujato",
         "author_short": "Sujato",
         "author_uid": "sujato",
+        "publication_date": "2018",
         "id": "en_mn1_sujato",
         "segmented": true,
-        "title": "The Root of All Things"
+        "title": "The Root of All Things",
+        "volpage": null
       },
       {
         "author": "Bhikkhu Bodhi",
         "author_short": "Bodhi",
         "author_uid": "bodhi",
         "id": "en_mn1_bodhi",
+        "is_root": false,
         "lang": "en",
         "lang_name": "English",
+        "publication_date": "2009",
         "segmented": false,
+        "volpage": null,
         "title": "The Root of All Things"
       },
       {
@@ -42,9 +49,12 @@
         "author_short": "Horner",
         "author_uid": "horner",
         "id": "en_mn1_horner",
+        "is_root": false,
         "lang": "en",
         "lang_name": "English",
+        "publication_date": "2017",
         "segmented": false,
+        "volpage": null,
         "title": "Discourse on the Synopsis of Fundamentals"
       }
     ],
@@ -58,7 +68,7 @@
     "author_short": "Sujato",
     "author_uid": "sujato",
     "author_blurb": {
-      "en": "Translated for SuttaCentral by Sujato Bhikkhu"
+      "en": "Translated for SuttaCentral by Bhikkhu Sujato, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
     },
     "lang": "en",
     "title": "The Root of All Things",
@@ -170,7 +180,7 @@
         {
           "scid": "mn1:3.3",
           "pli": "pathaviṃ pathavito saññatvā pathaviṃ maññati, pathaviyā maññati, pathavito maññati, pathaviṃ meti maññati, pathaviṃ abhinandati.",
-          "en": "But then they conceive earth, they conceive regarding earth, they conceive as earth, they conceive that ‘earth is mine’, they take pleasure in earth."
+          "en": "But then they identify with earth, they identify regarding earth, they identify as earth, they identify that ‘earth is mine’, they take pleasure in earth."
         },
         {
           "scid": "mn1:3.4",
@@ -189,7 +199,7 @@
         },
         {
           "scid": "mn1:4.2.1",
-          "en": "But then they conceive water, they conceive regarding water, they conceive as water, they conceive that ‘water is mine’, they take pleasure in water.",
+          "en": "But then they identify with water, they identify regarding water, they identify as water, they identify that ‘water is mine’, they take pleasure in water.",
           "expanded": true
         },
         {
@@ -209,7 +219,7 @@
         },
         {
           "scid": "mn1:5.2.1",
-          "en": "But then they conceive fire, they conceive regarding fire, they conceive as fire, they conceive that ‘fire is mine’, they take pleasure in fire.",
+          "en": "But then they identify with fire, they identify regarding fire, they identify as fire, they identify that ‘fire is mine’, they take pleasure in fire.",
           "expanded": true
         },
         {
@@ -229,7 +239,7 @@
         },
         {
           "scid": "mn1:6.2.1",
-          "en": "But then they conceive air, they conceive regarding air, they conceive as air, they conceive that ‘air is mine’, they take pleasure in air.",
+          "en": "But then they identify with air, they identify regarding air, they identify as air, they identify that ‘air is mine’, they take pleasure in air.",
           "expanded": true
         },
         {
@@ -249,7 +259,7 @@
         },
         {
           "scid": "mn1:7.2.1",
-          "en": "But then they conceive creatures, they conceive regarding creatures, they conceive as creatures, they conceive that ‘creatures is mine’, they take pleasure in creatures.",
+          "en": "But then they identify with creatures, they identify regarding creatures, they identify as creatures, they identify that ‘creatures is mine’, they take pleasure in creatures.",
           "expanded": true
         },
         {
@@ -269,7 +279,7 @@
         },
         {
           "scid": "mn1:8.2.1",
-          "en": "But then they conceive gods, they conceive regarding gods, they conceive as gods, they conceive that ‘gods is mine’, they take pleasure in gods.",
+          "en": "But then they identify with gods, they identify regarding gods, they identify as gods, they identify that ‘gods is mine’, they take pleasure in gods.",
           "expanded": true
         },
         {
@@ -289,7 +299,7 @@
         },
         {
           "scid": "mn1:9.2.1",
-          "en": "But then they conceive the Creator, they conceive regarding the Creator, they conceive as the Creator, they conceive that ‘the Creator is mine’, they take pleasure in the Creator.",
+          "en": "But then they identify with the Creator, they identify regarding the Creator, they identify as the Creator, they identify that ‘the Creator is mine’, they take pleasure in the Creator.",
           "expanded": true
         },
         {
@@ -309,7 +319,7 @@
         },
         {
           "scid": "mn1:10.2.1",
-          "en": "But then they conceive Brahmā, they conceive regarding Brahmā, they conceive as Brahmā, they conceive that ‘Brahmā is mine’, they take pleasure in Brahmā.",
+          "en": "But then they identify with Brahmā, they identify regarding Brahmā, they identify as Brahmā, they identify that ‘Brahmā is mine’, they take pleasure in Brahmā.",
           "expanded": true
         },
         {
@@ -329,7 +339,7 @@
         },
         {
           "scid": "mn1:11.2.1",
-          "en": "But then they conceive the gods of streaming radiance, they conceive regarding the gods of streaming radiance, they conceive as the gods of streaming radiance, they conceive that ‘the gods of streaming radiance is mine’, they take pleasure in the gods of streaming radiance.",
+          "en": "But then they identify with the gods of streaming radiance, they identify regarding the gods of streaming radiance, they identify as the gods of streaming radiance, they identify that ‘the gods of streaming radiance is mine’, they take pleasure in the gods of streaming radiance.",
           "expanded": true
         },
         {
@@ -349,7 +359,7 @@
         },
         {
           "scid": "mn1:12.2.1",
-          "en": "But then they conceive the gods replete with glory, they conceive regarding the gods replete with glory, they conceive as the gods replete with glory, they conceive that ‘the gods replete with glory is mine’, they take pleasure in the gods replete with glory.",
+          "en": "But then they identify with the gods replete with glory, they identify regarding the gods replete with glory, they identify as the gods replete with glory, they identify that ‘the gods replete with glory is mine’, they take pleasure in the gods replete with glory.",
           "expanded": true
         },
         {
@@ -369,7 +379,7 @@
         },
         {
           "scid": "mn1:13.2.1",
-          "en": "But then they conceive the gods of abundant fruit, they conceive regarding the gods of abundant fruit, they conceive as the gods of abundant fruit, they conceive that ‘the gods of abundant fruit is mine’, they take pleasure in the gods of abundant fruit.",
+          "en": "But then they identify with the gods of abundant fruit, they identify regarding the gods of abundant fruit, they identify as the gods of abundant fruit, they identify that ‘the gods of abundant fruit is mine’, they take pleasure in the gods of abundant fruit.",
           "expanded": true
         },
         {
@@ -389,7 +399,7 @@
         },
         {
           "scid": "mn1:14.2.1",
-          "en": "But then they conceive the Overlord, they conceive regarding the Overlord, they conceive as the Overlord, they conceive that ‘the Overlord is mine’, they take pleasure in the Overlord.",
+          "en": "But then they identify with the Overlord, they identify regarding the Overlord, they identify as the Overlord, they identify that ‘the Overlord is mine’, they take pleasure in the Overlord.",
           "expanded": true
         },
         {
@@ -409,7 +419,7 @@
         },
         {
           "scid": "mn1:15.2.1",
-          "en": "But then they conceive the dimension of infinite space, they conceive regarding the dimension of infinite space, they conceive as the dimension of infinite space, they conceive that ‘the dimension of infinite space is mine’, they take pleasure in the dimension of infinite space.",
+          "en": "But then they identify with the dimension of infinite space, they identify regarding the dimension of infinite space, they identify as the dimension of infinite space, they identify that ‘the dimension of infinite space is mine’, they take pleasure in the dimension of infinite space.",
           "expanded": true
         },
         {
@@ -429,7 +439,7 @@
         },
         {
           "scid": "mn1:16.2.1",
-          "en": "But then they conceive the dimension of infinite consciousness, they conceive regarding the dimension of infinite consciousness, they conceive as the dimension of infinite consciousness, they conceive that ‘the dimension of infinite consciousness is mine’, they take pleasure in the dimension of infinite consciousness.",
+          "en": "But then they identify with the dimension of infinite consciousness, they identify regarding the dimension of infinite consciousness, they identify as the dimension of infinite consciousness, they identify that ‘the dimension of infinite consciousness is mine’, they take pleasure in the dimension of infinite consciousness.",
           "expanded": true
         },
         {
@@ -449,7 +459,7 @@
         },
         {
           "scid": "mn1:17.2.1",
-          "en": "But then they conceive the dimension of nothingness, they conceive regarding the dimension of nothingness, they conceive as the dimension of nothingness, they conceive that ‘the dimension of nothingness is mine’, they take pleasure in the dimension of nothingness.",
+          "en": "But then they identify with the dimension of nothingness, they identify regarding the dimension of nothingness, they identify as the dimension of nothingness, they identify that ‘the dimension of nothingness is mine’, they take pleasure in the dimension of nothingness.",
           "expanded": true
         },
         {
@@ -469,7 +479,7 @@
         },
         {
           "scid": "mn1:18.2.1",
-          "en": "But then they conceive the dimension of neither perception nor non-perception, they conceive regarding the dimension of neither perception nor non-perception, they conceive as the dimension of neither perception nor non-perception, they conceive that ‘the dimension of neither perception nor non-perception is mine’, they take pleasure in the dimension of neither perception nor non-perception.",
+          "en": "But then they identify with the dimension of neither perception nor non-perception, they identify regarding the dimension of neither perception nor non-perception, they identify as the dimension of neither perception nor non-perception, they identify that ‘the dimension of neither perception nor non-perception is mine’, they take pleasure in the dimension of neither perception nor non-perception.",
           "expanded": true
         },
         {
@@ -489,7 +499,7 @@
         },
         {
           "scid": "mn1:19.2.1",
-          "en": "But then they conceive the seen, they conceive regarding the seen, they conceive as the seen, they conceive that ‘the seen is mine’, they take pleasure in the seen.",
+          "en": "But then they identify with the seen, they identify regarding the seen, they identify as the seen, they identify that ‘the seen is mine’, they take pleasure in the seen.",
           "expanded": true
         },
         {
@@ -509,7 +519,7 @@
         },
         {
           "scid": "mn1:20.2.1",
-          "en": "But then they conceive the heard, they conceive regarding the heard, they conceive as the heard, they conceive that ‘the heard is mine’, they take pleasure in the heard.",
+          "en": "But then they identify with the heard, they identify regarding the heard, they identify as the heard, they identify that ‘the heard is mine’, they take pleasure in the heard.",
           "expanded": true
         },
         {
@@ -529,7 +539,7 @@
         },
         {
           "scid": "mn1:21.2.1",
-          "en": "But then they conceive the thought, they conceive regarding the thought, they conceive as the thought, they conceive that ‘the thought is mine’, they take pleasure in the thought.",
+          "en": "But then they identify with the thought, they identify regarding the thought, they identify as the thought, they identify that ‘the thought is mine’, they take pleasure in the thought.",
           "expanded": true
         },
         {
@@ -545,11 +555,11 @@
         {
           "scid": "mn1:22.1",
           "pli": "Viññātaṃ viññātato sañjānāti;",
-          "en": "They perceive the cognized as the cognized."
+          "en": "They perceive the known as the known."
         },
         {
           "scid": "mn1:22.2.1",
-          "en": "But then they conceive the cognized, they conceive regarding the cognized, they conceive as the cognized, they conceive that ‘the cognized is mine’, they take pleasure in the cognized.",
+          "en": "But then they identify with the known, they identify regarding the known, they identify as the known, they identify that ‘the known is mine’, they take pleasure in the known.",
           "expanded": true
         },
         {
@@ -569,7 +579,7 @@
         },
         {
           "scid": "mn1:23.2.1",
-          "en": "But then they conceive oneness, they conceive regarding oneness, they conceive as oneness, they conceive that ‘oneness is mine’, they take pleasure in oneness.",
+          "en": "But then they identify with oneness, they identify regarding oneness, they identify as oneness, they identify that ‘oneness is mine’, they take pleasure in oneness.",
           "expanded": true
         },
         {
@@ -589,7 +599,7 @@
         },
         {
           "scid": "mn1:24.2.1",
-          "en": "But then they conceive diversity, they conceive regarding diversity, they conceive as diversity, they conceive that ‘diversity is mine’, they take pleasure in diversity.",
+          "en": "But then they identify with diversity, they identify regarding diversity, they identify as diversity, they identify that ‘diversity is mine’, they take pleasure in diversity.",
           "expanded": true
         },
         {
@@ -609,7 +619,7 @@
         },
         {
           "scid": "mn1:25.2.1",
-          "en": "But then they conceive all, they conceive regarding all, they conceive as all, they conceive that ‘all is mine’, they take pleasure in all.",
+          "en": "But then they identify with all, they identify regarding all, they identify as all, they identify that ‘all is mine’, they take pleasure in all.",
           "expanded": true
         },
         {
@@ -630,7 +640,7 @@
         {
           "scid": "mn1:26.2",
           "pli": "nibbānaṃ nibbānato saññatvā nibbānaṃ maññati, nibbānasmiṃ maññati, nibbānato maññati, nibbānaṃ meti maññati, nibbānaṃ abhinandati.",
-          "en": "But then they conceive extinguishment, they conceive regarding extinguishment, they conceive as extinguishment, they conceive that ‘extinguishment is mine’, they take pleasure in extinguishment."
+          "en": "But then they identify with extinguishment, they identify regarding extinguishment, they identify as extinguishment, they identify that ‘extinguishment is mine’, they take pleasure in extinguishment."
         },
         {
           "scid": "mn1:26.3",
@@ -667,7 +677,7 @@
         {
           "scid": "mn1:27.2",
           "pli": "pathaviṃ pathavito abhiññāya pathaviṃ mā maññi, pathaviyā mā maññi, pathavito mā maññi, pathaviṃ meti mā maññi, pathaviṃ mābhinandi.",
-          "en": "But they shouldn’t conceive earth, they shouldn’t conceive regarding earth, they shouldn’t conceive as earth, they shouldn’t conceive that ‘earth is mine’, they shouldn’t take pleasure in earth."
+          "en": "But they shouldn’t identify with earth, they shouldn’t identify regarding earth, they shouldn’t identify as earth, they shouldn’t identify that ‘earth is mine’, they shouldn’t take pleasure in earth."
         },
         {
           "scid": "mn1:27.3",
@@ -686,7 +696,7 @@
         },
         {
           "scid": "mn1:28-49.1.2",
-          "en": "But they shouldn’t conceive water, they shouldn’t conceive regarding water, they shouldn’t conceive as water, they shouldn’t conceive that ‘water is mine’, they shouldn’t take pleasure in water.",
+          "en": "But they shouldn’t identify with water, they shouldn’t identify regarding water, they shouldn’t identify as water, they shouldn’t identify that ‘water is mine’, they shouldn’t take pleasure in water.",
           "expanded": true
         },
         {
@@ -706,7 +716,7 @@
         },
         {
           "scid": "mn1:28-49.2.2",
-          "en": "But they shouldn’t conceive fire, they shouldn’t conceive regarding fire, they shouldn’t conceive as fire, they shouldn’t conceive that ‘fire is mine’, they shouldn’t take pleasure in fire.",
+          "en": "But they shouldn’t identify with fire, they shouldn’t identify regarding fire, they shouldn’t identify as fire, they shouldn’t identify that ‘fire is mine’, they shouldn’t take pleasure in fire.",
           "expanded": true
         },
         {
@@ -726,7 +736,7 @@
         },
         {
           "scid": "mn1:28-49.3.2",
-          "en": "But they shouldn’t conceive air, they shouldn’t conceive regarding air, they shouldn’t conceive as air, they shouldn’t conceive that ‘air is mine’, they shouldn’t take pleasure in air.",
+          "en": "But they shouldn’t identify with air, they shouldn’t identify regarding air, they shouldn’t identify as air, they shouldn’t identify that ‘air is mine’, they shouldn’t take pleasure in air.",
           "expanded": true
         },
         {
@@ -746,7 +756,7 @@
         },
         {
           "scid": "mn1:28-49.4.2",
-          "en": "But they shouldn’t conceive creatures, they shouldn’t conceive regarding creatures, they shouldn’t conceive as creatures, they shouldn’t conceive that ‘creatures is mine’, they shouldn’t take pleasure in creatures.",
+          "en": "But they shouldn’t identify with creatures, they shouldn’t identify regarding creatures, they shouldn’t identify as creatures, they shouldn’t identify that ‘creatures is mine’, they shouldn’t take pleasure in creatures.",
           "expanded": true
         },
         {
@@ -766,7 +776,7 @@
         },
         {
           "scid": "mn1:28-49.5.2",
-          "en": "But they shouldn’t conceive gods, they shouldn’t conceive regarding gods, they shouldn’t conceive as gods, they shouldn’t conceive that ‘gods is mine’, they shouldn’t take pleasure in gods.",
+          "en": "But they shouldn’t identify with gods, they shouldn’t identify regarding gods, they shouldn’t identify as gods, they shouldn’t identify that ‘gods is mine’, they shouldn’t take pleasure in gods.",
           "expanded": true
         },
         {
@@ -786,7 +796,7 @@
         },
         {
           "scid": "mn1:28-49.6.2",
-          "en": "But they shouldn’t conceive the Creator, they shouldn’t conceive regarding the Creator, they shouldn’t conceive as the Creator, they shouldn’t conceive that ‘the Creator is mine’, they shouldn’t take pleasure in the Creator.",
+          "en": "But they shouldn’t identify with the Creator, they shouldn’t identify regarding the Creator, they shouldn’t identify as the Creator, they shouldn’t identify that ‘the Creator is mine’, they shouldn’t take pleasure in the Creator.",
           "expanded": true
         },
         {
@@ -806,7 +816,7 @@
         },
         {
           "scid": "mn1:28-49.7.2",
-          "en": "But they shouldn’t conceive Brahmā, they shouldn’t conceive regarding Brahmā, they shouldn’t conceive as Brahmā, they shouldn’t conceive that ‘Brahmā is mine’, they shouldn’t take pleasure in Brahmā.",
+          "en": "But they shouldn’t identify with Brahmā, they shouldn’t identify regarding Brahmā, they shouldn’t identify as Brahmā, they shouldn’t identify that ‘Brahmā is mine’, they shouldn’t take pleasure in Brahmā.",
           "expanded": true
         },
         {
@@ -826,7 +836,7 @@
         },
         {
           "scid": "mn1:28-49.8.2",
-          "en": "But they shouldn’t conceive the gods of streaming radiance, they shouldn’t conceive regarding the gods of streaming radiance, they shouldn’t conceive as the gods of streaming radiance, they shouldn’t conceive that ‘the gods of streaming radiance is mine’, they shouldn’t take pleasure in the gods of streaming radiance.",
+          "en": "But they shouldn’t identify with the gods of streaming radiance, they shouldn’t identify regarding the gods of streaming radiance, they shouldn’t identify as the gods of streaming radiance, they shouldn’t identify that ‘the gods of streaming radiance is mine’, they shouldn’t take pleasure in the gods of streaming radiance.",
           "expanded": true
         },
         {
@@ -846,7 +856,7 @@
         },
         {
           "scid": "mn1:28-49.9.2",
-          "en": "But they shouldn’t conceive the gods replete with glory, they shouldn’t conceive regarding the gods replete with glory, they shouldn’t conceive as the gods replete with glory, they shouldn’t conceive that ‘the gods replete with glory is mine’, they shouldn’t take pleasure in the gods replete with glory.",
+          "en": "But they shouldn’t identify with the gods replete with glory, they shouldn’t identify regarding the gods replete with glory, they shouldn’t identify as the gods replete with glory, they shouldn’t identify that ‘the gods replete with glory is mine’, they shouldn’t take pleasure in the gods replete with glory.",
           "expanded": true
         },
         {
@@ -866,7 +876,7 @@
         },
         {
           "scid": "mn1:28-49.10.2",
-          "en": "But they shouldn’t conceive the gods of abundant fruit, they shouldn’t conceive regarding the gods of abundant fruit, they shouldn’t conceive as the gods of abundant fruit, they shouldn’t conceive that ‘the gods of abundant fruit is mine’, they shouldn’t take pleasure in the gods of abundant fruit.",
+          "en": "But they shouldn’t identify with the gods of abundant fruit, they shouldn’t identify regarding the gods of abundant fruit, they shouldn’t identify as the gods of abundant fruit, they shouldn’t identify that ‘the gods of abundant fruit is mine’, they shouldn’t take pleasure in the gods of abundant fruit.",
           "expanded": true
         },
         {
@@ -886,7 +896,7 @@
         },
         {
           "scid": "mn1:28-49.11.2",
-          "en": "But they shouldn’t conceive the Overlord, they shouldn’t conceive regarding the Overlord, they shouldn’t conceive as the Overlord, they shouldn’t conceive that ‘the Overlord is mine’, they shouldn’t take pleasure in the Overlord.",
+          "en": "But they shouldn’t identify with the Overlord, they shouldn’t identify regarding the Overlord, they shouldn’t identify as the Overlord, they shouldn’t identify that ‘the Overlord is mine’, they shouldn’t take pleasure in the Overlord.",
           "expanded": true
         },
         {
@@ -906,7 +916,7 @@
         },
         {
           "scid": "mn1:28-49.12.2",
-          "en": "But they shouldn’t conceive the dimension of infinite space, they shouldn’t conceive regarding the dimension of infinite space, they shouldn’t conceive as the dimension of infinite space, they shouldn’t conceive that ‘the dimension of infinite space is mine’, they shouldn’t take pleasure in the dimension of infinite space.",
+          "en": "But they shouldn’t identify with the dimension of infinite space, they shouldn’t identify regarding the dimension of infinite space, they shouldn’t identify as the dimension of infinite space, they shouldn’t identify that ‘the dimension of infinite space is mine’, they shouldn’t take pleasure in the dimension of infinite space.",
           "expanded": true
         },
         {
@@ -926,7 +936,7 @@
         },
         {
           "scid": "mn1:28-49.13.2",
-          "en": "But they shouldn’t conceive the dimension of infinite consciousness, they shouldn’t conceive regarding the dimension of infinite consciousness, they shouldn’t conceive as the dimension of infinite consciousness, they shouldn’t conceive that ‘the dimension of infinite consciousness is mine’, they shouldn’t take pleasure in the dimension of infinite consciousness.",
+          "en": "But they shouldn’t identify with the dimension of infinite consciousness, they shouldn’t identify regarding the dimension of infinite consciousness, they shouldn’t identify as the dimension of infinite consciousness, they shouldn’t identify that ‘the dimension of infinite consciousness is mine’, they shouldn’t take pleasure in the dimension of infinite consciousness.",
           "expanded": true
         },
         {
@@ -946,7 +956,7 @@
         },
         {
           "scid": "mn1:28-49.14.2",
-          "en": "But they shouldn’t conceive the dimension of nothingness, they shouldn’t conceive regarding the dimension of nothingness, they shouldn’t conceive as the dimension of nothingness, they shouldn’t conceive that ‘the dimension of nothingness is mine’, they shouldn’t take pleasure in the dimension of nothingness.",
+          "en": "But they shouldn’t identify with the dimension of nothingness, they shouldn’t identify regarding the dimension of nothingness, they shouldn’t identify as the dimension of nothingness, they shouldn’t identify that ‘the dimension of nothingness is mine’, they shouldn’t take pleasure in the dimension of nothingness.",
           "expanded": true
         },
         {
@@ -966,7 +976,7 @@
         },
         {
           "scid": "mn1:28-49.15.2",
-          "en": "But they shouldn’t conceive the dimension of neither perception nor non-perception, they shouldn’t conceive regarding the dimension of neither perception nor non-perception, they shouldn’t conceive as the dimension of neither perception nor non-perception, they shouldn’t conceive that ‘the dimension of neither perception nor non-perception is mine’, they shouldn’t take pleasure in the dimension of neither perception nor non-perception.",
+          "en": "But they shouldn’t identify with the dimension of neither perception nor non-perception, they shouldn’t identify regarding the dimension of neither perception nor non-perception, they shouldn’t identify as the dimension of neither perception nor non-perception, they shouldn’t identify that ‘the dimension of neither perception nor non-perception is mine’, they shouldn’t take pleasure in the dimension of neither perception nor non-perception.",
           "expanded": true
         },
         {
@@ -986,7 +996,7 @@
         },
         {
           "scid": "mn1:28-49.16.2",
-          "en": "But they shouldn’t conceive the seen, they shouldn’t conceive regarding the seen, they shouldn’t conceive as the seen, they shouldn’t conceive that ‘the seen is mine’, they shouldn’t take pleasure in the seen.",
+          "en": "But they shouldn’t identify with the seen, they shouldn’t identify regarding the seen, they shouldn’t identify as the seen, they shouldn’t identify that ‘the seen is mine’, they shouldn’t take pleasure in the seen.",
           "expanded": true
         },
         {
@@ -1006,7 +1016,7 @@
         },
         {
           "scid": "mn1:28-49.17.2",
-          "en": "But they shouldn’t conceive the heard, they shouldn’t conceive regarding the heard, they shouldn’t conceive as the heard, they shouldn’t conceive that ‘the heard is mine’, they shouldn’t take pleasure in the heard.",
+          "en": "But they shouldn’t identify with the heard, they shouldn’t identify regarding the heard, they shouldn’t identify as the heard, they shouldn’t identify that ‘the heard is mine’, they shouldn’t take pleasure in the heard.",
           "expanded": true
         },
         {
@@ -1026,7 +1036,7 @@
         },
         {
           "scid": "mn1:28-49.18.2",
-          "en": "But they shouldn’t conceive the thought, they shouldn’t conceive regarding the thought, they shouldn’t conceive as the thought, they shouldn’t conceive that ‘the thought is mine’, they shouldn’t take pleasure in the thought.",
+          "en": "But they shouldn’t identify with the thought, they shouldn’t identify regarding the thought, they shouldn’t identify as the thought, they shouldn’t identify that ‘the thought is mine’, they shouldn’t take pleasure in the thought.",
           "expanded": true
         },
         {
@@ -1041,12 +1051,12 @@
         },
         {
           "scid": "mn1:28-49.19.1",
-          "en": "They directly know the cognized as the cognized.",
+          "en": "They directly know the known as the known.",
           "expanded": true
         },
         {
           "scid": "mn1:28-49.19.2",
-          "en": "But they shouldn’t conceive the cognized, they shouldn’t conceive regarding the cognized, they shouldn’t conceive as the cognized, they shouldn’t conceive that ‘the cognized is mine’, they shouldn’t take pleasure in the cognized.",
+          "en": "But they shouldn’t identify with the known, they shouldn’t identify regarding the known, they shouldn’t identify as the known, they shouldn’t identify that ‘the known is mine’, they shouldn’t take pleasure in the known.",
           "expanded": true
         },
         {
@@ -1066,7 +1076,7 @@
         },
         {
           "scid": "mn1:28-49.20.2",
-          "en": "But they shouldn’t conceive oneness, they shouldn’t conceive regarding oneness, they shouldn’t conceive as oneness, they shouldn’t conceive that ‘oneness is mine’, they shouldn’t take pleasure in oneness.",
+          "en": "But they shouldn’t identify with oneness, they shouldn’t identify regarding oneness, they shouldn’t identify as oneness, they shouldn’t identify that ‘oneness is mine’, they shouldn’t take pleasure in oneness.",
           "expanded": true
         },
         {
@@ -1086,7 +1096,7 @@
         },
         {
           "scid": "mn1:28-49.21.2",
-          "en": "But they shouldn’t conceive diversity, they shouldn’t conceive regarding diversity, they shouldn’t conceive as diversity, they shouldn’t conceive that ‘diversity is mine’, they shouldn’t take pleasure in diversity.",
+          "en": "But they shouldn’t identify with diversity, they shouldn’t identify regarding diversity, they shouldn’t identify as diversity, they shouldn’t identify that ‘diversity is mine’, they shouldn’t take pleasure in diversity.",
           "expanded": true
         },
         {
@@ -1106,7 +1116,7 @@
         },
         {
           "scid": "mn1:28-49.22.2",
-          "en": "But they shouldn’t conceive all, they shouldn’t conceive regarding all, they shouldn’t conceive as all, they shouldn’t conceive that ‘all is mine’, they shouldn’t take pleasure in all.",
+          "en": "But they shouldn’t identify with all, they shouldn’t identify regarding all, they shouldn’t identify as all, they shouldn’t identify that ‘all is mine’, they shouldn’t take pleasure in all.",
           "expanded": true
         },
         {
@@ -1127,7 +1137,7 @@
         {
           "scid": "mn1:50.1",
           "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ mā maññi, nibbānasmiṃ mā maññi, nibbānato mā maññi, nibbānaṃ meti mā maññi, nibbānaṃ mābhinandi.",
-          "en": "But they shouldn’t conceive extinguishment, they shouldn’t conceive regarding extinguishment, they shouldn’t conceive as extinguishment, they shouldn’t conceive that ‘extinguishment is mine’, they shouldn’t take pleasure in extinguishment."
+          "en": "But they shouldn’t identify with extinguishment, they shouldn’t identify regarding extinguishment, they shouldn’t identify as extinguishment, they shouldn’t identify that ‘extinguishment is mine’, they shouldn’t take pleasure in extinguishment."
         },
         {
           "scid": "mn1:50.2",
@@ -1164,7 +1174,7 @@
         {
           "scid": "mn1:51.2",
           "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-          "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+          "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth."
         },
         {
           "scid": "mn1:51.3",
@@ -1183,7 +1193,7 @@
         },
         {
           "scid": "mn1:52-74.1.2",
-          "en": "But they don’t conceive water, they don’t conceive regarding water, they don’t conceive as water, they don’t conceive that ‘water is mine’, they don’t take pleasure in water.",
+          "en": "But they don’t identify with water, they don’t identify regarding water, they don’t identify as water, they don’t identify that ‘water is mine’, they don’t take pleasure in water.",
           "expanded": true
         },
         {
@@ -1203,7 +1213,7 @@
         },
         {
           "scid": "mn1:52-74.2.2",
-          "en": "But they don’t conceive fire, they don’t conceive regarding fire, they don’t conceive as fire, they don’t conceive that ‘fire is mine’, they don’t take pleasure in fire.",
+          "en": "But they don’t identify with fire, they don’t identify regarding fire, they don’t identify as fire, they don’t identify that ‘fire is mine’, they don’t take pleasure in fire.",
           "expanded": true
         },
         {
@@ -1223,7 +1233,7 @@
         },
         {
           "scid": "mn1:52-74.3.2",
-          "en": "But they don’t conceive air, they don’t conceive regarding air, they don’t conceive as air, they don’t conceive that ‘air is mine’, they don’t take pleasure in air.",
+          "en": "But they don’t identify with air, they don’t identify regarding air, they don’t identify as air, they don’t identify that ‘air is mine’, they don’t take pleasure in air.",
           "expanded": true
         },
         {
@@ -1243,7 +1253,7 @@
         },
         {
           "scid": "mn1:52-74.4.2",
-          "en": "But they don’t conceive creatures, they don’t conceive regarding creatures, they don’t conceive as creatures, they don’t conceive that ‘creatures is mine’, they don’t take pleasure in creatures.",
+          "en": "But they don’t identify with creatures, they don’t identify regarding creatures, they don’t identify as creatures, they don’t identify that ‘creatures is mine’, they don’t take pleasure in creatures.",
           "expanded": true
         },
         {
@@ -1263,7 +1273,7 @@
         },
         {
           "scid": "mn1:52-74.5.2",
-          "en": "But they don’t conceive gods, they don’t conceive regarding gods, they don’t conceive as gods, they don’t conceive that ‘gods is mine’, they don’t take pleasure in gods.",
+          "en": "But they don’t identify with gods, they don’t identify regarding gods, they don’t identify as gods, they don’t identify that ‘gods is mine’, they don’t take pleasure in gods.",
           "expanded": true
         },
         {
@@ -1283,7 +1293,7 @@
         },
         {
           "scid": "mn1:52-74.6.2",
-          "en": "But they don’t conceive the Creator, they don’t conceive regarding the Creator, they don’t conceive as the Creator, they don’t conceive that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
+          "en": "But they don’t identify with the Creator, they don’t identify regarding the Creator, they don’t identify as the Creator, they don’t identify that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
           "expanded": true
         },
         {
@@ -1303,7 +1313,7 @@
         },
         {
           "scid": "mn1:52-74.7.2",
-          "en": "But they don’t conceive Brahmā, they don’t conceive regarding Brahmā, they don’t conceive as Brahmā, they don’t conceive that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
+          "en": "But they don’t identify with Brahmā, they don’t identify regarding Brahmā, they don’t identify as Brahmā, they don’t identify that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
           "expanded": true
         },
         {
@@ -1323,7 +1333,7 @@
         },
         {
           "scid": "mn1:52-74.8.2",
-          "en": "But they don’t conceive the gods of streaming radiance, they don’t conceive regarding the gods of streaming radiance, they don’t conceive as the gods of streaming radiance, they don’t conceive that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
+          "en": "But they don’t identify with the gods of streaming radiance, they don’t identify regarding the gods of streaming radiance, they don’t identify as the gods of streaming radiance, they don’t identify that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
           "expanded": true
         },
         {
@@ -1343,7 +1353,7 @@
         },
         {
           "scid": "mn1:52-74.9.2",
-          "en": "But they don’t conceive the gods replete with glory, they don’t conceive regarding the gods replete with glory, they don’t conceive as the gods replete with glory, they don’t conceive that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
+          "en": "But they don’t identify with the gods replete with glory, they don’t identify regarding the gods replete with glory, they don’t identify as the gods replete with glory, they don’t identify that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
           "expanded": true
         },
         {
@@ -1363,7 +1373,7 @@
         },
         {
           "scid": "mn1:52-74.10.2",
-          "en": "But they don’t conceive the gods of abundant fruit, they don’t conceive regarding the gods of abundant fruit, they don’t conceive as the gods of abundant fruit, they don’t conceive that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
+          "en": "But they don’t identify with the gods of abundant fruit, they don’t identify regarding the gods of abundant fruit, they don’t identify as the gods of abundant fruit, they don’t identify that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
           "expanded": true
         },
         {
@@ -1383,7 +1393,7 @@
         },
         {
           "scid": "mn1:52-74.11.2",
-          "en": "But they don’t conceive the Overlord, they don’t conceive regarding the Overlord, they don’t conceive as the Overlord, they don’t conceive that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
+          "en": "But they don’t identify with the Overlord, they don’t identify regarding the Overlord, they don’t identify as the Overlord, they don’t identify that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
           "expanded": true
         },
         {
@@ -1403,7 +1413,7 @@
         },
         {
           "scid": "mn1:52-74.12.2",
-          "en": "But they don’t conceive the dimension of infinite space, they don’t conceive regarding the dimension of infinite space, they don’t conceive as the dimension of infinite space, they don’t conceive that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
+          "en": "But they don’t identify with the dimension of infinite space, they don’t identify regarding the dimension of infinite space, they don’t identify as the dimension of infinite space, they don’t identify that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
           "expanded": true
         },
         {
@@ -1423,7 +1433,7 @@
         },
         {
           "scid": "mn1:52-74.13.2",
-          "en": "But they don’t conceive the dimension of infinite consciousness, they don’t conceive regarding the dimension of infinite consciousness, they don’t conceive as the dimension of infinite consciousness, they don’t conceive that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
+          "en": "But they don’t identify with the dimension of infinite consciousness, they don’t identify regarding the dimension of infinite consciousness, they don’t identify as the dimension of infinite consciousness, they don’t identify that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
           "expanded": true
         },
         {
@@ -1443,7 +1453,7 @@
         },
         {
           "scid": "mn1:52-74.14.2",
-          "en": "But they don’t conceive the dimension of nothingness, they don’t conceive regarding the dimension of nothingness, they don’t conceive as the dimension of nothingness, they don’t conceive that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
+          "en": "But they don’t identify with the dimension of nothingness, they don’t identify regarding the dimension of nothingness, they don’t identify as the dimension of nothingness, they don’t identify that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
           "expanded": true
         },
         {
@@ -1463,7 +1473,7 @@
         },
         {
           "scid": "mn1:52-74.15.2",
-          "en": "But they don’t conceive the dimension of neither perception nor non-perception, they don’t conceive regarding the dimension of neither perception nor non-perception, they don’t conceive as the dimension of neither perception nor non-perception, they don’t conceive that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
+          "en": "But they don’t identify with the dimension of neither perception nor non-perception, they don’t identify regarding the dimension of neither perception nor non-perception, they don’t identify as the dimension of neither perception nor non-perception, they don’t identify that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
           "expanded": true
         },
         {
@@ -1483,7 +1493,7 @@
         },
         {
           "scid": "mn1:52-74.16.2",
-          "en": "But they don’t conceive the seen, they don’t conceive regarding the seen, they don’t conceive as the seen, they don’t conceive that ‘the seen is mine’, they don’t take pleasure in the seen.",
+          "en": "But they don’t identify with the seen, they don’t identify regarding the seen, they don’t identify as the seen, they don’t identify that ‘the seen is mine’, they don’t take pleasure in the seen.",
           "expanded": true
         },
         {
@@ -1503,7 +1513,7 @@
         },
         {
           "scid": "mn1:52-74.17.2",
-          "en": "But they don’t conceive the heard, they don’t conceive regarding the heard, they don’t conceive as the heard, they don’t conceive that ‘the heard is mine’, they don’t take pleasure in the heard.",
+          "en": "But they don’t identify with the heard, they don’t identify regarding the heard, they don’t identify as the heard, they don’t identify that ‘the heard is mine’, they don’t take pleasure in the heard.",
           "expanded": true
         },
         {
@@ -1523,7 +1533,7 @@
         },
         {
           "scid": "mn1:52-74.18.2",
-          "en": "But they don’t conceive the thought, they don’t conceive regarding the thought, they don’t conceive as the thought, they don’t conceive that ‘the thought is mine’, they don’t take pleasure in the thought.",
+          "en": "But they don’t identify with the thought, they don’t identify regarding the thought, they don’t identify as the thought, they don’t identify that ‘the thought is mine’, they don’t take pleasure in the thought.",
           "expanded": true
         },
         {
@@ -1538,12 +1548,12 @@
         },
         {
           "scid": "mn1:52-74.19.1",
-          "en": "They directly know the cognized as the cognized.",
+          "en": "They directly know the known as the known.",
           "expanded": true
         },
         {
           "scid": "mn1:52-74.19.2",
-          "en": "But they don’t conceive the cognized, they don’t conceive regarding the cognized, they don’t conceive as the cognized, they don’t conceive that ‘the cognized is mine’, they don’t take pleasure in the cognized.",
+          "en": "But they don’t identify with the known, they don’t identify regarding the known, they don’t identify as the known, they don’t identify that ‘the known is mine’, they don’t take pleasure in the known.",
           "expanded": true
         },
         {
@@ -1563,7 +1573,7 @@
         },
         {
           "scid": "mn1:52-74.20.2",
-          "en": "But they don’t conceive oneness, they don’t conceive regarding oneness, they don’t conceive as oneness, they don’t conceive that ‘oneness is mine’, they don’t take pleasure in oneness.",
+          "en": "But they don’t identify with oneness, they don’t identify regarding oneness, they don’t identify as oneness, they don’t identify that ‘oneness is mine’, they don’t take pleasure in oneness.",
           "expanded": true
         },
         {
@@ -1583,7 +1593,7 @@
         },
         {
           "scid": "mn1:52-74.21.2",
-          "en": "But they don’t conceive diversity, they don’t conceive regarding diversity, they don’t conceive as diversity, they don’t conceive that ‘diversity is mine’, they don’t take pleasure in diversity.",
+          "en": "But they don’t identify with diversity, they don’t identify regarding diversity, they don’t identify as diversity, they don’t identify that ‘diversity is mine’, they don’t take pleasure in diversity.",
           "expanded": true
         },
         {
@@ -1603,7 +1613,7 @@
         },
         {
           "scid": "mn1:52-74.22.2",
-          "en": "But they don’t conceive all, they don’t conceive regarding all, they don’t conceive as all, they don’t conceive that ‘all is mine’, they don’t take pleasure in all.",
+          "en": "But they don’t identify with all, they don’t identify regarding all, they don’t identify as all, they don’t identify that ‘all is mine’, they don’t take pleasure in all.",
           "expanded": true
         },
         {
@@ -1624,7 +1634,7 @@
         {
           "scid": "mn1:52-74.24",
           "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-          "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+          "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
         },
         {
           "scid": "mn1:52-74.25",
@@ -1661,7 +1671,7 @@
         {
           "scid": "mn1:75.2",
           "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-          "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+          "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth."
         },
         {
           "scid": "mn1:75.3",
@@ -1680,7 +1690,7 @@
         },
         {
           "scid": "mn1:76-98.1.2",
-          "en": "But they don’t conceive water, they don’t conceive regarding water, they don’t conceive as water, they don’t conceive that ‘water is mine’, they don’t take pleasure in water.",
+          "en": "But they don’t identify with water, they don’t identify regarding water, they don’t identify as water, they don’t identify that ‘water is mine’, they don’t take pleasure in water.",
           "expanded": true
         },
         {
@@ -1700,7 +1710,7 @@
         },
         {
           "scid": "mn1:76-98.2.2",
-          "en": "But they don’t conceive fire, they don’t conceive regarding fire, they don’t conceive as fire, they don’t conceive that ‘fire is mine’, they don’t take pleasure in fire.",
+          "en": "But they don’t identify with fire, they don’t identify regarding fire, they don’t identify as fire, they don’t identify that ‘fire is mine’, they don’t take pleasure in fire.",
           "expanded": true
         },
         {
@@ -1720,7 +1730,7 @@
         },
         {
           "scid": "mn1:76-98.3.2",
-          "en": "But they don’t conceive air, they don’t conceive regarding air, they don’t conceive as air, they don’t conceive that ‘air is mine’, they don’t take pleasure in air.",
+          "en": "But they don’t identify with air, they don’t identify regarding air, they don’t identify as air, they don’t identify that ‘air is mine’, they don’t take pleasure in air.",
           "expanded": true
         },
         {
@@ -1740,7 +1750,7 @@
         },
         {
           "scid": "mn1:76-98.4.2",
-          "en": "But they don’t conceive creatures, they don’t conceive regarding creatures, they don’t conceive as creatures, they don’t conceive that ‘creatures is mine’, they don’t take pleasure in creatures.",
+          "en": "But they don’t identify with creatures, they don’t identify regarding creatures, they don’t identify as creatures, they don’t identify that ‘creatures is mine’, they don’t take pleasure in creatures.",
           "expanded": true
         },
         {
@@ -1760,7 +1770,7 @@
         },
         {
           "scid": "mn1:76-98.5.2",
-          "en": "But they don’t conceive gods, they don’t conceive regarding gods, they don’t conceive as gods, they don’t conceive that ‘gods is mine’, they don’t take pleasure in gods.",
+          "en": "But they don’t identify with gods, they don’t identify regarding gods, they don’t identify as gods, they don’t identify that ‘gods is mine’, they don’t take pleasure in gods.",
           "expanded": true
         },
         {
@@ -1780,7 +1790,7 @@
         },
         {
           "scid": "mn1:76-98.6.2",
-          "en": "But they don’t conceive the Creator, they don’t conceive regarding the Creator, they don’t conceive as the Creator, they don’t conceive that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
+          "en": "But they don’t identify with the Creator, they don’t identify regarding the Creator, they don’t identify as the Creator, they don’t identify that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
           "expanded": true
         },
         {
@@ -1800,7 +1810,7 @@
         },
         {
           "scid": "mn1:76-98.7.2",
-          "en": "But they don’t conceive Brahmā, they don’t conceive regarding Brahmā, they don’t conceive as Brahmā, they don’t conceive that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
+          "en": "But they don’t identify with Brahmā, they don’t identify regarding Brahmā, they don’t identify as Brahmā, they don’t identify that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
           "expanded": true
         },
         {
@@ -1820,7 +1830,7 @@
         },
         {
           "scid": "mn1:76-98.8.2",
-          "en": "But they don’t conceive the gods of streaming radiance, they don’t conceive regarding the gods of streaming radiance, they don’t conceive as the gods of streaming radiance, they don’t conceive that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
+          "en": "But they don’t identify with the gods of streaming radiance, they don’t identify regarding the gods of streaming radiance, they don’t identify as the gods of streaming radiance, they don’t identify that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
           "expanded": true
         },
         {
@@ -1840,7 +1850,7 @@
         },
         {
           "scid": "mn1:76-98.9.2",
-          "en": "But they don’t conceive the gods replete with glory, they don’t conceive regarding the gods replete with glory, they don’t conceive as the gods replete with glory, they don’t conceive that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
+          "en": "But they don’t identify with the gods replete with glory, they don’t identify regarding the gods replete with glory, they don’t identify as the gods replete with glory, they don’t identify that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
           "expanded": true
         },
         {
@@ -1860,7 +1870,7 @@
         },
         {
           "scid": "mn1:76-98.10.2",
-          "en": "But they don’t conceive the gods of abundant fruit, they don’t conceive regarding the gods of abundant fruit, they don’t conceive as the gods of abundant fruit, they don’t conceive that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
+          "en": "But they don’t identify with the gods of abundant fruit, they don’t identify regarding the gods of abundant fruit, they don’t identify as the gods of abundant fruit, they don’t identify that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
           "expanded": true
         },
         {
@@ -1880,7 +1890,7 @@
         },
         {
           "scid": "mn1:76-98.11.2",
-          "en": "But they don’t conceive the Overlord, they don’t conceive regarding the Overlord, they don’t conceive as the Overlord, they don’t conceive that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
+          "en": "But they don’t identify with the Overlord, they don’t identify regarding the Overlord, they don’t identify as the Overlord, they don’t identify that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
           "expanded": true
         },
         {
@@ -1900,7 +1910,7 @@
         },
         {
           "scid": "mn1:76-98.12.2",
-          "en": "But they don’t conceive the dimension of infinite space, they don’t conceive regarding the dimension of infinite space, they don’t conceive as the dimension of infinite space, they don’t conceive that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
+          "en": "But they don’t identify with the dimension of infinite space, they don’t identify regarding the dimension of infinite space, they don’t identify as the dimension of infinite space, they don’t identify that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
           "expanded": true
         },
         {
@@ -1920,7 +1930,7 @@
         },
         {
           "scid": "mn1:76-98.13.2",
-          "en": "But they don’t conceive the dimension of infinite consciousness, they don’t conceive regarding the dimension of infinite consciousness, they don’t conceive as the dimension of infinite consciousness, they don’t conceive that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
+          "en": "But they don’t identify with the dimension of infinite consciousness, they don’t identify regarding the dimension of infinite consciousness, they don’t identify as the dimension of infinite consciousness, they don’t identify that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
           "expanded": true
         },
         {
@@ -1940,7 +1950,7 @@
         },
         {
           "scid": "mn1:76-98.14.2",
-          "en": "But they don’t conceive the dimension of nothingness, they don’t conceive regarding the dimension of nothingness, they don’t conceive as the dimension of nothingness, they don’t conceive that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
+          "en": "But they don’t identify with the dimension of nothingness, they don’t identify regarding the dimension of nothingness, they don’t identify as the dimension of nothingness, they don’t identify that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
           "expanded": true
         },
         {
@@ -1960,7 +1970,7 @@
         },
         {
           "scid": "mn1:76-98.15.2",
-          "en": "But they don’t conceive the dimension of neither perception nor non-perception, they don’t conceive regarding the dimension of neither perception nor non-perception, they don’t conceive as the dimension of neither perception nor non-perception, they don’t conceive that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
+          "en": "But they don’t identify with the dimension of neither perception nor non-perception, they don’t identify regarding the dimension of neither perception nor non-perception, they don’t identify as the dimension of neither perception nor non-perception, they don’t identify that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
           "expanded": true
         },
         {
@@ -1980,7 +1990,7 @@
         },
         {
           "scid": "mn1:76-98.16.2",
-          "en": "But they don’t conceive the seen, they don’t conceive regarding the seen, they don’t conceive as the seen, they don’t conceive that ‘the seen is mine’, they don’t take pleasure in the seen.",
+          "en": "But they don’t identify with the seen, they don’t identify regarding the seen, they don’t identify as the seen, they don’t identify that ‘the seen is mine’, they don’t take pleasure in the seen.",
           "expanded": true
         },
         {
@@ -2000,7 +2010,7 @@
         },
         {
           "scid": "mn1:76-98.17.2",
-          "en": "But they don’t conceive the heard, they don’t conceive regarding the heard, they don’t conceive as the heard, they don’t conceive that ‘the heard is mine’, they don’t take pleasure in the heard.",
+          "en": "But they don’t identify with the heard, they don’t identify regarding the heard, they don’t identify as the heard, they don’t identify that ‘the heard is mine’, they don’t take pleasure in the heard.",
           "expanded": true
         },
         {
@@ -2020,7 +2030,7 @@
         },
         {
           "scid": "mn1:76-98.18.2",
-          "en": "But they don’t conceive the thought, they don’t conceive regarding the thought, they don’t conceive as the thought, they don’t conceive that ‘the thought is mine’, they don’t take pleasure in the thought.",
+          "en": "But they don’t identify with the thought, they don’t identify regarding the thought, they don’t identify as the thought, they don’t identify that ‘the thought is mine’, they don’t take pleasure in the thought.",
           "expanded": true
         },
         {
@@ -2035,12 +2045,12 @@
         },
         {
           "scid": "mn1:76-98.19.1",
-          "en": "They directly know the cognized as the cognized.",
+          "en": "They directly know the known as the known.",
           "expanded": true
         },
         {
           "scid": "mn1:76-98.19.2",
-          "en": "But they don’t conceive the cognized, they don’t conceive regarding the cognized, they don’t conceive as the cognized, they don’t conceive that ‘the cognized is mine’, they don’t take pleasure in the cognized.",
+          "en": "But they don’t identify with the known, they don’t identify regarding the known, they don’t identify as the known, they don’t identify that ‘the known is mine’, they don’t take pleasure in the known.",
           "expanded": true
         },
         {
@@ -2060,7 +2070,7 @@
         },
         {
           "scid": "mn1:76-98.20.2",
-          "en": "But they don’t conceive oneness, they don’t conceive regarding oneness, they don’t conceive as oneness, they don’t conceive that ‘oneness is mine’, they don’t take pleasure in oneness.",
+          "en": "But they don’t identify with oneness, they don’t identify regarding oneness, they don’t identify as oneness, they don’t identify that ‘oneness is mine’, they don’t take pleasure in oneness.",
           "expanded": true
         },
         {
@@ -2080,7 +2090,7 @@
         },
         {
           "scid": "mn1:76-98.21.2",
-          "en": "But they don’t conceive diversity, they don’t conceive regarding diversity, they don’t conceive as diversity, they don’t conceive that ‘diversity is mine’, they don’t take pleasure in diversity.",
+          "en": "But they don’t identify with diversity, they don’t identify regarding diversity, they don’t identify as diversity, they don’t identify that ‘diversity is mine’, they don’t take pleasure in diversity.",
           "expanded": true
         },
         {
@@ -2100,7 +2110,7 @@
         },
         {
           "scid": "mn1:76-98.22.2",
-          "en": "But they don’t conceive all, they don’t conceive regarding all, they don’t conceive as all, they don’t conceive that ‘all is mine’, they don’t take pleasure in all.",
+          "en": "But they don’t identify with all, they don’t identify regarding all, they don’t identify as all, they don’t identify that ‘all is mine’, they don’t take pleasure in all.",
           "expanded": true
         },
         {
@@ -2121,7 +2131,7 @@
         {
           "scid": "mn1:76-98.24",
           "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-          "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+          "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
         },
         {
           "scid": "mn1:76-98.25",
@@ -2158,7 +2168,7 @@
         {
           "scid": "mn1:99.2",
           "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-          "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+          "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth."
         },
         {
           "scid": "mn1:99.3",
@@ -2177,7 +2187,7 @@
         },
         {
           "scid": "mn1:100-122.1.2",
-          "en": "But they don’t conceive water, they don’t conceive regarding water, they don’t conceive as water, they don’t conceive that ‘water is mine’, they don’t take pleasure in water.",
+          "en": "But they don’t identify with water, they don’t identify regarding water, they don’t identify as water, they don’t identify that ‘water is mine’, they don’t take pleasure in water.",
           "expanded": true
         },
         {
@@ -2197,7 +2207,7 @@
         },
         {
           "scid": "mn1:100-122.2.2",
-          "en": "But they don’t conceive fire, they don’t conceive regarding fire, they don’t conceive as fire, they don’t conceive that ‘fire is mine’, they don’t take pleasure in fire.",
+          "en": "But they don’t identify with fire, they don’t identify regarding fire, they don’t identify as fire, they don’t identify that ‘fire is mine’, they don’t take pleasure in fire.",
           "expanded": true
         },
         {
@@ -2217,7 +2227,7 @@
         },
         {
           "scid": "mn1:100-122.3.2",
-          "en": "But they don’t conceive air, they don’t conceive regarding air, they don’t conceive as air, they don’t conceive that ‘air is mine’, they don’t take pleasure in air.",
+          "en": "But they don’t identify with air, they don’t identify regarding air, they don’t identify as air, they don’t identify that ‘air is mine’, they don’t take pleasure in air.",
           "expanded": true
         },
         {
@@ -2237,7 +2247,7 @@
         },
         {
           "scid": "mn1:100-122.4.2",
-          "en": "But they don’t conceive creatures, they don’t conceive regarding creatures, they don’t conceive as creatures, they don’t conceive that ‘creatures is mine’, they don’t take pleasure in creatures.",
+          "en": "But they don’t identify with creatures, they don’t identify regarding creatures, they don’t identify as creatures, they don’t identify that ‘creatures is mine’, they don’t take pleasure in creatures.",
           "expanded": true
         },
         {
@@ -2257,7 +2267,7 @@
         },
         {
           "scid": "mn1:100-122.5.2",
-          "en": "But they don’t conceive gods, they don’t conceive regarding gods, they don’t conceive as gods, they don’t conceive that ‘gods is mine’, they don’t take pleasure in gods.",
+          "en": "But they don’t identify with gods, they don’t identify regarding gods, they don’t identify as gods, they don’t identify that ‘gods is mine’, they don’t take pleasure in gods.",
           "expanded": true
         },
         {
@@ -2277,7 +2287,7 @@
         },
         {
           "scid": "mn1:100-122.6.2",
-          "en": "But they don’t conceive the Creator, they don’t conceive regarding the Creator, they don’t conceive as the Creator, they don’t conceive that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
+          "en": "But they don’t identify with the Creator, they don’t identify regarding the Creator, they don’t identify as the Creator, they don’t identify that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
           "expanded": true
         },
         {
@@ -2297,7 +2307,7 @@
         },
         {
           "scid": "mn1:100-122.7.2",
-          "en": "But they don’t conceive Brahmā, they don’t conceive regarding Brahmā, they don’t conceive as Brahmā, they don’t conceive that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
+          "en": "But they don’t identify with Brahmā, they don’t identify regarding Brahmā, they don’t identify as Brahmā, they don’t identify that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
           "expanded": true
         },
         {
@@ -2317,7 +2327,7 @@
         },
         {
           "scid": "mn1:100-122.8.2",
-          "en": "But they don’t conceive the gods of streaming radiance, they don’t conceive regarding the gods of streaming radiance, they don’t conceive as the gods of streaming radiance, they don’t conceive that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
+          "en": "But they don’t identify with the gods of streaming radiance, they don’t identify regarding the gods of streaming radiance, they don’t identify as the gods of streaming radiance, they don’t identify that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
           "expanded": true
         },
         {
@@ -2337,7 +2347,7 @@
         },
         {
           "scid": "mn1:100-122.9.2",
-          "en": "But they don’t conceive the gods replete with glory, they don’t conceive regarding the gods replete with glory, they don’t conceive as the gods replete with glory, they don’t conceive that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
+          "en": "But they don’t identify with the gods replete with glory, they don’t identify regarding the gods replete with glory, they don’t identify as the gods replete with glory, they don’t identify that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
           "expanded": true
         },
         {
@@ -2357,7 +2367,7 @@
         },
         {
           "scid": "mn1:100-122.10.2",
-          "en": "But they don’t conceive the gods of abundant fruit, they don’t conceive regarding the gods of abundant fruit, they don’t conceive as the gods of abundant fruit, they don’t conceive that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
+          "en": "But they don’t identify with the gods of abundant fruit, they don’t identify regarding the gods of abundant fruit, they don’t identify as the gods of abundant fruit, they don’t identify that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
           "expanded": true
         },
         {
@@ -2377,7 +2387,7 @@
         },
         {
           "scid": "mn1:100-122.11.2",
-          "en": "But they don’t conceive the Overlord, they don’t conceive regarding the Overlord, they don’t conceive as the Overlord, they don’t conceive that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
+          "en": "But they don’t identify with the Overlord, they don’t identify regarding the Overlord, they don’t identify as the Overlord, they don’t identify that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
           "expanded": true
         },
         {
@@ -2397,7 +2407,7 @@
         },
         {
           "scid": "mn1:100-122.12.2",
-          "en": "But they don’t conceive the dimension of infinite space, they don’t conceive regarding the dimension of infinite space, they don’t conceive as the dimension of infinite space, they don’t conceive that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
+          "en": "But they don’t identify with the dimension of infinite space, they don’t identify regarding the dimension of infinite space, they don’t identify as the dimension of infinite space, they don’t identify that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
           "expanded": true
         },
         {
@@ -2417,7 +2427,7 @@
         },
         {
           "scid": "mn1:100-122.13.2",
-          "en": "But they don’t conceive the dimension of infinite consciousness, they don’t conceive regarding the dimension of infinite consciousness, they don’t conceive as the dimension of infinite consciousness, they don’t conceive that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
+          "en": "But they don’t identify with the dimension of infinite consciousness, they don’t identify regarding the dimension of infinite consciousness, they don’t identify as the dimension of infinite consciousness, they don’t identify that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
           "expanded": true
         },
         {
@@ -2437,7 +2447,7 @@
         },
         {
           "scid": "mn1:100-122.14.2",
-          "en": "But they don’t conceive the dimension of nothingness, they don’t conceive regarding the dimension of nothingness, they don’t conceive as the dimension of nothingness, they don’t conceive that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
+          "en": "But they don’t identify with the dimension of nothingness, they don’t identify regarding the dimension of nothingness, they don’t identify as the dimension of nothingness, they don’t identify that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
           "expanded": true
         },
         {
@@ -2457,7 +2467,7 @@
         },
         {
           "scid": "mn1:100-122.15.2",
-          "en": "But they don’t conceive the dimension of neither perception nor non-perception, they don’t conceive regarding the dimension of neither perception nor non-perception, they don’t conceive as the dimension of neither perception nor non-perception, they don’t conceive that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
+          "en": "But they don’t identify with the dimension of neither perception nor non-perception, they don’t identify regarding the dimension of neither perception nor non-perception, they don’t identify as the dimension of neither perception nor non-perception, they don’t identify that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
           "expanded": true
         },
         {
@@ -2477,7 +2487,7 @@
         },
         {
           "scid": "mn1:100-122.16.2",
-          "en": "But they don’t conceive the seen, they don’t conceive regarding the seen, they don’t conceive as the seen, they don’t conceive that ‘the seen is mine’, they don’t take pleasure in the seen.",
+          "en": "But they don’t identify with the seen, they don’t identify regarding the seen, they don’t identify as the seen, they don’t identify that ‘the seen is mine’, they don’t take pleasure in the seen.",
           "expanded": true
         },
         {
@@ -2497,7 +2507,7 @@
         },
         {
           "scid": "mn1:100-122.17.2",
-          "en": "But they don’t conceive the heard, they don’t conceive regarding the heard, they don’t conceive as the heard, they don’t conceive that ‘the heard is mine’, they don’t take pleasure in the heard.",
+          "en": "But they don’t identify with the heard, they don’t identify regarding the heard, they don’t identify as the heard, they don’t identify that ‘the heard is mine’, they don’t take pleasure in the heard.",
           "expanded": true
         },
         {
@@ -2517,7 +2527,7 @@
         },
         {
           "scid": "mn1:100-122.18.2",
-          "en": "But they don’t conceive the thought, they don’t conceive regarding the thought, they don’t conceive as the thought, they don’t conceive that ‘the thought is mine’, they don’t take pleasure in the thought.",
+          "en": "But they don’t identify with the thought, they don’t identify regarding the thought, they don’t identify as the thought, they don’t identify that ‘the thought is mine’, they don’t take pleasure in the thought.",
           "expanded": true
         },
         {
@@ -2532,12 +2542,12 @@
         },
         {
           "scid": "mn1:100-122.19.1",
-          "en": "They directly know the cognized as the cognized.",
+          "en": "They directly know the known as the known.",
           "expanded": true
         },
         {
           "scid": "mn1:100-122.19.2",
-          "en": "But they don’t conceive the cognized, they don’t conceive regarding the cognized, they don’t conceive as the cognized, they don’t conceive that ‘the cognized is mine’, they don’t take pleasure in the cognized.",
+          "en": "But they don’t identify with the known, they don’t identify regarding the known, they don’t identify as the known, they don’t identify that ‘the known is mine’, they don’t take pleasure in the known.",
           "expanded": true
         },
         {
@@ -2557,7 +2567,7 @@
         },
         {
           "scid": "mn1:100-122.20.2",
-          "en": "But they don’t conceive oneness, they don’t conceive regarding oneness, they don’t conceive as oneness, they don’t conceive that ‘oneness is mine’, they don’t take pleasure in oneness.",
+          "en": "But they don’t identify with oneness, they don’t identify regarding oneness, they don’t identify as oneness, they don’t identify that ‘oneness is mine’, they don’t take pleasure in oneness.",
           "expanded": true
         },
         {
@@ -2577,7 +2587,7 @@
         },
         {
           "scid": "mn1:100-122.21.2",
-          "en": "But they don’t conceive diversity, they don’t conceive regarding diversity, they don’t conceive as diversity, they don’t conceive that ‘diversity is mine’, they don’t take pleasure in diversity.",
+          "en": "But they don’t identify with diversity, they don’t identify regarding diversity, they don’t identify as diversity, they don’t identify that ‘diversity is mine’, they don’t take pleasure in diversity.",
           "expanded": true
         },
         {
@@ -2597,7 +2607,7 @@
         },
         {
           "scid": "mn1:100-122.22.2",
-          "en": "But they don’t conceive all, they don’t conceive regarding all, they don’t conceive as all, they don’t conceive that ‘all is mine’, they don’t take pleasure in all.",
+          "en": "But they don’t identify with all, they don’t identify regarding all, they don’t identify as all, they don’t identify that ‘all is mine’, they don’t take pleasure in all.",
           "expanded": true
         },
         {
@@ -2618,7 +2628,7 @@
         {
           "scid": "mn1:100-122.24",
           "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-          "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+          "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
         },
         {
           "scid": "mn1:100-122.25",
@@ -2655,7 +2665,7 @@
         {
           "scid": "mn1:123.2",
           "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-          "en": "But they don’t conceive earth, they don’t conceive regarding earth, they don’t conceive as earth, they don’t conceive that ‘earth is mine’, they don’t take pleasure in earth."
+          "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth."
         },
         {
           "scid": "mn1:123.3",
@@ -2674,7 +2684,7 @@
         },
         {
           "scid": "mn1:124-146.1.2",
-          "en": "But they don’t conceive water, they don’t conceive regarding water, they don’t conceive as water, they don’t conceive that ‘water is mine’, they don’t take pleasure in water.",
+          "en": "But they don’t identify with water, they don’t identify regarding water, they don’t identify as water, they don’t identify that ‘water is mine’, they don’t take pleasure in water.",
           "expanded": true
         },
         {
@@ -2694,7 +2704,7 @@
         },
         {
           "scid": "mn1:124-146.2.2",
-          "en": "But they don’t conceive fire, they don’t conceive regarding fire, they don’t conceive as fire, they don’t conceive that ‘fire is mine’, they don’t take pleasure in fire.",
+          "en": "But they don’t identify with fire, they don’t identify regarding fire, they don’t identify as fire, they don’t identify that ‘fire is mine’, they don’t take pleasure in fire.",
           "expanded": true
         },
         {
@@ -2714,7 +2724,7 @@
         },
         {
           "scid": "mn1:124-146.3.2",
-          "en": "But they don’t conceive air, they don’t conceive regarding air, they don’t conceive as air, they don’t conceive that ‘air is mine’, they don’t take pleasure in air.",
+          "en": "But they don’t identify with air, they don’t identify regarding air, they don’t identify as air, they don’t identify that ‘air is mine’, they don’t take pleasure in air.",
           "expanded": true
         },
         {
@@ -2734,7 +2744,7 @@
         },
         {
           "scid": "mn1:124-146.4.2",
-          "en": "But they don’t conceive creatures, they don’t conceive regarding creatures, they don’t conceive as creatures, they don’t conceive that ‘creatures is mine’, they don’t take pleasure in creatures.",
+          "en": "But they don’t identify with creatures, they don’t identify regarding creatures, they don’t identify as creatures, they don’t identify that ‘creatures is mine’, they don’t take pleasure in creatures.",
           "expanded": true
         },
         {
@@ -2754,7 +2764,7 @@
         },
         {
           "scid": "mn1:124-146.5.2",
-          "en": "But they don’t conceive gods, they don’t conceive regarding gods, they don’t conceive as gods, they don’t conceive that ‘gods is mine’, they don’t take pleasure in gods.",
+          "en": "But they don’t identify with gods, they don’t identify regarding gods, they don’t identify as gods, they don’t identify that ‘gods is mine’, they don’t take pleasure in gods.",
           "expanded": true
         },
         {
@@ -2774,7 +2784,7 @@
         },
         {
           "scid": "mn1:124-146.6.2",
-          "en": "But they don’t conceive the Creator, they don’t conceive regarding the Creator, they don’t conceive as the Creator, they don’t conceive that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
+          "en": "But they don’t identify with the Creator, they don’t identify regarding the Creator, they don’t identify as the Creator, they don’t identify that ‘the Creator is mine’, they don’t take pleasure in the Creator.",
           "expanded": true
         },
         {
@@ -2794,7 +2804,7 @@
         },
         {
           "scid": "mn1:124-146.7.2",
-          "en": "But they don’t conceive Brahmā, they don’t conceive regarding Brahmā, they don’t conceive as Brahmā, they don’t conceive that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
+          "en": "But they don’t identify with Brahmā, they don’t identify regarding Brahmā, they don’t identify as Brahmā, they don’t identify that ‘Brahmā is mine’, they don’t take pleasure in Brahmā.",
           "expanded": true
         },
         {
@@ -2814,7 +2824,7 @@
         },
         {
           "scid": "mn1:124-146.8.2",
-          "en": "But they don’t conceive the gods of streaming radiance, they don’t conceive regarding the gods of streaming radiance, they don’t conceive as the gods of streaming radiance, they don’t conceive that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
+          "en": "But they don’t identify with the gods of streaming radiance, they don’t identify regarding the gods of streaming radiance, they don’t identify as the gods of streaming radiance, they don’t identify that ‘the gods of streaming radiance is mine’, they don’t take pleasure in the gods of streaming radiance.",
           "expanded": true
         },
         {
@@ -2834,7 +2844,7 @@
         },
         {
           "scid": "mn1:124-146.9.2",
-          "en": "But they don’t conceive the gods replete with glory, they don’t conceive regarding the gods replete with glory, they don’t conceive as the gods replete with glory, they don’t conceive that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
+          "en": "But they don’t identify with the gods replete with glory, they don’t identify regarding the gods replete with glory, they don’t identify as the gods replete with glory, they don’t identify that ‘the gods replete with glory is mine’, they don’t take pleasure in the gods replete with glory.",
           "expanded": true
         },
         {
@@ -2854,7 +2864,7 @@
         },
         {
           "scid": "mn1:124-146.10.2",
-          "en": "But they don’t conceive the gods of abundant fruit, they don’t conceive regarding the gods of abundant fruit, they don’t conceive as the gods of abundant fruit, they don’t conceive that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
+          "en": "But they don’t identify with the gods of abundant fruit, they don’t identify regarding the gods of abundant fruit, they don’t identify as the gods of abundant fruit, they don’t identify that ‘the gods of abundant fruit is mine’, they don’t take pleasure in the gods of abundant fruit.",
           "expanded": true
         },
         {
@@ -2874,7 +2884,7 @@
         },
         {
           "scid": "mn1:124-146.11.2",
-          "en": "But they don’t conceive the Overlord, they don’t conceive regarding the Overlord, they don’t conceive as the Overlord, they don’t conceive that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
+          "en": "But they don’t identify with the Overlord, they don’t identify regarding the Overlord, they don’t identify as the Overlord, they don’t identify that ‘the Overlord is mine’, they don’t take pleasure in the Overlord.",
           "expanded": true
         },
         {
@@ -2894,7 +2904,7 @@
         },
         {
           "scid": "mn1:124-146.12.2",
-          "en": "But they don’t conceive the dimension of infinite space, they don’t conceive regarding the dimension of infinite space, they don’t conceive as the dimension of infinite space, they don’t conceive that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
+          "en": "But they don’t identify with the dimension of infinite space, they don’t identify regarding the dimension of infinite space, they don’t identify as the dimension of infinite space, they don’t identify that ‘the dimension of infinite space is mine’, they don’t take pleasure in the dimension of infinite space.",
           "expanded": true
         },
         {
@@ -2914,7 +2924,7 @@
         },
         {
           "scid": "mn1:124-146.13.2",
-          "en": "But they don’t conceive the dimension of infinite consciousness, they don’t conceive regarding the dimension of infinite consciousness, they don’t conceive as the dimension of infinite consciousness, they don’t conceive that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
+          "en": "But they don’t identify with the dimension of infinite consciousness, they don’t identify regarding the dimension of infinite consciousness, they don’t identify as the dimension of infinite consciousness, they don’t identify that ‘the dimension of infinite consciousness is mine’, they don’t take pleasure in the dimension of infinite consciousness.",
           "expanded": true
         },
         {
@@ -2934,7 +2944,7 @@
         },
         {
           "scid": "mn1:124-146.14.2",
-          "en": "But they don’t conceive the dimension of nothingness, they don’t conceive regarding the dimension of nothingness, they don’t conceive as the dimension of nothingness, they don’t conceive that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
+          "en": "But they don’t identify with the dimension of nothingness, they don’t identify regarding the dimension of nothingness, they don’t identify as the dimension of nothingness, they don’t identify that ‘the dimension of nothingness is mine’, they don’t take pleasure in the dimension of nothingness.",
           "expanded": true
         },
         {
@@ -2954,7 +2964,7 @@
         },
         {
           "scid": "mn1:124-146.15.2",
-          "en": "But they don’t conceive the dimension of neither perception nor non-perception, they don’t conceive regarding the dimension of neither perception nor non-perception, they don’t conceive as the dimension of neither perception nor non-perception, they don’t conceive that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
+          "en": "But they don’t identify with the dimension of neither perception nor non-perception, they don’t identify regarding the dimension of neither perception nor non-perception, they don’t identify as the dimension of neither perception nor non-perception, they don’t identify that ‘the dimension of neither perception nor non-perception is mine’, they don’t take pleasure in the dimension of neither perception nor non-perception.",
           "expanded": true
         },
         {
@@ -2974,7 +2984,7 @@
         },
         {
           "scid": "mn1:124-146.16.2",
-          "en": "But they don’t conceive the seen, they don’t conceive regarding the seen, they don’t conceive as the seen, they don’t conceive that ‘the seen is mine’, they don’t take pleasure in the seen.",
+          "en": "But they don’t identify with the seen, they don’t identify regarding the seen, they don’t identify as the seen, they don’t identify that ‘the seen is mine’, they don’t take pleasure in the seen.",
           "expanded": true
         },
         {
@@ -2994,7 +3004,7 @@
         },
         {
           "scid": "mn1:124-146.17.2",
-          "en": "But they don’t conceive the heard, they don’t conceive regarding the heard, they don’t conceive as the heard, they don’t conceive that ‘the heard is mine’, they don’t take pleasure in the heard.",
+          "en": "But they don’t identify with the heard, they don’t identify regarding the heard, they don’t identify as the heard, they don’t identify that ‘the heard is mine’, they don’t take pleasure in the heard.",
           "expanded": true
         },
         {
@@ -3014,7 +3024,7 @@
         },
         {
           "scid": "mn1:124-146.18.2",
-          "en": "But they don’t conceive the thought, they don’t conceive regarding the thought, they don’t conceive as the thought, they don’t conceive that ‘the thought is mine’, they don’t take pleasure in the thought.",
+          "en": "But they don’t identify with the thought, they don’t identify regarding the thought, they don’t identify as the thought, they don’t identify that ‘the thought is mine’, they don’t take pleasure in the thought.",
           "expanded": true
         },
         {
@@ -3029,12 +3039,12 @@
         },
         {
           "scid": "mn1:124-146.19.1",
-          "en": "They directly know the cognized as the cognized.",
+          "en": "They directly know the known as the known.",
           "expanded": true
         },
         {
           "scid": "mn1:124-146.19.2",
-          "en": "But they don’t conceive the cognized, they don’t conceive regarding the cognized, they don’t conceive as the cognized, they don’t conceive that ‘the cognized is mine’, they don’t take pleasure in the cognized.",
+          "en": "But they don’t identify with the known, they don’t identify regarding the known, they don’t identify as the known, they don’t identify that ‘the known is mine’, they don’t take pleasure in the known.",
           "expanded": true
         },
         {
@@ -3054,7 +3064,7 @@
         },
         {
           "scid": "mn1:124-146.20.2",
-          "en": "But they don’t conceive oneness, they don’t conceive regarding oneness, they don’t conceive as oneness, they don’t conceive that ‘oneness is mine’, they don’t take pleasure in oneness.",
+          "en": "But they don’t identify with oneness, they don’t identify regarding oneness, they don’t identify as oneness, they don’t identify that ‘oneness is mine’, they don’t take pleasure in oneness.",
           "expanded": true
         },
         {
@@ -3074,7 +3084,7 @@
         },
         {
           "scid": "mn1:124-146.21.2",
-          "en": "But they don’t conceive diversity, they don’t conceive regarding diversity, they don’t conceive as diversity, they don’t conceive that ‘diversity is mine’, they don’t take pleasure in diversity.",
+          "en": "But they don’t identify with diversity, they don’t identify regarding diversity, they don’t identify as diversity, they don’t identify that ‘diversity is mine’, they don’t take pleasure in diversity.",
           "expanded": true
         },
         {
@@ -3094,7 +3104,7 @@
         },
         {
           "scid": "mn1:124-146.22.2",
-          "en": "But they don’t conceive all, they don’t conceive regarding all, they don’t conceive as all, they don’t conceive that ‘all is mine’, they don’t take pleasure in all.",
+          "en": "But they don’t identify with all, they don’t identify regarding all, they don’t identify as all, they don’t identify that ‘all is mine’, they don’t take pleasure in all.",
           "expanded": true
         },
         {
@@ -3115,7 +3125,7 @@
         {
           "scid": "mn1:124-146.24",
           "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-          "en": "But they don’t conceive extinguishment, they don’t conceive regarding extinguishment, they don’t conceive as extinguishment, they don’t conceive that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
+          "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment."
         },
         {
           "scid": "mn1:124-146.25",
@@ -3152,7 +3162,7 @@
         {
           "scid": "mn1:147.2",
           "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-          "en": "But he doesn’t conceive earth, he doesn’t conceive regarding earth, he doesn’t conceive as earth, he doesn’t conceive that ‘earth is mine’, he doesn’t take pleasure in earth."
+          "en": "But he doesn’t identify with earth, he doesn’t identify regarding earth, he doesn’t identify as earth, he doesn’t identify that ‘earth is mine’, he doesn’t take pleasure in earth."
         },
         {
           "scid": "mn1:147.3",
@@ -3171,7 +3181,7 @@
         },
         {
           "scid": "mn1:148-170.1.2",
-          "en": "But he doesn’t conceive water, he doesn’t conceive regarding water, he doesn’t conceive as water, he doesn’t conceive that ‘water is mine’, he doesn’t take pleasure in water.",
+          "en": "But he doesn’t identify with water, he doesn’t identify regarding water, he doesn’t identify as water, he doesn’t identify that ‘water is mine’, he doesn’t take pleasure in water.",
           "expanded": true
         },
         {
@@ -3191,7 +3201,7 @@
         },
         {
           "scid": "mn1:148-170.2.2",
-          "en": "But he doesn’t conceive fire, he doesn’t conceive regarding fire, he doesn’t conceive as fire, he doesn’t conceive that ‘fire is mine’, he doesn’t take pleasure in fire.",
+          "en": "But he doesn’t identify with fire, he doesn’t identify regarding fire, he doesn’t identify as fire, he doesn’t identify that ‘fire is mine’, he doesn’t take pleasure in fire.",
           "expanded": true
         },
         {
@@ -3211,7 +3221,7 @@
         },
         {
           "scid": "mn1:148-170.3.2",
-          "en": "But he doesn’t conceive air, he doesn’t conceive regarding air, he doesn’t conceive as air, he doesn’t conceive that ‘air is mine’, he doesn’t take pleasure in air.",
+          "en": "But he doesn’t identify with air, he doesn’t identify regarding air, he doesn’t identify as air, he doesn’t identify that ‘air is mine’, he doesn’t take pleasure in air.",
           "expanded": true
         },
         {
@@ -3231,7 +3241,7 @@
         },
         {
           "scid": "mn1:148-170.4.2",
-          "en": "But he doesn’t conceive creatures, he doesn’t conceive regarding creatures, he doesn’t conceive as creatures, he doesn’t conceive that ‘creatures is mine’, he doesn’t take pleasure in creatures.",
+          "en": "But he doesn’t identify with creatures, he doesn’t identify regarding creatures, he doesn’t identify as creatures, he doesn’t identify that ‘creatures is mine’, he doesn’t take pleasure in creatures.",
           "expanded": true
         },
         {
@@ -3251,7 +3261,7 @@
         },
         {
           "scid": "mn1:148-170.5.2",
-          "en": "But he doesn’t conceive gods, he doesn’t conceive regarding gods, he doesn’t conceive as gods, he doesn’t conceive that ‘gods is mine’, he doesn’t take pleasure in gods.",
+          "en": "But he doesn’t identify with gods, he doesn’t identify regarding gods, he doesn’t identify as gods, he doesn’t identify that ‘gods is mine’, he doesn’t take pleasure in gods.",
           "expanded": true
         },
         {
@@ -3271,7 +3281,7 @@
         },
         {
           "scid": "mn1:148-170.6.2",
-          "en": "But he doesn’t conceive the Creator, he doesn’t conceive regarding the Creator, he doesn’t conceive as the Creator, he doesn’t conceive that ‘the Creator is mine’, he doesn’t take pleasure in the Creator.",
+          "en": "But he doesn’t identify with the Creator, he doesn’t identify regarding the Creator, he doesn’t identify as the Creator, he doesn’t identify that ‘the Creator is mine’, he doesn’t take pleasure in the Creator.",
           "expanded": true
         },
         {
@@ -3291,7 +3301,7 @@
         },
         {
           "scid": "mn1:148-170.7.2",
-          "en": "But he doesn’t conceive Brahmā, he doesn’t conceive regarding Brahmā, he doesn’t conceive as Brahmā, he doesn’t conceive that ‘Brahmā is mine’, he doesn’t take pleasure in Brahmā.",
+          "en": "But he doesn’t identify with Brahmā, he doesn’t identify regarding Brahmā, he doesn’t identify as Brahmā, he doesn’t identify that ‘Brahmā is mine’, he doesn’t take pleasure in Brahmā.",
           "expanded": true
         },
         {
@@ -3311,7 +3321,7 @@
         },
         {
           "scid": "mn1:148-170.8.2",
-          "en": "But he doesn’t conceive the gods of streaming radiance, he doesn’t conceive regarding the gods of streaming radiance, he doesn’t conceive as the gods of streaming radiance, he doesn’t conceive that ‘the gods of streaming radiance is mine’, he doesn’t take pleasure in the gods of streaming radiance.",
+          "en": "But he doesn’t identify with the gods of streaming radiance, he doesn’t identify regarding the gods of streaming radiance, he doesn’t identify as the gods of streaming radiance, he doesn’t identify that ‘the gods of streaming radiance is mine’, he doesn’t take pleasure in the gods of streaming radiance.",
           "expanded": true
         },
         {
@@ -3331,7 +3341,7 @@
         },
         {
           "scid": "mn1:148-170.9.2",
-          "en": "But he doesn’t conceive the gods replete with glory, he doesn’t conceive regarding the gods replete with glory, he doesn’t conceive as the gods replete with glory, he doesn’t conceive that ‘the gods replete with glory is mine’, he doesn’t take pleasure in the gods replete with glory.",
+          "en": "But he doesn’t identify with the gods replete with glory, he doesn’t identify regarding the gods replete with glory, he doesn’t identify as the gods replete with glory, he doesn’t identify that ‘the gods replete with glory is mine’, he doesn’t take pleasure in the gods replete with glory.",
           "expanded": true
         },
         {
@@ -3351,7 +3361,7 @@
         },
         {
           "scid": "mn1:148-170.10.2",
-          "en": "But he doesn’t conceive the gods of abundant fruit, he doesn’t conceive regarding the gods of abundant fruit, he doesn’t conceive as the gods of abundant fruit, he doesn’t conceive that ‘the gods of abundant fruit is mine’, he doesn’t take pleasure in the gods of abundant fruit.",
+          "en": "But he doesn’t identify with the gods of abundant fruit, he doesn’t identify regarding the gods of abundant fruit, he doesn’t identify as the gods of abundant fruit, he doesn’t identify that ‘the gods of abundant fruit is mine’, he doesn’t take pleasure in the gods of abundant fruit.",
           "expanded": true
         },
         {
@@ -3371,7 +3381,7 @@
         },
         {
           "scid": "mn1:148-170.11.2",
-          "en": "But he doesn’t conceive the Overlord, he doesn’t conceive regarding the Overlord, he doesn’t conceive as the Overlord, he doesn’t conceive that ‘the Overlord is mine’, he doesn’t take pleasure in the Overlord.",
+          "en": "But he doesn’t identify with the Overlord, he doesn’t identify regarding the Overlord, he doesn’t identify as the Overlord, he doesn’t identify that ‘the Overlord is mine’, he doesn’t take pleasure in the Overlord.",
           "expanded": true
         },
         {
@@ -3391,7 +3401,7 @@
         },
         {
           "scid": "mn1:148-170.12.2",
-          "en": "But he doesn’t conceive the dimension of infinite space, he doesn’t conceive regarding the dimension of infinite space, he doesn’t conceive as the dimension of infinite space, he doesn’t conceive that ‘the dimension of infinite space is mine’, he doesn’t take pleasure in the dimension of infinite space.",
+          "en": "But he doesn’t identify with the dimension of infinite space, he doesn’t identify regarding the dimension of infinite space, he doesn’t identify as the dimension of infinite space, he doesn’t identify that ‘the dimension of infinite space is mine’, he doesn’t take pleasure in the dimension of infinite space.",
           "expanded": true
         },
         {
@@ -3411,7 +3421,7 @@
         },
         {
           "scid": "mn1:148-170.13.2",
-          "en": "But he doesn’t conceive the dimension of infinite consciousness, he doesn’t conceive regarding the dimension of infinite consciousness, he doesn’t conceive as the dimension of infinite consciousness, he doesn’t conceive that ‘the dimension of infinite consciousness is mine’, he doesn’t take pleasure in the dimension of infinite consciousness.",
+          "en": "But he doesn’t identify with the dimension of infinite consciousness, he doesn’t identify regarding the dimension of infinite consciousness, he doesn’t identify as the dimension of infinite consciousness, he doesn’t identify that ‘the dimension of infinite consciousness is mine’, he doesn’t take pleasure in the dimension of infinite consciousness.",
           "expanded": true
         },
         {
@@ -3431,7 +3441,7 @@
         },
         {
           "scid": "mn1:148-170.14.2",
-          "en": "But he doesn’t conceive the dimension of nothingness, he doesn’t conceive regarding the dimension of nothingness, he doesn’t conceive as the dimension of nothingness, he doesn’t conceive that ‘the dimension of nothingness is mine’, he doesn’t take pleasure in the dimension of nothingness.",
+          "en": "But he doesn’t identify with the dimension of nothingness, he doesn’t identify regarding the dimension of nothingness, he doesn’t identify as the dimension of nothingness, he doesn’t identify that ‘the dimension of nothingness is mine’, he doesn’t take pleasure in the dimension of nothingness.",
           "expanded": true
         },
         {
@@ -3451,7 +3461,7 @@
         },
         {
           "scid": "mn1:148-170.15.2",
-          "en": "But he doesn’t conceive the dimension of neither perception nor non-perception, he doesn’t conceive regarding the dimension of neither perception nor non-perception, he doesn’t conceive as the dimension of neither perception nor non-perception, he doesn’t conceive that ‘the dimension of neither perception nor non-perception is mine’, he doesn’t take pleasure in the dimension of neither perception nor non-perception.",
+          "en": "But he doesn’t identify with the dimension of neither perception nor non-perception, he doesn’t identify regarding the dimension of neither perception nor non-perception, he doesn’t identify as the dimension of neither perception nor non-perception, he doesn’t identify that ‘the dimension of neither perception nor non-perception is mine’, he doesn’t take pleasure in the dimension of neither perception nor non-perception.",
           "expanded": true
         },
         {
@@ -3471,7 +3481,7 @@
         },
         {
           "scid": "mn1:148-170.16.2",
-          "en": "But he doesn’t conceive the seen, he doesn’t conceive regarding the seen, he doesn’t conceive as the seen, he doesn’t conceive that ‘the seen is mine’, he doesn’t take pleasure in the seen.",
+          "en": "But he doesn’t identify with the seen, he doesn’t identify regarding the seen, he doesn’t identify as the seen, he doesn’t identify that ‘the seen is mine’, he doesn’t take pleasure in the seen.",
           "expanded": true
         },
         {
@@ -3491,7 +3501,7 @@
         },
         {
           "scid": "mn1:148-170.17.2",
-          "en": "But he doesn’t conceive the heard, he doesn’t conceive regarding the heard, he doesn’t conceive as the heard, he doesn’t conceive that ‘the heard is mine’, he doesn’t take pleasure in the heard.",
+          "en": "But he doesn’t identify with the heard, he doesn’t identify regarding the heard, he doesn’t identify as the heard, he doesn’t identify that ‘the heard is mine’, he doesn’t take pleasure in the heard.",
           "expanded": true
         },
         {
@@ -3511,7 +3521,7 @@
         },
         {
           "scid": "mn1:148-170.18.2",
-          "en": "But he doesn’t conceive the thought, he doesn’t conceive regarding the thought, he doesn’t conceive as the thought, he doesn’t conceive that ‘the thought is mine’, he doesn’t take pleasure in the thought.",
+          "en": "But he doesn’t identify with the thought, he doesn’t identify regarding the thought, he doesn’t identify as the thought, he doesn’t identify that ‘the thought is mine’, he doesn’t take pleasure in the thought.",
           "expanded": true
         },
         {
@@ -3526,12 +3536,12 @@
         },
         {
           "scid": "mn1:148-170.19.1",
-          "en": "He directly knows the cognized as the cognized.",
+          "en": "He directly knows the known as the known.",
           "expanded": true
         },
         {
           "scid": "mn1:148-170.19.2",
-          "en": "But he doesn’t conceive the cognized, he doesn’t conceive regarding the cognized, he doesn’t conceive as the cognized, he doesn’t conceive that ‘the cognized is mine’, he doesn’t take pleasure in the cognized.",
+          "en": "But he doesn’t identify with the known, he doesn’t identify regarding the known, he doesn’t identify as the known, he doesn’t identify that ‘the known is mine’, he doesn’t take pleasure in the known.",
           "expanded": true
         },
         {
@@ -3551,7 +3561,7 @@
         },
         {
           "scid": "mn1:148-170.20.2",
-          "en": "But he doesn’t conceive oneness, he doesn’t conceive regarding oneness, he doesn’t conceive as oneness, he doesn’t conceive that ‘oneness is mine’, he doesn’t take pleasure in oneness.",
+          "en": "But he doesn’t identify with oneness, he doesn’t identify regarding oneness, he doesn’t identify as oneness, he doesn’t identify that ‘oneness is mine’, he doesn’t take pleasure in oneness.",
           "expanded": true
         },
         {
@@ -3571,7 +3581,7 @@
         },
         {
           "scid": "mn1:148-170.21.2",
-          "en": "But he doesn’t conceive diversity, he doesn’t conceive regarding diversity, he doesn’t conceive as diversity, he doesn’t conceive that ‘diversity is mine’, he doesn’t take pleasure in diversity.",
+          "en": "But he doesn’t identify with diversity, he doesn’t identify regarding diversity, he doesn’t identify as diversity, he doesn’t identify that ‘diversity is mine’, he doesn’t take pleasure in diversity.",
           "expanded": true
         },
         {
@@ -3591,7 +3601,7 @@
         },
         {
           "scid": "mn1:148-170.22.2",
-          "en": "But he doesn’t conceive all, he doesn’t conceive regarding all, he doesn’t conceive as all, he doesn’t conceive that ‘all is mine’, he doesn’t take pleasure in all.",
+          "en": "But he doesn’t identify with all, he doesn’t identify regarding all, he doesn’t identify as all, he doesn’t identify that ‘all is mine’, he doesn’t take pleasure in all.",
           "expanded": true
         },
         {
@@ -3612,7 +3622,7 @@
         {
           "scid": "mn1:148-170.24",
           "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-          "en": "But he doesn’t conceive extinguishment, he doesn’t conceive regarding extinguishment, he doesn’t conceive as extinguishment, he doesn’t conceive that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment."
+          "en": "But he doesn’t identify with extinguishment, he doesn’t identify regarding extinguishment, he doesn’t identify as extinguishment, he doesn’t identify that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment."
         },
         {
           "scid": "mn1:148-170.25",
@@ -3649,7 +3659,7 @@
         {
           "scid": "mn1:171.2",
           "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati.",
-          "en": "But he doesn’t conceive earth, he doesn’t conceive regarding earth, he doesn’t conceive as earth, he doesn’t conceive that ‘earth is mine’, he doesn’t take pleasure in earth."
+          "en": "But he doesn’t identify with earth, he doesn’t identify regarding earth, he doesn’t identify as earth, he doesn’t identify that ‘earth is mine’, he doesn’t take pleasure in earth."
         },
         {
           "scid": "mn1:171.3",
@@ -3678,7 +3688,7 @@
         },
         {
           "scid": "mn1:172-194.1.2",
-          "en": "But he doesn’t conceive water, he doesn’t conceive regarding water, he doesn’t conceive as water, he doesn’t conceive that ‘water is mine’, he doesn’t take pleasure in water.",
+          "en": "But he doesn’t identify with water, he doesn’t identify regarding water, he doesn’t identify as water, he doesn’t identify that ‘water is mine’, he doesn’t take pleasure in water.",
           "expanded": true
         },
         {
@@ -3708,7 +3718,7 @@
         },
         {
           "scid": "mn1:172-194.2.2",
-          "en": "But he doesn’t conceive fire, he doesn’t conceive regarding fire, he doesn’t conceive as fire, he doesn’t conceive that ‘fire is mine’, he doesn’t take pleasure in fire.",
+          "en": "But he doesn’t identify with fire, he doesn’t identify regarding fire, he doesn’t identify as fire, he doesn’t identify that ‘fire is mine’, he doesn’t take pleasure in fire.",
           "expanded": true
         },
         {
@@ -3738,7 +3748,7 @@
         },
         {
           "scid": "mn1:172-194.3.2",
-          "en": "But he doesn’t conceive air, he doesn’t conceive regarding air, he doesn’t conceive as air, he doesn’t conceive that ‘air is mine’, he doesn’t take pleasure in air.",
+          "en": "But he doesn’t identify with air, he doesn’t identify regarding air, he doesn’t identify as air, he doesn’t identify that ‘air is mine’, he doesn’t take pleasure in air.",
           "expanded": true
         },
         {
@@ -3768,7 +3778,7 @@
         },
         {
           "scid": "mn1:172-194.4.2",
-          "en": "But he doesn’t conceive creatures, he doesn’t conceive regarding creatures, he doesn’t conceive as creatures, he doesn’t conceive that ‘creatures is mine’, he doesn’t take pleasure in creatures.",
+          "en": "But he doesn’t identify with creatures, he doesn’t identify regarding creatures, he doesn’t identify as creatures, he doesn’t identify that ‘creatures is mine’, he doesn’t take pleasure in creatures.",
           "expanded": true
         },
         {
@@ -3798,7 +3808,7 @@
         },
         {
           "scid": "mn1:172-194.5.2",
-          "en": "But he doesn’t conceive gods, he doesn’t conceive regarding gods, he doesn’t conceive as gods, he doesn’t conceive that ‘gods is mine’, he doesn’t take pleasure in gods.",
+          "en": "But he doesn’t identify with gods, he doesn’t identify regarding gods, he doesn’t identify as gods, he doesn’t identify that ‘gods is mine’, he doesn’t take pleasure in gods.",
           "expanded": true
         },
         {
@@ -3828,7 +3838,7 @@
         },
         {
           "scid": "mn1:172-194.6.2",
-          "en": "But he doesn’t conceive the Creator, he doesn’t conceive regarding the Creator, he doesn’t conceive as the Creator, he doesn’t conceive that ‘the Creator is mine’, he doesn’t take pleasure in the Creator.",
+          "en": "But he doesn’t identify with the Creator, he doesn’t identify regarding the Creator, he doesn’t identify as the Creator, he doesn’t identify that ‘the Creator is mine’, he doesn’t take pleasure in the Creator.",
           "expanded": true
         },
         {
@@ -3858,7 +3868,7 @@
         },
         {
           "scid": "mn1:172-194.7.2",
-          "en": "But he doesn’t conceive Brahmā, he doesn’t conceive regarding Brahmā, he doesn’t conceive as Brahmā, he doesn’t conceive that ‘Brahmā is mine’, he doesn’t take pleasure in Brahmā.",
+          "en": "But he doesn’t identify with Brahmā, he doesn’t identify regarding Brahmā, he doesn’t identify as Brahmā, he doesn’t identify that ‘Brahmā is mine’, he doesn’t take pleasure in Brahmā.",
           "expanded": true
         },
         {
@@ -3888,7 +3898,7 @@
         },
         {
           "scid": "mn1:172-194.8.2",
-          "en": "But he doesn’t conceive the gods of streaming radiance, he doesn’t conceive regarding the gods of streaming radiance, he doesn’t conceive as the gods of streaming radiance, he doesn’t conceive that ‘the gods of streaming radiance is mine’, he doesn’t take pleasure in the gods of streaming radiance.",
+          "en": "But he doesn’t identify with the gods of streaming radiance, he doesn’t identify regarding the gods of streaming radiance, he doesn’t identify as the gods of streaming radiance, he doesn’t identify that ‘the gods of streaming radiance is mine’, he doesn’t take pleasure in the gods of streaming radiance.",
           "expanded": true
         },
         {
@@ -3918,7 +3928,7 @@
         },
         {
           "scid": "mn1:172-194.9.2",
-          "en": "But he doesn’t conceive the gods replete with glory, he doesn’t conceive regarding the gods replete with glory, he doesn’t conceive as the gods replete with glory, he doesn’t conceive that ‘the gods replete with glory is mine’, he doesn’t take pleasure in the gods replete with glory.",
+          "en": "But he doesn’t identify with the gods replete with glory, he doesn’t identify regarding the gods replete with glory, he doesn’t identify as the gods replete with glory, he doesn’t identify that ‘the gods replete with glory is mine’, he doesn’t take pleasure in the gods replete with glory.",
           "expanded": true
         },
         {
@@ -3948,7 +3958,7 @@
         },
         {
           "scid": "mn1:172-194.10.2",
-          "en": "But he doesn’t conceive the gods of abundant fruit, he doesn’t conceive regarding the gods of abundant fruit, he doesn’t conceive as the gods of abundant fruit, he doesn’t conceive that ‘the gods of abundant fruit is mine’, he doesn’t take pleasure in the gods of abundant fruit.",
+          "en": "But he doesn’t identify with the gods of abundant fruit, he doesn’t identify regarding the gods of abundant fruit, he doesn’t identify as the gods of abundant fruit, he doesn’t identify that ‘the gods of abundant fruit is mine’, he doesn’t take pleasure in the gods of abundant fruit.",
           "expanded": true
         },
         {
@@ -3978,7 +3988,7 @@
         },
         {
           "scid": "mn1:172-194.11.2",
-          "en": "But he doesn’t conceive the Overlord, he doesn’t conceive regarding the Overlord, he doesn’t conceive as the Overlord, he doesn’t conceive that ‘the Overlord is mine’, he doesn’t take pleasure in the Overlord.",
+          "en": "But he doesn’t identify with the Overlord, he doesn’t identify regarding the Overlord, he doesn’t identify as the Overlord, he doesn’t identify that ‘the Overlord is mine’, he doesn’t take pleasure in the Overlord.",
           "expanded": true
         },
         {
@@ -4008,7 +4018,7 @@
         },
         {
           "scid": "mn1:172-194.12.2",
-          "en": "But he doesn’t conceive the dimension of infinite space, he doesn’t conceive regarding the dimension of infinite space, he doesn’t conceive as the dimension of infinite space, he doesn’t conceive that ‘the dimension of infinite space is mine’, he doesn’t take pleasure in the dimension of infinite space.",
+          "en": "But he doesn’t identify with the dimension of infinite space, he doesn’t identify regarding the dimension of infinite space, he doesn’t identify as the dimension of infinite space, he doesn’t identify that ‘the dimension of infinite space is mine’, he doesn’t take pleasure in the dimension of infinite space.",
           "expanded": true
         },
         {
@@ -4038,7 +4048,7 @@
         },
         {
           "scid": "mn1:172-194.13.2",
-          "en": "But he doesn’t conceive the dimension of infinite consciousness, he doesn’t conceive regarding the dimension of infinite consciousness, he doesn’t conceive as the dimension of infinite consciousness, he doesn’t conceive that ‘the dimension of infinite consciousness is mine’, he doesn’t take pleasure in the dimension of infinite consciousness.",
+          "en": "But he doesn’t identify with the dimension of infinite consciousness, he doesn’t identify regarding the dimension of infinite consciousness, he doesn’t identify as the dimension of infinite consciousness, he doesn’t identify that ‘the dimension of infinite consciousness is mine’, he doesn’t take pleasure in the dimension of infinite consciousness.",
           "expanded": true
         },
         {
@@ -4068,7 +4078,7 @@
         },
         {
           "scid": "mn1:172-194.14.2",
-          "en": "But he doesn’t conceive the dimension of nothingness, he doesn’t conceive regarding the dimension of nothingness, he doesn’t conceive as the dimension of nothingness, he doesn’t conceive that ‘the dimension of nothingness is mine’, he doesn’t take pleasure in the dimension of nothingness.",
+          "en": "But he doesn’t identify with the dimension of nothingness, he doesn’t identify regarding the dimension of nothingness, he doesn’t identify as the dimension of nothingness, he doesn’t identify that ‘the dimension of nothingness is mine’, he doesn’t take pleasure in the dimension of nothingness.",
           "expanded": true
         },
         {
@@ -4098,7 +4108,7 @@
         },
         {
           "scid": "mn1:172-194.15.2",
-          "en": "But he doesn’t conceive the dimension of neither perception nor non-perception, he doesn’t conceive regarding the dimension of neither perception nor non-perception, he doesn’t conceive as the dimension of neither perception nor non-perception, he doesn’t conceive that ‘the dimension of neither perception nor non-perception is mine’, he doesn’t take pleasure in the dimension of neither perception nor non-perception.",
+          "en": "But he doesn’t identify with the dimension of neither perception nor non-perception, he doesn’t identify regarding the dimension of neither perception nor non-perception, he doesn’t identify as the dimension of neither perception nor non-perception, he doesn’t identify that ‘the dimension of neither perception nor non-perception is mine’, he doesn’t take pleasure in the dimension of neither perception nor non-perception.",
           "expanded": true
         },
         {
@@ -4128,7 +4138,7 @@
         },
         {
           "scid": "mn1:172-194.16.2",
-          "en": "But he doesn’t conceive the seen, he doesn’t conceive regarding the seen, he doesn’t conceive as the seen, he doesn’t conceive that ‘the seen is mine’, he doesn’t take pleasure in the seen.",
+          "en": "But he doesn’t identify with the seen, he doesn’t identify regarding the seen, he doesn’t identify as the seen, he doesn’t identify that ‘the seen is mine’, he doesn’t take pleasure in the seen.",
           "expanded": true
         },
         {
@@ -4158,7 +4168,7 @@
         },
         {
           "scid": "mn1:172-194.17.2",
-          "en": "But he doesn’t conceive the heard, he doesn’t conceive regarding the heard, he doesn’t conceive as the heard, he doesn’t conceive that ‘the heard is mine’, he doesn’t take pleasure in the heard.",
+          "en": "But he doesn’t identify with the heard, he doesn’t identify regarding the heard, he doesn’t identify as the heard, he doesn’t identify that ‘the heard is mine’, he doesn’t take pleasure in the heard.",
           "expanded": true
         },
         {
@@ -4188,7 +4198,7 @@
         },
         {
           "scid": "mn1:172-194.18.2",
-          "en": "But he doesn’t conceive the thought, he doesn’t conceive regarding the thought, he doesn’t conceive as the thought, he doesn’t conceive that ‘the thought is mine’, he doesn’t take pleasure in the thought.",
+          "en": "But he doesn’t identify with the thought, he doesn’t identify regarding the thought, he doesn’t identify as the thought, he doesn’t identify that ‘the thought is mine’, he doesn’t take pleasure in the thought.",
           "expanded": true
         },
         {
@@ -4213,12 +4223,12 @@
         },
         {
           "scid": "mn1:172-194.19.1",
-          "en": "He directly knows the cognized as the cognized.",
+          "en": "He directly knows the known as the known.",
           "expanded": true
         },
         {
           "scid": "mn1:172-194.19.2",
-          "en": "But he doesn’t conceive the cognized, he doesn’t conceive regarding the cognized, he doesn’t conceive as the cognized, he doesn’t conceive that ‘the cognized is mine’, he doesn’t take pleasure in the cognized.",
+          "en": "But he doesn’t identify with the known, he doesn’t identify regarding the known, he doesn’t identify as the known, he doesn’t identify that ‘the known is mine’, he doesn’t take pleasure in the known.",
           "expanded": true
         },
         {
@@ -4248,7 +4258,7 @@
         },
         {
           "scid": "mn1:172-194.20.2",
-          "en": "But he doesn’t conceive oneness, he doesn’t conceive regarding oneness, he doesn’t conceive as oneness, he doesn’t conceive that ‘oneness is mine’, he doesn’t take pleasure in oneness.",
+          "en": "But he doesn’t identify with oneness, he doesn’t identify regarding oneness, he doesn’t identify as oneness, he doesn’t identify that ‘oneness is mine’, he doesn’t take pleasure in oneness.",
           "expanded": true
         },
         {
@@ -4278,7 +4288,7 @@
         },
         {
           "scid": "mn1:172-194.21.2",
-          "en": "But he doesn’t conceive diversity, he doesn’t conceive regarding diversity, he doesn’t conceive as diversity, he doesn’t conceive that ‘diversity is mine’, he doesn’t take pleasure in diversity.",
+          "en": "But he doesn’t identify with diversity, he doesn’t identify regarding diversity, he doesn’t identify as diversity, he doesn’t identify that ‘diversity is mine’, he doesn’t take pleasure in diversity.",
           "expanded": true
         },
         {
@@ -4308,7 +4318,7 @@
         },
         {
           "scid": "mn1:172-194.22.2",
-          "en": "But he doesn’t conceive all, he doesn’t conceive regarding all, he doesn’t conceive as all, he doesn’t conceive that ‘all is mine’, he doesn’t take pleasure in all.",
+          "en": "But he doesn’t identify with all, he doesn’t identify regarding all, he doesn’t identify as all, he doesn’t identify that ‘all is mine’, he doesn’t take pleasure in all.",
           "expanded": true
         },
         {
@@ -4339,7 +4349,7 @@
         {
           "scid": "mn1:172-194.24",
           "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati.",
-          "en": "But he doesn’t conceive extinguishment, he doesn’t conceive regarding extinguishment, he doesn’t conceive as extinguishment, he doesn’t conceive that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment."
+          "en": "But he doesn’t identify with extinguishment, he doesn’t identify regarding extinguishment, he doesn’t identify as extinguishment, he doesn’t identify that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment."
         },
         {
           "scid": "mn1:172-194.25",

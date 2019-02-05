@@ -143,10 +143,10 @@
             should.deepEqual(pl.stats(), {
                 tracks: 2,
                 segments: {
-                    en: 1118,
-                    pli: 1156,
+                    en: 1120,
+                    pli: 1158,
                 },
-                duration: 19964,
+                duration: 19999,
             });
             done();
         } catch(e) { done(e); } })();

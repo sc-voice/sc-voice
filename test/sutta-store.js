@@ -5,6 +5,7 @@
     const {
         Playlist,
         Sutta,
+        SuttaFactory,
         SuttaStore,
         SuttaCentralApi,
         SuttaCentralId,
@@ -14,6 +15,9 @@
     const LOCAL = path.join(__dirname, '..', 'local');
     const ROOT = path.join(LOCAL, 'suttas');
     const MAXRESULTS = 5;
+    const SCAPI_2019 = {
+        apiUrl: 'http://staging.suttacentral.net/api',
+    };
 
     it("initialize() initializes SuttaStore", function(done) {
         (async function() { try {
@@ -95,11 +99,13 @@
                 'thag1.1', 'sn39.1-15', 
                 'sn1.8', 'mn1','an1.1-10']);
 
+            /*
             var thag1_1path = path.join(ROOT, 'kn/en/sujato-walton/thag1.1.json');
             should(fs.existsSync(thag1_1path));
             var stat = fs.statSync(thag1_1path);
             var age = Date.now() - stat.mtime;
             should(age).below(maxseconds*1000);
+            */
 
             var sn1_8path = path.join(ROOT, 'sn/en/sujato/sn1.8.json');
             should(fs.existsSync(sn1_8path));
@@ -122,6 +128,58 @@
             done(); 
         } catch(e) {done(e);} })();
     });
+    it("search('thig1.1') returns segmented sutta", function(done) {
+        (async function() { try {
+            var voice = Voice.createVoice({
+                name: 'raveena',
+                languageUnknown: 'pli',
+                usage: 'recite',
+            });
+            var suttaCentralApi = await new SuttaCentralApi(SCAPI_2019).initialize();
+            this.suttaFactory = new SuttaFactory({
+                suttaCentralApi,
+                autoSection: true,
+            });
+            var store = await new SuttaStore({
+                suttaCentralApi,
+                suttaFactory,
+                voice,
+            }).initialize();
+
+            // multiple results
+            var {
+                method,
+                results,
+            } = await store.search('thig1.1');
+            should(results).instanceOf(Array);
+            should(method).equal('sutta_uid');
+            should.deepEqual(results.map(r=>r.count), [1]);
+            should.deepEqual(results.map(r=>r.uid), ['thig1.1']);
+            should.deepEqual(results.map(r=>r.author_uid), [
+                'sujato']);
+            should.deepEqual(results.map(r=>r.suttaplex.acronym), [
+                'Thig 1.1']);
+            should(results[0].quote.en).match(/The Book of the Ones/);
+            should(results[0].nSegments).equal(9);
+            var sutta = results[0].sutta;
+            should(sutta.sutta_uid).equal('thig1.1');
+            should.deepEqual(sutta.segments[0],{
+                en: 'Verses of the Senior Nuns',
+                pli: 'Therīgāthā',
+                scid: 'thig1.1:1.1',
+            });
+            var sections = sutta.sections;
+            should.deepEqual(sections[0].segments[0],{
+                en: 'Verses of the Senior Nuns',
+                pli: 'Therīgāthā',
+                scid: 'thig1.1:1.1',
+            });
+            should(sections.length).equal(3);
+            should.deepEqual(sections.map(s => s.segments.length), [1,1,7,]);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
     it("search(pattern) returns search results", function(done) {
         (async function() { try {
             var voice = Voice.createVoice({
@@ -129,7 +187,9 @@
                 languageUnknown: 'pli',
                 usage: 'recite',
             });
+            var suttaCentralApi = await new SuttaCentralApi(SCAPI_2019).initialize();
             var store = await new SuttaStore({
+                suttaCentralApi,
                 voice,
             }).initialize();
 
@@ -166,7 +226,7 @@
             should(method).equal('phrase');
             should.deepEqual(results.map(r=>r.count), [5, 3, 2, 1, 1]);
             should.deepEqual(results.map(r=>r.uid), [
-                'sn42.11', 'mn105', 'mn1', 'sn12.51', 'mn66']);
+                'sn42.11', 'mn105', 'mn1', 'mn66', 'an4.257']);
 
             // multiple spaces
             var {
@@ -216,7 +276,9 @@
                 searchMetadata: false,
             });
             should(results).instanceOf(Array);
-            should.deepEqual(results.map(r=>r.count), []);
+            should.deepEqual(results.map(r=>r.count), [1]);
+            should.deepEqual(results.map(r=>r.uid), [
+                'thag1.1' ]);
             var {
                 method,
                 results,
@@ -356,10 +418,10 @@
                 uid: 'mn77',
             },{
                 count: 4,
-                uid: 'dn16',
+                uid: 'an10.29',
             },{
                 count: 4,
-                uid: 'an10.29',
+                uid: 'dn16',
             },{
                 count: 3,
                 uid: 'mn99',
@@ -385,10 +447,9 @@
                 count:r.count,
             })), expected);
             should(results[0].quote.en).match(/blue, with blue color/);
-            should(results[1].quote.en).match(/clad in blue, adorned with blue/);
-            should(results[2].quote.en).match(/the meditation on universal blue/);
+            should(results[1].quote.en).match(/the meditation on universal blue/);
+            should(results[2].quote.en).match(/clad in blue/);
             should(results[3].quote.en).match(/or blue, yellow, red, or magenta/);
-            should(results[4].quote.en).match(/or blue, yellow, red, or magenta/);
             done(); 
         } catch(e) {done(e);} })();
     });
@@ -421,10 +482,10 @@
                 uid: 'an9.36',
             },{
                 count: 16,
-                uid: 'mn108',
+                uid: 'an6.60',
             },{
                 count: 16,
-                uid: 'an6.60',
+                uid: 'mn108',
             },{
                 count: 15,
                 uid: 'dn33',
@@ -630,8 +691,8 @@
             should(result0.author).equal('Bhikkhu Sujato');
             should(result0.author_short).equal('Sujato');
             should(result0.author_uid).equal('sujato');
-            should(result0.author_blurb.en).equal(
-                'Translated for SuttaCentral by Sujato Bhikkhu');
+            should(result0.author_blurb.en).match(
+                /Translated for SuttaCentral by Bhikkhu Sujato/);
             should(result0.lang).equal('en');
             should(result0.nSegments).equal(9);
             should(result0.title).equal('Plain Version');
@@ -678,8 +739,8 @@
                 'dn14/en/sujato',
                 'mn9/en/sujato',
                 'dn16/en/sujato',
+                'mn22/en/sujato',
                 'sn42.11/en/sujato',
-                'dn33/en/sujato',
             ]);
             checkSuttas(data);
 

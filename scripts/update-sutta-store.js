@@ -7,12 +7,18 @@ const {
 } = require('rest-bundle');
 const {
     Sutta,
+    SuttaCentralApi,
     SuttaStore,
 } = require('../index');
 
 
 (async function() { try {
-    var store = await new SuttaStore().initialize();
+    var suttaCentralApi = await new SuttaCentralApi({
+        apiUrl: 'http://staging.suttacentral.net/api',
+    }).initialize();
+    var store = await new SuttaStore({
+        suttaCentralApi,
+    }).initialize();
     var msStart = Date.now();
     var maxAge = 24*60*60;
     await store.updateSuttas(null, {

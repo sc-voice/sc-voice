@@ -8,7 +8,7 @@
           <div class="scv-search-row">
               <div class="scv-search-col">
                   <v-text-field ref="refSearch"
-                      placeholder="Enter sutta id or keyword(s)" 
+                      placeholder="Enter sutta id or keywords" 
                       v-model="search" v-on:keypress="onSearchKey($event)"
                       aria-label="Enter sootta i d or keywords"
                       label = "Search" >
@@ -111,7 +111,7 @@
                     <div style="display: inline-block; width: 96%; ">
                         <div style="display:flex; justify-content: space-between; "> 
                             <div>
-                                {{resultId(result)}}
+                                {{resultId(result).toUpperCase()}}
                                 {{result.title}}
                             </div>
                             <div class="caption">
@@ -181,6 +181,7 @@
                     <div class="caption text-xs-center">
                         <div class="text-xs-center" v-if="hasAudio && gscv.voices">
                             <a :href="downloadUrl()" ref="refDownload" 
+                                class="scv-a"
                                 @click="downloadClick()"
                                 download>
                                 Download {{sutta_uid}}-{{language}}-{{author_uid}}.mp3
@@ -191,6 +192,7 @@
                             :key="translation.id"
                             v-show="author_uid !== translation.author_uid">
                             <a :href="translationLink(translation)"
+                                class="scv-a"
                                 v-on:click="clickTranslation(translation,$event)">
                                 {{translation.author}} 
                                 &nbsp;&bull;&nbsp; 
@@ -198,17 +200,18 @@
                             </a>
                         </div>
                         <div class="text-xs-center" v-if="hasAudio">
-                            <a :href="audioUrl" target="_blank"> 
+                            <a class="scv-a" :href="audioUrl" target="_blank"> 
                                 {{sutta_uid.toUpperCase()}} audio recordings
                             </a>
                         </div>
                         <div class="text-xs-center">
                             <a :href="`https://suttacentral.net/${sutta_uid}`"
+                                class="scv-a"
                                 target="_blank"> 
                                 {{sutta_uid.toUpperCase()}} at SuttaCentral.net
                             </a>
                         </div>
-                        <a class="text-xs-center" :style="cssProps"
+                        <a class="text-xs-center scv-a" :style="cssProps"
                             target="_blank"
                             href="https://github.com/sc-voice/sc-voice/wiki/Support-Policy/">
                             <span v-if="support.value==='Legacy'">
@@ -439,8 +442,8 @@ export default {
                     var links = [];
                     var lang = that.language;
                     var dsa = data.segment.audio;
-                    dsa.pli && links.push(that.audioLink(dsa.pli));
-                    dsa[lang] && links.push(that.audioLink(dsa[lang]));
+                    that.showPali && dsa.pli && links.push(that.audioLink(dsa.pli));
+                    that.showTrans && dsa[lang] && links.push(that.audioLink(dsa[lang]));
                     var audio = links.map(link => new Audio(link));
                     var handler1 = () => {
                         audio[1].removeEventListener("ended", handler1);
@@ -486,7 +489,7 @@ export default {
                     console.log(`playQuotes audio:`, data.segment.audio);
                 }
             } catch(e) { 
-                console.log(`playQuote`, e.stack);
+                console.log(`playQuotes`, e.stack);
             }})();
         },
         playQuote(ref, result) {
@@ -728,10 +731,9 @@ export default {
             return scid.split(":")[1] || "section_scid_errro2";
         },
         resultId(result) {
-            var id = this.sutta_uid || 
-                result && result.uid ||
-                result && result.suttaplex && result.suttaplex.acronym;
-            console.log('dbg resultId', id, result, this.sutta_uid); 
+            var id = result
+                ? result.uid || result.suttaplex && result.suttaplex.acronym
+                : this.sutta_uid;
             var idchars = [];
             var number = /[0-9.]/;
             for (var i=0; i<id.length; i++) {
@@ -820,7 +822,6 @@ export default {
         suttaTitle() {
             var titleParts = this.sutta.title.split(':');
             if (titleParts.length > 1) {
-                console.log('dbg titleParts', titleParts);
                 titleParts[0] = this.resultId().toUpperCase();
                 return titleParts.join(": ");
             } else {

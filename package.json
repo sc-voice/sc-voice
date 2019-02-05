@@ -1,6 +1,6 @@
 {
   "name": "sc-voice",
-  "version": "1.1.0",
+  "version": "1.1.4",
   "description": "SuttaCentral Voice Assistant",
   "main": "index.js",
   "directories": {
@@ -11,18 +11,21 @@
     "axios": "^0.18.0",
     "axis": "^1.0.0",
     "compression": "^1.7.3",
+    "credential": "^2.0.0",
     "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
     "merkle-json": "^1.1.2",
     "promise-queue": "^2.2.5",
-    "rest-bundle": "^0.37.5",
+    "rest-bundle": "^0.39.4",
     "serve-favicon": "^2.5.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "temp": "^0.9.0",
     "tmp": "0.0.33",
-    "vue": "^2.5.17",
+    "vue": "^2.5.22",
     "vue-axios": "^2.1.3",
     "vue-cookie": "^1.1.4",
-    "vuetify": "^1.2.3",
+    "vuetify": "^1.4.4",
     "watson-developer-cloud": "^3.8.0",
     "winston": "^3.0.0"
   },
@@ -37,7 +40,7 @@
     "should": "^11.2.0",
     "supertest": "^3.3.0",
     "vue-cli-plugin-vuetify": "^0.1.6",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.22"
   },
   "scripts": {
     "build": "vue-cli-service build",
@@ -46,6 +49,8 @@
     "lint": "vue-cli-service lint",
     "serve": "vue-cli-service serve",
     "start": "npm run build; scripts/sc-voice.js",
+    "start:ssl": "npm run build; scripts/sc-voice.js --ssl",
+    "start:staging": "npm run build; scripts/sc-voice.js --staging",
     "test": "npm run test:verbose",
     "test:test": "mocha -w -R min --inline-diffs -g TEST",
     "test:verbose": "mocha --inline-diffs",

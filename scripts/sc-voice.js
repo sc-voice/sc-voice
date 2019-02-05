@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 
+const fs = require("fs");
 const path = require("path");
+const https = require("https");
 const compression = require("compression");
 const express = require('express');
 const favicon = require('serve-favicon');
 const app = module.exports = express();
+const jwt = require('express-jwt');
+
 const {
     logger,
     RestBundle,
@@ -32,6 +36,15 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, OPTIONS, PUT, POST");
     next();
 });
+
+app.get('/scv/auth',
+    jwt({secret: 'shhhhhhared-secret'}),
+    (req, res) => {
+        if (!req.user.admin) {
+            return res.sendStatus(401);
+        }
+        res.sendStatus(200);
+    });
 app.use("/scv/index.html", 
     express.static(path.join(__dirname, "../dist/index.html")));
 app.use("/scv/img", express.static(path.join(__dirname, "../dist/img")));
@@ -53,7 +66,12 @@ app.get(["/","/scv"], function(req,res,next) {
 });
 (async function() {
     try {
-        var suttaCentralApi = await new SuttaCentralApi().initialize();
+        var apiUrl = argv.some((a) => a === '--staging')
+            ? 'http://staging.suttacentral.net/api'
+            : 'http://suttacentral.net/api';
+        var suttaCentralApi = await new SuttaCentralApi({
+            apiUrl,
+        }).initialize();
         var rbServer =  app.locals.rbServer = new RbServer();
 
         // create RestBundles
@@ -68,8 +86,12 @@ app.get(["/","/scv"], function(req,res,next) {
         restBundles.push(scvRest);
 
         // create http server and web socket
-        var ports = [80, 8081].concat(new Array(100).fill(3000).map((p,i)=>p+i));
-        rbServer.listen(app, restBundles, ports); 
+        if (argv.some((a) => a === '--ssl')) {
+            rbServer.listenSSL(app, restBundles); 
+        } else {
+            var ports = [80, 8081].concat(new Array(100).fill(3000).map((p,i)=>p+i));
+            rbServer.listen(app, restBundles, ports); 
+        }
         await rbServer.initialize();
     } catch(e) {
         logger.error(e.stack);

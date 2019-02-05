@@ -26,6 +26,7 @@
         bodhi: true,
         horner: true,
         thanissaro: true,
+        'caf_rhysdavids': true,
     };
     const SUPPORTED_LANGUAGES = {
         en: true,
@@ -62,7 +63,7 @@
             var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    if (that.suttaCentralApi) {
+                    if (that.suttaCentralApi && that.suttaCentralApi.initialized == null) {
                         await that.suttaCentralApi.initialize();
                     }
                     resolve(that);
@@ -98,11 +99,15 @@
             var lang = this.lang;
             var segStart = 0;
             var segments = sutta.segments;
+            if (segments == null || segments.length === 0) {
+                throw new Error('Sutta has no segments');
+            }
+            var group0 = new SuttaCentralId(segments[0].scid).groups[0];
             var newSections = segments.reduce((acc,seg,i) => {
                 var scid = new SuttaCentralId(seg.scid);
-                if (segStart === 0 && scid.groups[0] === '0') {
+                if (segStart === 0 && scid.groups[0] === group0) {
                     // don't split segment 0
-                } else if (segStart === 0 && scid.groups[0] !== '0' || 
+                } else if (segStart === 0 && scid.groups[0] !== group0 || 
                     /^[1-9]/.test(seg[lang])) {
                     acc.push(new Section({
                         segments: segments.slice(segStart,i),

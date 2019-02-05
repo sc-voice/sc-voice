@@ -1,10 +1,9 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const PAT_NUMBER = '[-+]?[0-9]+([.–,][0-9]+)?';
+    const PAT_NUMBER = '[-+]?[0-9]+([.–,0-9]+[0-9])?';
     const RE_ISNUMBER = new RegExp(`^${PAT_NUMBER}$`);
     const RE_NUMBER = new RegExp(PAT_NUMBER);
-    const RE_NUMBERTOKEN = new RegExp(`^${PAT_NUMBER}[,]?$`);
 
     class Words { 
         constructor(json, opts={}) {
@@ -158,6 +157,21 @@
             return wordValue || null;
         }
 
+        isForeignAlphabet(token) {
+            if (token.indexOf('-') > 0) {
+                return token.split('-').reduce((acc,w) => {
+                    return acc || this.isForeignAlphabet(w);
+                }, false);
+            }
+            if (this.symbolPat.test(token)) {
+                return false;
+            }
+            if (!this.alphabet.test(token)) {
+                return true; 
+            }
+            return false;
+        }
+
         isForeignWord(token) {
             if (token.indexOf('-') > 0) {
                 return token.split('-').reduce((acc,w) => {
@@ -193,8 +207,17 @@
         }
 
         tokenize(text) {
-            return text.split(' ').reduce((acc,tok) => {
+            var textParts = text.split(' ');
+            return textParts.reduce((acc,tok) => {
                 var prevMatches = null;
+                for (;;) {
+                    let matchNum = RE_NUMBER.exec(tok);
+                    if (matchNum == null || matchNum.index !== 0) {
+                        break;
+                    }
+                    acc.push(matchNum[0]);
+                    tok = tok.substring(matchNum[0].length);
+                }
                 for (var matches; (matches = this.symbolPat.exec(tok)); ) {
                     var c = matches[0];
                     if (matches.index) { 
@@ -203,12 +226,15 @@
                             || c === "'" || c === '"')) {
                             acc.push(tok);
                             tok = "";
-                        } else if (RE_NUMBERTOKEN.test(tok)) {
+                        } else if (RE_ISNUMBER.test(tok)) {
                             acc.push(tok);
                             tok = "";
                         } else {
-                            acc.push(tok.substring(0, matches.index));
-                            acc.push(tok.substring(matches.index,matches.index+1));
+                            var head = tok.substring(0, matches.index);
+                            var tail = tok.substring(matches.index,matches.index+1);
+
+                            acc.push(head);
+                            acc.push(tail);
                             tok = tok.substring(matches.index+1);
                         }
                     } else {

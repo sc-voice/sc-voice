@@ -5,9 +5,11 @@
           <img aria-hidden="true" class="pt-1" src="img/favicon.png" height=30px/>
       </a>
       <v-toolbar-title >
-        <div style="position: relative; margin-top:-4px; ">
-            <div class="caption" style="">SuttaCentral</div>
-            <div class="title" style="margin-top:-2px">Voice Assistant</div>
+        <div style="position: relative; margin-top:-2px; ">
+            <div class="scv-logo-large" style="">
+                voice<span style="color:orange">.</span>
+            </div>
+            <div class="scv-logo-small">suttacentral.net</div>
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -28,6 +30,7 @@
         <v-icon>settings</v-icon>
       </v-btn>
     </v-toolbar>
+
     <v-dialog v-model="dialogHelp" persistent max-width="45em">
         <v-card >
           <v-card-title class="title scv-dialog-title">
@@ -123,18 +126,27 @@
             </div>
         </transition>
         <v-content class="" >
-          <Sutta />
+            <router-view></router-view>
         </v-content>
     </div>
     <v-footer fixed class="pt-2 pl-2 pr-2 caption" app >
       <div style="margin-top:-0.35em" >
           <a :href="searchUrl('the dark bound for light')"
+            class="scv-a"
             aria-label="dedicated to the dark bound for light">
               To <i>the dark bound for light</i>
           </a>
       </div>
       <v-spacer/>
-      <div class="pl-2" style="margin-top:-0.35em" >{{scvOpts.search}}</div>
+      <div class="pl-2" style="margin-top:-0.35em" >
+        {{scvOpts.search}}
+        <router-link to="/app" v-if="isAdmin" aria-hidden=true >
+            &equiv;
+        </router-link>
+        <router-link to="/admin" v-else aria-hidden=true >
+            &equiv;
+        </router-link>
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -173,7 +185,7 @@ export default {
     },
     methods: {
         clickHome() {
-            this.scvOpts.deleteCookies();
+            Vue.set(this.scvOpts, "search", null);
         },
         onfocus(id) {
             this.focused[id] = true;
@@ -259,6 +271,11 @@ export default {
                 'margin': '0',
             };
         },
+        isAdmin() {
+            var cr = this.$route;
+            console.log(`dbg isAdmin`, cr);
+            return cr && cr.path==='/admin' || false;
+        }
     },
     mounted() {
         this.$nextTick(() => {
@@ -295,8 +312,6 @@ export default {
 </script>
 <style >
 a {
-    //color: #ffcc66 !important;
-    color: #ffffff !important;
     text-decoration: none;
     padding-left: 0.2em;
     padding-right: 0.2em;
@@ -334,10 +349,7 @@ summary {
     padding-right: 0.2em;
 }
 button {
-    background-color: var(accentColor);
-}
-:focus {
-    background-color: #000 !important;
+    background-color: var(--accent-color);
 }
 .scv-content {
     position: relative;
@@ -395,6 +407,19 @@ button {
 }
 .scv-help > a:hover {
     text-decoration: none;
+}
+.scv-logo-large {
+    margin-top: -5px;
+    font-size: 22px;
+}
+.scv-logo-small {
+    margin-top: -8px;
+    margin-left: 2px;
+    font-size: 11px;
+    font-variant: small-caps;
+}
+.scv-a {
+    color: #ffffff;
 }
 
 </style>

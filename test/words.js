@@ -81,7 +81,28 @@
         should(words.isNumber('123.45')).equal(true);
         should(words.isNumber('-0.45')).equal(true);
     });
-    it("isForeignWord(token) return true if token is a word in foreign alphabet", function() {
+    it("isForeignAlphabet(token) return true if token is a word in foreign alphabet", function() {
+        var words = new Words();
+        // punctuation
+        should(words.isForeignAlphabet('!')).equal(false);
+
+        // native word
+        should(words.isForeignAlphabet('thirty')).equal(false);
+        should(words.isForeignAlphabet('Thirty')).equal(false);
+        should(words.isForeignAlphabet('htirty')).equal(false);
+        should(words.isForeignAlphabet('hTirty')).equal(false);
+
+        // foreign word
+        should(words.isForeignAlphabet('Brahm\u0101')).equal(true);
+        should(words.isForeignAlphabet('brahm\u0101')).equal(true);
+        should(words.isForeignAlphabet('rBahm\u0101')).equal(true);
+        should(words.isForeignAlphabet('rbahm\u0101')).equal(true);
+
+        // hyphenated
+        should(words.isForeignAlphabet('thirty-three')).equal(false);
+        should(words.isForeignAlphabet('well-to-do')).equal(false);
+    });
+    it("isForeignWord(token) return true if token is a foreign word", function() {
         var words = new Words();
         // punctuation
         should(words.isForeignWord('!')).equal(false);
@@ -89,10 +110,14 @@
         // native word
         should(words.isForeignWord('thirty')).equal(false);
         should(words.isForeignWord('Thirty')).equal(false);
+        should(words.isForeignWord('htirty')).equal(true); // in dictionary
+        should(words.isForeignWord('hTirty')).equal(true); // in dictionary
 
         // foreign word
         should(words.isForeignWord('Brahm\u0101')).equal(true);
         should(words.isForeignWord('brahm\u0101')).equal(true);
+        should(words.isForeignWord('rBahm\u0101')).equal(true);
+        should(words.isForeignWord('rbahm\u0101')).equal(true);
 
         // hyphenated
         should(words.isForeignWord('thirty-three')).equal(false);
@@ -145,15 +170,31 @@
             .equal(`${Words.U_LSQUOTE}nandi dukkhassa mulan${Words.U_RSQUOTE}ti${Words.U_EMDASH}`);
 
     });
-    it("tokenize(text) returns array of tokens", function() {
+    it("tokenize(text) handles numbers", function() {
         var words = new Words();
-        var tokens = words.tokenize('and 6,000, and 600');
+        var tokens = words.tokenize('one of 80,000—all');
         should.deepEqual(tokens, [
+            'one',
+            'of',
+            '80,000',
+            '—',
+            'all',
+        ]);
+
+        var tokens = words.tokenize('8,400,000,000 cars 2,400,000 and 6,000, and 600');
+        should.deepEqual(tokens, [
+            '8,400,000,000',
+            'cars',
+            '2,400,000',
             'and',
-            '6,000,',
+            '6,000',
+            ',',
             'and',
             '600',
         ]);
+    });
+    it("tokenize(text) returns array of tokens", function() {
+        var words = new Words();
 
         var tokens = words.tokenize('Hello {mn1.2-en-test} world.');
         should.deepEqual(tokens, [

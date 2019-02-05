@@ -42,6 +42,21 @@
         biblio: null,
         num: 1,
     };
+    const SUTTAPLEX_AN2_12_2019 = {
+        acronym: null,
+        volpages: 'pts-vp-pli1.53',
+        uid: 'an2.11-20',
+        blurb: null,
+        difficulty: null,
+        original_title: 'Adhikaraṇa Vagga',
+        root_lang: 'pli',
+        type: 'text',
+        from: null,
+        translated_title: '',
+        parallel_count: 7,
+        biblio: null,
+        num: 1,
+    };
     const SUTTAPLEX_EA12_1 = {
         acronym: 'EA 12.1//T 125.12.1',
         volpages: 'T ii 568a01',
@@ -67,6 +82,19 @@
         segmented: false,
         title: 'Loving-kindness',
     }];
+    const TRANSLATIONS_SNP1_8_2019 = [{
+        author: 'Laurence Khantipalo Mills',
+        author_short: 'Mills',
+        author_uid: 'mills',
+        id: 'en_snp1.8_mills',
+        lang: 'en',
+        lang_name: 'English',
+        segmented: false,
+        title: 'Loving-kindness',
+        is_root: false,
+        publication_date: "2015",
+        volpage: null,
+    }];
     const TRANSLATIONS_EA12_1 = [{
         author: 'Thích Nhất Hạnh, Annabel Laity',
         author_short: 'Nhất Hạnh …',
@@ -77,11 +105,27 @@
         segmented: false,
         title: 'The One Way In Sūtra',
     }];
+    const TRANSLATIONS_EA12_1_2019 = [{
+        author: 'Thích Nhất Hạnh, Annabel Laity',
+        author_short: 'Nhất Hạnh …',
+        author_uid: 'nhat_hanh-laity',
+        id: 'en_ea12.1_nhat_hanh-laity',
+        lang: 'en',
+        lang_name: 'English',
+        segmented: false,
+        title: 'The One Way In Sūtra',
+        is_root: false,
+        publication_date: null,
+        volpage: null,
+    }];
+    const SCAPI_2019 = {
+        apiUrl: 'http://staging.suttacentral.net/api',
+    };
 
     it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         this.timeout(10*1000);
         (async function() { try {
-            var scr = await new SuttaCentralApi().initialize();
+            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             var scid = 'snp1.8';
             var language = 'en';
             var sutta = await scr.loadSutta('snp1.8','en');
@@ -91,12 +135,12 @@
             should(suttaplex).properties(SUTTAPLEX_SNP1_8);
             var translations = suttaplex.translations;
             should(translations).instanceOf(Array);
-            should.deepEqual(translations, TRANSLATIONS_SNP1_8); done();
+            should.deepEqual(translations, TRANSLATIONS_SNP1_8_2019); done();
         } catch(e) {done(e);} })();
     });
     it("loadSutta(opts) returns english translations for Snp1.8", function(done) {
         (async function() { try {
-            var scr = await new SuttaCentralApi().initialize();
+            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             var language = 'en';
             var sutta = await scr.loadSutta({
                 scid:'snp1.8',
@@ -114,7 +158,7 @@
             should(suttaplex).properties(SUTTAPLEX_SNP1_8);
             var translations = suttaplex.translations;
             should(translations).instanceOf(Array);
-            should.deepEqual(translations, TRANSLATIONS_SNP1_8);
+            should.deepEqual(translations, TRANSLATIONS_SNP1_8_2019);
             var translation = suttaplex.translations[0];
             var segments = sutta.segments;
             var i = 0;
@@ -147,7 +191,7 @@
     it("loadSutta(opts) returns english translations for ea12.1", function(done) {
         this.timeout(5*1000);
         (async function() { try {
-            var scr = await new SuttaCentralApi().initialize();
+            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             var language = 'en';
             var sutta = await scr.loadSutta({
                 scid:'ea12.1',
@@ -164,7 +208,7 @@
             should(suttaplex).properties(SUTTAPLEX_EA12_1);
             var translations = suttaplex.translations;
             should(translations).instanceOf(Array);
-            should.deepEqual(translations, TRANSLATIONS_EA12_1);
+            should.deepEqual(translations, TRANSLATIONS_EA12_1_2019);
             var translation = suttaplex.translations[0];
             var segments = sutta.segments;
             var i = 0;
@@ -194,7 +238,7 @@
     });
     it("loadSutta(opts) returns Error if sutta not found", function(done) {
         (async function() { try {
-            var scr = await new SuttaCentralApi().initialize();
+            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
 
             // implausible sutta
             var err = null;
@@ -231,7 +275,7 @@
     });
     it("loadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
         (async function() { try {
-            var scr = await new SuttaCentralApi().initialize();
+            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             var language = 'en';
             var sutta = await scr.loadSutta('an2.12');
             should(sutta).instanceOf(Sutta);
@@ -239,7 +283,7 @@
             should(sutta.suttaplex.uid).equal('an2.11-20');
             should(sutta.sutta_uid).equal('an2.11-20');
             var suttaplex = sutta.suttaplex;
-            should(suttaplex).properties(SUTTAPLEX_AN2_12);
+            should(suttaplex).properties(SUTTAPLEX_AN2_12_2019);
             var translations = suttaplex.translations;
             should(translations).instanceOf(Array);
             should(translations.length).equal(2); // sujato, thanissaro
@@ -255,7 +299,7 @@
     });
     it("expandAbbreviation(abbr) expands abbreviation", function(done) {
         (async function() { try {
-            var scr = await new SuttaCentralApi().initialize();
+            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             should.deepEqual(scr.expandAbbreviation('sk'), [
               "Sk",
               "Sekhiya"
@@ -263,11 +307,37 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("loadSutta(opts) loads MN79", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var sutta = await scr.loadSutta("mn79", "en", "sujato");
+
+            should.deepEqual(sutta.segments[0], {
+                scid: 'mn79:0.1',
+                en: 'Middle Discourses 79',
+                pli: 'Majjhima Nikāya 79'
+            });
+            should.deepEqual(sutta.segments[100], {
+                en: "“What do you think, Udāyī? ",
+                pli: "“Taṃ kiṃ maññasi, udāyi, ",
+                scid: "mn79:16.1",
+            });
+            should(sutta.segments.length).equal(200);
+            should.deepEqual(Object.keys(sutta).sort(), [
+                'suttaCode', 'translation', 'sutta_uid', 'author_uid', 'support', 
+                'sections', 'suttaplex',
+                //'metaarea', 
+            ].sort());
+
+            done();
+        } catch(e) { done(e); } })();
+    });
     it("loadSutta(opts) returns same sutta as Pootl", function(done) {
         done(); return; // Pootl content is obsolete and now differs from current
         this.timeout(5*1000);
         (async function() { try {
-            var scr = await new SuttaCentralApi().initialize();
+            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             var sutta = await scr.loadSutta("mn1", "en", "sujato");
             var suttaPootl = await SuttaFactory.loadSuttaPootl('mn1');
 
@@ -300,7 +370,7 @@
     });
     it("suttaFromHtml(html, opts) should parse HTML", function(done) {
         (async function() { try {
-            var scr = await new SuttaCentralApi().initialize();
+            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             var text = [
                 'hello',
                 'there\n',

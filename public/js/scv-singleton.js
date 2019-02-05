@@ -19,25 +19,34 @@
         value: 0,
     },{
         url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
-        label: "Launch Sutta Player with Rainforest Ambience Glory Sunz (Public Domain)",
+        label: "Play Rainforest Ambience Glory Sunz (Public Domain)",
         volume: 0.1,
         value: 1,
     },{
         url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
-        label: "Launch Sutta Player with Indian Bell by Flemur (Sampling Plus 1.0)",
+        label: "Play Indian Bell by Flemur (Sampling Plus 1.0)",
         volume: 0.1,
         value: 2,
     },{
         url: '/audio/tibetan-singing-bowl-horst-cc0.mp3',
-        label: "Launch Sutta Player with Tibetan Singing Bowl by Horst (CC0)",
+        label: "Play Tibetan Singing Bowl by Horst (CC0)",
         volume: 0.3,
         value: 3,
     },{
         url: '/audio/jetrye-bell-meditation-cleaned-CC0.mp3',
-        label: "Launch Sutta Player with Bell Meditation Cleaned by JetRye (CC0)",
+        label: "Play Bell Meditation Cleaned by JetRye (CC0)",
         volume: 0.1,
         value: 4,
+    },{
+        url: '/audio/STE-004-Coemgenu.mp3',
+        label: "Play Mid-range Singing Bell by Coemgenu (Public Domain)",
+        volume: 0.5,
+        value: 5,
     }];
+
+    const EXPIRES = {
+        expires: "100Y",
+    };
 
     class ScvSingleton { 
         constructor(g) {
@@ -52,6 +61,14 @@
             if (g == null) {
                 throw new Error(`g is required`);
             }
+            Object.defineProperty(this, "_token", {
+                writable: true,
+                value: null,
+            });
+            Object.defineProperty(this, "vueRoot", {
+                writable: true,
+                value: null,
+            });
             Object.defineProperty(this, "g", {
                 value: g,
             });
@@ -59,6 +76,15 @@
                 writable: true,
                 value: "no title",
             });
+        }
+
+        get token() {
+            return this._token;
+        }
+
+        set token(value) {
+            var g = this.g;
+            g.Vue.set(this, "_token", value);
         }
 
         get ipsChoices() {
@@ -86,7 +112,7 @@
 
         set useCookies(value) {
             if (value) {
-                this.vueRoot.$cookie.set("useCookies", value);
+                this.vueRoot.$cookie.set("useCookies", value, EXPIRES);
             } else {
                 this.vueRoot.$cookie.delete("useCookies");
             }
@@ -118,19 +144,19 @@
             var v = this[prop];
             if (v != null && this.vueRoot) {
                 if (this.useCookies) {
-                    cookie.set(prop, v);
+                    cookie.set(prop, v, EXPIRES);
                     console.log(`setting cookie (${prop}):${v}`,
                         `${this.vueRoot.$cookie.get(prop)}`, 
                         typeof this.vueRoot.$cookie.get(prop));
                 }
                 if (prop === 'useCookies') {
                     if (v) {
-                        cookie.set( "showId", this.showId);
-                        cookie.set( "iVoice", this.iVoice);
-                        cookie.set( "maxResults", this.maxResults);
-                        cookie.set( "showLang", this.showLang);
-                        cookie.set( "ips", this.ips);
-                        cookie.set( "useCookies", this.useCookies);
+                        cookie.set( "showId", this.showId, EXPIRES);
+                        cookie.set( "iVoice", this.iVoice, EXPIRES);
+                        cookie.set( "maxResults", this.maxResults, EXPIRES);
+                        cookie.set( "showLang", this.showLang, EXPIRES);
+                        cookie.set( "ips", this.ips, EXPIRES);
+                        cookie.set( "useCookies", this.useCookies, EXPIRES);
                         console.log(`saved settings to cookies`, cookie);
                     } else {
                         Object.keys(this).forEach(key => {
