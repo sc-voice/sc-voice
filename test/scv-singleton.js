@@ -368,13 +368,23 @@
             lang: 'de',
         });
     });
-    it("token stores the JWT token", function() {
+    it("TESTTESTuser stores login credentials", function() {
         var scv = new ScvSingleton(g);
-        should(scv.token).equal(null);
+        should.deepEqual(scv.user, {
+            username: null,
+            token: null,
+        });
         scv.mounted(mockVueRoot);
-        should(scv.token).equal(null);
-        scv.token = 'asdf';
-        should(scv.token).equal('asdf');
+        should.deepEqual(scv.user, {
+            username: null,
+            token: null,
+        });
+        var user = {
+            username: 'testuser',
+            token: 'testtoken',
+        };
+        scv.user = user;
+        should.deepEqual(scv.user, user);
     });
 });
 

@@ -61,9 +61,12 @@
             if (g == null) {
                 throw new Error(`g is required`);
             }
-            Object.defineProperty(this, "_token", {
+            Object.defineProperty(this, "_user", {
                 writable: true,
-                value: null,
+                value: {
+                    username: null,
+                    token: null,
+                },
             });
             Object.defineProperty(this, "vueRoot", {
                 writable: true,
@@ -78,13 +81,14 @@
             });
         }
 
-        get token() {
-            return this._token;
+        get user() {
+            return this._user;
         }
 
-        set token(value) {
+        set user(value) {
             var g = this.g;
-            g.Vue.set(this, "_token", value);
+            g.Vue.set(this._user, "username", value.username);
+            g.Vue.set(this._user, "token", value.token);
         }
 
         get ipsChoices() {
