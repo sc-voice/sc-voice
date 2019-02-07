@@ -1,9 +1,9 @@
 <template>
-<div class="admin-grp">
+<div class="auth-grp">
     <login/>
     <v-tabs fixed-tabs v-model="tabsModel" v-if="token"
-       class="admin-tabs"
-       dark color="deep-orange darken-3"
+       class="auth-tabs"
+       dark :color="tabsColor"
        slider-color="yellow accent-2">
         <v-tab> Users </v-tab>
         <v-tab-item>
@@ -30,7 +30,7 @@ import AddUser from "./add-user";
 import Login from "./login";
 
 export default {
-    name: 'Admin',
+    name: 'Authenticated',
     data: () => {
         return {
             user: {
@@ -57,6 +57,14 @@ export default {
         token() {
             return this.user && this.user.token;
         },
+        isAdmin() {
+            return this.user.isAdmin
+        },
+        tabsColor() {
+            return this.isAdmin
+                ? "deep-orange darken-3"
+                : "indigo darken-2"
+        },
     },
     components: {
         AddUser,
@@ -67,7 +75,7 @@ export default {
 </script>
 
 <style scoped>
-.admin-grp {
+.auth-grp {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,7 +83,7 @@ export default {
 a.v-tabs__item {
     color: #ff00ff !important;
 }
-.admin-tabs {
+.auth-tabs {
     width: 100%;
 }
 </style>

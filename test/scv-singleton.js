@@ -373,15 +373,18 @@
         should.deepEqual(scv.user, {
             username: null,
             token: null,
+            isAdmin: false,
         });
         scv.mounted(mockVueRoot);
         should.deepEqual(scv.user, {
             username: null,
             token: null,
+            isAdmin: false,
         });
         var user = {
             username: 'testuser',
             token: 'testtoken',
+            isAdmin: true,
         };
         scv.user = user;
         should.deepEqual(scv.user, user);

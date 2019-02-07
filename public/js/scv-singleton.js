@@ -65,6 +65,7 @@
                 writable: true,
                 value: {
                     username: null,
+                    isAdmin: false,
                     token: null,
                 },
             });
@@ -89,6 +90,7 @@
             var g = this.g;
             g.Vue.set(this._user, "username", value.username);
             g.Vue.set(this._user, "token", value.token);
+            g.Vue.set(this._user, "isAdmin", value.isAdmin);
         }
 
         get ipsChoices() {

@@ -1,5 +1,5 @@
 <template>
-<v-dialog v-model="dialog" v-if="token" persistent>
+    <v-dialog v-model="dialog" v-if="token" persistent>
         <v-btn flat slot="activator">
             Add User
         </v-btn>
@@ -32,7 +32,7 @@
                 </v-btn>
             </v-card-actions>
         </v-card>
-</v-dialog> <!-- Add User -->
+    </v-dialog> <!-- Add User -->
 </template>
 
 <script>

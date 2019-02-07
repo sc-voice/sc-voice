@@ -670,7 +670,8 @@
                     var token = jwt.sign(authuser, SECRET, {
                         expiresIn: '1h',
                     });
-                    resolve(token);
+                    authuser.token = token;
+                    resolve(authuser);
                 } catch(e) {reject(e);} })();
             });
         }

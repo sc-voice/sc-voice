@@ -1,9 +1,9 @@
 <template>
 <div class="login-grp">
-    <v-card width="20em" light v-if="!token">
+    <v-card width="20em" light v-if="!user.token">
         <v-form :submit="onLogin">
             <v-card-title primary-title>
-                <h3>Translator/Admin Login</h3>
+                <h3>Voice Login</h3>
             </v-card-title>
             <v-card-text>
                 <v-text-field label="Username" v-model="username"
@@ -22,10 +22,15 @@
                 </div>
             </v-card-text>
             <v-card-actions>
+                <router-link class="scv-a" to="/app" aria-hidden=true >
+                    <v-btn small flat light
+                        :disabled="isWaiting" >
+                        Cancel
+                    </v-btn>
+                </router-link>
                 <v-spacer/>
-                <v-btn small @click="onLogin" flat dark
+                <v-btn small @click="onLogin" flat light
                     type="submit"
-                    class="deep-orange darken-3"
                     :disabled="isWaiting || !username || !password" >
                     Login
                 </v-btn>
@@ -48,7 +53,6 @@ export default {
             user: {
             },
             isWaiting: false,
-            token: null, 
             loginError: null,
         }
     },
@@ -69,12 +73,7 @@ export default {
             this.isWaiting = true;
             this.$http.post(url, data).then(res => {
                 Vue.set(this, "isWaiting", false);
-                this.gscv.token = res.data;
-                Vue.set(this, "token", res.data);
-                this.gscv.user = {
-                    username: this.username,
-                    token: res.data,
-                };
+                this.gscv.user = res.data;
                 Vue.set(this, "user", this.gscv.user);
             }).catch(e => {
                 Vue.set(this, "isWaiting", false);
@@ -89,7 +88,6 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "token", this.gscv.token);
         Vue.set(this, "user", this.gscv.user);
     },
     computed: {
