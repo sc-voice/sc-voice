@@ -43,7 +43,7 @@
         usage: 'review',
     }];
 
-    const SECRET = `JWT${Math.random()}`;
+    const JWT_SECRET = `JWT${Math.random()}`;
 
     class ScvRest extends RestBundle { 
         constructor(opts = {
@@ -67,6 +67,7 @@
                 defaultUser: DEFAULT_USER,
             });
             this.mdAria = opts.mdAria || new MdAria();
+            this.jwtExpires = opts.jwtExpires || '1h';
             this.voicePali = Voice.createVoice({
                 name: 'Aditi',
                 usage: 'recite',
@@ -125,6 +126,11 @@
                         this.getDebugEphemerals),
                     this.resourceMethod("post", "login", 
                         this.postLogin),
+
+                    this.resourceMethod("get", "auth/users", 
+                        this.getUsers),
+                    this.resourceMethod("post", "auth/set-password", 
+                        this.postSetPassword),
 
                 ]),
             });
@@ -645,13 +651,9 @@
             }
         }
 
-        authenticate(username, password) {
-            logger.info(`ScvRest.authenticate(${username})`);
-            return this.userStore.authenticate(username, password);
-        }
-
         postLogin(req, res, next) {
             var that = this;
+            var us = that.userStore;
             var {
                 username,
                 password,
@@ -659,21 +661,46 @@
 
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var authuser = await that.authenticate(username, password);
+                    var authuser = await us.authenticate(username, password);
                     if (authuser == null) {
                         res.locals.status = 401;
                         logger.warn(`POST login ${username} => HTTP401 UNAUTHORIZED`);
                         throw new Error('Invalid username/password');
                     }
                     delete authuser.credentials;
-                    logger.info(`POST login ${username} => OK`);
-                    var token = jwt.sign(authuser, SECRET, {
-                        expiresIn: '1h',
+                    logger.info(`POST login ${username} => ${JSON.stringify(authuser)}`);
+                    var token = jwt.sign(authuser, JWT_SECRET, {
+                        expiresIn: that.jwtExpires,
                     });
                     authuser.token = token;
                     resolve(authuser);
                 } catch(e) {reject(e);} })();
             });
+        }
+
+        getUsers(req, res, next) {
+            return Promise.resolve(this.userStore.users());
+        }
+
+        postSetPassword(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var {
+                        username,
+                        password,
+                    } = req.body || {};
+                    var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
+                    var result = await that.userStore.setPassword(username, password);
+                    logger.info(`POST set-password `+
+                        `for:${username} by:${decoded.username} => OK`);
+                    resolve(result);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        static get JWT_SECRET() {
+            return JWT_SECRET;
         }
     }
 

@@ -12,7 +12,7 @@
         <v-card-text>
             <v-text-field label="Username" 
                 disabled
-                v-model="user.username">
+                v-model="username">
             </v-text-field>
             <form ><!-- Chrome silliness-->
                 <v-text-field label="New password" 
@@ -56,14 +56,32 @@ export default {
             disabled() {
                 return !this.password || this.password !== this.password2;
             },
-            username: "",
             isWaiting: false,
         }
     },
+    props: {
+        username: String,
+    },
     methods: {
         onChangePassword() {
-            console.log('change password tbd');
+            console.log(`change password for ${this.username}`);
             this.dialog = false;
+            var url = this.url('auth/set-password');
+            var config = {
+                headers: {
+                    Authorization: `Bearer ${this.token}`,
+                }
+            }
+            var username = this.username;
+            var data = {
+                username,
+                password: this.password,
+            };
+            this.$http.post(url, data, config).then(res => {
+                console.log(`onChangePassword() ${username} OK`, res.data);
+            }).catch(e => {
+                console.error(`onChangePassword() ${username} failed`, e.stack);
+            });
         },
         url(path) {
             return window.location.origin === 'http://localhost:8080'

@@ -7,8 +7,7 @@
        slider-color="yellow accent-2">
         <v-tab> Users </v-tab>
         <v-tab-item>
-            <change-password/>
-            <add-user/>
+            <admin-users/>
         </v-tab-item>
         <v-tab> Releases </v-tab>
         <v-tab-item>
@@ -25,8 +24,7 @@
 <script>
 /* eslint no-console: 0*/
 import Vue from "vue";
-import ChangePassword from "./change-password";
-import AddUser from "./add-user";
+import AdminUsers from "./admin-users";
 import Login from "./login";
 
 export default {
@@ -67,8 +65,7 @@ export default {
         },
     },
     components: {
-        AddUser,
-        ChangePassword,
+        AdminUsers,
         Login,
     },
 }
