@@ -1,6 +1,6 @@
 <template>
 <v-dialog v-model="dialog" v-if="token" persistent>
-    <v-btn flat slot="activator">
+    <v-btn flat small slot="activator">
         Change Password
     </v-btn>
     <v-card>
@@ -28,9 +28,9 @@
             </form ><!-- Chrome silliness-->
         </v-card-text>
         <v-card-actions>
-            <v-btn flat @click="dialog=false">Cancel</v-btn>
+            <v-btn flat small @click="dialog=false">Cancel</v-btn>
             <v-spacer/>
-            <v-btn flat 
+            <v-btn flat small
                 :disabled="disabled()"
                 @click="onChangePassword()"
                 >
@@ -64,7 +64,8 @@ export default {
     },
     methods: {
         onChangePassword() {
-            console.log(`change password for ${this.username}`);
+            var username = this.username;
+            console.log(`change password for ${username}`);
             this.dialog = false;
             var url = this.url('auth/set-password');
             var config = {
@@ -72,7 +73,6 @@ export default {
                     Authorization: `Bearer ${this.token}`,
                 }
             }
-            var username = this.username;
             var data = {
                 username,
                 password: this.password,

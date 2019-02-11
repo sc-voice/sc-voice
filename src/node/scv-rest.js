@@ -129,6 +129,10 @@
 
                     this.resourceMethod("get", "auth/users", 
                         this.getUsers),
+                    this.resourceMethod("post", "auth/delete-user", 
+                        this.postDeleteUser),
+                    this.resourceMethod("post", "auth/add-user", 
+                        this.postAddUser),
                     this.resourceMethod("post", "auth/set-password", 
                         this.postSetPassword),
 
@@ -679,7 +683,57 @@
         }
 
         getUsers(req, res, next) {
-            return Promise.resolve(this.userStore.users());
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
+                    var users = await that.userStore.users();
+                    if (!decoded.isAdmin) {
+                        users = {
+                            [decoded.username]: users[decoded.username],
+                        };
+                    }
+                    resolve(users);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        postDeleteUser(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var {
+                        username,
+                    } = req.body || {};
+                    var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
+                    if (decoded.username !== username && !decoded.isAdmin) {
+                        throw new Error('Unauthorized user deletion'+
+                            `of:${username} by:${decoded.username}`);
+                    }
+                    var result = await that.userStore.deleteUser(username);
+                    logger.info(`POST delete-user `+
+                        `user:${username} by:${decoded.username} => OK`);
+                    resolve(result);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        postAddUser(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var user = {
+                        username: req.body.username,
+                        password: req.body.password,
+                        isAdmin: req.body.isAdmin,
+                    };
+                    var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
+                    var result = await that.userStore.addUser(user);
+                    logger.info(`POST add-user `+
+                        `user:${user.username} by:${decoded.username} => OK`);
+                    resolve(result);
+                } catch(e) {reject(e);} })();
+            });
         }
 
         postSetPassword(req, res, next) {
