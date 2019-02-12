@@ -23,8 +23,14 @@
                         v-model="password2">
                     </v-text-field>
                 </form><!--Chrome silliness-->
-                <v-checkbox label="Administrator"
+                <v-checkbox label="Administrator" height="1em"
                     v-model="isAdmin">
+                </v-checkbox>
+                <v-checkbox label="Translator" height="1em"
+                    v-model="isTranslator">
+                </v-checkbox>
+                <v-checkbox label="Editor" height="1em"
+                    v-model="isEditor">
                 </v-checkbox>
                 <v-alert type="info" :value="statusMsg">
                     {{statusMsg}}
@@ -58,6 +64,8 @@ export default {
             password: "",
             password2: "",
             isAdmin: false,
+            isTranslator: false,
+            isEditor: false,
             dialog: false,
             errMsg: null,
             statusMsg: null,
@@ -77,6 +85,8 @@ export default {
             Vue.set(this, "password", "");
             Vue.set(this, "password2", "");
             Vue.set(this, "isAdmin", false);
+            Vue.set(this, "isTranslator", false);
+            Vue.set(this, "isEditor", false);
         },
         onAddUser() {
             var username = this.username;
@@ -90,6 +100,8 @@ export default {
                 username,
                 password: this.password,
                 isAdmin: this.isAdmin,
+                isTranslator: this.isTranslator,
+                isEditor: this.isEditor,
             };
             Vue.set(this, "statusMsg", `Adding user ${this.username}...`);
             this.$http.post(url, data, config).then(res => {

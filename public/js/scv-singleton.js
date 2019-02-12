@@ -66,6 +66,8 @@
                 value: {
                     username: null,
                     isAdmin: false,
+                    isTranslator: false,
+                    isEditor: false,
                     token: null,
                 },
             });
@@ -91,6 +93,8 @@
             g.Vue.set(this._user, "username", value.username);
             g.Vue.set(this._user, "token", value.token);
             g.Vue.set(this._user, "isAdmin", value.isAdmin);
+            g.Vue.set(this._user, "isTranslator", value.isTranslator);
+            g.Vue.set(this._user, "isEditor", value.isEditor);
         }
 
         get ipsChoices() {

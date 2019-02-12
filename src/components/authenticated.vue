@@ -6,16 +6,16 @@
        dark :color="tabsColor"
        slider-color="yellow accent-2">
         <v-tab> Users </v-tab>
-        <v-tab-item>
+        <v-tab-item dark>
             <admin-users/>
         </v-tab-item>
-        <v-tab> Releases </v-tab>
-        <v-tab-item>
+        <v-tab v-if="isAdmin"> Releases </v-tab>
+        <v-tab-item v-if="isAdmin"> 
             Release stuff goes here...
         </v-tab-item>
-        <v-tab> Translator </v-tab>
-        <v-tab-item>
-            Translator stuff goes here...
+        <v-tab v-if="isTranslator || isEditor"> Content </v-tab>
+        <v-tab-item v-if="isTranslator || isEditor">
+            Translator/Editor stuff goes here...
         </v-tab-item>
     </v-tabs>
 </div>
@@ -32,6 +32,8 @@ export default {
     data: () => {
         return {
             user: {
+                isTranslator: false,
+                isEditor: false,
             },
             tabsModel: null,
             isWaiting: false,
@@ -55,6 +57,12 @@ export default {
         token() {
             return this.user && this.user.token;
         },
+        isEditor() {
+            return this.user.isEditor
+        },
+        isTranslator() {
+            return this.user.isTranslator
+        },
         isAdmin() {
             return this.user.isAdmin
         },
@@ -74,6 +82,7 @@ export default {
 <style scoped>
 .auth-grp {
     display: flex;
+    flex-flow: column;
     justify-content: center;
     align-items: center;
 }

@@ -726,6 +726,8 @@
                         username: req.body.username,
                         password: req.body.password,
                         isAdmin: req.body.isAdmin,
+                        isTranslator: req.body.isTranslator,
+                        isEditor: req.body.isEditor,
                     };
                     var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
                     var result = await that.userStore.addUser(user);
