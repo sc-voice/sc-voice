@@ -70,7 +70,8 @@
               </div>
               <div v-for="(ex,i) in examples"  :key="`example${i}`"
                   class="text-xs-center caption">
-                  <a :href="searchUrl(`${ex}`)" :ref="`refExample${i}`" >
+                  <a :href="searchUrl(`${ex}`)" 
+                    class="scv-a" :ref="`refExample${i}`" >
                       {{i+1}}. {{ex}}</a>
               </div>
           </div>

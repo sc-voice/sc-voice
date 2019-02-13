@@ -25,7 +25,7 @@
     const Voice = require('./voice');
     const SuttaCentralId = require('./sutta-central-id');
     const PATH_SOUNDS = path.join(__dirname, '../../local/sounds/');
-    const PATH_EXAMPLES = path.join(__dirname, `../../words/examples/`);
+    const PATH_EXAMPLES = path.join(__dirname, `../../local/suttas/examples/`);
     const DEFAULT_USER = {
         username: "admin",
         isAdmin: true,

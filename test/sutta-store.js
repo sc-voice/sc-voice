@@ -181,6 +181,7 @@
         } catch(e) {done(e);} })();
     });
     it("search(pattern) returns search results", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
@@ -232,14 +233,13 @@
             var {
                 method,
                 results,
-            } = await store.search('adorned is');
+            } = await store.search('quandary with');
             should(results).instanceOf(Array);
-            should.deepEqual(results.map(r=>r.count), [1, 1, 1]);
             should.deepEqual(results.map(r=>r.uid), [
-                'thag20.1', 'thag17.3', 'thag16.4', ]);
-            should(results[0].quote.en).match(/body all adorned  Is enough/);
-            should(results[1].quote.en).match(/body all adorned  Is enough/);
-            should(results[2].quote.en).match(/body all adorned  Is enough/);
+                'sn35.245', 
+            ]);
+            should.deepEqual(results.map(r=>r.count), [1, ]);
+            should(results[0].quote.en).match(/simile of the vipers/i);
 
             // no results
             var {
@@ -261,11 +261,11 @@
                 results,
             } = await store.search('jessica walton',3);
             should(results).instanceOf(Array);
-            should.deepEqual(results.map(r=>r.count), [3, 3, 3]);
             should.deepEqual(results.map(r=>r.uid), [
-                'thag9.1', 'thag8.3', 'thag8.2', ]);
+                'thag1.1', 'thig9.1', 'thig8.1', ]);
+            should.deepEqual(results.map(r=>r.count), [2, 1, 1]);
             should.deepEqual(results.map(r=>r.author_uid), [
-                'sujato-walton', 'sujato-walton', 'sujato-walton']);
+                'sujato', 'sujato', 'sujato']);
 
             // no metadata
             var {
@@ -276,9 +276,10 @@
                 searchMetadata: false,
             });
             should(results).instanceOf(Array);
-            should.deepEqual(results.map(r=>r.count), [1]);
             should.deepEqual(results.map(r=>r.uid), [
-                'thag1.1' ]);
+                'thig9.1', 'thig8.1', 'thig7.3', 'thig7.2', 'thig7.1',
+                ]);
+            should.deepEqual(results.map(r=>r.count), [1,1,1,1,1]);
             var {
                 method,
                 results,
@@ -475,9 +476,6 @@
                 uid:r.uid,
                 count:r.count,
             })), [{
-                count: 20,
-                uid: 'thag16.7',
-            },{
                 count: 17,
                 uid: 'an9.36',
             },{
@@ -489,6 +487,9 @@
             },{
                 count: 15,
                 uid: 'dn33',
+            },{
+                count: 12,
+                uid: 'dn19',
             }]);
             should(resultPattern).equal('\\bjh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
 
@@ -705,7 +706,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("findSuttas(opts) finds suttas matching pattern", function(done) {
+    it("TESTTESTfindSuttas(opts) finds suttas matching pattern", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             function checkSuttas(data) {
@@ -739,8 +740,8 @@
                 'dn14/en/sujato',
                 'mn9/en/sujato',
                 'dn16/en/sujato',
-                'mn22/en/sujato',
                 'sn42.11/en/sujato',
+                'mn22/en/sujato',
             ]);
             checkSuttas(data);
 

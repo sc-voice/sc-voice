@@ -374,17 +374,23 @@
             username: null,
             token: null,
             isAdmin: false,
+            isEditor: false,
+            isTranslator: false,
         });
         scv.mounted(mockVueRoot);
         should.deepEqual(scv.user, {
             username: null,
             token: null,
             isAdmin: false,
+            isEditor: false,
+            isTranslator: false,
         });
         var user = {
             username: 'testuser',
             token: 'testtoken',
             isAdmin: true,
+            isEditor: true,
+            isTranslator: true,
         };
         scv.user = user;
         should.deepEqual(scv.user, user);
