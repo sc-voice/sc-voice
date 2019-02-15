@@ -267,9 +267,21 @@
             return signature;
         }
         
-        createResponse(request, cached = false,soundStore=this.soundStore) {
+        synthesizeResponse(resolve, reject, request) {
+            var hitPct = (100*this.hits/(this.hits+this.misses)).toFixed(1);
+            var outpath = request.outpath;
+            var stats = fs.existsSync(outpath) && fs.statSync(outpath);
+            if (stats && stats.size <= this.ERROR_SIZE) {
+                var err = fs.readFileSync(outpath).toString();
+                reject(new Error(`sound file is too short (${stats.size}): ${outpath} ${this.audioFormat} ${this.audioSuffix}`));
+                //reject(new Error(`sound file is too short (${stats.size}): ${outpath} ${err}`));
+            }
+            resolve(this.createResponse(request, false));
+        }
+
+        createResponse(request, cached = false) {
             var signature = request.signature;
-            var jsonPath = soundStore.signaturePath(signature, ".json");
+            var jsonPath = this.soundStore.signaturePath(signature, ".json");
             fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2)+'\n');
             var response = {
                 file: request.outpath,
@@ -299,7 +311,7 @@
             }
             return new Promise((resolve, reject) => {
                 try {
-                    var soundStore = opts.soundStore || that.soundStore;
+                    var soundStore = that.soundStore;
                     var cache = opts.cache == null ? true : opts.cache;
                     var rate = this.prosody.rate || "0%";
                     var pitch = this.prosody.pitch || "0%";
@@ -315,7 +327,7 @@
                     var stats = fs.existsSync(outpath) && fs.statSync(outpath);
                     if (cache && stats && stats.size > this.ERROR_SIZE) {
                         this.hits++;
-                        resolve(this.createResponse(request, true, soundStore));
+                        resolve(this.createResponse(request, true));
                     } else {
                         that.misses++;
 
@@ -406,7 +418,7 @@
             }
             return new Promise((resolve, reject) => {
                 var inputs = `file '${files.join("'\nfile '")}'\n`;
-                var soundStore = opts.soundStore || this.soundStore;
+                var soundStore = this.soundStore;
                 var signature = {
                     api: "ffmegConcat",
                     files,
@@ -422,7 +434,7 @@
                 };
                 if (cache && stats && stats.size > this.ERROR_SIZE) {
                     this.hits++;
-                    resolve(this.createResponse(request, true, soundStore));
+                    resolve(this.createResponse(request, true));
                 } else {
                     if (opts.ssmlAll) {
                         var ssmlPath = soundStore.signaturePath(signature, ".ssml");
@@ -448,7 +460,7 @@
                             reject(new Error(err));
                         } else {
                             soundStore.addEphemeral(signature.guid);
-                            resolve(this.createResponse(request, false, soundStore));
+                            resolve(this.createResponse(request, false));
                         }
                     });
                 }

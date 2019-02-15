@@ -48,8 +48,16 @@
             }, opts);
         }
 
-        guidPath(guid, suffix) {
-            return super.guidPath(guid, suffix || this.audioSuffix);
+        guidPath(...args) {
+            var guid = args[0];
+            var opts = args[1] || {};
+            if (typeof opts === 'string') {
+                opts = {
+                    suffix: opts,
+                };
+            }
+            opts.suffix = opts.suffix || this.audioSuffix;
+            return super.guidPath(guid, opts);
         }
 
         addEphemeral(guid) {

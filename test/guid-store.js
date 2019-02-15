@@ -9,7 +9,7 @@
     const local = path.join(__dirname, '..', 'local');
     var mj = new MerkleJson();
 
-    it("GuidStore(opts) creates an asset GuidStore", function() {
+    it("TESTTESTGuidStore(opts) creates an asset GuidStore", function() {
         var store = new GuidStore();
         should(store.storePath).equal(path.join(local, 'guid-store'));
         should(fs.existsSync(store.storePath)).equal(true);
@@ -19,22 +19,27 @@
             storeName: 'sounds',
         });
         should(store.storePath).equal(path.join(local, 'sounds'));
+        should(store.volume).equal('common');
         should(fs.existsSync(store.storePath)).equal(true);
     });
-    it("guidPath(guid) returns file path of guid", function() {
+    it("TESTTESTguidPath(guid) returns file path of guid", function() {
         var store = new GuidStore();
         var guid = mj.hash("hello world");
-        var dirPath = path.join(local, 'guid-store', guid.substring(0,2), guid);
+        var guidDir = guid.substring(0,2);
+        var commonPath = path.join(local, 'guid-store', 'common', guidDir);
+        var dirPath = path.join(commonPath, guid);
         should(store.guidPath(guid,'.gif')).equal(`${dirPath}.gif`);
     });
-    it("signaturePath(signature) returns file path of signature", function() {
+    it("TESTTESTsignaturePath(signature) returns file path of signature", function() {
         var store = new GuidStore();
         var guid = mj.hash("hello world");
-        var dirPath = path.join(local, 'guid-store', guid.substring(0,2), guid);
+        var guidDir = guid.substring(0,2);
+        var dirPath = path.join(local, 'guid-store', 'common', guidDir);
+        var sigPath = path.join(dirPath, guid);
         var signature = {
             guid,
         };
-        should(store.signaturePath(signature,'.txt')).equal(`${dirPath}.txt`);
+        should(store.signaturePath(signature,'.txt')).equal(`${sigPath}.txt`);
 
         var store = new GuidStore({
             type: 'SoundStore',
@@ -42,8 +47,9 @@
             suffix: '.ogg',
         });
         var guid = mj.hash("hello world");
-        var dirPath = path.join(local, 'sounds', guid.substring(0,2), guid);
-        var expectedPath = `${dirPath}.ogg`;
+        var commonPath = path.join(local, 'sounds', 'common', guidDir);
+        var sigPath = path.join(commonPath, guid);
+        var expectedPath = `${sigPath}.ogg`;
         var signature = {
             guid,
         };

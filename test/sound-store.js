@@ -20,6 +20,7 @@
         should(fs.existsSync(store.storePath)).equal(true);
         should(store.type).equal('SoundStore');
         should(store.storeName).equal('sounds');
+        should(store.volume).equal('common');
         should(store.audioSuffix).equal('.mp3');
         should(store.audioFormat).equal('mp3');
         should(store.audioMIME).equal('audio/mp3');
@@ -38,12 +39,26 @@
         should(store.audioFormat).equal('ogg_vorbis');
         should(store.audioMIME).equal('audio/ogg');
     });
-    it("guidPath(guid, suffix) returns file path of guid", function() {
+    it("TESTTESTguidPath(guid, suffix) returns file path of guid", function() {
         var store = new SoundStore();
         var guid = mj.hash("hello world");
-        var dirPath = path.join(LOCAL, 'sounds', guid.substring(0,2), guid);
-        should(store.guidPath(guid)).equal(`${dirPath}.mp3`);
-        should(store.guidPath(guid, '.abc')).equal(`${dirPath}.abc`);
+
+        // guids are normally allocated in the "common" volume
+        var commonPath = path.join(LOCAL, 'sounds', 'common');
+        var guidDir = guid.substring(0,2);
+        var guidPath = path.join(commonPath, guidDir, guid);
+        should(store.guidPath(guid)).equal(`${guidPath}.mp3`);
+        should(store.guidPath(guid, '.abc')).equal(`${guidPath}.abc`);
+        should(fs.existsSync(commonPath)).equal(true);
+
+        // return path to a guid in a custom volume 
+        var testVolPath = path.join(LOCAL, 'sounds', 'test-volume', guidDir);
+        var guid1Path = path.join(testVolPath, guid);
+        should(store.guidPath(guid, {
+            suffix: '.abc',
+            volume: 'test-volume',
+        })).equal(`${guid1Path}.abc`);
+        should(fs.existsSync(testVolPath)).equal(true);
     });
     it("addEphemeral(guid) saves an ephemeral guid", function() {
         var store = new SoundStore();

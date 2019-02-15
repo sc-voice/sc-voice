@@ -178,7 +178,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
+    it("TESTTESTGET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
         var scvRest = app.locals.scvRest;
         this.timeout(20*1000);
         var async = function* () { try {
@@ -191,7 +191,7 @@
                     'attachment; filename=an3.76-77_pli+en_amy.mp3')
                 .end((e,r) => e ? async.throw(e) : async.next(r));
             var contentLength = Number(res.headers['content-length']);
-            should(contentLength).above(3500000);
+            should(contentLength).above(3400000);
             should(contentLength).below(3600000);
             should(res.statusCode).equal(200);
             done();
@@ -386,7 +386,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles large segment", function(done) {
+    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
@@ -407,7 +407,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
             should(data.segment.audio.en).match(/^85a9c6/);
-            should(data.segment.audio.pli).match(/^7b701/);
+            should(data.segment.audio.pli).match(/^49043/);
 
             done();
         } catch(e) {done(e);} })();

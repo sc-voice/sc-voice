@@ -167,7 +167,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("speak(opts) adds voice audio", function(done) {
+    it("TESTTESTspeak(opts) adds voice audio", function(done) {
         this.timeout(2*1000);
         (async function() { try {
             var voices = {
@@ -188,7 +188,7 @@
             var result = await pl.speak({
                 voices,
             });
-            should(result.signature.guid).match(/fa2a2d/);
+            should(result.signature.guid).match(/61629/);
             done();
         } catch(e) { done(e); } })();
     });
