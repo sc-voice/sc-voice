@@ -265,7 +265,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /search/:pattern returns suttaplexes found", function(done) {
+    it("GET /search/:pattern returns suttaplexes found", function(done) {
         this.timeout(10*1000);
         var async = function* () { try {
             var maxResults = 3;

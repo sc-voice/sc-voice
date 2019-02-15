@@ -267,21 +267,9 @@
             return signature;
         }
         
-        synthesizeResponse(resolve, reject, request) {
-            var hitPct = (100*this.hits/(this.hits+this.misses)).toFixed(1);
-            var outpath = request.outpath;
-            var stats = fs.existsSync(outpath) && fs.statSync(outpath);
-            if (stats && stats.size <= this.ERROR_SIZE) {
-                var err = fs.readFileSync(outpath).toString();
-                reject(new Error(`sound file is too short (${stats.size}): ${outpath} ${this.audioFormat} ${this.audioSuffix}`));
-                //reject(new Error(`sound file is too short (${stats.size}): ${outpath} ${err}`));
-            }
-            resolve(this.createResponse(request, false));
-        }
-
-        createResponse(request, cached = false) {
+        createResponse(request, cached = false,soundStore=this.soundStore) {
             var signature = request.signature;
-            var jsonPath = this.soundStore.signaturePath(signature, ".json");
+            var jsonPath = soundStore.signaturePath(signature, ".json");
             fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2)+'\n');
             var response = {
                 file: request.outpath,
@@ -311,12 +299,13 @@
             }
             return new Promise((resolve, reject) => {
                 try {
+                    var soundStore = opts.soundStore || that.soundStore;
                     var cache = opts.cache == null ? true : opts.cache;
                     var rate = this.prosody.rate || "0%";
                     var pitch = this.prosody.pitch || "0%";
                     var ssml = `<prosody rate="${rate}" pitch="${pitch}">${ssmlFragment}</prosody>`;
                     var signature = this.signature(ssml);
-                    var outpath = this.soundStore.signaturePath(signature, this.audioSuffix);
+                    var outpath = soundStore.signaturePath(signature, this.audioSuffix);
                     var request = {
                         ssml,
                         signature,
@@ -326,7 +315,7 @@
                     var stats = fs.existsSync(outpath) && fs.statSync(outpath);
                     if (cache && stats && stats.size > this.ERROR_SIZE) {
                         this.hits++;
-                        resolve(this.createResponse(request, true));
+                        resolve(this.createResponse(request, true, soundStore));
                     } else {
                         that.misses++;
 
@@ -417,12 +406,13 @@
             }
             return new Promise((resolve, reject) => {
                 var inputs = `file '${files.join("'\nfile '")}'\n`;
+                var soundStore = opts.soundStore || this.soundStore;
                 var signature = {
                     api: "ffmegConcat",
                     files,
                 }
                 signature[this.mj.hashTag] = this.mj.hash(signature);
-                var outpath = this.soundStore.signaturePath(signature, this.audioSuffix);
+                var outpath = soundStore.signaturePath(signature, this.audioSuffix);
                 var stats = fs.existsSync(outpath) && fs.statSync(outpath);
                 var cache = opts.cache == null ? true : opts.cache;
                 var request = {
@@ -432,13 +422,13 @@
                 };
                 if (cache && stats && stats.size > this.ERROR_SIZE) {
                     this.hits++;
-                    resolve(this.createResponse(request, true));
+                    resolve(this.createResponse(request, true, soundStore));
                 } else {
                     if (opts.ssmlAll) {
-                        var ssmlPath = this.soundStore.signaturePath(signature, ".ssml");
+                        var ssmlPath = soundStore.signaturePath(signature, ".ssml");
                         fs.writeFileSync(ssmlPath, JSON.stringify(opts.ssmlAll, null, 2));
                     }
-                    var inpath = this.soundStore.signaturePath(signature, ".txt");
+                    var inpath = soundStore.signaturePath(signature, ".txt");
                     fs.writeFileSync(inpath, inputs);
                     var cmd = `bash -c "ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`;
                     var execOpts = {
@@ -457,8 +447,8 @@
                             console.error(`ffmpegConcat() failed ${outpath}`, stats.size, err);
                             reject(new Error(err));
                         } else {
-                            this.soundStore.addEphemeral(signature.guid);
-                            resolve(this.createResponse(request, false));
+                            soundStore.addEphemeral(signature.guid);
+                            resolve(this.createResponse(request, false, soundStore));
                         }
                     });
                 }

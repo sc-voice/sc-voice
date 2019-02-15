@@ -368,7 +368,7 @@
             lang: 'de',
         });
     });
-    it("TESTTESTuser stores login credentials", function() {
+    it("user stores login credentials", function() {
         var scv = new ScvSingleton(g);
         should.deepEqual(scv.user, {
             username: null,

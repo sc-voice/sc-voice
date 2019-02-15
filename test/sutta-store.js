@@ -706,7 +706,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTfindSuttas(opts) finds suttas matching pattern", function(done) {
+    it("findSuttas(opts) finds suttas matching pattern", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             function checkSuttas(data) {

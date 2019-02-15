@@ -526,7 +526,6 @@
                 var collection_id = fnameparts[fnameparts.length-4];
                 var text = fs.readFileSync(fname);
                 try {
-                    console.log(`fname:${fname}`);
                     var json = JSON.parse(text);
                     var sutta = new Sutta(json);
                 } catch(e) {
