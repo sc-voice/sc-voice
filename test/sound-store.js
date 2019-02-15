@@ -2,6 +2,7 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const tmp = require('tmp');
     const { MerkleJson } = require("merkle-json");
     const { logger } = require('rest-bundle');
     const {
@@ -11,13 +12,14 @@
     const LOCAL = path.join(__dirname, '..', 'local');
     var mj = new MerkleJson();
     logger.level = 'warn';
+    var storePath = tmp.tmpNameSync();
 
     it("SoundStore() creates default GuidStore for sounds", function() {
         var store = new SoundStore();
         should(store).instanceof(SoundStore);
         should(store).instanceof(GuidStore);
-        should(store.storePath).equal(path.join(LOCAL, 'sounds'));
         should(fs.existsSync(store.storePath)).equal(true);
+        should(store.storePath).equal(path.join(LOCAL, 'sounds'));
         should(store.type).equal('SoundStore');
         should(store.storeName).equal('sounds');
         should(store.volume).equal('common');
@@ -28,10 +30,11 @@
     it("SoundStore(opts) creates custom SoundStore", function() {
         var store = new SoundStore({
             audioFormat: 'ogg',
+            storePath,
         });
         should(store).instanceof(SoundStore);
         should(store).instanceof(GuidStore);
-        should(store.storePath).equal(path.join(LOCAL, 'sounds'));
+        should(store.storePath).equal(storePath);
         should(store.type).equal('SoundStore');
         should(store.storeName).equal('sounds');
         should(fs.existsSync(store.storePath)).equal(true);
@@ -39,12 +42,14 @@
         should(store.audioFormat).equal('ogg_vorbis');
         should(store.audioMIME).equal('audio/ogg');
     });
-    it("TESTTESTguidPath(guid, suffix) returns file path of guid", function() {
-        var store = new SoundStore();
+    it("guidPath(guid, suffix) returns file path of guid", function() {
+        var store = new SoundStore({
+            storePath,
+        });
         var guid = mj.hash("hello world");
 
         // guids are normally allocated in the "common" volume
-        var commonPath = path.join(LOCAL, 'sounds', 'common');
+        var commonPath = path.join(storePath, 'common');
         var guidDir = guid.substring(0,2);
         var guidPath = path.join(commonPath, guidDir, guid);
         should(store.guidPath(guid)).equal(`${guidPath}.mp3`);
@@ -52,7 +57,7 @@
         should(fs.existsSync(commonPath)).equal(true);
 
         // return path to a guid in a custom volume 
-        var testVolPath = path.join(LOCAL, 'sounds', 'test-volume', guidDir);
+        var testVolPath = path.join(storePath, 'test-volume', guidDir);
         var guid1Path = path.join(testVolPath, guid);
         should(store.guidPath(guid, {
             suffix: '.abc',
@@ -61,7 +66,9 @@
         should(fs.existsSync(testVolPath)).equal(true);
     });
     it("addEphemeral(guid) saves an ephemeral guid", function() {
-        var store = new SoundStore();
+        var store = new SoundStore({
+            storePath,
+        });
         should.deepEqual(store.ephemerals, []);
         var data = [1,2,3].map(i => {
             var name = `ephemeral-${i}`;
@@ -87,6 +94,7 @@
     it("clearEphemeral(opts) clears old ephemeral files", function() {
         var store = new SoundStore({
             suffixes: ['.txt'],
+            storePath,
         });
         should.deepEqual(store.ephemerals, []);
         should(store.ephemeralInterval).equal(1*60*1000);
@@ -138,6 +146,7 @@
             var ephemeralInterval = 100;
             var store = new SoundStore({
                 suffixes: ['.txt'],
+                storePath,
                 ephemeralInterval,
                 ephemeralAge: ephemeralInterval/2,
             });

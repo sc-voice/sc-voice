@@ -82,6 +82,7 @@
         async.next();
     });
     it("GET /sutta/mn100/en/sujato returns sutta", function(done) {
+        this.timeout(5*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn100/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -178,7 +179,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
+    it("GET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
         var scvRest = app.locals.scvRest;
         this.timeout(20*1000);
         var async = function* () { try {
@@ -386,7 +387,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
+    it("GET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";

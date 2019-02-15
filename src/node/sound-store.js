@@ -50,12 +50,9 @@
 
         guidPath(...args) {
             var guid = args[0];
-            var opts = args[1] || {};
-            if (typeof opts === 'string') {
-                opts = {
-                    suffix: opts,
-                };
-            }
+            var opts = typeof args[1] === 'string'
+                ? { suffix: args[1], }
+                : Object.assign({}, args[1]);
             opts.suffix = opts.suffix || this.audioSuffix;
             return super.guidPath(guid, opts);
         }

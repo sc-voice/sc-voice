@@ -34,10 +34,10 @@
             var volume = opts.volume || this.volume;
             var volumePath = path.join(this.storePath, volume);
             fs.existsSync(volumePath) || fs.mkdirSync(volumePath);
-            var folder = guid.substr(0,this.folderPrefix);
-            var folderPath = path.join(this.storePath, volume, folder);
-            fs.existsSync(folderPath) || fs.mkdirSync(folderPath);
-            return path.join(folderPath, `${guid}${suffix}`);
+            var chapter = opts.chapter || guid.substr(0,this.folderPrefix);
+            var chapterPath = path.join(this.storePath, volume, chapter);
+            fs.existsSync(chapterPath) || fs.mkdirSync(chapterPath);
+            return path.join(chapterPath, `${guid}${suffix}`);
         }
 
         signaturePath(signature, opts) {
