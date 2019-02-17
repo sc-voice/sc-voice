@@ -13,18 +13,9 @@
             super((opts = SoundStore.options(opts)));
             var that = this;
             logger.info(`SoundStore.ctor(${that.storePath})`);
-            that.audioFormat = opts.audioFormat || 'mp3';
-            if (that.audioFormat === 'ogg') {
-                that.audioSuffix = '.ogg';
-                that.audioFormat = 'ogg_vorbis';
-                that.audioMIME = 'audio/ogg';
-            } else if (that.audioFormat === 'mp3') {
-                that.audioSuffix = '.mp3';
-                that.audioFormat = 'mp3';
-                that.audioMIME = 'audio/mp3';
-            } else {
-                throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
-            }
+            that.audioSuffix = opts.audioSuffix;
+            that.audioFormat = opts.audioFormat;
+            that.audioMIME = opts.audioMIME;
 
             // every minute, delete ephemerals older than 5 minutes
             that.ephemerals = [];
@@ -40,21 +31,27 @@
         }
 
         static options(opts={}) {
+            if (opts.audioFormat === 'ogg') {
+                var audioSuffix = '.ogg';
+                var audioFormat = 'ogg_vorbis';
+                var audioMIME = 'audio/ogg';
+            } else if (opts.audioFormat == null || opts.audioFormat === 'mp3') {
+                var audioSuffix = '.mp3';
+                var audioFormat = 'mp3';
+                var audioMIME = 'audio/mp3';
+            } else {
+                throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
+            }
             return Object.assign({}, {
                 type: 'SoundStore',
                 storeName: 'sounds',
                 storePath: PATH_SOUNDS,
-                suffix: this.audioSuffix,
-            }, opts);
-        }
-
-        guidPath(...args) {
-            var guid = args[0];
-            var opts = typeof args[1] === 'string'
-                ? { suffix: args[1], }
-                : Object.assign({}, args[1]);
-            opts.suffix = opts.suffix || this.audioSuffix;
-            return super.guidPath(guid, opts);
+                suffix: audioSuffix,
+            }, opts, {
+                audioFormat,
+                audioSuffix,
+                audioMIME,
+            });
         }
 
         addEphemeral(guid) {

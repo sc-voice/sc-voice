@@ -27,7 +27,7 @@
         should(store.audioFormat).equal('mp3');
         should(store.audioMIME).equal('audio/mp3');
     });
-    it("SoundStore(opts) creates custom SoundStore", function() {
+    it("TESTTESTSoundStore(opts) creates custom SoundStore", function() {
         var store = new SoundStore({
             audioFormat: 'ogg',
             storePath,
@@ -42,7 +42,7 @@
         should(store.audioFormat).equal('ogg_vorbis');
         should(store.audioMIME).equal('audio/ogg');
     });
-    it("guidPath(guid, suffix) returns file path of guid", function() {
+    it("TESTTESTguidPath(guid, suffix) returns file path of guid", function() {
         var store = new SoundStore({
             storePath,
         });

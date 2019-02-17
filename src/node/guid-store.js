@@ -19,29 +19,43 @@
         }
 
         guidPath(...args) {
-            var guid = args[0];
-            var opts = args[1] || {};
-            if (typeof opts === 'string') {
-                opts = {
-                    suffix: opts,
+            if (args[0] === Object(args[0])) { // (opts); (opts1,opts2)
+                var opts = Object.assign({}, args[0], args[1]);
+            } else if (args[1] === Object(args[1])) { // (guid, opts)
+                var opts = Object.assign({
+                    guid: args[0],
+                }, args[1]);
+            } else { // (guid, suffix)
+                var opts = {
+                    guid: args[0],
+                    suffix: args[1],
                 };
             }
-            var suffix = opts.suffix || this.suffix;
-            if (typeof guid !== 'string') {
-                var e = new Error(`GuidStore.guidPath() invalid guid:${guid}`);
-                throw e;
-            }
+
+            // set up volume folder
             var volume = opts.volume || this.volume;
             var volumePath = path.join(this.storePath, volume);
             fs.existsSync(volumePath) || fs.mkdirSync(volumePath);
+
+            // set up chapter folder
+            var guid = opts.guid;
             var chapter = opts.chapter || guid.substr(0,this.folderPrefix);
             var chapterPath = path.join(this.storePath, volume, chapter);
             fs.existsSync(chapterPath) || fs.mkdirSync(chapterPath);
+
+            // define path
+            var suffix = opts.suffix || this.suffix;
             return path.join(chapterPath, `${guid}${suffix}`);
         }
 
-        signaturePath(signature, opts) {
-            return this.guidPath(signature.guid, opts);
+        signaturePath(sigObj, opts) {
+            var guidOpts = Object.assign({}, sigObj);
+            if (opts === Object(opts)) {
+                Object.assign(guidOpts, opts);
+            } else if (typeof opts === 'string') {
+                guidOpts.suffix = opts;
+            }
+            return this.guidPath(guidOpts);
         }
 
     }
