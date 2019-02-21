@@ -163,6 +163,7 @@
             should(results[0].nSegments).equal(9);
             var sutta = results[0].sutta;
             should(sutta.sutta_uid).equal('thig1.1');
+            should(sutta.author_uid).equal('sujato');
             should.deepEqual(sutta.segments[0],{
                 en: 'Verses of the Senior Nuns',
                 pli: 'Therīgāthā',
@@ -828,6 +829,7 @@
                 }
             });
             should.deepEqual(playlist.tracks[0],{
+                lang: 'en',
                 sutta_uid: "createPlaylist_error1",
                 segments: [{
                     en: "Play list is too long to be played. All play lists "+

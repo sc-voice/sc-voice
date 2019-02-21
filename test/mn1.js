@@ -4,8 +4,10 @@
     const path = require('path');
     const { logger } = require('rest-bundle');
     const {
+        Playlist,
         Section,
         Sutta,
+        SuttaStore,
         SuttaFactory,
         SuttaCentralId,
         SuttaCentralApi,
@@ -122,14 +124,59 @@
                 languageUnknown: "pli",
             });
             var lines = Sutta.textOfSegments(expandedSutta.sections[2].segments);
+            should(lines.length).equal(98);
             var text = `${lines.join('\n')}\n`;
             var result = await voice.speak(text, {
                 cache: true, // false: use TTS web service for every request
                 usage: "recite",
+                volume: "test",
+                chapter: "mn1",
             });
             logger.info(`mn1 sound guid:${result.signature.guid}`);
             should(result.signature.files.length).equal(166);
 
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTspeak() generates mn1 sounds", function(done) {
+        console.log("mn1.speak()  may take 1-2 minutes...");
+        this.timeout(120*1000); 
+        /*
+         * This is real-world system test that exercises and requires:
+         * 1. AWS Polly
+         * 2. Internet connection
+         * 3. An actual section of MN1
+         * 4. The local sound cache
+         * 5. >5MB of local disk for sound storage
+         */
+        (async function() { try {
+            var msStart = Date.now();
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            this.suttaFactory = new SuttaFactory({
+                suttaCentralApi,
+                autoSection: true,
+            });
+            var voice = Voice.createVoice({
+                name: "amy",
+                languageUnknown: "pli",
+            });
+            var store = await new SuttaStore({
+                suttaCentralApi,
+                suttaFactory,
+                voice,
+            }).initialize();
+            var pl = await store.createPlaylist({
+                pattern: 'mn1',
+                languages: ['en'], // speaking order 
+            });
+            var result = await pl.speak({
+                voices: {
+                    en: voice,
+                },
+                volume: 'test-mn1',
+            });
+            should(result.signature.guid).match(/3a0ff/);
+            console.log(`mn1.speak() done`, ((Date.now() - msStart)/1000).toFixed(1));
             done();
         } catch(e) { done(e); } })();
     });

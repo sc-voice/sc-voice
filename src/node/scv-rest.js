@@ -13,6 +13,7 @@
     const srcPkg = require("../../package.json");
     const Words = require('./words');
     const GuidStore = require('./guid-store');
+    const Playlist = require('./playlist');
     const Section = require('./section');
     const SoundStore = require('./sound-store');
     const Sutta = require('./sutta');
@@ -90,6 +91,9 @@
                     this.resourceMethod("get", 
                         "audio/:guid/:filename", this.getAudio, this.audioMIME),
                     this.resourceMethod("get", 
+                        "audio/:sutta_uid/:lang/:translator/:voice/:guid", 
+                            this.getAudio, this.audioMIME),
+                    this.resourceMethod("get", 
                         "recite/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReciteSection),
                     this.resourceMethod("get", 
@@ -161,8 +165,20 @@
         getAudio(req, res, next) {
             return new Promise((resolve, reject) => { try {
                 var guid = req.params.guid;
-                var filePath = this.soundStore.guidPath(guid);
+                var {   
+                    sutta_uid,
+                    lang,
+                    translator,
+                    voice,
+                } = req.params;
+                var soundOpts = {};
+                if (sutta_uid) {
+                    soundOpts.volume = Playlist.volumeName(sutta_uid, 
+                        lang, translator, voice);
+                }
+                var filePath = this.soundStore.guidPath(guid, soundOpts);
                 var filename = req.params.filename;
+                console.log(`dbg`, filePath, filename);
                 var data = fs.readFileSync(filePath);
                 res.set('accept-ranges', 'bytes');
                 res.set('do_stream', 'true');
@@ -377,12 +393,16 @@
                     if (segment[language]) {
                         var speak = await voiceLang.speak(segment[language], {
                             usage,
+                            volume: Playlist.volumeName(sutta_uid, language, 
+                                translator, voiceLang.name),
                         });
                         segment.audio[language] = speak.signature.guid;
                     }
                     if (segment.pli) {
                         var speak = await voicePali.speak(segment.pli, {
                             usage: 'recite',
+                            volume: Playlist.volumeName(sutta_uid, 'pli', 
+                                translator, voicePali.name),
                         });
                         segment.audio.pli = speak.signature.guid;
                     }

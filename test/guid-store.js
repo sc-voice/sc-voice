@@ -9,7 +9,7 @@
     const local = path.join(__dirname, '..', 'local');
     var mj = new MerkleJson();
 
-    it("TESTTESTGuidStore(opts) creates an asset GuidStore", function() {
+    it("GuidStore(opts) creates an asset GuidStore", function() {
         var store = new GuidStore();
         should(store.storePath).equal(path.join(local, 'guid-store'));
         should(fs.existsSync(store.storePath)).equal(true);
@@ -22,7 +22,7 @@
         should(store.volume).equal('common');
         should(fs.existsSync(store.storePath)).equal(true);
     });
-    it("TESTTESTguidPath(guid) returns file path of guid", function() {
+    it("guidPath(guid) returns file path of guid", function() {
         var store = new GuidStore();
         var guid = mj.hash("hello world");
         var guidDir = guid.substring(0,2);
@@ -44,7 +44,7 @@
         var idPath = path.join(chapterPath, `${id}${suffix}`);
         should(store.guidPath(id,opts)).equal(idPath);
     });
-    it("TESTTESTsignaturePath(signature) returns file path of signature", function() {
+    it("signaturePath(signature) returns file path of signature", function() {
         var store = new GuidStore();
         var guid = mj.hash("hello world");
         var guidDir = guid.substring(0,2);

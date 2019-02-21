@@ -44,7 +44,7 @@
         }),
         new Sutta({
             sutta_uid: 'test3',
-            author_uid: 'test',
+            author_uid: 'test-author',
             sections: [{
                 segments: [{
                     scid: 'test3:1.1',
@@ -168,7 +168,7 @@
         } catch(e) { done(e); } })();
     });
     it("TESTTESTspeak(opts) adds voice audio", function(done) {
-        this.timeout(2*1000);
+        this.timeout(5*1000);
         (async function() { try {
             var voices = {
                 pli: Voice.createVoice({
@@ -187,8 +187,9 @@
             pl.addSutta(suttas[2]);
             var result = await pl.speak({
                 voices,
+                volume: 'test-playlist',
             });
-            should(result.signature.guid).match(/61629/);
+            should(result.signature.guid).match(/aca5eb4/);
             done();
         } catch(e) { done(e); } })();
     });
