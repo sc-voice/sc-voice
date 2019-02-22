@@ -132,6 +132,8 @@
 
                     this.resourceMethod("get", "auth/users", 
                         this.getUsers),
+                    this.resourceMethod("get", "auth/sound-store/volume-info", 
+                        this.getSoundStoreVolumeInfo),
                     this.resourceMethod("post", "auth/delete-user", 
                         this.postDeleteUser),
                     this.resourceMethod("post", "auth/add-user", 
@@ -776,6 +778,27 @@
 
         static get JWT_SECRET() {
             return JWT_SECRET;
+        }
+
+        requireAdmin(req, res, msg){
+            var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
+            if (!decoded.isAdmin) {
+                res.locals.status = 401;
+                var user = decoded.user;
+                logger.warn(`${msg}:${user} => HTTP401 UNAUTHORIZED (ADMIN)`);
+                throw new Error('Admin privilege required');
+            }
+            return true;
+        }
+
+        getSoundStoreVolumeInfo(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "GET sound-store/volume-info");
+                    resolve(that.soundStore.volumeInfo());
+                } catch(e) {reject(e);} })();
+            });
         }
     }
 

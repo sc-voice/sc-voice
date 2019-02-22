@@ -3,8 +3,10 @@
     const fs = require('fs');
     const path = require('path');
     const supertest = require('supertest');
+    const jwt = require('jsonwebtoken');
     const {
         logger,
+        UserStore,
     } = require('rest-bundle');
     logger.level = 'info';
     const {
@@ -17,8 +19,11 @@
         SuttaCentralId,
         SuttaFactory,
         Words,
-
     } = require("../index");
+    const TEST_ADMIN = {
+        username: "test-admin",
+        isAdmin: true,
+    };
     const Queue = require('promise-queue');
     const PUBLIC = path.join(__dirname, '../public');
     const SC = path.join(__dirname, '../local/sc');
@@ -394,13 +399,13 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/audio/:suid/:lang/:trans/:voice/:guid returns audio", function(done) {
+    it("GET /play/audio/:suid/:lang/:trans/:voice/:guid returns audio", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
+    it("GET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
@@ -464,6 +469,20 @@
             should(res.body.url).equal(`${WIKIURL}/Home.md`);
             var html = res.body.html;
             should(html).match(/<summary>Navigating the texts<.summary>/);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTGET auth/sound-store/volume-info return stats", function(done) {
+        this.timeout(3*1000);
+        (async function() { try {
+            var url = `/scv/auth/sound-store/volume-info`;
+            var scvRest = app.locals.scvRest;
+            var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
+            var res = await supertest(app).get(url)
+                .set("Authorization", `Bearer ${token}`);
+            res.statusCode.should.equal(200);
+            var soundStore = scvRest.soundStore;
+            should.deepEqual(res.body, soundStore.volumeInfo());
             done();
         } catch(e) {done(e);} })();
     });

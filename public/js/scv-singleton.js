@@ -42,6 +42,11 @@
         label: "Play Mid-range Singing Bell by Coemgenu (Public Domain)",
         volume: 0.5,
         value: 5,
+    },{
+        url: '/audio/simple-bell.mp3',
+        label: "Simple Bell by Aminah (Public Domain)",
+        volume: 0.5,
+        value: 6,
     }];
 
     const EXPIRES = {
@@ -56,7 +61,7 @@
             this.showLang = 0;
             this.search = null;
             this.maxResults = 5;
-            this.ips = 4;
+            this.ips = 6;
             this.lang = 'en';
             if (g == null) {
                 throw new Error(`g is required`);

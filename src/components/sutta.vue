@@ -10,6 +10,7 @@
                   <v-text-field ref="refSearch"
                       placeholder="Enter sutta id or keywords" 
                       v-model="search" v-on:keypress="onSearchKey($event)"
+                      role="search"
                       aria-label="Enter sootta i d or keywords"
                       label = "Search" >
                   </v-text-field>
@@ -64,6 +65,8 @@
           <div v-if="!searchResults && !sections" class="scv-home-blurb" >
               <div class="text-xs-center caption pr-2">
                   <v-btn @click="clickExamples()"
+                      role="button"
+                      aria-label="examples"
                       class="scv-text-button " :style="cssProps" small>
                       Examples
                   </v-btn>

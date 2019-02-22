@@ -70,5 +70,4 @@
         should(store.signaturePath(signature)).equal(expectedPath);
     });
 
-
 })

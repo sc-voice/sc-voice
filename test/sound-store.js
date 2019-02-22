@@ -2,6 +2,7 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const { execSync } = require('child_process');
     const tmp = require('tmp');
     const { MerkleJson } = require("merkle-json");
     const { logger } = require('rest-bundle');
@@ -194,6 +195,22 @@
             should(fs.existsSync(data[1].fpath)).equal(false);
             should(fs.existsSync(data[2].fpath)).equal(false);
             should.deepEqual(store.ephemerals, []);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTvolumeInfo() returns volume information", function(done) {
+        (async function() { try {
+            var store = new SoundStore({});
+            var cmd = `du -sb *`;
+            var du = execSync(cmd, {
+                cwd: store.storePath,
+            }).toString().trim().split('\n');
+            du = du.reduce((acc, line) => {
+                var lineParts = line.split('\t');
+                acc[lineParts[1]] = Number(lineParts[0]);
+                return acc;
+            }, {});
+            should.deepEqual(store.volumeInfo(), du);
             done();
         } catch(e) {done(e);} })();
     });

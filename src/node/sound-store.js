@@ -1,6 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
+    const { execSync } = require('child_process');
     const {
         logger,
     } = require('rest-bundle');
@@ -77,6 +78,18 @@
                 });
             });
             this.ephemerals = ephemerals;
+        }
+
+        volumeInfo() {
+            var cmd = `du -sb *`;
+            var du = execSync(cmd, {
+                cwd: this.storePath,
+            }).toString().trim().split('\n');
+            return du.reduce((acc, line) => {
+                var lineParts = line.split('\t');
+                acc[lineParts[1]] = Number(lineParts[0]);
+                return acc;
+            }, {});
         }
 
     }
