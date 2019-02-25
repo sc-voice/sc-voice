@@ -1,8 +1,10 @@
 <template>
   <v-app dark>
-    <v-toolbar app flat dark >
-      <a :href="homeHref" @click="clickHome()" aria-label="home">
-          <img aria-hidden="true" class="pt-1" src="img/favicon.png" height=30px/>
+    <v-toolbar app flat dark aria-role="navigation">
+      <a :href="homeHref" @click="clickHome()" 
+          aria-label="Soota Central Home Page">
+          <img aria-hidden="true" class="pt-1" 
+            src="img/favicon.png" height=30px/>
       </a>
       <v-toolbar-title >
         <div style="position: relative; margin-top:-2px; ">
@@ -15,7 +17,6 @@
       <v-spacer></v-spacer>
       <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
         aria-label="Help"
-        role="contentinfo"
         title="About and Help"
         @click="openHelp()"
         >
@@ -23,7 +24,6 @@
       </v-btn>
       <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
         aria-label="Settings"
-        role="contentinfo"
         title="Settings"
         @click="dialogSettings = !dialogSettings"
         >
