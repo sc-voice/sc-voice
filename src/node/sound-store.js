@@ -87,7 +87,10 @@
             }).toString().trim().split('\n');
             return du.reduce((acc, line) => {
                 var lineParts = line.split('\t');
-                acc[lineParts[1]] = Number(lineParts[0]);
+                acc[lineParts[1]] = {
+                    name: lineParts[1],
+                    size: Number(lineParts[0]),
+                };
                 return acc;
             }, {});
         }

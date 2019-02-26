@@ -71,10 +71,12 @@ export default {
             var that = this;
             this.loginError = null;
             this.isWaiting = true;
+            console.log(`onLogin() ${username}`);
             this.$http.post(url, data).then(res => {
                 Vue.set(this, "isWaiting", false);
                 this.gscv.user = res.data;
                 Vue.set(this, "user", this.gscv.user);
+                console.log(`onLogin() ${username} ${this.gscv.user}`);
             }).catch(e => {
                 Vue.set(this, "isWaiting", false);
                 Vue.set(that, "loginError", "Invalid Username/Password");

@@ -9,6 +9,10 @@
         <v-tab-item dark>
             <admin-users/>
         </v-tab-item>
+        <v-tab v-if="isAdmin"> Caches </v-tab>
+        <v-tab-item v-if="isAdmin"> 
+            <caches/>
+        </v-tab-item>
         <v-tab v-if="isAdmin"> Releases </v-tab>
         <v-tab-item v-if="isAdmin"> 
             Release stuff goes here...
@@ -25,6 +29,7 @@
 /* eslint no-console: 0*/
 import Vue from "vue";
 import AdminUsers from "./admin-users";
+import Caches from "./caches";
 import Login from "./login";
 
 export default {
@@ -74,6 +79,7 @@ export default {
     },
     components: {
         AdminUsers,
+        Caches,
         Login,
     },
 }
