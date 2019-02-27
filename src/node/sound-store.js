@@ -109,8 +109,9 @@
                     var files = [];
                     fs.readdirSync(volpath).forEach(d => {
                         var dpath = path.join(volpath, d);
-                        var dfiles = fs.readdirSync(dpath).map(f=>path.join(dpath,f));
-                        files = files.concat(files, dfiles);
+                        var dfiles = fs.readdirSync(dpath)
+                            .map(f=>path.join(dpath,f));
+                        dfiles.forEach(df => files.push(df));
                     });
                     files.forEach(f => fs.unlinkSync(f));
                     var result = {

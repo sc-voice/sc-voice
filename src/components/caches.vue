@@ -34,12 +34,14 @@
                           Size:
                         </v-list-tile-content>
                         <v-list-tile-content class="align-end">
-                          {{ (props.item.size/1E6).toFixed(0)}}MB
+                          {{ (props.item.size/1E6).toFixed(2)}}MB
                         </v-list-tile-content>
                       </v-list-tile>
                     </v-list>
                     <v-card-actions>
-                        <v-btn>Clear Cache</v-btn>
+                        <v-btn @click='onClearCache(props.item.name)'>
+                            Clear Cache
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -73,13 +75,8 @@ export default {
     },
     methods: {
         getCaches() {
-            var config = {
-                headers: {
-                    Authorization: `Bearer ${this.token}`,
-                }
-            }
             var urlVol = this.url("auth/sound-store/volume-info"); 
-            this.$http.get(urlVol, config).then(res => {
+            this.$http.get(urlVol, this.authConfig).then(res => {
                 var cacheNames = Object.keys(res.data);
                 Vue.set(this, "caches", cacheNames.map(name => {
                     var cache = res.data[name];
@@ -90,9 +87,18 @@ export default {
                 console.error(`getCaches() failed`, e.stack);
             });
         },
-        onAddUser() {
-            console.log('onAddUser');
-            this.getUsers();
+        onClearCache(volume) {
+            console.log('onClearCache', volume);
+            var urlVol = this.url("auth/sound-store/clear-volume"); 
+            var data = {
+                volume,
+            }
+            this.$http.post(urlVol, data, this.authConfig).then(res => {
+                console.log(res.data);
+                this.getCaches();
+            }).catch(e => {
+                console.error(`onClearCache() failed`, e.stack);
+            });
         },
         url(path) {
             return window.location.origin === 'http://localhost:8080'
@@ -129,6 +135,13 @@ export default {
         },
         na() {
             return "--";
+        },
+        authConfig() {
+            return {
+                headers: {
+                    Authorization: `Bearer ${this.token}`,
+                }
+            }
         },
     },
     components: {

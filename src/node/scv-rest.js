@@ -783,7 +783,8 @@
         }
 
         requireAdmin(req, res, msg){
-            var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
+            var authorization = req.headers.authorization || "";
+            var decoded = jwt.decode(authorization.split(' ')[1]);
             if (!decoded.isAdmin) {
                 res.locals.status = 401;
                 var user = decoded.user;
