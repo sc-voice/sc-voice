@@ -8,8 +8,8 @@
       </a>
       <v-toolbar-title >
         <div style="position: relative; margin-top:-2px; ">
-            <div class="scv-logo-small " @click="goSuttaCentral()">suttacentral</div>
-            <div class="scv-logo-large" style="">Voice</div>
+            <div class="scv-logo-small " @click="goSuttaCentral()">SuttaCentral</div>
+            <div class="scv-logo-large" >VOICE</div>
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -288,7 +288,7 @@ export default {
                 : "scv-icon-btn indigo darken-2";
         },
         goSuttaCentral() {
-            window.open("https://suttacentral.net","_blank");
+            //window.open("https://suttacentral.net","_blank");
             return null;
         },
 
@@ -429,13 +429,14 @@ button {
     cursor: default;
     margin-top: -8px;
     font-size: 22px;
+    letter-spacing: 1px;
 }
 .scv-logo-small {
-    cursor: pointer;
+    //cursor: pointer;
     margin-top: 2px;
     font-size: 11px;
-    font-variant: small-caps;
-    color: #e09000;
+    //font-variant: small-caps;
+    color: #ce8400;
 }
 .scv-a {
     color: #ffffff;

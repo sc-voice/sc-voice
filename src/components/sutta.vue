@@ -1047,7 +1047,7 @@ export default {
 .scv-inspire-row {
     margin-top: -1.2em;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     width: 100%;
 }
 </style>
