@@ -4,9 +4,10 @@
       <a :href="homeHref" @click="clickHome()" 
           aria-label="Soota Central Home Page">
           <img aria-hidden="true" class="pt-1" 
+            style="margin-left: -4px"
             src="img/favicon.png" height=30px/>
       </a>
-      <v-toolbar-title >
+      <v-toolbar-title style="margin-left:8px">
         <div style="position: relative; margin-top:-2px; ">
             <div class="scv-logo-small " @click="goSuttaCentral()">SuttaCentral</div>
             <div class="scv-logo-large" >VOICE</div>
