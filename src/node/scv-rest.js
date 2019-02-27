@@ -134,6 +134,8 @@
                         this.getUsers),
                     this.resourceMethod("get", "auth/sound-store/volume-info", 
                         this.getSoundStoreVolumeInfo),
+                    this.resourceMethod("post", "auth/sound-store/clear-volume", 
+                        this.postSoundStoreClearVolume),
                     this.resourceMethod("post", "auth/delete-user", 
                         this.postDeleteUser),
                     this.resourceMethod("post", "auth/add-user", 
@@ -797,6 +799,20 @@
                 (async function() { try {
                     that.requireAdmin(req, res, "GET sound-store/volume-info");
                     resolve(that.soundStore.volumeInfo());
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        postSoundStoreClearVolume(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "POST sound-store/clear-volume");
+                    var {
+                        volume,
+                    } = req.body || {};
+                    var result = await that.soundStore.clearVolume(volume);
+                    resolve(result);
                 } catch(e) {reject(e);} })();
             });
         }

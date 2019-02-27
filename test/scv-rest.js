@@ -472,7 +472,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET auth/sound-store/volume-info return stats", function(done) {
+    it("GET auth/sound-store/volume-info return stats", function(done) {
         this.timeout(3*1000);
         (async function() { try {
             var url = `/scv/auth/sound-store/volume-info`;
@@ -483,6 +483,47 @@
             res.statusCode.should.equal(200);
             var soundStore = scvRest.soundStore;
             should.deepEqual(res.body, soundStore.volumeInfo());
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTGET auth/sound-store/clear-volume clears volume cache", function(done) {
+        this.timeout(3*1000);
+        (async function() { try {
+            var scvRest = app.locals.scvRest;
+            var soundStore = scvRest.soundStore;
+            var volume = 'test-clear-volume';
+            var fpath = soundStore.guidPath({
+                volume,
+                guid:'12345',
+            });
+            fs.writeFileSync(fpath, '12345data');
+            should(fs.existsSync(fpath)).equal(true);
+            var url = `/scv/auth/sound-store/clear-volume`;
+            var scvRest = app.locals.scvRest;
+            var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
+
+            var data = { volume, };
+            var res = await supertest(app).post(url)
+                .set("Authorization", `Bearer ${token}`)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(data);
+            res.statusCode.should.equal(200);
+            should.deepEqual(res.body, {
+                filesDeleted:1,
+            });
+            should(fs.existsSync(fpath)).equal(false);
+
+            var data = { volume:'invalid-volume', };
+            logger.error(`EXPECTED ERROR BEGIN`);
+            var res = await supertest(app).post(url)
+                .set("Authorization", `Bearer ${token}`)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(data);
+            res.statusCode.should.equal(500);
+            logger.error(`EXPECTED ERROR END`);
+
             done();
         } catch(e) {done(e);} })();
     });

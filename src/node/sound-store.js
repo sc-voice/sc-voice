@@ -19,7 +19,7 @@
             that.audioMIME = opts.audioMIME;
 
             // every minute, delete ephemerals older than 5 minutes
-            that.ephemerals = [];
+            that.ephemerals = {};
             that.ephemeralAge = opts.ephemeralAge || 5*MS_MINUTES;
             that.ephemeralInterval = opts.ephemeralInterval || 1*MS_MINUTES;
             that.ephemeralInterval && setInterval(() => {
@@ -56,14 +56,14 @@
         }
 
         addEphemeral(guid) {
-            this.ephemerals.push(guid);
+            this.ephemerals[guid] = Date.now();
         }
 
         clearEphemerals(opts={}) {
             var ctime = opts.ctime || Date.now();
             var suffixes = opts.suffixes || this.suffixes;
-            var ephemerals = [];
-            this.ephemerals.forEach(guid => {
+            var ephemerals = {};
+            Object.keys(this.ephemerals).forEach(guid => {
                 suffixes.forEach(suffix => {
                     var fpath = this.guidPath(guid, suffix);
                     if (fs.existsSync(fpath)) {
@@ -71,8 +71,8 @@
                         if (fstat.ctime <= ctime) {
                             fs.unlinkSync(fpath);
                             logger.info(`clearEphemerals unlinkSync:${fpath}`);
-                        } else if (ephemerals[ephemerals.length-1] !== guid) {
-                            ephemerals.push(guid);
+                        } else if (ephemerals[guid] == null) {
+                            ephemerals[guid] = Date.now();
                         } 
                     }
                 });
@@ -93,6 +93,32 @@
                 };
                 return acc;
             }, {});
+        }
+
+        clearVolume(volume) {
+            var that = this;
+            var context = `SoundStore.clearVolume()`;
+            var volpath = path.join(this.storePath, volume+"");
+            if (!fs.existsSync(volpath)) {
+                var e = new Error(`${context} no volume:${volume}`);
+                logger.warn(e);
+                return Promise.reject(e);
+            }
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var files = [];
+                    fs.readdirSync(volpath).forEach(d => {
+                        var dpath = path.join(volpath, d);
+                        var dfiles = fs.readdirSync(dpath).map(f=>path.join(dpath,f));
+                        files = files.concat(files, dfiles);
+                    });
+                    files.forEach(f => fs.unlinkSync(f));
+                    var result = {
+                       filesDeleted: files.length,
+                    };
+                    resolve(result);
+                } catch(e) {reject(e);} })();
+            });
         }
 
     }

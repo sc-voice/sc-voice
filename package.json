@@ -1,7 +1,7 @@
 {
   "name": "sc-voice",
-  "version": "1.2.0",
-  "description": "SuttaCentral Voice Assistant",
+  "version": "1.2.1",
+  "description": "SuttaCentral Voice",
   "main": "index.js",
   "directories": {
     "test": "test"

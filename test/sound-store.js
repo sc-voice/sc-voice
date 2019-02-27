@@ -70,7 +70,7 @@
         var store = new SoundStore({
             storePath,
         });
-        should.deepEqual(store.ephemerals, []);
+        should.deepEqual(store.ephemerals, {});
         var data = [1,2,3].map(i => {
             var name = `ephemeral-${i}`;
             var guid = mj.hash(name);
@@ -81,12 +81,12 @@
         });
 
         store.addEphemeral(data[0].guid);
-        should.deepEqual(store.ephemerals, [
+        should.deepEqual(Object.keys(store.ephemerals), [
             data[0].guid,
         ]);
         store.addEphemeral(data[1].guid);
         store.addEphemeral(data[2].guid);
-        should.deepEqual(store.ephemerals, [
+        should.deepEqual(Object.keys(store.ephemerals), [
             data[0].guid,
             data[1].guid,
             data[2].guid,
@@ -97,7 +97,7 @@
             suffixes: ['.txt'],
             storePath,
         });
-        should.deepEqual(store.ephemerals, []);
+        should.deepEqual(Object.keys(store.ephemerals), []);
         should(store.ephemeralInterval).equal(1*60*1000);
         should(store.ephemeralAge).equal(5*60*1000);
         var data = [1,2,3].map(i => {
@@ -119,7 +119,7 @@
         should(fs.existsSync(data[1].fpath)).equal(true);
         should(fs.existsSync(data[2].fpath)).equal(true);
 
-        should.deepEqual(store.ephemerals, [
+        should.deepEqual(Object.keys(store.ephemerals), [
             data[0].guid,
             data[1].guid,
             data[2].guid,
@@ -130,7 +130,7 @@
         should(fs.existsSync(data[0].fpath)).equal(false);
         should(fs.existsSync(data[1].fpath)).equal(true);
         should(fs.existsSync(data[2].fpath)).equal(true);
-        should.deepEqual(store.ephemerals, [
+        should.deepEqual(Object.keys(store.ephemerals), [
             data[1].guid,
             data[2].guid,
         ]);
@@ -140,7 +140,7 @@
         should(fs.existsSync(data[0].fpath)).equal(false);
         should(fs.existsSync(data[1].fpath)).equal(false);
         should(fs.existsSync(data[2].fpath)).equal(false);
-        should.deepEqual(store.ephemerals, []);
+        should.deepEqual(Object.keys(store.ephemerals), []);
     });
     it("automatically clears old ephemerals", function(done) {
         (async function() { try {
@@ -151,7 +151,7 @@
                 ephemeralInterval,
                 ephemeralAge: ephemeralInterval/2,
             });
-            should.deepEqual(store.ephemerals, []);
+            should.deepEqual(Object.keys(store.ephemerals), []);
             should(store.ephemeralInterval).equal(ephemeralInterval);
             should(store.ephemeralAge).equal(ephemeralInterval/2);
             var data = [1,2,3].map(i => {
@@ -169,7 +169,7 @@
                     fstat: fs.statSync(fpath),
                 }
             });
-            should.deepEqual(store.ephemerals, [
+            should.deepEqual(Object.keys(store.ephemerals), [
                 data[0].guid,
                 data[1].guid,
                 data[2].guid,
@@ -185,7 +185,7 @@
             should(fs.existsSync(data[0].fpath)).equal(true); // refreshed
             should(fs.existsSync(data[1].fpath)).equal(false);
             should(fs.existsSync(data[2].fpath)).equal(false);
-            should.deepEqual(store.ephemerals, [
+            should.deepEqual(Object.keys(store.ephemerals), [
                 data[0].guid,
             ]);
 
@@ -194,11 +194,11 @@
             should(fs.existsSync(data[0].fpath)).equal(false);
             should(fs.existsSync(data[1].fpath)).equal(false);
             should(fs.existsSync(data[2].fpath)).equal(false);
-            should.deepEqual(store.ephemerals, []);
+            should.deepEqual(Object.keys(store.ephemerals), []);
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTvolumeInfo() returns volume information", function(done) {
+    it("volumeInfo() returns volume information", function(done) {
         (async function() { try {
             var store = new SoundStore({});
             var cmd = `du -sb *`;
@@ -214,6 +214,68 @@
                 return acc;
             }, {});
             should.deepEqual(store.volumeInfo(), du);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("clearVolume() clears volume", function(done) {
+        (async function() { try {
+            var store = new SoundStore({
+                storePath,
+            });
+            var volume1 = 'test-v1';
+            var guid1 = 'clear-v1';
+            var filePath1 = store.guidPath({
+                volume: volume1,
+                chapter:'test-c1',
+                guid: guid1,
+            }, '.test');
+            should(fs.existsSync(filePath1)).equal(false);
+            fs.writeFileSync(filePath1, 'test-f1');
+            should(fs.existsSync(filePath1)).equal(true);
+            var filePath2 = store.guidPath({
+                volume:'test-v2',
+                chapter:'test-c2',
+                guid:'clear-v2',
+            }, '.test');
+            should(fs.existsSync(filePath2)).equal(false);
+            fs.writeFileSync(filePath2, 'test-f2');
+            should(fs.existsSync(filePath2)).equal(true);
+
+            // null volume
+            var eCaught = null;
+            try {
+                var result = await store.clearVolume();
+            } catch(e) { eCaught = e; }
+            should(eCaught.message).match(/no volume/);
+            should(fs.existsSync(filePath2)).equal(true);
+            should(fs.existsSync(filePath1)).equal(true);
+
+            // nonsense volume
+            try {
+                var result = await store.clearVolume('no-volume');
+            } catch(e) { eCaught = e; }
+            should(eCaught.message).match(/no volume/);
+            should(fs.existsSync(filePath2)).equal(true);
+            should(fs.existsSync(filePath1)).equal(true);
+
+            // clear only selected volume
+            var result = await store.clearVolume(volume1);
+            should(fs.existsSync(filePath2)).equal(true);
+            should(fs.existsSync(filePath1)).equal(false);
+            should.deepEqual(result, {
+                filesDeleted: 1,
+            });
+
+            // clearEphemerals should not be bothered by deleted files
+            fs.writeFileSync(filePath1, 'test-f1');
+            store.addEphemeral(guid1);
+            should.deepEqual(Object.keys(store.ephemerals), [guid1]);
+            var result = await store.clearVolume(volume1);
+            should(fs.existsSync(filePath1)).equal(false);
+            store.clearEphemerals();
+            should.deepEqual(Object.keys(store.ephemerals), []);
+            should(fs.existsSync(filePath2)).equal(true);
+
             done();
         } catch(e) {done(e);} })();
     });
