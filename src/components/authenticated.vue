@@ -15,7 +15,7 @@
         </v-tab-item>
         <v-tab v-if="isAdmin"> Releases </v-tab>
         <v-tab-item v-if="isAdmin"> 
-            Release stuff goes here...
+            <releases/>
         </v-tab-item>
         <v-tab v-if="isTranslator || isEditor"> Content </v-tab>
         <v-tab-item v-if="isTranslator || isEditor">
@@ -30,6 +30,7 @@
 import Vue from "vue";
 import AdminUsers from "./admin-users";
 import Caches from "./caches";
+import Releases from "./releases";
 import Login from "./login";
 
 export default {
@@ -80,6 +81,7 @@ export default {
     components: {
         AdminUsers,
         Caches,
+        Releases,
         Login,
     },
 }

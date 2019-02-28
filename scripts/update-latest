@@ -15,6 +15,11 @@ done
 shift $((OPTIND-1))
 [ "$1" = "--" ] && shift
 
+if [ "$1" == "test" ]; then
+    echo -e "UPDATE\t: UPDATE TEST COMPLETED"
+    exit 0;
+fi
+
 if [ "$REBOOT" == "0" ]; then
     while true; do
         echo -e "UPDATE\t: SC-Voice update requires a reboot"

@@ -1,6 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
+    const { exec, execSync } = require('child_process');
     const URL = require('url');
     const http = require('http');
     const https = require('https');
@@ -142,6 +143,8 @@
                         this.postAddUser),
                     this.resourceMethod("post", "auth/set-password", 
                         this.postSetPassword),
+                    this.resourceMethod("post", "auth/update-release", 
+                        this.postUpdateRelease),
 
                 ]),
             });
@@ -814,6 +817,44 @@
                     } = req.body || {};
                     var result = await that.soundStore.clearVolume(volume);
                     resolve(result);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        postUpdateRelease(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "POST update-release");
+                    var cmd = `scripts/update -r`;
+                    var cwd = path.join(__dirname, '../..');
+                    var error = null;
+                    exec(cmd, { cwd }, (e, stdout, stderr) => {
+                        if (e) {
+                            logger.error(`POST update-release: ${cwd} => HTTP500`);
+                            logger.error(e.stack);
+                            error = e;
+                        } else {
+                            error = false;
+                        }
+                        logger.info(`postUpdateRelease-stdout: ${stdout.toString()}`);
+                        logger.info(`postUpdateRelease-stderr: ${stderr.toString()}`);
+                    });
+                    setTimeout(() => {
+                        if (error) {
+                            reject(error);
+                        } else if (error === false) {
+                            logger.info(`POST update-release: ${cwd} => release is current`);
+                            resolve({
+                                updateRelease: false,
+                            });
+                        } else {
+                            logger.info(`POST update-release: ${cwd} => updating...`);
+                            resolve({
+                                updateRelease: true,
+                            });
+                        }
+                    }, 1000);
                 } catch(e) {reject(e);} })();
             });
         }
