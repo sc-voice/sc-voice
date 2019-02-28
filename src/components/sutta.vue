@@ -1,6 +1,7 @@
 <template>
 <div>
   <v-progress-linear v-model="waiting" height="4"
+    aria-hidden="true"
     background-color="#000"
     style="width:100%; margin-top:0"/>
   <v-container fluid class="scv-sutta">

@@ -8,9 +8,17 @@
             src="img/favicon.png" height=30px/>
       </a>
       <v-toolbar-title style="margin-left:8px">
-        <div style="position: relative; margin-top:-2px; ">
-            <div class="scv-logo-small " @click="goSuttaCentral()">SuttaCentral</div>
-            <div class="scv-logo-large" >VOICE</div>
+        <div aria-label="soota central voice"
+            aria-role="heading"
+             style="position: relative; margin-top:-2px; ">
+            <div class="scv-logo-small " 
+                aria-hidden="true"
+                @click="goSuttaCentral()">SuttaCentral</div>
+            <div class="scv-logo-large" 
+                aria-hidden=true
+                aria-label="soota central voice">
+                VOICE
+            </div>
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>

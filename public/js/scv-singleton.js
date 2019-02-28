@@ -44,7 +44,7 @@
         value: 5,
     },{
         url: '/audio/simple-bell.mp3',
-        label: "Simple Bell by Aminah (Public Domain)",
+        label: "Simple Bell (Public Domain)",
         volume: 0.5,
         value: 6,
     }];
