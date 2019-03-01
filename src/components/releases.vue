@@ -65,7 +65,7 @@
             <v-alert :value="isReleaseCurrent" type="success">
                 Current release is latest. No action taken.
             </v-alert>
-            <img src="/img/danger.gif" width="200px"
+            <img src="url(/img/danger.gif)" width="200px"
                 class="mb-2"/>
         </div>
       </v-container>
@@ -92,7 +92,7 @@ export default {
             confirmUpdate: false,
             isUpdating: false,
             refreshSecs: 0,
-            updateMinutes: 5,
+            updateMinutes: 1.5,
             isReleaseCurrent: false,
         }
     },
