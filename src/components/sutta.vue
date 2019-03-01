@@ -10,15 +10,14 @@
           <div class="scv-search-row">
               <div class="scv-search-col">
                   <h1 class="title">Explore the Buddha's Teaching</h1>
-                  <div class="scv-search-field">
+                  <div class="scv-search-field" role="search">
                       <v-text-field ref="refSearch"
                           placeholder="Search"
                           v-model="search" v-on:keypress="onSearchKey($event)"
                           @click:append="onSearchKey()"
                           append-icon="search"
                           flat
-                          single-line
-                          role="search"
+                          single-line                          
                           >
                       </v-text-field>
                   </div>
