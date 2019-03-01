@@ -311,12 +311,16 @@
             }
             return new Promise((resolve, reject) => {
                 try {
+                    var soundStore = that.soundStore;
                     var cache = opts.cache == null ? true : opts.cache;
                     var rate = this.prosody.rate || "0%";
                     var pitch = this.prosody.pitch || "0%";
                     var ssml = `<prosody rate="${rate}" pitch="${pitch}">${ssmlFragment}</prosody>`;
                     var signature = this.signature(ssml);
-                    var outpath = this.soundStore.signaturePath(signature, this.audioSuffix);
+                    opts.volume && (signature.volume = opts.volume);
+                    signature.chapter = opts.chapter;
+                    opts.guid && (signature.guid = opts.guid);
+                    var outpath = soundStore.signaturePath(signature, this.audioSuffix);
                     var request = {
                         ssml,
                         signature,
@@ -363,11 +367,12 @@
                 var queue = that.queue;
                 (async function() { try {
                     var result = null;
-                    var ssmlAll = [];
+                    //var ssmlAll = []; // useful for debugging
+                    var ssmlAll = null;
                     if (typeof text === 'string') {
                         var segments = that.segmentSSML(that.stripHtml(text));
                         var promises = segments.map(ssml => {
-                            ssmlAll.push(ssml);
+                            ssmlAll && ssmlAll.push(ssml);
                             return queue.add(() => that.synthesizeSSML(ssml, opts));
                         });
                         result = await Promise.all(promises);
@@ -380,7 +385,7 @@
                         var promises = textArray.reduce((acc, t) => {
                             var segs = that.segmentSSML(that.stripHtml(t));
                             segs.forEach(ssml => {
-                                ssmlAll.push(ssml);
+                                ssmlAll && ssmlAll.push(ssml);
                                 acc.push(queue.add(() => that.synthesizeSSML(ssml, opts)));
                             });
                             segments.push(segs);
@@ -393,9 +398,10 @@
                             result = result[0];
                         } else {
                             var files = result.map(r => r.file);
-                            result = await that.ffmpegConcat(files, {
+                            var ffmpegOpts = Object.assign({
                                 ssmlAll,
-                            });
+                            }, opts);
+                            result = await that.ffmpegConcat(files, ffmpegOpts);
                         }
                         resolve(Object.assign({
                             segments,
@@ -417,12 +423,14 @@
             }
             return new Promise((resolve, reject) => {
                 var inputs = `file '${files.join("'\nfile '")}'\n`;
+                var soundStore = this.soundStore;
                 var signature = {
                     api: "ffmegConcat",
                     files,
                 }
+                opts.volume && (signature.volume = opts.volume);
                 signature[this.mj.hashTag] = this.mj.hash(signature);
-                var outpath = this.soundStore.signaturePath(signature, this.audioSuffix);
+                var outpath = soundStore.signaturePath(signature, this.audioSuffix);
                 var stats = fs.existsSync(outpath) && fs.statSync(outpath);
                 var cache = opts.cache == null ? true : opts.cache;
                 var request = {
@@ -435,10 +443,10 @@
                     resolve(this.createResponse(request, true));
                 } else {
                     if (opts.ssmlAll) {
-                        var ssmlPath = this.soundStore.signaturePath(signature, ".ssml");
+                        var ssmlPath = soundStore.signaturePath(signature, ".ssml");
                         fs.writeFileSync(ssmlPath, JSON.stringify(opts.ssmlAll, null, 2));
                     }
-                    var inpath = this.soundStore.signaturePath(signature, ".txt");
+                    var inpath = soundStore.signaturePath(signature, ".txt");
                     fs.writeFileSync(inpath, inputs);
                     var cmd = `bash -c "ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`;
                     var execOpts = {
@@ -457,7 +465,7 @@
                             console.error(`ffmpegConcat() failed ${outpath}`, stats.size, err);
                             reject(new Error(err));
                         } else {
-                            this.soundStore.addEphemeral(signature.guid);
+                            soundStore.addEphemeral(signature.guid);
                             resolve(this.createResponse(request, false));
                         }
                     });

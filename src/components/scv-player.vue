@@ -347,9 +347,15 @@ export default {
             //console.log(`langTextClass ${this.langTextClass}`);
         },
         audioSrc(lang) {
+            var sutta_uid = this.sutta_uid;
+            var voice = lang === 'pli' ? 'Aditi' : this.voice.name;
+            var translator = this.translator;
             var segment = this.section && this.section.segments[this.iSegment];
-            var url = this.url(segment ? `audio/${segment.audio[lang]}` : '');
-            //console.log(`audioSrc`, url);
+            var guid = segment && segment.audio[lang];
+            var url = guid 
+                ? this.url(`audio/${sutta_uid}/${lang}/${translator}/${voice}/${guid}`)
+                : '';
+            console.log(`audioSrc`, url);
             return url;
         },
         progressSrc() {

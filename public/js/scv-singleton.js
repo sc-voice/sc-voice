@@ -42,6 +42,11 @@
         label: "Play Mid-range Singing Bell by Coemgenu (Public Domain)",
         volume: 0.5,
         value: 5,
+    },{
+        url: '/audio/simple-bell.mp3',
+        label: "Simple Bell (Public Domain)",
+        volume: 0.5,
+        value: 6,
     }];
 
     const EXPIRES = {
@@ -56,14 +61,20 @@
             this.showLang = 0;
             this.search = null;
             this.maxResults = 5;
-            this.ips = 4;
+            this.ips = 6;
             this.lang = 'en';
             if (g == null) {
                 throw new Error(`g is required`);
             }
-            Object.defineProperty(this, "_token", {
+            Object.defineProperty(this, "_user", {
                 writable: true,
-                value: null,
+                value: {
+                    username: null,
+                    isAdmin: false,
+                    isTranslator: false,
+                    isEditor: false,
+                    token: null,
+                },
             });
             Object.defineProperty(this, "vueRoot", {
                 writable: true,
@@ -78,13 +89,17 @@
             });
         }
 
-        get token() {
-            return this._token;
+        get user() {
+            return this._user;
         }
 
-        set token(value) {
+        set user(value) {
             var g = this.g;
-            g.Vue.set(this, "_token", value);
+            g.Vue.set(this._user, "username", value.username);
+            g.Vue.set(this._user, "token", value.token);
+            g.Vue.set(this._user, "isAdmin", value.isAdmin);
+            g.Vue.set(this._user, "isTranslator", value.isTranslator);
+            g.Vue.set(this._user, "isEditor", value.isEditor);
         }
 
         get ipsChoices() {

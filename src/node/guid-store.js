@@ -12,24 +12,50 @@
             this.folderPrefix = opts.folderPrefix || 2;
 
             this.suffix = opts.suffix || '';
+            this.volume = opts.volume || 'common';
             this.storeName = opts.storeName || 'guid-store';
             this.storePath = opts.storePath ||  path.join(LOCAL, this.storeName);
             fs.existsSync(this.storePath) || fs.mkdirSync(this.storePath);
         }
 
-        guidPath(guid, suffix=this.suffix) {
-            if (typeof guid !== 'string') {
-                var e = new Error(`GuidStore.guidPath() invalid guid:${guid}`);
-                throw e;
+        guidPath(...args) {
+            if (args[0] === Object(args[0])) { // (opts); (opts1,opts2)
+                var opts = Object.assign({}, args[0], args[1]);
+            } else if (args[1] === Object(args[1])) { // (guid, opts)
+                var opts = Object.assign({
+                    guid: args[0],
+                }, args[1]);
+            } else { // (guid, suffix)
+                var opts = {
+                    guid: args[0],
+                    suffix: args[1],
+                };
             }
-            var folder = guid.substr(0,this.folderPrefix);
-            var folderPath = path.join(this.storePath, folder);
-            fs.existsSync(folderPath) || fs.mkdirSync(folderPath);
-            return path.join(folderPath, `${guid}${suffix}`);
+
+            // set up volume folder
+            var volume = opts.volume || this.volume;
+            var volumePath = path.join(this.storePath, volume);
+            fs.existsSync(volumePath) || fs.mkdirSync(volumePath);
+
+            // set up chapter folder
+            var guid = opts.guid;
+            var chapter = opts.chapter || guid.substr(0,this.folderPrefix);
+            var chapterPath = path.join(this.storePath, volume, chapter);
+            fs.existsSync(chapterPath) || fs.mkdirSync(chapterPath);
+
+            // define path
+            var suffix = opts.suffix || this.suffix;
+            return path.join(chapterPath, `${guid}${suffix}`);
         }
 
-        signaturePath(signature, suffix=this.suffix) {
-            return this.guidPath(signature.guid, suffix);
+        signaturePath(sigObj, opts) {
+            var guidOpts = Object.assign({}, sigObj);
+            if (opts === Object(opts)) {
+                Object.assign(guidOpts, opts);
+            } else if (typeof opts === 'string') {
+                guidOpts.suffix = opts;
+            }
+            return this.guidPath(guidOpts);
         }
 
     }

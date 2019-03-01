@@ -31,19 +31,21 @@ argv.filter(a => a==='--log-debug').length && (logger.level = 'debug');
 // set up application
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", 
-        "X-Requested-With, Content-Type, Access-Control-Allow-Headers");
+    res.header("Access-Control-Allow-Headers", [
+        "X-Requested-With",
+        "Content-Type",
+        "Access-Control-Allow-Headers",
+        "Authorization",
+    ].join(","));
     res.header("Access-Control-Allow-Methods", "GET, OPTIONS, PUT, POST");
     next();
 });
 
-app.get('/scv/auth',
-    jwt({secret: 'shhhhhhared-secret'}),
-    (req, res) => {
-        if (!req.user.admin) {
-            return res.sendStatus(401);
-        }
-        res.sendStatus(200);
+app.get('/scv/auth/*',
+    jwt({secret: ScvRest.JWT_SECRET}),
+    (req, res, next) => {
+        logger.debug(`authenticated path:${req.path}`);
+        next();
     });
 app.use("/scv/index.html", 
     express.static(path.join(__dirname, "../dist/index.html")));

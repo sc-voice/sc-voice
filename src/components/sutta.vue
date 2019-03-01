@@ -1,18 +1,34 @@
 <template>
 <div>
   <v-progress-linear v-model="waiting" height="4"
+    v-if="waiting > 0"
+    aria-hidden="true"
     background-color="#000"
     style="width:100%; margin-top:0"/>
   <v-container fluid class="scv-sutta">
       <v-layout column align-left >
           <div class="scv-search-row">
               <div class="scv-search-col">
-                  <v-text-field ref="refSearch"
-                      placeholder="Enter sutta id or keywords" 
-                      v-model="search" v-on:keypress="onSearchKey($event)"
-                      aria-label="Enter sootta i d or keywords"
-                      label = "Search" >
-                  </v-text-field>
+                  <h1 class="title">Explore the Buddha's Teaching</h1>
+                  <div class="scv-search-field" role="search">
+                      <v-text-field ref="refSearch"
+                          placeholder="Search"
+                          v-model="search" v-on:keypress="onSearchKey($event)"
+                          @click:append="onSearchKey()"
+                          append-icon="search"
+                          flat
+                          single-line                          
+                          >
+                      </v-text-field>
+                  </div>
+                  <div class="scv-inspire-row">
+                      <v-btn @click="clickInspireMe()"
+                          role="button"
+                          aria-label="inspire me"
+                          class="scv-inspire " :style="cssProps" small>
+                          Inspire me!
+                      </v-btn>
+                  </div>
                   <div class="mb-3" 
                     v-if="waiting<=0 && sutta_uid && !searchResults"
                     style="display:flex; justify-content: flex-start">
@@ -60,19 +76,6 @@
                 aria-label="Dismiss Error">
                 <v-icon>clear</v-icon>
               </v-btn>
-          </div>
-          <div v-if="!searchResults && !sections" class="scv-home-blurb" >
-              <div class="text-xs-center caption pr-2">
-                  <v-btn @click="clickExamples()"
-                      class="scv-text-button " :style="cssProps" small>
-                      Examples
-                  </v-btn>
-              </div>
-              <div v-for="(ex,i) in examples"  :key="`example${i}`"
-                  class="text-xs-center caption">
-                  <a :href="searchUrl(`${ex}`)" :ref="`refExample${i}`" >
-                      {{i+1}}. {{ex}}</a>
-              </div>
           </div>
           <details v-show="searchResults" open>
             <summary v-if="resultCount" 
@@ -321,15 +324,15 @@ export default {
         return that;
     },
     methods: {
-        clickExamples() {
+        clickInspireMe() {
             var that = this;
             var url = this.url(`examples/3`);
             this.$http.get(url).then(res => {
-                Vue.set(this, "examples", res.data);
-                this.$nextTick(() => {
-                    var elt = that.$refs['refExample0'][0];
-                    elt && elt.focus();
-                });
+                var examples = res.data;
+                Vue.set(this, "examples", examples);
+                that.clear();
+                that.search = examples[0];
+                that.onSearch();
             }).catch(e => {
                 console.error(e.stack);
             });
@@ -562,7 +565,7 @@ export default {
                 player.launch(iTrack);
             });
         },
-        onSearchKey(event) {
+        onSearchKey(event={key:"Enter"}) {
             if (event.key === "Enter") {
                 this.clear();
                 this.search && this.onSearch();
@@ -975,6 +978,10 @@ export default {
     flex-flow: column;
     align-items: center;
 }
+.scv-search {
+    line-height: 1 !important;
+    color: red;
+}
 .scv-search-result {
     margin-top: 0.8em;
     border: 1pt solid #333;
@@ -1018,5 +1025,32 @@ export default {
     flex-flow: column;
     justify-content: space-around; 
     margin-top: 5em;
+}
+.scv-search-field {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: 1em;
+}
+.scv-inspire {
+    margin-left: 1px;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 10px;
+    border: 1px solid #383838;
+    height: 24px;
+    background: #212121 !important;
+}
+.scv-inspire:focus {
+    border: 1pt solid #888;
+    border-color: var(--accent-color);
+    outline: 1pt solid var(--accent-color);
+}
+.scv-inspire-row {
+    margin-top: -1.2em;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 </style>

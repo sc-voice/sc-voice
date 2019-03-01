@@ -274,7 +274,9 @@
                 ? pattern
                 : `"(${language}|pli)":.*${pattern}`;
             var root = this.root.replace(ROOT, '');
-            var cmd = `grep -rciE '${grex}' --exclude-dir=.git`+
+            var cmd = `grep -rciE '${grex}' `+
+                `--exclude-dir=examples `+
+                `--exclude-dir=.git `+
                 `|grep -v ':0'`+
                 `|sort -g -r -k 2,2 -k 1,1 -t ':'`;
             maxResults && (cmd += `|head -${maxResults}`);
@@ -522,7 +524,14 @@
                 var fname = path.join(ROOT,line.substring(0,iColon));
                 var fnameparts = fname.split('/');
                 var collection_id = fnameparts[fnameparts.length-4];
-                var sutta = new Sutta(JSON.parse(fs.readFileSync(fname)));
+                var text = fs.readFileSync(fname);
+                try {
+                    var json = JSON.parse(text);
+                    var sutta = new Sutta(json);
+                } catch(e) {
+                    logger.warn(`${e.message} fname:${fname}`);
+                    throw e;
+                }
                 sutta = this.suttaFactory.sectionSutta(sutta);
                 var suttaplex = sutta.suttaplex;
                 var nSegments = sutta.segments.length;

@@ -1,7 +1,7 @@
-
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
+    const { exec, execSync } = require('child_process');
     const URL = require('url');
     const http = require('http');
     const https = require('https');
@@ -14,6 +14,7 @@
     const srcPkg = require("../../package.json");
     const Words = require('./words');
     const GuidStore = require('./guid-store');
+    const Playlist = require('./playlist');
     const Section = require('./section');
     const SoundStore = require('./sound-store');
     const Sutta = require('./sutta');
@@ -25,7 +26,7 @@
     const Voice = require('./voice');
     const SuttaCentralId = require('./sutta-central-id');
     const PATH_SOUNDS = path.join(__dirname, '../../local/sounds/');
-    const PATH_EXAMPLES = path.join(__dirname, `../../words/examples/`);
+    const PATH_EXAMPLES = path.join(__dirname, `../../local/suttas/examples/`);
     const DEFAULT_USER = {
         username: "admin",
         isAdmin: true,
@@ -43,7 +44,7 @@
         usage: 'review',
     }];
 
-    const SECRET = `JWT${Math.random()}`;
+    const JWT_SECRET = `JWT${Math.random()}`;
 
     class ScvRest extends RestBundle { 
         constructor(opts = {
@@ -67,6 +68,7 @@
                 defaultUser: DEFAULT_USER,
             });
             this.mdAria = opts.mdAria || new MdAria();
+            this.jwtExpires = opts.jwtExpires || '1h';
             this.voicePali = Voice.createVoice({
                 name: 'Aditi',
                 usage: 'recite',
@@ -89,6 +91,9 @@
                         "audio/:guid", this.getAudio, this.audioMIME),
                     this.resourceMethod("get", 
                         "audio/:guid/:filename", this.getAudio, this.audioMIME),
+                    this.resourceMethod("get", 
+                        "audio/:sutta_uid/:lang/:translator/:voice/:guid", 
+                            this.getAudio, this.audioMIME),
                     this.resourceMethod("get", 
                         "recite/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReciteSection),
@@ -126,6 +131,21 @@
                     this.resourceMethod("post", "login", 
                         this.postLogin),
 
+                    this.resourceMethod("get", "auth/users", 
+                        this.getUsers),
+                    this.resourceMethod("get", "auth/sound-store/volume-info", 
+                        this.getSoundStoreVolumeInfo),
+                    this.resourceMethod("post", "auth/sound-store/clear-volume", 
+                        this.postSoundStoreClearVolume),
+                    this.resourceMethod("post", "auth/delete-user", 
+                        this.postDeleteUser),
+                    this.resourceMethod("post", "auth/add-user", 
+                        this.postAddUser),
+                    this.resourceMethod("post", "auth/set-password", 
+                        this.postSetPassword),
+                    this.resourceMethod("post", "auth/update-release", 
+                        this.postUpdateRelease),
+
                 ]),
             });
         }
@@ -152,8 +172,20 @@
         getAudio(req, res, next) {
             return new Promise((resolve, reject) => { try {
                 var guid = req.params.guid;
-                var filePath = this.soundStore.guidPath(guid);
+                var {   
+                    sutta_uid,
+                    lang,
+                    translator,
+                    voice,
+                } = req.params;
+                var soundOpts = {};
+                if (sutta_uid) {
+                    soundOpts.volume = Playlist.volumeName(sutta_uid, 
+                        lang, translator, voice);
+                }
+                var filePath = this.soundStore.guidPath(guid, soundOpts);
                 var filename = req.params.filename;
+                console.log(`dbg`, filePath, filename);
                 var data = fs.readFileSync(filePath);
                 res.set('accept-ranges', 'bytes');
                 res.set('do_stream', 'true');
@@ -368,12 +400,16 @@
                     if (segment[language]) {
                         var speak = await voiceLang.speak(segment[language], {
                             usage,
+                            volume: Playlist.volumeName(sutta_uid, language, 
+                                translator, voiceLang.name),
                         });
                         segment.audio[language] = speak.signature.guid;
                     }
                     if (segment.pli) {
                         var speak = await voicePali.speak(segment.pli, {
                             usage: 'recite',
+                            volume: Playlist.volumeName(sutta_uid, 'pli', 
+                                translator, voicePali.name),
                         });
                         segment.audio.pli = speak.signature.guid;
                     }
@@ -645,13 +681,9 @@
             }
         }
 
-        authenticate(username, password) {
-            logger.info(`ScvRest.authenticate(${username})`);
-            return this.userStore.authenticate(username, password);
-        }
-
         postLogin(req, res, next) {
             var that = this;
+            var us = that.userStore;
             var {
                 username,
                 password,
@@ -659,17 +691,170 @@
 
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var authuser = await that.authenticate(username, password);
+                    var authuser = await us.authenticate(username, password);
                     if (authuser == null) {
                         res.locals.status = 401;
                         logger.warn(`POST login ${username} => HTTP401 UNAUTHORIZED`);
                         throw new Error('Invalid username/password');
                     }
-                    logger.info(`POST login ${username} => OK`);
-                    var token = jwt.sign(authuser, SECRET, {
-                        expiresIn: '1h',
+                    delete authuser.credentials;
+                    logger.info(`POST login ${username} => ${JSON.stringify(authuser)}`);
+                    var token = jwt.sign(authuser, JWT_SECRET, {
+                        expiresIn: that.jwtExpires,
                     });
-                    resolve(token);
+                    authuser.token = token;
+                    resolve(authuser);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        getUsers(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
+                    var users = await that.userStore.users();
+                    if (!decoded.isAdmin) {
+                        users = {
+                            [decoded.username]: users[decoded.username],
+                        };
+                    }
+                    resolve(users);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        postDeleteUser(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var {
+                        username,
+                    } = req.body || {};
+                    var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
+                    if (decoded.username !== username && !decoded.isAdmin) {
+                        throw new Error('Unauthorized user deletion'+
+                            `of:${username} by:${decoded.username}`);
+                    }
+                    var result = await that.userStore.deleteUser(username);
+                    logger.info(`POST delete-user `+
+                        `user:${username} by:${decoded.username} => OK`);
+                    resolve(result);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        postAddUser(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var user = {
+                        username: req.body.username,
+                        password: req.body.password,
+                        isAdmin: req.body.isAdmin,
+                        isTranslator: req.body.isTranslator,
+                        isEditor: req.body.isEditor,
+                    };
+                    var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
+                    var result = await that.userStore.addUser(user);
+                    logger.info(`POST add-user `+
+                        `user:${user.username} by:${decoded.username} => OK`);
+                    resolve(result);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        postSetPassword(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var {
+                        username,
+                        password,
+                    } = req.body || {};
+                    var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
+                    var result = await that.userStore.setPassword(username, password);
+                    logger.info(`POST set-password `+
+                        `for:${username} by:${decoded.username} => OK`);
+                    resolve(result);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        static get JWT_SECRET() {
+            return JWT_SECRET;
+        }
+
+        requireAdmin(req, res, msg){
+            var authorization = req.headers.authorization || "";
+            var decoded = jwt.decode(authorization.split(' ')[1]);
+            if (!decoded.isAdmin) {
+                res.locals.status = 401;
+                var user = decoded.user;
+                logger.warn(`${msg}:${user} => HTTP401 UNAUTHORIZED (ADMIN)`);
+                throw new Error('Admin privilege required');
+            }
+            return true;
+        }
+
+        getSoundStoreVolumeInfo(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "GET sound-store/volume-info");
+                    resolve(that.soundStore.volumeInfo());
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        postSoundStoreClearVolume(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "POST sound-store/clear-volume");
+                    var {
+                        volume,
+                    } = req.body || {};
+                    var result = await that.soundStore.clearVolume(volume);
+                    resolve(result);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        postUpdateRelease(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "POST update-release");
+                    var cmd = `scripts/update -r`;
+                    var cwd = path.join(__dirname, '../..');
+                    var error = null;
+                    exec(cmd, { cwd }, (e, stdout, stderr) => {
+                        if (e) {
+                            logger.error(`POST update-release: ${cwd} => HTTP500`);
+                            logger.error(e.stack);
+                            error = e;
+                        } else {
+                            error = false;
+                        }
+                        logger.info(`postUpdateRelease-stdout: ${stdout.toString()}`);
+                        logger.info(`postUpdateRelease-stderr: ${stderr.toString()}`);
+                    });
+                    setTimeout(() => {
+                        if (error) {
+                            reject(error);
+                        } else if (error === false) {
+                            logger.info(`POST update-release: ${cwd} => release is current`);
+                            resolve({
+                                updateRelease: false,
+                            });
+                        } else {
+                            logger.info(`POST update-release: ${cwd} => updating...`);
+                            resolve({
+                                updateRelease: true,
+                            });
+                        }
+                    }, 1000);
                 } catch(e) {reject(e);} })();
             });
         }

@@ -158,6 +158,8 @@
             var opts = {
                 cache,
                 usage: "navigate",
+                volume: 'test',
+                chapter: 'voice',
             };
             var result = await raveena.speak(text, opts);
             should(result).properties(['file','hits','misses','signature','cached']);

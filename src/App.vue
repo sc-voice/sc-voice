@@ -1,29 +1,36 @@
 <template>
   <v-app dark>
-    <v-toolbar app flat dark >
-      <a :href="homeHref" @click="clickHome()" aria-label="home">
-          <img aria-hidden="true" class="pt-1" src="img/favicon.png" height=30px/>
+    <v-toolbar app flat dark aria-role="navigation">
+      <a :href="homeHref" @click="clickHome()" 
+          aria-label="Soota Central Home Page">
+          <img aria-hidden="true" class="pt-1" 
+            style="margin-left: -4px"
+            src="img/favicon.png" height=30px/>
       </a>
-      <v-toolbar-title >
-        <div style="position: relative; margin-top:-2px; ">
-            <div class="scv-logo-large" style="">
-                voice<span style="color:orange">.</span>
+      <v-toolbar-title style="margin-left:8px">
+        <div aria-label="soota central voice"
+            aria-role="heading"
+             style="position: relative; margin-top:-2px; ">
+            <div class="scv-logo-small " 
+                aria-hidden="true"
+                @click="goSuttaCentral()">SuttaCentral</div>
+            <div class="scv-logo-large" 
+                aria-hidden=true
+                aria-label="soota central voice">
+                VOICE
             </div>
-            <div class="scv-logo-small">suttacentral.net</div>
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
         aria-label="Help"
-        role="contentinfo"
         title="About and Help"
         @click="openHelp()"
         >
-        <v-icon>help</v-icon>
+        <v-icon>info</v-icon>
       </v-btn>
       <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
         aria-label="Settings"
-        role="contentinfo"
         title="Settings"
         @click="dialogSettings = !dialogSettings"
         >
@@ -64,22 +71,22 @@
             <details class="scv-dialog" >
                 <summary class="subheading">Sutta Player settings</summary>
                 <div class="scv-settings">
-                    <v-radio-group v-model="scvOpts.iVoice" 
-                        @change="scvOpts.changed('iVoice')"
+                    <v-radio-group v-model="gscv.iVoice" 
+                        @change="gscv.changed('iVoice')"
                         column>
-                       <v-radio v-for="(v,i) in scvOpts.voices" 
+                       <v-radio v-for="(v,i) in gscv.voices" 
                          :label="v.label" :value="i" :key="`voice${i}`">
                          </v-radio>
                     </v-radio-group>
-                    <v-radio-group v-model="scvOpts.showLang" 
-                        @change="scvOpts.changed('showLang')"
+                    <v-radio-group v-model="gscv.showLang" 
+                        @change="gscv.changed('showLang')"
                         column>
                        <v-radio v-for="(sl,i) in showLangChoices" 
                          :label="sl.label" :value="i" :key="`showLang${sl.value}`">
                          </v-radio>
                     </v-radio-group>
-                    <v-radio-group v-model="scvOpts.ips" 
-                        @change="scvOpts.changed('ips')"
+                    <v-radio-group v-model="gscv.ips" 
+                        @change="gscv.changed('ips')"
                         column>
                        <v-radio v-for="(ips) in ipsChoices" 
                          :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
@@ -90,25 +97,25 @@
             <details class="scv-dialog" >
                 <summary class="subheading">General settings</summary>
                 <div class="scv-settings">
-                    <v-radio-group v-if="scvOpts" v-model="scvOpts.maxResults" 
-                        @change="scvOpts.changed('maxResults')"
+                    <v-radio-group v-if="gscv" v-model="gscv.maxResults" 
+                        @change="gscv.changed('maxResults')"
                         column>
                        <v-radio v-for="(mr) in maxResultsChoices" 
                          :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
                          </v-radio>
                     </v-radio-group>
-                    <v-checkbox v-if="scvOpts" 
-                        v-model="scvOpts.showId" role="checkbox" 
-                        :aria-checked="scvOpts.showId"
-                        v-on:change="scvOpts.changed('showId')"
+                    <v-checkbox v-if="gscv" 
+                        v-model="gscv.showId" role="checkbox" 
+                        :aria-checked="gscv.showId"
+                        v-on:change="gscv.changed('showId')"
                         label="Show SuttaCentral text segment identifiers">
                     </v-checkbox>
                 </div>
             </details>
-            <v-checkbox v-if="scvOpts" 
-                v-model="scvOpts.useCookies" role="checkbox" 
-                v-on:change="scvOpts.changed('useCookies')"
-                :aria-checked="scvOpts.useCookies"
+            <v-checkbox v-if="gscv" 
+                v-model="gscv.useCookies" role="checkbox" 
+                v-on:change="gscv.changed('useCookies')"
+                :aria-checked="gscv.useCookies"
                 style="margin-left: 0.8em"
                 label="Store settings using web browser cookies ">
             </v-checkbox>
@@ -139,12 +146,20 @@
       </div>
       <v-spacer/>
       <div class="pl-2" style="margin-top:-0.35em" >
-        {{scvOpts.search}}
-        <router-link to="/app" v-if="isAdmin" aria-hidden=true >
-            &equiv;
+        {{user.username}}
+        <router-link class="scv-a-btn" to="/app" 
+            v-if="isAuth" aria-hidden=true >
+            <v-btn icon 
+                :class="userBtnClass" :style="cssProps" small>
+                <v-icon>supervisor_account</v-icon>
+            </v-btn>
         </router-link>
-        <router-link to="/admin" v-else aria-hidden=true >
-            &equiv;
+        <router-link class="scv-a-btn" to="/auth" 
+            v-else aria-hidden=true >
+            <v-btn icon 
+                class="scv-icon-btn" :style="cssProps" small>
+                <v-icon>supervisor_account</v-icon>
+            </v-btn>
         </router-link>
       </div>
     </v-footer>
@@ -181,11 +196,12 @@ export default {
             }],
             title: 'SuttaCentral Voice Assistant',
             bgShow: false,
+            user: {},
         }
     },
     methods: {
         clickHome() {
-            Vue.set(this.scvOpts, "search", null);
+            Vue.set(this.gscv, "search", null);
         },
         onfocus(id) {
             this.focused[id] = true;
@@ -195,7 +211,7 @@ export default {
         },
         closeDialog() {
             console.log('closeDialog()');
-            this.scvOpts.reload();
+            this.gscv.reload();
         },
         openHelp() {
             var that = this;
@@ -224,9 +240,9 @@ export default {
     },
     computed: {
         voice() {
-            return this.scvOpts.voices[this.scvOpts.iVoice];
+            return this.gscv.voices[this.gscv.iVoice];
         },
-        scvOpts() {
+        gscv() {
             return this.$root && this.$root.$data;
         },
         showLangChoices() {
@@ -245,7 +261,7 @@ export default {
             return `./?r=${Math.random()}#/?`;
         },
         ipsChoices() {
-            return this.scvOpts.ipsChoices;
+            return this.gscv.ipsChoices;
         },
         maxResultsChoices() {
             return [{
@@ -271,11 +287,20 @@ export default {
                 'margin': '0',
             };
         },
-        isAdmin() {
+        isAuth() {
             var cr = this.$route;
-            console.log(`dbg isAdmin`, cr);
-            return cr && cr.path==='/admin' || false;
-        }
+            return cr && cr.path==='/auth' || false;
+        },
+        userBtnClass() {
+            return this.user.isAdmin 
+                ? "scv-icon-btn deep-orange darken-3"
+                : "scv-icon-btn indigo darken-2";
+        },
+        goSuttaCentral() {
+            //window.open("https://suttacentral.net","_blank");
+            return null;
+        },
+
     },
     mounted() {
         this.$nextTick(() => {
@@ -284,21 +309,22 @@ export default {
         var query = this.$route.query;
         console.debug('App.mounted() with query:', query);
         if (query) {
-            if (!this.scvOpts.useCookies) {
+            if (!this.gscv.useCookies) {
                 query.showId != null && 
-                    Vue.set(this.scvOpts, "showId", query.showId==='true');
+                    Vue.set(this.gscv, "showId", query.showId==='true');
                 query.iVoice && 
-                    Vue.set(this.scvOpts, "iVoice", Number(query.iVoice||0));
+                    Vue.set(this.gscv, "iVoice", Number(query.iVoice||0));
                 query.maxResults && 
-                    Vue.set(this.scvOpts, "maxResults", Number(query.maxResults));
+                    Vue.set(this.gscv, "maxResults", Number(query.maxResults));
                 query.showLang &&
-                    Vue.set(this.scvOpts, "showLang", Number(query.showLang||0));
+                    Vue.set(this.gscv, "showLang", Number(query.showLang||0));
                 query.ips != null &&
-                    Vue.set(this.scvOpts, "ips", Number(query.ips));
+                    Vue.set(this.gscv, "ips", Number(query.ips));
             }
             var search = query.scid || query.search || '';
-            query.search && Vue.set(this.scvOpts, "search", search);
+            query.search && Vue.set(this.gscv, "search", search);
         }
+        Vue.set(this, "user", this.gscv.user);
     },
     created() {
         var that = this;
@@ -409,17 +435,24 @@ button {
     text-decoration: none;
 }
 .scv-logo-large {
-    margin-top: -5px;
+    cursor: default;
+    margin-top: -8px;
     font-size: 22px;
+    letter-spacing: 1px;
 }
 .scv-logo-small {
-    margin-top: -8px;
-    margin-left: 2px;
+    //cursor: pointer;
+    margin-top: 2px;
     font-size: 11px;
-    font-variant: small-caps;
+    //font-variant: small-caps;
+    color: #ce8400;
 }
 .scv-a {
     color: #ffffff;
+}
+scv-a-btn {
+    color: #ffffff;
+    text-decoration: none;
 }
 
 </style>

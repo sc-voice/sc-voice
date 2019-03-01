@@ -47,7 +47,7 @@
             showLang: 0,
             search: null,
             maxResults: 5,
-            ips: 4,
+            ips: 6,
             lang: 'en',
         });
         scv.mounted(mockVueRoot);
@@ -87,13 +87,15 @@
         var scv = new ScvSingleton(g);
         scv.mounted(mockVueRoot);
         should(scv.maxResults).equal(5);
-        should(scv.ips).equal(4);
+        should(scv.ips).equal(6);
         scv.loadCookie('maxResults');
         should(scv.maxResults).equal(7);
-        should(scv.ips).equal(4);
+        should(scv.ips).equal(6);
     });
     it("changed(prop) propagates properties to cookies", function() {
         var scv = new ScvSingleton(g);
+        mockVueRoot.$cookie.otherCookie = 'hello';
+        mockVueRoot.$cookie.useCookies = true;
         Object.keys(scv).forEach(key => {
             delete mockVueRoot.$cookie[key];
         });
@@ -103,6 +105,9 @@
         });
 
         scv.mounted(mockVueRoot);
+        should.deepEqual(mockVueRoot.$cookie, {
+            otherCookie: 'hello',
+        });
 
         // When useCookies is set to true, save all the properties
         scv.useCookies = true;
@@ -110,7 +115,7 @@
         should.deepEqual(mockVueRoot.$cookie, {
             otherCookie: 'hello',
             iVoice: "0",
-            ips: "4",
+            ips: "6",
             maxResults: "5",
             showId: "false",
             showLang: "0",
@@ -124,7 +129,7 @@
         should.deepEqual(mockVueRoot.$cookie, {
             otherCookie: 'hello',
             iVoice: "0",
-            ips: "4",
+            ips: "6",
             maxResults: "6",
             showId: "false",
             showLang: "0",
@@ -148,7 +153,7 @@
         // default is to use own properties
         should(scv.hash()).equal([
             "#/?iVoice=0",
-            "ips=4",
+            "ips=6",
             "lang=en",
             "maxResults=5",
             "showId=false",
@@ -160,7 +165,7 @@
             maxResults: 6,
         })).equal([
             "#/?iVoice=0",
-            "ips=4",
+            "ips=6",
             "lang=en",
             "maxResults=6",
             "showId=false",
@@ -173,7 +178,7 @@
             maxResults: 2,
         })).equal([
             "#/?iVoice=0",
-            "ips=4",
+            "ips=6",
             "lang=en",
             "maxResults=2",
             "search=asdf",
@@ -203,7 +208,7 @@
             showLang: 0,
             search: null,
             maxResults: 5,
-            ips: 4,
+            ips: 6,
             lang: 'en',
         });
         scv.mounted(mockVueRoot);
@@ -214,7 +219,7 @@
             showLang: 0,
             search: null,
             maxResults: 5,
-            ips: 4,
+            ips: 6,
             lang: 'en',
         });
     });
@@ -224,7 +229,7 @@
         // default
         should(scv.url()).match(new RegExp([
             "test-origin/test-path\\?r=[0-9.]*#/\\?iVoice=0",
-            "ips=4",
+            "ips=6",
             "lang=en",
             "maxResults=5",
             "showId=false",
@@ -236,7 +241,7 @@
             maxResults: 6,
         })).match(new RegExp([
             "test-origin/test-path\\?r=[0-9.]*#/\\?iVoice=0",
-            "ips=4",
+            "ips=6",
             "lang=en",
             "maxResults=6",
             "showId=false",
@@ -252,7 +257,7 @@
         scv.reload();
         should(g.window.location.href).match(new RegExp([
             "test-origin/test-path\\?r=[0-9.]*#/\\?iVoice=0",
-            "ips=4",
+            "ips=6",
             "lang=en",
             "maxResults=5",
             "showId=false",
@@ -266,7 +271,7 @@
         });
         should(g.window.location.href).match(new RegExp([
             "test-origin/test-path\\?r=[0-9.]*#/\\?iVoice=0",
-            "ips=4",
+            "ips=6",
             "lang=de",
             "maxResults=9",
             "showId=false",
@@ -350,7 +355,7 @@
             showLang: 0,
             search: null,
             maxResults: 5,
-            ips: 4,
+            ips: 6,
             lang: 'en',
         });
 
@@ -368,13 +373,32 @@
             lang: 'de',
         });
     });
-    it("token stores the JWT token", function() {
+    it("user stores login credentials", function() {
         var scv = new ScvSingleton(g);
-        should(scv.token).equal(null);
+        should.deepEqual(scv.user, {
+            username: null,
+            token: null,
+            isAdmin: false,
+            isEditor: false,
+            isTranslator: false,
+        });
         scv.mounted(mockVueRoot);
-        should(scv.token).equal(null);
-        scv.token = 'asdf';
-        should(scv.token).equal('asdf');
+        should.deepEqual(scv.user, {
+            username: null,
+            token: null,
+            isAdmin: false,
+            isEditor: false,
+            isTranslator: false,
+        });
+        var user = {
+            username: 'testuser',
+            token: 'testtoken',
+            isAdmin: true,
+            isEditor: true,
+            isTranslator: true,
+        };
+        scv.user = user;
+        should.deepEqual(scv.user, user);
     });
 });
 
