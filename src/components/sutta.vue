@@ -1038,7 +1038,9 @@ export default {
     text-align: center;
     margin-bottom: 1em;
     font-size: 10px;
-    height: 20px;
+    border: 1px solid #383838;
+    height: 24px;
+    background: #212121 !important;
 }
 .scv-inspire:focus {
     border: 1pt solid #888;
