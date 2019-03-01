@@ -1,6 +1,7 @@
 <template>
 <div>
   <v-progress-linear v-model="waiting" height="4"
+    v-if="waiting > 0"
     aria-hidden="true"
     background-color="#000"
     style="width:100%; margin-top:0"/>
