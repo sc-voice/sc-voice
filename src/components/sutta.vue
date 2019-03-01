@@ -94,12 +94,13 @@
                 No suttas found
             </summary>
             <!-- ABL 'all' button edit test -->
-            <div class="scv-playlist ml-3 pt-2 pl-3" style="display: flex; justify-content: flex-start;">
-                <v-btn @click="playAll()"
+            <div class="scv-playlist ml-3 pt-2 pl-3">
+                <v-btn icon
+                    @click="playAll()"
                     class="scv-icon-btn" :style="cssProps" small>
                     <v-icon>play_circle_outline</v-icon>
                 </v-btn>
-                <v-btn
+                <v-btn icon
                     :href="downloadUrl(search)"
                     v-show="playlistDuration.totalSeconds < 3*3600"
                     @click="downloadClick(search)"
@@ -912,7 +913,7 @@ export default {
 .scv-playlist {
     margin-top: 0.5em;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
 }
 .scv-sutta {
