@@ -65,6 +65,8 @@
             <v-alert :value="isReleaseCurrent" type="success">
                 Current release is latest. No action taken.
             </v-alert>
+            <img src="/img/danger.gif" width="200px"
+                class="mb-2"/>
         </div>
       </v-container>
     </v-sheet>
