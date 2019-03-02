@@ -8,8 +8,7 @@
             src="img/favicon.png" height=34px/>
         </a>
         <v-toolbar-title style="margin-left:8px">
-            <div aria-label="soota central voice"
-                style="position: relative; margin-top:-2px;">
+            <div style="position: relative; margin-top:-2px;">
                 <div class="scv-logo-small" aria-hidden="true">
                     SuttaCentral</div>
                 <div class="scv-logo-large" aria-hidden="true">
