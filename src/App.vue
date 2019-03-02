@@ -6,38 +6,43 @@
           <a :href="homeHref" @click="clickHome()"
             aria-label="Soota Central Home Page">
             <img aria-hidden="true" class="pt-1"
-              style="margin-left: -4px"
               src="img/favicon.png" height=34px/>
 
               <div aria-label="soota central voice"
               aria-role="heading"
-               style="position: relative; margin-top:-2px; ">
-              <div class="scv-logo-small "
-                  aria-hidden="true"
-                  @click="goSuttaCentral()">SuttaCentral</div>
-              <div class="scv-logo-large"
-                  aria-hidden=true
-                  aria-label="soota central voice">
-                  VOICE
-              </div>
+               style="position: relative; margin-top:-2px;">
+                <div class="scv-logo-small "
+                    aria-hidden="true"
+                    @click="goSuttaCentral()">SuttaCentral</div>
+                <div class="scv-logo-large"
+                    aria-hidden=true
+                    aria-label="soota central voice">
+                    VOICE
+                </div>
               </div>
           </a>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
-          aria-label="About"
-          title="About"
-          @click="openHelp()"
-          >
-          <v-icon>info</v-icon>
-        </v-btn>
-        <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
-          aria-label="Settings"
-          title="Settings"
-          @click="dialogSettings = !dialogSettings"
-          >
-          <v-icon>settings</v-icon>
-        </v-btn>
+        <ul>
+            <li>
+                <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
+                  aria-label="About"
+                  title="About"
+                  @click="openHelp()"
+                  >
+                  <v-icon>info</v-icon>
+                </v-btn>
+            </li>
+            <li>
+                <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+                  aria-label="Settings"
+                  title="Settings"
+                  @click="dialogSettings = !dialogSettings"
+                  >
+                  <v-icon>settings</v-icon>
+                </v-btn>
+            </li>
+        </ul>
       </v-toolbar>
     </header>
 
@@ -74,24 +79,24 @@
             <details class="scv-dialog" >
                 <summary class="subheading">Sutta Player settings</summary>
                 <div class="scv-settings">
-                    <v-radio-group v-model="gscv.iVoice" 
+                    <v-radio-group v-model="gscv.iVoice"
                         @change="gscv.changed('iVoice')"
                         column>
-                       <v-radio v-for="(v,i) in gscv.voices" 
+                       <v-radio v-for="(v,i) in gscv.voices"
                          :label="v.label" :value="i" :key="`voice${i}`">
                          </v-radio>
                     </v-radio-group>
-                    <v-radio-group v-model="gscv.showLang" 
+                    <v-radio-group v-model="gscv.showLang"
                         @change="gscv.changed('showLang')"
                         column>
-                       <v-radio v-for="(sl,i) in showLangChoices" 
+                       <v-radio v-for="(sl,i) in showLangChoices"
                          :label="sl.label" :value="i" :key="`showLang${sl.value}`">
                          </v-radio>
                     </v-radio-group>
-                    <v-radio-group v-model="gscv.ips" 
+                    <v-radio-group v-model="gscv.ips"
                         @change="gscv.changed('ips')"
                         column>
-                       <v-radio v-for="(ips) in ipsChoices" 
+                       <v-radio v-for="(ips) in ipsChoices"
                          :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
                          </v-radio>
                     </v-radio-group>
@@ -100,23 +105,23 @@
             <details class="scv-dialog" >
                 <summary class="subheading">General settings</summary>
                 <div class="scv-settings">
-                    <v-radio-group v-if="gscv" v-model="gscv.maxResults" 
+                    <v-radio-group v-if="gscv" v-model="gscv.maxResults"
                         @change="gscv.changed('maxResults')"
                         column>
-                       <v-radio v-for="(mr) in maxResultsChoices" 
+                       <v-radio v-for="(mr) in maxResultsChoices"
                          :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
                          </v-radio>
                     </v-radio-group>
-                    <v-checkbox v-if="gscv" 
-                        v-model="gscv.showId" role="checkbox" 
+                    <v-checkbox v-if="gscv"
+                        v-model="gscv.showId" role="checkbox"
                         :aria-checked="gscv.showId"
                         v-on:change="gscv.changed('showId')"
                         label="Show SuttaCentral text segment identifiers">
                     </v-checkbox>
                 </div>
             </details>
-            <v-checkbox v-if="gscv" 
-                v-model="gscv.useCookies" role="checkbox" 
+            <v-checkbox v-if="gscv"
+                v-model="gscv.useCookies" role="checkbox"
                 v-on:change="gscv.changed('useCookies')"
                 :aria-checked="gscv.useCookies"
                 style="margin-left: 0.8em"
@@ -150,16 +155,16 @@
       <v-spacer/>
       <div class="pl-2" style="margin-top:-0.35em" >
         {{user.username}}
-        <router-link class="scv-a-btn" to="/app" 
+        <router-link class="scv-a-btn" to="/app"
             v-if="isAuth" aria-hidden=true >
-            <v-btn icon 
+            <v-btn icon
                 :class="userBtnClass" :style="cssProps" small>
                 <v-icon>supervisor_account</v-icon>
             </v-btn>
         </router-link>
-        <router-link class="scv-a-btn" to="/auth" 
+        <router-link class="scv-a-btn" to="/auth"
             v-else aria-hidden=true >
-            <v-btn icon 
+            <v-btn icon
                 class="scv-icon-btn" :style="cssProps" small>
                 <v-icon>supervisor_account</v-icon>
             </v-btn>
@@ -173,7 +178,7 @@
 import Vue from "vue";
 import Sutta from './components/sutta';
 import scvPackage from '../package';
-// eslint no-console 0 
+// eslint no-console 0
 
 export default {
     name: 'App',
@@ -295,7 +300,7 @@ export default {
             return cr && cr.path==='/auth' || false;
         },
         userBtnClass() {
-            return this.user.isAdmin 
+            return this.user.isAdmin
                 ? "scv-icon-btn deep-orange darken-3"
                 : "scv-icon-btn indigo darken-2";
         },
@@ -313,11 +318,11 @@ export default {
         console.debug('App.mounted() with query:', query);
         if (query) {
             if (!this.gscv.useCookies) {
-                query.showId != null && 
+                query.showId != null &&
                     Vue.set(this.gscv, "showId", query.showId==='true');
-                query.iVoice && 
+                query.iVoice &&
                     Vue.set(this.gscv, "iVoice", Number(query.iVoice||0));
-                query.maxResults && 
+                query.maxResults &&
                     Vue.set(this.gscv, "maxResults", Number(query.maxResults));
                 query.showLang &&
                     Vue.set(this.gscv, "showLang", Number(query.showLang||0));
@@ -461,11 +466,16 @@ scv-a-btn {
 .scv-banner-logo {
     display: flex;
     align-items: center;
+    margin-left: 8px;
 }
 
 .scv-banner-logo a {
     text-decoration: none;
     color: inherit;
+}
+
+header ul {
+    list-style-type: none;
 }
 
 </style>
