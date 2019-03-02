@@ -2,25 +2,24 @@
   <v-app dark>
     <header role="banner">
       <v-toolbar app flat dark role="navigation">
-        <v-toolbar-title class="scv-banner-logo">
-          <a :href="homeHref" @click="clickHome()"
-            aria-label="Soota Central Home Page">
-            <img aria-hidden="true" class="pt-1"
-              src="img/favicon.png" height="34px"
-              style="margin-left: -4px"/>
-              <div aria-label="soota central voice"
-              aria-role="heading"
-               style="position: relative; margin-top:-2px;">
+        <a :href="homeHref" @click="clickHome()"
+          aria-label="Soota Central Home Page">
+          <img aria-hidden="true" class="pt-1"
+            style="margin-left: -4px"
+            src="img/favicon.png" height=34px/>
+        </a>
+        <v-toolbar-title style="margin-left:8px">
+            <div aria-label="soota central voice"
+                aria-role="heading"
+                style="position: relative; margin-top:-2px; ">
                 <div class="scv-logo-small "
                     aria-hidden="true"
-                    @click="goSuttaCentral()">SuttaCentral</div>
+                    @click="clickHome()">SuttaCentral</div>
                 <div class="scv-logo-large"
                     aria-hidden=true
-                    aria-label="soota central voice">
-                    VOICE
-                </div>
-              </div>
-          </a>
+                    aria-label="soota central voice"
+                    @click="clickHome()">VOICE</div>
+            </div>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <ul>
@@ -463,13 +462,7 @@ scv-a-btn {
     text-decoration: none;
 }
 
-.scv-banner-logo {
-    display: flex;
-    align-items: center;
-    margin-left: 8px;
-}
-
-.scv-banner-logo a {
+header a {
     text-decoration: none;
     color: inherit;
 }
