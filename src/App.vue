@@ -3,22 +3,23 @@
     <header role="banner">
       <v-toolbar app flat dark role="navigation">
         <a :href="homeHref" @click="clickHome()"
-          aria-label="Soota Central Home Page">
+          aria-label="Soota Central Voice">
           <img aria-hidden="true" class="pt-1"
             style="margin-left: -4px"
             src="img/favicon.png" height=34px/>
         </a>
         <v-toolbar-title style="margin-left:8px">
             <div aria-label="soota central voice"
-                aria-role="heading"
-                style="position: relative; margin-top:-2px; ">
-                <div class="scv-logo-small "
-                    aria-hidden="true"
-                    @click="clickHome()">SuttaCentral</div>
-                <div class="scv-logo-large"
-                    aria-hidden=true
-                    aria-label="soota central voice"
-                    @click="clickHome()">VOICE</div>
+                style="position: relative; margin-top:-2px;">
+                <a :href="homeHref" @click="clickHome()"
+                aria-hidden="true">
+                    <div class="scv-logo-small">
+                        SuttaCentral</div>
+                    <div class="scv-logo-large">
+                        VOICE</div>
+                </a>
+            </div>
+        </v-toolbar-title>
             </div>
         </v-toolbar-title>
         <v-spacer></v-spacer>
