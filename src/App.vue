@@ -463,9 +463,10 @@ scv-a-btn {
     text-decoration: none;
 }
 
-header a {
+a .scv-logo-small, a .scv-logo-large {
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
 }
 
 header ul {
