@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-toolbar app flat dark role="navigation">
+    <v-toolbar app flat dark aria-role="navigation">
         <a :href="homeHref" @click="clickHome()"
         aria-label="Soota Central Voice">
         <img aria-hidden="true" class="pt-1"
@@ -8,7 +8,7 @@
             src="img/favicon.png" height=34px/>
         </a>
         <v-toolbar-title style="margin-left:8px">
-            <div class="scv-title" aria-label="soota central voice"
+            <div aria-label="soota central voice"
                 style="position: relative; margin-top:-2px;">
                 <div class="scv-logo-small" aria-hidden="true">
                     SuttaCentral</div>
@@ -21,15 +21,17 @@
             <li>
                 <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
                 title="About"
+                aria-label="About"
                 @click="openHelp()">
-                <v-icon>info</v-icon>
+                <v-icon aria-hidden="true">info</v-icon>
                 </v-btn>
             </li>
             <li>
                 <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
                 title="Settings"
+                aria-label="Settings"
                 @click="dialogSettings = !dialogSettings">
-                <v-icon>settings</v-icon>
+                <v-icon aria-hidden="true">settings</v-icon>
                 </v-btn>
             </li>
         </ul>
@@ -450,12 +452,6 @@ button {
 scv-a-btn {
     color: #ffffff;
     text-decoration: none;
-}
-
-.scv-title a {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
 }
 
 nav ul {
