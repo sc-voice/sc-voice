@@ -2,12 +2,12 @@
   <v-app dark>
     <header role="banner">
       <v-toolbar app flat dark role="navigation">
-        <v-toolbar-title class="scv-banner-logo" style="margin-left:8px">
+        <v-toolbar-title class="scv-banner-logo">
           <a :href="homeHref" @click="clickHome()"
             aria-label="Soota Central Home Page">
             <img aria-hidden="true" class="pt-1"
-              src="img/favicon.png" height=34px/>
-
+              src="img/favicon.png" height="34px"
+              style="margin-left: -4px"/>
               <div aria-label="soota central voice"
               aria-role="heading"
                style="position: relative; margin-top:-2px;">
@@ -476,6 +476,7 @@ scv-a-btn {
 
 header ul {
     list-style-type: none;
+    display: inherit;
 }
 
 </style>
