@@ -93,7 +93,6 @@
                 class='title'>
                 No suttas found
             </summary>
-            <!-- ABL 'all' button edit test -->
             <div class="scv-playlist ml-3 pt-2 pl-3">
                 <v-btn icon
                     @click="playAll()"
@@ -107,7 +106,7 @@
                     class="scv-icon-btn" :style="cssProps" small>
                     <v-icon>arrow_downward</v-icon>
                 </v-btn>
-            </div><!-- ./ABL 'all' button edit test -->
+            </div>
             <details role="heading" aria-level="2"
                 v-for="(result,i) in (searchResults && searchResults.results||[])"
                 :key="`${result.uid}_${i}`"
@@ -1050,9 +1049,14 @@ export default {
     outline: 1pt solid var(--accent-color);
 }
 .scv-inspire-row {
-    margin-top: -1.2em;
+    margin: -0.8em 0 0.5em 0;
     display: flex;
     justify-content: center;
     width: 100%;
 }
+
+.scv-sutta a {
+  text-decoration: none;
+}
+
 </style>
