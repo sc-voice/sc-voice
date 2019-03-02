@@ -9,7 +9,7 @@
             src="img/favicon.png" height=34px/>
         </a>
         <v-toolbar-title style="margin-left:8px">
-            <div aria-label="soota central voice"
+            <div class="scv-title" aria-label="soota central voice"
                 style="position: relative; margin-top:-2px;">
                 <a :href="homeHref" @click="clickHome()"
                 aria-hidden="true">
@@ -443,7 +443,7 @@ button {
     text-decoration: none;
 }
 .scv-logo-large {
-    cursor: default;
+    //cursor: default;
     margin-top: -8px;
     font-size: 22px;
     letter-spacing: 1px;
@@ -463,7 +463,7 @@ scv-a-btn {
     text-decoration: none;
 }
 
-a .scv-logo-small, a .scv-logo-large {
+.scv-title a {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
