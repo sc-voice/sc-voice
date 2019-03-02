@@ -1,47 +1,50 @@
 <template>
   <v-app dark>
-    <v-toolbar app flat dark aria-role="navigation">
-      <a :href="homeHref" @click="clickHome()" 
-          aria-label="Soota Central Home Page">
-          <img aria-hidden="true" class="pt-1" 
-            style="margin-left: -4px"
-            src="img/favicon.png" height=30px/>
-      </a>
-      <v-toolbar-title style="margin-left:8px">
-        <div aria-label="soota central voice"
-            aria-role="heading"
-             style="position: relative; margin-top:-2px; ">
-            <div class="scv-logo-small " 
-                aria-hidden="true"
-                @click="goSuttaCentral()">SuttaCentral</div>
-            <div class="scv-logo-large" 
-                aria-hidden=true
-                aria-label="soota central voice">
-                VOICE
-            </div>
-        </div>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
-        aria-label="Help"
-        title="About and Help"
-        @click="openHelp()"
-        >
-        <v-icon>info</v-icon>
-      </v-btn>
-      <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
-        aria-label="Settings"
-        title="Settings"
-        @click="dialogSettings = !dialogSettings"
-        >
-        <v-icon>settings</v-icon>
-      </v-btn>
-    </v-toolbar>
+    <header role="banner">
+      <v-toolbar app flat dark role="navigation">
+        <v-toolbar-title class="scv-banner-logo" style="margin-left:8px">
+          <a :href="homeHref" @click="clickHome()"
+            aria-label="Soota Central Home Page">
+            <img aria-hidden="true" class="pt-1"
+              style="margin-left: -4px"
+              src="img/favicon.png" height=34px/>
+
+              <div aria-label="soota central voice"
+              aria-role="heading"
+               style="position: relative; margin-top:-2px; ">
+              <div class="scv-logo-small "
+                  aria-hidden="true"
+                  @click="goSuttaCentral()">SuttaCentral</div>
+              <div class="scv-logo-large"
+                  aria-hidden=true
+                  aria-label="soota central voice">
+                  VOICE
+              </div>
+              </div>
+          </a>
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
+          aria-label="About"
+          title="About"
+          @click="openHelp()"
+          >
+          <v-icon>info</v-icon>
+        </v-btn>
+        <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+          aria-label="Settings"
+          title="Settings"
+          @click="dialogSettings = !dialogSettings"
+          >
+          <v-icon>settings</v-icon>
+        </v-btn>
+      </v-toolbar>
+    </header>
 
     <v-dialog v-model="dialogHelp" persistent max-width="45em">
         <v-card >
           <v-card-title class="title scv-dialog-title">
-              About &amp; Help
+              About
               <v-spacer/>
               <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
                 aria-label="Close Help"
@@ -453,6 +456,16 @@ button {
 scv-a-btn {
     color: #ffffff;
     text-decoration: none;
+}
+
+.scv-banner-logo {
+    display: flex;
+    align-items: center;
+}
+
+.scv-banner-logo a {
+    text-decoration: none;
+    color: inherit;
 }
 
 </style>
