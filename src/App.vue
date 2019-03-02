@@ -1,45 +1,39 @@
 <template>
   <v-app dark>
-    <header role="banner">
-      <v-toolbar app flat dark>
+    <v-toolbar app flat dark role="navigation">
         <a :href="homeHref" @click="clickHome()"
-          aria-label="Soota Central Voice">
-          <img aria-hidden="true" class="pt-1"
+        aria-label="Soota Central Voice">
+        <img aria-hidden="true" class="pt-1"
             style="margin-left: -4px"
             src="img/favicon.png" height=34px/>
         </a>
         <v-toolbar-title style="margin-left:8px">
             <div class="scv-title" aria-label="soota central voice"
                 style="position: relative; margin-top:-2px;">
-                    <div class="scv-logo-small">
-                        SuttaCentral</div>
-                    <div class="scv-logo-large">
-                        VOICE</div>
+                <div class="scv-logo-small" aria-hidden="true">
+                    SuttaCentral</div>
+                <div class="scv-logo-large" aria-hidden="true">
+                    VOICE</div>
             </div>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <nav role="navigation">
-            <ul>
-                <li>
-                    <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
-                    title="About"
-                    @click="openHelp()"
-                    >
-                    <v-icon>info</v-icon>
-                    </v-btn>
-                </li>
-                <li>
-                    <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
-                    title="Settings"
-                    @click="dialogSettings = !dialogSettings"
-                    >
-                    <v-icon>settings</v-icon>
-                    </v-btn>
-                </li>
-            </ul>
-        </nav>
-      </v-toolbar>
-    </header>
+        <ul>
+            <li>
+                <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
+                title="About"
+                @click="openHelp()">
+                <v-icon>info</v-icon>
+                </v-btn>
+            </li>
+            <li>
+                <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+                title="Settings"
+                @click="dialogSettings = !dialogSettings">
+                <v-icon>settings</v-icon>
+                </v-btn>
+            </li>
+        </ul>
+    </v-toolbar>
 
     <v-dialog v-model="dialogHelp" persistent max-width="45em">
         <v-card >
@@ -464,7 +458,7 @@ scv-a-btn {
     cursor: pointer;
 }
 
-header ul {
+nav ul {
     list-style-type: none;
     display: inherit;
 }
