@@ -99,7 +99,7 @@
             should(files.filter(f => f.match(/\/sn\//)).length).equal(count.sn);
             should(files.filter(f => f.match(/\/kn\//)).length).equal(count.kn);
            //should(files.filter(f => f.match(/\/pi-vi\//)).length).equal(count.pivi);
-            should(files.filter(f => f.match(/\/en\//)).length).equal(
+            should(files.filter(f => f.match(/\/en\//)).length).not.below(
                 Object.keys(count).reduce((acc,key) => count[key] + acc, 0));
             done();
         } catch(e) {done(e)} })();
