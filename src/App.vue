@@ -48,7 +48,7 @@
                 <v-icon>close</v-icon>
               </v-btn>
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="about-text">
           <span v-html="helpHtml"/>
           </v-card-text>
         </v-card>
@@ -456,6 +456,10 @@ scv-a-btn {
 nav ul {
     list-style-type: none;
     display: inherit;
+}
+
+.about-text a {
+    color: #ce8400;
 }
 
 </style>
