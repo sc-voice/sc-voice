@@ -412,7 +412,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) performs keyword search", function(done) {
+    it("TESTTESTsearch(pattern) performs keyword search", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var expected = [{
@@ -426,10 +426,10 @@
                 uid: 'dn16',
             },{
                 count: 3,
-                uid: 'mn99',
+                uid: 'dn33',
             },{
                 count: 3,
-                uid: 'mn75',
+                uid: 'dn34',
             }];
             var {
                 method,
@@ -451,7 +451,7 @@
             should(results[0].quote.en).match(/blue, with blue color/);
             should(results[1].quote.en).match(/the meditation on universal blue/);
             should(results[2].quote.en).match(/clad in blue/);
-            should(results[3].quote.en).match(/or blue, yellow, red, or magenta/);
+            should(results[3].quote.en).match(/Not perceiving form/);
             done(); 
         } catch(e) {done(e);} })();
     });
@@ -490,7 +490,7 @@
                 uid: 'dn33',
             },{
                 count: 12,
-                uid: 'dn19',
+                uid: 'an9.35',
             }]);
             should(resultPattern).equal('\\bjh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
 
@@ -516,7 +516,7 @@
                 uid: 'sn40.3',
             },{
                 count: 5,
-                uid: 'mn77',
+                uid: 'an9.39',
             }]);
 
             done(); 
@@ -741,7 +741,7 @@
                 'dn14/en/sujato',
                 'mn9/en/sujato',
                 'dn16/en/sujato',
-                'sn42.11/en/sujato',
+                'dn33/en/sujato',
                 'mn22/en/sujato',
             ]);
             checkSuttas(data);

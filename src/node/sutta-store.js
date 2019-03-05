@@ -298,13 +298,23 @@
             });
         }
 
+        static grepComparator(a,b) {
+            var cmp = b.count - a.count;
+            if (cmp === 0) {
+                cmp = a.fpath.localeCompare(b.fpath);
+            }
+            return cmp;
+        }
+
         keywordSearch(args) {
             var {
                 pattern,
                 maxResults,
                 language,
                 searchMetadata,
+                comparator,
             } = args;
+            comparator = comparator || SuttaStore.grepComparator;
             var that = this;
             var keywords = pattern.split(' +'); // + was inserted by normalizePattern();
             keywords = keywords.map(w => 
@@ -338,10 +348,11 @@
                             } else if (mrgIn.length) {
                                 var cmp = mrgIn[0].fpath.localeCompare(fpath);
                                 if (cmp === 0) {
-                                    mrgOut.push({
+                                    var newItem = {
                                         fpath,
                                         count: Math.min(mrgIn[0].count, count),
-                                    });
+                                    };
+                                    mrgOut.push(newItem);
                                     mrgIn.shift();
                                 } else if (cmp < 0) {
                                     mrgIn.shift(); // discard left
@@ -358,7 +369,7 @@
                     }
                     resolve({
                         resultPattern: keywords.join('|'),
-                        lines: mrgOut.sort((a,b) => b.count - a.count)
+                        lines: mrgOut.sort(comparator)
                             .map(v => `${v.fpath}:${v.count}`)
                             .slice(0, maxResults),
                     });
