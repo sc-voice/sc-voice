@@ -2,12 +2,15 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const tmp = require('tmp');
     const {
         AbstractTTS,
+        SoundStore,
         Words,
     } = require("../index");
     const BREAK = `<break time="0.001s"/>`;
     const PARA_BREAK = `<break time="1.5s"/>`;
+    var storePath = tmp.tmpNameSync();
 
     it("AbstractTTS(opts) can be customized", function() {
         var words = new Words();
@@ -284,7 +287,7 @@
             path.join(__dirname, 'data/1d4e09ef9cd91470da56c84c2da481b0.ogg'),
             path.join(__dirname, 'data/0e4a11bcb634a4eb72d2004a74f39728.ogg'),
         ];
-        (async function() {
+        (async function() { try {
             should(fs.existsSync(files[0])).equal(true);
             should(fs.existsSync(files[1])).equal(true);
             var cache = true;
@@ -295,7 +298,44 @@
                 new RegExp(`.*${result.signature.guid}.*`));  // output guid
 
             done();
-        })();
+        } catch(e) {done(e);} })();
+    });
+    it("ffmpegConcat(files) returns sound file", function(done) {
+        var soundStore = new SoundStore({
+            storePath,
+        });
+        var abstractTTS = new AbstractTTS({
+            soundStore,
+        });
+        var volume = 'test-ffmpegConcat';
+        var files = [
+            soundStore.guidPath({
+                volume,
+                guid: 'test1',
+            }),
+            soundStore.guidPath({
+                volume,
+                guid: 'test2',
+            }),
+        ];
+        var data1 = path.join(__dirname, 'data/1d4e09ef9cd91470da56c84c2da481b0.ogg');
+        var data2 = path.join(__dirname, 'data/0e4a11bcb634a4eb72d2004a74f39728.ogg');
+        fs.writeFileSync(files[0], fs.readFileSync(data1));
+        fs.writeFileSync(files[1], fs.readFileSync(data2));
+        //console.log('ffmpegConcat TEST', storePath);
+        (async function() { try {
+            should(fs.existsSync(files[0])).equal(true);
+            should(fs.existsSync(files[1])).equal(true);
+            var cache = true;
+            var result = await abstractTTS.ffmpegConcat(files, { cache });
+            should(result).properties(['file','cached','hits','misses','signature']);
+            should(fs.existsSync(result.file)).equal(true); // output file guid
+            should(result.file).match(
+                new RegExp(`.*${result.signature.guid}.*`));  // output guid
+            should(result.signature.guid).match(/f6b55e7/);
+
+            done();
+        } catch(e) {done(e);} })();
     });
 
 })

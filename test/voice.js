@@ -146,8 +146,8 @@
         });
     });
     it("speak([text],opts) returns sound file for array of text", function(done) {
-        this.timeout(3*1000);
-        (async function() {
+        this.timeout(5*1000);
+        (async function() { try {
             var raveena = Voice.createVoice("en-IN");
             var text = [
                 "Tomatoes are",
@@ -163,14 +163,16 @@
             };
             var result = await raveena.speak(text, opts);
             should(result).properties(['file','hits','misses','signature','cached']);
-            should(result.signature.files.length).equal(4);
-            should(fs.statSync(result.signature.files[0]).size).greaterThan(1000); // Tomatoes are
-            should(fs.statSync(result.signature.files[1]).size).greaterThan(1000); // red.
-            should(fs.statSync(result.signature.files[2]).size).greaterThan(1000); // Tomatoes are red.
-            should(fs.statSync(result.signature.files[3]).size).greaterThan(1000); // Broccoli is green.
+            var storePath = raveena.soundStore.storePath;
+            var files = result.signature.files.map(f => path.join(storePath, f));
+            should(files.length).equal(4);
+            should(fs.statSync(files[0]).size).greaterThan(1000); // Tomatoes are
+            should(fs.statSync(files[1]).size).greaterThan(1000); // red.
+            should(fs.statSync(files[2]).size).greaterThan(1000); // Tomatoes are red.
+            should(fs.statSync(files[3]).size).greaterThan(1000); // Broccoli is green.
             should(fs.statSync(result.file).size).greaterThan(5000);
             done();
-        })();
+        } catch(e) {done(e);} })();
     });
     it("placeholder words are expanded with voice ipa", function() {
         /*

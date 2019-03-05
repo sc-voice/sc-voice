@@ -418,15 +418,22 @@
         }
 
         ffmpegConcat(files, opts = {}) {
+            var soundStore = this.soundStore;
+            var storePath = soundStore.storePath;
+            var rePath = new RegExp(`${storePath}/?`);
             if (files == null || !files.length) {
                 return Promise.reject(new Error(`ffmpegConcat(no-files?)`));
             }
-            return new Promise((resolve, reject) => {
-                var inputs = `file '${files.join("'\nfile '")}'\n`;
-                var soundStore = this.soundStore;
+            return new Promise((resolve, reject) => { try {
+                // IMPORTANT: store-relative paths ensure that content 
+                // on different servers will always have the same hash
+                var ffmpegfiles = files.map(f => f.replace(rePath, '../../')); 
+                var sigfiles = files.map(f => f.replace(rePath, '')); 
+
+                var inputs = `file '${ffmpegfiles.join("'\nfile '")}'\n`;
                 var signature = {
                     api: "ffmegConcat",
-                    files,
+                    files:sigfiles,
                 }
                 opts.volume && (signature.volume = opts.volume);
                 signature[this.mj.hashTag] = this.mj.hash(signature);
@@ -436,7 +443,7 @@
                 var request = {
                     signature,
                     outpath,
-                    files,
+                    files:sigfiles,
                 };
                 if (cache && stats && stats.size > this.ERROR_SIZE) {
                     this.hits++;
@@ -450,6 +457,7 @@
                     fs.writeFileSync(inpath, inputs);
                     var cmd = `bash -c "ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`;
                     var execOpts = {
+                        cwd: storePath,
                         maxBuffer,
                     };
                     exec(cmd, execOpts, (err, stdout, stderr) => {
@@ -470,7 +478,7 @@
                         }
                     });
                 }
-            });
+            } catch(e) { reject(e); } });
 
         }
 

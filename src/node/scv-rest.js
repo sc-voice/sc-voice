@@ -185,7 +185,6 @@
                 }
                 var filePath = this.soundStore.guidPath(guid, soundOpts);
                 var filename = req.params.filename;
-                console.log(`dbg`, filePath, filename);
                 var data = fs.readFileSync(filePath);
                 res.set('accept-ranges', 'bytes');
                 res.set('do_stream', 'true');

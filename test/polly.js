@@ -95,10 +95,12 @@
             var result = await polly.synthesizeText(text, {cache});
             should(result).properties(['file','hits','misses','signature','cached']);
             should(result.signature.files.length).equal(4);
-            should(fs.statSync(result.signature.files[0]).size).greaterThan(1000); // Tomatoes are
-            should(fs.statSync(result.signature.files[1]).size).greaterThan(1000); // red.
-            should(fs.statSync(result.signature.files[2]).size).greaterThan(1000); // Tomatoes are red.
-            should(fs.statSync(result.signature.files[3]).size).greaterThan(1000); // Broccoli is green.
+            var storePath = polly.soundStore.storePath;
+            var files = result.signature.files.map(f => path.join(storePath, f));
+            should(fs.statSync(files[0]).size).greaterThan(1000); // Tomatoes are
+            should(fs.statSync(files[1]).size).greaterThan(1000); // red.
+            should(fs.statSync(files[2]).size).greaterThan(1000); // Tomatoes are red.
+            should(fs.statSync(files[3]).size).greaterThan(1000); // Broccoli is green.
             should(fs.statSync(result.file).size).greaterThan(5000);
             done();
         } catch(e) { done(e);} })();

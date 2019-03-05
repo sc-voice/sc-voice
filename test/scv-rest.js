@@ -426,7 +426,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
             should(data.segment.audio.en).match(/^85a9c6/);
-            should(data.segment.audio.pli).match(/^8db1d/);
+            should(data.segment.audio.pli).match(/^c9a2188/);
 
             done();
         } catch(e) {done(e);} })();
@@ -486,7 +486,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET auth/sound-store/clear-volume clears volume cache", function(done) {
+    it("GET auth/sound-store/clear-volume clears volume cache", function(done) {
         this.timeout(3*1000);
         (async function() { try {
             var scvRest = app.locals.scvRest;
