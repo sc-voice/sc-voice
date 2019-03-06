@@ -446,8 +446,12 @@ export default {
                     var links = [];
                     var lang = that.language;
                     var dsa = data.segment.audio;
-                    that.showPali && dsa.pli && links.push(that.audioLink(dsa.pli));
-                    that.showTrans && dsa[lang] && links.push(that.audioLink(dsa[lang]));
+                    if (that.showPali && dsa.pli) {
+                        links.push(that.audioLink(data, "pli"));
+                    }
+                    if (that.showTrans && dsa[lang]) {
+                        links.push(that.audioLink(data, lang));
+                    }
                     var audio = links.map(link => new Audio(link));
                     var handler1 = () => {
                         audio[1].removeEventListener("ended", handler1);
@@ -701,13 +705,18 @@ export default {
                 search: this.suttaRef(this.sutta_uid, trans.lang, trans.author_uid),
             });
         },
-        audioLink(guid, sutta_uid){
-            var lang = this.language;
-            var trans = this.author_uid;
-            var link = `./audio/${guid}`;
-            if (sutta_uid) {
-                link += `/${this.sutta_uid}-${lang}-${trans}.mp3`;
-            }
+        audioLink(data, lang){
+            var {
+                translator,
+                segment,
+                sutta_uid,
+            } = data;
+            var guid = segment.audio[lang];
+            var voice = lang === 'pli' ? 'aditi' : this.voice.name;
+            var link = `./audio/${sutta_uid}/${lang}/${translator}/${voice}/${guid}`;
+            //if (sutta_uid) {
+                //link += `/${this.sutta_uid}-${lang}-${trans}.mp3`;
+            //}
             return this.url(link);
         },
         sectionAriaLabel(sect) {
