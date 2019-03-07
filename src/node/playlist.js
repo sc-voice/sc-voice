@@ -46,8 +46,12 @@
 
         static volumeName(sutta_uid, lang, auid, vname) {
             var collection = sutta_uid.replace(/([a-z]+).*/, '$1');
-            var vname = vname.toLowerCase();
-            return `${collection}_${lang}_${auid}_${vname}`;
+            if (collection === "thig" || collection === "thag") {
+                collection = "kn";
+            }
+            var source = lang === 'pli' ? 'mahasangiti' : auid;
+            var vname =  vname.toLowerCase();
+            return `${collection}_${lang}_${source}_${vname}`;
         }
 
         speak(opts) {

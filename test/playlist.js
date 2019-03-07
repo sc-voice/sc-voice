@@ -193,5 +193,17 @@
             done();
         } catch(e) { done(e); } })();
     });
+    it("volumeName(...) returns SoundStore volume", function() {
+        should(Playlist.volumeName('a','b','c','d')).equal('a_b_c_d');
+        should(Playlist.volumeName('a1','b','c','d')).equal('a_b_c_d');
+        should(Playlist.volumeName('a1.1','b','c','d')).equal('a_b_c_d');
+        should(Playlist.volumeName('a1.2-5','b','c','d')).equal('a_b_c_d');
+        should(Playlist.volumeName('a1.2-5:3','b','c','d')).equal('a_b_c_d');
+        should(Playlist.volumeName('a1.2-5:3.1','b','c','d')).equal('a_b_c_d');
+        should(Playlist.volumeName('thig1.2','b','c','d')).equal('kn_b_c_d');
+        should(Playlist.volumeName('thag1.2','b','c','d')).equal('kn_b_c_d');
+        should(Playlist.volumeName('thag1.2','pli','c','d')).equal('kn_pli_mahasangiti_d');
+        should(Playlist.volumeName('mn1','pli','c','d')).equal('mn_pli_mahasangiti_d');
+    });
 
 })
