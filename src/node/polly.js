@@ -21,10 +21,17 @@
             this.region = opts.region || 'us-west-1';
             this.pollyConfig = opts.config || {
                 signatureVersion: this.apiVersion,
+                apiVersion: '2016-06-10',
                 region: this.region,
             };
             opts.prosody == null && (this.prosody.rate = "-20%");
-            this.polly = opts.polly || new AWS.Polly(this.pollyConfig);
+            if (opts.polly) {
+                this.polly = opts.polly;
+            } else {
+                var cfg = this.pollyConfig;
+                logger.info(`Polly.ctor() new AWS.Polly(${JSON.stringify(cfg)})`);
+                this.polly = new AWS.Polly(cfg);
+            }
         }
 
         serviceSynthesize(resolve, reject, request) {
@@ -36,6 +43,7 @@
                 VoiceId: that.voice,
                 LanguageCode: that.language,
             }
+            logger.info(`serviceSynthesize() ${JSON.stringify(params)}`);
 
             that.polly.synthesizeSpeech(params, (err, data) => {
 

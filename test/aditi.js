@@ -66,7 +66,7 @@
         testPhoneme(recite, 'əcchəɾɪjə\'abbʰʊt̪əsʊt̪t̪ə', 'acchariyaabbhutasutta'); 
 
         // vowels
-        testPhoneme(recite, 'eɪso','eso');
+        testPhoneme(recite, 'ẽso','eso');
 
         // punctuation
         var ssml = recite.segmentSSML('dve, dve');

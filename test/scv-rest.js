@@ -426,7 +426,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
             should(data.segment.audio.en).match(/^85a9c6/);
-            should(data.segment.audio.pli).match(/^c9a2188/);
+            should(data.segment.audio.pli).match(/^738d13df/);
 
             done();
         } catch(e) {done(e);} })();
