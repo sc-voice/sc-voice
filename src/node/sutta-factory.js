@@ -42,6 +42,7 @@
             this.reHeader = opts.reHeader || Sutta.RE_HEADER;
             this.suttaCentralApi = opts.suttaCentralApi;
             this.pootleParser = new PoParser();
+            this.plainText = opts.plainText === true || opts.plainText == null;
         }
 
         static loadSutta(opts={}) {
@@ -69,6 +70,18 @@
                     resolve(that);
                 } catch(e) {reject(e);} })();
             });
+        }
+
+        stripHtml(sutta) {
+            var lang = this.lang;
+            sutta.segments.forEach(seg => {
+                var text = seg[lang];
+                if (text.indexOf('<') >= 0) {
+                    text = text.replace(/<\/li>/g,'\n');
+                    seg[lang] = text.replace(/<[^>]+>/g,'');
+                }
+            });
+            return sutta;
         }
 
         supportedSuttas(){
@@ -132,6 +145,7 @@
             var that = this;
             var language = opts.language || 'en';
             var autoSection = opts.autoSection == null ? this.autoSection : opts.autoSection;
+            var plainText = opts.plainText == null ? this.plainText : opts.plainText;
             if (SUPPORTED_LANGUAGES[language] !== true) {
                 return Promise.reject(
                     new Error(`SC-Voice does not support language: ${language}`));
@@ -147,6 +161,9 @@
                     var sutta = that.suttaCentralApi 
                         ? await that.suttaCentralApi.loadSutta(opts)
                         : await that.loadSuttaPootl(opts);
+                    if (plainText) {
+                        sutta = that.stripHtml(sutta);
+                    }
                     if (opts.expand && EXPANDABLE_SUTTAS[sutta.sutta_uid]) {
                         sutta = that.expandSutta(that.parseSutta(sutta))
                     }

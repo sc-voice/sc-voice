@@ -264,7 +264,7 @@
                 <div v-show="gscv.showId" class='scv-scid'>
                     SC&nbsp;{{seg.scid.split(":")[1]}}
                 </div>
-                {{seg.en}}
+                <div v-html="segmentLang(seg)"/>
             </div>
           </details> <!-- section i -->
           <scv-player v-if="tracks"
@@ -728,6 +728,9 @@ export default {
             label += `${sect.title}`;
 
             return label;
+        },
+        segmentLang(seg) {
+            return seg[this.language].replace(/\n/g,'</br>');
         },
         searchUrl(pat) {
             var search = encodeURIComponent(pat);

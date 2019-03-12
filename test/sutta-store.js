@@ -412,7 +412,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) performs keyword search", function(done) {
+    it("search(pattern) performs keyword search", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var expected = [{
@@ -708,6 +708,7 @@
         } catch(e) {done(e);} })();
     });
     it("findSuttas(opts) finds suttas matching pattern", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
             function checkSuttas(data) {
@@ -850,6 +851,24 @@
                     pli: 40,
                 }
             });
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("an4.6 has no HTML", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore({
+                maxDuration: 450,
+            }).initialize();
+            var {
+                method,
+                results,
+            } = await store.search('an4.6');
+            var sutta = results[0].sutta;
+            should(sutta.sutta_uid).equal('an4.6');
+            var en5 = sutta.segments[5].en;
+            should(en5).not.match(/<ol>/);
+            should(en5).not.match(/<li>/);
 
             done(); 
         } catch(e) {done(e);} })();
