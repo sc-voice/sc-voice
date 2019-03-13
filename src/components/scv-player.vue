@@ -59,7 +59,7 @@
                     <v-icon v-if="!loading && !paused">pause</v-icon>
                 </v-btn>
                 <v-spacer/>
-                <div> {{segment && segment.scid}} </div>
+                <div class="scv-player-scid">SC&nbsp;{{scid}}</div>
                 <v-spacer/>
                 <v-btn icon class="scv-icon-btn"
                     ref="refClose"
@@ -457,6 +457,9 @@ export default {
         ipsChoices() {
             return this.gscv.ipsChoices;
         },
+        scid() {
+            return this.segment && this.segment.scid;
+        },
         introAudioUrl() {
             var ips = this.ipsChoices[this.gscv.ips];
             return ips && ips.url;
@@ -491,6 +494,9 @@ export default {
 }
 .scv-player-text-playing {
     color: var(--accent-color);
+}
+.scv-player-scid {
+    text-transform: uppercase;
 }
 .scv-player-text-top {
     display: flex;
