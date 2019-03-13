@@ -32,13 +32,6 @@
                   <div class="mb-3"
                     v-if="waiting<=0 && sutta_uid && !searchResults"
                     style="display:flex; justify-content: flex-start">
-                    <!--v-btn icon
-                        ref="refSutta"
-                        @click="playBlurb()"
-                        :aria-label="`listen to summary of ${resultId()}`"
-                        class="scv-icon-btn" :style="cssProps" small>
-                        <v-icon>chat_bubble_outline</v-icon>
-                    </v-btn-->
                     <v-btn icon
                         :disabled="waiting > 0"
                         @click="launchSuttaPlayer()"
@@ -54,11 +47,6 @@
                         class="scv-icon-btn" :style="cssProps" small>
                         <v-icon>arrow_downward</v-icon>
                     </v-btn>
-                    <!--v-btn icon
-                        :aria-label="`show other resources for ${resultId()}`"
-                        class="scv-icon-btn" :style="cssProps" small>
-                        <v-icon>folder_open</v-icon>
-                    </v-btn-->
                   </div>
               </div>
           </div>
@@ -124,6 +112,9 @@
                         </div>
                     </div>
                 </summary>
+                <div v-if="gscv.showId" class="scv-search-result-scid scv-scid">
+                    SC&nbsp;{{result.quote.scid}}
+                </div>
                 <div v-if="result.quote && showPali && result.quote.pli"
                     class="scv-search-result-pli">
                     <div>
@@ -134,14 +125,14 @@
                     class="scv-search-result-lang">
                     <div>
                         <span v-html="result.quote.en"></span>
-                        <span v-if="gscv.showId" class='scv-scid'>
+                        <div v-if="gscv.showId" class='scv-scid'>
                             &mdash;
-                            SC&nbsp;{{result.quote.scid}}
-                            {{result.author}}
-                        </span>
+                            {{result.author}} 
+                        </div>
                     </div>
                 </div>
-                <div class="ml-3" style="display:flex; justify-content: flex-start">
+                <div class="ml-3 pt-2" 
+                    style="display:flex; justify-content: flex-start">
                     <v-btn icon v-if="result.quote"
                         @click="playQuotes(i, result)"
                         :class="btnPlayQuotesClass(i)" :style="cssProps" small>
@@ -1026,6 +1017,17 @@ export default {
     font-style: italic !important;
     padding-left: 1.6em;
     margin-top: 0.5em;
+}
+.scv-search-result-scid {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    font-style: italic !important;
+    padding-left: 2.5em;
+    margin-top: 0.5em;
+    margin-bottom: -0.7em;
+    text-transform: uppercase;
 }
 .scv-error-help {
     margin: 0em;

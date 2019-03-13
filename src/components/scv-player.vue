@@ -355,7 +355,7 @@ export default {
             var url = guid 
                 ? this.url(`audio/${sutta_uid}/${lang}/${translator}/${voice}/${guid}`)
                 : '';
-            console.log(`audioSrc`, url);
+            //console.log(`audioSrc`, url);
             return url;
         },
         progressSrc() {
