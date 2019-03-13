@@ -23,7 +23,7 @@
         should(ssml).match((phoneme(ph,text) ));
     }
 
-    it("segmentSSML(text) returns SSML", function() {
+    it("TESTTESTsegmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice({
             name: 'Aditi',
             usage: 'recite',
@@ -67,6 +67,7 @@
 
         // vowels
         testPhoneme(recite, 'ẽso','eso');
+        testPhoneme(recite, "bʰɪk.kʰʊnɪŋ", 'bhikkhuniṃ');
 
         // punctuation
         var ssml = recite.segmentSSML('dve, dve');
