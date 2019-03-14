@@ -175,6 +175,32 @@
         should(tts.isNumber('123.45')).equal(true);
         should(tts.isNumber('-0.45')).equal(true);
     });
+    it("TESTTESTmaxSegment controls segment length", function() {
+        var tts = new AbstractTTS({
+            maxSegment: 5,
+            maxCuddle: 0,
+        });
+
+        // lots of tokens
+        var ssml = tts.segment([
+            'a', 'b', 'c', 'd', 'e', 'f', 'g',
+        ]);
+        should.deepEqual(ssml, [
+            'a b c',
+            'd e f',
+            'g',
+        ]);
+
+        // punctuation
+        var ssml = tts.segment([
+            'a', 'b', ',', 'c', ',', 'd', 'e', 'f', 'g',
+        ]);
+        should.deepEqual(ssml, [
+            'a b,',
+            'c, d',
+            'e f g',
+        ]);
+    });
     it("segment(tokens) returns array of segments", function() {
         var tts = new AbstractTTS();
         should(isNaN('\n')).equal(false); // surprising

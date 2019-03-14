@@ -33,6 +33,8 @@
             this.queue = new Queue(opts.maxConcurrentServiceCalls || 5, Infinity);
             this.usage = opts.usage || "recite";
             this.maxSSML = opts.maxSSML || 5000;
+            this.maxSegment = opts.maxSegment || 1000;
+            this.maxCuddle = opts.maxCuddle || 1;
             this.usages = opts.usages || {};
             this.mj = new MerkleJson({
                 hashTag: 'guid',
@@ -205,7 +207,17 @@
             var symbols = this.words.symbols;
             var acc = tokens.reduce((acc,token) => {
                 var symbol = symbols[token];
-                if (token.length === 1 && !this.words.isWord(token) && !this.isNumber(token)) {
+                var tlen = token.length;
+                var tword = this.words.isWord(token);
+                var tnumber = !tword && this.words.isNumber(token);
+                var seglen = acc.segment.length;
+                var maxCuddle = this.maxCuddle;
+                var overflow = this.maxSegment && (seglen + tlen + maxCuddle > this.maxSegment);
+                if (!this.cuddle && overflow) {
+                    acc.segments.push(acc.segment);
+                    acc.segment = token;
+                    acc.cuddle = null;
+                } else if (tlen === 1 && !tword && !tnumber) {
                     if (symbol == null) {
                         throw new Error(`undefined symbol: ${token}`);
                     }
