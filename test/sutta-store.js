@@ -18,6 +18,17 @@
     const SCAPI_2019 = {
         apiUrl: 'http://staging.suttacentral.net/api',
     };
+    function checkSuttas(data) {
+        should(data.suttas.length).equal(data.suttaRefs.length);
+        for (var i = 0; i < data.suttaRefs.length; i++) {
+            var refParts = data.suttaRefs[i].split('/');
+            var sutta = data.suttas[i];
+            should(sutta).instanceOf(Sutta);
+            should(sutta.sutta_uid).equal(refParts[0]);
+            should(sutta.translation.lang).equal(refParts[1]);
+            should(sutta.translation.author_uid).equal(refParts[2]);
+        }
+    }
 
     it("initialize() initializes SuttaStore", function(done) {
         (async function() { try {
@@ -707,23 +718,12 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("findSuttas(opts) finds suttas matching pattern", function(done) {
+    it("TESTTESTfindSuttas(opts) finds suttas by phrase", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
-            function checkSuttas(data) {
-                should(data.suttas.length).equal(data.suttaRefs.length);
-                for (var i = 0; i < data.suttaRefs.length; i++) {
-                    var refParts = data.suttaRefs[i].split('/');
-                    var sutta = data.suttas[i];
-                    should(sutta).instanceOf(Sutta);
-                    should(sutta.sutta_uid).equal(refParts[0]);
-                    should(sutta.translation.lang).equal(refParts[1]);
-                    should(sutta.translation.author_uid).equal(refParts[2]);
-                }
-            }
 
-            // Search phrase
+            // Search english phrase
             var data = await store.findSuttas({ pattern: 'root of suffering', });
             should(data.method).equal('phrase');
             should.deepEqual(data.suttaRefs, [
@@ -734,6 +734,15 @@
                 'mn66/en/sujato',
             ]);
             checkSuttas(data);
+
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("findSuttas(opts) finds suttas by keywords", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
 
             // Search keywords
             var data = await store.findSuttas({ pattern: 'root suffering', });
@@ -746,6 +755,33 @@
                 'mn22/en/sujato',
             ]);
             checkSuttas(data);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTkeywordSearch(...) finds suttas by keywords", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            var language = 'en';
+
+            // Search Pali phrase
+            var pattern = store.patternKeywords('Anāthapiṇḍika')[0]; 
+            var data = await store.keywordSearch({ pattern, language, });
+            should(data.lines.length).equal(223);
+
+            // Search Pali phrase
+            var pattern = store.patternKeywords('anathapindika')[0]; 
+            console.log(pattern);
+            var data2 = await store.keywordSearch({ pattern, language, });
+            should(data2.lines.length).equal(224); // sn55.30: anāthapiṇḍikā 
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTfindSuttas(opts) finds by sutta_uid", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
 
             // Search sutta uid list
             var data = await store.findSuttas({ pattern: 'mn2,mn1', });

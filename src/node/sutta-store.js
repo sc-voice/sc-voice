@@ -257,6 +257,7 @@
                     .replace(/i/iug, '(i|ī)')
                     .replace(/u/iug, '(u|ū)')
                     .replace(/m/iug, '(m|ṁ|ṃ)')
+                    .replace(/d/iug, '(d|ḍ)')
                     .replace(/n/iug, '(n|ṅ|ñ|ṇ)')
                     .replace(/l/iug, '(l|ḷ)')
                     .replace(/t/iug, '(t|ṭ)')
@@ -286,6 +287,7 @@
                 shell: '/bin/bash',
                 maxBuffer,
             };
+            console.log(`dbg`, cmd);
             return new Promise((resolve,reject) => {
                 exec(cmd, opts, (err,stdout,stderr) => {
                     if (err) {
@@ -306,6 +308,14 @@
             return cmp;
         }
 
+        patternKeywords(pattern) {
+            var keywords = pattern.split(' +'); // + was inserted by normalizePattern();
+            return keywords.map(w => 
+                /^[a-z]+$/iu.test(w) && this.words.isForeignWord(w)
+                ? `\\b${SuttaStore.paliPattern(w)}`
+                : `\\b${w}\\b`);
+        }
+
         keywordSearch(args) {
             var {
                 pattern,
@@ -316,11 +326,7 @@
             } = args;
             comparator = comparator || SuttaStore.grepComparator;
             var that = this;
-            var keywords = pattern.split(' +'); // + was inserted by normalizePattern();
-            keywords = keywords.map(w => 
-                /^[a-z]+$/iu.test(w) && this.words.isForeignWord(w)
-                ? `\\b${SuttaStore.paliPattern(w)}`
-                : `\\b${w}\\b`);
+            var keywords = this.patternKeywords(pattern);
             logger.info(`SuttaStore.keywordSearch(${keywords})`);
             var wordArgs = Object.assign({}, args, {
                 maxResults: 0,
