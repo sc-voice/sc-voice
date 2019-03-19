@@ -152,6 +152,8 @@
     "language": "hi-IN",
     "service": "aws-polly",
     "name": "Aditi",
+    "syllableVowels": "aeiouāīū",
+    "syllabifyLength": 11,
     "gender": "female",
     "pitch": "-10%",
     "fullStopComma": true,

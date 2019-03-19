@@ -363,5 +363,28 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTsyllabify(word) spaces word by syllable", function() {
+        var tts = new AbstractTTS({
+            syllableVowels: "aeiouāīū",
+        });
+        should(tts.syllableVowels).equal("aeiouāīū");
+
+        should(tts.syllabify("tatetitotutātītū")).equal("ta te ti to tu tā tī tū");
+        should(tts.syllabify("a")).equal("a");
+        should(tts.syllabify("at")).equal("at");
+        should(tts.syllabify("ta")).equal("ta");
+        should(tts.syllabify("ata")).equal("a ta");
+        should(tts.syllabify("tat")).equal("tat");
+        should(tts.syllabify("taat")).equal("ta at");
+        should(tts.syllabify("tatta")).equal("tat ta");
+        should(tts.syllabify("tattat")).equal("tat tat");
+        should(tts.syllabify("tatat")).equal("ta tat");
+        should(tts.syllabify("atatat")).equal("a ta tat");
+        should(tts.syllabify("atatata")).equal("a ta ta ta");
+        should(tts.syllabify("atattata")).equal("a tat ta ta");
+        should(tts.syllabify("atattatta")).equal("a tat tat ta");
+        should(tts.syllabify("acchariyaabbhutasutta"))
+            .equal("ac cha ri ya ab bhu ta sut ta");
+    });
 
 })

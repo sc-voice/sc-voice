@@ -30,6 +30,8 @@
             this.pitch = opts.pitch || "-0%";
             this.usage = opts.usage || 'recite';
             this.usages = opts.usages;
+            this.syllableVowels = opts.syllableVowels;
+            this.syllabifyLength = opts.syllabifyLength;
             Object.defineProperty(this, '_services', {
                 writable: true,
                 value: opts.services || null,
@@ -134,6 +136,8 @@
                             soundStore: this.soundStore,
                             usage: key,
                             breaks: usage.breaks,
+                            syllableVowels: this.syllableVowels,
+                            syllabifyLength: this.syllabifyLength,
                             prosody: {
                                 rate: usage.rate,
                                 pitch: this.pitch,

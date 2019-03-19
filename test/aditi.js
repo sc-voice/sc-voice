@@ -6,7 +6,16 @@
         Polly,
         Voice,
     } = require("../index");
-
+    const syllabifyLength = 11;
+    const ADITI_OPTS = {
+        name: 'Aditi',
+        usage: 'recite',
+        language: 'hi-IN',
+        languageUnknown: 'pli',
+        stripNumbers: true,
+        stripQuotes: true,
+        //syllabifyLength,
+    };
 
     // Service results are normally cached. To bypass the cache, change
     // the following value to false. You can clear the cache by
@@ -23,23 +32,35 @@
         should(ssml).match((phoneme(ph,text) ));
     }
 
-    it("segmentSSML(text) returns SSML", function() {
-        var aditi = Voice.createVoice({
-            name: 'Aditi',
-            usage: 'recite',
-            language: 'hi-IN',
-            languageUnknown: 'pli',
-            stripNumbers: true,
-            stripQuotes: true,
-        });
+    it("TESTTESTcreateVoice() creates Aditi", function() {
+        var aditi = Voice.createVoice(ADITI_OPTS);
         should(aditi.name).equal('Aditi');
         should(aditi.language).equal('hi-IN');
         should(aditi.fullStopComma).equal(true);
+        should(aditi.syllableVowels).equal('aeiouāīū');
+        should(aditi.syllabifyLength).equal(syllabifyLength);
+
         var recite = aditi.services['recite'];
         should(recite.fullStopComma).equal(true);
+        should(recite.syllableVowels).equal('aeiouāīū');
+        should(recite.syllabifyLength).equal(syllabifyLength);
+        
+        var aditi = Voice.createVoice(Object.assign({}, ADITI_OPTS, {
+            syllableVowels: 'aeiou',
+        }));
+        should(aditi.syllableVowels).equal('aeiou');
+        var recite = aditi.services['recite'];
+        should(recite.syllableVowels).equal('aeiou');
+    });
+    it("TESTTESTsegmentSSML(text) returns SSML", function() {
+        var aditi = Voice.createVoice(ADITI_OPTS);
+        var recite = aditi.services['recite'];
+
+        // syllabify spaces
+        testPhoneme(recite, 'əc chə ɾɪ jə əb bʰʊ t̪ə sʊt̪ t̪ə', 'acchariyaabbhutasutta'); 
 
         // stops
-        testPhoneme(recite, 'bʰɪk.kʰʊsəŋgʰo','bhikkhusaṅgho');
+        testPhoneme(recite, 'bʰɪk kʰʊ səŋ gʰo','bhikkhusaṅgho');
         testPhoneme(recite, 'səŋgʰe','saṃghe');
         testPhoneme(recite, 'pəɲ ɲə','Pañña');
         testPhoneme(recite, 'səŋkʰɑːɾə','saṅkhāra');
@@ -63,7 +84,6 @@
         testPhoneme(recite, 'nɑːʟ̈ənd̪ɑː', 'nāḷandā'); 
         testPhoneme(recite, 'nɑːlənd̪ɑː', 'nālandā'); 
         testPhoneme(recite, 'nəʟ̈həŋ', 'naḷhaṃ'); 
-        testPhoneme(recite, 'əcchəɾɪjə\'abbʰʊt̪əsʊt̪t̪ə', 'acchariyaabbhutasutta'); 
 
         // vowels
         testPhoneme(recite, 'ẽso','eso');

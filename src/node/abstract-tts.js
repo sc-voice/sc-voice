@@ -36,6 +36,8 @@
             this.maxSegment = opts.maxSegment || 1000;
             this.maxCuddle = opts.maxCuddle || 1;
             this.usages = opts.usages || {};
+            this.syllableVowels = opts.syllableVowels;
+            this.syllabifyLength = opts.syllabifyLength;
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
@@ -120,13 +122,20 @@
             return ssml;
         }
 
+        wordIPA(word, language) {
+            if (this.syllabifyLength && word.length >= this.syllabifyLength) {
+                word = this.syllabify(word);
+            }
+            return this.words.ipa(word, language);
+        }
+
         wordSSML(word) {
             var wordInfo = this.wordInfo(word);
             if (wordInfo) {
                 if (wordInfo.ipa) { // use custom IPA
                     var ipa = wordInfo.ipa;
                 } else if (wordInfo.language !== this.language.split('-')[0]) { // generate IPA
-                    var ipa = this.words.ipa(word, wordInfo.language); 
+                    var ipa = this.wordIPA(word, wordInfo.language);
                 } else {
                     var ipa = null;
                 }
@@ -141,7 +150,7 @@
                     var w = word.endsWith(`’`) ? word.substring(0,word.length-1) : word;
                     if (this.languageUnknown !== this.language && 
                         this.words.isForeignWord(w)) { 
-                        var ipa = this.words.ipa(word, this.languageUnknown); 
+                        var ipa = this.wordIPA(word, this.languageUnknown);
                     } else {
                         var ipa = null;
                     }
@@ -422,6 +431,42 @@
                         reject(new Error(`synthesizeText(${text}) expected string or Array`));
                     }
                 } catch(e) { reject(e);} })();
+            });
+        }
+
+        syllabify(word) {
+            var re = this.syllabifyRegExp;
+            var vowels = this.syllableVowels;
+            if (vowels == null) {
+                return word;
+            }
+            if (re == null) {
+                var regOpts = "gui";
+                var patVowel = `[${vowels}]`;
+                this.reVowel = new RegExp(patVowel, regOpts);
+                var patConsonant = `[^${vowels}]`;
+                var pat = `${patVowel}.${patConsonant}?${patConsonant}?`;
+                re = this.syllabifyRegExp = new RegExp(pat, regOpts);
+            }
+            var c = 'no-c';
+            return word.replace(re, (m, i, s)=> {
+                //console.log(`dbg m:${m} c:${c} i:${i} s:${s} word:${word}`);
+                var remaining = word.length - (i + m.length);
+                if (s) {
+                    switch (m.length) {
+                        case 2: return remaining 
+                            ? `${m[0]} ${m[1]}`                 // ATa => a ta
+                            : m;                                // tAT => tat
+                        case 3: return this.reVowel.test(m[1])
+                            ? `${m[0]} ${m[1]}${m[2]}`          // tAAT => ta at
+                            : `${m[0]}${m[1]} ${m[2]}`;         // ATTa => at ta
+                        case 4: return this.reVowel.test(m[1])
+                            ? `${m[0]} ${m[1]}${m[2]} ${m[3]}`  // tAATTa => ta at ta
+                            : `${m[0]}${m[1]} ${m[2]}${m[3]}`;  // tATTHa => tat tha
+                        default: return m;
+                    }
+                }
+                return m;
             });
         }
 

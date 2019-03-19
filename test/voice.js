@@ -14,7 +14,7 @@
         return ph;
     }
 
-    it("loadVoices(voicePath) should return voices", function() {
+    it("TESTTESTloadVoices(voicePath) should return voices", function() {
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
         should(voices.length).greaterThan(0);
@@ -40,6 +40,8 @@
             name: 'Amy',
             service: 'aws-polly',
             gender: 'female',
+            syllableVowels: undefined,
+            syllabifyLength: undefined,
             rates: {
                 navigate: "+5%", 
                 recite: "-30%",
