@@ -327,7 +327,7 @@
         should(recite.wordSSML(`vasala`)).equal(phoneme("ʋəsə la","vasala"));
         should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
         should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑːməɲ cə ","Nāmañca"));
-        should(recite.wordSSML(`anottappañca`)).match(/"ənot̪t̪əppəɲ cə "/);
+        should(recite.wordSSML(`anottappañca`)).match(/"ə not̪ t̪əp pəɲ cə"/);
         should(recite.wordSSML(`Atthi`)).match(/"ət̪.t̪ʰɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hot̪ɪ"/);
     });

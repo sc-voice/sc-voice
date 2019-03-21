@@ -466,10 +466,10 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("paliPattern(pattern) should return the Pali pattern", function(){
+    it("TESTTESTpaliPattern(pattern) should return the Pali pattern", function(){
         should(SuttaStore.paliPattern("jhana")).equal('jh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
         should(SuttaStore.paliPattern("abcdefghijklmn"))
-        .equal('(a|ā)bcdefgh(i|ī)jk(l|ḷ)(m|ṁ|ṃ)(n|ṅ|ñ|ṇ)')
+        .equal('(a|ā)bc(d|ḍ)efgh(i|ī)jk(l|ḷ)(m|ṁ|ṃ)(n|ṅ|ñ|ṇ)')
         should(SuttaStore.paliPattern("nopqrstuvwxyz"))
         .equal('(n|ṅ|ñ|ṇ)opqrs(t|ṭ)(u|ū)vwxyz');
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
@@ -616,7 +616,7 @@
         should(SuttaStore.isUidPattern('sn22.1-20    ,   red')).equal(false);
         should(SuttaStore.isUidPattern('red,sn22.1-20')).equal(false);
     });
-    it("TESTTESTexpandRange(item) expands range", function(done) {
+    it("expandRange(item) expands range", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             should.deepEqual(store.expandRange('an5.179').length,1);
@@ -773,7 +773,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsuttaList(pattern) finds listed suttas", function(done) {
+    it("suttaList(pattern) finds listed suttas", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -1016,6 +1016,7 @@
         } catch(e) {done(e);} })();
     });
     it("maxDuration limits createPlaylist()", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,

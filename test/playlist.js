@@ -167,7 +167,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("speak(opts) adds voice audio", function(done) {
+    it("TESTTESTspeak(opts) adds voice audio", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voices = {
@@ -189,7 +189,7 @@
                 voices,
                 volume: 'test-playlist',
             });
-            should(result.signature.guid).match(/abceb0/);
+            should(result.signature.guid).match(/5f8466/);
             done();
         } catch(e) { done(e); } })();
     });

@@ -551,11 +551,16 @@
             if (typeof list === 'string') {
                 list = list.split(',');
             }
-            return list.reduce((acc, item) => {
-                var suttaRef = item.toLowerCase().replace(/ /gu, '');
-                this.expandRange(suttaRef).forEach(item => acc.push(item));
-                return acc;
-            }, []);
+            try {
+                logger.warn(`suttaList ${JSON.stringify(list)}`);
+                return list.reduce((acc, item) => {
+                    var suttaRef = item.toLowerCase().replace(/ /gu, '');
+                    this.expandRange(suttaRef).forEach(item => acc.push(item));
+                    return acc;
+                }, []);
+            } catch (e) {
+                throw e;
+            }
         }
 
         grepSearchResults(args) {
@@ -797,9 +802,7 @@
                             method,
                             uids,
                             suttaRefs,
-                        } = that.sutta_uidSearch({
-                            pattern, maxResults, language,
-                        });
+                        } = that.sutta_uidSearch(pattern, maxResults, language);
                     } else {
                         var method = 'phrase';
                         var lines = [];
