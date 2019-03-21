@@ -18,26 +18,32 @@
     const SUTTAIDS_PATH = path.join(__dirname, '..', '..', 'src', 'node', 'sutta-ids.json');
     const COLLECTIONS = {
         an: {
+            name: 'an',
             folder: 'an',
             subchapters: true,
         },
         mn: {
+            name: 'mn',
             folder: 'mn',
             subchapters: false,
         },
         dn: {
+            name: 'dn',
             folder: 'dn',
             subchapters: false,
         },
         sn: {
+            name: 'sn',
             folder: 'sn',
             subchapters: true,
         },
         thig: {
+            name: 'thig',
             folder: 'kn',
             subchapters: true,
         },
         thag: {
+            name: 'thag',
             folder: 'kn',
             subchapters: true,
         }
@@ -469,62 +475,87 @@
             return i;
         }
 
+        expandRange(suttaRef) {
+            var cname = suttaRef.replace(/[-.:0-9.].*/u, '');
+            var suffix = suttaRef.replace(/[^/]*([a-z\/]*)$/iu, '$1');
+            suttaRef = suttaRef.replace(suffix, '');
+            var range = suttaRef.substring(cname.length);
+            var coll = Object.keys(COLLECTIONS).reduce((acc,ck) => {
+                var c = COLLECTIONS[ck];
+                return acc || cname === c.name && c;
+            }, false);
+            var result = [];
+            if (!coll) { // no collection
+                throw new Error(`Unrecognized sutta collection: ${suttaRef} [E4]`);
+            }
+            var rangeParts = range.split('-');
+            var dotParts = rangeParts[0].split('.');
+            if (dotParts.length > 2) {
+                throw new Error(`Invalid sutta reference: ${suttaRef} [E3]`);
+            }
+            if (coll.subchapters) { // e.g., SN, AN
+                if (dotParts.length === 1) { // e.g. SN50
+                    var prefix = `${suttaRef}.`;
+                    var first = rangeParts.length === 1 ? 1 : Number(rangeParts[0]);
+                    var last = rangeParts.length === 1 ? 999 : Number(rangeParts[1]);
+                } else if (rangeParts.length === 1) {
+                    var prefix = `${cname}${dotParts[0]}.`;
+                    rangeParts[0] = dotParts[1];
+                    var first = Number(rangeParts[0]);
+                    var last = first;
+                } else { // e.g., SN50.1
+                    var prefix = `${cname}${dotParts[0]}.`;
+                    var first = Number(dotParts[1]);
+                    var last = Number(rangeParts[1]);
+                }
+                if (isNaN(first) || isNaN(last)) {
+                    throw new Error(`Invalid sutta reference: ${suttaRef} [E1]`);
+                }
+                var firstItem = `${prefix}${first}`;
+                var iCur = this.suttaIndex(firstItem, false);
+                if (iCur == null) {
+                    throw new Error(`Sutta ${firstItem} not found`);
+                }
+                var endUid = this.sutta_uidSuccessor(`${prefix}${last}`);
+                var iEnd = this.suttaIndex(endUid);
+                for (var i = iCur; i < iEnd; i++) {
+                    result.push(`${this.suttaIds[i]}${suffix}`);
+                }
+            } else { // e.g., MN, DN
+                if (rangeParts.length === 1) {
+                    var first = Number(rangeParts[0]);
+                    var last = first;
+                } else {
+                    var first = Number(rangeParts[0]);
+                    var last = Number(rangeParts[1]);
+                }
+                if (isNaN(first) || isNaN(last)) {
+                    throw new Error(`Invalid sutta reference: ${suttaRef} [E2]`);
+                }
+                var firstItem = `${cname}${first}`;
+                var iCur = this.suttaIndex(firstItem, false);
+                if (iCur == null) {
+                    throw new Error(`Sutta ${firstItem} not found`);
+                }
+                var lastItem = `${cname}${last}`;
+                var endUid = this.sutta_uidSuccessor(lastItem);
+                var iEnd = this.suttaIndex(endUid);
+                for (var i = iCur; i < iEnd; i++) {
+                    result.push(`${this.suttaIds[i]}${suffix}`);
+                }
+            }
+            return result;
+        }
+
         suttaList(list) {
             if (typeof list === 'string') {
                 list = list.split(',');
             }
-            var majorList = list.reduce((acc,item) => {
-                item = item.trim().toLowerCase();
-                if (/[1-9]\./.test(item)) {
-                    var suttaNum = item.replace(/ /g, "");
-                    acc.push(suttaNum);
-                } else if (item.indexOf('/') >= 0) {
-                    acc.push(item); // fully specified reference (e.g., mn1/en/bodhi)
-                } else {
-                    var rangeParts = item.split('-');
-                    var prefix = rangeParts[0].replace(/[-0-9.:]*$/,'');
-                    if (rangeParts.length === 1) {
-                        var coll = COLLECTIONS[prefix];
-                        if (coll && coll.subchapters) {
-                            var uid = `${item}.1-999`; 
-                            acc.push(uid);
-                        } else {
-                            acc.push(item);
-                        }
-                    } else {
-                        var first = Number(rangeParts[0].substring(prefix.length));
-                        var last = Number(rangeParts[1]);
-                        if (isNaN(first) || isNaN(last)) {
-                            acc.push(item);
-                        } else {
-                            last < first && ({last,first} = {first,last});
-                            for (var i = first; i <= last; i++) {
-                                acc.push(`${prefix}${i}`);
-                            }
-                        }
-                    }
-                }
+            return list.reduce((acc, item) => {
+                var suttaRef = item.toLowerCase().replace(/ /gu, '');
+                this.expandRange(suttaRef).forEach(item => acc.push(item));
                 return acc;
             }, []);
-            var files = majorList.reduce((acc,item,i) => {
-                if (item.indexOf('/') >= 0) {
-                    acc.push(item); // e.g., mn1/en/bodhi
-                } else {
-                    var iCur = this.suttaIndex(item, false);
-                    if (iCur == null) {
-                        throw new Error(`Sutta ${item} not found`);
-                    }
-                    var nextUid = this.sutta_uidSuccessor(item);
-                    var iNext = this.suttaIndex(nextUid, false);
-                    var iLast = iNext-1;
-                    var iNext = this.suttaIndex(nextUid);
-                    for (var i = iCur; i < iNext; i++) {
-                        acc.push(this.suttaIds[i]);
-                    }
-                }
-                return acc;
-            }, []);
-            return files;
         }
 
         grepSearchResults(args) {
@@ -714,6 +745,31 @@
             });
         }
 
+        sutta_uidSearch(pattern, maxResults=5, language='en') {
+            var method = 'sutta_uid';
+            var uids = this.suttaList(pattern).slice(0, maxResults);
+            var suttaRefs = uids.map(ref => {
+                var refParts = ref.split('/');
+                var uid = refParts[0];
+                var refLang = refParts[1] || language;
+                var refTranslator = refParts[2];
+                if (refTranslator == null) {
+                    var localPath = suttaPaths[this.root]
+                        .filter(sp => sp.indexOf(uid) >= 0)[0];
+                    var suttaPath = path.join(this.root, localPath);
+                    var spParts = suttaPath.split('/');
+                    refTranslator = spParts[spParts.length-2];
+                }
+                return `${uid}/${refLang}/${refTranslator}`;
+            });
+
+            return {
+                method,
+                uids,
+                suttaRefs,
+            }
+        }
+
         findSuttas(...args) {
             var that = this;
             var opts = args[0];
@@ -737,21 +793,12 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     if (SuttaStore.isUidPattern(pattern)) {
-                        var method = 'sutta_uid';
-                        var uids = that.suttaList(pattern).slice(0, maxResults);
-                        var suttaRefs = uids.map(ref => {
-                            var refParts = ref.split('/');
-                            var uid = refParts[0];
-                            var refLang = refParts[1] || language;
-                            var refTranslator = refParts[2];
-                            if (refTranslator == null) {
-                                var localPath = suttaPaths[that.root]
-                                    .filter(sp => sp.indexOf(uid) >= 0)[0];
-                                var suttaPath = path.join(that.root, localPath);
-                                var spParts = suttaPath.split('/');
-                                refTranslator = spParts[spParts.length-2];
-                            }
-                            return `${uid}/${refLang}/${refTranslator}`;
+                        var {
+                            method,
+                            uids,
+                            suttaRefs,
+                        } = that.sutta_uidSearch({
+                            pattern, maxResults, language,
                         });
                     } else {
                         var method = 'phrase';

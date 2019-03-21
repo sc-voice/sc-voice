@@ -175,7 +175,7 @@
         should(tts.isNumber('123.45')).equal(true);
         should(tts.isNumber('-0.45')).equal(true);
     });
-    it("TESTTESTmaxSegment controls segment length", function() {
+    it("maxSegment controls segment length", function() {
         var tts = new AbstractTTS({
             maxSegment: 5,
             maxCuddle: 0,
@@ -363,7 +363,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsyllabify(word) spaces word by syllable", function() {
+    it("syllabify(word) spaces word by syllable", function() {
         var tts = new AbstractTTS({
             syllableVowels: "aeiouāīū",
         });

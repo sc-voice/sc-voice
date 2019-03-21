@@ -616,13 +616,177 @@
         should(SuttaStore.isUidPattern('sn22.1-20    ,   red')).equal(false);
         should(SuttaStore.isUidPattern('red,sn22.1-20')).equal(false);
     });
-    it("suttaList(pattern) finds listed suttas", function(done) {
+    it("TESTTESTexpandRange(item) expands range", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            should.deepEqual(store.expandRange('an5.179').length,1);
+
+            // no subchapters
+            should.deepEqual(store.expandRange('mn50'), [
+                'mn50' ]);
+            should.deepEqual(store.expandRange('mn1-3'), [
+                'mn1', 'mn2', 'mn3', ]);
+
+            // subchapters
+            should.deepEqual(store.expandRange('sn50'), [
+                'sn50.1-12',
+                'sn50.13-22',
+                'sn50.23-34',
+                'sn50.35-44',
+                'sn50.45-54',
+                'sn50.55-66',
+                //'sn50.67-76',
+                'sn50.77-88',
+                'sn50.89-98',
+                'sn50.99-108',
+            ]);
+            should.deepEqual(store.expandRange('sn50.2-11'), [
+                'sn50.1-12']);
+            should.deepEqual(store.expandRange('sn50.2-21'), [
+                'sn50.1-12', 
+                'sn50.13-22']);
+            should.deepEqual(store.expandRange('an5.179'), [
+                'an5.179']);
+            should.deepEqual(store.expandRange('an1.2-5'), [
+                'an1.1-10']);
+            should.deepEqual(store.expandRange('an10.2-5'), [
+                'an10.2',
+                'an10.3',
+                'an10.4',
+                'an10.5',
+            ]);
+            should.deepEqual(store.expandRange('an10.155-158'), [
+                'an10.155',
+                'an10.156-166',
+            ]);
+
+            // subchapters KN
+            should.deepEqual(store.expandRange('thig1.13'), [
+                'thig1.13',
+            ]);
+            should.deepEqual(store.expandRange('thig4'), [
+                'thig4.1',
+            ]);
+            should.deepEqual(store.expandRange('thag8'), [
+                'thag8.1',
+                'thag8.2',
+                'thag8.3',
+            ]);
+            should.deepEqual(store.expandRange('thig1.1-3'), [
+                'thig1.1',
+                'thig1.2',
+                'thig1.3',
+            ]);
+
+            // out of range
+            should.deepEqual(store.expandRange('mn666'), ['mn152']);
+            should.deepEqual(store.expandRange('an666'), ['an11.992-1151']);
+            should.deepEqual(store.expandRange('an2.9999'), ['an2.310-479']);
+
+            // errors
+            should.throws(() => {
+                store.expandRange('da21'); // no collection
+            });
+            should.throws(() => {
+                store.expandRange('snp1.8'); // no collection
+            });
+            should.throws(() => {
+                store.expandRange('kn9'); // no collection
+            });
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("expandRange(item) handles fully sutta refs", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+            should.deepEqual(store.expandRange('an5.179').length,1);
+
+            // no subchapters
+            should.deepEqual(store.expandRange('mn50/en/sujato'), [
+                'mn50/en/sujato' ]);
+            should.deepEqual(store.expandRange('mn1-3/en/sujato'), [
+                'mn1/en/sujato', 'mn2/en/sujato', 'mn3/en/sujato', ]);
+
+            // subchapters
+            should.deepEqual(store.expandRange('sn50/en/sujato'), [
+                'sn50.1-12/en/sujato',
+                'sn50.13-22/en/sujato',
+                'sn50.23-34/en/sujato',
+                'sn50.35-44/en/sujato',
+                'sn50.45-54/en/sujato',
+                'sn50.55-66/en/sujato',
+                //'sn50.67-76/en/sujato',
+                'sn50.77-88/en/sujato',
+                'sn50.89-98/en/sujato',
+                'sn50.99-108/en/sujato',
+            ]);
+            should.deepEqual(store.expandRange('sn50.2-11/en/sujato'), [
+                'sn50.1-12/en/sujato']);
+            should.deepEqual(store.expandRange('sn50.2-21/en/sujato'), [
+                'sn50.1-12/en/sujato', 
+                'sn50.13-22/en/sujato']);
+            should.deepEqual(store.expandRange('an5.179/en/sujato'), [
+                'an5.179/en/sujato']);
+            should.deepEqual(store.expandRange('an1.2-5/en/sujato'), [
+                'an1.1-10/en/sujato']);
+            should.deepEqual(store.expandRange('an10.2-5/en/sujato'), [
+                'an10.2/en/sujato',
+                'an10.3/en/sujato',
+                'an10.4/en/sujato',
+                'an10.5/en/sujato',
+            ]);
+            should.deepEqual(store.expandRange('an10.155-158/en/sujato'), [
+                'an10.155/en/sujato',
+                'an10.156-166/en/sujato',
+            ]);
+
+            // subchapters KN
+            should.deepEqual(store.expandRange('thig1.13/en/sujato'), [
+                'thig1.13/en/sujato',
+            ]);
+            should.deepEqual(store.expandRange('thig4/en/sujato'), [
+                'thig4.1/en/sujato',
+            ]);
+            should.deepEqual(store.expandRange('thag8/en/sujato'), [
+                'thag8.1/en/sujato',
+                'thag8.2/en/sujato',
+                'thag8.3/en/sujato',
+            ]);
+            should.deepEqual(store.expandRange('thig1.1-3/en/sujato'), [
+                'thig1.1/en/sujato',
+                'thig1.2/en/sujato',
+                'thig1.3/en/sujato',
+            ]);
+
+            // no collection
+            should.throws(() => {
+                store.expandRange('da21/en/sujato');
+            });
+            should.throws(() => {
+                store.expandRange('snp1.8/en/sujato');
+            });
+            should.throws(() => {
+                store.expandRange('kn9/en/sujato');
+            });
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTsuttaList(pattern) finds listed suttas", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
             should.deepEqual( store.suttaList(
+                ['MN 1-3/en/sujato']), // spaces
+                ['mn1/en/sujato', 'mn2/en/sujato', 'mn3/en/sujato']);
+            should.deepEqual( store.suttaList(
                 ['AN 5.179', 'sn29.1']), // spaces
                 ['an5.179', 'sn29.1']);
+
+            should.deepEqual(store.suttaList( 
+                ['an10.1-3']),
+                ['an10.1', 'an10.2', 'an10.3']);
 
             should.deepEqual( store.suttaList(
                 ['an2.3']), // sub-chapter embedded 
@@ -718,7 +882,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTfindSuttas(opts) finds suttas by phrase", function(done) {
+    it("findSuttas(opts) finds suttas by phrase", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
@@ -759,7 +923,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTkeywordSearch(...) finds suttas by keywords", function(done) {
+    it("keywordSearch(...) finds suttas by keywords", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var language = 'en';
@@ -778,7 +942,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTfindSuttas(opts) finds by sutta_uid", function(done) {
+    it("findSuttas(opts) finds by sutta_uid", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
@@ -905,6 +1069,25 @@
             var en5 = sutta.segments[5].en;
             should(en5).not.match(/<ol>/);
             should(en5).not.match(/<li>/);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("sutta_uidSearch(...) finds suttas by sutta_uid", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore({
+                maxDuration: 450,
+            }).initialize();
+            var maxResults = 5;
+            var language = 'en';
+
+            should.deepEqual(store.sutta_uidSearch("an10.1-10").uids, [
+                "an10.1", "an10.2", "an10.3", "an10.4", "an10.5"]);
+            should.deepEqual(store.sutta_uidSearch("mn2-11").uids, [
+                "mn2", "mn3", "mn4", "mn5", "mn6" ]);
+            should.deepEqual(store.sutta_uidSearch("an1.2-11").uids, [
+                "an1.1-10", "an1.11-20"]);
+
 
             done(); 
         } catch(e) {done(e);} })();

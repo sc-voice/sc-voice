@@ -14,7 +14,7 @@
         return ph;
     }
 
-    it("TESTTESTloadVoices(voicePath) should return voices", function() {
+    it("loadVoices(voicePath) should return voices", function() {
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
         should(voices.length).greaterThan(0);
@@ -279,7 +279,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeak(text) can handle lengthy Pali", function(done) {
+    it("speak(text) can handle lengthy Pali", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var raveena = Voice.createVoice({
