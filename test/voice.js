@@ -317,7 +317,7 @@
         should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
     });
-    it("Aditi phonemes", function() {
+    it("TESTTESTAditi phonemes", function() {
         var aditi = Voice.createVoice({
             name: "aditi",
             languageUnknown: "pli",
@@ -326,7 +326,7 @@
         var recite = aditi.services.recite;
         should(recite.wordSSML(`vasala`)).equal(phoneme("ʋəsə la","vasala"));
         should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
-        should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑːməɲ cə ","Nāmañca"));
+        should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑː məɲ cə","Nāmañca"));
         should(recite.wordSSML(`anottappañca`)).match(/"ə not̪ t̪əp pəɲ cə"/);
         should(recite.wordSSML(`Atthi`)).match(/"ət̪.t̪ʰɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hot̪ɪ"/);

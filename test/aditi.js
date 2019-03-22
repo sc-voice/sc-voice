@@ -6,7 +6,7 @@
         Polly,
         Voice,
     } = require("../index");
-    const syllabifyLength = 10;
+    const syllabifyLength = 7;
     const ADITI_OPTS = {
         name: 'Aditi',
         usage: 'recite',
@@ -57,32 +57,33 @@
         var recite = aditi.services['recite'];
 
         // syllabify spaces
+        testPhoneme(recite, 'd̪ək kʰɪ ɳej jəŋ', 'dakkhiṇeyyaṃ');
         testPhoneme(recite, 'əc chə ɾɪ jə əb bʰʊ t̪ə sʊt̪ t̪ə', 'acchariyaabbhutasutta'); 
 
         // stops
         testPhoneme(recite, 'bʰɪk kʰʊ səŋ gʰo','bhikkhusaṅgho');
         testPhoneme(recite, 'səŋgʰe','saṃghe');
         testPhoneme(recite, 'pəɲ ɲə','Pañña');
-        testPhoneme(recite, 'səŋkʰɑːɾə','saṅkhāra');
-        testPhoneme(recite, 'bɾɑːhməɳəŋ','brāhmaṇaṃ');
+        testPhoneme(recite, 'səŋ kʰɑː ɾə','saṅkhāra');
+        testPhoneme(recite, 'bɾɑːh mə ɳəŋ','brāhmaṇaṃ');
         testPhoneme(recite, 'gɪʝ ʄhɑ ku: ʈe','gijjhakūṭe');
-        testPhoneme(recite, 'cɪt̪t̪əs sə','cittassa');
+        testPhoneme(recite, 'cɪt̪ t̪əs sə','cittassa');
         testPhoneme(recite, 'chən no ʋɑː d̪ə','Channovāda');
-        testPhoneme(recite, 'phəggʊɳə','Phagguṇa');
+        testPhoneme(recite, 'phəg gʊ ɳə','Phagguṇa');
         testPhoneme(recite, 'sət̪ɪ','sati'); // memory;mindfulness
         testPhoneme(recite, 'səʈ.ʈʰɪ','saṭṭhi'); // sixty
         testPhoneme(recite, 'sət̪.t̪ʰɪ','satthi'); // the thigh
-        testPhoneme(recite, 'd̪əɳɖəkə','daṇḍaka');
+        testPhoneme(recite, 'd̪əɳ ɖə kə','daṇḍaka');
         testPhoneme(recite, 'd̪ʱəmmə','Dhamma');
         testPhoneme(recite, 'd̪ʱəmə', 'Dhama'); // blowing
         testPhoneme(recite, 'si ɾɪ ʋəɖ ɖhə', 'sirivaḍḍha'); // blowing
         testPhoneme(recite, 'bɑːləkə', 'bālaka'); 
-        testPhoneme(recite, 'bʰəl.lɪkə', 'bhallika'); 
-        testPhoneme(recite, 'd̪eʋəd̪əhə', 'devadaha'); 
+        testPhoneme(recite, 'bʰəl lɪ kə', 'bhallika'); 
+        testPhoneme(recite, 'd̪e ʋə d̪ə hə', 'devadaha'); 
         testPhoneme(recite, 'jəsə', 'yasa'); 
-        testPhoneme(recite, 'ʊpəkɑːʟ̈ə', 'upakāḷa'); 
-        testPhoneme(recite, 'nɑːʟ̈ənd̪ɑː', 'nāḷandā'); 
-        testPhoneme(recite, 'nɑːlənd̪ɑː', 'nālandā'); 
+        testPhoneme(recite, 'ʊ pə kɑː ʟ̈ə', 'upakāḷa'); 
+        testPhoneme(recite, 'nɑː ʟ̈ən d̪ɑː', 'nāḷandā'); 
+        testPhoneme(recite, 'nɑː lən d̪ɑː', 'nālandā'); 
         testPhoneme(recite, 'nəʟ̈həŋ', 'naḷhaṃ'); 
 
         // vowels
