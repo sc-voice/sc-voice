@@ -6,7 +6,7 @@
         Polly,
         Voice,
     } = require("../index");
-    const syllabifyLength = 11;
+    const syllabifyLength = 10;
     const ADITI_OPTS = {
         name: 'Aditi',
         usage: 'recite',
@@ -52,7 +52,7 @@
         var recite = aditi.services['recite'];
         should(recite.syllableVowels).equal('aeiou');
     });
-    it("segmentSSML(text) returns SSML", function() {
+    it("TESTTESTsegmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
 
@@ -65,9 +65,9 @@
         testPhoneme(recite, 'pəɲ ɲə','Pañña');
         testPhoneme(recite, 'səŋkʰɑːɾə','saṅkhāra');
         testPhoneme(recite, 'bɾɑːhməɳəŋ','brāhmaṇaṃ');
-        testPhoneme(recite, 'gɪʝʄhɑku:ʈe','gijjhakūṭe');
+        testPhoneme(recite, 'gɪʝ ʄhɑ ku: ʈe','gijjhakūṭe');
         testPhoneme(recite, 'cɪt̪t̪əs sə','cittassa');
-        testPhoneme(recite, 'chənnoʋɑːd̪ə','Channovāda');
+        testPhoneme(recite, 'chən no ʋɑː d̪ə','Channovāda');
         testPhoneme(recite, 'phəggʊɳə','Phagguṇa');
         testPhoneme(recite, 'sət̪ɪ','sati'); // memory;mindfulness
         testPhoneme(recite, 'səʈ.ʈʰɪ','saṭṭhi'); // sixty
@@ -75,7 +75,7 @@
         testPhoneme(recite, 'd̪əɳɖəkə','daṇḍaka');
         testPhoneme(recite, 'd̪ʱəmmə','Dhamma');
         testPhoneme(recite, 'd̪ʱəmə', 'Dhama'); // blowing
-        testPhoneme(recite, 'siɾɪʋəɖɖhə', 'sirivaḍḍha'); // blowing
+        testPhoneme(recite, 'si ɾɪ ʋəɖ ɖhə', 'sirivaḍḍha'); // blowing
         testPhoneme(recite, 'bɑːləkə', 'bālaka'); 
         testPhoneme(recite, 'bʰəl.lɪkə', 'bhallika'); 
         testPhoneme(recite, 'd̪eʋəd̪əhə', 'devadaha'); 
@@ -87,7 +87,7 @@
 
         // vowels
         testPhoneme(recite, 'ẽso','eso');
-        testPhoneme(recite, "bʰɪk.kʰʊnɪŋ", 'bhikkhuniṃ');
+        testPhoneme(recite, "bʰɪk kʰʊ nɪŋ", 'bhikkhuniṃ');
 
         // punctuation
         var ssml = recite.segmentSSML('dve, dve');

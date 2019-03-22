@@ -153,7 +153,7 @@
     "service": "aws-polly",
     "name": "Aditi",
     "syllableVowels": "aeiouāīū",
-    "syllabifyLength": 11,
+    "syllabifyLength": 10,
     "gender": "female",
     "pitch": "-10%",
     "fullStopComma": true,
