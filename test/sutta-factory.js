@@ -13,7 +13,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
 
-    it("loadSutta(id, opts) returns a Sutta from SuttaCentral api", function(done) {
+    it("loadSutta(...) returns a Sutta from SuttaCentral api", function(done) {
         (async function() { try {
             var suttaCentralApi = new SuttaCentralApi();
             var factory = await new SuttaFactory({
@@ -41,7 +41,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("loadSutta(id, opts) returns a Sutta", function(done) {
+    it("loadSutta(...) returns a Sutta", function(done) {
         (async function() { try {
             var factory = new SuttaFactory();
             var sutta = await factory.loadSutta('mn1');
@@ -66,7 +66,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("loadSutta(id, opts) returns a Sutta", function(done) {
+    it("loadSutta(...) returns a Sutta", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn1');
             var end = 21;
@@ -90,7 +90,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("loadSutta(id, opts) loads an3.163-182", function(done) {
+    it("loadSutta(...) loads an3.163-182", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('an3.163-182');
             should(sutta.sections[0].segments[0].en).equal('Numbered Discourses 3');
@@ -98,7 +98,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("loadSutta(id, opts) loads dn7", function(done) {
+    it("loadSutta(...) loads dn7", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('dn7');
             should(sutta.sections[0].segments[0].en).equal('Long Discourses 7');
@@ -106,7 +106,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("loadSutta(id, opts) loads sn22.1", function(done) {
+    it("loadSutta(...) loads sn22.1", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('sn22.1');
             should(sutta.sections[0].segments[0].en).equal('Linked Discourses 22');
@@ -125,7 +125,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("loadSutta(id, opts) automatically sections a Sutta", function(done) {
+    it("loadSutta(...) automatically sections a Sutta", function(done) {
         (async function() { try {
             var factory = new SuttaFactory({
                 autoSection: true,
@@ -152,6 +152,26 @@
                 .equal(`2. A Discussion With Jīvaka Komārabhacca`);
             should(sutta.sections[3].title)
                 .equal(`3. The Question About the Fruits of the Ascetic${Words.U_ELLIPSIS}`);
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTloadSutta() loads AN10.26/en/bodhi", function(done) {
+        (async function() { try {
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            var factory = await new SuttaFactory({
+                suttaCentralApi,
+            }).initialize();
+            var eCaught = null;
+            try {
+                var sutta = await factory.loadSutta({
+                    scid: 'an10.26',
+                    language: 'en',
+                    translator: 'bodhi',
+                });
+            } catch(e) {
+                eCaught = e;
+            }
+            should(eCaught.message).match(/not found .*bodhi/);
             done();
         } catch(e) { done(e); } })();
     });
