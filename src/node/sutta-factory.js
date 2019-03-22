@@ -161,6 +161,9 @@
                     var sutta = that.suttaCentralApi 
                         ? await that.suttaCentralApi.loadSutta(opts)
                         : await that.loadSuttaPootl(opts);
+                    if (sutta == null) {
+                        throw new Error(`loadSutta() not found opts:${JSON.stringify(opts)}`);
+                    }
                     if (plainText) {
                         sutta = that.stripHtml(sutta);
                     }

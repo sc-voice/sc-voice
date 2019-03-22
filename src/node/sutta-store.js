@@ -552,7 +552,6 @@
                 list = list.split(',');
             }
             try {
-                logger.warn(`suttaList ${JSON.stringify(list)}`);
                 return list.reduce((acc, item) => {
                     var suttaRef = item.toLowerCase().replace(/ /gu, '');
                     this.expandRange(suttaRef).forEach(item => acc.push(item));

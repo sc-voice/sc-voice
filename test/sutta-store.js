@@ -773,7 +773,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("suttaList(pattern) finds listed suttas", function(done) {
+    it("TESTTESTsuttaList(pattern) finds listed suttas", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
