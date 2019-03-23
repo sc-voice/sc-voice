@@ -57,7 +57,7 @@
         var recite = aditi.services['recite'];
 
         // syllabify spaces
-        testPhoneme(recite, 'd̪ək kʰɪ ɳej jəŋ', 'dakkhiṇeyyaṃ');
+        testPhoneme(recite, 'd̪ək kʰɪn ej jəŋ', 'dakkhiṇeyyaṃ');
         testPhoneme(recite, 'əc chə ɾɪ jə əb bʰʊ t̪ə sʊt̪ t̪ə', 'acchariyaabbhutasutta'); 
 
         // stops
