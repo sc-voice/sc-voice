@@ -62,6 +62,7 @@
         testPhoneme(recite, `bʰə gə ʋən 't̪əŋ je ʋə`, 'bhagavantaṃyeva'); 
         testPhoneme(recite, `səb bə 'səŋ je ʋə`, 'sabbasaṃyeva'); 
         testPhoneme(recite, `ʋe j jɑː kə ɾə ɳəŋ`, 'veyyākaraṇaṃ'); 
+        testPhoneme(recite, `pəc cə ʋek kʰe j jə`, 'paccavekkheyya'); 
 
         // stops
         testPhoneme(recite, 'bʰɪk kʰʊ səŋ gʰo','bhikkhusaṅgho');
