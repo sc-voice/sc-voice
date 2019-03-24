@@ -63,6 +63,7 @@
         testPhoneme(recite, `səb bə 'səŋ je ʋə`, 'sabbasaṃyeva'); 
         testPhoneme(recite, `ʋe j jɑː kə ɾə ɳəŋ`, 'veyyākaraṇaṃ'); 
         testPhoneme(recite, `pəc cə ʋek kʰe j jə`, 'paccavekkheyya'); 
+        testPhoneme(recite, `ʋe sɑː lɪ jəŋ`, 'vesāliyaṃ'); 
 
         // stops
         testPhoneme(recite, 'bʰɪk kʰʊ səŋ gʰo','bhikkhusaṅgho');
@@ -93,6 +94,9 @@
         // vowels
         testPhoneme(recite, 'ẽso','eso');
         testPhoneme(recite, "bʰɪk kʰʊ nɪŋ", 'bhikkhuniṃ');
+        testPhoneme(recite, "ẽʟ̈əkəŋ", 'eḷakaṃ');
+        testPhoneme(recite, "ẽsə", 'esa');
+        testPhoneme(recite, "pə sẽ nə d̪ɪs sə", 'pasenadissa');
 
         // punctuation
         var ssml = recite.segmentSSML('dve, dve');
