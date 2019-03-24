@@ -59,6 +59,8 @@
         // syllabify spaces
         testPhoneme(recite, 'd̪ək kʰɪn ej jəŋ', 'dakkhiṇeyyaṃ');
         testPhoneme(recite, 'əc chə ɾɪ jə əb bʰʊ t̪ə sʊt̪ t̪ə', 'acchariyaabbhutasutta'); 
+        testPhoneme(recite, `bʰə gə ʋən 't̪əŋ je ʋə`, 'bhagavantaṃyeva'); 
+        testPhoneme(recite, `səb bə 'səŋ je ʋə`, 'sabbasaṃyeva'); 
 
         // stops
         testPhoneme(recite, 'bʰɪk kʰʊ səŋ gʰo','bhikkhusaṅgho');
