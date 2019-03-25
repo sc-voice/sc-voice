@@ -58,7 +58,8 @@
 
         // syllabify spaces
         testPhoneme(recite, 'd̪ək kʰɪn ej jəŋ', 'dakkhiṇeyyaṃ');
-        testPhoneme(recite, 'əc chə ɾɪ jə əb bʰʊ t̪ə sʊt̪ t̪ə', 'acchariyaabbhutasutta'); 
+        testPhoneme(recite, 'əc chə ɾɪ jə əb bʰʊ t̪ə sʊt̪ t̪ə', 
+            'acchariyaabbhutasutta'); 
         testPhoneme(recite, `bʰə gə ʋən 't̪əŋ je ʋə`, 'bhagavantaṃyeva'); 
         testPhoneme(recite, `səb bə 'səŋ je ʋə`, 'sabbasaṃyeva'); 
         testPhoneme(recite, `ʋe j jɑː kə ɾə ɳəŋ`, 'veyyākaraṇaṃ'); 
@@ -79,8 +80,8 @@
         testPhoneme(recite, 'səʈ.ʈʰɪ','saṭṭhi'); // sixty
         testPhoneme(recite, 'sət̪.t̪ʰɪ','satthi'); // the thigh
         testPhoneme(recite, 'd̪əɳ ɖə kə','daṇḍaka');
-        testPhoneme(recite, 'd̪ʱəmmə','Dhamma');
-        testPhoneme(recite, 'd̪ʱəmə', 'Dhama'); // blowing
+        testPhoneme(recite, 'ɖhə̃mmə','Dhamma');
+        testPhoneme(recite, 'ɖhə̃mə', 'Dhama'); // blowing
         testPhoneme(recite, 'si ɾɪ ʋəɖ ɖhə', 'sirivaḍḍha'); // blowing
         testPhoneme(recite, 'bɑːləkə', 'bālaka'); 
         testPhoneme(recite, 'bʰəl lɪ kə', 'bhallika'); 
