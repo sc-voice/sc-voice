@@ -1,8 +1,8 @@
 ---
 name: Research
-about: ''
+about: 'Exploring new horizons '
 title: ''
-labels: ''
+labels: 'Type: research'
 assignees: ''
 
 ---
