@@ -80,7 +80,7 @@ type aws
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: AWS CLI detected (OK)"
 else
-    ./install-aws.sh
+    $SCRIPT_DIR/install-aws.sh
 fi
 
 if [ -e node_modules ]; then
