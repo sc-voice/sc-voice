@@ -274,8 +274,8 @@
             } = await store.search('jessica walton',3);
             should(results).instanceOf(Array);
             should.deepEqual(results.map(r=>r.uid), [
-                'thag1.1', 'thig9.1', 'thig8.1', ]);
-            should.deepEqual(results.map(r=>r.count), [2, 1, 1]);
+                'thig9.1', 'thig8.1', 'thig7.3']);
+            should.deepEqual(results.map(r=>r.count), [1, 1, 1]);
             should.deepEqual(results.map(r=>r.author_uid), [
                 'sujato', 'sujato', 'sujato']);
 
@@ -869,7 +869,7 @@
             should(result0.author_short).equal('Sujato');
             should(result0.author_uid).equal('sujato');
             should(result0.author_blurb.en).match(
-                /Translated for SuttaCentral by Bhikkhu Sujato/);
+                /Translated for SuttaCentral by.*Bhikkhu Sujato/u);
             should(result0.lang).equal('en');
             should(result0.nSegments).equal(9);
             should(result0.title).equal('Plain Version');

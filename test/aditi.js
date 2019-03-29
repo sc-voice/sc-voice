@@ -6,7 +6,7 @@
         Polly,
         Voice,
     } = require("../index");
-    const syllabifyLength = 7;
+    const syllabifyLength = 5;
     const ADITI_OPTS = {
         name: 'Aditi',
         usage: 'recite',
@@ -69,7 +69,7 @@
 
         // stops
         testPhoneme(recite, 'bʰɪk kʰʊ səŋ gʰo','bhikkhusaṅgho');
-        testPhoneme(recite, 'səŋgʰe','saṃghe');
+        testPhoneme(recite, 'səŋ gʰe','saṃghe');
         testPhoneme(recite, 'pəɲ ɲə','Pañña');
         testPhoneme(recite, 'səŋ kʰɑː ɾə','saṅkhāra');
         testPhoneme(recite, 'bɾɑːh mə ɳəŋ','brāhmaṇaṃ');
@@ -78,25 +78,25 @@
         testPhoneme(recite, 'chən no ʋɑː d̪ə','Channovāda');
         testPhoneme(recite, 'phəg gʊ ɳə','Phagguṇa');
         testPhoneme(recite, 'sət̪ɪ','sati'); // memory;mindfulness
-        testPhoneme(recite, 'səʈ.ʈʰɪ','saṭṭhi'); // sixty
-        testPhoneme(recite, 'sət̪.t̪ʰɪ','satthi'); // the thigh
+        testPhoneme(recite, 'səʈ ʈhɪ','saṭṭhi'); // sixty
+        testPhoneme(recite, 'sət̪ t̪ʰɪ','satthi'); // the thigh
         testPhoneme(recite, 'd̪əɳ ɖə kə','daṇḍaka');
-        testPhoneme(recite, 'ɖhə̃mmə','Dhamma');
-        testPhoneme(recite, 'ɖhə̃mə', 'Dhama'); // blowing
+        testPhoneme(recite, 'ɖhə̃m mə','Dhamma');
+        testPhoneme(recite, 'ɖhə̃ mə', 'Dhama'); // blowing
         testPhoneme(recite, 'si ɾɪ ʋəɖ ɖhə', 'sirivaḍḍha'); // blowing
-        testPhoneme(recite, 'bɑːləkə', 'bālaka'); 
+        testPhoneme(recite, 'bɑː lə kə', 'bālaka'); 
         testPhoneme(recite, 'bʰəl lɪ kə', 'bhallika'); 
         testPhoneme(recite, 'd̪e ʋə d̪ə hə', 'devadaha'); 
         testPhoneme(recite, 'jəsə', 'yasa'); 
         testPhoneme(recite, 'ʊ pə kɑː ʟ̈ə', 'upakāḷa'); 
         testPhoneme(recite, 'nɑː ʟ̈ən d̪ɑː', 'nāḷandā'); 
         testPhoneme(recite, 'nɑː lən d̪ɑː', 'nālandā'); 
-        testPhoneme(recite, 'nəʟ̈həŋ', 'naḷhaṃ'); 
+        testPhoneme(recite, 'nəʟ̈ həŋ', 'naḷhaṃ'); 
 
         // vowels
         testPhoneme(recite, 'ẽso','eso');
         testPhoneme(recite, "bʰɪk kʰʊ nɪŋ", 'bhikkhuniṃ');
-        testPhoneme(recite, "ẽʟ̈əkəŋ", 'eḷakaṃ');
+        testPhoneme(recite, "ẽ ʟ̈ə kəŋ", 'eḷakaṃ');
         testPhoneme(recite, "ẽsə", 'esa');
         testPhoneme(recite, "pə sẽ nə d̪ɪs sə", 'pasenadissa');
         testPhoneme(recite, "ʋẽ sɑː ɾəʝ ʝəp pət̪ t̪o", 'vesārajjappatto');

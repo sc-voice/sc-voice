@@ -68,7 +68,7 @@
     "author_short": "Sujato",
     "author_uid": "sujato",
     "author_blurb": {
-      "en": "Translated for SuttaCentral by Bhikkhu Sujato, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
+      "en": "Translated for SuttaCentral by <span class=\"author\">Bhikkhu Sujato</span>, <span class=\"publication-date\">2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
     },
     "lang": "en",
     "title": "The Root of All Things",
@@ -107,7 +107,7 @@
       "segments": [
         {
           "scid": "mn1:1.1",
-          "pli": "Evaṃ me sutaṃ—​",
+          "pli": "Evaṃ me sutaṃ—",
           "en": "So I have heard."
         },
         {

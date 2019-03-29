@@ -324,7 +324,7 @@
         });
         should(aditi.name).equal("Aditi");
         var recite = aditi.services.recite;
-        should(recite.wordSSML(`vasala`)).equal(phoneme("ʋəsə la","vasala"));
+        should(recite.wordSSML(`vasala`)).equal(phoneme("ʋə sə la","vasala"));
         should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
         should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑː məɲ cə","Nāmañca"));
         should(recite.wordSSML(`anottappañca`)).match(/"ə not̪ t̪əp pəɲ cə"/);
