@@ -16,8 +16,8 @@ When I use Voice it would be great if I were able to … because …
 - [ ] 
 
 
-#### Pre milestone planning check:
-- [ ] Small enough to completed in a milestone.
+#### Pre release planning check:
+- [ ] Small enough to completed in a release.
 - [ ] Dependencies marked
 - [ ] No external dependencies block this from being completed.
 - [ ] Details are understood by dev team so they know what needs to be done and can determine if it can be completed.
