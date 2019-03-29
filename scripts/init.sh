@@ -20,7 +20,7 @@ RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: build-essentials detected (OK)"
 else
     echo -e "INIT\t: installing build-essentials (requires sudo)"
-    apt-get install -y build-essential
+    sudo apt-get install -y build-essential
 fi
 
 type npm
