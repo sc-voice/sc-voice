@@ -3,6 +3,7 @@
       <v-container fluid grid-list-md >
         <div class="text-xs-center pb-3">
         <v-progress-circular :value="cachePercent"
+            v-if="identity"
             size="50" width="6" rotate="90"
             color="red">
             <div style="font-size:12px; line-height:1.1 !important">
@@ -66,6 +67,7 @@ export default {
         return {
             user:{},
             caches: [],
+            identity: null,
             isWaiting: false,
             cacheRowsPerPageItems: [4, 8, 12],
             pagination: {
@@ -74,6 +76,16 @@ export default {
         }
     },
     methods: {
+        getIdentity() {
+            var urlVol = this.url("identity");
+            this.$http.get(urlVol).then(res => {
+                var identity = res.data;
+                Vue.set(this, "identity", identity);
+                console.log(res.data);
+            }).catch(e => {
+                console.error(`getIdentity() failed`, e.stack);
+            });
+        },
         getCaches() {
             var urlVol = this.url("auth/sound-store/volume-info"); 
             this.$http.get(urlVol, this.authConfig).then(res => {
@@ -112,22 +124,25 @@ export default {
     mounted() {
         Vue.set(this, "user", this.gscv.user);
         this.getCaches();
+        this.getIdentity();
     },
     computed: {
         gscv() {
             return this.$root.$data;
         },
         cacheTotal() {
+            var avail = this.identity && this.identity.diskavail || 1E9;
             var total = this.caches.reduce((acc, c) => {
                 return acc + c.size;
             }, 0);
-            return (total/1E9).toFixed(0);
+            return (total/avail).toFixed(0);
         },
         cachePercent() {
+            var avail = this.identity && this.identity.diskavail || 1E9;
             var total = this.caches.reduce((acc, c) => {
                 return acc + c.size;
             }, 0);
-            var maxSize = this.maxSize * 1E9;
+            var maxSize = this.maxSize * avail;
             return ((total/maxSize) * 100).toFixed(0);
         },
         token() {
