@@ -28,6 +28,14 @@
                     <th>Total memory</th>
                     <td>{{(identity.totalmem/1E9).toFixed(1)}}GB</td>
                 </tr>
+                <tr v-if="identity.diskavail">
+                    <th>Disk available</th>
+                    <td>{{(identity.diskavail/1E9).toFixed(1)}}GB</td>
+                </tr>
+                <tr v-if="identity.disktotal">
+                    <th>Disk total</th>
+                    <td>{{(identity.disktotal/1E9).toFixed(1)}}GB</td>
+                </tr>
                 <tr v-if="identity.uptime">
                     <th>Uptime</th>
                     <td>{{(identity.uptime/(3600*24)).toFixed(1)}} days</td>
