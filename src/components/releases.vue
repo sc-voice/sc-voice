@@ -3,44 +3,44 @@
         color="red lighten-4" light>
       <v-container fluid grid-list-md >
         <div class="scv-loadavg">
-            <table class="scv-identity">
-                <tr v-if="identity.name">
+            <table v-if="identity" class="scv-identity">
+                <tr>
                     <th>Application name</th>
                     <td>{{identity.name}}</td>
                 </tr>
-                <tr v-if="identity.package">
+                <tr>
                     <th>Package</th>
                     <td>{{identity.package}}</td>
                 </tr>
-                <tr v-if="identity.hostname">
+                <tr>
                     <th>Hostname</th>
                     <td>{{identity.hostname}}</td>
                 </tr>
-                <tr v-if="identity.version">
+                <tr>
                     <th>Version</th>
                     <td>{{identity.version}}</td>
                 </tr>
-                <tr v-if="identity.freemem">
+                <tr>
                     <th>Free memory</th>
                     <td>{{(identity.freemem/1E9).toFixed(1)}}GB</td>
                 </tr>
-                <tr v-if="identity.totalmem">
+                <tr>
                     <th>Total memory</th>
                     <td>{{(identity.totalmem/1E9).toFixed(1)}}GB</td>
                 </tr>
-                <tr v-if="identity.diskavail">
+                <tr>
                     <th>Disk available</th>
                     <td>{{(identity.diskavail/1E9).toFixed(1)}}GB</td>
                 </tr>
-                <tr v-if="identity.disktotal">
+                <tr>
                     <th>Disk total</th>
                     <td>{{(identity.disktotal/1E9).toFixed(1)}}GB</td>
                 </tr>
-                <tr v-if="identity.uptime">
+                <tr>
                     <th>Uptime</th>
                     <td>{{(identity.uptime/(3600*24)).toFixed(1)}} days</td>
                 </tr>
-                <tr v-if="identity.loadavg" >
+                <tr>
                     <th>Load average</th>
                     <td>
                         <div class="scv-loadavg-line">
@@ -95,7 +95,7 @@ export default {
     data: () => {
         return {
             user:{},
-            identity: {},
+            identity: null,
             error: null,
             confirmUpdate: false,
             isUpdating: false,
