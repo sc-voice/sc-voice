@@ -778,6 +778,9 @@
             var store = await new SuttaStore().initialize();
 
             should.deepEqual( store.suttaList(
+                ['sn 45.161']), // spaces
+                ['sn45.161']);
+            should.deepEqual( store.suttaList(
                 ['MN 1-3/en/sujato']), // spaces
                 ['mn1/en/sujato', 'mn2/en/sujato', 'mn3/en/sujato']);
             should.deepEqual( store.suttaList(
@@ -831,10 +834,14 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) finds suttas in range", function(done) {
+    it("TESTTESTsearch(pattern) finds suttas in range", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
+
+            // spaces
+            var data = await store.search({ pattern: 'sn 45.161', });
+            should.deepEqual(data.results.map(r=>r.uid), ['sn45.161']);
 
             // fully specified unsupported
             var data = await store.search({ pattern: 'mn1/en/bodhi', });
