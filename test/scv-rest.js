@@ -46,12 +46,13 @@
         should(scvRest.voicePali.services.recite.soundStore).equal(soundStore);
         should(scvRest.voicePali.services.review.soundStore).equal(soundStore);
     });
-    it("GET /identity returns restbundle identity JSON", function(done) {
+    it("TESTTESTGET /identity returns restbundle identity JSON", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/identity").expect((res) => {
                 res.statusCode.should.equal(200);
                 var keys = Object.keys(res.body).sort();
                 should.deepEqual(keys, [
+                    'diskavail', 'diskfree', 'disktotal',
                     'freemem', 'hostname', 'loadavg', 'name', 
                     'package', 'totalmem', 'uptime', 'version'
                 ]);
