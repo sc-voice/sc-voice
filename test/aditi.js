@@ -66,6 +66,7 @@
         testPhoneme(recite, `pəc cə ʋek kʰe j jə`, 'paccavekkheyya'); 
         testPhoneme(recite, `ʋẽ sɑː lɪ jəŋ`, 'vesāliyaṃ'); 
         testPhoneme(recite, `pə ʈɪ 'səŋ ʋẽ d̪e t̪iː`, 'paṭisaṃvedetī'); 
+        testPhoneme(recite, `pə ɾɪ sʊɖ ɖhə̃ŋ`, `parisuddhaṃ`);
 
         // stops
         testPhoneme(recite, 'bʰɪk kʰʊ səŋ gʰo','bhikkhusaṅgho');

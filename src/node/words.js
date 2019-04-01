@@ -359,10 +359,7 @@
             var result = String(text);
             var keys = Object.keys(map).sort((a,b) => {
                 var c = a.length - b.length;
-                if (c) {
-                    return -c;
-                }
-                return a.localeCompare(b);
+                return c ? -c : a.localeCompare(b);
             });
             var pats = keys.map(key => {
                 var value = Words.utf16(map[key]).toUpperCase();
