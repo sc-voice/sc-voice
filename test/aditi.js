@@ -32,16 +32,18 @@
         should(ssml).match((phoneme(ph,text) ));
     }
 
-    it("createVoice() creates Aditi", function() {
+    it("TESTTESTcreateVoice() creates Aditi", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         should(aditi.name).equal('Aditi');
         should(aditi.language).equal('hi-IN');
+        should(aditi.maxSegment).equal(400);
         should(aditi.fullStopComma).equal(true);
         should(aditi.syllableVowels).equal('aeiouāīū');
         should(aditi.syllabifyLength).equal(syllabifyLength);
 
         var recite = aditi.services['recite'];
         should(recite.fullStopComma).equal(true);
+        should(recite.maxSegment).equal(400);
         should(recite.syllableVowels).equal('aeiouāīū');
         should(recite.syllabifyLength).equal(syllabifyLength);
         
@@ -66,7 +68,7 @@
         testPhoneme(recite, `pəc cə ʋek kʰe j jə`, 'paccavekkheyya'); 
         testPhoneme(recite, `ʋẽ sɑː lɪ jəŋ`, 'vesāliyaṃ'); 
         testPhoneme(recite, `pə ʈɪ 'səŋ ʋẽ d̪e t̪iː`, 'paṭisaṃvedetī'); 
-        testPhoneme(recite, `pə ɾɪ sʊɖ ɖhə̃ŋ`, `parisuddhaṃ`);
+        testPhoneme(recite, `pə ɾɪ sʊɖ ɖʱəŋ`, `parisuddhaṃ`);
 
         // stops
         testPhoneme(recite, 'bʰɪk kʰʊ səŋ gʰo','bhikkhusaṅgho');
@@ -82,8 +84,8 @@
         testPhoneme(recite, 'səʈ ʈhɪ','saṭṭhi'); // sixty
         testPhoneme(recite, 'sət̪ t̪ʰɪ','satthi'); // the thigh
         testPhoneme(recite, 'd̪əɳ ɖə kə','daṇḍaka');
-        testPhoneme(recite, 'ɖhə̃m mə','Dhamma');
-        testPhoneme(recite, 'ɖhə̃ mə', 'Dhama'); // blowing
+        testPhoneme(recite, 'ɖʱəm mə','Dhamma');
+        testPhoneme(recite, 'ɖʱə mə', 'Dhama'); // blowing
         testPhoneme(recite, 'si ɾɪ ʋəɖ ɖhə', 'sirivaḍḍha'); // blowing
         testPhoneme(recite, 'bɑː lə kə', 'bālaka'); 
         testPhoneme(recite, 'bʰəl lɪ kə', 'bhallika'); 

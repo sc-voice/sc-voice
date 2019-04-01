@@ -32,6 +32,7 @@
             this.usages = opts.usages;
             this.syllableVowels = opts.syllableVowels;
             this.syllabifyLength = opts.syllabifyLength;
+            this.maxSegment = opts.maxSegment;
             Object.defineProperty(this, '_services', {
                 writable: true,
                 value: opts.services || null,
@@ -134,6 +135,7 @@
                             stripQuotes: this.stripQuotes,
                             voice: this.name,
                             soundStore: this.soundStore,
+                            maxSegment: this.maxSegment,
                             usage: key,
                             breaks: usage.breaks,
                             syllableVowels: this.syllableVowels,

@@ -15,6 +15,7 @@
     const RE_PARA_EOL = /^\n\n+$/u;
     const RE_NUMBER = new RegExp(Words.PAT_NUMBER);
     const RE_STRIPNUMBER = new RegExp(`\\(?${Words.PAT_NUMBER}\\)?`);
+    const MAX_SEGMENT = 1000;
 
     class AbstractTTS {
         constructor(opts={}) {
@@ -33,7 +34,7 @@
             this.queue = new Queue(opts.maxConcurrentServiceCalls || 5, Infinity);
             this.usage = opts.usage || "recite";
             this.maxSSML = opts.maxSSML || 5000;
-            this.maxSegment = opts.maxSegment || 1000;
+            this.maxSegment = opts.maxSegment || MAX_SEGMENT;
             this.maxCuddle = opts.maxCuddle || 1;
             this.usages = opts.usages || {};
             this.syllableVowels = opts.syllableVowels;
