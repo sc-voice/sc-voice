@@ -1,0 +1,13 @@
+#!/bin/bash
+
+AUDIO=$1
+MAP=$2
+BEGIN='-ss ${this.begin}' 
+DURATION='-t ${(this.end-this.begin).toFixed(2)}' 
+INFILE="-i $AUDIO"
+OUTFILE='-c copy ${this.id.replace(/:/,"_")}.ogg'
+
+cat $MAP |\
+json fragments |\
+json -e "this.out = \`ffmpeg $BEGIN $DURATION $INFILE $OUTFILE\`"  |\
+json -a out
