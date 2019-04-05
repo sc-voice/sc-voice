@@ -32,8 +32,8 @@
         should(ssml).match((phoneme(ph,text) ));
     }
 
-    it("createVoice() creates Aditi", function() {
-        var aditi = Voice.createVoice(ADITI_OPTS);
+    it("TESTTESTcreateVoice() creates Aditi", function() {
+        var aditi = Voice.createVoice('aditi');
         should(aditi.name).equal('Aditi');
         should(aditi.language).equal('hi-IN');
         should(aditi.maxSegment).equal(400);

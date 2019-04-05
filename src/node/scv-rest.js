@@ -71,12 +71,7 @@
             this.jwtExpires = opts.jwtExpires || '1h';
             this.voicePali = Voice.createVoice({
                 name: 'Aditi',
-                usage: 'recite',
-                language: 'hi-IN',
                 soundStore: this.soundStore,
-                stripNumbers: true,
-                stripQuotes: true,
-                languageUnknown: "pli",
                 audioFormat: this.soundStore.audioFormat,
                 audioSuffix: this.soundStore.audioSuffix,
             });
