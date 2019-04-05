@@ -222,8 +222,10 @@
                 var tnumber = !tword && this.words.isNumber(token);
                 var seglen = acc.segment.length;
                 var maxCuddle = this.maxCuddle;
-                var overflow = this.maxSegment && (seglen + tlen + maxCuddle > this.maxSegment);
-                if (!this.cuddle && overflow) {
+                var overflow = this.maxSegment 
+                    ? seglen + tlen + maxCuddle > this.maxSegment
+                    : false;
+                if (!this.cuddle && overflow && tword) {
                     acc.segments.push(acc.segment);
                     acc.segment = token;
                     acc.cuddle = null;

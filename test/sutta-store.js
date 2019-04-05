@@ -834,7 +834,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) finds suttas in range", function(done) {
+    it("search(pattern) finds suttas in range", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();

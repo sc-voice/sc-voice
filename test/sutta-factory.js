@@ -155,7 +155,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTloadSutta() loads AN10.26/en/bodhi", function(done) {
+    it("loadSutta() loads AN10.26/en/bodhi", function(done) {
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = await new SuttaFactory({

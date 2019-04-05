@@ -32,7 +32,7 @@
         should(ssml).match((phoneme(ph,text) ));
     }
 
-    it("TESTTESTcreateVoice() creates Aditi", function() {
+    it("createVoice() creates Aditi", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         should(aditi.name).equal('Aditi');
         should(aditi.language).equal('hi-IN');
@@ -54,7 +54,7 @@
         var recite = aditi.services['recite'];
         should(recite.syllableVowels).equal('aeiou');
     });
-    it("TESTTESTsegmentSSML(text) returns SSML", function() {
+    it("segmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
 
@@ -109,5 +109,26 @@
         should(ssml.length).equal(2);
         var ssml = recite.segmentSSML('2. Dve');
         should(ssml.length).equal(1);
+    });
+    it("TESTTESTsegmentSSML(text) doesn't orphan punctuation", function() {
+        var aditi = Voice.createVoice(ADITI_OPTS);
+        var recite = aditi.services['recite'];
+        var text = [
+            "Sace,",
+            "bhikkhave,",
+            "adhicittamanuyutto",
+            "bhikkhu",
+            "ekantaṃ",
+            "samādhinimittaṃyeva",
+            "manasi",
+            "kareyya,",
+            "ṭhānaṃ",
+            "taṃ",
+            "cittaṃ",
+            "kosajjāya",
+            "saṃvatteyya.",
+        ].join(' ');
+        var ssml = recite.segmentSSML(text);
+        should.deepEqual(ssml.filter(s=>s==='.'), []);
     });
 })

@@ -279,17 +279,22 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("speak(text) can handle lengthy Pali", function(done) {
+    it("TESTTESTspeak(text) can handle lengthy Pali", function(done) {
         this.timeout(5*1000);
         (async function() { try {
-            var raveena = Voice.createVoice({
-                name: "raveena",
+            var aditi = Voice.createVoice({
+                name: "aditi",
+                usage: 'recite',
                 languageUnknown: "pli",
+                language: 'hi-IN',
+                stripNumbers: true,
+                stripQuotes: true,
             });
+            should(aditi.maxSegment).equal(400);
             var text = `Cuddasa kho panimāni yonipamukhasatasahassāni saṭṭhi ca satāni cha ca satāni pañca ca kammuno satāni pañca ca kammāni, tīṇi ca kammāni, kamme ca aḍḍhakamme ca dvaṭṭhipaṭipadā, dvaṭṭhantarakappā, chaḷābhijātiyo, aṭṭha purisabhūmiyo, ekūnapaññāsa ājīvakasate, ekūnapaññāsa paribbājakasate, ekūnapaññāsa nāgavāsasate, vīse indriyasate, tiṃse nirayasate, chattiṃsarajodhātuyo, satta saññīgabbhā, satta asaññīgabbhā, satta nigaṇṭhigabbhā, satta devā, satta mānusā, satta pesācā, satta sarā, satta pavuṭā, satta papātā, satta ca papātasatāni, satta supinā, satta supinasatāni, cullāsīti mahākappino satasahassāni, yāni bāle ca paṇḍite ca sandhāvitvā saṃsaritvā dukkhassantaṃ karissanti."`;
-            var result = await raveena.speak(text, {usage:'recite'});
+            var result = await aditi.speak(text, {usage:'recite'});
             should(result.signature.api).equal('ffmegConcat');
-            should(result.signature.files.length).equal(8);
+            should(result.signature.files.length).equal(26);
 
             done();
         } catch(e) {done(e);} })();
@@ -317,7 +322,7 @@
         should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
     });
-    it("TESTTESTAditi phonemes", function() {
+    it("Aditi phonemes", function() {
         var aditi = Voice.createVoice({
             name: "aditi",
             languageUnknown: "pli",

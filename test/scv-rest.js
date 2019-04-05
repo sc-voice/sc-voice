@@ -46,7 +46,7 @@
         should(scvRest.voicePali.services.recite.soundStore).equal(soundStore);
         should(scvRest.voicePali.services.review.soundStore).equal(soundStore);
     });
-    it("TESTTESTGET /identity returns restbundle identity JSON", function(done) {
+    it("GET /identity returns restbundle identity JSON", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/identity").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -340,7 +340,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
+    it("GET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iVoice = 0;
@@ -406,7 +406,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
+    it("GET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
@@ -427,7 +427,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
             should(data.segment.audio.en).match(/^7120fcf/);
-            should(data.segment.audio.pli).match(/^0dbf301cada3773007b8f6440c301c8f/);
+            should(data.segment.audio.pli).match(/1f535dc7ed38ec794de5b6dcaf2440b4/);
 
             done();
         } catch(e) {done(e);} })();
