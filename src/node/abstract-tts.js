@@ -37,6 +37,7 @@
             this.maxSegment = opts.maxSegment || MAX_SEGMENT;
             this.maxCuddle = opts.maxCuddle || 1;
             this.usages = opts.usages || {};
+            this.customWords = opts.customWords;
             this.syllableVowels = opts.syllableVowels;
             this.syllabifyLength = opts.syllabifyLength;
             this.mj = new MerkleJson({
@@ -110,7 +111,12 @@
             if (wordValue && typeof wordValue === 'string') { // synonym
                 wordValue = this.wordInfo(wordValue);
             }
-            return wordValue || null;
+            if (!wordValue) {
+                return null;
+            }
+            var customWord = this.customWords && this.customWords[word];
+            customWord && Object.assign(wordValue, customWord);
+            return wordValue;
         }
 
         ipa_word(ipa, word) {

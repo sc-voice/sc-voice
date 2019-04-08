@@ -32,7 +32,7 @@
         should(ssml).match((phoneme(ph,text) ));
     }
 
-    it("TESTTESTcreateVoice() creates Aditi", function() {
+    it("createVoice() creates Aditi", function() {
         var aditi = Voice.createVoice('aditi');
         should(aditi.name).equal('Aditi');
         should(aditi.language).equal('hi-IN');
@@ -110,7 +110,7 @@
         var ssml = recite.segmentSSML('2. Dve');
         should(ssml.length).equal(1);
     });
-    it("TESTTESTsegmentSSML(text) doesn't orphan punctuation", function() {
+    it("segmentSSML(text) doesn't orphan punctuation", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
         var text = [

@@ -30,6 +30,7 @@
             this.pitch = opts.pitch || "-0%";
             this.usage = opts.usage || 'recite';
             this.usages = opts.usages;
+            this.customWords = opts.customWords;
             this.syllableVowels = opts.syllableVowels;
             this.syllabifyLength = opts.syllabifyLength;
             this.maxSegment = opts.maxSegment;
@@ -134,6 +135,7 @@
                             stripNumbers: this.stripNumbers,
                             stripQuotes: this.stripQuotes,
                             voice: this.name,
+                            customWords: this.customWords,
                             soundStore: this.soundStore,
                             maxSegment: this.maxSegment,
                             usage: key,

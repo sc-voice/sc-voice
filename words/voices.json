@@ -104,7 +104,15 @@
             "breaks": [0.001,0.1,0.2,0.4,0.5]
         }
     },
+    "customWords": {
+        "detached": { 
+            "ipa": "dɛtat͡ʃd"
+        }
+    },
     "ipa": {
+        "en": {
+            "detached":"dɛtat͡ʃd"
+        },
         "pli": {
             "a": "\u0250",
             "a$": "a",
