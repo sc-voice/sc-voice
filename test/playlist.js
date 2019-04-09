@@ -96,7 +96,7 @@
              'test2',
         ]);
     });
-    it("stats() adds a sutta", function() {
+    it("TESTTESTstats() adds a sutta", function() {
         var pl = new Playlist({
             languages:['de','pli'],
         });
@@ -104,6 +104,10 @@
         should.deepEqual(pl.stats(),{
             tracks: 0,
             duration: 0,
+            chars: {
+                de: 0,
+                pli: 0,
+            },
             segments: {
                 de: 0,
                 pli: 0,
@@ -113,7 +117,11 @@
         pl.addSutta(suttas[0]);
         should.deepEqual(pl.stats(),{
             tracks: 1,
-            duration: 35,
+            chars: {
+                de: 22,
+                pli: 24,
+            },
+            duration: 5,
             segments: {
                 de: 2,
                 pli: 2,
@@ -123,14 +131,18 @@
         pl.addSutta(suttas[1]);
         should.deepEqual(pl.stats(),{
             tracks: 2,
-            duration: 64,
+            chars: {
+                de: 33,
+                pli: 48,
+            },
+            duration: 8,
             segments: {
                 de: 3,
                 pli: 4,
             },
         });
     });
-    it("addSutta(sutta) adds dn33", function(done) {
+    it("TESTTESTaddSutta(sutta) adds dn33", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
@@ -142,27 +154,35 @@
             pl.addSutta(sutta);
             should.deepEqual(pl.stats(), {
                 tracks: 2,
+                chars: {
+                    en: 83588,
+                    pli: 79412,
+                }, 
                 segments: {
                     en: 1120,
                     pli: 1158,
                 },
-                duration: 19999,
+                duration: 14454,
             });
             done();
         } catch(e) { done(e); } })();
     });
-    it("addTrack(sutta_uid, segmentsOrMessage) adds a track", function(done) {
+    it("TESTTESTaddTrack(sutta_uid, segmentsOrMessage) adds a track", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var pl = new Playlist();
             pl.addTrack("error123", "this is a test");
             should.deepEqual(pl.stats(), {
                 tracks: 1,
+                chars: {
+                    en: 14,
+                    pli: 0,
+                },
                 segments: {
                     en: 1,
                     pli: 0,
                 },
-                duration: 7,
+                duration: 2,
             });
             done();
         } catch(e) { done(e); } })();

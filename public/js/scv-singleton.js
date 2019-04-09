@@ -1,4 +1,8 @@
 (function(exports) {
+    const DN33_EN_SECONDS = 2*3600 + 0*60 + 27;
+    const DN33_EN_SECONDS_PER_SEGMENT = DN33_EN_SECONDS/(1158);
+    const DN33_EN_SECONDS_PER_CHAR = DN33_EN_SECONDS/(83588);
+    const DN33_PLI_SECONDS_PER_CHAR = DN33_EN_SECONDS/(79412);
     const DEFAULT_VOICES = [{
         name: 'Amy',
         value: 'recite',
@@ -231,12 +235,8 @@
             }
         }
 
-        duration(nSegments){
-            const DN33_PACE = (2*3600 + 0*60 + 27)/(1158);
-            var secondsPerSegment =
-                (this.showPali ? DN33_PACE * 1.8 : 0) +
-                (this.showTrans ? DN33_PACE : 0);
-            var totalSeconds = Math.trunc(nSegments * secondsPerSegment);
+        durationDisplay(totalSeconds) {
+            totalSeconds = Math.round(totalSeconds);
             var seconds = totalSeconds;
             var hours = Math.trunc(seconds / 3600);
             seconds -= hours * 3600;
@@ -265,6 +265,58 @@
                 display,
                 aria,
             }
+        }
+
+        duration(obj){
+            if (typeof obj === 'number') {
+                return this.durationSegments(obj);
+            }
+            var {
+                showTrans,
+                showPali,
+            } = this || {};
+            var chars = obj;
+            var seconds = 0;
+            Object.keys(obj).forEach(lang => {
+                if (lang === 'pli') {
+                    showPali && (seconds += chars[lang] * DN33_PLI_SECONDS_PER_CHAR);
+                } else {
+                    showTrans && (seconds += chars[lang] * DN33_EN_SECONDS_PER_CHAR);
+                }
+            });
+            return this.durationDisplay(seconds);
+        }
+
+        durationSegments(nSegments){
+            const DN33_PACE = DN33_EN_SECONDS/(1158);
+            var secondsPerSegment =
+                (this.showPali ? DN33_PACE * 1.8 : 0) +
+                (this.showTrans ? DN33_PACE : 0);
+            var totalSeconds = Math.trunc(nSegments * secondsPerSegment);
+            return this.durationDisplay(totalSeconds);
+        }
+
+        timeRemaining(tracks, curTrack=0, curSeg=0) {
+            var chars = this.charsRemaining(tracks, curTrack, curSeg);
+            var result = this.duration(chars);
+            result.chars = chars;
+            return result;
+        }
+
+        charsRemaining(tracks, curTrack=0, curSeg=0) {
+            return tracks.reduce((acc, track, iTrack) => {
+                var segments = track.segments;
+                curTrack <= iTrack && segments && segments.forEach((seg, iSeg) => {
+                    var remaining = curTrack < iTrack ||
+                        iTrack === curTrack && curSeg <= iSeg;
+                    remaining && Object.keys(seg).forEach(key => {
+                        if (key !== 'scid') {
+                            acc[key] = (acc[key] || 0) + seg[key].length;
+                        }
+                    });
+                });
+                return acc;
+            }, {});
         }
     }
 

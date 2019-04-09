@@ -1,6 +1,10 @@
 (typeof describe === 'function') && describe("scv-singleton", function() {
     const should = require("should");
     const ScvSingleton = require("../public/js/scv-singleton");
+    const {
+        Playlist,
+        Sutta,
+    } = require('../index');
     const mockVue = {
     };
     Object.defineProperty(mockVue, 'set', {
@@ -37,6 +41,39 @@
         vueRoot: mockVueRoot,
         Vue: mockVue,
     };
+    var suttas = [
+        new Sutta({
+            sutta_uid: 'test1',
+            author_uid: 'test',
+            sections: [{
+                segments: [{
+                    scid: 'test1:1.1',
+                    pli: 'test1:pli1.1',    // 12
+                    en:  'test1:en1.1 a',   // 13
+                    de:  'test1:de1.1 ab',  // 14
+                },{
+                    scid: 'test1:1.2',
+                    pli: 'test1:pli1.2 abc',    // 16
+                    de:  'test1:de1.2  abcd',   // 17
+                }],
+            }],
+        }),
+        new Sutta({
+            sutta_uid: 'test2',
+            author_uid: 'test',
+            sections: [{
+                segments: [{
+                    scid: 'test2:1.1',
+                    pli: 'test2:pli1.1 abcde',  // 18
+                    en:  'test2:en1.1  abcdef', // 19
+                },{
+                    scid: 'test2:1.2',
+                    pli: 'test2:pli1.2 abcdefg',    // 20
+                    en:  'test2:en1.2  abcdefgh',   // 21
+                }],
+            }],
+        }),
+    ];
 
     it("ScvSingleton() creates the SCV Vue singleton", function() {
         var scv = new ScvSingleton(g);
@@ -278,7 +315,7 @@
             "showLang=0",
         ].join('&')));
     });
-    it("duration(nSegs) returns estimated playtime", function() {
+    it("TESTTESTduration(nSegs) returns estimated playtime", function() {
         var scv = new ScvSingleton(g);
 
         should(scv.duration(0).display).equal('--');
@@ -301,6 +338,54 @@
             display: '4h 52m',
             aria: '4 hours and 52 minutes',
             totalSeconds: 4*3600 + 51*60 + 14,
+        });
+
+        // Pali
+        scv.showLang = 1;
+        should(scv.duration(1).display).equal('11s');
+        should(scv.duration(10).display).equal('1m 52s');
+        should(scv.duration(1000).display).equal('3h 8m');
+
+        // English
+        scv.showLang = 2;
+        should(scv.duration(1).display).equal('6s');
+        should(scv.duration(10).display).equal('1m 2s');
+        should(scv.duration(1000).display).equal('1h 44m');
+    });
+    it("TESTTESTduration(chars) returns estimated playtime", function() {
+        var scv = new ScvSingleton(g);
+
+        should(scv.duration({
+            en: 0,      // chars
+            pli: 0,     // chars
+        }).display).equal('--');
+
+        // Pali/English
+        scv.showLang = 0;
+        should.deepEqual(scv.duration({
+            en:196,
+        }), {
+            aria: '17 seconds',
+            display: '17s',
+            hours: 0,
+            minutes: 0,
+            seconds: 17,
+            totalSeconds: 17,
+        });
+        should(scv.duration({
+            en: 1000,
+            pli: 800,
+        })).properties({
+            display: '2m 39s',
+            aria: '2 minutes and 39 seconds',
+        });
+        should(scv.duration({
+            en: 60000,
+            pli: 48000,
+        })).properties({
+            display: '2h 40m',
+            aria: '2 hours and 40 minutes',
+            totalSeconds: 2*3600 + 39*60 + 16,
         });
 
         // Pali
@@ -399,6 +484,146 @@
         };
         scv.user = user;
         should.deepEqual(scv.user, user);
+    });
+    it("TESTTESTcharsRemaining(tracks,...) returns time remaining", function() {
+        var scv = new ScvSingleton(g);
+        var pl = new Playlist();
+        pl.addSutta(suttas[0]);
+        pl.addSutta(suttas[1]);
+        should.deepEqual(scv.charsRemaining(pl.tracks, 0, 0), {
+            en: 53,
+            pli: 66,
+        });
+        should.deepEqual(scv.charsRemaining(pl.tracks, 1, 0), {
+            en: 40,
+            pli: 38,
+        });
+        should.deepEqual(scv.charsRemaining(pl.tracks, 0, 1), {
+            en: 40,
+            pli: 54,
+        });
+    });
+    it("TESTTESTtimeRemaining(tracks,...) returns time remaining", function() {
+        var scv = new ScvSingleton(g);
+        should(scv.showTrans).equal(true);
+        should(scv.showPali).equal(true);
+        var pl = new Playlist();
+        pl.addSutta(suttas[0]);
+        pl.addSutta(suttas[1]);
+        should.deepEqual(scv.timeRemaining(pl.tracks, 0, 0), {
+            aria: "11 seconds",
+            display: '11s',
+            hours: 0,
+            minutes: 0,
+            seconds: 11,
+            totalSeconds: 11,
+            chars: {
+                en: 53,
+                pli: 66,
+            },
+        });
+        should.deepEqual(scv.timeRemaining(pl.tracks, 1, 0), {
+            aria: "7 seconds",
+            display: '7s',
+            hours: 0,
+            minutes: 0,
+            seconds: 7,
+            totalSeconds: 7,
+            chars: {
+                en: 40,
+                pli: 38,
+            },
+        });
+        should.deepEqual(scv.timeRemaining(pl.tracks, 0, 1), {
+            aria: "8 seconds",
+            display: '8s',
+            hours: 0,
+            minutes: 0,
+            seconds: 8,
+            totalSeconds: 8,
+            chars: {
+                en: 40,
+                pli: 54,
+            },
+        });
+
+        // Show Pali
+        scv.showLang = 1;
+        should.deepEqual(scv.timeRemaining(pl.tracks, 0, 0), {
+            aria: "6 seconds",
+            display: '6s',
+            hours: 0,
+            minutes: 0,
+            seconds: 6,
+            totalSeconds: 6,
+            chars: {
+                en: 53,
+                pli: 66,
+            },
+        });
+        should.deepEqual(scv.timeRemaining(pl.tracks, 1, 0), {
+            aria: "3 seconds",
+            display: '3s',
+            hours: 0,
+            minutes: 0,
+            seconds: 3,
+            totalSeconds: 3,
+            chars: {
+                en: 40,
+                pli: 38,
+            },
+        });
+        should.deepEqual(scv.timeRemaining(pl.tracks, 0, 1), {
+            aria: "5 seconds",
+            display: '5s',
+            hours: 0,
+            minutes: 0,
+            seconds: 5,
+            totalSeconds: 5,
+            chars: {
+                en: 40,
+                pli: 54,
+            },
+        });
+
+        // Show translation
+        scv.showLang = 2;
+        should.deepEqual(scv.timeRemaining(pl.tracks, 0, 0), {
+            aria: "5 seconds",
+            display: '5s',
+            hours: 0,
+            minutes: 0,
+            seconds: 5,
+            totalSeconds: 5,
+            chars: {
+                en: 53,
+                pli: 66,
+            },
+        });
+        should.deepEqual(scv.timeRemaining(pl.tracks, 1, 0), {
+            aria: "3 seconds",
+            display: '3s',
+            hours: 0,
+            minutes: 0,
+            seconds: 3,
+            totalSeconds: 3,
+            chars: {
+                en: 40,
+                pli: 38,
+            },
+        });
+        should.deepEqual(scv.timeRemaining(pl.tracks, 0, 1), {
+            aria: "3 seconds",
+            display: '3s',
+            hours: 0,
+            minutes: 0,
+            seconds: 3,
+            totalSeconds: 3,
+            chars: {
+                en: 40,
+                pli: 54,
+            },
+        });
     });
 });
 

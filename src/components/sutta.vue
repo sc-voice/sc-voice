@@ -598,6 +598,7 @@ export default {
                 translator: this.translator,
                 iSection: i,
                 nSegments: sect.segments.length,
+                segments: sect.segments,
             }));
             this.$nextTick(() => {
                 var refPlaySutta = this.$refs.refPlaySutta;

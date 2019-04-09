@@ -977,7 +977,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("createPlaylist(opts) creates playlist", function(done) {
+    it("TESTTESTcreatePlaylist(opts) creates playlist", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
@@ -991,7 +991,11 @@
             ]);
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
-                duration: 687,
+                chars: {
+                    en: 3086,
+                    pli: 2370,
+                },
+                duration: 483,
                 segments: {
                     pli: 40,
                     en: 38,
@@ -1013,7 +1017,10 @@
             ]);
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
-                duration: 450,
+                chars: {
+                    pli: 2370,
+                },
+                duration: 216,
                 segments: {
                     pli: 40,
                 }
@@ -1022,7 +1029,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("maxDuration limits createPlaylist()", function(done) {
+    it("TESTTESTmaxDuration limits createPlaylist()", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore({
@@ -1032,7 +1039,10 @@
             var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
             should.deepEqual(playlist.stats(), {
                 tracks: 1,
-                duration: 7,
+                chars: {
+                    en: 83,
+                },
+                duration: 8,
                 segments: {
                     en: 1, // error message
                 }
@@ -1054,7 +1064,10 @@
             });
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
-                duration: 450,
+                chars: {
+                    pli: 2370,
+                },
+                duration: 216,
                 segments: {
                     pli: 40,
                 }

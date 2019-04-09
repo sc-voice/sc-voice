@@ -1,7 +1,10 @@
 (function(exports) {
     const Sutta = require('./sutta');
     const Voice = require('./voice');
-    const DN33_EN_SECONDS_PER_SEGMENT = (2*3600 + 0*60 + 27)/(1158);
+    const DN33_EN_SECONDS = 2*3600 + 0*60 + 27;
+    const DN33_EN_SECONDS_PER_SEGMENT = DN33_EN_SECONDS/(1158);
+    const DN33_EN_SECONDS_PER_CHAR = DN33_EN_SECONDS/(83588);
+    const DN33_PLI_SECONDS_PER_CHAR = DN33_EN_SECONDS/(79412);
 
     class Playlist { 
         constructor(opts={}) {
@@ -14,12 +17,14 @@
         stats() {
             var result = {
                 segments: {},
+                chars: {},
                 tracks: this.tracks.length,
                 duration: 0,
             };
             var languages = this.languages;
             languages.forEach(lang => {
                 result.segments[lang] = 0;
+                result.chars[lang] = 0;
             });
 
             this.tracks.forEach(track => {
@@ -27,18 +32,15 @@
                     languages.forEach(lang => {
                         if (segment[lang] != null) {
                             result.segments[lang]++;
+                            result.chars[lang] += segment[lang].length;
                         }
                     });
                 });
             });
             languages.forEach(lang => {
-                if (lang === 'pli') {
-                    result.duration += result.segments[lang] *
-                        1.8 * DN33_EN_SECONDS_PER_SEGMENT;
-                } else { 
-                    result.duration += result.segments[lang] *
-                        DN33_EN_SECONDS_PER_SEGMENT;
-                }
+                result.duration += lang === 'pli'
+                    ? result.chars[lang] * DN33_PLI_SECONDS_PER_CHAR
+                    : result.chars[lang] * DN33_EN_SECONDS_PER_CHAR;
             });
             result.duration = Math.ceil(result.duration);
             return result;

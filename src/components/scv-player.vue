@@ -451,8 +451,15 @@ export default {
             }, 0) || 0;
         },
         timeRemaining(){
-            var remaining = this.segmentsTotal - this.segmentsElapsed;
-            return this.gscv && this.gscv.duration(remaining).display || '--';
+            var {
+                gscv,
+                tracks,
+                iTrack,
+                iSegment,
+            } = this;
+            var tr =  gscv && tracks &&
+                gscv.timeRemaining(tracks, iTrack, iSegment);
+            return tr && tr.display || '--';
         },
         ipsChoices() {
             return this.gscv.ipsChoices;
