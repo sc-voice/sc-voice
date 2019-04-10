@@ -65,8 +65,8 @@
         testPhoneme(recite, "bʰə gə v\\ən 't̪əŋ je v\\ə", 'bhagavantaṃyeva'); 
         testPhoneme(recite, `səb bə 'səŋ je v\\ə`, 'sabbasaṃyeva'); 
         testPhoneme(recite, `ve j jɑː kə ɾə ɳəŋ`, 'veyyākaraṇaṃ'); 
-        testPhoneme(recite, `pəc cə vek kʰe j jə`, 'paccavekkheyya'); 
-        testPhoneme(recite, `ʋẽ sɑː lɪ jəŋ`, 'vesāliyaṃ'); 
+        testPhoneme(recite, `pəc cə v\\ek kʰe j jə`, 'paccavekkheyya'); 
+        testPhoneme(recite, `v\\e sɑː lɪ jəŋ`, 'vesāliyaṃ'); 
         testPhoneme(recite, `pə ʈɪ 'səŋ ʋẽ d̪e t̪iː`, 'paṭisaṃvedetī'); 
         testPhoneme(recite, `pə ɾɪ sʊɖ ɖʱəŋ`, `parisuddhaṃ`);
 
@@ -102,7 +102,7 @@
         testPhoneme(recite, "ẽ ʟ̈ə kəŋ", 'eḷakaṃ');
         testPhoneme(recite, "ẽsə", 'esa');
         testPhoneme(recite, "pə sẽ nə d̪ɪs sə", 'pasenadissa');
-        testPhoneme(recite, "ʋẽ sɑː ɾəʝ ʝəp pət̪ t̪o", 'vesārajjappatto');
+        testPhoneme(recite, "v\\e sɑː ɾəʝ ʝəp pət̪ t̪o", 'vesārajjappatto');
 
         // punctuation
         var ssml = recite.segmentSSML('dve, dve');
