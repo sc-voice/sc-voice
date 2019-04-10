@@ -29,7 +29,7 @@
 
     function testPhoneme(recite, ph, text) {
         var ssml = recite.segmentSSML(text)[0];
-        should(ssml).match((phoneme(ph,text) ));
+        should(ssml.indexOf(ph)).above(-1, `Phoneme not found.\nexpected:\t\t\t  "${ph}"\nactual:${ssml}`);
     }
 
     it("createVoice() creates Aditi", function() {
@@ -54,7 +54,7 @@
         var recite = aditi.services['recite'];
         should(recite.syllableVowels).equal('aeiou');
     });
-    it("segmentSSML(text) returns SSML", function() {
+    it("TESTTESTsegmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
 
@@ -62,10 +62,10 @@
         testPhoneme(recite, 'd̪ək kʰɪn ej jəŋ', 'dakkhiṇeyyaṃ');
         testPhoneme(recite, 'əc chə ɾɪ jə əb bʰʊ t̪ə sʊt̪ t̪ə', 
             'acchariyaabbhutasutta'); 
-        testPhoneme(recite, `bʰə gə ʋən 't̪əŋ je ʋə`, 'bhagavantaṃyeva'); 
-        testPhoneme(recite, `səb bə 'səŋ je ʋə`, 'sabbasaṃyeva'); 
-        testPhoneme(recite, `ʋe j jɑː kə ɾə ɳəŋ`, 'veyyākaraṇaṃ'); 
-        testPhoneme(recite, `pəc cə ʋek kʰe j jə`, 'paccavekkheyya'); 
+        testPhoneme(recite, "bʰə gə v\\ən 't̪əŋ je v\\ə", 'bhagavantaṃyeva'); 
+        testPhoneme(recite, `səb bə 'səŋ je v\\ə`, 'sabbasaṃyeva'); 
+        testPhoneme(recite, `ve j jɑː kə ɾə ɳəŋ`, 'veyyākaraṇaṃ'); 
+        testPhoneme(recite, `pəc cə vek kʰe j jə`, 'paccavekkheyya'); 
         testPhoneme(recite, `ʋẽ sɑː lɪ jəŋ`, 'vesāliyaṃ'); 
         testPhoneme(recite, `pə ʈɪ 'səŋ ʋẽ d̪e t̪iː`, 'paṭisaṃvedetī'); 
         testPhoneme(recite, `pə ɾɪ sʊɖ ɖʱəŋ`, `parisuddhaṃ`);
@@ -78,7 +78,7 @@
         testPhoneme(recite, 'bɾɑːh mə ɳəŋ','brāhmaṇaṃ');
         testPhoneme(recite, 'gɪʝ ʄhɑ ku: ʈe','gijjhakūṭe');
         testPhoneme(recite, 'cɪt̪ t̪əs sə','cittassa');
-        testPhoneme(recite, 'chən no ʋɑː d̪ə','Channovāda');
+        testPhoneme(recite, 'chən no v\\ɑː d̪ə','Channovāda');
         testPhoneme(recite, 'phəg gʊ ɳə','Phagguṇa');
         testPhoneme(recite, 'sət̪ɪ','sati'); // memory;mindfulness
         testPhoneme(recite, 'səʈ ʈhɪ','saṭṭhi'); // sixty
@@ -86,10 +86,10 @@
         testPhoneme(recite, 'd̪əɳ ɖə kə','daṇḍaka');
         testPhoneme(recite, 'ɖʱəm mə','Dhamma');
         testPhoneme(recite, 'ɖʱə mə', 'Dhama'); // blowing
-        testPhoneme(recite, 'si ɾɪ ʋəɖ ɖhə', 'sirivaḍḍha'); // blowing
+        testPhoneme(recite, 'si ɾɪ v\\əɖ ɖhə', 'sirivaḍḍha'); // blowing
         testPhoneme(recite, 'bɑː lə kə', 'bālaka'); 
         testPhoneme(recite, 'bʰəl lɪ kə', 'bhallika'); 
-        testPhoneme(recite, 'd̪e ʋə d̪ə hə', 'devadaha'); 
+        testPhoneme(recite, 'd̪e v\\ə d̪ə hə', 'devadaha'); 
         testPhoneme(recite, 'jəsə', 'yasa'); 
         testPhoneme(recite, 'ʊ pə kɑː ʟ̈ə', 'upakāḷa'); 
         testPhoneme(recite, 'nɑː ʟ̈ən d̪ɑː', 'nāḷandā'); 

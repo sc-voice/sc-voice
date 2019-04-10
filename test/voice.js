@@ -322,14 +322,14 @@
         should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
     });
-    it("Aditi phonemes", function() {
+    it("TESTTESTAditi phonemes", function() {
         var aditi = Voice.createVoice({
             name: "aditi",
             languageUnknown: "pli",
         });
         should(aditi.name).equal("Aditi");
         var recite = aditi.services.recite;
-        should(recite.wordSSML(`vasala`)).equal(phoneme("ʋə sə la","vasala"));
+        should(recite.wordSSML(`vasala`)).equal(phoneme("v\\ə sə la","vasala"));
         should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
         should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑː məɲ cə","Nāmañca"));
         should(recite.wordSSML(`anottappañca`)).match(/"ə not̪ t̪əp pəɲ cə"/);
