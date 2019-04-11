@@ -114,7 +114,8 @@ export default {
         playTrack(iTrack, paused=false) {
             paused = paused || this.pauseAudio();
             if (iTrack < 0 || this.section && this.tracks.length <= iTrack) {
-                console.log(`playTrack(${iTrack}) ignored`);
+                console.log(`playTrack(${iTrack}) ignored `,
+                    `iTrack:${iTrack} tracks:${this.tracks.length}`);
                 return;
             }
             Vue.set(this, "iTrack", iTrack);
@@ -191,23 +192,33 @@ export default {
             }, opts);
         },
         onEndLang(event) {
+            var {
+                paused,
+                iSegment,
+                tracks,
+                section,
+                iTrack,
+            } = this;
             this.setTextClass();
-            if (this.paused) {
-                console.log(`onEndLang() finished`, event);
+            if (!paused && iSegment < section.segments.length-1) {
+                this.paused = true;
+                Vue.set(this, "iSegment", iSegment+1);
+                this.$nextTick(() => {
+                    this.toggleAudio();
+                });
+            } else if (!paused && iTrack+1 < tracks.length) {
+                this.paused = true;
+                const NEW_SECTION_PAUSE = 1000;
+                setTimeout(() => {
+                    this.playTrack(iTrack+1, true);
+                }, NEW_SECTION_PAUSE);
             } else {
                 this.paused = true;
-                if (this.iSegment < this.section.segments.length-1) {
-                    Vue.set(this, "iSegment", this.iSegment+1);
-                    //console.log(`onEndLang() incrementing segment: ${this.iSegment}`);
-                    this.$nextTick(() => {
-                        this.toggleAudio();
-                    });
-                } else if (this.iTrack < this.tracks.length) {
-                    const NEW_SECTION_PAUSE = 1000;
-                    setTimeout(() => {
-                        this.playTrack(this.iTrack+1, true);
-                    }, NEW_SECTION_PAUSE);
-                }
+                var evt = JSON.stringify(event);
+                console.log(`onEndLang(${evt}) seg:${iSegment} track:${iTrack}`);
+                var introAudio = this.$refs[`refIntroSound`];
+                introAudio.load();
+                introAudio.play();
             }
         },
         onEndPali(event) {
