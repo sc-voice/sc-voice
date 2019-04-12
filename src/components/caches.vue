@@ -8,7 +8,7 @@
             color="red">
             <div style="font-size:12px; line-height:1.1 !important">
             {{cachePercent}}%
-            {{cacheTotal}}GB
+            {{cacheUsed}}GB
             </div>
         </v-progress-circular>
         </div>
@@ -130,20 +130,21 @@ export default {
         gscv() {
             return this.$root.$data;
         },
-        cacheTotal() {
-            var avail = this.identity && this.identity.diskavail || 1E9;
-            var total = this.caches.reduce((acc, c) => {
+        cacheUsed() {
+            var used = this.caches.reduce((acc, c) => {
                 return acc + c.size;
             }, 0);
-            return (total/avail).toFixed(0);
+            return (used/1E9).toFixed(1);
         },
         cachePercent() {
-            var avail = this.identity && this.identity.diskavail || 1E9;
-            var total = this.caches.reduce((acc, c) => {
-                return acc + c.size;
-            }, 0);
-            var maxSize = this.maxSize * avail;
-            return ((total/maxSize) * 100).toFixed(0);
+            if (!this.identity) {
+                return '--';
+            }
+            var {
+                diskavail,
+                disktotal,
+            } = this.identity;
+            return (((disktotal - diskavail)/disktotal) * 100).toFixed(0);
         },
         token() {
             return this.user && this.user.token;
