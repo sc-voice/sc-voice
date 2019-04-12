@@ -192,7 +192,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) returns search results", function(done) {
+    it("TESTTESTsearch(pattern) returns search results", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice({
@@ -212,6 +212,11 @@
                 results,
             } = await store.search('is the root of suffering');
             should(results).instanceOf(Array);
+            should.deepEqual(Object.keys(results[0]).sort(), [
+                'count', 'uid', 'author', 'author_short', 'author_uid',
+                'author_blurb', 'lang', 'nSegments', 'title', 'collection_id',
+                'suttaplex', 'quote', 'sutta', 'audio',
+            ].sort());
             should(method).equal('phrase');
             should.deepEqual(results.map(r=>r.count), [5, 3, 2, 1]);
             should.deepEqual(results.map(r=>r.uid), [

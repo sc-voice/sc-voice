@@ -1,6 +1,7 @@
 (function(exports) {
     const DN33_EN_SECONDS = 2*3600 + 0*60 + 27;
     const DN33_EN_SECONDS_PER_SEGMENT = DN33_EN_SECONDS/(1158);
+    const DN33_PLI_SECONDS_PER_SEGMENT = 1.8 * DN33_EN_SECONDS_PER_SEGMENT;
     const DN33_EN_SECONDS_PER_CHAR = DN33_EN_SECONDS/(83588);
     const DN33_PLI_SECONDS_PER_CHAR = DN33_EN_SECONDS/(79412);
     const DEFAULT_VOICES = [{
@@ -288,10 +289,9 @@
         }
 
         durationSegments(nSegments){
-            const DN33_PACE = DN33_EN_SECONDS/(1158);
             var secondsPerSegment =
-                (this.showPali ? DN33_PACE * 1.8 : 0) +
-                (this.showTrans ? DN33_PACE : 0);
+                (this.showPali ? DN33_PLI_SECONDS_PER_SEGMENT : 0) +
+                (this.showTrans ? DN33_EN_SECONDS_PER_SEGMENT: 0);
             var totalSeconds = Math.trunc(nSegments * secondsPerSegment);
             return this.durationDisplay(totalSeconds);
         }
@@ -304,17 +304,32 @@
         }
 
         charsRemaining(tracks, curTrack=0, curSeg=0) {
+            const EN_CHARS_PER_SEGMENT = 
+                DN33_EN_SECONDS_PER_SEGMENT/DN33_EN_SECONDS_PER_CHAR; 
+            const PLI_CHARS_PER_SEGMENT = 
+                DN33_PLI_SECONDS_PER_SEGMENT/DN33_PLI_SECONDS_PER_CHAR; 
             return tracks.reduce((acc, track, iTrack) => {
-                var segments = track.segments;
-                curTrack <= iTrack && segments && segments.forEach((seg, iSeg) => {
-                    var remaining = curTrack < iTrack ||
-                        iTrack === curTrack && curSeg <= iSeg;
-                    remaining && Object.keys(seg).forEach(key => {
-                        if (key !== 'scid') {
-                            acc[key] = (acc[key] || 0) + seg[key].length;
-                        }
-                    });
-                });
+                if (curTrack <= iTrack) {
+                    var segments = track.segments;
+                    if (segments) {
+                        segments.forEach((seg, iSeg) => {
+                            var remaining = curTrack < iTrack ||
+                                iTrack === curTrack && curSeg <= iSeg;
+                            remaining && Object.keys(seg).forEach(key => {
+                                if (key !== 'scid') {
+                                    acc[key] = (acc[key] || 0) + seg[key].length;
+                                }
+                            });
+                        });
+                    } else {
+                        var lang = this.lang || 'en';
+                        var segsRemaining = track.nSegments - curSeg;
+                        acc[lang] = acc[lang] || 0;
+                        acc[lang] += segsRemaining * EN_CHARS_PER_SEGMENT;
+                        acc['pli'] = acc['pli'] || 0;
+                        acc['pli'] += segsRemaining * PLI_CHARS_PER_SEGMENT;
+                    }
+                }
                 return acc;
             }, {});
         }

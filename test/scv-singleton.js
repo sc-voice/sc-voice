@@ -485,7 +485,7 @@
         scv.user = user;
         should.deepEqual(scv.user, user);
     });
-    it("TESTTESTcharsRemaining(tracks,...) returns time remaining", function() {
+    it("TESTTESTcharsRemaining(tracks,...) returns characters remaining", function() {
         var scv = new ScvSingleton(g);
         var pl = new Playlist();
         pl.addSutta(suttas[0]);
