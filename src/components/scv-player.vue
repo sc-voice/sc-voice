@@ -114,9 +114,10 @@ export default {
         playTrack(iTrack, paused=false) {
             paused = paused || this.pauseAudio();
             if (iTrack < 0 || this.section && this.tracks.length <= iTrack) {
-                console.log(`playTrack(${iTrack}) ignored `,
-                    `iTrack:${iTrack} tracks:${this.tracks.length}`);
-                return;
+                var msg = `playTrack(${iTrack}) ignored `+
+                    `iTrack:${iTrack} tracks:${this.tracks.length}`;
+                this.playStartEndSound(msg);
+                return Promise.reject(new Error(msg));
             }
             Vue.set(this, "iTrack", iTrack);
             Vue.set(this, "iSegment", 0);
@@ -191,6 +192,14 @@ export default {
                 '--success-color': this.$vuetify.theme.success,
             }, opts);
         },
+        endAudio() {
+            this.paused = true;
+            var evt = JSON.stringify(event);
+            console.log(`onEndLang(${evt}) seg:${iSegment} track:${iTrack}`);
+            var introAudio = this.$refs[`refIntroSound`];
+            introAudio.load();
+            introAudio.play();
+        },
         onEndLang(event) {
             var {
                 paused,
@@ -216,9 +225,7 @@ export default {
                 this.paused = true;
                 var evt = JSON.stringify(event);
                 console.log(`onEndLang(${evt}) seg:${iSegment} track:${iTrack}`);
-                var introAudio = this.$refs[`refIntroSound`];
-                introAudio.load();
-                introAudio.play();
+                this.playStartEndSound('onEndLang');
             }
         },
         onEndPali(event) {
@@ -273,28 +280,40 @@ export default {
                 });
             } catch(e) {reject(e);} });
         },
-        launch(iTrack) {
-            var introAudio = this.$refs[`refIntroSound`];
+        playStartEndSound(label) {
             var that = this;
-            if (introAudio) {
-                var onEndIntro = () => {
-                    onEndIntro && introAudio.removeEventListener("ended", onEndIntro);
-                    onEndIntro = null;
-                    if (that.paused) {
-                        that.clickPlayPause();
+            return new Promise((resolve, reject) => { try {
+                var introAudio = that.$refs[`refIntroSound`];
+                if (introAudio) {
+                    var onEndIntro = () => {
+                        onEndIntro && introAudio.removeEventListener("ended", onEndIntro);
+                        onEndIntro = null;
+                        resolve(that.paused);
                     }
+                    introAudio.addEventListener("ended", onEndIntro);
+                    var ips = that.ipsChoices[that.gscv.ips];
+                    console.log(`playStartEndSound(${label}) introAudio:${ips.label}`);
+                    introAudio.volume = ips.volume;
+                    introAudio.load();
+                    introAudio.play();
+                } else {
+                    resolve(false);
                 }
-                introAudio.addEventListener("ended", onEndIntro);
-                var ips = this.ipsChoices[this.gscv.ips];
-                introAudio.volume = ips.volume;
-                introAudio.load();
-                introAudio.play();
-                this.playTrack(iTrack);
-            } else {
-                this.playTrack(iTrack).then(() => {
-                    that.clickPlayPause();
-                });
-            }
+            } catch(e) {reject(e);} });
+        },
+        launch(iTrack) {
+            var that = this;
+            that.playStartEndSound('launch').then((play) => {
+                play && that.clickPlayPause();
+            });
+            var introAudio = that.$refs[`refIntroSound`];
+            that.playTrack(iTrack).then(() => { try {
+                if (!introAudio) {
+                    that.paused && that.clickPlayPause();
+                }
+            } catch (e) {
+                console.error(e.stack);
+            }});
         },
         clickPlayPause() {
             console.log(`clickPlayPause() ${this.paused ? "play" : "pause"}`);
