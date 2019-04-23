@@ -64,13 +64,14 @@ else
     popd
 fi
 
-if [ -e local/suttas ]; then
+if [ -e local/suttas/mn ]; then
     echo -e "INIT\t: updating scv-suttas..."
     pushd local/suttas
     git pull
     popd
 else
     pushd local
+    rm -rf suttas
     echo -e "INIT\t: installing scv-suttas..."
     git clone https://github.com/sc-voice/scv-suttas suttas
     popd
