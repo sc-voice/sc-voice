@@ -81,10 +81,12 @@
         }
 
         volumeInfo() {
-            var cmd = `du -sb *`;
-            var du = execSync(cmd, {
+            var execOpts = {
                 cwd: this.storePath,
-            }).toString().trim().split('\n');
+            };
+            logger.info(`volumeInfo execOpts:${JSON.stringify(execOpts)}`);
+            var cmd = `du -sb *`;
+            var du = execSync(cmd, execOpts).toString().trim().split('\n');
             return du.reduce((acc, line) => {
                 var lineParts = line.split('\t');
                 acc[lineParts[1]] = {
