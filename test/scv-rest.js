@@ -350,7 +350,7 @@
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(data.segment.en).match(/^Middle Discourses 1/);
-            should(data.segment.audio.pli).match(/^c102b/); // no numbers
+            should(data.segment.audio.pli).match(/6ba33aa963c46b629d0ec036d570ef19/); // no numbers
 
             if (0) {
                 var scid = "mn1:52-74.23";

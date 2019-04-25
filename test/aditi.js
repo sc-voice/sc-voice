@@ -76,7 +76,7 @@
         testPhoneme(recite, 'pəɲ ɲə','Pañña');
         testPhoneme(recite, 'səŋ kʰɑː ɾə','saṅkhāra');
         testPhoneme(recite, 'bɾɑːh mə ɳəŋ','brāhmaṇaṃ');
-        testPhoneme(recite, 'gɪʝ ʄhɑ ku: ʈe','gijjhakūṭe');
+        testPhoneme(recite, 'gɪdʒ dʒʱə ku: ʈe','gijjhakūṭe');
         testPhoneme(recite, 'cɪt̪ t̪əs sə','cittassa');
         testPhoneme(recite, 'chən no v\\ɑː d̪ə','Channovāda');
         testPhoneme(recite, 'phəg gʊ ɳə','Phagguṇa');
