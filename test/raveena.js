@@ -27,7 +27,7 @@
         should(ssml).match((phoneme(ph,text) ));
     }
 
-    it("TESTTESTcreateVoice() creates Raveena", function() {
+    it("createVoice() creates Raveena", function() {
         var raveena = Voice.createVoice('raveena');
         should(raveena.name).equal('Raveena');
         should(raveena.language).equal('en-IN');
@@ -53,7 +53,7 @@
         should(raveena.syllableVowels).equal(syllableVowels);
         should(raveena.syllabifyLength).equal(syllabifyLength);
     });
-    it("TESTTESTsegmentSSML(text) returns SSML", function() {
+    it("segmentSSML(text) returns SSML", function() {
         var raveena = Voice.createVoice(RAVEENA_OPTS);
         var recite = raveena.services['recite'];
 

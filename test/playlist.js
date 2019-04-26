@@ -96,7 +96,7 @@
              'test2',
         ]);
     });
-    it("TESTTESTstats() adds a sutta", function() {
+    it("stats() adds a sutta", function() {
         var pl = new Playlist({
             languages:['de','pli'],
         });
@@ -142,7 +142,7 @@
             },
         });
     });
-    it("TESTTESTaddSutta(sutta) adds dn33", function(done) {
+    it("addSutta(sutta) adds dn33", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
@@ -167,7 +167,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTaddTrack(sutta_uid, segmentsOrMessage) adds a track", function(done) {
+    it("addTrack(sutta_uid, segmentsOrMessage) adds a track", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var pl = new Playlist();

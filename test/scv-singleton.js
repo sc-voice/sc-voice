@@ -315,7 +315,7 @@
             "showLang=0",
         ].join('&')));
     });
-    it("TESTTESTduration(nSegs) returns estimated playtime", function() {
+    it("duration(nSegs) returns estimated playtime", function() {
         var scv = new ScvSingleton(g);
 
         should(scv.duration(0).display).equal('--');
@@ -352,7 +352,7 @@
         should(scv.duration(10).display).equal('1m 2s');
         should(scv.duration(1000).display).equal('1h 44m');
     });
-    it("TESTTESTduration(chars) returns estimated playtime", function() {
+    it("duration(chars) returns estimated playtime", function() {
         var scv = new ScvSingleton(g);
 
         should(scv.duration({
@@ -485,7 +485,7 @@
         scv.user = user;
         should.deepEqual(scv.user, user);
     });
-    it("TESTTESTcharsRemaining(tracks,...) returns characters remaining", function() {
+    it("charsRemaining(tracks,...) returns characters remaining", function() {
         var scv = new ScvSingleton(g);
         var pl = new Playlist();
         pl.addSutta(suttas[0]);
@@ -503,7 +503,7 @@
             pli: 54,
         });
     });
-    it("TESTTESTtimeRemaining(tracks,...) returns time remaining", function() {
+    it("timeRemaining(tracks,...) returns time remaining", function() {
         var scv = new ScvSingleton(g);
         should(scv.showTrans).equal(true);
         should(scv.showPali).equal(true);

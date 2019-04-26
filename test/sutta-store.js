@@ -192,7 +192,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) returns search results", function(done) {
+    it("search(pattern) returns search results", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice({
@@ -982,7 +982,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTcreatePlaylist(opts) creates playlist", function(done) {
+    it("createPlaylist(opts) creates playlist", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
@@ -1034,7 +1034,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTmaxDuration limits createPlaylist()", function(done) {
+    it("maxDuration limits createPlaylist()", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore({
