@@ -528,5 +528,30 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTGET audio-url/... returns supported audio url", function(done) {
+        this.timeout(3*1000);
+        (async function() { try {
+            // short url
+            var url = '/scv/audio-url/sn1.23/en';
+            var res = await supertest(app).get(url)
+            res.statusCode.should.equal(200);
+            should.deepEqual(res.body, {
+                url: 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com/'+
+                    'en/sn/sn1/sn1.23-en-sujato-sujato.webm',
+                statusCode: 200,
+            });
+
+            // long url
+            var url = '/scv/audio-url/sn1.23/pli/mahasangiti/sujato';
+            var res = await supertest(app).get(url)
+            res.statusCode.should.equal(200);
+            should.deepEqual(res.body, {
+                url: 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com/'+
+                    'pli/sn/sn1/sn1.23-pli-mahasangiti-sujato.webm',
+                statusCode: 200,
+            });
+            done();
+        } catch(e) {done(e);} })();
+    });
 });
 

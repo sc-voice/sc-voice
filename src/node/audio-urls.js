@@ -8,14 +8,14 @@
         exec,
     } = require('child_process');
     const FLAC_ROOT = "https://raw.githubusercontent.com/sujato/sc-audio/master/flac";
-    const DO_ROOT = "https://sc-mp3-store.sfo2.digitaloceanspaces.com";
-//https://sc-mp3-store.sfo2.digitaloceanspaces.com/pli/sn/sn1/sn1.03-pli-mahasangiti-sujato.mp3
-//https://raw.githubusercontent.com/sujato/sc-audio/master/flac/pli/sn/sn1/sn1.11-pli-mahasangiti-sujato.flac
+    const DO_ROOT = "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com";
 
     class AudioUrls {
         constructor(opts={}) {
-            this.rootUrl = opts.rootUrl || FLAC_ROOT;
-            this.rootMime = opts.rootMime || 'flac';
+            //this.rootUrl = opts.rootUrl || FLAC_ROOT;
+            //this.rootMime = opts.rootMime || 'flac';
+            this.rootUrl = opts.rootUrl || DO_ROOT;
+            this.rootMime = opts.rootMime || 'webm';
             this.speaker = opts.speaker || 'sujato';
             this.lang = opts.lang || 'pli';
             this.author = opts.author || 'mahasangiti';

@@ -193,6 +193,10 @@ export default {
             }, opts);
         },
         endAudio() {
+            var {
+                iSegment,
+                iTrack,
+            } = this;
             this.paused = true;
             var evt = JSON.stringify(event);
             console.log(`onEndLang(${evt}) seg:${iSegment} track:${iTrack}`);

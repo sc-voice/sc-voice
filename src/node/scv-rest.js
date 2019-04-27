@@ -14,6 +14,7 @@
     const srcPkg = require("../../package.json");
     const Words = require('./words');
     const GuidStore = require('./guid-store');
+    const AudioUrls = require('./audio-urls');
     const Playlist = require('./playlist');
     const Section = require('./section');
     const SoundStore = require('./sound-store');
@@ -59,6 +60,7 @@
             this.examples = opts.examples;
             this.soundStore = opts.soundStore || new SoundStore(opts);
             this.audioMIME = this.soundStore.audioMIME;
+            this.audioUrls = opts.audioUrls || new AudioUrls();
             this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
@@ -110,6 +112,12 @@
                     this.resourceMethod("get", 
                         "download/sutta/:sutta_uid/:language/:translator/:usage", 
                         this.getDownloadSutta, this.audioMIME),
+                    this.resourceMethod("get", 
+                        "audio-url/:sutta_uid/:language/:translator/:speaker", 
+                        this.getAudioUrl),
+                    this.resourceMethod("get", 
+                        "audio-url/:sutta_uid/:language", 
+                        this.getAudioUrl),
                     this.resourceMethod("get", 
                         "download/playlist/:langs/:voice/:pattern",
                         this.getDownloadPlaylist, this.audioMIME),
@@ -850,6 +858,23 @@
                         }
                     }, 1000);
                 } catch(e) {reject(e);} })();
+            });
+        }
+
+        getAudioUrl(req, res, next) {
+            var sutta_uid = req.params.sutta_uid ;
+            if (!sutta_uid) {
+                return Promise.reject(new Error('Expected sutta_uid'));
+            }
+            var language = req.params.language || 'en';
+            var translator = req.params.translator || 
+                (language === 'pli' ? 'mahasangiti' : 'sujato');
+            var speaker = req.params.speaker || 'sujato';
+            return this.audioUrls.audioUrl({
+                suttaId: sutta_uid,
+                lang: language,
+                author: translator,
+                speaker: speaker,
             });
         }
     }
