@@ -190,8 +190,7 @@
                                 class="scv-a"
                                 v-on:click="clickTranslation(translation,$event)">
                                 {{translation.author}}
-                                &nbsp;&bull;&nbsp;
-                                {{translation.lang_name}}
+                                ({{translation.lang_name}})
                             </a>
                         </div>
                         <div class="text-xs-center" v-if="supportedAudio.length">
