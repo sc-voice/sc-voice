@@ -194,15 +194,13 @@
                                 {{translation.lang_name}}
                             </a>
                         </div>
-                        <div class="text-xs-center" v-if="hasAudio">
-                            <a class="scv-a" :href="supportedAudio['en']" target="_blank">
-                                Spoken audio 
-                            </a>
-                            <a class="scv-a" :href="supportedAudio['pli']" target="_blank">
-                                Spoken Pali 
-                            </a>
-                            <a class="scv-a" :href="otherAudioUrl" target="_blank">
-                                Other audio 
+                        <div class="text-xs-center" v-if="supportedAudio.length">
+                            Audio:
+                            <a class="scv-a" :href="audio.url" 
+                                v-for="(audio,i) in supportedAudio" :key="`audio${i}`"
+                                target="_blank">
+                                <span v-if="i">&#x2022;</span>
+                                {{audio.source}}
                             </a>
                         </div>
                         <div class="text-xs-center">
@@ -308,10 +306,7 @@ export default {
                 value: '(n/a)',
                 descriptions: '(n/a)',
             },
-            supportedAudio: {
-                en: 'tbd-en',
-                pli: 'tbd-pli',
-            },
+            supportedAudio: [],
             sutta: {},
             suttaplex: {},
             suttaCode: '',
@@ -618,14 +613,11 @@ export default {
                 segments: sect.segments,
             }));
             ['pli', language].forEach(lang => {
-                var url = that.url(`/audio-url/${sutta_uid}/${lang}`);
+                var url = that.url(`/audio-urls/${sutta_uid}`);
                 that.$http.get(url).then(res => {
-                    var url = res.data.url;
-                    if (url) {
-                        Vue.set(that.supportedAudio, lang, url);
-                    }
+                    Vue.set(that, "supportedAudio", res.data);
                 }).catch(e => {
-                    console.error('supported audio:', url, e.stack);
+                    console.error('supported audio:', url, e.stack, lang);
                 });
             });
             this.$nextTick(() => {

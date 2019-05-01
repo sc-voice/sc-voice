@@ -113,11 +113,8 @@
                         "download/sutta/:sutta_uid/:language/:translator/:usage", 
                         this.getDownloadSutta, this.audioMIME),
                     this.resourceMethod("get", 
-                        "audio-url/:sutta_uid/:language/:translator/:speaker", 
-                        this.getAudioUrl),
-                    this.resourceMethod("get", 
-                        "audio-url/:sutta_uid/:language", 
-                        this.getAudioUrl),
+                        "audio-urls/:sutta_uid", 
+                        this.getAudioUrls),
                     this.resourceMethod("get", 
                         "download/playlist/:langs/:voice/:pattern",
                         this.getDownloadPlaylist, this.audioMIME),
@@ -861,21 +858,12 @@
             });
         }
 
-        getAudioUrl(req, res, next) {
+        getAudioUrls(req, res, next) {
             var sutta_uid = req.params.sutta_uid ;
             if (!sutta_uid) {
                 return Promise.reject(new Error('Expected sutta_uid'));
             }
-            var language = req.params.language || 'en';
-            var translator = req.params.translator || 
-                (language === 'pli' ? 'mahasangiti' : 'sujato');
-            var speaker = req.params.speaker || 'sujato';
-            return this.audioUrls.audioUrl({
-                suttaId: sutta_uid,
-                lang: language,
-                author: translator,
-                speaker: speaker,
-            });
+            return this.audioUrls.sourceUrls(sutta_uid);
         }
     }
 
