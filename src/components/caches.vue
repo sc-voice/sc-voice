@@ -144,7 +144,9 @@ export default {
                 diskavail,
                 disktotal,
             } = this.identity;
-            return (((disktotal - diskavail)/disktotal) * 100).toFixed(0);
+            var cacheUsed = this.cacheUsed;
+            var cacheTotal = disktotal - diskavail - cacheUsed;
+            return (cacheUsed / cacheTotal * 100).toFixed(0);
         },
         token() {
             return this.user && this.user.token;
