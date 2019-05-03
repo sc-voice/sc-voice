@@ -44,7 +44,7 @@
             fs.existsSync(chapterPath) || fs.mkdirSync(chapterPath);
 
             // define path
-            var suffix = opts.suffix || this.suffix;
+            var suffix = opts.suffix == null ? this.suffix : opts.suffix;
             return path.join(chapterPath, `${guid}${suffix}`);
         }
 

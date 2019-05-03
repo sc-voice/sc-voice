@@ -528,7 +528,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET audio-url/... returns supported audio url", function(done) {
+    it("GET audio-url/... returns supported audio url", function(done) {
         this.timeout(3*1000);
         (async function() { try {
             // short url

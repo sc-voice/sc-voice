@@ -121,7 +121,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsourceUrls(...) returns verified audio urls", function(done) {
+    it("sourceUrls(...) returns verified audio urls", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var audio = new AudioUrls();

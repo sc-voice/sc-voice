@@ -29,7 +29,7 @@
             this.ipa = opts.ipa || {};
             this.pitch = opts.pitch || "-0%";
             this.usage = opts.usage || 'recite';
-            this.usages = opts.usages;
+            this.usages = opts.usages || {[this.usage]:{}};
             this.customWords = opts.customWords;
             this.syllableVowels = opts.syllableVowels;
             this.syllabifyLength = opts.syllabifyLength;
