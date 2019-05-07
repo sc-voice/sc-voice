@@ -18,6 +18,8 @@
     const MANIFEST = "manifest.json";
     const tmp = require('tmp');
 
+    var suttaStore = new SuttaStore();
+
     class VsmStore extends SoundStore {
         constructor(opts) {
             super((opts = VsmStore.options(opts)));
@@ -104,7 +106,6 @@
                 (async function() { try {
                     var srcStore = that.soundStore;
                     var volume = speakResult.signature.volume;
-                    console.log(`dbg speakResult`, speakResult);
                     var guidResult = await that.importGuidFiles(guid, volume);
                     var importResult = Object.assign({}, speakResult);
                     importResult.file = importResult.file
@@ -195,6 +196,47 @@
                             return;
                         }
                         resolve(manifest);
+                    });
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        importSutta(sutta, opts = {}) {
+            var {
+                lang,
+                author,
+                voice,
+                volume,
+            } = opts;
+            var sutta_uid = sutta.sutta_uid;
+            lang = lang || this.lang;
+            author = author || this.author;
+            voice = voice || this.voice;
+            volume = volume || Playlist.volumeName(sutta_uid, lang, author, voice.name);
+
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var result = {
+                        lang,
+                        author,
+                        voice,
+                        volume,
+                        sutta_uid,
+                    };
+                    var guids = [];
+                    for (var i = 0; i<sutta.segments.length; i++) {
+                        var seg = sutta.segments[i];
+                        var text = seg[lang];
+                        var speakResult = await that.speak(text, {
+                            volume,
+                        });
+                        guids.push(speakResult.signature.guid);
+                    }
+                    resolve({
+                        sutta_uid,
+                        volume,
+                        guids,
                     });
                 } catch(e) {reject(e);} })();
             });

@@ -9,6 +9,7 @@
     const {
         GuidStore,
         SoundStore,
+        SuttaStore,
         Voice,
         VsmStore,
     } = require("../index");
@@ -25,6 +26,8 @@
     var mj = new MerkleJson();
     logger.level = 'warn';
     var storePath = tmp.tmpNameSync();
+    var suttaStore = new SuttaStore();
+    suttaStore.initialize();
 
     it("TESTTESTVsmStore() creates VSM", function() {
         var vsm = new VsmStore();
@@ -94,6 +97,31 @@
             should.deepEqual(Object.keys(resultVsm).sort(),
                 Object.keys(resultVoice).sort());
 
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTimportSutta(sutta) imports sutta segments", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var vsm = new VsmStore();
+            var results = await suttaStore.search("thig1.2");
+            var {
+                sutta,
+                author_uid,
+                lang,
+                signature,
+            } = results.results[0];
+            var volume = "kn_pli_mahasangiti_aditi";
+            vsm.clearVolume(volume);
+            var sutta_uid = sutta.sutta_uid;
+            var guidsOld = Object.assign({},vsm.importMap);
+            var importResult = await vsm.importSutta(sutta);
+            var guids = Object.keys(vsm.importMap).filter(guid => !guidsOld[guid]);
+            should.deepEqual(importResult, {
+                sutta_uid,
+                volume,
+                guids, // newly added guids
+            });
             done();
         } catch(e) {done(e);} })();
     });
