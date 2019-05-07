@@ -17,9 +17,10 @@
         "That’s how you should train.",
         "So you should train like this:",
     ].join("\n");
+    const TEST_VOLUME = "test-volume";
     const VOICE_OPTS = {
-        volume: "test-volume",
         usage: "recite",
+        volume: 'other_en_sujato_aditi',
     };
     var mj = new MerkleJson();
     logger.level = 'warn';
@@ -34,8 +35,8 @@
         should(vsm.soundStore).instanceof(SoundStore);
         should(fs.existsSync(vsm.storePath)).equal(true);
         should(vsm.type).equal('VsmStore');
-        should(vsm.storeName).equal('vsm-raveena');
-        should(vsm.storePath).equal(path.join(LOCAL, 'vsm', 'vsm-raveena'));
+        should(vsm.storeName).equal('vsm');
+        should(vsm.storePath).equal(path.join(LOCAL, 'vsm'));
         should(vsm.volume).equal('common');
         should(vsm.audioSuffix).equal('.mp3');
         should(vsm.audioFormat).equal('mp3');
@@ -53,8 +54,8 @@
         var vsm = new VsmStore({
             voice: aditi,
         });
-        should(vsm.storeName).equal('vsm-aditi');
-        should(vsm.storePath).equal(path.join(LOCAL, 'vsm', 'vsm-aditi'));
+        should(vsm.storeName).equal('vsm');
+        should(vsm.storePath).equal(path.join(LOCAL, 'vsm'));
         should(vsm.voice).equal(aditi);
     });
     it("TESTTESTimport(speakResult) copies resource files into VSM", function(done) {
@@ -73,6 +74,11 @@
             var reFile = new RegExp(`${vsm.storePath}`,'u');
             should(importResult.file).match(reFile);
             should(fs.existsSync(importResult.file)).equal(true);
+
+            // the importMap has all imported guids
+            var guid = importResult.signature.guid;
+            should(vsm.importMap[guid]).equal(importResult);
+
             done();
         } catch(e) {done(e);} })();
     });
@@ -84,15 +90,20 @@
             // Vsm.speak() returns similar result as voice.speak()
             var resultVoice = await voice.speak(TEST_TEXT, VOICE_OPTS);
             var resultVsm = await vsm.speak(TEST_TEXT, VOICE_OPTS);
-            should(resultVsm).properties({
-                segments: resultVoice.segments,
-                signature: resultVoice.signature,
-            });
+            should.deepEqual(resultVsm.signature, resultVoice.signature); 
             should.deepEqual(Object.keys(resultVsm).sort(),
                 Object.keys(resultVoice).sort());
 
-            var guid = resultVoice.signature.guid;
-            should(vsm.guidMap[guid]).equal(resultVsm);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTarchiveVsm(volume) serializes Vsm", function(done) {
+        (async function() { try {
+            var vsm = new VsmStore();
+            var voice = vsm.voice;
+            var resultVsm = await vsm.speak(TEST_TEXT, VOICE_OPTS);
+
+            var result = await vsm.archiveVsm(TEST_VOLUME);
             done();
         } catch(e) {done(e);} })();
     });

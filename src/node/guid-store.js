@@ -14,7 +14,11 @@
             this.suffix = opts.suffix || '';
             this.volume = opts.volume || 'common';
             this.storeName = opts.storeName || 'guid-store';
-            this.storePath = opts.storePath ||  path.join(LOCAL, this.storeName);
+
+            // Unserialized properties
+            Object.defineProperty(this, 'storePath', {
+                value: opts.storePath ||  path.join(LOCAL, this.storeName),
+            });
             fs.existsSync(this.storePath) || fs.mkdirSync(this.storePath);
         }
 
