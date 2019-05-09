@@ -49,7 +49,7 @@
             });
             storeName = storeName || `vsm`;
             storePath = storePath || PATH_VSM;
-            soundStore = soundStore || new SoundStore();
+            soundStore = soundStore || voice.soundStore;
 
             return Object.assign({}, {
                 storePath,
@@ -95,7 +95,7 @@
             });
         }
 
-        import(speakResult) {
+        importSpeakResult(speakResult) {
             var guid = speakResult.signature.guid;
             var result = this.importMap[guid];
             if (result) {
@@ -141,13 +141,13 @@
                         author,
                     }, opts);
                     var speakResult = await voice.speak(text, speakOpts);
-                    var result = await that.import(speakResult);
+                    var result = await that.importSpeakResult(speakResult);
                     resolve(result);
                 }catch(e) {reject(e);}})();
             });
         }
 
-        archiveVsm(opts={}) {
+        archiveVolume(opts={}) {
             var that = this;
             if (typeof opts === 'string') {
                 opts = {
@@ -161,12 +161,12 @@
                 archiveFile,
             } = opts;
             voice = voice || that.voice;
-            archiveDir = archiveDir || this.storePath;
+            archiveDir = archiveDir || that.storePath;
             archiveFile = archiveFile || volume || 'archive';
             var volPath = path.join(that.storePath, volume);
             if (!fs.existsSync(volPath)) {
                 return Promise.reject(new Error(
-                    `archiveVsm() no volume:${volume}`));
+                    `archiveVolume() no volume:${volume}`));
             }
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -198,6 +198,60 @@
                         resolve(manifest);
                     });
                 } catch(e) {reject(e);} })();
+            });
+        }
+
+        restoreVolume(opts={}) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var {
+                        volume,
+                        voice,
+                        soundStore,
+                        archiveDir,
+                        archiveFile,
+                        clearVolume,
+                    } = opts;
+                    voice = voice || that.voice;
+                    archiveDir = archiveDir || that.storePath;
+                    archiveFile = archiveFile || volume || 'archive';
+                    soundStore = soundStore || that.soundStore;
+                    clearVolume = clearVolume === false ? false : true;
+                    var filesDeleted = 0;
+                    var volumePath = path.join(soundStore.storePath, volume);
+                    if (clearVolume && fs.existsSync(volumePath)) {
+                        logger.info(`restoreVolume(${volume}) clearVolume`);
+                        var clearResult = await soundStore.clearVolume(volume);
+                        filesDeleted = clearResult.filesDeleted;
+                    }
+                    var zipFile = archiveFile.startsWith('/')
+                        ? archiveFile
+                        : path.join(archiveDir, archiveFile);
+                    if (!fs.existsSync(zipFile)) {
+                        var altZipFile = `${zipFile}.tar.gz`;
+                        if (!fs.existsSync(altZipFile)) {
+                            throw new Error(`VSM archive not found:${zipFile}`);
+                        }
+                        zipFile = altZipFile;
+                    }
+                    var cwd = soundStore.storePath;
+                    var cmd = `gunzip -ck ${zipFile} | tar -x`;
+                    var cmdOpts = {
+                        cwd,
+                    };
+                    var execResult = exec(cmd, cmdOpts, (error, stdout, stderr) => {
+                        if (error) {
+                            reject(error);
+                            console.log(`stderr`, stderr);
+                            console.error(error.stack);
+                            return;
+                        }
+                        resolve({
+                            filesDeleted,
+                        });
+                    });
+                } catch(e) { reject(e);} })();
             });
         }
 

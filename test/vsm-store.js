@@ -61,7 +61,7 @@
         should(vsm.storePath).equal(path.join(LOCAL, 'vsm'));
         should(vsm.voice).equal(aditi);
     });
-    it("TESTTESTimport(speakResult) copies resource files into VSM", function(done) {
+    it("TESTTESTimportSpeakResult(sr) imports resource files", function(done) {
         (async function() { try {
             var vsm = new VsmStore();
             var voice = vsm.voice;
@@ -69,7 +69,7 @@
             // Vsm.speak() returns similar result as voice.speak()
             var speakResult = await voice.speak(TEST_TEXT, VOICE_OPTS);
             var guid = speakResult.signature.guid;
-            var importResult = await vsm.import(speakResult);
+            var importResult = await vsm.importSpeakResult(speakResult);
             should(importResult).properties({
                 segments: speakResult.segments,
                 signature: speakResult.signature,
@@ -125,13 +125,72 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTarchiveVsm(volume) serializes Vsm", function(done) {
+    it("TESTTESTarchiveVolume(volume) serializes volume", function(done) {
         (async function() { try {
             var vsm = new VsmStore();
             var voice = vsm.voice;
             var resultVsm = await vsm.speak(TEST_TEXT, VOICE_OPTS);
+            var archive = path.join(LOCAL, 'vsm', `${TEST_VOLUME}.tar.gz`);
+            if (fs.existsSync(archive)) {
+                fs.unlinkSync(archive);
+            }
 
-            var result = await vsm.archiveVsm(TEST_VOLUME);
+            // creates archive
+            var result = await vsm.archiveVolume(TEST_VOLUME);
+            should(fs.existsSync(archive)).equal(true);
+
+            // re-create archive
+            var result = await vsm.archiveVolume(TEST_VOLUME);
+            should(fs.existsSync(archive)).equal(true);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTrestoreVolume(opts) restores volume", function(done) {
+        (async function() { try {
+            var tmpDirObj = tmp.dirSync({
+                unsafeCleanup: true,
+            });
+            var soundStore = new SoundStore({
+                storePath: tmpDirObj.name,
+            });
+            var vsm = new VsmStore({
+                soundStore,
+            });
+            var volume = 'kn_en_sujato_amy';
+            var archiveFile = path.join(__dirname, 'data', `${volume}.tar.gz`);
+            var restoreOpts = {
+                volume,
+                archiveFile,
+            };
+
+            // restore with new volume
+            var result = await vsm.restoreVolume(restoreOpts);
+            var volPath = path.join(tmpDirObj.name, volume);
+            var guid = '528d6018f6e9325e258122ede2ece84b';
+            var chapter = guid.substr(0,2);
+            var jsonPath = path.join(volPath, chapter, `${guid}.json`);
+            should(fs.existsSync(jsonPath)).equal(true);
+            should(result.filesDeleted).equal(0);
+
+            // restore existing volume clears it first (default)
+            var markerPath = path.join(volPath, chapter, 'marker');
+            fs.writeFileSync(markerPath, 'marker');
+            should(fs.existsSync(markerPath)).equal(true);
+            var result = await vsm.restoreVolume(restoreOpts);
+            should(fs.existsSync(markerPath)).equal(false);
+            should(result.filesDeleted).equal(91);
+
+            // restore existing volume without clearing it
+            restoreOpts.clearVolume = false;
+            var markerPath = path.join(volPath, chapter, 'marker');
+            fs.writeFileSync(markerPath, 'marker');
+            should(fs.existsSync(markerPath)).equal(true);
+            var result = await vsm.restoreVolume(restoreOpts);
+            should(fs.existsSync(markerPath)).equal(true);
+            should(result.filesDeleted).equal(0);
+
+            tmpDirObj.removeCallback();
             done();
         } catch(e) {done(e);} })();
     });

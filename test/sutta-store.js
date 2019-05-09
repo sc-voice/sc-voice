@@ -1118,5 +1118,43 @@
             done(); 
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTnikaySuttaIds(...) returns sutta_uids", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore({
+                maxDuration: 450,
+            }).initialize();
+            var language = 'en';
+            const KNSTART = [
+                'thag1.1', 'thag1.2', 'thag1.3',
+            ];
+            const KNEND = [
+                'thig14.1', 'thig15.1', 'thig16.1',
+            ];
+
+            // nikaya, language, author/translator
+            var ids = await store.nikayaSuttaIds('kn', 'en', 'sujato');
+            should(ids).instanceOf(Array);
+            should.deepEqual(ids.slice(0,3), KNSTART);
+            should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
+
+            // Pali is in English folder
+            var ids = await store.nikayaSuttaIds('kn', 'pli', 'sujato');
+            should(ids).instanceOf(Array);
+            should.deepEqual(ids.slice(0,3), KNSTART);
+            should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
+
+            // nikaya
+            var ids = await store.nikayaSuttaIds('kn');
+            should(ids).instanceOf(Array);
+            should.deepEqual(ids.slice(0,3), KNSTART);
+            should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
+
+            // Bad input
+            var ids = await store.nikayaSuttaIds('nonikaya', 'yiddish', 'nobody');
+            should.deepEqual(ids, []);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
 
 })

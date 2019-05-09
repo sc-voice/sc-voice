@@ -925,6 +925,32 @@
             });
         }
 
+        nikayaSuttaIds(nikaya, language='en', author='sujato') {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var nikayaPath = path.join(that.root, nikaya);
+                    var lang = language === 'pli' ? 'en' : language;
+                    var langPath = path.join(nikayaPath, lang, author);
+                    fs.readdir(langPath, null, (err, files) => {
+                        if (err) {
+                            logger.info(`nikayaSuttaIds(${nikaya}) ${err.message}`);
+                            resolve([]);
+                        } else {
+                            var sutta_uids = files.reduce((acc,f) => {
+                                if (f.endsWith('.json')) {
+                                    acc.push(f.replace(/\.json/u, ''));
+                                }
+                                return acc;
+                            }, []);
+                            var cmp = SuttaCentralId.compareLow;
+                            resolve(sutta_uids.sort(cmp));
+                        }
+                    });
+                } catch(e) {reject(e);} })();
+            });
+        }
+
     }
 
     module.exports = exports.SuttaStore = SuttaStore;
