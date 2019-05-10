@@ -14,6 +14,7 @@
     const SoundStore = require('./sound-store');
     const Playlist = require('./playlist');
     const Voice = require('./voice');
+    const AWS = require("aws-sdk");
     const PATH_VSM = path.join(__dirname, '../../local/vsm');
     const MANIFEST = "manifest.json";
     const tmp = require('tmp');
@@ -30,6 +31,7 @@
             this.voice = opts.voice;
             this.zip = opts.zip || 'gzip -f ';
             this.importMap = {};
+            this.s3 = opts.s3 || new AWS.S3();
         }
 
         static options(opts={}) {

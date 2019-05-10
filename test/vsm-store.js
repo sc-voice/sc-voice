@@ -1,4 +1,4 @@
-(typeof describe === 'function') && describe("sound-store", function() {
+(typeof describe === 'function') && describe("vsm-store", function() {
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
@@ -29,7 +29,7 @@
     var suttaStore = new SuttaStore();
     suttaStore.initialize();
 
-    it("TESTTESTVsmStore() creates VSM", function() {
+    it("VsmStore() creates VSM", function() {
         var vsm = new VsmStore();
         should(vsm).instanceof(VsmStore);
         should(vsm).instanceof(SoundStore);
@@ -45,7 +45,7 @@
         should(vsm.audioFormat).equal('mp3');
         should(vsm.audioMIME).equal('audio/mp3');
     });
-    it("TESTTESTVsmStore() creates custom VSM", function() {
+    it("VsmStore() creates custom VSM", function() {
         var aditi = Voice.createVoice({
             name: "aditi",
             usage: 'recite',
@@ -61,7 +61,7 @@
         should(vsm.storePath).equal(path.join(LOCAL, 'vsm'));
         should(vsm.voice).equal(aditi);
     });
-    it("TESTTESTimportSpeakResult(sr) imports resource files", function(done) {
+    it("importSpeakResult(sr) imports resource files", function(done) {
         (async function() { try {
             var vsm = new VsmStore();
             var voice = vsm.voice;
@@ -85,7 +85,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeak(text,opts) decorates voice.speak()", function(done) {
+    it("speak(text,opts) decorates voice.speak()", function(done) {
         (async function() { try {
             var vsm = new VsmStore();
             var voice = vsm.voice;
@@ -100,7 +100,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTimportSutta(sutta) imports sutta segments", function(done) {
+    it("importSutta(sutta) imports sutta segments", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var vsm = new VsmStore();
@@ -125,7 +125,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTarchiveVolume(volume) serializes volume", function(done) {
+    it("archiveVolume(volume) serializes volume", function(done) {
         (async function() { try {
             var vsm = new VsmStore();
             var voice = vsm.voice;
@@ -146,7 +146,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTrestoreVolume(opts) restores volume", function(done) {
+    it("restoreVolume(opts) restores volume", function(done) {
         (async function() { try {
             var tmpDirObj = tmp.dirSync({
                 unsafeCleanup: true,
