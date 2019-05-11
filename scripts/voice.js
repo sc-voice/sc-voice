@@ -35,6 +35,7 @@ var usage = parseArg('-u', '--usage', (acc,a,i) => argv[i+1], 'recite');
 var fnIn = parseArg('-i', '--input', (acc,a,i) => argv[i+1], 'stdin');
 var fdIn = !fnIn || fnIn === 'stdin' ? 0 : fs.openSync(fnIn, 'r');
 var fnOut = parseArg('-o', '--output', (acc,a,i) => argv[i+1], null);
+var text = '(stdin)';
 for (var i=0; i<argv.length; i++) {
     var arg = argv[i];
     if (arg.startsWith('-')) {
@@ -70,7 +71,7 @@ Arguments:`);
 }
 
 (async function() { try {
-    var text = fs.readFileSync(0).toString();
+    text = fs.readFileSync(0).toString();
     console.error(`text\t: ${text}`);
     var voice = Voice.createVoice(vname);
     if (voice == null) {
