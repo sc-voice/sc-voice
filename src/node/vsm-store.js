@@ -15,8 +15,10 @@
     const Playlist = require('./playlist');
     const Voice = require('./voice');
     const AWS = require("aws-sdk");
-    const PATH_VSM = path.join(__dirname, '../../local/vsm');
+    const LOCAL = path.join(__dirname, '../../local');
+    const PATH_VSM = path.join(LOCAL, 'vsm');
     const MANIFEST = "manifest.json";
+    const VSM_S3 = path.join(LOCAL, 'vsm-s3.json');
     const tmp = require('tmp');
 
     var suttaStore = new SuttaStore();
@@ -31,7 +33,6 @@
             this.voice = opts.voice;
             this.zip = opts.zip || 'gzip -f ';
             this.importMap = {};
-            this.s3 = opts.s3 || new AWS.S3();
         }
 
         static options(opts={}) {

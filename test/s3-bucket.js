@@ -2,18 +2,20 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const { logger } = require('rest-bundle');
     const {
         S3Bucket,
     } = require("../index");
     const AWS = require("aws-sdk");
     const TEST_BUCKET = 'sc-voice-test-bucket';
     var s3 = new AWS.S3();
+
     const BUCKET_OPTS = {
         s3,
         Bucket: TEST_BUCKET,
     };
 
-    it("ctor() constructor", function() {
+    it("TESTTESTctor() constructor", function() {
         // default constructor
         var bucket = new S3Bucket();
         should(bucket.s3).instanceOf(AWS.S3);
@@ -66,6 +68,23 @@
             should(getResult.ContentType).equal('application/octet-stream');
             should(getResult.Body.length).equal(data.length);
             should.deepEqual(getResult.Body, data);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTlocal/vsm-s3.json changes endpoint", function(done) {
+        this.timeout(9*1000);
+        var vsm_s3_path = path.join(__dirname, '..', 'local', 'vsm-s3.json');
+        if (!fs.existsSync(vsm_s3_path)) {
+            logger.warn(`skipping vsm-s3.json test`);
+            done();
+            return;
+        }
+        (async function() { try {
+            var vsm_s3 = JSON.parse(fs.readFileSync(vsm_s3_path));
+            var bucket = await new S3Bucket(vsm_s3).initialize();
+            should(bucket.s3.config.endpoint).equal('https://s3.us-west-1.wasabisys.com');
+            should(bucket.Bucket).equal('sc-voice-wasabi');
+            should(bucket.initialized).equal(true);
             done();
         } catch(e) {done(e);} })();
     });

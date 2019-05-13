@@ -14,13 +14,16 @@
     const tmp = require('tmp');
     const REGION = 'us-west-1';
     const BUCKET = 'sc-voice-bucket';
+    const LOCAL = path.join(__dirname, '..', '..', 'local');
 
     class S3Bucket {
         constructor(opts={}) {
-            var s3 = this.s3 = opts.s3 || new AWS.S3();
+            this.Bucket = opts.Bucket || BUCKET;
+            var s3 = this.s3 = opts.s3 instanceof AWS.S3 
+                ? opts.s3
+                : new AWS.S3(opts.s3);
 
             this.initialized = false;
-            this.Bucket = opts.Bucket || BUCKET;
             this.LocationConstraint = opts.LocationConstraint || REGION;
         }
 

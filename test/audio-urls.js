@@ -1,4 +1,4 @@
-(typeof describe === 'function') && describe("sutta-store", function() {
+(typeof describe === 'function') && describe("audio-urls", function() {
     const should = require("should");
     const {
         AudioUrls,
@@ -68,6 +68,7 @@
             `xRoot/xLang/sn/sn1/sn1.1-xLang-xAuthor-xSpeaker.xExtension`);
     });
     it("audioUrl(...) returns verified audio url or null", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var audio = new AudioUrls();
 
