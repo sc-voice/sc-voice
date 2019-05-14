@@ -3,6 +3,9 @@
     "service": "aws-polly",
     "name": "Amy",
     "gender": "female",
+    "languageUnknown": "pli",
+    "stripNumbers": false,
+    "stripQuotes": false,
     "rates": {
         "navigate": "+5%", 
         "recite": "-30%"
@@ -84,6 +87,9 @@
     "service": "aws-polly",
     "name": "Raveena",
     "gender": "female",
+    "languageUnknown": "en-IN",
+    "stripNumbers": false,
+    "stripQuotes": false,
     "rates": {
         "navigate": "+5%", 
         "recite": "-30%"
@@ -258,6 +264,9 @@
     "language": "en-US",
     "service": "aws-polly",
     "name": "Salli",
+    "languageUnknown": "pli",
+    "stripNumbers": false,
+    "stripQuotes": false,
     "gender": "female",
     "rates": {
         "navigate": "+5%", 
@@ -325,6 +334,9 @@
     "service": "aws-polly",
     "name": "Russell",
     "gender": "male",
+    "languageUnknown": "pli",
+    "stripNumbers": false,
+    "stripQuotes": false,
     "rates": {
         "navigate": "-0%", 
         "recite": "-20%"
@@ -393,6 +405,9 @@
     "service": "aws-polly",
     "name": "Marlene",
     "gender": "female",
+    "languageUnknown": "pli",
+    "stripNumbers": false,
+    "stripQuotes": false,
     "rates": {
         "navigate": "-0%", 
         "recite": "-20%"
@@ -461,6 +476,9 @@
     "language": "de-DE",
     "service": "aws-polly",
     "name": "Vicki",
+    "languageUnknown": "pli",
+    "stripNumbers": false,
+    "stripQuotes": false,
     "gender": "female",
     "pitch": "-10%",
     "rates": {

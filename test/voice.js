@@ -78,6 +78,43 @@
         should(amy.name).equal("Amy");
         should(amy.usage).equal("recite");
     });
+    it("TESTTESTcreateVoice(voiceName) returns a default voice", function() {
+        var voice = Voice.createVoice('aditi');
+        should(voice).instanceOf(Voice);
+        should(voice.language).equal("hi-IN");
+        should(voice.name).equal("Aditi");
+        should(voice.usage).equal("recite");
+        should(voice.languageUnknown).equal('pli');
+        should(voice.stripNumbers).equal(true);
+        should(voice.stripQuotes).equal(true);
+
+        var voice = Voice.createVoice('amy');
+        should(voice).instanceOf(Voice);
+        should(voice.language).equal("en-GB");
+        should(voice.name).equal("Amy");
+        should(voice.usage).equal("recite");
+        should(voice.languageUnknown).equal('pli');
+        should(voice.stripNumbers).equal(false);
+        should(voice.stripQuotes).equal(false);
+
+        var voice = Voice.createVoice('raveena');
+        should(voice).instanceOf(Voice);
+        should(voice.language).equal("en-IN");
+        should(voice.name).equal("Raveena");
+        should(voice.usage).equal("recite");
+        should(voice.languageUnknown).equal('en-IN');
+        should(voice.stripNumbers).equal(false);
+        should(voice.stripQuotes).equal(false);
+
+        var voice = Voice.createVoice('russell');
+        should(voice).instanceOf(Voice);
+        should(voice.language).equal("en-AU");
+        should(voice.name).equal("Russell");
+        should(voice.usage).equal("recite");
+        should(voice.languageUnknown).equal('pli');
+        should(voice.stripNumbers).equal(false);
+        should(voice.stripQuotes).equal(false);
+    });
     it("createVoice(opts) creates a recite Voice instance", function() {
         var reciteVoice = Voice.createVoice({
             language: 'en',
