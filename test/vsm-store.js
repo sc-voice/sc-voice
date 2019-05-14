@@ -103,7 +103,12 @@
     it("importSutta(sutta) imports sutta segments", function(done) {
         this.timeout(5*1000);
         (async function() { try {
-            var vsm = new VsmStore();
+            var tmpDirObj = tmp.dirSync({
+                unsafeCleanup: true,
+            });
+            var vsm = new VsmStore({
+                storePath: tmpDirObj.name,
+            });
             var results = await suttaStore.search("thig1.2");
             var {
                 sutta,
@@ -191,6 +196,39 @@
             should(result.filesDeleted).equal(0);
 
             tmpDirObj.removeCallback();
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTimportNikaya(...) archives nikaya", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var tmpDirObj = tmp.dirSync({
+                unsafeCleanup: true,
+            });
+            var vsm = new VsmStore({
+                storePath: tmpDirObj.name,
+            });
+            var maxSuttas = 2; // for testing
+            var archiveResult = await vsm.importNikaya({
+                nikaya: 'kn',
+                voice: 'aditi',
+                maxSuttas,
+            });
+            should(archiveResult).properties({
+                nikaya: 'kn',
+                lang: 'pli',
+                searchLang: 'en',
+                author: 'sujato',
+                maxSuttas,
+                sutta_ids: [ 'thag1.1', 'thag1.2' ],
+            });
+            should(archiveResult.guids.length).equal(24+9);
+            var volumePath = path.join(tmpDirObj.name, 'kn_pli_mahasangiti_aditi');
+            should(fs.existsSync(volumePath)).equal(true);
+            var guid = archiveResult.guids[0];
+            var guidPath = path.join(volumePath, guid.substring(0,2), `${guid}.json`);
+            should(fs.existsSync(guidPath)).equal(true);
+
             done();
         } catch(e) {done(e);} })();
     });

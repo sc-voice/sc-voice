@@ -150,6 +150,79 @@
             });
         }
 
+        importNikaya(...args) {
+            var that = this;
+            var opts = args[0] || {};
+            if (typeof args[0] === 'string') {
+                opts = {
+                    nikaya: args[0],
+                    lang: args[1],
+                    author: args[2],
+                    voice: args[3],
+                }
+            }
+            var {
+                nikaya,
+                lang,
+                author,
+                voice,
+                volume,
+                maxSuttas,
+                suttaStore,
+            } = opts;
+            lang = lang || 'pli';
+            author = author || 'sujato';
+            voice = voice || Voice.createVoice('aditi');
+            if (typeof voice === 'string') {
+                voice = Voice.createVoice(voice);
+            }
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var guids = [];
+                    suttaStore = suttaStore || await new SuttaStore().initialize();
+                    var searchLang = lang === 'pli' ? 'en' : lang;
+                    var sutta_ids = await 
+                        suttaStore.nikayaSuttaIds(nikaya, searchLang, author);
+                    sutta_ids = maxSuttas
+                        ? sutta_ids.slice(0, maxSuttas)
+                        : sutta_ids;
+                    for (var iSutta = 0; iSutta < sutta_ids.length; iSutta++) {
+                        var suid = sutta_ids[iSutta];
+                        var searchPattern = `${suid}/${searchLang}/${author}`;
+                        var searchResults = await suttaStore.search(searchPattern);
+                        if (searchResults.results.length) {
+                            var {
+                                sutta,
+                            } = searchResults.results[0];
+                        }
+                        var archiveResult = await that.importSutta(sutta);
+                        var volume = archiveResult.volume;
+                        guids = guids.concat(archiveResult.guids);
+                    }
+                    resolve({
+                        nikaya,
+                        lang,
+                        searchLang,
+                        author,
+                        voice: {
+                            name: voice.name,
+                            usage: voice.usage,
+                            pitch: voice.pitch,
+                            usages: {
+                                [voice.usage]: {
+                                    rate: voice.usages[voice.usage].rate,
+                                }
+                            }
+                        },
+                        maxSuttas,
+                        sutta_ids,
+                        volume,
+                        guids,
+                    });
+                } catch(e) {reject(e);} })();
+            });
+        }
+
         archiveVolume(opts={}) {
             var that = this;
             if (typeof opts === 'string') {
@@ -288,7 +361,9 @@
                         var speakResult = await that.speak(text, {
                             volume,
                         });
-                        guids.push(speakResult.signature.guid);
+                        var guid = speakResult.signature.guid;
+                        guids.push(guid);
+                        var guidResult = await that.importGuidFiles(guid, volume);
                     }
                     resolve({
                         sutta_uid,
