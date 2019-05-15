@@ -1118,7 +1118,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTnikaySuttaIds(...) returns sutta_uids", function(done) {
+    it("nikaySuttaIds(...) returns sutta_uids", function(done) {
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,

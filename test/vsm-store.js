@@ -10,6 +10,7 @@
         GuidStore,
         SoundStore,
         SuttaStore,
+        S3Bucket,
         Voice,
         VsmStore,
     } = require("../index");
@@ -19,6 +20,11 @@
         "So you should train like this:",
     ].join("\n");
     const TEST_VOLUME = "test-volume";
+    const TEST_BUCKET = 'sc-voice-test-bucket';
+    const TEST_S3 = {
+        endpoint: 's3.us-west-1.amazonaws.com',
+        region: 'us-west-1',
+    };
     const VOICE_OPTS = {
         usage: "recite",
         volume: 'other_en_sujato_aditi',
@@ -44,22 +50,30 @@
         should(vsm.audioSuffix).equal('.mp3');
         should(vsm.audioFormat).equal('mp3');
         should(vsm.audioMIME).equal('audio/mp3');
+        should(vsm.s3Bucket).instanceOf(S3Bucket);
+        should(vsm.s3Bucket.initialized).equal(false);
     });
-    it("VsmStore() creates custom VSM", function() {
-        var aditi = Voice.createVoice({
-            name: "aditi",
-            usage: 'recite',
-            languageUnknown: "pli",
-            language: 'hi-IN',
-            stripNumbers: true,
-            stripQuotes: true,
-        });
-        var vsm = new VsmStore({
-            voice: aditi,
-        });
-        should(vsm.storeName).equal('vsm');
-        should(vsm.storePath).equal(path.join(LOCAL, 'vsm'));
-        should(vsm.voice).equal(aditi);
+    it("TESTTESTVsmStore() creates custom VSM", function(done) {
+        (async function() { try {
+            var aditi = Voice.createVoice({
+                name: "aditi",
+                usage: 'recite',
+                languageUnknown: "pli",
+                language: 'hi-IN',
+                stripNumbers: true,
+                stripQuotes: true,
+            });
+            var s3Bucket = await new S3Bucket().initialize();
+            var vsm = new VsmStore({
+                voice: aditi,
+                s3Bucket,
+            });
+            should(vsm.storeName).equal('vsm');
+            should(vsm.storePath).equal(path.join(LOCAL, 'vsm'));
+            should(vsm.voice).equal(aditi);
+            should(vsm.s3Bucket).equal(s3Bucket);
+            done();
+        } catch(e) {done(e);} })();
     });
     it("importSpeakResult(sr) imports resource files", function(done) {
         (async function() { try {
@@ -130,7 +144,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("archiveVolume(volume) serializes volume", function(done) {
+    it("serializeVolume(volume) serializes volume", function(done) {
         (async function() { try {
             var vsm = new VsmStore();
             var voice = vsm.voice;
@@ -141,11 +155,11 @@
             }
 
             // creates archive
-            var result = await vsm.archiveVolume(TEST_VOLUME);
+            var result = await vsm.serializeVolume(TEST_VOLUME);
             should(fs.existsSync(archive)).equal(true);
 
             // re-create archive
-            var result = await vsm.archiveVolume(TEST_VOLUME);
+            var result = await vsm.serializeVolume(TEST_VOLUME);
             should(fs.existsSync(archive)).equal(true);
 
             done();
@@ -199,7 +213,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTimportNikaya(...) archives nikaya", function(done) {
+    it("importNikaya(...) imports nikaya", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var tmpDirObj = tmp.dirSync({
@@ -229,6 +243,79 @@
             var guidPath = path.join(volumePath, guid.substring(0,2), `${guid}.json`);
             should(fs.existsSync(guidPath)).equal(true);
 
+            tmpDirObj.removeCallback();
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("tarPath(opts) returns tar path", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var tmpDirObj = tmp.dirSync({
+                unsafeCleanup: true,
+            });
+            var vsm = new VsmStore({
+                storePath: tmpDirObj.name,
+            });
+            should(vsm.tarPath()).equal(path.join(tmpDirObj.name, 'common.tar'));
+            should(vsm.tarPath({
+                volume: 'abc',
+            })).equal(path.join(tmpDirObj.name, 'abc.tar'));
+
+            tmpDirObj.removeCallback();
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("zipPath(opts) returns zip path", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var tmpDirObj = tmp.dirSync({
+                unsafeCleanup: true,
+            });
+            var vsm = new VsmStore({
+                storePath: tmpDirObj.name,
+            });
+            should(vsm.zipPath()).equal(path.join(tmpDirObj.name, 'common.tar.gz'));
+            should(vsm.zipPath({
+                volume: 'abc',
+            })).equal(path.join(tmpDirObj.name, 'abc.tar.gz'));
+
+            tmpDirObj.removeCallback();
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("archiveNikaya(...) archives nikaya", function(done) {
+        this.timeout(10*1000);
+        (async function() { try {
+            const Bucket = TEST_BUCKET;
+            const s3Bucket = await new S3Bucket({ 
+                Bucket, 
+                s3: TEST_S3,
+            });
+            var tmpDirObj = tmp.dirSync({
+                unsafeCleanup: true,
+            });
+            var vsm = new VsmStore({
+                storePath: tmpDirObj.name,
+                s3Bucket,
+            });
+            var maxSuttas = 1; // for testing
+            var archiveResult = await vsm.archiveNikaya({
+                nikaya: 'kn',
+                voice: 'aditi',
+                maxSuttas,
+                s3Bucket,
+            });
+
+            should.deepEqual(archiveResult.s3Bucket, {
+                Bucket,
+                s3: TEST_S3,
+            });
+            should(archiveResult).properties({
+                Key: 'kn_pli_mahasangiti_aditi.tar.gz',
+            });
+            should(archiveResult.response).properties(['ETag']);
+
+            tmpDirObj.removeCallback();
             done();
         } catch(e) {done(e);} })();
     });

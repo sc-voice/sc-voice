@@ -12,6 +12,7 @@
     } = require('../../package');
     const SuttaStore = require('./sutta-store');
     const SoundStore = require('./sound-store');
+    const S3Bucket = require('./s3-bucket');
     const Playlist = require('./playlist');
     const Voice = require('./voice');
     const AWS = require("aws-sdk");
@@ -31,8 +32,11 @@
             this.lang = opts.lang || 'pli';
             this.author = opts.author || 'mahasangiti';
             this.voice = opts.voice;
-            this.zip = opts.zip || 'gzip -f ';
+            this.zipSuffix = opts.zipSuffix || '.gz';
+            this.zip = opts.zip || `gzip -f -S ${this.zipSuffix}`;
             this.importMap = {};
+            this.s3Bucket = opts.s3Bucket || new S3Bucket();
+            this.archiveDir = opts.archiveDir || this.storePath;
         }
 
         static options(opts={}) {
@@ -41,6 +45,7 @@
                 storeName,
                 soundStore,
                 voice,
+                s3Bucket,
             } = opts;
             voice = voice || Voice.createVoice({
                 name: "aditi",
@@ -60,7 +65,20 @@
                 type: "VsmStore",
                 soundStore,
                 voice,
+                s3Bucket,
             });
+        }
+
+        tarPath(opts={}) {
+            var volume = opts.volume || 'common';
+            var archiveDir = opts.archiveDir || this.archiveDir;
+            var archiveFile = opts.archiveFile || this.archiveFile || volume;
+            return path.join(archiveDir, `${archiveFile}.tar`);
+        }
+
+        zipPath(opts={}) {
+            var zipSuffix = opts.zipSuffix || this.zipSuffix;
+            return `${this.tarPath(opts)}${zipSuffix}`;
         }
 
         importGuidFiles(guid, volume) {
@@ -150,6 +168,49 @@
             });
         }
 
+        archiveNikaya(...args) {
+            var that = this;
+            var opts = args[0] || {};
+            var {
+                s3Bucket,
+                voice,
+            } = opts;
+            var archiveDir = opts.archiveDir || that.archiveDir;
+            s3Bucket = s3Bucket || this.s3Bucket;
+            voice = voice || this.voice;
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var result = {};
+                    var importResult = await that.importNikaya.apply(that, args);
+                    var {
+                        volume,
+                    } = importResult;
+                    var archiveFile =  opts.archiveFile || volume;
+                    var archiveOpts = {
+                        volume,
+                        archiveDir,
+                        archiveFile,
+                        voice,
+                    };
+                    var {
+                        archived,
+                        version,
+                    } = await that.serializeVolume.call(that, archiveOpts);
+                    var archivePath = that.zipPath({
+                        volume,
+                        archiveDir,
+                        archiveFile,
+                    });
+                    var archiveBase = path.basename(archivePath);
+                    var archiveStream = fs.createReadStream(archivePath);
+                    var archiveResult = await 
+                        s3Bucket.putObject(archiveBase, archiveStream);
+                    resolve(archiveResult);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
         importNikaya(...args) {
             var that = this;
             var opts = args[0] || {};
@@ -223,7 +284,7 @@
             });
         }
 
-        archiveVolume(opts={}) {
+        serializeVolume(opts={}) {
             var that = this;
             if (typeof opts === 'string') {
                 opts = {
@@ -231,6 +292,7 @@
                 }
             }
             var {
+                s3Bucket,
                 volume,
                 voice,
                 archiveDir,
@@ -242,7 +304,7 @@
             var volPath = path.join(that.storePath, volume);
             if (!fs.existsSync(volPath)) {
                 return Promise.reject(new Error(
-                    `archiveVolume() no volume:${volume}`));
+                    `serializeVolume() no volume:${volume}`));
             }
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -258,8 +320,8 @@
                     fs.writeFileSync(manifestPath, 
                         JSON.stringify(manifest, null, 2));
 
-                    var tarPath = path.join(archiveDir, `${archiveFile}.tar`);
-                    var zip = that.zip
+                    var tarPath = that.tarPath(manifest);
+                    var zip = that.zip;
                     var cmd = `tar -cf ${tarPath} ${volume} ; ${zip} ${tarPath}`;
                     var cmdOpts = {
                         cwd: that.storePath,

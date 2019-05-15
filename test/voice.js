@@ -78,7 +78,7 @@
         should(amy.name).equal("Amy");
         should(amy.usage).equal("recite");
     });
-    it("TESTTESTcreateVoice(voiceName) returns a default voice", function() {
+    it("createVoice(voiceName) returns a default voice", function() {
         var voice = Voice.createVoice('aditi');
         should(voice).instanceOf(Voice);
         should(voice.language).equal("hi-IN");

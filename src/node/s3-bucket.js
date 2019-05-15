@@ -15,9 +15,16 @@
     const REGION = 'us-west-1';
     const BUCKET = 'sc-voice-bucket';
     const LOCAL = path.join(__dirname, '..', '..', 'local');
+    const DEFAULT_OPTS = {
+        s3: {
+            apiVersion: '2006-03-01',
+            endpoint: 's3.us-west-1.amazonaws.com',
+            region: 'us-west-1',
+        }
+    }
 
     class S3Bucket {
-        constructor(opts={}) {
+        constructor(opts = DEFAULT_OPTS) {
             this.Bucket = opts.Bucket || BUCKET;
             var s3 = this.s3 = opts.s3 instanceof AWS.S3 
                 ? opts.s3
@@ -33,6 +40,9 @@
                 LocationConstraint,
                 s3,
             } = this;
+            if (this.initialized) {
+                return Promise.resolve(this);
+            }
             var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -84,7 +94,7 @@
             });
         }
 
-        putObject(oname, data) {
+        putObject(Key, data) {
             var {
                 s3,
                 Bucket,
@@ -95,14 +105,24 @@
                     var params = {
                         Body: data,
                         Bucket,
-                        Key: oname,
+                        Key,
                     };
                     s3.putObject(params, (err, response) => {
                         if (err) {
                             reject(err);
                             return;
                         }
-                        resolve(response);
+                        resolve({
+                            s3Bucket: {
+                                Bucket,
+                                s3: {
+                                    endpoint: s3.config.endpoint,
+                                    region: s3.config.region,
+                                },
+                            },
+                            Key,
+                            response,
+                        });
                     });
                 } catch(e) {reject(e);} })();
             });
@@ -119,6 +139,7 @@
                         Bucket,
                         Key: oname,
                     };
+
                     s3.getObject(params, (err, data) => {
                         if (err) {
                             reject(err);
@@ -126,6 +147,24 @@
                         }
                         resolve(data);
                     });
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        getObjectStream(oname) {
+            var {
+                s3,
+                Bucket,
+            } = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var params = {
+                        Bucket,
+                        Key: oname,
+                    };
+
+                    var stream = s3.getObject(params).createReadStream();
+                    resolve(stream);
                 } catch(e) {reject(e);} })();
             });
         }
