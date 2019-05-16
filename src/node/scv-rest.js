@@ -14,6 +14,7 @@
     const srcPkg = require("../../package.json");
     const Words = require('./words');
     const GuidStore = require('./guid-store');
+    const S3Bucket = require('./s3-bucket');
     const AudioUrls = require('./audio-urls');
     const Playlist = require('./playlist');
     const Section = require('./section');
@@ -26,8 +27,9 @@
     const PoParser = require('./po-parser');
     const Voice = require('./voice');
     const SuttaCentralId = require('./sutta-central-id');
-    const PATH_SOUNDS = path.join(__dirname, '../../local/sounds/');
-    const PATH_EXAMPLES = path.join(__dirname, `../../local/suttas/examples/`);
+    const LOCAL = path.join(__dirname, '../../local');
+    const PATH_SOUNDS = path.join(LOCAL, 'sounds/');
+    const PATH_EXAMPLES = path.join(LOCAL, `suttas`, `examples/`);
     const DEFAULT_USER = {
         username: "admin",
         isAdmin: true,
@@ -143,6 +145,8 @@
                         this.postAddUser),
                     this.resourceMethod("post", "auth/set-password", 
                         this.postSetPassword),
+                    this.resourceMethod("post", "auth/vsm/s3-credentials", 
+                        this.postVsmS3Credentials),
                     this.resourceMethod("post", "auth/update-release", 
                         this.postUpdateRelease),
 
@@ -855,6 +859,36 @@
                         }
                     }, 1000);
                 } catch(e) {reject(e);} })();
+            });
+        }
+
+        postVsmS3Credentials(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "POST vsm/s3-credentials");
+                    var creds = req.body;
+                    var { Bucket, s3 } = creds;
+                    var {
+                        endpoint,
+                        region,
+                    } = s3;
+                    logger.info(`POST vsm/s3-credentials `+
+                        `Bucket:${Bucket} endpoint:${endpoint} region:${region}`);
+                    var s3Bucket = await new S3Bucket(creds).initialize();
+                    var credPath = path.join(LOCAL, 'vsm-s3.json');
+                    fs.writeFileSync(credPath, JSON.stringify(creds, null, 2));
+                    logger.info(`vsm/s3-credentials verified and saved to: ${credPath}`);
+                    resolve({
+                        Bucket,
+                        s3: {
+                            endpoint,
+                            region,
+                        }
+                    });
+                } catch(e) {
+                    reject(e);} 
+                })();
             });
         }
 

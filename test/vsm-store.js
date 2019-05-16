@@ -53,7 +53,7 @@
         should(vsm.s3Bucket).instanceOf(S3Bucket);
         should(vsm.s3Bucket.initialized).equal(false);
     });
-    it("TESTTESTVsmStore() creates custom VSM", function(done) {
+    it("VsmStore() creates custom VSM", function(done) {
         (async function() { try {
             var aditi = Voice.createVoice({
                 name: "aditi",

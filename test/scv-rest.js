@@ -26,7 +26,8 @@
     };
     const Queue = require('promise-queue');
     const PUBLIC = path.join(__dirname, '../public');
-    const SC = path.join(__dirname, '../local/sc');
+    const LOCAL = path.join(__dirname, '../local');
+    const SC = path.join(LOCAL, 'sc');
     const app = require("../scripts/sc-voice.js"); // access cached instance 
 
     it("ScvRest must be initialized", function(done) {
@@ -487,7 +488,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET auth/sound-store/clear-volume clears volume cache", function(done) {
+    it("POST auth/sound-store/clear-volume clears volume cache", function(done) {
         this.timeout(3*1000);
         (async function() { try {
             var scvRest = app.locals.scvRest;
@@ -542,6 +543,48 @@
                 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com/'+
                     'en/sn/sn1/sn1.23-en-sujato-sujato.webm',
             ]);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("POST auth/vsm/s3-credentials configures vsm-s3.json", function(done) {
+        this.timeout(5*1000);
+        var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
+        if (!fs.existsSync(vsmS3Path)) {
+            logger.warn('skipping vsm/s3-credentials test');
+            done();
+            return;
+        }
+        (async function() { try {
+            var url = `/scv/auth/vsm/s3-credentials`;
+            var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
+            var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
+
+            // Good credentials are saved
+            fs.unlinkSync(vsmS3Path);
+            var res = await supertest(app).post(url)
+                .set("Authorization", `Bearer ${token}`)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(goodCreds);
+            var actualCreds = JSON.parse(fs.readFileSync(vsmS3Path));
+            fs.writeFileSync(vsmS3Path, JSON.stringify(goodCreds, null, 2));
+            res.statusCode.should.equal(200);
+            should.deepEqual(actualCreds, goodCreds);
+
+            // Bad credentials are not saved
+            logger.warn("EXPECTED WARNING BEGIN");
+            var badCreds = JSON.parse(JSON.stringify(goodCreds));
+            badCreds.s3.secretAccessKey = 'bad-secretAccessKey';
+            var res = await supertest(app).post(url)
+                .set("Authorization", `Bearer ${token}`)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(badCreds);
+            logger.warn("EXPECTED WARNING END");
+            res.statusCode.should.equal(500);
+            var actualCreds = JSON.parse(fs.readFileSync(vsmS3Path));
+            should.deepEqual(actualCreds, goodCreds);
 
             done();
         } catch(e) {done(e);} })();
