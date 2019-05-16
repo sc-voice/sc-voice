@@ -110,6 +110,8 @@ export default {
                 Vue.set(this, 'vsmCreds', res.data);
                 if (res.data.Bucket) {
                     Vue.set(this, 'editCreds', JSON.parse(JSON.stringify(res.data)));
+                    Vue.set(this.editCreds.s3, 'accessKeyId', '');
+                    Vue.set(this.editCreds.s3, 'secretAccessKey', '');
                 }
             }).catch(e => {
                 console.log(e.response);
