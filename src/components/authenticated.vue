@@ -17,6 +17,10 @@
         <v-tab-item v-if="isAdmin"> 
             <releases/>
         </v-tab-item>
+        <v-tab v-if="isAdmin"> VSM </v-tab>
+        <v-tab-item v-if="isAdmin">
+            <vsm/>
+        </v-tab-item>
         <v-tab v-if="isTranslator || isEditor"> Content </v-tab>
         <v-tab-item v-if="isTranslator || isEditor">
             Translator/Editor stuff goes here...
@@ -29,6 +33,7 @@
 /* eslint no-console: 0*/
 import Vue from "vue";
 import AdminUsers from "./admin-users";
+import Vsm from "./vsm";
 import Caches from "./caches";
 import Releases from "./releases";
 import Login from "./login";
@@ -82,6 +87,7 @@ export default {
         AdminUsers,
         Caches,
         Releases,
+        Vsm,
         Login,
     },
 }

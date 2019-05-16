@@ -547,11 +547,40 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTGET auth/vsm/s3-credentials configures vsm-s3.json", function(done) {
+        this.timeout(5*1000);
+        var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
+        if (!fs.existsSync(vsmS3Path)) {
+            logger.warn('skipping vsm/s3-credentials GET test');
+            done();
+            return;
+        }
+        (async function() { try {
+            var url = `/scv/auth/vsm/s3-credentials`;
+            var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
+            var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
+
+            // Returns obfuscated credentials
+            var res = await supertest(app).get(url)
+                .set("Authorization", `Bearer ${token}`)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json');
+            res.statusCode.should.equal(200);
+            var actualCreds = res.body;
+            should(actualCreds.Bucket).equal(goodCreds.Bucket);
+            should(actualCreds.s3.endpoint).equal(goodCreds.s3.endpoint);
+            should(actualCreds.s3.region).equal(goodCreds.s3.region);
+            should(actualCreds.s3.accessKeyId.substr(0,5)).equal('*****');
+            should(actualCreds.s3.secretAccessKey.substr(0,5)).equal('*****');
+
+            done();
+        } catch(e) {done(e);} })();
+    });
     it("POST auth/vsm/s3-credentials configures vsm-s3.json", function(done) {
         this.timeout(5*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
-            logger.warn('skipping vsm/s3-credentials test');
+            logger.warn('skipping vsm/s3-credentials POST test');
             done();
             return;
         }

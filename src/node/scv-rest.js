@@ -145,6 +145,8 @@
                         this.postAddUser),
                     this.resourceMethod("post", "auth/set-password", 
                         this.postSetPassword),
+                    this.resourceMethod("get", "auth/vsm/s3-credentials", 
+                        this.getVsmS3Credentials),
                     this.resourceMethod("post", "auth/vsm/s3-credentials", 
                         this.postVsmS3Credentials),
                     this.resourceMethod("post", "auth/update-release", 
@@ -791,10 +793,14 @@
         requireAdmin(req, res, msg){
             var authorization = req.headers.authorization || "";
             var decoded = jwt.decode(authorization.split(' ')[1]);
-            if (!decoded.isAdmin) {
+            var {
+                username,
+            } = decoded;
+            if (decoded.isAdmin) {
+                logger.warn(`${msg}:${username} => AUTHORIZED`);
+            } else {
                 res.locals.status = 401;
-                var user = decoded.user;
-                logger.warn(`${msg}:${user} => HTTP401 UNAUTHORIZED (ADMIN)`);
+                logger.warn(`${msg}:${username} => HTTP401 UNAUTHORIZED (ADMIN)`);
                 throw new Error('Admin privilege required');
             }
             return true;
@@ -859,6 +865,35 @@
                         }
                     }, 1000);
                 } catch(e) {reject(e);} })();
+            });
+        }
+
+        getVsmS3Credentials(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "GET vsm/s3-credentials");
+                    var credPath = path.join(LOCAL, 'vsm-s3.json');
+                    var creds = {};
+                    if (fs.existsSync(credPath)) {
+                        creds = JSON.parse(fs.readFileSync(credPath));
+                    }
+                    if (creds.s3) {
+                        var obfuscate = s => {
+                            var result = "";
+                            for (var i = 0; i < s.length; i++) {
+                                result = result + (i < s.length-4 ? '*' : s[i]);
+                            }
+                            return result;
+                        };
+                        
+                        creds.s3.secretAccessKey = obfuscate(creds.s3.secretAccessKey);
+                        creds.s3.accessKeyId = obfuscate(creds.s3.accessKeyId);
+                    }
+                    resolve(creds);
+                } catch(e) {
+                    reject(e);} 
+                })();
             });
         }
 

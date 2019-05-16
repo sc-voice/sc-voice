@@ -36,11 +36,13 @@ var scvSingleton = new exports.ScvSingleton({
     Vue,
 });
 
+console.log(`mounting #app ...`);
 var vueRoot = new Vue({
     render: h => h(App),
     router,
     data: scvSingleton,
 }).$mount('#app')
+console.log(`mounting #app OK`);
 
 scvSingleton.mounted(vueRoot);
 
