@@ -168,6 +168,29 @@
                 } catch(e) {reject(e);} })();
             });
         }
+
+        listObjects(opts={}) {
+            var {
+                s3,
+                Bucket,
+            } = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var params = {
+                        Bucket,
+                    };
+
+                    s3.listObjects(params, (err, data) => {
+                        if (err) {
+                            reject(err);
+                            return;
+                        }
+                        resolve(data);
+                    });
+                } catch(e) {reject(e);} })();
+            });
+        }
+
     }
 
     module.exports = exports.S3Bucket = S3Bucket;

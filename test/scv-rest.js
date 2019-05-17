@@ -547,7 +547,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET auth/vsm/s3-credentials configures vsm-s3.json", function(done) {
+    it("GET auth/vsm/s3-credentials configures vsm-s3.json", function(done) {
         this.timeout(5*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
@@ -614,6 +614,33 @@
             res.statusCode.should.equal(500);
             var actualCreds = JSON.parse(fs.readFileSync(vsmS3Path));
             should.deepEqual(actualCreds, goodCreds);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTGET auth/vsm/list-objects lists bucket objects", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var url = `/scv/auth/vsm/list-objects`;
+            var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
+            var res = await supertest(app).get(url)
+                .set("Authorization", `Bearer ${token}`)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json');
+            res.statusCode.should.equal(200);
+
+            var s3Result = res.body;
+            var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
+            should(s3Result).properties({
+                Name: fs.existsSync(vsmS3Path)
+                    ? 'sc-voice-wasabi'
+                    : 'sc-voice-test',
+                MaxKeys: 1000,
+            });
+            should(s3Result.Contents[0]).properties([
+                'Key', 'LastModified', 'ETag', 'Size', 'StorageClass', 'Owner',
+            ]);
+            should(s3Result.Contents[0].Key).match(/[a-z]*_[a-z]*_[a-z]*_[a-z]*.tar.gz/iu);
 
             done();
         } catch(e) {done(e);} })();

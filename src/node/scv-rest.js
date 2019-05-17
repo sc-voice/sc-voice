@@ -145,6 +145,8 @@
                         this.postAddUser),
                     this.resourceMethod("post", "auth/set-password", 
                         this.postSetPassword),
+                    this.resourceMethod("get", "auth/vsm/list-objects", 
+                        this.getVsmListObjects),
                     this.resourceMethod("get", "auth/vsm/s3-credentials", 
                         this.getVsmS3Credentials),
                     this.resourceMethod("post", "auth/vsm/s3-credentials", 
@@ -797,7 +799,7 @@
                 username,
             } = decoded;
             if (decoded.isAdmin) {
-                logger.warn(`${msg}:${username} => AUTHORIZED`);
+                logger.info(`${msg}:${username} => AUTHORIZED`);
             } else {
                 res.locals.status = 401;
                 logger.warn(`${msg}:${username} => HTTP401 UNAUTHORIZED (ADMIN)`);
@@ -865,6 +867,24 @@
                         }
                     }, 1000);
                 } catch(e) {reject(e);} })();
+            });
+        }
+
+        getVsmListObjects(req, res, next) {
+            var that = this;
+            var credPath = path.join(LOCAL, 'vsm-s3.json');
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "GET vsm/list-objects");
+                    var creds; 
+                    if (fs.existsSync(credPath)) {
+                        creds = JSON.parse(fs.readFileSync(credPath));
+                    }
+                    var s3Bucket = await new S3Bucket(creds).initialize();
+                    var params;
+                    var result = await s3Bucket.listObjects(params);
+                    resolve(result);
+                } catch(e) { reject(e);} })();
             });
         }
 

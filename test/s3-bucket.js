@@ -165,5 +165,21 @@
             stream.pipe(ostream);
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTlistObjects(opts) lists bucket objects", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
+            var s3Result = await bucket.listObjects();
+            should(s3Result).properties({
+                Name: TEST_BUCKET,
+                MaxKeys: 1000,
+            });
+            should(s3Result.Contents[0]).properties([
+                'Key', 'LastModified', 'ETag', 'Size', 'StorageClass', 'Owner',
+            ]);
+            should(s3Result.Contents[0].Key).match(/[a-z]*_[a-z]*_[a-z]*_[a-z]*.tar.gz/iu);
+            done();
+        } catch(e) {done(e);} })();
+    });
 
 })
