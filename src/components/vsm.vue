@@ -50,11 +50,11 @@
                                 v-model="editCreds.Bucket">
                             </v-text-field>
                             <v-text-field label="accessKeyId" 
-                                placeholder="(e.g., '...GYTZ')"
+                                placeholder="(required)"
                                 v-model="editCreds.s3.accessKeyId">
                             </v-text-field>
                             <v-text-field label="secretAccessKey" 
-                                placeholder="(e.g., '...yvJa')"
+                                placeholder="(required)"
                                 v-model="editCreds.s3.secretAccessKey">
                             </v-text-field>
                             <v-alert type="error" :value="editCredError">
