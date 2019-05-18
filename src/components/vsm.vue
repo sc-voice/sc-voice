@@ -76,10 +76,10 @@
         </v-card>
         <v-card>
             <v-card-title >
-                <div class="title">Importable VSM Modules</div>
+                <div class="title">Installable VSM Modules</div>
                 <v-spacer/>
                 <v-btn color="warning" :disabled="!vsmSelected.length">
-                    Import
+                    Install
                 </v-btn>
             </v-card-title>
             <v-card-text>

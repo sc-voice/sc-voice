@@ -319,4 +319,42 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTrestoreS3Keys(opts) restores from S3 Bucket", function(done) {
+        this.timeout(10*1000);
+        (async function() { try {
+            const Bucket = TEST_BUCKET;
+            const s3Bucket = await new S3Bucket({ 
+                Bucket, 
+                s3: TEST_S3,
+            });
+            var tmpDirObj = tmp.dirSync({
+                unsafeCleanup: true,
+            });
+            var soundStore = new SoundStore({
+                storePath: tmpDirObj.name,
+            });
+            var vsm = new VsmStore({
+                s3Bucket,
+                soundStore,
+            });
+            var {
+                Contents,
+                Name,
+            } = await s3Bucket.listObjects();
+            should(Contents.length).above(0); // nothing to test
+            var params = {
+                s3Bucket,
+                keys: [Contents[0].Key],
+                soundStore,
+                //clearVolume,
+            };
+            var resRestore = await vsm.restoreS3Keys(params);
+            var restoredFile = path.join(tmpDirObj.name, 
+                'kn_en_sujato_amy/52/528d6018f6e9325e258122ede2ece84b.txt');
+            should(fs.existsSync(restoredFile)).equal(true);
+
+            tmpDirObj.removeCallback();
+            done();
+        } catch(e) {done(e);} })();
+    });
 })

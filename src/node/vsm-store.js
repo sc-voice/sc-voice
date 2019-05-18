@@ -339,6 +339,60 @@
             });
         }
 
+        restoreS3Keys(opts={}) {
+            var {
+                s3Bucket,
+                keys,
+                soundStore,
+                clearVolume,
+            } = opts;
+            if (!(s3Bucket instanceof S3Bucket)) {
+                return Promise.reject(new Error(    
+                    `restoreS3Keys() expected s3Bucket: S3Bucket`));
+            }
+            if (!(keys instanceof Array) || keys.length===0) {
+                return Promise.reject(new Error(    
+                    `restoreS3Keys() expected keys: array of S3 Keys`));
+            }
+            clearVolume = !!clearVolume; // default is false
+            soundStore = soundStore || this.soundStore;
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var tmpDirObj = tmp.dirSync({
+                        unsafeCleanup: true,
+                    });
+                    var archiveDir = tmpDirObj.name;
+                    var result = {
+                        Bucket: s3Bucket.Bucket,
+                        s3:{ 
+                            endpoint: s3Bucket.s3.endpoint,
+                            region: s3Bucket.s3.region,
+                        },
+                        restored:[],
+                    };
+                    for (var iVol=0; iVol<keys.length; iVol++) {
+                        var key = keys[iVol];
+                        var volume = path.basename(key, `.tar${that.zipSuffix}`);
+                        var params = {
+                            archiveDir,
+                            archiveFile: key,
+                            volume,
+                            clearVolume,
+                            soundStore,
+                        };
+                        var archivePath = path.join(archiveDir, key);
+                        var stream = await s3Bucket.downloadObject(key, archivePath);
+                        var resRestore = await that.restoreVolume(params);
+                        logger.info(`VsmStore.restoreS3Keys() restored:${s3Bucket.Bucket}/${key}`);
+                        result.restored.push(resRestore);
+                        fs.unlink(archivePath, ()=>logger.debug(`removed ${archivePath}`));
+                    }
+                    resolve(result);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
         restoreVolume(opts={}) {
             var that = this;
             return new Promise((resolve, reject) => {
@@ -349,7 +403,7 @@
                         soundStore,
                         archiveDir,
                         archiveFile,
-                        clearVolume,
+                        clearVolume, // default is true
                     } = opts;
                     voice = voice || that.voice;
                     archiveDir = archiveDir || that.storePath;
@@ -380,12 +434,16 @@
                     };
                     var execResult = exec(cmd, cmdOpts, (error, stdout, stderr) => {
                         if (error) {
+                            logger.warn(`restoreVolume() failed cwd:${cwd} cmd:${cmd}`);
+                            logger.warn('-----STDERR BEGIN-----');
+                            logger.warn(stderr);
+                            logger.warn('-----STDERR END-----');
+                            logger.warn(error.stack);
                             reject(error);
-                            console.log(`stderr`, stderr);
-                            console.error(error.stack);
                             return;
                         }
                         resolve({
+                            restored: zipFile,
                             filesDeleted,
                         });
                     });

@@ -105,25 +105,18 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("getObjectStream(oname) downloads object as stream", function(done) {
+    it("downloadObject(oname,dstPath) downloads object as file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
             var name = 'kn_en_sujato_amy.tar.gz';
-            var dataPath = path.join(__dirname, 'data', name);
-            var data = fs.readFileSync(dataPath);
-            var stream = await bucket.getObjectStream(name);
-            var outPath = tmp.tmpNameSync();
-            var ostream = fs.createWriteStream(outPath);
-            ostream.on('error', err => {
-                done(err);
-            });
-            ostream.on('finish', () => {
-                var outData = fs.readFileSync(outPath);
-                should.deepEqual(outData, data);
-                done();
-            });
-            stream.pipe(ostream);
+            var dstPath = path.join('/tmp', `test-${name}`);
+            if (fs.existsSync(dstPath)) {
+                fs.unlinkSync(dstPath);
+            }
+            var resDownload = await bucket.downloadObject(name, dstPath);
+            should(fs.existsSync(dstPath)).equal(true);
+            done();
         } catch(e) {done(e);} })();
     });
     it("local/vsm-s3.json changes endpoint", function(done) {
@@ -149,20 +142,13 @@
             should(putResult.Key).equal(name);
             should(putResult.response).properties(['ETag']);
 
-            // we cn download a stream from Wasabi
+            // we can download object from Wasabi
             var outPath = tmp.tmpNameSync();
-            var ostream = fs.createWriteStream(outPath);
-            ostream.on('error', err => {
-                done(err);
-            });
-            ostream.on('finish', () => {
-                var expectedData = fs.readFileSync(dataPath);
-                var outData = fs.readFileSync(outPath);
-                should.deepEqual(outData, expectedData);
-                done();
-            });
-            var stream = await bucket.getObjectStream(name);
-            stream.pipe(ostream);
+            should(fs.existsSync(outPath)).equal(false);
+            var resDownload = await bucket.downloadObject(name, outPath);
+            should(fs.existsSync(outPath)).equal(true);
+            fs.unlinkSync(outPath);
+            done();
         } catch(e) {done(e);} })();
     });
     it("TESTTESTlistObjects(opts) lists bucket objects", function(done) {

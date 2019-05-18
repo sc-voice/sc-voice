@@ -151,7 +151,7 @@
             });
         }
 
-        getObjectStream(oname) {
+        downloadObject(oname, dstPath) {
             var {
                 s3,
                 Bucket,
@@ -164,7 +164,23 @@
                     };
 
                     var stream = s3.getObject(params).createReadStream();
-                    resolve(stream);
+                    var ostream = fs.createWriteStream(dstPath);
+                    var msgContext = `S3Bucket.downloadObject() `+
+                        `${Bucket}/${oname} => ${dstPath}`;
+                    ostream.on('error', err => {
+                        logger.warn(`${msgContext} ERROR`);
+                        logger.warn(err.stack);
+                        reject(err);
+                    });
+                    ostream.on('finish', () => {
+                        logger.info(`${msgContext} OK`);
+                        resolve({
+                            Bucket,
+                            Key: oname,
+                            dstPath,
+                        });
+                    });
+                    stream.pipe(ostream);
                 } catch(e) {reject(e);} })();
             });
         }
