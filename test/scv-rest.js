@@ -8,7 +8,6 @@
         logger,
         UserStore,
     } = require('rest-bundle');
-    logger.level = 'info';
     const {
         Definitions,
         ScvRest,
@@ -618,9 +617,12 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET auth/vsm/list-objects lists bucket objects", function(done) {
+    it("GET auth/vsm/list-objects lists bucket objects", function(done) {
         this.timeout(5*1000);
         (async function() { try {
+            var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
+
+            // Default Bucket
             var url = `/scv/auth/vsm/list-objects`;
             var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
             var res = await supertest(app).get(url)
@@ -628,19 +630,65 @@
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json');
             res.statusCode.should.equal(200);
-
             var s3Result = res.body;
-            var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
             should(s3Result).properties({
                 Name: fs.existsSync(vsmS3Path)
                     ? 'sc-voice-wasabi'
                     : 'sc-voice-test',
                 MaxKeys: 1000,
+                s3: {
+                    endpoint: 'https://s3.us-west-1.wasabisys.com',
+                    region: 'us-west-1',
+                },
             });
             should(s3Result.Contents[0]).properties([
                 'Key', 'LastModified', 'ETag', 'Size', 'StorageClass', 'Owner',
             ]);
             should(s3Result.Contents[0].Key).match(/[a-z]*_[a-z]*_[a-z]*_[a-z]*.tar.gz/iu);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTPOST auth/vsm/restore-s3-archives restores vsm files", function(done) {
+        this.timeout(5*1000);
+        var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
+        if (!fs.existsSync(vsmS3Path)) {
+            logger.warn('skipping vsm/s3-credentials POST test');
+            done();
+            return;
+        }
+        (async function() { try {
+            var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
+            var url = `/scv/auth/vsm/list-objects`;
+            var resList = await supertest(app).get(url)
+                .set("Authorization", `Bearer ${token}`)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json');
+            var {
+                Contents,
+            } = resList.body;
+
+            var url = `/scv/auth/vsm/restore-s3-archives`;
+            var restore = [{
+                Key: Contents[0].Key,
+                ETag: Contents[0].ETag,
+            }];
+            var clearVolume = false;
+            var data = {
+                restore,
+                clearVolume,
+            };
+            var res = await supertest(app).post(url)
+                .set("Authorization", `Bearer ${token}`)
+                .set('Content-Type', 'application/json')
+                .set('Accept', 'application/json')
+                .send(data);
+            res.statusCode.should.equal(200);
+            should(res.body).properties({
+                Bucket: 'sc-voice-wasabi',
+                clearVolume,
+                restore,
+            });
 
             done();
         } catch(e) {done(e);} })();

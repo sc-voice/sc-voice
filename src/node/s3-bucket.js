@@ -201,7 +201,13 @@
                             reject(err);
                             return;
                         }
-                        resolve(data);
+                        var result = Object.assign({
+                            s3: {
+                                endpoint: s3.config.endpoint,
+                                region: s3.config.region,
+                            }
+                        }, data);
+                        resolve(result);
                     });
                 } catch(e) {reject(e);} })();
             });

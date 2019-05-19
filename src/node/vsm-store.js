@@ -27,7 +27,7 @@
     class VsmStore extends SoundStore {
         constructor(opts) {
             super((opts = VsmStore.options(opts)));
-            logger.info(`VsmStore.ctor(${this.storePath})`);
+            logger.debug(`VsmStore.ctor(${this.storePath})`);
             this.soundStore = opts.soundStore;
             this.lang = opts.lang || 'pli';
             this.author = opts.author || 'mahasangiti';
@@ -339,20 +339,20 @@
             });
         }
 
-        restoreS3Keys(opts={}) {
+        restoreS3Archives(opts={}) {
             var {
                 s3Bucket,
-                keys,
+                restore,
                 soundStore,
                 clearVolume,
             } = opts;
             if (!(s3Bucket instanceof S3Bucket)) {
                 return Promise.reject(new Error(    
-                    `restoreS3Keys() expected s3Bucket: S3Bucket`));
+                    `restoreS3Archives() expected s3Bucket: S3Bucket`));
             }
-            if (!(keys instanceof Array) || keys.length===0) {
+            if (!(restore instanceof Array) || restore.length===0) {
                 return Promise.reject(new Error(    
-                    `restoreS3Keys() expected keys: array of S3 Keys`));
+                    `restoreS3Archives() expected restore: array of {Key,ETag}`));
             }
             clearVolume = !!clearVolume; // default is false
             soundStore = soundStore || this.soundStore;
@@ -364,27 +364,34 @@
                     });
                     var archiveDir = tmpDirObj.name;
                     var result = {
-                        Bucket: s3Bucket.Bucket,
-                        s3:{ 
-                            endpoint: s3Bucket.s3.endpoint,
-                            region: s3Bucket.s3.region,
+                        s3Bucket: {
+                            Bucket: s3Bucket.Bucket,
+                            s3: {
+                                endpoint: s3Bucket.s3.config.endpoint,
+                                region: s3Bucket.s3.config.region,
+                            },
                         },
                         restored:[],
                     };
-                    for (var iVol=0; iVol<keys.length; iVol++) {
-                        var key = keys[iVol];
-                        var volume = path.basename(key, `.tar${that.zipSuffix}`);
+                    for (var iVol=0; iVol<restore.length; iVol++) {
+                        var { 
+                            Key,
+                            ETag,
+                        } = restore[iVol];
+                        var volume = path.basename(Key, `.tar${that.zipSuffix}`);
                         var params = {
                             archiveDir,
-                            archiveFile: key,
+                            archiveFile: Key,
                             volume,
                             clearVolume,
                             soundStore,
+                            ETag,
                         };
-                        var archivePath = path.join(archiveDir, key);
-                        var stream = await s3Bucket.downloadObject(key, archivePath);
+                        var archivePath = path.join(archiveDir, Key);
+                        var stream = await s3Bucket.downloadObject(Key, archivePath);
                         var resRestore = await that.restoreVolume(params);
-                        logger.info(`VsmStore.restoreS3Keys() restored:${s3Bucket.Bucket}/${key}`);
+                        var fun = 'VsmStore.restoreS3Archives()';
+                        logger.info(`${fun} restored:${s3Bucket.Bucket}/${Key}`);
                         result.restored.push(resRestore);
                         fs.unlink(archivePath, ()=>logger.debug(`removed ${archivePath}`));
                     }
@@ -404,6 +411,7 @@
                         archiveDir,
                         archiveFile,
                         clearVolume, // default is true
+                        ETag,
                     } = opts;
                     voice = voice || that.voice;
                     archiveDir = archiveDir || that.storePath;
@@ -442,7 +450,18 @@
                             reject(error);
                             return;
                         }
+                        var manifestPath = path.join(volumePath, 'manifest.json');
+                        var manifest = {};
+                        if (fs.existsSync(manifestPath)) {
+                            manifest = JSON.parse(fs.readFileSync(manifestPath));
+                        }
+                        manifest.ETag = ETag || null;
+                        manifest.restored = new Date();
+                        manifest.volume = manifest.volume || volume;
+                        fs.writeFileSync(manifestPath, 
+                            JSON.stringify(manifest, null, 2));
                         resolve({
+                            manifest,
                             restored: zipFile,
                             filesDeleted,
                         });

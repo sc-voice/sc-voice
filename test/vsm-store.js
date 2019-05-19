@@ -165,7 +165,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("restoreVolume(opts) restores volume", function(done) {
+    it("TESTTESTrestoreVolume(opts) restores volume", function(done) {
         (async function() { try {
             var tmpDirObj = tmp.dirSync({
                 unsafeCleanup: true,
@@ -191,6 +191,11 @@
             var jsonPath = path.join(volPath, chapter, `${guid}.json`);
             should(fs.existsSync(jsonPath)).equal(true);
             should(result.filesDeleted).equal(0);
+            should(result).properties([
+                'manifest',
+                'restored',
+                'filesDeleted',
+            ]);
 
             // restore existing volume clears it first (default)
             var markerPath = path.join(volPath, chapter, 'marker');
@@ -198,7 +203,7 @@
             should(fs.existsSync(markerPath)).equal(true);
             var result = await vsm.restoreVolume(restoreOpts);
             should(fs.existsSync(markerPath)).equal(false);
-            should(result.filesDeleted).equal(91);
+            should(result.filesDeleted).above(90);
 
             // restore existing volume without clearing it
             restoreOpts.clearVolume = false;
@@ -319,14 +324,15 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTrestoreS3Keys(opts) restores from S3 Bucket", function(done) {
+    it("TESTTESTrestoreS3Archives(opts) restores from S3 Bucket", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             const Bucket = TEST_BUCKET;
-            const s3Bucket = await new S3Bucket({ 
+            const s3BucketOpts = { 
                 Bucket, 
                 s3: TEST_S3,
-            });
+            };
+            const s3Bucket = await new S3Bucket(s3BucketOpts);
             var tmpDirObj = tmp.dirSync({
                 unsafeCleanup: true,
             });
@@ -344,14 +350,20 @@
             should(Contents.length).above(0); // nothing to test
             var params = {
                 s3Bucket,
-                keys: [Contents[0].Key],
+                restore: [{
+                    Key: Contents[0].Key,
+                    ETag: Contents[0].ETag,
+                }],
                 soundStore,
                 //clearVolume,
             };
-            var resRestore = await vsm.restoreS3Keys(params);
+            var resRestore = await vsm.restoreS3Archives(params);
             var restoredFile = path.join(tmpDirObj.name, 
                 'kn_en_sujato_amy/52/528d6018f6e9325e258122ede2ece84b.txt');
             should(fs.existsSync(restoredFile)).equal(true);
+            should(resRestore).properties({
+                s3Bucket: s3BucketOpts,
+            });
 
             tmpDirObj.removeCallback();
             done();

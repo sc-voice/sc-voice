@@ -26,7 +26,6 @@
         RbServer,
     } = require('rest-bundle');
     RbServer.logDefault();
-    logger.level = 'info';
 
     var singleton;
 

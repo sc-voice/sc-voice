@@ -19,6 +19,7 @@
     const Playlist = require('./playlist');
     const Section = require('./section');
     const SoundStore = require('./sound-store');
+    const VsmStore = require('./vsm-store');
     const Sutta = require('./sutta');
     const SuttaFactory = require('./sutta-factory');
     const SuttaStore = require('./sutta-store');
@@ -151,6 +152,8 @@
                         this.getVsmS3Credentials),
                     this.resourceMethod("post", "auth/vsm/s3-credentials", 
                         this.postVsmS3Credentials),
+                    this.resourceMethod("post", "auth/vsm/restore-s3-archives", 
+                        this.postVsmRestoreS3Archives),
                     this.resourceMethod("post", "auth/update-release", 
                         this.postUpdateRelease),
 
@@ -870,17 +873,22 @@
             });
         }
 
+        vsmS3Bucket(Bucket) {
+            var credPath = path.join(LOCAL, 'vsm-s3.json');
+            var creds = null;
+            if (fs.existsSync(credPath)) {
+                creds = JSON.parse(fs.readFileSync(credPath));
+                Bucket && (creds.Bucket = Bucket);
+            }
+            return new S3Bucket(creds).initialize();
+        }
+
         getVsmListObjects(req, res, next) {
             var that = this;
-            var credPath = path.join(LOCAL, 'vsm-s3.json');
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    that.requireAdmin(req, res, "GET vsm/list-objects");
-                    var creds; 
-                    if (fs.existsSync(credPath)) {
-                        creds = JSON.parse(fs.readFileSync(credPath));
-                    }
-                    var s3Bucket = await new S3Bucket(creds).initialize();
+                    that.requireAdmin(req, res, `GET vsm/list-objects`);
+                    var s3Bucket = await that.vsmS3Bucket();
                     var params;
                     var result = await s3Bucket.listObjects(params);
                     resolve(result);
@@ -935,6 +943,57 @@
                     fs.writeFileSync(credPath, JSON.stringify(creds, null, 2));
                     logger.info(`vsm/s3-credentials verified and saved to: ${credPath}`);
                     resolve({
+                        Bucket,
+                        s3: {
+                            endpoint,
+                            region,
+                        }
+                    });
+                } catch(e) {
+                    reject(e);} 
+                })();
+            });
+        }
+
+        postVsmRestoreS3Archives(req, res, next) {
+            var that = this;
+            var {
+                soundStore,
+            } = that;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "POST vsm/restore-s3-archives");
+                    var {
+                        Bucket,
+                        restore,
+                        clearVolume,
+                    } = req.body;
+                    if (restore == null) {
+                        throw new Error(`Missing required property: restore`);
+                    }
+                    var s3Bucket = await that.vsmS3Bucket(Bucket);
+                    var {
+                        Bucket,
+                        s3,
+                    } = s3Bucket;
+                    var {
+                        endpoint,
+                        region,
+                    } = s3.config;
+                    var vsm = new VsmStore({
+                        s3Bucket,
+                        soundStore,
+                    });
+                    var resRestore = await vsm.restoreS3Archives({
+                        s3Bucket,
+                        restore,
+                        clearVolume,
+                    });
+                    logger.info(`POST vsm/restore-s3-archives `+
+                        `Bucket:${Bucket} endpoint:${endpoint} region:${region}`);
+                    resolve({
+                        restore,
+                        clearVolume,
                         Bucket,
                         s3: {
                             endpoint,

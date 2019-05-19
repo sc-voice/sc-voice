@@ -8,7 +8,7 @@
         S3Bucket,
     } = require("../index");
     const AWS = require("aws-sdk");
-    const TEST_BUCKET = 'sc-voice-test-bucket';
+    const TEST_BUCKET = 'sc-voice-test';
     const AWS_ENDPOINT = 's3.us-west-1.amazonaws.com';
     const AWS_APIVERSION = '2006-03-01';
     const AWS_REGION = 'us-west-1';
@@ -151,7 +151,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTlistObjects(opts) lists bucket objects", function(done) {
+    it("listObjects(opts) lists bucket objects", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
@@ -159,6 +159,10 @@
             should(s3Result).properties({
                 Name: TEST_BUCKET,
                 MaxKeys: 1000,
+                s3: {
+                    endpoint: 's3.us-west-1.amazonaws.com',
+                    region: 'us-west-1',
+                },
             });
             should(s3Result.Contents[0]).properties([
                 'Key', 'LastModified', 'ETag', 'Size', 'StorageClass', 'Owner',

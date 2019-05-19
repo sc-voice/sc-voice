@@ -13,7 +13,7 @@
         constructor(opts) {
             super((opts = SoundStore.options(opts)));
             var that = this;
-            logger.info(`SoundStore.ctor(${that.storePath})`);
+            logger.debug(`SoundStore.ctor(${that.storePath})`);
             that.audioSuffix = opts.audioSuffix;
             that.audioFormat = opts.audioFormat;
             that.audioMIME = opts.audioMIME;
@@ -111,9 +111,14 @@
                     var files = [];
                     fs.readdirSync(volpath).forEach(d => {
                         var dpath = path.join(volpath, d);
-                        var dfiles = fs.readdirSync(dpath)
-                            .map(f=>path.join(dpath,f));
-                        dfiles.forEach(df => files.push(df));
+                        var stat = fs.statSync(dpath);
+                        if (stat.isDirectory()) {
+                            var dfiles = fs.readdirSync(dpath)
+                                .map(f=>path.join(dpath,f));
+                            dfiles.forEach(df => files.push(df));
+                        } else if (stat.isFile()) {
+                            files.push(dpath);
+                        }
                     });
                     files.forEach(f => fs.unlinkSync(f));
                     var result = {
