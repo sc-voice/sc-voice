@@ -885,12 +885,28 @@
 
         getVsmListObjects(req, res, next) {
             var that = this;
+            var {
+                soundStore,
+            } = that;
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     that.requireAdmin(req, res, `GET vsm/list-objects`);
                     var s3Bucket = await that.vsmS3Bucket();
                     var params;
                     var result = await s3Bucket.listObjects(params);
+                    var Contents = result.Contents;
+                    for (var iCon=0; iCon<Contents.length; iCon++) {
+                        var c = Contents[iCon];
+                        var volume = path.basename(c.Key, `.tar.gz`);
+                        var manifestPath = path.join(soundStore.storePath, 
+                            volume, `manifest.json`);
+                        c.upToDate = false;
+                        if (fs.existsSync(manifestPath)) {
+                            var manifest = JSON.parse(fs.readFileSync(manifestPath));
+                            c.upToDate = c.ETag === manifest.ETag;
+                            c.restored = manifest.restored;
+                        }
+                    }
                     resolve(result);
                 } catch(e) { reject(e);} })();
             });

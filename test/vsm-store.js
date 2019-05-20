@@ -165,7 +165,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTrestoreVolume(opts) restores volume", function(done) {
+    it("restoreVolume(opts) restores volume", function(done) {
         (async function() { try {
             var tmpDirObj = tmp.dirSync({
                 unsafeCleanup: true,
@@ -324,7 +324,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTrestoreS3Archives(opts) restores from S3 Bucket", function(done) {
+    it("restoreS3Archives(opts) restores from S3 Bucket", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             const Bucket = TEST_BUCKET;

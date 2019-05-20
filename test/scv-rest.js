@@ -617,7 +617,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET auth/vsm/list-objects lists bucket objects", function(done) {
+    it("TESTTESTGET auth/vsm/list-objects lists bucket objects", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
@@ -641,15 +641,21 @@
                     region: 'us-west-1',
                 },
             });
-            should(s3Result.Contents[0]).properties([
+            var c0 = s3Result.Contents[0];
+            should(c0).properties([
                 'Key', 'LastModified', 'ETag', 'Size', 'StorageClass', 'Owner',
+                'upToDate',
             ]);
+            if (c0.upToDate) {
+            console.log(`dbg c0`, c0);
+                should(new Date(c0.restored)).above(new Date(c0.LastModified));
+            }
             should(s3Result.Contents[0].Key).match(/[a-z]*_[a-z]*_[a-z]*_[a-z]*.tar.gz/iu);
 
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/vsm/restore-s3-archives restores vsm files", function(done) {
+    it("POST auth/vsm/restore-s3-archives restores vsm files", function(done) {
         this.timeout(5*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {

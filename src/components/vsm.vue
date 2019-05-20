@@ -77,8 +77,12 @@
         <v-card>
             <v-card-title >
                 <div class="title">Installable VSM Modules</div>
+                <v-btn icon @click="getCredentials()">
+                    <v-icon>refresh</v-icon>
+                </v-btn>
                 <v-spacer/>
-                <v-btn color="warning" :disabled="!vsmSelected.length">
+                <v-btn @click="onVsmInstall()"
+                    color="warning" :disabled="!vsmSelected.length">
                     Install
                 </v-btn>
             </v-card-title>
@@ -96,10 +100,17 @@
                           <v-checkbox v-model="props.selected" primary hide-details/>
                       </td>
                       <td class="text-xs-left">{{ props.item.Key }}</td>
+                      <td class="text-xs-left">{{ props.item.upToDate }}</td>
                       <td class="text-xs-left">{{ props.item.Size }}</td>
                       <td >{{ props.item.ETag }}</td>
                     </template>
                 </v-data-table>
+                <v-alert type="info" :value="isVsmRestoring">
+                    Installing selected VSM modules...
+                </v-alert>
+                <v-alert type="error" v-if="vsmRestoreError" :value="true">
+                    {{vsmRestoreError.message}}
+                </v-alert>
             </v-card-text>
         </v-card>
 
@@ -116,7 +127,9 @@ export default {
         return {
             user:{},
             isEditCredentials: false,
+            isVsmRestoring: false,
             editCredError: null,
+            vsmRestoreError: null,
             vsmSelected: [],
             vsmObjects: [],
             vsmCreds: {
@@ -158,6 +171,24 @@ export default {
         },
         onEditCredentials() {
             Vue.set(this, 'isEditCredentials', true);
+        },
+        onVsmInstall() {
+            var that = this;
+            var url = that.url('auth/vsm/restore-s3-archives');
+            var data = {
+                restore: that.vsmSelected,
+            };
+            Vue.set(that, 'isVsmRestoring', true);
+            Vue.set(that, 'vsmRestoreError', null);
+            that.$http.post(url, data, that.authConfig).then(res => {
+                console.log(`restored S3 archives`, res.data);
+                Vue.set(that, 'isVsmRestoring', false);
+                that.getCredentials();
+            }).catch(e => {
+                console.log('could not restore S3 archives', e.response.data);
+                Vue.set(that, 'isVsmRestoring', false);
+                Vue.set(that, 'vsmRestoreError', e);
+            });
         },
         onSubmitCredentials() {
             var that = this;
@@ -203,6 +234,9 @@ export default {
             return [{
                 text: 'VSM Module',
                 value: 'Key',
+            },{
+                text: 'Installed',
+                value: 'upToDate',
             },{
                 text: 'Size',
                 value: 'Size',
