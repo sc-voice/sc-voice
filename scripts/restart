@@ -16,6 +16,7 @@ fi
 echo -e "UPDATE\t: normal user detected"
 
 sync
-sudo shutdown -r +1
+sleep 5
+sudo shutdown -r now
 
 echo -e "UPDATE\t: $0 END `date`"
