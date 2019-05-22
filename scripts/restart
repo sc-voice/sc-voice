@@ -1,0 +1,21 @@
+#!/bin/bash
+
+echo -e "UPDATE\t: $0 START `date`"
+
+if [ "`whoami`" == "root" ]; then
+    echo -e "ERROR\t: root detected. This script cannot be run as root"
+    exit -1
+fi
+
+if [ "`id -u`" == "0" ]; then
+    echo -e "UPDATE\t: superuser detected, switching to normal user"
+    sudo -u `whoami` $0 $*
+    RC=$?
+    exit $RC
+fi
+echo -e "UPDATE\t: normal user detected"
+
+sync
+sudo shutdown -r +1
+
+echo -e "UPDATE\t: $0 END `date`"

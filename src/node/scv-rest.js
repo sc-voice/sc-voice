@@ -842,7 +842,7 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     that.requireAdmin(req, res, "POST reboot");
-                    var cmd = `shutdown -r +1`;
+                    var cmd = `scripts/restart`;
                     logger.warn(`${cmd}`);
                     var cwd = path.join(__dirname, '../..');
                     var error = null;
