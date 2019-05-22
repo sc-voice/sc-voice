@@ -154,6 +154,8 @@
                         this.postVsmS3Credentials),
                     this.resourceMethod("post", "auth/vsm/restore-s3-archives", 
                         this.postVsmRestoreS3Archives),
+                    this.resourceMethod("post", "auth/reboot", 
+                        this.postReboot),
                     this.resourceMethod("post", "auth/update-release", 
                         this.postUpdateRelease),
 
@@ -831,6 +833,35 @@
                     } = req.body || {};
                     var result = await that.soundStore.clearVolume(volume);
                     resolve(result);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        postReboot(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "POST reboot");
+                    var cmd = `shutdown -r +1`;
+                    logger.warn(`${cmd}`);
+                    var cwd = path.join(__dirname, '../..');
+                    var error = null;
+                    exec(cmd, { cwd }, (e, stdout, stderr) => {
+                        if (e) {
+                            logger.error(`POST reboot: ${cwd} => HTTP500`);
+                            logger.error(e.stack);
+                            error = e;
+                        }
+                    });
+                    setTimeout(() => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve({
+                                reboot: 59,
+                            });
+                        }
+                    }, 1000);
                 } catch(e) {reject(e);} })();
             });
         }

@@ -619,8 +619,13 @@
     });
     it("TESTTESTGET auth/vsm/list-objects lists bucket objects", function(done) {
         this.timeout(5*1000);
+        var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
+        if (!fs.existsSync(vsmS3Path)) {
+            logger.warn("skipping auth/vsm/list-objects test");
+            done();
+            return;
+        }
         (async function() { try {
-            var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
 
             // Default Bucket
             var url = `/scv/auth/vsm/list-objects`;

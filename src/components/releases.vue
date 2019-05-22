@@ -55,19 +55,30 @@
         </div>
         <div class="scv-release">
             <h2> Update Release </h2>
-            <v-checkbox v-model="confirmUpdate"
-                :label="`Update release and restart server (~${updateMinutes} minutes)`">
+            <v-checkbox v-model="confirmRestart"
+                :label="`STEP 1: Restart server (~${restartMinutes} minutes)`">
             </v-checkbox>
-            <v-btn 
+            <v-btn @click="onRestart()"
+                :disabled="!confirmRestart"
+                class="error">
+                Restart
+            </v-btn>
+            <v-checkbox v-model="confirmUpdate"
+                :label="`STEP 2: Update release (~${updateMinutes} minutes)`">
+            </v-checkbox>
+            <v-btn @click="onUpdateRelease()"
                 :disabled="!confirmUpdate"
-                @click="onUpdateRelease()"
                 class="error">
                 Update
             </v-btn>
+            <v-alert :value="!error && isRestarting" type="info">
+                Restarting server in {{refreshSecs}} seconds...
+            </v-alert>
             <v-alert :value="!isReleaseCurrent & !error && isUpdating" type="info">
                 Updating server in {{refreshSecs}} seconds...
             </v-alert>
-            <v-alert v-if="!confirmUpdate && error" :value="error" type="error">
+            <v-alert v-if="(!confirmRestart || !confirmUpdate) && error" 
+                :value="error" type="error">
                 {{error.message}}
             </v-alert>
             <v-alert :value="isReleaseCurrent" type="success">
@@ -98,9 +109,12 @@ export default {
             identity: null,
             error: null,
             confirmUpdate: false,
+            confirmRestart: false,
             isUpdating: false,
+            isRestarting: false,
             refreshSecs: 0,
             updateMinutes: 1.5,
+            restartMinutes: 1.5,
             isReleaseCurrent: false,
         }
     },
@@ -113,6 +127,29 @@ export default {
                 console.log(res.data);
             }).catch(e => {
                 console.error(`getIdentity() failed`, e.stack);
+            });
+        },
+        onRestart() {
+            var that = this;
+            console.log('onRestart');
+            var url = this.url("auth/reboot"); 
+            var data = {};
+            Vue.set(this, "isRestarting", true);
+            Vue.set(this, "confirmRestart", false);
+            Vue.set(that, "refreshSecs", that.restartMinutes * 60);
+            Vue.set(this, "error", null);
+            this.$http.post(url, data, this.authConfig).then(res => {
+                console.log(res.data);
+                var interval = setInterval(() => {
+                    Vue.set(that, "refreshSecs", that.refreshSecs-1);
+                    if (that.refreshSecs < 0) {
+                        clearInterval(interval);
+                        window.location.reload(true);
+                    }
+                }, 1000);
+            }).catch(e => {
+                this.error = e;
+                console.error(`onRestart() failed`, e.stack);
             });
         },
         onUpdateRelease() {

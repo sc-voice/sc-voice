@@ -68,7 +68,7 @@
             `xRoot/xLang/sn/sn1/sn1.1-xLang-xAuthor-xSpeaker.xExtension`);
     });
     it("audioUrl(...) returns verified audio url or null", function(done) {
-        this.timeout(5*1000);
+        this.timeout(7*1000);
         (async function() { try {
             var audio = new AudioUrls();
 
