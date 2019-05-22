@@ -72,7 +72,7 @@
                 Update
             </v-btn>
             <v-alert :value="!error && isRestarting" type="info">
-                Restarting server in {{refreshSecs}} seconds...
+                Restarting server: {{refreshSecs}} seconds remaining...
             </v-alert>
             <v-alert :value="!isReleaseCurrent & !error && isUpdating" type="info">
                 Updating server in {{refreshSecs}} seconds...
@@ -143,12 +143,14 @@ export default {
                 var interval = setInterval(() => {
                     Vue.set(that, "refreshSecs", that.refreshSecs-1);
                     if (that.refreshSecs < 0) {
+                        Vue.set(this, "isRestarting", false);
                         clearInterval(interval);
                         window.location.reload(true);
                     }
                 }, 1000);
             }).catch(e => {
                 this.error = e;
+                Vue.set(this, "isRestarting", false);
                 console.error(`onRestart() failed`, e.stack);
             });
         },
