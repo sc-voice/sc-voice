@@ -14,6 +14,7 @@
     const SoundStore = require('./sound-store');
     const S3Bucket = require('./s3-bucket');
     const Playlist = require('./playlist');
+    const Task = require('./task');
     const Voice = require('./voice');
     const AWS = require("aws-sdk");
     const LOCAL = path.join(__dirname, '../../local');
@@ -230,10 +231,13 @@
                 volume,
                 maxSuttas,
                 suttaStore,
+                task,
             } = opts;
             lang = lang || 'pli';
             author = author || 'sujato';
             voice = voice || Voice.createVoice('aditi');
+            task = task || new Task();
+            task.actionsTotal++;
             if (typeof voice === 'string') {
                 voice = Voice.createVoice(voice);
             }
@@ -247,6 +251,7 @@
                     sutta_ids = maxSuttas
                         ? sutta_ids.slice(0, maxSuttas)
                         : sutta_ids;
+                    task.actionsTotal += sutta_ids.length;
                     for (var iSutta = 0; iSutta < sutta_ids.length; iSutta++) {
                         var suid = sutta_ids[iSutta];
                         var searchPattern = `${suid}/${searchLang}/${author}`;
@@ -257,9 +262,12 @@
                             } = searchResults.results[0];
                         }
                         var archiveResult = await that.importSutta(sutta);
-                        var volume = archiveResult.volume;
+                        var volume = archiveResult.volume || '';
                         guids = guids.concat(archiveResult.guids);
+                        task.actionsDone++;
+                        task.summary = `${volume} suttas imported: ${iSutta+1}`;
                     }
+                    task.actionsDone++;
                     resolve({
                         nikaya,
                         lang,
@@ -279,8 +287,12 @@
                         sutta_ids,
                         volume,
                         guids,
+                        task,
                     });
-                } catch(e) {reject(e);} })();
+                } catch(e) {
+                    task.error = e;
+                    reject(e);
+                } })();
             });
         }
 

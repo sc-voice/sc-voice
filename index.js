@@ -19,6 +19,7 @@ module.exports = {
     SuttaStore: require('./src/node/sutta-store'),
     Sutta: require("./src/node/sutta"),
     S3Bucket: require('./src/node/s3-bucket'),
+    Task: require('./src/node/task'),
     Voice: require('./src/node/voice'),
     VsmStore: require('./src/node/vsm-store'),
     Watson: require("./src/node/watson"),

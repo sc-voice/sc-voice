@@ -11,6 +11,7 @@
         SoundStore,
         SuttaStore,
         S3Bucket,
+        Task,
         Voice,
         VsmStore,
     } = require("../index");
@@ -218,7 +219,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("importNikaya(...) imports nikaya", function(done) {
+    it("TESTTESTimportNikaya(...) imports nikaya", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var tmpDirObj = tmp.dirSync({
@@ -227,12 +228,23 @@
             var vsm = new VsmStore({
                 storePath: tmpDirObj.name,
             });
+            var task = new Task(); // client can poll task progress
             var maxSuttas = 2; // for testing
             var archiveResult = await vsm.importNikaya({
                 nikaya: 'kn',
                 voice: 'aditi',
                 maxSuttas,
+                task,
             });
+            should(task).properties({
+                actionsDone: 3,
+                actionsTotal: 3,
+                error: null,
+            });
+            should(task).properties([
+                'msTask', 'created', 'summary',
+            ]);
+            should(task.summary).match(/kn_pli_mahasangiti_aditi suttas imported: 2/);
             should(archiveResult).properties({
                 nikaya: 'kn',
                 lang: 'pli',
@@ -240,6 +252,7 @@
                 author: 'sujato',
                 maxSuttas,
                 sutta_ids: [ 'thag1.1', 'thag1.2' ],
+                task,
             });
             should(archiveResult.guids.length).equal(24+9);
             var volumePath = path.join(tmpDirObj.name, 'kn_pli_mahasangiti_aditi');

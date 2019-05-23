@@ -652,7 +652,6 @@
                 'upToDate',
             ]);
             if (c0.upToDate) {
-            console.log(`dbg c0`, c0);
                 should(new Date(c0.restored)).above(new Date(c0.LastModified));
             }
             should(s3Result.Contents[0].Key).match(/[a-z]*_[a-z]*_[a-z]*_[a-z]*.tar.gz/iu);
