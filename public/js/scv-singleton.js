@@ -7,26 +7,30 @@
     const DEFAULT_VOICES = [{
         name: 'Amy',
         value: 'recite',
-        label: 'Amy (slower)',
+        label: '🤖 Amy (slower)',
     },{
         name: 'Russell',
         value: 'recite',
-        label: 'Russell for general listening and high-frequency hearing loss (medium)',
+        label: '🤖 Russell (medium, recommended for high-frequency hearing loss)',
     },{
         name: 'Raveena',
         value: 'review',
-        label: 'Raveena (faster)',
+        label: '🤖 Raveena (faster)',
+    }];
+    const ROOT_VOICES = [{
+        name: 'Aditi',
+        value: 'recite',
+        label: '🤖 Aditi',
+    },{
+        name: 'Russell',
+        value: 'recite',
+        label: '🗣️ Sujato (if available)',
     }];
 
     const IPS_CHOICES = [{
         url: '',
         label: "Launch Sutta Player without sound",
         value: 0,
-    },{
-        url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
-        label: "Play Rainforest Ambience Glory Sunz (Public Domain)",
-        volume: 0.1,
-        value: 1,
     },{
         url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
         label: "Play Indian Bell by Flemur (Sampling Plus 1.0)",
@@ -37,11 +41,6 @@
         label: "Play Tibetan Singing Bowl by Horst (CC0)",
         volume: 0.3,
         value: 3,
-    },{
-        url: '/audio/jetrye-bell-meditation-cleaned-CC0.mp3',
-        label: "Play Bell Meditation Cleaned by JetRye (CC0)",
-        volume: 0.1,
-        value: 4,
     },{
         url: '/audio/STE-004-Coemgenu.mp3',
         label: "Play Mid-range Singing Bell by Coemgenu (Public Domain)",
@@ -60,6 +59,7 @@
 
     class ScvSingleton { 
         constructor(g) {
+            this.human = false;
             this.showId = false;
             this.iVoice = 0;
             this.scid = null;
@@ -113,6 +113,10 @@
 
         get voices() {
             return DEFAULT_VOICES;
+        }
+
+        get root() {
+            return ROOT_VOICES;
         }
 
         get useCookies() {

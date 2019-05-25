@@ -65,59 +65,84 @@
                 <v-icon>close</v-icon>
               </v-btn>
           </v-card-title>
-          <v-card-text>
-            <details class="scv-dialog" >
-                <summary class="subheading">Sutta Player settings</summary>
-                <div class="scv-settings">
-                    <v-radio-group v-model="gscv.iVoice"
-                        @change="gscv.changed('iVoice')"
-                        column>
-                       <v-radio v-for="(v,i) in gscv.voices"
-                         :label="v.label" :value="i" :key="`voice${i}`">
-                         </v-radio>
-                    </v-radio-group>
-                    <v-radio-group v-model="gscv.showLang"
-                        @change="gscv.changed('showLang')"
-                        column>
-                       <v-radio v-for="(sl,i) in showLangChoices"
-                         :label="sl.label" :value="i" :key="`showLang${sl.value}`">
-                         </v-radio>
-                    </v-radio-group>
-                    <v-radio-group v-model="gscv.ips"
-                        @change="gscv.changed('ips')"
-                        column>
-                       <v-radio v-for="(ips) in ipsChoices"
-                         :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
-                         </v-radio>
-                    </v-radio-group>
-                </div>
-            </details>
-            <details class="scv-dialog" >
-                <summary class="subheading">General settings</summary>
-                <div class="scv-settings">
-                    <v-radio-group v-if="gscv" v-model="gscv.maxResults"
-                        @change="gscv.changed('maxResults')"
-                        column>
-                       <v-radio v-for="(mr) in maxResultsChoices"
-                         :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
-                         </v-radio>
-                    </v-radio-group>
-                    <v-checkbox v-if="gscv"
-                        v-model="gscv.showId" role="checkbox"
-                        :aria-checked="gscv.showId"
-                        v-on:change="gscv.changed('showId')"
-                        label="Show SuttaCentral text segment identifiers">
-                    </v-checkbox>
-                </div>
-            </details>
-            <v-checkbox v-if="gscv"
+          <v-card-text class="settings-page">
+
+            <section>
+            <h2 class="firsth">Reader</h2>
+            <h3 class="scv-settings">Translation</h3>
+            <v-radio-group class="scv-settings en-robot" v-model="gscv.iVoice"
+                @change="gscv.changed('iVoice')"
+                column>
+               <v-radio v-for="(v,i) in gscv.voices"
+                 :label="v.label" :value="i" :key="`voice${i}`">
+                 </v-radio>
+            </v-radio-group>
+            <!--@KARL-->
+            <v-checkbox class="scv-settings en-human" v-if="gscv"
+                v-model="gscv.human" role="checkbox"
+                v-on:change="gscv.changed('human')"
+                :aria-checked="gscv.human"
+                label="🗣️ Sujato (if available)">
+            </v-checkbox>
+
+            <!--@KARL-->
+            <h3 class="scv-settings">Root Language</h3>
+            <v-radio-group class="scv-settings" v-model="gscv.iRoot"
+                @change="gscv.changed('iRoot')"
+                column>
+               <v-radio v-for="(v,i) in gscv.root"
+                 :label="v.label" :value="i" :key="`root${i}`">
+                 </v-radio>
+            </v-radio-group>
+
+
+            <h2>Languages</h2>
+            <v-radio-group class="scv-settings" v-model="gscv.showLang"
+                @change="gscv.changed('showLang')"
+                column>
+               <v-radio v-for="(sl,i) in showLangChoices"
+                 :label="sl.label" :value="i" :key="`showLang${sl.value}`">
+                 </v-radio>
+            </v-radio-group>
+            </section>
+
+            <h2>Bell Sound</h2>
+            <v-radio-group class="scv-settings" v-model="gscv.ips"
+                @change="gscv.changed('ips')"
+                column>
+               <v-radio v-for="(ips) in ipsChoices"
+                 :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
+                 </v-radio>
+            </v-radio-group>
+
+            <h2>Search Results</h2>
+            <div class="scv-settings">
+                <v-radio-group v-if="gscv" v-model="gscv.maxResults"
+                    @change="gscv.changed('maxResults')"
+                    column>
+                   <v-radio v-for="(mr) in maxResultsChoices"
+                     :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
+                     </v-radio>
+                </v-radio-group>
+            </div>
+
+            <h2>Text Info</h2>
+                <v-checkbox class="scv-settings" v-if="gscv"
+                    v-model="gscv.showId" role="checkbox"
+                    :aria-checked="gscv.showId"
+                    v-on:change="gscv.changed('showId')"
+                    label="Show SuttaCentral text segment identifiers">
+                </v-checkbox>
+
+            <h2>Remember settings</h2>
+            <v-checkbox class="scv-settings" v-if="gscv"
                 v-model="gscv.useCookies" role="checkbox"
                 v-on:change="gscv.changed('useCookies')"
                 :aria-checked="gscv.useCookies"
-                style="margin-left: 0.8em"
                 label="Store settings using web browser cookies ">
             </v-checkbox>
           </v-card-text>
+
           <v-card-actions>
             <button class="scv-dialog-button" :style="cssProps"
                 @click="closeDialog()" >
@@ -245,13 +270,13 @@ export default {
         },
         showLangChoices() {
             return [{
-                label: "Show both Pali text and translated text",
+                label: "Read both Pali text and translated text",
                 value: 0,
             },{
-                label: "Show only Pali text",
+                label: "Read only Pali text",
                 value: 1,
             },{
-                label: "Show only translated text",
+                label: "Read only translated text",
                 value: 2,
             }];
         },
@@ -261,12 +286,10 @@ export default {
         ipsChoices() {
             return this.gscv.ipsChoices;
         },
+        // @KARL
         maxResultsChoices() {
             return [{
-                label: "Return up to 3 search results (fast)",
-                value: 3,
-            },{
-                label: "Return up to 5 search results",
+                label: "Return up to 5 search results (fast)",
                 value: 5,
             },{
                 label: "Return up to 10 search results",
@@ -395,9 +418,23 @@ button {
     height: 100%;
     width: 100%;
 }
+
+.settings-page h2, .settings-page h3 {
+    font-weight: 500;
+}
+
+.firsth {
+    margin-bottom: .2em;
+}
+
 .scv-settings {
     margin-left: 1em;
 }
+
+.en-human {
+    margin-top: -1em;
+}
+
 .scv-icon-btn {
     margin: 0;
     border-radius:5px;
