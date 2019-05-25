@@ -29,24 +29,32 @@
                           Inspire me!
                       </v-btn>
                   </div>
-                  <div class="mb-3"
-                    v-if="waiting<=0 && sutta_uid && !searchResults"
-                    style="display:flex; justify-content: flex-start">
-                    <v-btn icon
-                        :disabled="waiting > 0"
-                        @click="launchSuttaPlayer()"
-                        ref="refPlaySutta"
-                        :aria-label="`play ${resultId()}`"
-                        class="scv-icon-btn" :style="cssProps" small>
-                        <v-icon>play_circle_outline</v-icon>
-                    </v-btn>
-                    <v-btn icon
-                        :href="downloadUrl()"
-                        @click="downloadClick()"
-                        :aria-label="`download ${resultId()}`"
-                        class="scv-icon-btn" :style="cssProps" small>
-                        <v-icon>arrow_downward</v-icon>
-                    </v-btn>
+                  <div class="scv-onesutta-btns-container">
+                      <div class="mb-3 scv-onesutta-btns"
+                        v-if="waiting<=0 && sutta_uid && !searchResults">
+                       <v-btn icon
+                            :disabled="waiting > 0"
+                            @click="launchSuttaPlayer()"
+                            ref="refPlaySutta"
+                            :aria-label="`play ${resultId()}`"
+                            class="scv-icon-btn onesutta-btn" :style="cssProps" small>
+                            <v-icon>play_circle_outline</v-icon>
+                        </v-btn>
+                        <v-btn icon
+                            :href="downloadUrl()"
+                            @click="downloadClick()"
+                            :aria-label="`download ${resultId()}`"
+                            class="scv-icon-btn onesutta-btn" :style="cssProps" small>
+                            <v-icon>arrow_downward</v-icon>
+                        </v-btn>
+                        <!--@KARL-->
+                        <v-btn icon
+                            @click="moreResources()"
+                            :aria-label="`download ${resultId()}`"
+                            class="scv-icon-btn onesutta-btn-right" :style="cssProps" small>
+                            <v-icon>add</v-icon>
+                        </v-btn>
+                      </div>
                   </div>
               </div>
           </div>
@@ -131,7 +139,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ml-3 pt-2" 
+                <div class="ml-3 pt-2"
                     style="display:flex; justify-content: flex-start">
                     <v-btn icon v-if="result.quote"
                         @click="playQuotes(i, result)"
@@ -174,7 +182,7 @@
                 <details>
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
                     <div class="caption text-xs-center">
-                        <div class="text-xs-center" v-if="hasAudio && gscv.voices">
+                        <div class="text-xs-center" v-if="hasAudio && gscv.voices">   <!--@KARL: REMOVE COMPLETELY; OUTDATED DUPLICATION-->
                             <a :href="downloadUrl()" ref="refDownload"
                                 class="scv-a"
                                 @click="downloadClick()"
@@ -185,17 +193,17 @@
                         <div v-for="translation in suttaplex.translations"
                             class="text-xs-center"
                             :key="translation.id"
-                            v-show="author_uid !== translation.author_uid">
+                            v-show="author_uid !== translation.author_uid">   <!--@KARL: ADAPT FOR "ADD" EXPENDED BUTTON-->
                             <a :href="translationLink(translation)"
                                 class="scv-a"
                                 v-on:click="clickTranslation(translation,$event)">
-                                {{translation.author}}
-                                ({{translation.lang_name}})
+                                {{translation.author}}        <!--@KARL: USE SHORT AUTHOR NAME (EG. "Sujato", not "Bhikkhu Sujato")-->
+                                ({{translation.lang_name}})   <!--@KARL: REPLACE WITH "(Trans.)"-->
                             </a>
                         </div>
-                        <div class="text-xs-center" v-if="supportedAudio.length">
+                        <div class="text-xs-center" v-if="supportedAudio.length">    <!--@KARL: ADAPT TO RESULT IN READER SHORT NAME + TYPE (EG "Kitchen (Reader)")-->
                             Audio:
-                            <a class="scv-a" :href="audio.url" 
+                            <a class="scv-a" :href="audio.url"
                                 v-for="(audio,i) in supportedAudio" :key="`audio${i}`"
                                 target="_blank">
                                 <span v-if="i">&#x2022;</span>
@@ -203,22 +211,22 @@
                             </a>
                         </div>
                         <div class="text-xs-center">
-                            <a :href="`https://suttacentral.net/${sutta_uid}`"
+                            <a :href="`https://:suttacentral.net/${sutta_uid}`"
                                 class="scv-a"
                                 target="_blank">
-                                {{sutta_uid.toUpperCase()}} at SuttaCentral.net
+                                {{sutta_uid.toUpperCase()}} at SuttaCentral.net  <!--@KARL: REMOVE SUTTA ID AND ".NET" (EG. "On SuttaCentral")-->
                             </a>
                         </div>
                         <a class="text-xs-center scv-a" :style="cssProps"
                             target="_blank"
-                            href="https://github.com/sc-voice/sc-voice/wiki/Support-Policy/">
+                            href="https://:github.com/sc-voice/sc-voice/wiki/Support-Policy/">
                             <span v-if="support.value==='Legacy'">
                                 Content support: Legacy
                             </span>
                             <span v-if="support.value==='Supported'">
                                 Content support: <em>Supported</em>
                             </span>
-                        </a>
+                        </a> <!--@KARL: REMOVE COMPLETELY (unnecessary info for the general user; the inquiring user will find the wiki)-->
                     </div>
                 </details>
             </div> <!-- scv-blurb-more -->
@@ -989,6 +997,21 @@ export default {
     display: inline-block;
     padding-top: 0.5em;
 }
+
+.scv-onesutta-btns-container {
+    display:flex;
+    width: 100%;
+}
+
+.scv-onesutta-btns {
+    width: 100%;
+
+}
+
+.onesutta-btn-right {
+    float: right;
+}
+
 .scv-support {
     display: block;
     text-align: center;
