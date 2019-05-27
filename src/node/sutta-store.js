@@ -927,6 +927,10 @@
 
         nikayaSuttaIds(nikaya, language='en', author='sujato') {
             var that = this;
+            if (nikaya == null) {
+                return Promise.reject(new Error(
+                    `nikayaSuttaIds() nikaya is required`));
+            }
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var nikayaPath = path.join(that.root, nikaya);

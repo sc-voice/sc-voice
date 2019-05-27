@@ -219,7 +219,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTimportNikaya(...) imports nikaya", function(done) {
+    it("importNikaya(...) imports nikaya", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var tmpDirObj = tmp.dirSync({
@@ -230,7 +230,7 @@
             });
             var task = new Task(); // client can poll task progress
             var maxSuttas = 2; // for testing
-            var archiveResult = await vsm.importNikaya({
+            var resImport = await vsm.importNikaya({
                 nikaya: 'kn',
                 voice: 'aditi',
                 maxSuttas,
@@ -242,10 +242,10 @@
                 error: null,
             });
             should(task).properties([
-                'msTask', 'created', 'summary',
+                'msActive', 'started', 'summary',
             ]);
             should(task.summary).match(/kn_pli_mahasangiti_aditi suttas imported: 2/);
-            should(archiveResult).properties({
+            should(resImport).properties({
                 nikaya: 'kn',
                 lang: 'pli',
                 searchLang: 'en',
@@ -254,10 +254,10 @@
                 sutta_ids: [ 'thag1.1', 'thag1.2' ],
                 task,
             });
-            should(archiveResult.guids.length).equal(24+9);
+            should(resImport.guids.length).equal(24+9);
             var volumePath = path.join(tmpDirObj.name, 'kn_pli_mahasangiti_aditi');
             should(fs.existsSync(volumePath)).equal(true);
-            var guid = archiveResult.guids[0];
+            var guid = resImport.guids[0];
             var guidPath = path.join(volumePath, guid.substring(0,2), `${guid}.json`);
             should(fs.existsSync(guidPath)).equal(true);
 
@@ -317,11 +317,30 @@
                 s3Bucket,
             });
             var maxSuttas = 1; // for testing
-            var archiveResult = await vsm.archiveNikaya({
+            var task = new Task({
+                name: 'testArchiveNikaya',
+            });
+            var archivePromise = vsm.archiveNikaya({
                 nikaya: 'kn',
                 voice: 'aditi',
                 maxSuttas,
                 s3Bucket,
+                task,
+            });
+            should(task).properties({
+                name: 'testArchiveNikaya',
+                summary: `testArchiveNikaya idle`,
+                actionsTotal: 3,
+                actionsDone: 0,
+            });
+            var archiveResult = await archivePromise;
+            should(task).properties({
+                name: 'testArchiveNikaya',
+                summary: `archived `+
+                    `volume:kn_pli_mahasangiti_aditi `+
+                    `bucket:sc-voice-test-bucket`,
+                actionsTotal: 4,
+                actionsDone: 4,
             });
 
             should.deepEqual(archiveResult.s3Bucket, {

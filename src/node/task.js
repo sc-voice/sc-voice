@@ -3,33 +3,54 @@
     class Task {
         constructor(opts={}) {
             var uuid = opts.uuid || uuidv4();
-            var now = new Date();
-            this.created = opts.created || now;
-            this._actionsDone = opts.actionsDone || 0;
-            this._actionsTotal = opts.actionsTotal || 0;
-            this.msTask = now - this.created;
-            this.error = null;
             this.uuid = uuid;
             this.name = opts.name || `task${uuid}`;
-            this.summary = `${this.name} created`;
+            this.start(`${this.name} idle`);
+            Object.defineProperty(this, '_actionsDone', {
+                writable: true,
+                value: opts.actionsDone || 0,
+            });
+            Object.defineProperty(this, '_actionsTotal', {
+                writable: true,
+                value: opts.actionsTotal || 0,
+            });
+            Object.defineProperty(this, 'msActive', {
+                enumerable: true,
+                get: () => this.lastActive - this.started,
+            });
+            Object.defineProperty(this, 'isActive', {
+                enumerable: true,
+                get: () => this.actionsDone < this.actionsTotal,
+            });
+            Object.defineProperty(this, 'actionsDone', {
+                enumerable: true,
+                get: () => {
+                    return this._actionsDone;
+                },
+                set: (value) => {
+                    this._actionsDone = value;
+                    this.lastActive = new Date();
+                },
+            });
+            Object.defineProperty(this, 'actionsTotal', {
+                enumerable: true,
+                get: () => {
+                    return this._actionsTotal;
+                },
+                set: (value) => {
+                    this._actionsTotal = value;
+                    this.lastActive = new Date();
+                },
+            });
         }
 
-        get actionsDone() {
-            return this._actionsDone;
-        }
+        start(summary) {
+            this.summary = summary || `${this.name} started`;
+            this.started = new Date();
+            this.lastActive = this.started;
+            this.error = null;
 
-        set actionsDone(value) {
-            this._actionsDone = value;
-            this.msTask = Date.now() - this.created;
-        }
-
-        get actionsTotal() {
-            return this._actionsTotal;
-        }
-
-        set actionsTotal(value) {
-            this._actionsTotal = value;
-            this.msTask = Date.now() - this.created;
+            return this;
         }
     }
 

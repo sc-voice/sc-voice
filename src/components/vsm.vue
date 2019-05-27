@@ -4,7 +4,8 @@
             <v-card-title>
                 <div class="title"> VSM S3 Credentials </div>
                 <v-spacer/>
-                <v-btn @click='onEditCredentials()' color="warning">
+                <v-btn @click='onEditCredentials()' dark
+                    color="deep-orange darken-3">
                     Edit Credentials
                 </v-btn>
             </v-card-title>
@@ -113,6 +114,83 @@
                 </v-alert>
             </v-card-text>
         </v-card>
+        <v-card v-if="vsmFactoryTask">
+            <v-card-title>
+                <div class="title">VSM Factory</div>
+                <v-spacer/>
+                <span class="mr-3"> {{vsmFactoryTask.summary}}</span>
+                <v-progress-circular color="success" 
+                     size="50"
+                     :value="vsmFactoryProgress" >
+                    {{vsmFactoryProgress.toFixed(0)}}%
+                </v-progress-circular>
+                <v-spacer/>
+                <v-dialog v-model="vsmFactoryDialog" persistent>
+                    <template v-slot:activator="{ on }">
+                        <v-btn color="deep-orange darken-3" dark v-on="on" >
+                            Build VSM </v-btn>
+                     </template>
+                    <v-card>
+                        <v-card-title class="deep-orange darken-3">
+                            <div class="title">Build Voice Sound Module (VSM)</div>
+                            <v-spacer/>
+                            <v-btn @click="vsmFactoryDialog = false">
+                                Cancel
+                            </v-btn>
+                        </v-card-title>
+                        <v-card-text>
+                            Building a VSM takes a long time. For testing, choose fewer suttas.
+                            <div class="vsm-row">
+                                <v-radio-group label="Suttas" v-model="vsmCreate.maxSuttas">
+                                    <v-radio label="All" value="0"/>
+                                    <v-radio label="1" value="1"/>
+                                    <v-radio label="5" value="5"/>
+                                    <v-radio label="10" value="10"/>
+                                </v-radio-group>
+                                <v-radio-group label="Nikaya" v-model="vsmCreate.nikaya">
+                                    <v-radio label="Anguttara" value="an"/>
+                                    <v-radio label="Digha" value="dn"/>
+                                    <v-radio label="Khuddhaka" value="kn"/>
+                                    <v-radio label="Majjhima" value="mn"/>
+                                    <v-radio label="Saṁyutta" value="sn"/>
+                                </v-radio-group>
+                                <v-radio-group label="Language" v-model="vsmCreate.lang">
+                                    <v-radio label="English" value="en"/>
+                                    <v-radio label="Pali" value="pli"/>
+                                </v-radio-group>
+                                <v-radio-group label="Author" v-model="vsmCreate.author">
+                                    <v-radio label="Sujato/Mahasangiti" value="sujato"/>
+                                </v-radio-group>
+                                <v-radio-group label="Voice" v-model="vsmCreate.voice">
+                                    <v-radio label="Aditi (hi-IN)" value="aditi"
+                                        v-show="vsmCreate.lang==='pli'" />
+                                    <v-radio label="Amy (en-GB)" value="amy"
+                                        v-show="vsmCreate.lang==='en'" />
+                                    <v-radio label="Raveena (en-IN)" value="raveena"
+                                        v-show="vsmCreate.lang==='en'" />
+                                    <v-radio label="Russell (en-AU)" value="russell"
+                                        v-show="vsmCreate.lang==='en'" />
+                                    <v-radio label="Sujato (en, pli)" value="sujato" 
+                                        :disabled="true" />
+                                </v-radio-group>
+                            </div>
+                            <v-card-actions>
+                                <v-btn :disabled="!isVsmCreate"
+                                    @click="onVsmCreate()">
+                                    Create
+                                </v-btn>
+                                <v-spacer/>
+                            </v-card-actions>
+                            <v-alert type="error" v-if="vsmCreateError" :value="true">
+                                {{vsmCreateError.message}}
+                            </v-alert>
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
+            </v-card-title>
+            <v-card-text>
+            </v-card-text>
+        </v-card>
 
     </v-sheet>
 </template>
@@ -129,9 +207,19 @@ export default {
             isEditCredentials: false,
             isVsmRestoring: false,
             editCredError: null,
+            vsmFactoryTask: null,
             vsmRestoreError: null,
+            vsmCreateError: null,
             vsmSelected: [],
             vsmObjects: [],
+            vsmFactoryDialog: false,
+            vsmCreate: {
+                nikaya: null,
+                lang: 'pli',
+                author: 'sujato',
+                voice: null,
+                maxSuttas: null,
+            },
             vsmCreds: {
             },
             editCreds: {
@@ -146,10 +234,42 @@ export default {
         }
     },
     methods: {
+        onVsmCreate() {
+            var url = this.url('auth/vsm/create');
+                Vue.set(this, 'vsmCreateError', null);
+            this.$http.post(url, this.vsmCreate, this.authConfig).then(res => {
+                console.log(`onVsmCreate`, res.data);
+                Vue.set(this, 'vsmFactoryDialog', false);
+                this.getVsmFactoryTask();
+            }).catch(e => {
+                Vue.set(this, 'vsmCreateError', e);
+                console.error(e.response);
+            });
+        },
         getListObjects() {
             var url = this.url('auth/vsm/list-objects');
             this.$http.get(url, this.authConfig).then(res => {
                 Vue.set(this, 'vsmObjects', res.data.Contents);
+            }).catch(e => {
+                console.error(e.response);
+            });
+        },
+        getVsmFactoryTask() {
+            var that = this;
+            var url = that.url('auth/vsm/factory-task');
+            that.$http.get(url, that.authConfig).then(res => {
+                var {
+                    actionsDone,
+                    actionsTotal,
+                    error,
+                } = res.data;
+                console.log(`getVsmFactoryTask`, res.data);
+                Vue.set(that, 'vsmFactoryTask', res.data);
+                if (error == null && actionsDone < actionsTotal) {
+                    setTimeout(() => {
+                        that.getVsmFactoryTask();
+                    }, 1000);
+                }
             }).catch(e => {
                 console.error(e.response);
             });
@@ -212,6 +332,7 @@ export default {
     mounted() {
         Vue.set(this, "user", this.gscv.user);
         this.getCredentials();
+        this.getVsmFactoryTask();
     },
     computed: {
         gscv() {
@@ -245,6 +366,24 @@ export default {
                 value: 'ETag',
             }];
         },
+        vsmFactoryProgress() {
+            var {
+                actionsDone,
+                actionsTotal,
+            } = this.vsmFactoryTask;
+            return 100 * (actionsTotal ? actionsDone/actionsTotal : 1);
+        },
+        isVsmCreate() {
+            var {
+                maxSuttas,
+                voice,
+                lang,
+                nikaya,
+                author,
+            } = this.vsmCreate;
+            return maxSuttas !== null && author !== null &&
+                voice !== null && lang !== null && nikaya !== null;
+        },
     },
     components: {
     },
@@ -257,5 +396,10 @@ export default {
 .vsm-cred-table > tr > th {
     text-align: left;
     padding-right: 1em;
+}
+.vsm-row {
+    display: flex;
+    flex-flow: row wrap;
+    padding-left: 1em;
 }
 </style>

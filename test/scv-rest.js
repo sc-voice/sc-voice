@@ -29,6 +29,24 @@
     const SC = path.join(LOCAL, 'sc');
     const app = require("../scripts/sc-voice.js"); // access cached instance 
 
+
+    function testAuthPost(url, data) {
+        var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
+        return supertest(app).post(url)
+            .set("Authorization", `Bearer ${token}`)
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+            .send(data);
+    }
+
+    function testAuthGet(url) {
+        var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
+        return supertest(app).get(url)
+            .set("Authorization", `Bearer ${token}`)
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json');
+    }
+
     it("ScvRest must be initialized", function(done) {
         (async function() { try {
             var scvRest = app.locals.scvRest;
@@ -504,11 +522,7 @@
             var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
 
             var data = { volume, };
-            var res = await supertest(app).post(url)
-                .set("Authorization", `Bearer ${token}`)
-                .set('Content-Type', 'application/json')
-                .set('Accept', 'application/json')
-                .send(data);
+            var res = await testAuthPost(url, data);
             res.statusCode.should.equal(200);
             should.deepEqual(res.body, {
                 filesDeleted:1,
@@ -517,11 +531,7 @@
 
             var data = { volume:'invalid-volume', };
             logger.error(`EXPECTED ERROR BEGIN`);
-            var res = await supertest(app).post(url)
-                .set("Authorization", `Bearer ${token}`)
-                .set('Content-Type', 'application/json')
-                .set('Accept', 'application/json')
-                .send(data);
+            var res = await testAuthPost(url, data);
             res.statusCode.should.equal(500);
             logger.error(`EXPECTED ERROR END`);
 
@@ -556,14 +566,10 @@
         }
         (async function() { try {
             var url = `/scv/auth/vsm/s3-credentials`;
-            var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
             var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
 
             // Returns obfuscated credentials
-            var res = await supertest(app).get(url)
-                .set("Authorization", `Bearer ${token}`)
-                .set('Content-Type', 'application/json')
-                .set('Accept', 'application/json');
+            var res = await testAuthGet(url);
             res.statusCode.should.equal(200);
             var actualCreds = res.body;
             should(actualCreds.Bucket).equal(goodCreds.Bucket);
@@ -585,16 +591,11 @@
         }
         (async function() { try {
             var url = `/scv/auth/vsm/s3-credentials`;
-            var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
             var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
 
             // Good credentials are saved
             fs.unlinkSync(vsmS3Path);
-            var res = await supertest(app).post(url)
-                .set("Authorization", `Bearer ${token}`)
-                .set('Content-Type', 'application/json')
-                .set('Accept', 'application/json')
-                .send(goodCreds);
+            var res = await testAuthPost(url, goodCreds);
             var actualCreds = JSON.parse(fs.readFileSync(vsmS3Path));
             fs.writeFileSync(vsmS3Path, JSON.stringify(goodCreds, null, 2));
             res.statusCode.should.equal(200);
@@ -604,11 +605,7 @@
             logger.warn("EXPECTED WARNING BEGIN");
             var badCreds = JSON.parse(JSON.stringify(goodCreds));
             badCreds.s3.secretAccessKey = 'bad-secretAccessKey';
-            var res = await supertest(app).post(url)
-                .set("Authorization", `Bearer ${token}`)
-                .set('Content-Type', 'application/json')
-                .set('Accept', 'application/json')
-                .send(badCreds);
+            var res = await testAuthPost(url, badCreds);
             logger.warn("EXPECTED WARNING END");
             res.statusCode.should.equal(500);
             var actualCreds = JSON.parse(fs.readFileSync(vsmS3Path));
@@ -617,7 +614,30 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET auth/vsm/list-objects lists bucket objects", function(done) {
+    it("GET auth/vsm/factory-task returns factory status", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+
+            // Default Bucket
+            var url = `/scv/auth/vsm/factory-task`;
+            var res = await testAuthGet(url);
+            res.statusCode.should.equal(200);
+            should(res.body).properties({
+                error: null,
+                summary: 'VSMFactory idle',
+                name: 'VSMFactory',
+                msActive: 0,
+            });
+            should.deepEqual(Object.keys(res.body).sort(), [
+                'isActive', 'lastActive',
+                'error', 'name', 'msActive', 'started', 'summary', 'uuid',
+                'actionsTotal', 'actionsDone',
+            ].sort());
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("GET auth/vsm/list-objects lists bucket objects", function(done) {
         this.timeout(5*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
@@ -629,11 +649,7 @@
 
             // Default Bucket
             var url = `/scv/auth/vsm/list-objects`;
-            var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
-            var res = await supertest(app).get(url)
-                .set("Authorization", `Bearer ${token}`)
-                .set('Content-Type', 'application/json')
-                .set('Accept', 'application/json');
+            var res = await testAuthGet(url);
             res.statusCode.should.equal(200);
             var s3Result = res.body;
             should(s3Result).properties({
@@ -668,12 +684,8 @@
             return;
         }
         (async function() { try {
-            var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
             var url = `/scv/auth/vsm/list-objects`;
-            var resList = await supertest(app).get(url)
-                .set("Authorization", `Bearer ${token}`)
-                .set('Content-Type', 'application/json')
-                .set('Accept', 'application/json');
+            var resList = await testAuthGet(url);
             var {
                 Contents,
             } = resList.body;
@@ -688,17 +700,88 @@
                 restore,
                 clearVolume,
             };
-            var res = await supertest(app).post(url)
-                .set("Authorization", `Bearer ${token}`)
-                .set('Content-Type', 'application/json')
-                .set('Accept', 'application/json')
-                .send(data);
+            var res = await testAuthPost(url, data);
             res.statusCode.should.equal(200);
             should(res.body).properties({
                 Bucket: 'sc-voice-wasabi',
                 clearVolume,
                 restore,
             });
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("POST auth/vsm/create-archive create VSM", function(done) {
+        this.timeout(10*1000);
+        (async function() { try {
+            var url = `/scv/auth/vsm/create-archive`;
+            var nikaya = 'kn';
+            var author = 'sujato';
+            var lang = 'pli';
+            var voice = 'aditi';
+            var maxSuttas = 1;
+            var postArchive = false;
+            var data = {
+                nikaya,
+                voice,
+                lang,
+                author,
+                maxSuttas,
+                postArchive,
+            };
+
+            // the response is immediate since processing is in the background
+            var res = await testAuthPost(url, data);
+            res.statusCode.should.equal(200);
+            should(res.body).properties({
+                postArchive,
+                author,
+                lang,
+                nikaya,
+                maxSuttas,
+                voice,
+            });
+            var summary = 'Building VSM for nikaya:kn language:pli voice:aditi';
+            should(res.body.task).properties({
+                actionsTotal: 2,
+                actionsDone: 0,
+                summary,
+                error: null,
+                name: 'VSMFactory',
+            });
+
+            // an immediately following request should be busy 
+            logger.warn("EXPECTED WARNING BEGIN");
+            var res = await testAuthPost(url, data);
+            logger.warn("EXPECTED WARNING END");
+            res.statusCode.should.equal(500);
+            should(res.body.error).match(/VSM Factory is busy/);
+            var taskUrl = `/scv/auth/vsm/factory-task`;
+            var res = await testAuthGet(taskUrl);
+            res.statusCode.should.equal(200);
+            should(res.body).properties({
+                error: null,
+                summary,
+                name: 'VSMFactory',
+                isActive: true,
+            });
+
+            // and after a while it should be done
+            await new Promise((resolve, reject) => {
+                setTimeout(() => resolve(true), 2000);
+            });
+            var res = await testAuthGet(taskUrl);
+            res.statusCode.should.equal(200);
+            should(res.body).properties({
+                error: null,
+                name: 'VSMFactory',
+                isActive: false,
+            });
+            should(res.body.summary).match(/VSM created/);
+
+            // and we can submit another request
+            var res = await testAuthPost(url, data);
+            res.statusCode.should.equal(200);
 
             done();
         } catch(e) {done(e);} })();

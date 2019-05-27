@@ -26,6 +26,7 @@
     const SuttaCentralApi = require('./sutta-central-api');
     const MdAria = require('./md-aria');
     const PoParser = require('./po-parser');
+    const Task = require('./task');
     const Voice = require('./voice');
     const SuttaCentralId = require('./sutta-central-id');
     const LOCAL = path.join(__dirname, '../../local');
@@ -68,6 +69,9 @@
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
                 autoSection: true,
+            });
+            this.vsmFactoryTask = new Task({
+                name: 'VSMFactory',
             });
             this.userStore = opts.userStore || new UserStore({
                 defaultUser: DEFAULT_USER,
@@ -150,8 +154,12 @@
                         this.getVsmListObjects),
                     this.resourceMethod("get", "auth/vsm/s3-credentials", 
                         this.getVsmS3Credentials),
+                    this.resourceMethod("get", "auth/vsm/factory-task", 
+                        this.getVsmFactoryTask),
                     this.resourceMethod("post", "auth/vsm/s3-credentials", 
                         this.postVsmS3Credentials),
+                    this.resourceMethod("post", "auth/vsm/create-archive", 
+                        this.postVsmCreateArchive),
                     this.resourceMethod("post", "auth/vsm/restore-s3-archives", 
                         this.postVsmRestoreS3Archives),
                     this.resourceMethod("post", "auth/reboot", 
@@ -943,6 +951,18 @@
             });
         }
 
+        getVsmFactoryTask(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "GET vsm/factory-task");
+                    resolve(that.vsmFactoryTask);
+                } catch(e) {
+                    reject(e);} 
+                })();
+            });
+        }
+
         getVsmS3Credentials(req, res, next) {
             var that = this;
             return new Promise((resolve, reject) => {
@@ -995,6 +1015,72 @@
                             endpoint,
                             region,
                         }
+                    });
+                } catch(e) {
+                    reject(e);} 
+                })();
+            });
+        }
+
+        postVsmCreateArchive(req, res, next) {
+            var that = this;
+            var {
+                soundStore,
+            } = that;
+            var task = that.vsmFactoryTask;
+            if (task.isActive) {
+                return Promise.reject(new Error(
+                    `VSM Factory is busy started:${task.started} summary:${task.summary}`));
+            }
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "POST vsm/create-archive");
+                    var {
+                        maxSuttas,
+                        nikaya,
+                        lang,
+                        author,
+                        voice,
+                        postArchive,
+                    } = req.body;
+                    task.start(`Building VSM for `+
+                        `nikaya:${nikaya} language:${lang} voice:${voice}`);
+                    task.actionsTotal++;
+                    postArchive = postArchive == null ? true : postArchive;
+                    var s3Bucket = await that.vsmS3Bucket();
+                    var vsm = new VsmStore({
+                        s3Bucket,
+                        soundStore,
+                    });
+                    vsm.importNikaya({
+                        nikaya,
+                        voice,
+                        maxSuttas,
+                        lang,
+                        author,
+                        task,
+                    }).then(resImport => {
+                        (async function () { try {
+                            if (postArchive) {
+                            }
+                            task.actionsDone++;
+                            task.summary = `VSM created ${new Date()}`;
+                        } catch(e) {
+                            task.error = e.message;
+                            reject(e);
+                        }})();
+                    }).catch(e => {
+                        task.error = e.message;
+                        reject(e);
+                    });
+                    resolve({
+                        voice: typeof voice === 'string' ? voice : voice.name,
+                        maxSuttas,
+                        nikaya,
+                        lang,
+                        author,
+                        postArchive,
+                        task,
                     });
                 } catch(e) {
                     reject(e);} 

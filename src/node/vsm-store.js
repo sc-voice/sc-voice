@@ -171,19 +171,29 @@
 
         archiveNikaya(...args) {
             var that = this;
-            var opts = args[0] || {};
+            var opts = args[0] && Object.assign({},args[0]) || {};
+            opts.s3Bucket = opts.s3Bucket || this.s3Bucket;
+            opts.voice = opts.voice || this.voice;
+            opts.task = opts.task || new Task({
+                name: 'archiveNikaya',
+            });
+            opts.archiveDir = opts.archiveDir || this.archiveDir;
             var {
+                nikaya,
+                archiveDir,
                 s3Bucket,
                 voice,
+                task,
             } = opts;
-            var archiveDir = opts.archiveDir || that.archiveDir;
-            s3Bucket = s3Bucket || this.s3Bucket;
-            voice = voice || this.voice;
-            var that = this;
+            if (nikaya == null) {
+                return Promise.reject(new Error(
+                    `archiveNikaya() nikaya is required`));
+            }
+            task.actionsTotal += 2;
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var result = {};
-                    var importResult = await that.importNikaya.apply(that, args);
+                    var importResult = await that.importNikaya.call(that, opts);
                     var {
                         volume,
                     } = importResult;
@@ -194,6 +204,7 @@
                         archiveFile,
                         voice,
                     };
+                    task.summary = `serializing volume: ${volume}`;
                     var {
                         archived,
                         version,
@@ -203,10 +214,14 @@
                         archiveDir,
                         archiveFile,
                     });
+                    task.actionsDone++;
+                    task.summary = `archiving volume:${volume} bucket:${s3Bucket.Bucket}`;
                     var archiveBase = path.basename(archivePath);
                     var archiveStream = fs.createReadStream(archivePath);
                     var archiveResult = await 
                         s3Bucket.putObject(archiveBase, archiveStream);
+                    task.summary = `archived volume:${volume} bucket:${s3Bucket.Bucket}`;
+                    task.actionsDone++;
                     resolve(archiveResult);
                 } catch(e) {reject(e);} })();
             });
@@ -233,6 +248,10 @@
                 suttaStore,
                 task,
             } = opts;
+            if (nikaya == null) {
+                return Promise.reject(new Error(
+                    `importNikaya() nikaya is required`));
+            }
             lang = lang || 'pli';
             author = author || 'sujato';
             voice = voice || Voice.createVoice('aditi');
