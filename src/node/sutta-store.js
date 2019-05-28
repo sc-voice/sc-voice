@@ -437,6 +437,9 @@
             if (!this.isInitialized) {
                 throw new Error("SuttaStore.initialize() is required");
             }
+            if (suttaRef == null) {
+                throw new Error("SuttaStore.suttaIndex() suttaRef is required");
+            }
             var sutta_uid = suttaRef.split('/')[0];
             var iEnd = this.suttaIds.length;
             var i1 = 0;
@@ -518,7 +521,7 @@
                     throw new Error(`Sutta ${firstItem} not found`);
                 }
                 var endUid = this.sutta_uidSuccessor(`${prefix}${last}`);
-                var iEnd = this.suttaIndex(endUid);
+                var iEnd = endUid && this.suttaIndex(endUid) || 0;
                 for (var i = iCur; i < iEnd; i++) {
                     result.push(`${this.suttaIds[i]}${suffix}`);
                 }

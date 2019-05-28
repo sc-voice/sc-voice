@@ -5,7 +5,8 @@
     const URL = require('url');
     const http = require('http');
     const https = require('https');
-    var jwt = require('jsonwebtoken');
+    const jwt = require('jsonwebtoken');
+    const tmp = require('tmp');
     const {
         logger,
         RestBundle,
@@ -1044,13 +1045,16 @@
                         postArchive,
                     } = req.body;
                     task.start(`Building VSM for `+
-                        `nikaya:${nikaya} language:${lang} voice:${voice}`);
-                    task.actionsTotal++;
+                        `nikaya:${nikaya} language:${lang} voice:${voice}`, 1);
                     postArchive = postArchive == null ? true : postArchive;
                     var s3Bucket = await that.vsmS3Bucket();
+                    var tmpDirObj = tmp.dirSync({
+                        unsafeCleanup: true,
+                    });
                     var vsm = new VsmStore({
                         s3Bucket,
                         soundStore,
+                        storePath: tmpDirObj.name,
                     });
                     vsm.importNikaya({
                         nikaya,
@@ -1062,9 +1066,18 @@
                     }).then(resImport => {
                         (async function () { try {
                             if (postArchive) {
+                                var resArchive = await vsm.archiveNikaya({
+                                    nikaya,
+                                    voice,
+                                    maxSuttas,
+                                    lang,
+                                    author,
+                                    task,
+                                });
                             }
+                            logger.info(`removing ${tmpDirObj.name}`);
+                            tmpDirObj.removeCallback();
                             task.actionsDone++;
-                            task.summary = `VSM created ${new Date()}`;
                         } catch(e) {
                             task.error = e.message;
                             reject(e);

@@ -68,6 +68,7 @@
                         </v-alert>
                     </v-card-text>
                     <v-card-actions>
+                        <v-spacer/>
                         <v-btn @click="onSubmitCredentials()">
                             Submit
                         </v-btn>
@@ -118,12 +119,15 @@
             <v-card-title>
                 <div class="title">VSM Factory</div>
                 <v-spacer/>
-                <span class="mr-3"> {{vsmFactoryTask.summary}}</span>
-                <v-progress-circular color="success" 
-                     size="50"
-                     :value="vsmFactoryProgress" >
-                    {{vsmFactoryProgress.toFixed(0)}}%
-                </v-progress-circular>
+                <div v-if="vsmFactoryTask.isActive">
+                    <v-progress-circular color="success" 
+                         size="50"
+                         :value="vsmFactoryProgress" >
+                        {{vsmFactoryProgress.toFixed(0)}}%
+                    </v-progress-circular>
+                </div><div v-else>
+                    Idle
+                </div>
                 <v-spacer/>
                 <v-dialog v-model="vsmFactoryDialog" persistent>
                     <template v-slot:activator="{ on }">
@@ -146,6 +150,10 @@
                                     <v-radio label="1" value="1"/>
                                     <v-radio label="5" value="5"/>
                                     <v-radio label="10" value="10"/>
+                                    <v-radio label="50" value="50"/>
+                                    <v-radio label="100" value="100"/>
+                                    <v-radio label="150" value="150"/>
+                                    <v-radio label="200" value="200"/>
                                 </v-radio-group>
                                 <v-radio-group label="Nikaya" v-model="vsmCreate.nikaya">
                                     <v-radio label="Anguttara" value="an"/>
@@ -175,20 +183,36 @@
                                 </v-radio-group>
                             </div>
                             <v-card-actions>
+                                <v-spacer/>
                                 <v-btn :disabled="!isVsmCreate"
                                     @click="onVsmCreate()">
                                     Create
                                 </v-btn>
-                                <v-spacer/>
                             </v-card-actions>
                             <v-alert type="error" v-if="vsmCreateError" :value="true">
-                                {{vsmCreateError.message}}
+                                VSM BUILD FAILED: {{vsmCreateError.message}}
                             </v-alert>
                         </v-card-text>
                     </v-card>
                 </v-dialog>
             </v-card-title>
             <v-card-text>
+                <table class='vsm-cred-table'>
+                <tr><th>summary:</th> <td>{{vsmFactoryTask.summary}} </td> </tr>
+                <tr><th>started:</th>
+                    <td>{{new Date(vsmFactoryTask.started).toLocaleString()}}</td>
+                </tr>
+                <tr><th>lastActive:</th>
+                    <td>{{new Date(vsmFactoryTask.lastActive).toLocaleString()}}
+                        (started +
+                        {{(vsmFactoryTask.msActive/1000).toFixed(0)}} seconds)
+                    </td>
+                </tr>
+                </table>
+                <v-alert type="error" v-if="vsmFactoryTask.error" :value="true">
+                    <h3>VSM Build Failed</h3>
+                    {{vsmFactoryTask.error}}
+                </v-alert>
             </v-card-text>
         </v-card>
 
@@ -235,8 +259,8 @@ export default {
     },
     methods: {
         onVsmCreate() {
-            var url = this.url('auth/vsm/create');
-                Vue.set(this, 'vsmCreateError', null);
+            var url = this.url('auth/vsm/create-archive');
+            Vue.set(this, 'vsmCreateError', null);
             this.$http.post(url, this.vsmCreate, this.authConfig).then(res => {
                 console.log(`onVsmCreate`, res.data);
                 Vue.set(this, 'vsmFactoryDialog', false);
@@ -259,16 +283,15 @@ export default {
             var url = that.url('auth/vsm/factory-task');
             that.$http.get(url, that.authConfig).then(res => {
                 var {
-                    actionsDone,
-                    actionsTotal,
-                    error,
+                    isActive,
                 } = res.data;
-                console.log(`getVsmFactoryTask`, res.data);
                 Vue.set(that, 'vsmFactoryTask', res.data);
-                if (error == null && actionsDone < actionsTotal) {
+                if (isActive) {
                     setTimeout(() => {
                         that.getVsmFactoryTask();
-                    }, 1000);
+                    }, 5000);
+                } else {
+                    this.getListObjects();
                 }
             }).catch(e => {
                 console.error(e.response);
@@ -383,6 +406,14 @@ export default {
             } = this.vsmCreate;
             return maxSuttas !== null && author !== null &&
                 voice !== null && lang !== null && nikaya !== null;
+        },
+        taskSegmentsDone() {
+            return this.vsmFactoryTask && this.vsmFactoryTask.actionsDone
+                && (this.vsmFactoryTask.actionsDone - 3) || 0;
+        },
+        taskSegmentsTotal() {
+            return this.vsmFactoryTask && this.vsmFactoryTask.actionsTotal 
+                && (this.vsmFactoryTask.actionsTotal - 3) || 0;
         },
     },
     components: {

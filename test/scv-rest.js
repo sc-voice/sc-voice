@@ -614,7 +614,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET auth/vsm/factory-task returns factory status", function(done) {
+    it("TESTTESTGET auth/vsm/factory-task returns factory status", function(done) {
         this.timeout(5*1000);
         (async function() { try {
 
@@ -624,7 +624,7 @@
             res.statusCode.should.equal(200);
             should(res.body).properties({
                 error: null,
-                summary: 'VSMFactory idle',
+                summary: 'VSMFactory created',
                 name: 'VSMFactory',
                 msActive: 0,
             });
@@ -711,7 +711,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/create-archive create VSM", function(done) {
+    it("TESTTESTPOST auth/vsm/create-archive create VSM", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;
@@ -777,7 +777,7 @@
                 name: 'VSMFactory',
                 isActive: false,
             });
-            should(res.body.summary).match(/VSM created/);
+            should(res.body.summary).match(/kn_pli_mahasangiti_aditi suttas imported/);
 
             // and we can submit another request
             var res = await testAuthPost(url, data);

@@ -128,6 +128,40 @@
             });
         }
 
+        upload(Key, stream) {
+            var {
+                s3,
+                Bucket,
+            } = this;
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var params = {
+                        Body: stream,
+                        Bucket,
+                        Key,
+                    };
+                    s3.upload(params, (err, response) => {
+                        if (err) {
+                            reject(err);
+                            return;
+                        }
+                        resolve({
+                            s3Bucket: {
+                                Bucket,
+                                s3: {
+                                    endpoint: s3.config.endpoint,
+                                    region: s3.config.region,
+                                },
+                            },
+                            Key,
+                            response,
+                        });
+                    });
+                } catch(e) {reject(e);} })();
+            });
+        }
+
         getObject(oname) {
             var {
                 s3,

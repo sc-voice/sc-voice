@@ -1,18 +1,31 @@
 (function(exports) {
     const uuidv4 = require('uuid/v4');
+    const {
+        logger,
+    } = require('rest-bundle');
     class Task {
         constructor(opts={}) {
             var uuid = opts.uuid || uuidv4();
             this.uuid = uuid;
             this.name = opts.name || `task${uuid}`;
-            this.start(`${this.name} idle`);
+            this.started = new Date();
+            this.lastActive = this.started;
+            this.error = null;
+            var {
+                actionsTotal,
+                actionsDone,
+            } = opts;
+            Object.defineProperty(this, '_summary', {
+                writable: true,
+                value: opts.summary || `${this.name} created`,
+            });
             Object.defineProperty(this, '_actionsDone', {
                 writable: true,
-                value: opts.actionsDone || 0,
+                value: actionsDone || 0,
             });
             Object.defineProperty(this, '_actionsTotal', {
                 writable: true,
-                value: opts.actionsTotal || 0,
+                value: actionsTotal || 0,
             });
             Object.defineProperty(this, 'msActive', {
                 enumerable: true,
@@ -20,7 +33,18 @@
             });
             Object.defineProperty(this, 'isActive', {
                 enumerable: true,
-                get: () => this.actionsDone < this.actionsTotal,
+                get: () => this.error == null && this.actionsDone < this.actionsTotal,
+            });
+            Object.defineProperty(this, 'summary', {
+                enumerable: true,
+                get: () => {
+                    return this._summary;
+                },
+                set: (value) => {
+                    this._summary = value;
+                    logger.info(`Task_${this.name}.summary: ${value}`);
+                    this.lastActive = new Date();
+                },
             });
             Object.defineProperty(this, 'actionsDone', {
                 enumerable: true,
@@ -44,10 +68,12 @@
             });
         }
 
-        start(summary) {
+        start(summary, actionsTotal=0, actionsDone=0) {
             this.summary = summary || `${this.name} started`;
             this.started = new Date();
             this.lastActive = this.started;
+            this.actionsTotal = actionsTotal;
+            this.actionsDone = actionsDone;
             this.error = null;
 
             return this;

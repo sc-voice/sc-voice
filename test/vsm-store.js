@@ -28,7 +28,7 @@
     };
     const VOICE_OPTS = {
         usage: "recite",
-        volume: 'other_en_sujato_aditi',
+        volume: TEST_VOLUME,
     };
     var mj = new MerkleJson();
     logger.level = 'warn';
@@ -150,18 +150,18 @@
             var vsm = new VsmStore();
             var voice = vsm.voice;
             var resultVsm = await vsm.speak(TEST_TEXT, VOICE_OPTS);
-            var archive = path.join(LOCAL, 'vsm', `${TEST_VOLUME}.tar.gz`);
-            if (fs.existsSync(archive)) {
-                fs.unlinkSync(archive);
+            var filepath = path.join(LOCAL, 'vsm', `${TEST_VOLUME}.tar.gz`);
+            if (fs.existsSync(filepath)) {
+                fs.unlinkSync(filepath);
             }
 
-            // creates archive
+            // serialize volume
             var result = await vsm.serializeVolume(TEST_VOLUME);
-            should(fs.existsSync(archive)).equal(true);
+            should(fs.existsSync(filepath)).equal(true);
 
-            // re-create archive
+            // re-serialize volume
             var result = await vsm.serializeVolume(TEST_VOLUME);
-            should(fs.existsSync(archive)).equal(true);
+            should(fs.existsSync(filepath)).equal(true);
 
             done();
         } catch(e) {done(e);} })();
@@ -301,7 +301,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("archiveNikaya(...) archives nikaya", function(done) {
+    it("TESTTESTarchiveNikaya(...) archives nikaya", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             const Bucket = TEST_BUCKET;
@@ -329,19 +329,17 @@
             });
             should(task).properties({
                 name: 'testArchiveNikaya',
-                summary: `testArchiveNikaya idle`,
-                actionsTotal: 3,
+                summary: `testArchiveNikaya created`,
+                actionsTotal: 11,
                 actionsDone: 0,
             });
             var archiveResult = await archivePromise;
             should(task).properties({
                 name: 'testArchiveNikaya',
-                summary: `archived `+
-                    `volume:kn_pli_mahasangiti_aditi `+
-                    `bucket:sc-voice-test-bucket`,
-                actionsTotal: 4,
-                actionsDone: 4,
+                actionsTotal: 12,
+                actionsDone: 12,
             });
+            should(task.summary).match(/Archived kn_pli_mahasangiti_aditi/);
 
             should.deepEqual(archiveResult.s3Bucket, {
                 Bucket,

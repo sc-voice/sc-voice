@@ -189,7 +189,8 @@
                 return Promise.reject(new Error(
                     `archiveNikaya() nikaya is required`));
             }
-            task.actionsTotal += 2;
+            const ACTIONS_UPLOAD = 10; // a large number to prevent 100% from misleading user
+            task.actionsTotal += ACTIONS_UPLOAD;
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var result = {};
@@ -205,25 +206,57 @@
                         voice,
                     };
                     task.summary = `serializing volume: ${volume}`;
-                    var {
-                        archived,
-                        version,
-                    } = await that.serializeVolume.call(that, archiveOpts);
                     var archivePath = that.zipPath({
                         volume,
                         archiveDir,
                         archiveFile,
                     });
-                    task.actionsDone++;
-                    task.summary = `archiving volume:${volume} bucket:${s3Bucket.Bucket}`;
+                    if (fs.existsSync(archivePath)) {
+                        logger.info(`removing existing archive:${archivePath}`);
+                        fs.unlinkSync(archivePath);
+                    }
+                    var {
+                        archived,
+                        version,
+                    } = await that.serializeVolume.call(that, archiveOpts);
+                    task.summary = `archiving ${volume} to ${s3Bucket.Bucket} ...`;
+                    var archiveStats = fs.statSync(archivePath);
+                    var archiveSize = archiveStats.size;
                     var archiveBase = path.basename(archivePath);
                     var archiveStream = fs.createReadStream(archivePath);
-                    var archiveResult = await 
-                        s3Bucket.putObject(archiveBase, archiveStream);
-                    task.summary = `archived volume:${volume} bucket:${s3Bucket.Bucket}`;
-                    task.actionsDone++;
+                    var archivePromise = s3Bucket.upload(archiveBase, archiveStream);
+                    /*
+                    archiveStream.on('data', chunk => {
+                        logger.info(`archiveStream.data chunk:${chunk.length}`);
+                    });
+                    archiveStream.on('end', () => {
+                        logger.info(`archiveStream.end`);
+                    });
+                    archiveStream.on('error', e => {
+                        logger.warn(e.stack);
+                    });
+                    */
+                    logger.info([
+                        `archiveNikaya()`,
+                        `Bucket:${s3Bucket.Bucket}`,
+                        `file:${archivePath}`,
+                        `size:${archiveSize} ...`].join(' '));
+                    var archiveResult = await archivePromise;
+                    var Bucket = s3Bucket.Bucket;
+                    var Key = archiveResult.Key;
+                    var ETag = archiveResult.response.ETag;
+                    ETag && (ETag = ETag.replace(/"/ug, ''));
+                    task.summary = `Archived ${Key}/${ETag} to ${Bucket}`;
+                    if (fs.existsSync(archivePath)) {
+                        logger.info(`removing uploaded archive:${archivePath}`);
+                        fs.unlinkSync(archivePath);
+                    }
+                    task.actionsDone += ACTIONS_UPLOAD;
                     resolve(archiveResult);
-                } catch(e) {reject(e);} })();
+                } catch(e) {
+                    logger.warn(e.stack);
+                    reject(e);
+                } })();
             });
         }
 
@@ -248,6 +281,7 @@
                 suttaStore,
                 task,
             } = opts;
+            maxSuttas = Number(maxSuttas);
             if (nikaya == null) {
                 return Promise.reject(new Error(
                     `importNikaya() nikaya is required`));
@@ -267,11 +301,13 @@
                     var searchLang = lang === 'pli' ? 'en' : lang;
                     var sutta_ids = await 
                         suttaStore.nikayaSuttaIds(nikaya, searchLang, author);
-                    sutta_ids = maxSuttas
-                        ? sutta_ids.slice(0, maxSuttas)
-                        : sutta_ids;
-                    task.actionsTotal += sutta_ids.length;
-                    for (var iSutta = 0; iSutta < sutta_ids.length; iSutta++) {
+                    if (maxSuttas) {
+                        sutta_ids = sutta_ids.slice(0, maxSuttas);
+                    }
+                    logger.info(`VSMStore.importNikaya(${nikaya}) ${sutta_ids.length} suttas`);
+                    var nSuttas = sutta_ids.length;
+                    task.actionsTotal += nSuttas;
+                    for (var iSutta = 0; iSutta < nSuttas; iSutta++) {
                         var suid = sutta_ids[iSutta];
                         var searchPattern = `${suid}/${searchLang}/${author}`;
                         var searchResults = await suttaStore.search(searchPattern);
@@ -279,12 +315,16 @@
                             var {
                                 sutta,
                             } = searchResults.results[0];
+                            var archiveResult = await that.importSutta(sutta);
+                            var volume = archiveResult.volume || '';
+                            guids = guids.concat(archiveResult.guids);
+                            task.summary = 
+                                `${volume} suttas imported: ${iSutta+1}/${nSuttas} ${suid}`;
+                        } else {
+                            logger.warn(`VSMStore.importNikaya(${nikaya}) `+
+                                `[${iSutta}] ${suid} NOT FOUND`);
                         }
-                        var archiveResult = await that.importSutta(sutta);
-                        var volume = archiveResult.volume || '';
-                        guids = guids.concat(archiveResult.guids);
                         task.actionsDone++;
-                        task.summary = `${volume} suttas imported: ${iSutta+1}`;
                     }
                     task.actionsDone++;
                     resolve({
@@ -310,6 +350,7 @@
                     });
                 } catch(e) {
                     task.error = e;
+                    logger.warn(e.stack);
                     reject(e);
                 } })();
             });
@@ -353,7 +394,10 @@
 
                     var tarPath = that.tarPath(manifest);
                     var zip = that.zip;
-                    var cmd = `tar -cf ${tarPath} ${volume} ; ${zip} ${tarPath}`;
+                    var cmd = [
+                        `tar -cf ${tarPath} ${volume}`,
+                        `${zip} ${tarPath}`,
+                    ].join(';');
                     var cmdOpts = {
                         cwd: that.storePath,
                     };

@@ -57,7 +57,30 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("putObject(oname,data) uploads object", function(done) {
+    it("upload(oname,stream) uploads stream", function(done) {
+        this.timeout(9*1000);
+        (async function() { try {
+            var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
+            var Key = 'kn_en_sujato_amy.tar.gz';
+            var Bucket = TEST_BUCKET;
+            var endpoint = 's3.us-west-1.amazonaws.com';
+            var region = 'us-west-1';
+            var dataPath = path.join(__dirname, 'data', Key);
+            var stream = fs.createReadStream(dataPath);
+            var uploadResult = await bucket.upload(Key, stream);
+            should.deepEqual(uploadResult.s3Bucket, {
+                s3: { 
+                    endpoint,
+                    region,
+                },
+                Bucket,
+            });
+            should(uploadResult).properties({ Key });
+            should(uploadResult.response).properties(['ETag']);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("putObject(oname,data) uploads stream", function(done) {
         this.timeout(9*1000);
         (async function() { try {
             var bucket = await new S3Bucket(BUCKET_OPTS).initialize();

@@ -6,7 +6,7 @@
         Task,
     } = require("../index");
 
-    it("TESTTESTTask(opts) is constructor", () => {
+    it("Task(opts) is constructor", () => {
         // Default constructor
         var task = new Task();
         should(task).properties({
@@ -38,7 +38,7 @@
             isActive: true,
         });
     });
-    it("TESTTESTactionsTotal records total task action count", (done) => {
+    it("actionsTotal records total task action count", (done) => {
         var task = new Task();
         var {
             started,
@@ -54,7 +54,7 @@
             } catch(e) { done(e); }
         }, 10);
     });
-    it("TESTTESTactionsDone records number of completed actions", (done) => {
+    it("actionsDone records number of completed actions", (done) => {
         var task = new Task({
             actionsTotal: 1,
         });
@@ -62,6 +62,7 @@
             started,
             lastActive,
         } = task;
+        should(task.actionsTotal).equal(1);
         setTimeout(() => {
             try {
                 task.actionsDone++;
@@ -73,28 +74,42 @@
             } catch(e) { done(e); }
         }, 10);
     });
-    it("TESTTESTstart(summary) restarts task", (done) => {
+    it("start(summary) restarts task", (done) => {
         var task = new Task();
         var {
             started,
         } = task;
         setTimeout(() => {
             try {
-                should(task.start('testing-start')).equal(task);
+                task.actionsTotal = 123;
+                task.actionsDone = 45;
+                should(task.actionsTotal).equal(123);
+                should(task.actionsDone).equal(45);
+                should(task.start('testing-start',3,2)).equal(task);
                 should(task.started).above(started);
+                should(task.actionsTotal).equal(3);
+                should(task.actionsDone).equal(2);
+
+                should(task.start('testing-start')).equal(task);
+                should(task.actionsTotal).equal(0);
+                should(task.actionsDone).equal(0);
                 done();
             } catch(e) { done(e); }
         }, 10);
     });
-    it("TESTTESTisActive returns true if there are actions to be done", () => {
+    it("isActive returns true if there are actions to be done", () => {
         var task = new Task();
         should(task.isActive).equal(false);
         task.actionsTotal++;
         should(task.isActive).equal(true);
         task.actionsDone++;
         should(task.isActive).equal(false);
+        task.actionsTotal++;
+        should(task.isActive).equal(true);
+        task.error = new Error('test error');
+        should(task.isActive).equal(false);
     });
-    it("TESTESTmsActive returns milliseconds of activity", (done) => {
+    it("msActive returns milliseconds of activity", (done) => {
         var task = new Task();
         should(task.msActive).equal(0);
         setTimeout(() => {
