@@ -614,7 +614,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET auth/vsm/factory-task returns factory status", function(done) {
+    it("GET auth/vsm/factory-task returns factory status", function(done) {
         this.timeout(5*1000);
         (async function() { try {
 
@@ -711,7 +711,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/vsm/create-archive create VSM", function(done) {
+    it("POST auth/vsm/create-archive create VSM", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;

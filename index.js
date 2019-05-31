@@ -3,6 +3,7 @@ module.exports = {
     AudioUrls: require("./src/node/audio-urls"),
     Cursor: require('./src/node/cursor'),
     Definitions: require('./src/node/definitions'),
+    HumanTts: require("./src/node/human-tts"),
     MdAria: require("./src/node/md-aria"),
     Polly: require("./src/node/polly"),
     PoParser: require('./src/node/po-parser'),

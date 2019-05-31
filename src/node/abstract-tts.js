@@ -36,6 +36,7 @@
             this.maxSSML = opts.maxSSML || 5000;
             this.maxSegment = opts.maxSegment || MAX_SEGMENT;
             this.maxCuddle = opts.maxCuddle || 1;
+            this.noAudioPath = opts.noAudioPath;
             this.usages = opts.usages || {};
             this.customWords = opts.customWords;
             this.syllableVowels = opts.syllableVowels;
@@ -300,19 +301,26 @@
         synthesizeResponse(resolve, reject, request) {
             var hitPct = (100*this.hits/(this.hits+this.misses)).toFixed(1);
             var outpath = request.outpath;
-            var stats = fs.existsSync(outpath) && fs.statSync(outpath);
-            if (stats && stats.size <= this.ERROR_SIZE) {
-                var err = fs.readFileSync(outpath).toString();
-                reject(new Error(`sound file is too short (${stats.size}): ${outpath} ${this.audioFormat} ${this.audioSuffix}`));
-                //reject(new Error(`sound file is too short (${stats.size}): ${outpath} ${err}`));
+            if (fs.existsSync(outpath)) {
+                var stats = fs.existsSync(outpath) && fs.statSync(outpath);
+                if (stats && stats.size <= this.ERROR_SIZE) {
+                    var err = fs.readFileSync(outpath).toString();
+                    reject(new Error(`sound file is too short (${stats.size}): `+
+                        `${outpath} ${this.audioFormat} ${this.audioSuffix}`));
+                }
+                resolve(this.createResponse(request, false, true));
+            } else {
+                logger.info(`synthesizeResponse() no audio outpath:${outpath}`);
+                request.outpath = this.noAudioPath;
+                resolve(this.createResponse(request, false, false));
             }
-            resolve(this.createResponse(request, false));
         }
 
-        createResponse(request, cached = false) {
+        createResponse(request, cached = false, writeSignature=true) {
             var signature = request.signature;
             var jsonPath = this.soundStore.signaturePath(signature, ".json");
-            fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2)+'\n');
+            writeSignature &&
+                fs.writeFileSync(jsonPath, JSON.stringify(signature, null, 2)+'\n');
             var response = {
                 file: request.outpath,
                 hits: this.hits,

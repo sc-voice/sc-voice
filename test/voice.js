@@ -18,6 +18,16 @@
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
         should(voices.length).greaterThan(0);
+        should.deepEqual(voices.map(v=>v.name).sort(),[
+            'Aditi', 
+            'Amy', 
+            'Marlene',
+            'Raveena', 
+            'Russell',
+            'Salli',
+            'Vicki',
+            'sujato_pli',
+        ].sort());
         var raveena = voices.filter(voice => voice.name === 'Raveena')[0];
         should(raveena).instanceOf(Voice);
         should(raveena).properties({

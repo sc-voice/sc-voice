@@ -2,6 +2,7 @@
     const fs = require('fs');
     const path = require('path');
     const Polly = require('./polly');
+    const HumanTts = require('./human-tts');
     const Words = require('./words');
     const SoundStore = require('./sound-store');
 
@@ -25,6 +26,7 @@
                 recite: Voice.RATE_SLOW,
             }
             this.gender = opts.gender || "female";
+            this.noAudioPath = opts.noAudioPath;
             this.soundStore = opts.soundStore || new SoundStore(opts);
             this.ipa = opts.ipa || {};
             this.pitch = opts.pitch || "-0%";
@@ -125,28 +127,32 @@
                 var words = this.voiceWords();
                 this._services = {};
                 Object.keys(this.usages).forEach(key => {
+                    let usage = this.usages[key];
+                    let props= {
+                        words,
+                        language: this.language,
+                        languageUnknown: this.languageUnknown,
+                        fullStopComma: this.fullStopComma,
+                        stripNumbers: this.stripNumbers,
+                        stripQuotes: this.stripQuotes,
+                        voice: this.name,
+                        customWords: this.customWords,
+                        soundStore: this.soundStore,
+                        maxSegment: this.maxSegment,
+                        usage: key,
+                        breaks: usage.breaks,
+                        syllableVowels: this.syllableVowels,
+                        syllabifyLength: this.syllabifyLength,
+                        prosody: {
+                            rate: usage.rate,
+                            pitch: this.pitch,
+                        }
+                    }
+                    this.noAudioPath && (props.noAudioPath = this.noAudioPath);
                     if (this.service === 'aws-polly') {
-                        var usage = this.usages[key];
-                        this._services[key] = new Polly({
-                            words,
-                            language: this.language,
-                            languageUnknown: this.languageUnknown,
-                            fullStopComma: this.fullStopComma,
-                            stripNumbers: this.stripNumbers,
-                            stripQuotes: this.stripQuotes,
-                            voice: this.name,
-                            customWords: this.customWords,
-                            soundStore: this.soundStore,
-                            maxSegment: this.maxSegment,
-                            usage: key,
-                            breaks: usage.breaks,
-                            syllableVowels: this.syllableVowels,
-                            syllabifyLength: this.syllabifyLength,
-                            prosody: {
-                                rate: usage.rate,
-                                pitch: this.pitch,
-                            }
-                        });
+                        this._services[key] = new Polly(props);
+                    } else if (this.service === 'human-tts') {
+                        this._services[key] = new HumanTts(props);
                     } else {
                         throw new Error(`unknown service:${this.service}`);
                     }

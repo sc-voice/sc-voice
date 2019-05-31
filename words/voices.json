@@ -546,4 +546,31 @@
             "y": "j"
         }
     }
+},{
+    "language": "pli",
+    "service": "human-tts",
+    "name": "sujato_pli",
+    "maxSegment": 400,
+    "syllableVowels": "aeiouāīū",
+    "syllabifyLength": 0,
+    "stripNumbers": true,
+    "stripQuotes": true,
+    "languageUnknown": "pli",
+    "gender": "male",
+    "pitch": "0%",
+    "fullStopComma": true,
+    "rates": {
+        "navigate": "0%", 
+        "recite": "0%"
+    },
+    "usages": {
+        "recite": {
+            "priority": 1,
+            "rate": "0%",
+            "breaks": [0.001,0.1,0.2,0.6,1]
+        }
+    },
+    "ipa": {
+        "pli": {}
+    }
 }]

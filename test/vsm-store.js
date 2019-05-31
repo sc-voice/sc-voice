@@ -301,7 +301,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTarchiveNikaya(...) archives nikaya", function(done) {
+    it("archiveNikaya(...) archives nikaya", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             const Bucket = TEST_BUCKET;
