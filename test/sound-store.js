@@ -92,7 +92,7 @@
             data[2].guid,
         ]);
     });
-    it("clearEphemeral(opts) clears old ephemeral files", function() {
+    it("TESTTESTclearEphemeral(opts) clears old ephemeral files", function() {
         var store = new SoundStore({
             suffixes: ['.txt'],
             storePath,
@@ -142,7 +142,7 @@
         should(fs.existsSync(data[2].fpath)).equal(false);
         should.deepEqual(Object.keys(store.ephemerals), []);
     });
-    it("automatically clears old ephemerals", function(done) {
+    it("TESTTESTautomatically clears old ephemerals", function(done) {
         (async function() { try {
             var ephemeralInterval = 100;
             var store = new SoundStore({
