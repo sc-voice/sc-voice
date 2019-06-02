@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.294.0",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "axis": "^1.0.0",
     "compression": "^1.7.3",
     "credential": "^2.0.0",

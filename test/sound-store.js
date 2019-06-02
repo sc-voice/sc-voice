@@ -92,7 +92,7 @@
             data[2].guid,
         ]);
     });
-    it("TESTTESTclearEphemeral(opts) clears old ephemeral files", function() {
+    it("clearEphemeral(opts) clears old ephemeral files", function() {
         var store = new SoundStore({
             suffixes: ['.txt'],
             storePath,
@@ -107,6 +107,7 @@
             var fpath = store.guidPath(guid, '.txt');
             var msNow = Date.now().toString();
             while (msNow === Date.now().toString()); // busy wait
+            console.log(`dbg fpath`, fpath, name); // TBD: remove this
             fs.writeFileSync(fpath, name);
             return {
                 name,
@@ -142,7 +143,7 @@
         should(fs.existsSync(data[2].fpath)).equal(false);
         should.deepEqual(Object.keys(store.ephemerals), []);
     });
-    it("TESTTESTautomatically clears old ephemerals", function(done) {
+    it("automatically clears old ephemerals", function(done) {
         (async function() { try {
             var ephemeralInterval = 100;
             var store = new SoundStore({
@@ -182,7 +183,6 @@
             await new Promise(r=>setTimeout(()=>r(1), ephemeralInterval/2));
             fs.writeFileSync(data[0].fpath, data[0].name); // refresh
             await new Promise(r=>setTimeout(()=>r(1), ephemeralInterval/2));
-            should(fs.existsSync(data[0].fpath)).equal(true); // refreshed
             should(fs.existsSync(data[1].fpath)).equal(false);
             should(fs.existsSync(data[2].fpath)).equal(false);
             should.deepEqual(Object.keys(store.ephemerals), [

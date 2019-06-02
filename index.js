@@ -12,6 +12,7 @@ module.exports = {
     Section: require('./src/node/section'),
     GuidStore: require("./src/node/guid-store"),
     Playlist: require('./src/node/playlist'),
+    SCAudio: require('./src/node/sc-audio'),
     SoundStore: require('./src/node/sound-store'),
     SuttaCentralApi: require('./src/node/sutta-central-api'),
     SuttaCentralId: require("./src/node/sutta-central-id"),
