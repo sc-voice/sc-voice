@@ -2,6 +2,7 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const tmp = require('tmp');
     const { logger } = require('rest-bundle');
     const {
         Playlist,
@@ -17,7 +18,7 @@
     } = require("../index");
     const LOCAL = path.join(__dirname, '../local');
 
-    it("constructor", function() {
+    it("TESTTESTconstructor", function() {
         var sca = new SCAudio();
         should(sca).properties({
             reader: 'sujato',
@@ -28,6 +29,7 @@
             urlSegments: 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com',
             extSeg: '.webm',
             extRaw: '.flac',
+            downloadDir: path.join(LOCAL, 'sc-audio'),
         });
 
         var reader = 'test-reader';
@@ -55,8 +57,11 @@
             'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com'+
             '/en/sn/sn1/sn1.09-en-sujato-sujato.json');
     });
-    it("segmentUrl(suidseg...)", function() {
+    it("TESTTESTsegmentUrl(suidseg...)", function() {
         var sca = new SCAudio();
+        should(sca.segmentUrl('SN1.09:2.1','pli')).equal(
+            'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com'+
+            '/pli/sn/sn1/sn1.9/sn1.9_2.1.webm');
         should(sca.segmentUrl('SN1.58:2.1','pli')).equal(
             'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com'+
             '/pli/sn/sn1/sn1.58/sn1.58_2.1.webm');
@@ -108,6 +113,58 @@
             var resMap = await sca.mapJson(suttaSN1_2, 'pli', 'mahasangiti', 'sujato');
             should(resMap.fragments.length).equal(11);
             should(resMap.fragments[0].lines[0]).equal('Nimokkhasutta');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) downloads audio file", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var language = 'en';
+            var reader = 'sujato';
+            var suttaSegId = 'sn1.9:1.1';
+            var author = 'sujato';
+            var downloadDir = tmp.tmpNameSync();
+            should(fs.existsSync(downloadDir)).equal(false);
+            var sca = new SCAudio({
+                downloadDir,
+            });
+            should(sca.downloadDir).equal(downloadDir);
+            should(fs.existsSync(downloadDir)).equal(true);
+            var audioPath = path.join(downloadDir, 'sn1.9_1.1.webm');
+
+            // english
+            var res = await sca.downloadSegmentAudio({
+                suttaSegId,
+            });
+            should.deepEqual(res,{
+                language: 'en',
+                reader,
+                suttaSegId,
+                audioPath,
+                author,
+            });
+            should(fs.existsSync(audioPath)).equal(true);
+            var stats = fs.statSync(audioPath);
+            should(stats.size).equal(37922);
+
+            // Pali
+            var sca = new SCAudio();
+            var res = await sca.downloadSegmentAudio({
+                suttaSegId,
+                language: 'pli',
+                audioPath,
+            });
+            should.deepEqual(res,{
+                language: 'pli',
+                reader,
+                suttaSegId,
+                audioPath,
+                author,
+            });
+            should(fs.existsSync(audioPath)).equal(true);
+            var stats = fs.statSync(audioPath);
+            should(stats.size).equal(84994);
 
             done();
         } catch(e) { done(e); } })();

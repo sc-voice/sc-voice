@@ -27,6 +27,11 @@
             this.reader = opts.reader || 'sujato';
             this.extRaw = opts.extRaw || '.flac';
             this.extSeg = opts.extSeg || '.webm';
+            this.downloadDir = opts.downloadDir || path.join(LOCAL, 'sc-audio');
+            if (!fs.existsSync(this.downloadDir)) {
+                logger.info(`creating SCAudio download directory:${this.downloadDir}`);
+                fs.mkdirSync(this.downloadDir);
+            }
         }
 
         nikayaOf(suid) {
@@ -173,7 +178,7 @@
 
         segmentUrl(suidsegid, lang=this.language, author=this.author, reader=this.reader) {
             var segIdParts = suidsegid.toLowerCase().split(':');
-            var suid = segIdParts[0];
+            var suid = segIdParts[0].replace(/\.00*/gu,'.');
             var segId = segIdParts[1];
             var nikaya = this.nikayaOf(suid);
             var major = this.majorIdOf(suid);
@@ -186,9 +191,58 @@
                 suid,
                 `${suid}_${segId}${extSeg}`,
             ].join('/');
-            
         }
 
+        downloadSegmentAudio(opts = {}) {
+            var suttaSegId = opts.suttaSegId;
+            if (suttaSegId == null) {
+                return Promise.reject(new Error(`expected suttaSegId`));
+            }
+            suttaSegId = suttaSegId.replace(/\.00*/ug,'.');
+            var audioPath = opts.audioPath;
+            if (audioPath == null) {
+                var filename = `${suttaSegId.replace(/:/g,'_')}${this.extSeg}`;
+                audioPath = path.join(this.downloadDir, filename);
+            }
+            var language = opts.language || this.language;
+            var author = opts.author || this.author;
+            var reader = opts.reader || this.reader;
+            var that = this;
+            var url = that.segmentUrl(suttaSegId, language, author, reader);
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    let httpx = url.startsWith('https') ? https : http;
+                    let os = fs.createWriteStream(audioPath);
+                    let request = httpx.get(url, function(response) {
+                        let contentType = response.headers['content-type'];
+                        response.pipe(os);
+                        response.on('end', () => {
+                            logger.info(`downloaded ${audioPath} ${contentType}`);
+                            var response = {
+                                audioPath,
+                                suttaSegId,
+                                language,
+                                author,
+                                reader,
+                            };
+                            if (contentType === 'video/webm') {
+                                resolve(response);
+                            } else {
+                                var e = new Error(
+                                    `download failed for url:${url} error:${audioPath}`);
+                                reject(e);
+                            }
+                        });
+                    }).on('error', (e) => {
+                        logger.error(e.stack);
+                        reject(e);
+                    }).on('timeout', (e) => {
+                        logger.error(e.stack);
+                        req.abort();
+                    });
+                } catch(e) {reject(e);} })();
+            });
+        }
     }
 
     module.exports = exports.SCAudio = SCAudio;

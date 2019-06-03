@@ -840,7 +840,7 @@
         } catch(e) {done(e);} })();
     });
     it("search(pattern) finds suttas in range", function(done) {
-        this.timeout(6*1000);
+        this.timeout(7*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -955,7 +955,7 @@
         } catch(e) {done(e);} })();
     });
     it("findSuttas(opts) finds by sutta_uid", function(done) {
-        this.timeout(6*1000);
+        this.timeout(7*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
 

@@ -45,7 +45,7 @@
         should(bucket.initialized).equal(false);
     });
     it("initialize() must be called", function(done) {
-        this.timeout(3*1000);
+        this.timeout(4*1000);
         (async function() { try {
             var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
             should(bucket.initialized).equal(true);
