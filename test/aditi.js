@@ -55,9 +55,11 @@
         var recite = aditi.services['recite'];
         should(recite.syllableVowels).equal('aeiou');
     });
-    it("segmentSSML(text) returns SSML", function() {
+    it("TESTTESTsegmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
+
+        testPhoneme(recite, 'ə sesəŋ ;', 'asesaṃ;');
 
         var ssml = recite.segmentSSML('disā, disā');
         should(ssml.length).equal(1);
