@@ -12,6 +12,8 @@
     } = require('../../package');
     const http = require('http');
     const https = require('https');
+    const SuttaStore = require('./sutta-store');
+    const SoundStore = require('./sound-store');
     const LOCAL = path.join(__dirname, '..', '..', 'local');
     const URL_RAW = 'https://raw.githubusercontent.com/sujato/sc-audio/master/flac';
     const URL_SEGMENTS = 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com';
@@ -27,6 +29,8 @@
             this.reader = opts.reader || 'sujato';
             this.extRaw = opts.extRaw || '.flac';
             this.extSeg = opts.extSeg || '.webm';
+            this.suttaStore = opts.suttaStore;
+            this.soundStore = opts.soundStore;
             this.downloadDir = opts.downloadDir || path.join(LOCAL, 'sc-audio');
             if (!fs.existsSync(this.downloadDir)) {
                 logger.info(`creating SCAudio download directory:${this.downloadDir}`);
@@ -240,6 +244,60 @@
                         logger.error(e.stack);
                         req.abort();
                     });
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        cacheSuttaAudio(opts) {
+            var {
+                suid,
+                language,
+                author,
+                reader,
+                suttaStore,
+                soundStore,
+            } = opts;
+            if (suid == null) {
+                return Promise.reject(new Error('suid is required'));
+            }
+            suttaStore = suttaStore || this.suttaStore;
+            if (suttaStore == null) {
+                return Promise.reject(new Error(`expected suttaStore`));
+            }
+            soundStore = soundStore || this.soundStore;
+            if (soundStore == null) {
+                return Promise.reject(new Error(`expected soundStore`));
+            }
+            language = language || this.language;
+            author = author || this.author;
+            reader = reader || this.reader;
+
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var segmentAudio = {};
+                    var result = {
+                        suid,
+                        segmentAudio,
+                    };
+                    var {
+                        fragments,
+                    } = await that.mapJson(suid, language, author, reader);
+                    var resSearch = await suttaStore.search(suid);
+                    var {
+                        sutta,
+                    } = resSearch.results[0];
+                    var segments = sutta.segments;
+                    var iFrag = 0;
+                    var frag = fragments[iFrag];
+                    for (var iSeg=0; iSeg < segments.length; iSeg++) {
+                        var seg = segments[iSeg];
+                        if (seg.scid === frag.id) {
+                            console.log(`dbg frag`, frag.id);
+                            frag = fragments[++iFrag];
+                        }
+                    }
+                    resolve(result);
                 } catch(e) {reject(e);} })();
             });
         }

@@ -1,5 +1,6 @@
 (function(exports) {
     const Sutta = require('./sutta');
+    const SoundStore = require('./sound-store');
     const Voice = require('./voice');
     const DN33_EN_SECONDS = 2*3600 + 0*60 + 27;
     const DN33_EN_SECONDS_PER_SEGMENT = DN33_EN_SECONDS/(1158);
@@ -46,16 +47,6 @@
             return result;
         }
 
-        static volumeName(sutta_uid, lang, auid, vname) {
-            var collection = sutta_uid.replace(/([a-z]+).*/, '$1');
-            if (collection === "thig" || collection === "thag") {
-                collection = "kn";
-            }
-            var source = lang === 'pli' ? 'mahasangiti' : auid;
-            var vname =  vname.toLowerCase();
-            return `${collection}_${lang}_${source}_${vname}`;
-        }
-
         speak(opts) {
             var that = this;
             var oipts = Object.assign({
@@ -83,7 +74,7 @@
                                 var voice = voices[lang];
                                 var vname = voice.name.toLowerCase();
                                 var volume = opts.volume || 
-                                    Playlist.volumeName(sutta_uid, lang, auid, voice.name);
+                                    SoundStore.suttaVolumeName(sutta_uid, lang, auid, voice.name);
                                 var text = segment[lang];
                                 if (voice && text) {
                                     var segOpts = {

@@ -7,6 +7,7 @@
     const {
         Playlist,
         Section,
+        SoundStore,
         Sutta,
         SuttaStore,
         SCAudio,
@@ -17,6 +18,8 @@
         Words,
     } = require("../index");
     const LOCAL = path.join(__dirname, '../local');
+    var suttaStore = new SuttaStore();
+    var soundStore = new SoundStore();
 
     it("constructor", function() {
         var sca = new SCAudio();
@@ -168,6 +171,23 @@
 
             done();
         } catch(e) { done(e); } })();
+    });
+    it("TESTTESTcacheSuttaAudio(opts) populates cache with segment audio", function(done) {
+        (async function() { try {
+            var sca = new SCAudio();
+            var suid = 'sn1.09';
+            var opts = {
+                suid,
+                suttaStore,
+                soundStore,
+            };
+            await suttaStore.initialize();
+            var res = await sca.cacheSuttaAudio(opts);
+            should(res).properties({
+                suid,
+            });
+            done();
+        } catch(e) {done(e);} })();
     });
 });
 

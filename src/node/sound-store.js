@@ -31,6 +31,17 @@
             that.suffixes = opts.suffixes || [that.audioSuffix, '.json', '.txt', '.ssml'];
         }
 
+        static suttaVolumeName(sutta_uid, lang, auid, vname) {
+            var collection = sutta_uid.replace(/([a-z]+).*/, '$1');
+            if (collection === "thig" || collection === "thag") {
+                collection = "kn";
+            }
+            var source = lang === 'pli' ? 'mahasangiti' : auid;
+            var vname =  vname.toLowerCase();
+            return `${collection}_${lang}_${source}_${vname}`;
+        }
+
+
         static options(opts={}) {
             if (opts.audioFormat === 'ogg') {
                 var audioSuffix = '.ogg';

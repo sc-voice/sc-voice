@@ -334,6 +334,12 @@
             return response;
         }
 
+        signatureSSML(ssmlFragment) {
+            var rate = this.prosody.rate || "0%";
+            var pitch = this.prosody.pitch || "0%";
+            return `<prosody rate="${rate}" pitch="${pitch}">${ssmlFragment}</prosody>`;
+        }
+
         synthesizeSSML(ssmlFragment, opts={}) {
             var that = this;
             if (ssmlFragment.length > this.maxSSML) {
@@ -354,9 +360,7 @@
                 try {
                     var soundStore = that.soundStore;
                     var cache = opts.cache == null ? true : opts.cache;
-                    var rate = this.prosody.rate || "0%";
-                    var pitch = this.prosody.pitch || "0%";
-                    var ssml = `<prosody rate="${rate}" pitch="${pitch}">${ssmlFragment}</prosody>`;
+                    var ssml = this.signatureSSML(ssmlFragment);
                     var signature = this.signature(ssml);
                     opts.volume && (signature.volume = opts.volume);
                     signature.chapter = opts.chapter;

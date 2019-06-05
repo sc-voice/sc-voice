@@ -202,7 +202,7 @@
                 } = req.params;
                 var soundOpts = {};
                 if (sutta_uid) {
-                    soundOpts.volume = Playlist.volumeName(sutta_uid, 
+                    soundOpts.volume = SoundStore.suttaVolumeName(sutta_uid, 
                         lang, translator, voice);
                 }
                 var filePath = this.soundStore.guidPath(guid, soundOpts);
@@ -419,17 +419,19 @@
                     }
                     segment.audio = {};
                     if (segment[language]) {
-                        var speak = await voiceLang.speak(segment[language], {
+                        var speak = await voiceLang.speakSegment({
+                            sutta_uid,
+                            segment,
+                            language,
+                            translator,
                             usage,
-                            volume: Playlist.volumeName(sutta_uid, language, 
-                                translator, voiceLang.name),
                         });
                         segment.audio[language] = speak.signature.guid;
                     }
                     if (segment.pli) {
                         var speak = await voicePali.speak(segment.pli, {
                             usage: 'recite',
-                            volume: Playlist.volumeName(sutta_uid, 'pli', 
+                            volume: SoundStore.suttaVolumeName(sutta_uid, 'pli', 
                                 translator, voicePali.name),
                         });
                         segment.audio.pli = speak.signature.guid;

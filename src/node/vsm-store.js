@@ -154,7 +154,8 @@
             lang = lang || that.lang;
             author = author || that.author;
             voice = voice || that.voice;
-            volume = volume || Playlist.volumeName(sutta_uid, lang, author, voice.name);
+            volume = volume || 
+                SoundStore.suttaVolumeName(sutta_uid, lang, author, voice.name);
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var speakOpts = Object.assign({
@@ -556,7 +557,8 @@
             lang = lang || this.lang;
             author = author || this.author;
             voice = voice || this.voice;
-            volume = volume || Playlist.volumeName(sutta_uid, lang, author, voice.name);
+            volume = volume || 
+                SoundStore.suttaVolumeName(sutta_uid, lang, author, voice.name);
 
             var that = this;
             return new Promise((resolve, reject) => {

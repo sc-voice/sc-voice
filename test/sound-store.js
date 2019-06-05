@@ -43,6 +43,20 @@
         should(store.audioFormat).equal('ogg_vorbis');
         should(store.audioMIME).equal('audio/ogg');
     });
+    it("suttaVolumeName(...) returns SoundStore volume", function() {
+        should(SoundStore.suttaVolumeName('a','b','c','d')).equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('a1','b','c','d')).equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('a1.1','b','c','d')).equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('a1.2-5','b','c','d')).equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('a1.2-5:3','b','c','d')).equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('a1.2-5:3.1','b','c','d')).equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('thig1.2','b','c','d')).equal('kn_b_c_d');
+        should(SoundStore.suttaVolumeName('thag1.2','b','c','d')).equal('kn_b_c_d');
+        should(SoundStore.suttaVolumeName('thag1.2','pli','c','d'))
+            .equal('kn_pli_mahasangiti_d');
+        should(SoundStore.suttaVolumeName('mn1','pli','c','d'))
+            .equal('mn_pli_mahasangiti_d');
+    });
     it("guidPath(guid, suffix) returns file path of guid", function() {
         var store = new SoundStore({
             storePath,

@@ -358,7 +358,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... returns playable segment", function(done) {
+    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iVoice = 0;
@@ -556,7 +556,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET auth/vsm/s3-credentials configures vsm-s3.json", function(done) {
+    it("GET auth/vsm/s3-credentials returns sanitized vsm-s3.json", function(done) {
         this.timeout(5*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
@@ -589,12 +589,12 @@
             done();
             return;
         }
+        var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
+        fs.unlinkSync(vsmS3Path);
         (async function() { try {
             var url = `/scv/auth/vsm/s3-credentials`;
-            var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
 
             // Good credentials are saved
-            fs.unlinkSync(vsmS3Path);
             var res = await testAuthPost(url, goodCreds);
             var actualCreds = JSON.parse(fs.readFileSync(vsmS3Path));
             fs.writeFileSync(vsmS3Path, JSON.stringify(goodCreds, null, 2));
@@ -612,7 +612,10 @@
             should.deepEqual(actualCreds, goodCreds);
 
             done();
-        } catch(e) {done(e);} })();
+        } catch(e) {
+            fs.writeFileSync(vsmS3Path, JSON.stringify(goodCreds, null, 2));
+            done(e);
+        } })();
     });
     it("GET auth/vsm/factory-task returns factory status", function(done) {
         this.timeout(5*1000);
@@ -711,7 +714,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/vsm/create-archive create VSM", function(done) {
+    it("POST auth/vsm/create-archive create VSM", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;

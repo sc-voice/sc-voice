@@ -326,7 +326,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeak(text) can handle lengthy Pali", function(done) {
+    it("speak(text) can handle lengthy Pali", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var aditi = Voice.createVoice({

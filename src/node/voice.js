@@ -186,6 +186,22 @@
             });
         }
 
+        speakSegment(opts={}) {
+            var {
+                sutta_uid,
+                segment,
+                language,
+                translator,
+                usage,
+            } = opts;
+            var volume = SoundStore.suttaVolumeName(sutta_uid, language, 
+                    translator, this.name);
+            return this.speak(segment[language], {
+                usage,
+                volume,
+            });
+        }
+
     }
 
     module.exports = exports.Voice = Voice;
