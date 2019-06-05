@@ -16,8 +16,8 @@
             if (json == null) {
                 var filePath = opts.filePath 
                     || path.join(__dirname, `../../words/${this.language}.json`);
-                if (!fs.existsSync(filePath)) {
-                    var filePath = path.join(__dirname, `../../words/en.json`);
+                if (!fs.existsSync(filePath) && this.language.startsWith('en')) {
+                    filePath = path.join(__dirname, `../../words/en.json`);
                 }
 
                 json = fs.existsSync(filePath)

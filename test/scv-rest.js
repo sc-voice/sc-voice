@@ -445,7 +445,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
             should(data.segment.audio.en).match(/^7120fcf/);
-            should(data.segment.audio.pli).match(/e56e955f4b1868a8176a7bf810be34c8/);
+            should(data.segment.audio.pli).match(/d7ada11f84b7cfbcad13c6616ee0f53e/);
 
             done();
         } catch(e) {done(e);} })();
@@ -711,7 +711,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/create-archive create VSM", function(done) {
+    it("TESTTESTPOST auth/vsm/create-archive create VSM", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;

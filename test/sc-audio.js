@@ -18,7 +18,7 @@
     } = require("../index");
     const LOCAL = path.join(__dirname, '../local');
 
-    it("TESTTESTconstructor", function() {
+    it("constructor", function() {
         var sca = new SCAudio();
         should(sca).properties({
             reader: 'sujato',
@@ -57,7 +57,7 @@
             'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com'+
             '/en/sn/sn1/sn1.09-en-sujato-sujato.json');
     });
-    it("TESTTESTsegmentUrl(suidseg...)", function() {
+    it("segmentUrl(suidseg...)", function() {
         var sca = new SCAudio();
         should(sca.segmentUrl('SN1.09:2.1','pli')).equal(
             'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com'+
@@ -94,7 +94,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTcatalog(suid...) returns sutta catalog", function(done) {
+    it("catalog(suid...) returns sutta catalog", function(done) {
         (async function() { try {
             var sca = new SCAudio();
             var response = await sca.catalog();
@@ -117,7 +117,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) downloads audio file", function(done) {
+    it("downloadSegmentAudio(suttaSegId,...) downloads audio file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
@@ -153,7 +153,7 @@
             var res = await sca.downloadSegmentAudio({
                 suttaSegId,
                 language: 'pli',
-                audioPath,
+                audioPath, // overrides downloadDir
             });
             should.deepEqual(res,{
                 language: 'pli',

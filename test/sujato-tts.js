@@ -71,10 +71,9 @@
             var storePath = voice.soundStore.storePath;
             var files = result.signature.files.map(f => 
                 f.startsWith('/') ? f : path.join(storePath, f));
-            should(files.length).equal(4);
+            should(files.length).equal(3);
             should(files[0]).equal(files[1]);
             should(files[0]).equal(files[2]);
-            should(files[0]).equal(files[3]);
             should(files[0]).match(/break500/);
             should(fs.statSync(result.file).size).greaterThan(5000);
             done();

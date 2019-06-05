@@ -36,6 +36,7 @@
         var aditi = Voice.createVoice('aditi');
         should(aditi.name).equal('Aditi');
         should(aditi.language).equal('hi-IN');
+        should(aditi.languageUnknown).equal('pli');
         should(aditi.maxSegment).equal(400);
         should(aditi.fullStopComma).equal(true);
         should(aditi.syllableVowels).equal('aeiouāīū');
@@ -57,6 +58,12 @@
     it("segmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
+
+        var ssml = recite.segmentSSML('disā, disā');
+        should(ssml.length).equal(1);
+        should(ssml[0]).match(/phoneme.*phoneme.*phoneme.*phoneme/);
+
+        testPhoneme(recite, 'pɑ’ɽe', 'pare');
 
         // syllabify spaces
         testPhoneme(recite, 'd̪ək kʰɪn ej jəŋ', 'dakkhiṇeyyaṃ');
@@ -106,7 +113,7 @@
 
         // punctuation
         var ssml = recite.segmentSSML('dve, dve');
-        should(ssml.length).equal(2);
+        should(ssml.length).equal(1);
         var ssml = recite.segmentSSML('2. Dve');
         should(ssml.length).equal(1);
     });
