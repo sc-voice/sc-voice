@@ -293,7 +293,6 @@
                     for (var iSeg=0; iSeg < segments.length; iSeg++) {
                         var seg = segments[iSeg];
                         if (seg.scid === frag.id) {
-                            console.log(`dbg frag`, frag.id);
                             frag = fragments[++iFrag];
                         }
                     }

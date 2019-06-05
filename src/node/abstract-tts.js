@@ -142,13 +142,10 @@
             if (wordInfo) {
                 if (wordInfo.ipa) { // use custom IPA
                     var ipa = wordInfo.ipa;
-            word === 'pare' && console.log(`dbg word 1`, word, wordInfo, ipa);
                 } else if (wordInfo.language !== this.language.split('-')[0]) { // generate IPA
                     var ipa = this.wordIPA(word, wordInfo.language);
-            word === 'pare' && console.log(`dbg word 2`, word, wordInfo, ipa);
                 } else {
                     var ipa = null;
-            word === 'pare' && console.log(`dbg word 3`, word, wordInfo, ipa);
                 }
             } else { // unknown word or punctuation
                 if (Words.RE_ACRONYM.test(word)) {

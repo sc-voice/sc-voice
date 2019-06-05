@@ -429,10 +429,12 @@
                         segment.audio[language] = speak.signature.guid;
                     }
                     if (segment.pli) {
-                        var speak = await voicePali.speak(segment.pli, {
+                        var speak = await voicePali.speakSegment({
+                            sutta_uid,
+                            segment,
+                            language: 'pli',
+                            translator,
                             usage: 'recite',
-                            volume: SoundStore.suttaVolumeName(sutta_uid, 'pli', 
-                                translator, voicePali.name),
                         });
                         segment.audio.pli = speak.signature.guid;
                     }

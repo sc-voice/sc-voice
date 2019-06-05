@@ -197,6 +197,8 @@
             var volume = SoundStore.suttaVolumeName(sutta_uid, language, 
                     translator, this.name);
             return this.speak(segment[language], {
+                scid: segment.scid,
+                language,
                 usage,
                 volume,
             });
