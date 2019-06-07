@@ -294,7 +294,6 @@
                 shell: '/bin/bash',
                 maxBuffer,
             };
-            console.log(`dbg`, cmd);
             return new Promise((resolve,reject) => {
                 exec(cmd, opts, (err,stdout,stderr) => {
                     if (err) {

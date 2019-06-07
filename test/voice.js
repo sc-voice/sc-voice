@@ -4,6 +4,7 @@
     const path = require('path');
     const {
         Polly,
+        SCAudio,
         Voice,
         Words,
     } = require('../index');
@@ -75,18 +76,38 @@
         should(!!salli.ipa).equal(true);
         should(!!salli.ipa.pli).equal(true);
     });
-    it("createVoice(opts) returns voice for a language", function() {
+    it("TESTTESTcreateVoice(opts) returns voice for a language", function() {
+        // Default
         var voice = Voice.createVoice();
         should(voice).instanceOf(Voice);
         should(voice.language).equal("en-IN");
         should(voice.name).equal("Raveena");
         should(voice.usage).equal("recite");
+        should(voice.scAudio).equal(undefined);
+        should(voice.altTts).equal(undefined);
 
+        // Custom
         var amy = Voice.createVoice("en-GB");
         should(amy).instanceOf(Voice);
         should(amy.language).equal("en-GB");
         should(amy.name).equal("Amy");
         should(amy.usage).equal("recite");
+
+        // Custom
+        var scAudio = new SCAudio();
+        var altTts = amy.services.recite;
+        should(altTts).instanceOf(Polly);
+        var russell = Voice.createVoice({
+            language: 'en-AU',
+            scAudio,
+            altTts,
+        });
+        should(russell).instanceOf(Voice);
+        should(russell.language).equal("en-AU");
+        should(russell.name).equal("Russell");
+        should(russell.usage).equal("recite");
+        should(russell.scAudio).equal(scAudio);
+        should(russell.altTts).equal(altTts);
     });
     it("createVoice(voiceName) returns a default voice", function() {
         var voice = Voice.createVoice('aditi');
@@ -416,6 +437,103 @@
             var result = await raveena.speak(text, {usage:'recite'});
             should(result.signature.api).equal('aws-polly');
             should(result.signature.text).not.match(/[“'‘’'”]/);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTspeakSegment(opts) speaks aws-polly", function(done) {
+        (async function() { try {
+            var aditi = Voice.createVoice({
+                name: 'aditi',
+            });
+            var sutta_uid = 'sn1.9';
+            var language = 'pli';
+            var translator = 'sujato';
+            var usage = 'recite';
+            var segment = {
+                scid: 'sn1.9:1.1',
+                pli: 'purple squirrels',
+            }
+            var resSpeak = await aditi.speakSegment({
+                sutta_uid,
+                segment,
+                language,
+                translator,
+                usage,
+            });
+            should(resSpeak.signature).properties({
+                api: 'aws-polly',
+                guid: '4f6a9c8ad3572ffa6bb35491a874cf4e',
+            });
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTspeakSegment(opts) speaks human-tts", function(done) {
+        (async function() { try {
+            var aditi = Voice.createVoice({
+                name: 'aditi',
+            });
+            var sutta_uid = 'sn1.9';
+            var language = 'pli';
+            var translator = 'sujato';
+            var usage = 'recite';
+            var segment = {
+                scid: 'sn1.9999:1.1', // not a sutta
+                pli: 'purple squirrels',
+            }
+            var altTts = aditi.services.recite;
+            var args = {
+                sutta_uid,
+                segment,
+                language,
+                translator,
+                usage,
+            };
+
+            // scAudio is required
+            var voice = Voice.createVoice({
+                name: 'sujato_pli',
+            });
+            var eCaught = null;
+            var resSpeak = await voice.speakSegment(args).catch(e => (eCaught=e));
+            should(eCaught).instanceOf(Error);
+            should(eCaught.message).match(/scAudio is required/);
+
+            // sutta has no human audio
+            var scAudio = new SCAudio();
+            var voice = Voice.createVoice({
+                name: 'sujato_pli',
+                scAudio,
+            });
+            var resSpeak = await voice.speakSegment(args);
+            should(resSpeak).properties([
+                'file', 'signature',
+            ]);
+            should(resSpeak.signature).properties({
+                api: 'human-tts',
+                guid: '1c9c6388fab93cd6c477d0de7a883eb3',
+            });
+            should(resSpeak.file).match(/no_audio.mp3/);
+            should(fs.existsSync(resSpeak.file)).equal(true);
+
+            // suttas has human audio
+            sutta_uid = 'sn1.9:1.1';
+            args.sutta_uid = sutta_uid;
+            var voice = Voice.createVoice({
+                name: 'sujato_pli',
+                scAudio,
+                altTts, // required to generate alternate audio
+            });
+            var resSpeak = await voice.speakSegment(args);
+            should(resSpeak).properties([
+                'file', 'signature', 
+            ]);
+            should(resSpeak.signature).properties({
+                api: 'aws-polly',
+                voice: 'Aditi',
+            });
+            should(resSpeak.file).match(new RegExp(resSpeak.signature.guid));
+            should(fs.existsSync(resSpeak.file)).equal(true);
 
             done();
         } catch(e) {done(e);} })();

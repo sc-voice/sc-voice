@@ -25,6 +25,7 @@
                 navigate: Voice.RATE_FAST,
                 recite: Voice.RATE_SLOW,
             }
+            this.scAudio = opts.scAudio;
             this.gender = opts.gender || "female";
             this.noAudioPath = opts.noAudioPath;
             this.soundStore = opts.soundStore || new SoundStore(opts);
@@ -35,6 +36,7 @@
             this.customWords = opts.customWords;
             this.syllableVowels = opts.syllableVowels;
             this.syllabifyLength = opts.syllabifyLength;
+            this.altTts = opts.altTts;
             this.maxSegment = opts.maxSegment;
             Object.defineProperty(this, '_services', {
                 writable: true,
@@ -139,6 +141,8 @@
                         customWords: this.customWords,
                         soundStore: this.soundStore,
                         maxSegment: this.maxSegment,
+                        scAudio: this.scAudio,
+                        altTts: this.altTts,
                         usage: key,
                         breaks: usage.breaks,
                         syllableVowels: this.syllableVowels,
@@ -194,10 +198,19 @@
                 translator,
                 usage,
             } = opts;
+            usage = usage || this.usage;
+            var service = this.services[usage];
+            if (service == null) {
+                var avail = Object.keys(this.services);
+                return Promise.reject(new Error(
+                    `Voice.speakSegment() unsupported TTS service `+
+                    `usage:${usage} available:${avail}`));
+            }
             var volume = SoundStore.suttaVolumeName(sutta_uid, language, 
                     translator, this.name);
-            return this.speak(segment[language], {
-                scid: segment.scid,
+            return service.synthesizeSegment({
+                segment,
+                translator,
                 language,
                 usage,
                 volume,

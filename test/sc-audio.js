@@ -22,6 +22,7 @@
     var soundStore = new SoundStore();
 
     it("constructor", function() {
+        // Default
         var sca = new SCAudio();
         should(sca).properties({
             reader: 'sujato',
@@ -35,6 +36,7 @@
             downloadDir: path.join(LOCAL, 'sc-audio'),
         });
 
+        // Custom
         var reader = 'test-reader';
         var author = 'test-author';
         var language = 'pli';

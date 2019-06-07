@@ -560,6 +560,29 @@
 
         }
 
+        synthesizeSegment(opts={}) {
+            var {
+                segment,
+                language,
+                usage,
+                volume,
+            } = opts;
+            if (segment == null) {
+                return Promise.reject(new Error(`synthesizeSegment() segment is required`));
+            }
+            if (language == null) {
+                return Promise.reject(new Error(`synthesizeSegment() language is required`));
+            }
+            usage = usage || this.usage;
+            var text = segment[language.split('-')[0]] || '(no text)';
+            return this.synthesizeText(text, {
+                scid: segment.scid,
+                language,
+                usage,
+                volume,
+            });
+        }
+
     }
 
     module.exports = exports.AbstractTTS = AbstractTTS;

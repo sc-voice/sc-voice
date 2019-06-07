@@ -38,7 +38,6 @@
         should(recite.syllableVowels).equal('aeiou');
     });
     it("segmentSSML(text) returns SSML", function() {
-        logger.level = 'info'; //dbg
         var voice = Voice.createVoice({name:'sujato_pli'});
         var recite = voice.services['recite'];
         should(recite.noAudioPath).match(/no_audio.mp3/);

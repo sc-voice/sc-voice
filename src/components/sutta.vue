@@ -400,7 +400,6 @@ export default {
         },
         playOne(result) {
             this.tracks = this.suttaTracks(result.sutta);
-            console.log('dbg playOne');
             this.launchSuttaPlayer();
         },
         playAll() {
