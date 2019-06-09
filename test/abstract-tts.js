@@ -10,6 +10,8 @@
     } = require("../index");
     const BREAK = `<break time="0.001s"/>`;
     const PARA_BREAK = `<break time="1.5s"/>`;
+    const ELLIPSIS = "\u2026";
+    const ELLIPSIS_BREAK = '<break time="1.000s"/>';
     var storePath = tmp.tmpNameSync();
 
     it("AbstractTTS(opts) can be customized", function() {
@@ -70,7 +72,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("wordSSML(word) returns SSML text for word", function() {
+    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS({
             languageUnknown: 'pli',
         });
@@ -78,6 +80,9 @@
             languageUnknown: 'pli',
             stripNumbers: true,
         });
+
+        // symbols
+        should(tts.wordSSML(ELLIPSIS)).equal(ELLIPSIS_BREAK);
 
         // numbers
         should(tts.wordSSML('281–309')).equal('281–309');

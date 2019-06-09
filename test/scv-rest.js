@@ -358,7 +358,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
+    it("GET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iVoice = 0;
@@ -444,7 +444,7 @@
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
-            should(data.segment.audio.en).match(/^7120fcf/);
+            should(data.segment.audio.en).match(/^a48be6c5a442877d71d87485add271bc/);
             should(data.segment.audio.pli).match(/d7ada11f84b7cfbcad13c6616ee0f53e/);
 
             done();

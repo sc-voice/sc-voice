@@ -174,7 +174,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTcacheSuttaAudio(opts) populates cache with segment audio", function(done) {
+    it("cacheSuttaAudio(opts) populates cache with segment audio", function(done) {
         (async function() { try {
             var sca = new SCAudio();
             var suid = 'sn1.09';

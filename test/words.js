@@ -5,6 +5,7 @@
     const {
         Words,
     } = require("../index");
+    const ELLIPSIS = '\u2026';
 
     var words = new Words();
 
@@ -369,6 +370,12 @@
             }
         }
         console.log(dict);
+    });
+    it("TESTTESTsymbols[symbol] returns info about word", function() {
+        var words = new Words();
+        should(words.symbols[ELLIPSIS]).properties({
+            ellipsisBreak: true,
+        });
     });
     
 

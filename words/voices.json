@@ -171,6 +171,7 @@
     "syllabifyLength": 5,
     "stripNumbers": true,
     "stripQuotes": true,
+    "ellipsisBreak": "<break time=\"0.300s\"/>",
     "languageUnknown": "pli",
     "gender": "female",
     "pitch": "-10%",

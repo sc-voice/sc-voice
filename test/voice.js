@@ -76,7 +76,7 @@
         should(!!salli.ipa).equal(true);
         should(!!salli.ipa.pli).equal(true);
     });
-    it("TESTTESTcreateVoice(opts) returns voice for a language", function() {
+    it("createVoice(opts) returns voice for a language", function() {
         // Default
         var voice = Voice.createVoice();
         should(voice).instanceOf(Voice);
@@ -441,7 +441,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeakSegment(opts) speaks aws-polly", function(done) {
+    it("speakSegment(opts) speaks aws-polly", function(done) {
         (async function() { try {
             var aditi = Voice.createVoice({
                 name: 'aditi',
@@ -468,7 +468,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeakSegment(opts) speaks human-tts", function(done) {
+    it("speakSegment(opts) speaks human-tts", function(done) {
         (async function() { try {
             var aditi = Voice.createVoice({
                 name: 'aditi',

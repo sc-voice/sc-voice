@@ -15,6 +15,7 @@
     const RE_PARA_EOL = /^\n\n+$/u;
     const RE_NUMBER = new RegExp(Words.PAT_NUMBER);
     const RE_STRIPNUMBER = new RegExp(`\\(?${Words.PAT_NUMBER}\\)?`);
+    const ELLIPSIS_BREAK = '<break time="1.000s"/>';
     const MAX_SEGMENT = 1000;
 
     class AbstractTTS {
@@ -41,6 +42,7 @@
             this.customWords = opts.customWords;
             this.syllableVowels = opts.syllableVowels;
             this.syllabifyLength = opts.syllabifyLength;
+            this.ellipsisBreak = opts.ellipsisBreak || ELLIPSIS_BREAK;
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
@@ -139,13 +141,13 @@
 
         wordSSML(word) {
             var wordInfo = this.wordInfo(word);
+            var symbols = this.words.symbols;
+            var ipa = null;
             if (wordInfo) {
                 if (wordInfo.ipa) { // use custom IPA
-                    var ipa = wordInfo.ipa;
+                    ipa = wordInfo.ipa;
                 } else if (wordInfo.language !== this.language.split('-')[0]) { // generate IPA
-                    var ipa = this.wordIPA(word, wordInfo.language);
-                } else {
-                    var ipa = null;
+                    ipa = this.wordIPA(word, wordInfo.language);
                 }
             } else { // unknown word or punctuation
                 if (Words.RE_ACRONYM.test(word)) {
@@ -153,19 +155,20 @@
                         .replace('{', '<say-as interpret-as="spell">')
                         .replace('}', '</say-as>');
                 } else if (word.trim() === '') {
-                    var ipa = null;
+                    // ipa = null
                 } else if (this.words.isWord(word)) {
                     var w = word.endsWith(`’`) ? word.substring(0,word.length-1) : word;
                     if (this.languageUnknown !== this.language && 
                         this.words.isForeignWord(w)) { 
                         var ipa = this.wordIPA(word, this.languageUnknown);
-                    } else {
-                        var ipa = null;
                     }
                 } else if (word.endsWith(`’`)) {
-                    var ipa = null; 
+                    // ipa = null
                 } else {
-                    var ipa = null; 
+                    var symInfo = symbols[word];
+                    if (symInfo && symInfo.ellipsisBreak) {
+                        return this.ellipsisBreak;
+                    }
                 }
             }
             if (ipa) {
