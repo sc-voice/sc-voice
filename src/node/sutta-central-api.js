@@ -65,7 +65,7 @@
             var age = stat && (Date.now() - stat.ctimeMs)/1000 || this.apiCacheSeconds;
             if (age < this.apiCacheSeconds) {
                 var res = JSON.parse(fs.readFileSync(cachedPath));
-                logger.debug(`SuttaCentralApi.loadJson(${url}) => cached:${guid}`);
+                logger.info(`SuttaCentralApi.loadJson(${url}) => cached:${guid}`);
                 var result = Promise.resolve(res);
             } else {
                 var result = this.loadJsonRest(url);

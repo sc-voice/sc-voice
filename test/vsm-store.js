@@ -55,6 +55,7 @@
         should(vsm.s3Bucket.initialized).equal(false);
     });
     it("VsmStore() creates custom VSM", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var aditi = Voice.createVoice({
                 name: "aditi",

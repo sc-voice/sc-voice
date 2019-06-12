@@ -82,7 +82,7 @@
         should(voice).instanceOf(Voice);
         should(voice.language).equal("en-IN");
         should(voice.name).equal("Raveena");
-        should(voice.usage).equal("recite");
+        should(voice.usage).equal("review");
         should(voice.scAudio).equal(undefined);
         should(voice.altTts).equal(undefined);
 
@@ -132,7 +132,7 @@
         should(voice).instanceOf(Voice);
         should(voice.language).equal("en-IN");
         should(voice.name).equal("Raveena");
-        should(voice.usage).equal("recite");
+        should(voice.usage).equal("review");
         should(voice.languageUnknown).equal('en-IN');
         should(voice.stripNumbers).equal(false);
         should(voice.stripQuotes).equal(false);
@@ -538,5 +538,16 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("voiceOfName(name) returns voice of name", function() {
+        should(Voice.voiceOfName("amy")).properties({name:"Amy"});
+        should(Voice.voiceOfName("Amy")).properties({name:"Amy"});
+        should(Voice.voiceOfName("0")).properties({name:"Amy"});
+        should(Voice.voiceOfName(0)).properties({name:"Amy"});
+        should(Voice.voiceOfName(1)).properties({name:"Russell"});
+        should(Voice.voiceOfName("raveena")).properties({name:"Raveena"});
+        should(Voice.voiceOfName(1)).properties({name:"Russell"});
+        should(Voice.voiceOfName("vicki")).properties({name:"Vicki"});
+        should(Voice.voiceOfName("sujato_pli")).properties({name:"sujato_pli"});
+    })
 
 })

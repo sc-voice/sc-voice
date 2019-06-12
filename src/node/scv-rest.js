@@ -39,17 +39,7 @@
         credentials: '{"hash":"13YYGuRGjiQad/G1+MOOmxmLC/1znGYBcHWh2vUgkdq7kzTAZ6dk76S3zpP0OwZq1eofgUUJ2kq45+TxOx5tvvag","salt":"Qf1NbN3Jblo8sCL9bo32yFmwiApHSeRkr3QOJZu3KJ0Q8hbWMXAaHdoQLUWceW83tOS0jN4tuUXqWQWCH2lNCx0S","keyLength":66,"hashMethod":"pbkdf2","iterations":748406}',
     };
 
-    const VOICES = [{
-        name: 'Amy',
-        usage: 'recite',
-    },{
-        name: 'Russell',
-        usage: 'recite',
-    },{
-        name: 'Raveena',
-        usage: 'review',
-    }];
-
+    const VOICES = Voice.loadVoices();
     const JWT_SECRET = `JWT${Math.random()}`;
 
     class ScvRest extends RestBundle { 
@@ -106,10 +96,10 @@
                         "review/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReviewSection),
                     this.resourceMethod("get", 
-                        "play/segment/:sutta_uid/:language/:translator/:scid/:iVoice", 
+                        "play/segment/:sutta_uid/:language/:translator/:scid/:voicename", 
                         this.getPlaySegment),
                     this.resourceMethod("get", 
-                        "play/section/:sutta_uid/:language/:translator/:iSection/:iVoice", 
+                        "play/section/:sutta_uid/:language/:translator/:iSection/:voicename", 
                         this.getPlaySection),
                     this.resourceMethod("get", 
                         "recite/sutta/:sutta_uid/:language/:translator", 
@@ -335,12 +325,13 @@
         getPlaySection(req, res, next) {
             var that = this;
             var { 
-                sutta_uid, language, translator, iSection, iVoice 
+                sutta_uid, language, translator, iSection, voicename, 
             } = this.suttaParms(req);
             var suttaRef = `${sutta_uid}/${language}/${translator}`;
-            logger.info(`GET play/section/${suttaRef}/${iSection}/${iVoice}`);
-            var usage = VOICES[iVoice].usage || 'recite';
-            var voiceName = VOICES[iVoice].name || 'Amy';
+            logger.info(`GET play/section/${suttaRef}/${iSection}/${voicename}`);
+            var voice = Voice.voiceOfName(voiceName) || Voice.voiceOfName('Amy');
+            var usage = voice.usage;
+            var voiceName = voice.name;
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
@@ -367,9 +358,9 @@
                         title: section.title,
                         section:iSection,
                         nSections: sutta.sections.length,
-                        iVoice,
+                        voicename,
                         segments,
-                        voiceLang: VOICES[iVoice].name,
+                        voiceLang: voice.name,
                         voicePali: voicePali.name,
                     });
                 } catch(e) { reject(e); } })();
@@ -379,11 +370,15 @@
         getPlaySegment(req, res, next) {
             var that = this;
             var { 
-                sutta_uid, language, translator, scid, iVoice 
+                sutta_uid, language, translator, scid, voicename, 
             } = this.suttaParms(req);
+            if (/[0-9]+/.test(voicename)) {
+                var iVoice = Number(voicename);
+            }
+            var voice = Voice.voiceOfName(voicename);
             var suttaRef = `${sutta_uid}/${language}/${translator}`;
-            logger.info(`GET play/segment/${suttaRef}/${scid}/${iVoice}`);
-            var usage = VOICES[iVoice].usage || 'recite';
+            logger.info(`GET play/segment/${suttaRef}/${scid}/${voicename}`);
+            var usage = voice.usage || 'recite';
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
@@ -396,7 +391,7 @@
                         throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
                     }
                     var voiceLang = Voice.createVoice({
-                        name: VOICES[iVoice].name,
+                        name: voice.name,
                         usage,
                         soundStore: that.soundStore,
                         languageUnknown: "pli",
@@ -446,7 +441,7 @@
                         title: section.title,
                         section:iSection,
                         nSections: sutta.sections.length,
-                        iVoice,
+                        voicename,
                         iSegment,
                         segment,
                         voiceLang: voiceLang.name,

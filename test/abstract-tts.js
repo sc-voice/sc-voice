@@ -72,7 +72,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
+    it("wordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS({
             languageUnknown: 'pli',
         });

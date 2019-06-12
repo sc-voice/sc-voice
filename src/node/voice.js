@@ -5,6 +5,7 @@
     const HumanTts = require('./human-tts');
     const Words = require('./words');
     const SoundStore = require('./sound-store');
+    var voicesCache;
 
     function eqIgnoreCase(a,b) {
         a = a.toLocaleLowerCase();
@@ -37,6 +38,7 @@
             this.syllableVowels = opts.syllableVowels;
             this.syllabifyLength = opts.syllabifyLength;
             this.altTts = opts.altTts;
+            this.iVoice = opts.iVoice; // legacy
             this.maxSegment = opts.maxSegment;
             Object.defineProperty(this, '_services', {
                 writable: true,
@@ -48,9 +50,33 @@
         static get RATE_SLOW() { return "-20%"; }
 
         static loadVoices(voicePath) {
+            if (voicesCache) {
+                return voicesCache;
+            }
             voicePath == null && (voicePath = path.join(__dirname, '../../words/voices.json'));
             var json = JSON.parse(fs.readFileSync(voicePath).toString());
-            return json.map(voice => new Voice(voice));
+            voicesCache = json.map(voiceOpts => new Voice(voiceOpts));
+            return voicesCache;
+        }
+
+        static voiceOfName(name="Amy") {
+            var voices = Voice.loadVoices();
+            var iVoice = Number(name);
+            if (!isNaN(iVoice)) {
+                return voices.reduce((acc, voice) => {
+                    if (iVoice===Number(voice.iVoice)) {
+                        return voice;
+                    }
+                    return acc;
+                }, null);
+            }
+            var lowername = name.toLowerCase();
+            return voices.reduce((acc, voice) => {
+                if (voice.name.toLowerCase() === lowername) {
+                    return voice;
+                }
+                return acc;
+            }, null);
         }
 
         static createVoice(opts) {

@@ -337,8 +337,8 @@
         this.timeout(30*1000);
         (async function() { try {
             var iSection = 2;
-            var iVoice = 0;
-            var url = `/scv/play/section/mn1/en/sujato/${iSection}/${iVoice}`;
+            var voicename = '0';
+            var url = `/scv/play/section/mn1/en/sujato/${iSection}/${voicename}`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
             var section = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
@@ -348,12 +348,12 @@
             should(section.voicePali).equal('Aditi');
             should(section.section).equal(iSection);
             should(section.nSections).equal(10);
-            should(section.iVoice).equal(iVoice);
+            should(section.voicename).equal(voicename);
             should(section.language).equal('en');
             should(section.translator).equal('sujato');
             should.deepEqual(section.segments[0].audio, {});
             var testPath = path.join(PUBLIC,
-                `play/section/mn1/en/sujato/${iSection}/${iVoice}`);
+                `play/section/mn1/en/sujato/${iSection}/${voicename}`);
             fs.writeFileSync(testPath, JSON.stringify(section, null,2));
             done();
         } catch(e) {done(e);} })();
@@ -361,9 +361,36 @@
     it("GET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
-            var iVoice = 0;
+            var voicename = 'Russell';
             var scid = "mn1:0.1";
-            var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
+            var url = `/scv/play/segment/mn1/en/sujato/${scid}/${voicename}`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data.segment.en).match(/^Middle Discourses 1/);
+            should(data.segment.audio.pli).match(/6ba33aa963c46b629d0ec036d570ef19/); // no numbers
+
+            var scid = "mn1:3.1";
+            var url = `/scv/play/segment/mn1/en/sujato/${scid}/${voicename}`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data.segment.en).match(/^.Take an uneducated ordinary/);
+            if (0) {
+                var testPath = path.join(PUBLIC,
+                    `play/segment/mn1/en/sujato/${scid}/${voicename}`);
+                fs.writeFileSync(testPath, JSON.stringify(data, null,2));
+            }
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("GET /play/segment/... returns playable segment", function(done) {
+        this.timeout(30*1000);
+        (async function() { try {
+            var voicename = '0';
+            var scid = "mn1:0.1";
+            var url = `/scv/play/segment/mn1/en/sujato/${scid}/${voicename}`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
@@ -372,7 +399,7 @@
 
             if (0) {
                 var scid = "mn1:52-74.23";
-                var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
+                var url = `/scv/play/segment/mn1/en/sujato/${scid}/${voicename}`;
                 var res = await supertest(app).get(url);
                 res.statusCode.should.equal(200);
                 var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
@@ -382,7 +409,7 @@
                 should(data.iSegment).equal(299);
                 should(data.section).equal(4);
                 should(data.nSections).equal(10);
-                should(data.iVoice).equal(iVoice);
+                should(data.voicename).equal(voicename);
                 should(data.language).equal('en');
                 should(data.translator).equal('sujato');
                 should(data.segment.en).match(/^They directly know extinguishment as/);
@@ -393,25 +420,25 @@
 
             if (1) {
                 var scid = "mn1:3.1";
-                var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
+                var url = `/scv/play/segment/mn1/en/sujato/${scid}/${voicename}`;
                 var res = await supertest(app).get(url);
                 res.statusCode.should.equal(200);
                 var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
                 should(data.segment.en).match(/^.Take an uneducated ordinary/);
                 var testPath = path.join(PUBLIC,
-                    `play/segment/mn1/en/sujato/${scid}/${iVoice}`);
+                    `play/segment/mn1/en/sujato/${scid}/${voicename}`);
                 fs.writeFileSync(testPath, JSON.stringify(data, null,2));
             }
 
             if (0) {
                 var scid = "mn1:3.2";
-                var url = `/scv/play/segment/mn1/en/sujato/${scid}/${iVoice}`;
+                var url = `/scv/play/segment/mn1/en/sujato/${scid}/${voicename}`;
                 var res = await supertest(app).get(url);
                 res.statusCode.should.equal(200);
                 var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
                 should(data.segment.en).match(/^They perceive earth as earth/);
                 var testPath = path.join(PUBLIC,
-                    `play/segment/mn1/en/sujato/${scid}/${iVoice}`);
+                    `play/segment/mn1/en/sujato/${scid}/${voicename}`);
                 fs.writeFileSync(testPath, JSON.stringify(data, null,2));
             }
 
@@ -429,8 +456,8 @@
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
             var sutta_uid = scid.split(":")[0];
-            var iVoice = 0;
-            var url = `/scv/play/segment/${sutta_uid}/en/sujato/${scid}/${iVoice}`;
+            var voicename = "0";
+            var url = `/scv/play/segment/${sutta_uid}/en/sujato/${scid}/${voicename}`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
@@ -440,7 +467,7 @@
             should(data.iSegment).equal(8);
             should(data.section).equal(2);
             should(data.nSections).equal(3);
-            should(data.iVoice).equal(iVoice);
+            should(data.voicename).equal(voicename);
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);

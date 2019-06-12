@@ -6,6 +6,9 @@
     "languageUnknown": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
+    "locales": "en-.*",
+    "iVoice": 0,
+    "usage": "recite",
     "rates": {
         "navigate": "+5%", 
         "recite": "-30%"
@@ -90,6 +93,9 @@
     "languageUnknown": "en-IN",
     "stripNumbers": false,
     "stripQuotes": false,
+    "locales": "en-.*",
+    "iVoice": 2,
+    "usage": "review",
     "rates": {
         "navigate": "+5%", 
         "recite": "-30%"
@@ -171,6 +177,8 @@
     "syllabifyLength": 5,
     "stripNumbers": true,
     "stripQuotes": true,
+    "locales": "pli",
+    "usage": "recite",
     "ellipsisBreak": "<break time=\"0.300s\"/>",
     "languageUnknown": "pli",
     "gender": "female",
@@ -270,6 +278,8 @@
     "languageUnknown": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
+    "locales": "en-.*",
+    "usage": "recite",
     "gender": "female",
     "rates": {
         "navigate": "+5%", 
@@ -340,6 +350,9 @@
     "languageUnknown": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
+    "locales": "en-.*",
+    "iVoice": 1,
+    "usage": "recite",
     "rates": {
         "navigate": "-0%", 
         "recite": "-20%"
@@ -411,6 +424,8 @@
     "languageUnknown": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
+    "locales": "de-.*",
+    "usage": "recite",
     "rates": {
         "navigate": "-0%", 
         "recite": "-20%"
@@ -482,6 +497,8 @@
     "languageUnknown": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
+    "locales": "de-.*",
+    "usage": "recite",
     "gender": "female",
     "pitch": "-10%",
     "rates": {
@@ -557,6 +574,8 @@
     "syllabifyLength": 0,
     "stripNumbers": true,
     "stripQuotes": true,
+    "locales": "pli",
+    "usage": "recite",
     "languageUnknown": "pli",
     "gender": "male",
     "pitch": "0%",

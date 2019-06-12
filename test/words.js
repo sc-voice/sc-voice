@@ -371,7 +371,7 @@
         }
         console.log(dict);
     });
-    it("TESTTESTsymbols[symbol] returns info about word", function() {
+    it("symbols[symbol] returns info about symbol", function() {
         var words = new Words();
         should(words.symbols[ELLIPSIS]).properties({
             ellipsisBreak: true,

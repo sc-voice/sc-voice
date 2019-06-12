@@ -2,6 +2,7 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const { logger } = require('rest-bundle');
     const {
         Definitions,
         Segments,
@@ -309,9 +310,11 @@
     });
     it("loadSutta(opts) loads MN79", function(done) {
         this.timeout(5*1000);
+        logger.level = 'info';
         (async function() { try {
             var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
             var sutta = await scr.loadSutta("mn79", "en", "sujato");
+            console.log("dbgloadSutta", sutta);
 
             should.deepEqual(sutta.segments[0], {
                 scid: 'mn79:0.1',

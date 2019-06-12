@@ -67,7 +67,7 @@
         should(audio.buildUrl(opts)).equal(
             `xRoot/xLang/sn/sn1/sn1.1-xLang-xAuthor-xSpeaker.xExtension`);
     });
-    it("TESTTESTaudioUrl(...) returns verified audio url", function(done) {
+    it("audioUrl(...) returns verified audio url", function(done) {
         this.timeout(15*1000);
         (async function() { try {
             var audio = new AudioUrls();
@@ -93,7 +93,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTaudioUrl(...) handles bad url", function(done) {
+    it("audioUrl(...) handles bad url", function(done) {
         this.timeout(15*1000);
         (async function() { try {
             var audio = new AudioUrls();
@@ -111,7 +111,7 @@
         } catch(e) {done(e);} })();
     });
     it("audioUrl(...) handle bad host null", function(done) {
-        done(); return; // TBD 
+        done(); return; // TBD  takes too long with some DNS servers
         this.timeout(15*1000);
         (async function() { try {
             var audio = new AudioUrls();

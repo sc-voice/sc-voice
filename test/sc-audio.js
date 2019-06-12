@@ -122,7 +122,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("downloadSegmentAudio(suttaSegId,...) downloads audio file", function(done) {
+    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) downloads audio file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
@@ -169,7 +169,8 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).equal(84994);
+            should(stats.size).above(80000);
+            should(stats.size).below(90000);
 
             done();
         } catch(e) { done(e); } })();

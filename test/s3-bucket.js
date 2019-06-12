@@ -104,7 +104,7 @@
         } catch(e) {done(e);} })();
     });
     it("getObject(oname) downloads object", function(done) {
-        this.timeout(5*1000);
+        this.timeout(6*1000);
         (async function() { try {
             var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
             var name = 'kn_en_sujato_amy.tar.gz';
@@ -143,7 +143,7 @@
         } catch(e) {done(e);} })();
     });
     it("local/vsm-s3.json changes endpoint", function(done) {
-        this.timeout(9*1000);
+        this.timeout(10*1000);
         var vsm_s3_path = path.join(__dirname, '..', 'local', 'vsm-s3.json');
         if (!fs.existsSync(vsm_s3_path)) {
             logger.warn(`skipping vsm-s3.json test`);
