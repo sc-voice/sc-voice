@@ -367,6 +367,8 @@
                 result = result.replace(pat, value);
             });
             result = result.replace(/U/g,'u').replace("\n", " ");
+            console.log(`dbg text:"${text}"`);
+            console.log(`dbg result:"${result}"`);
             return eval(`"${result}"`);
         }
 

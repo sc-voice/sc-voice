@@ -71,6 +71,10 @@
             if (g == null) {
                 throw new Error(`g is required`);
             }
+            Object.defineProperty(this, "_voices", {
+                writable: true,
+                value: null,
+            });
             Object.defineProperty(this, "_user", {
                 writable: true,
                 value: {
@@ -112,7 +116,12 @@
         }
 
         get voices() {
-            return DEFAULT_VOICES;
+            return this._voices || DEFAULT_VOICES;
+        }
+
+        set voices(value) {
+            var g = this.g;
+            g.Vue.set(this, "_voices", value);
         }
 
         get useCookies() {

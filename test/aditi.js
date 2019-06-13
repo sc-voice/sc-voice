@@ -10,8 +10,8 @@
     const ADITI_OPTS = {
         name: 'Aditi',
         usage: 'recite',
-        language: 'hi-IN',
-        languageUnknown: 'pli',
+        locale: 'hi-IN',
+        langUnknown: 'pli',
         stripNumbers: true,
         stripQuotes: true,
         //syllabifyLength,
@@ -35,8 +35,8 @@
     it("createVoice() creates Aditi", function() {
         var aditi = Voice.createVoice('aditi');
         should(aditi.name).equal('Aditi');
-        should(aditi.language).equal('hi-IN');
-        should(aditi.languageUnknown).equal('pli');
+        should(aditi.locale).equal('hi-IN');
+        should(aditi.langUnknown).equal('pli');
         should(aditi.maxSegment).equal(400);
         should(aditi.fullStopComma).equal(true);
         should(aditi.syllableVowels).equal('aeiouāīū');

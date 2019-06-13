@@ -104,6 +104,17 @@
             value: 'recite',
         });
     });
+    it("ScvSingleton() creates the SCV Vue singleton", function() {
+        var scv = new ScvSingleton(g);
+        var testVoice = {
+            name: "test-name",
+            label: "test-label",
+            value: "test-recite",
+        }; 
+        var voices = [testVoice];
+        scv.voices = voices;
+        should(scv.voices).equal(voices);
+    });
     it("deleteCookies() deletes ScvSingleton cookies", function() {
         mockVueRoot.$cookie.otherCookie = 'hello';
         mockVueRoot.$cookie.useCookies = true;

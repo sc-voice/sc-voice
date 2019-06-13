@@ -143,7 +143,7 @@
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
-                languageUnknown: 'pli',
+                langUnknown: 'pli',
                 usage: 'recite',
             });
             var suttaCentralApi = await new SuttaCentralApi(SCAPI_2019).initialize();
@@ -197,7 +197,7 @@
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
-                languageUnknown: 'pli',
+                langUnknown: 'pli',
                 usage: 'recite',
             });
             var suttaCentralApi = await new SuttaCentralApi(SCAPI_2019).initialize();
@@ -398,7 +398,7 @@
         (async function() { try {
             var voice = Voice.createVoice({
                 language: 'en',
-                languageUnknown: 'pli',
+                langUnknown: 'pli',
                 usage: 'recite',
             });
             var store = await new SuttaStore({

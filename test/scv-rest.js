@@ -184,25 +184,6 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /download/sutta/mn100/en/sujato/review returns download", function(done) {
-        this.timeout(15*1000);
-        var scvRest = app.locals.scvRest;
-        var async = function* () { try {
-            var apiModel = yield  scvRest.initialize()
-                .then(r=>async.next(r)).catch(e=>async.throw(e));
-            var response = yield supertest(app)
-                .get("/scv/download/sutta/mn100/en/sujato/review")
-                .expect('Content-Type', /audio\/mp3/)
-                .expect('Content-Disposition', /attachment; filename=mn100-en-sujato.mp3/)
-                .end((e,r) => e ? async.throw(e) : async.next(r));
-            var contentLength = Number(response.headers['content-length']);
-            should(contentLength).above(9400000);
-            should(contentLength).below(9600000);
-            should(response.statusCode).equal(200);
-            done();
-        } catch (e) { done(e); } }();
-        async.next();
-    });
     it("GET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
         var scvRest = app.locals.scvRest;
         this.timeout(20*1000);
@@ -376,7 +357,7 @@
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(data.segment.en).match(/^.Take an uneducated ordinary/);
-            if (0) {
+            if (0) { // simulate REST response using static file
                 var testPath = path.join(PUBLIC,
                     `play/segment/mn1/en/sujato/${scid}/${voicename}`);
                 fs.writeFileSync(testPath, JSON.stringify(data, null,2));
@@ -812,6 +793,46 @@
             // and we can submit another request
             var res = await testAuthPost(url, data);
             res.statusCode.should.equal(200);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTGET voices returns voices", function(done) {
+        (async function() { try {
+            // default
+            var url = "/scv/voices";
+            var res = await supertest(app).get(url)
+            should(res.statusCode).equal(200);
+            var voices = res.body;
+            should.deepEqual(voices.map(v=>v.name), [
+                'Amy', 'Russell', 'Raveena', // en voices first
+                'Aditi', 'sujato_pli', // pli voices last
+            ])
+            should(voices[0]).properties({
+                name: "Amy",
+                iVoice: 0,
+                usage: "recite",
+            });
+
+            // en
+            var url = "/scv/voices/en";
+            var res = await supertest(app).get(url)
+            should(res.statusCode).equal(200);
+            var voices = res.body;
+            should.deepEqual(voices.map(v=>v.name), [
+                'Amy', 'Russell', 'Raveena', // en voices first
+                'Aditi', 'sujato_pli', // pli voices last
+            ])
+
+            // de
+            var url = "/scv/voices/de";
+            var res = await supertest(app).get(url)
+            should(res.statusCode).equal(200);
+            var voices = res.body;
+            should.deepEqual(voices.map(v=>v.name), [
+                'Marlene', 'Vicki', // de voices first
+                'Aditi', 'sujato_pli', // pli voices last
+            ])
 
             done();
         } catch(e) {done(e);} })();

@@ -17,7 +17,7 @@
     it("createVoice() creates sujato_pli", function() {
         var voice = Voice.createVoice('sujato_pli');
         should(voice.name).equal('sujato_pli');
-        should(voice.language).equal('pli');
+        should(voice.locale).equal('pli');
         should(voice.maxSegment).equal(400);
         should(voice.fullStopComma).equal(true);
         should(voice.syllableVowels).equal('aeiouāīū');

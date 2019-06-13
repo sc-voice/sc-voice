@@ -17,11 +17,13 @@
         constructor(opts={}) {
             this.stripNumbers = opts.stripNumbers;
             this.stripQuotes = opts.stripQuotes;
-            this.language = opts.language || 'en-IN';
-            this.languageUnknown = opts.languageUnknown || this.language;
+            this.locale = opts.locale || "en-IN";
+            this.langSeg = opts.langSeg || 'en';
+            this.langUnknown = opts.langUnknown || this.langSeg;
             this.fullStopComma = opts.fullStopComma;
             this.service = opts.service || 'aws-polly';
             this.name = opts.name || 'Raveena';
+            this.label = opts.label || this.name;
             this.rates = opts.rates || {
                 navigate: Voice.RATE_FAST,
                 recite: Voice.RATE_SLOW,
@@ -43,6 +45,11 @@
             Object.defineProperty(this, '_services', {
                 writable: true,
                 value: opts.services || null,
+            });
+            Object.defineProperty(this, 'language', { // deprecated
+                get: () => {
+                    throw new Error('language is deprecated');
+                },
             });
         }
 
@@ -87,10 +94,10 @@
                 }
                 console.log(`createVoice()`, opts);
             } else if (typeof opts === 'string') {
-                var voiceJson = voices.filter(v => v.language.match(`^${opts}`))[0];
+                var voiceJson = voices.filter(v => v.locale.match(`^${opts}`))[0];
                 if (voiceJson) {
                     opts = {
-                        language: opts,
+                        locale: opts,
                     }
                 } else {
                     var voiceJson = voices.filter(v => eqIgnoreCase(v.name, opts))[0];
@@ -105,12 +112,12 @@
                 }
             } else if (opts == null) {
                 opts = {
-                    language: "en-IN"
+                    locale: "en-IN"
                 };
             }
             if (voiceJson == null) {
                 var voiceJson = voices.filter(v => {
-                    if (opts.language && !v.language.match(`^${opts.language}`)) {
+                    if (opts.locale && !v.locale.match(`^${opts.locale}`)) {
                         return false;
                     }
                     if (opts.name && !eqIgnoreCase(v.name, opts.name)) {
@@ -143,8 +150,9 @@
                 throw new Error(`Expected IPA lexicon for pre-configured voice: `+
                     `${voiceJson.name}`);
             }
-            var voiceOpts = Object.assign({}, voiceJson, opts);
-            voiceOpts.language = voiceJson.language;
+            var voiceOpts = Object.assign({}, voiceJson);
+            voiceOpts = Object.assign(voiceOpts, opts);
+            voiceOpts.locale = voiceJson.locale;
             voiceOpts.name = voiceJson.name;
             var voice = new Voice(voiceOpts);
             return voice;
@@ -158,8 +166,8 @@
                     let usage = this.usages[key];
                     let props= {
                         words,
-                        language: this.language,
-                        languageUnknown: this.languageUnknown,
+                        language: this.locale,
+                        langUnknown: this.langUnknown,
                         fullStopComma: this.fullStopComma,
                         stripNumbers: this.stripNumbers,
                         stripQuotes: this.stripQuotes,
@@ -194,7 +202,7 @@
 
         voiceWords() {
             var words = new Words(undefined, {
-                language: this.language.split('-')[0],
+                language: this.locale.split('-')[0],
             });
             words._ipa = this.ipa;
             return words;

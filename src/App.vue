@@ -235,6 +235,18 @@ export default {
                 `search=${search}&`+
                 `lang=${this.language}`;
         },
+        getVoices() {
+            var that = this;
+            var url = this.url(`voices`);
+            this.$http.get(url).then(res => {
+                var voices = res.data;
+                that.gscv.voices = res.data;
+                console.log(`voices`, voices);
+                console.log(`voices`, that.gscv.voices);
+            }).catch(e => {
+                console.error(e.stack);
+            });
+        },
     },
     computed: {
         voice() {
@@ -301,6 +313,7 @@ export default {
 
     },
     mounted() {
+        this.getVoices();
         this.$nextTick(() => {
             console.debug(`App.mounted(nextTick)`, this.$route.query);
         });

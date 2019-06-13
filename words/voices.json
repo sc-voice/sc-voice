@@ -1,9 +1,11 @@
 [{
-    "language": "en-GB",
+    "locale": "en-GB",
     "service": "aws-polly",
     "name": "Amy",
+    "label": "Amy (slower)",
     "gender": "female",
-    "languageUnknown": "pli",
+    "langSeg": "en",
+    "langUnknown": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
     "locales": "en-.*",
@@ -86,11 +88,13 @@
         }
     }
 },{
-    "language": "en-IN",
+    "locale": "en-IN",
     "service": "aws-polly",
     "name": "Raveena",
+    "label": "Raveena (faster)",
     "gender": "female",
-    "languageUnknown": "en-IN",
+    "langSeg": "en",
+    "langUnknown": "en-IN",
     "stripNumbers": false,
     "stripQuotes": false,
     "locales": "en-.*",
@@ -169,7 +173,7 @@
         }
     }
 },{
-    "language": "hi-IN",
+    "locale": "hi-IN",
     "service": "aws-polly",
     "name": "Aditi",
     "maxSegment": 400,
@@ -180,7 +184,8 @@
     "locales": "pli",
     "usage": "recite",
     "ellipsisBreak": "<break time=\"0.300s\"/>",
-    "languageUnknown": "pli",
+    "langSeg": "pli",
+    "langUnknown": "pli",
     "gender": "female",
     "pitch": "-10%",
     "fullStopComma": true,
@@ -272,82 +277,13 @@
         }
     }
 },{
-    "language": "en-US",
-    "service": "aws-polly",
-    "name": "Salli",
-    "languageUnknown": "pli",
-    "stripNumbers": false,
-    "stripQuotes": false,
-    "locales": "en-.*",
-    "usage": "recite",
-    "gender": "female",
-    "rates": {
-        "navigate": "+5%", 
-        "recite": "-20%"
-    },
-    "usages": {
-        "navigate": {
-            "rate": "+5%",
-            "breaks": [0.001,0.1,0.2,0.3,0.4]
-        },
-        "recite": {
-            "rate": "-20%",
-            "breaks": [0.001,0.1,0.2,0.6,1]
-        },
-        "review": {
-            "rate": "-5%",
-            "breaks": [0.001,0.1,0.2,0.4,0.5]
-        }
-    },
-    "ipa": {
-        "pli": {
-            "a": "\u0250",
-            "a$": "a",
-            "^a": "\u0250\u02c8",
-            "ah": "\u0251'h",
-            "\u0101": "\u0251",
-            "aya": "aj\u0250\u02cc",
-            "bh": "b\u02b0",
-            "\u1e0d": "d",
-            "dh": "d\u02b0",
-            "du": "d\u028a",
-            "\u012b": "i\u02d0",
-            "\u1e6d\u1e6dh": "\u0288\u0306\u0288\u02b0",
-            "gh": "g\u02b0",
-            "unused-h": "h\u0308",
-            "i": "\u026a",
-            "j": "\u029d",
-            "jj": "\u029d.\u029d",
-            "jha": "\u0284h\u0251",
-            "kh": "k\u02b0",
-            "kk": "k.k",
-            "kkh": "k.k\u02b0",
-            "ll": "l.l",
-            "\u00f1": "\u0272",
-            "\u1e37":"\u029f\u0308",
-            "\u1e47": "n'",
-            "ma": "ma",
-            "ng": "\u014bg",
-            "\u1e43": "\u014b",
-            "nu": "nu",
-            "\u1e45g": "\u014bg",
-            "\u1e45k": "\u014bk",
-            "sutta": "\u02ccsutta\u0308",
-            "r": "\u027a",
-            "tt": "t.t",
-            "unused-th": "\u0288\u02b0",
-            "unused-u": "\u028A",
-            "\u016b": "\u028a\u02d0",
-            "^va": "va",
-            "y": "j"
-        }
-    }
-},{
-    "language": "en-AU",
+    "locale": "en-AU",
     "service": "aws-polly",
     "name": "Russell",
+    "label": "Russell for general listening and high-frequency hearing loss (medium)",
     "gender": "male",
-    "languageUnknown": "pli",
+    "langSeg": "en",
+    "langUnknown": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
     "locales": "en-.*",
@@ -417,11 +353,12 @@
         }
     }
 },{
-    "language": "de-DE",
+    "locale": "de-DE",
     "service": "aws-polly",
     "name": "Marlene",
     "gender": "female",
-    "languageUnknown": "pli",
+    "langSeg": "de",
+    "langUnknown": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
     "locales": "de-.*",
@@ -491,10 +428,11 @@
         }
     }
 },{
-    "language": "de-DE",
+    "locale": "de-DE",
     "service": "aws-polly",
     "name": "Vicki",
-    "languageUnknown": "pli",
+    "langSeg": "de",
+    "langUnknown": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
     "locales": "de-.*",
@@ -566,7 +504,7 @@
         }
     }
 },{
-    "language": "pli",
+    "locale": "pli",
     "service": "human-tts",
     "name": "sujato_pli",
     "maxSegment": 400,
@@ -576,7 +514,8 @@
     "stripQuotes": true,
     "locales": "pli",
     "usage": "recite",
-    "languageUnknown": "pli",
+    "langSeg": "pli",
+    "langUnknown": "pli",
     "gender": "male",
     "pitch": "0%",
     "fullStopComma": true,

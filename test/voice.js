@@ -25,14 +25,15 @@
             'Marlene',
             'Raveena', 
             'Russell',
-            'Salli',
             'Vicki',
             'sujato_pli',
         ].sort());
         var raveena = voices.filter(voice => voice.name === 'Raveena')[0];
         should(raveena).instanceOf(Voice);
         should(raveena).properties({
-            language: 'en-IN',
+            locale: 'en-IN',
+            langSeg: 'en',
+            langUnknown: 'en-IN',
             name: 'Raveena',
             service: 'aws-polly',
             gender: 'female',
@@ -47,7 +48,9 @@
         var amy = voices.filter(voice => voice.name === 'Amy')[0];
         should(amy).instanceOf(Voice);
         should(amy).properties({
-            language: 'en-GB',
+            locale: 'en-GB',
+            langSeg: 'en',
+            langUnknown: 'pli',
             name: 'Amy',
             service: 'aws-polly',
             gender: 'female',
@@ -60,27 +63,12 @@
         });
         should(!!amy.ipa).equal(true);
         should(!!amy.ipa.pli).equal(true);
-
-        var salli = voices.filter(voice => voice.name === 'Salli')[0];
-        should(salli).instanceOf(Voice);
-        should(salli).properties({
-            language: 'en-US',
-            name: 'Salli',
-            service: 'aws-polly',
-            gender: 'female',
-            rates: {
-                navigate: "+5%", 
-                recite: "-20%",
-            },
-        });
-        should(!!salli.ipa).equal(true);
-        should(!!salli.ipa.pli).equal(true);
     });
     it("createVoice(opts) returns voice for a language", function() {
         // Default
         var voice = Voice.createVoice();
         should(voice).instanceOf(Voice);
-        should(voice.language).equal("en-IN");
+        should(voice.locale).equal("en-IN");
         should(voice.name).equal("Raveena");
         should(voice.usage).equal("review");
         should(voice.scAudio).equal(undefined);
@@ -89,7 +77,7 @@
         // Custom
         var amy = Voice.createVoice("en-GB");
         should(amy).instanceOf(Voice);
-        should(amy.language).equal("en-GB");
+        should(amy.locale).equal("en-GB");
         should(amy.name).equal("Amy");
         should(amy.usage).equal("recite");
 
@@ -98,12 +86,12 @@
         var altTts = amy.services.recite;
         should(altTts).instanceOf(Polly);
         var russell = Voice.createVoice({
-            language: 'en-AU',
+            locale: 'en-AU',
             scAudio,
             altTts,
         });
         should(russell).instanceOf(Voice);
-        should(russell.language).equal("en-AU");
+        should(russell.locale).equal("en-AU");
         should(russell.name).equal("Russell");
         should(russell.usage).equal("recite");
         should(russell.scAudio).equal(scAudio);
@@ -112,43 +100,43 @@
     it("createVoice(voiceName) returns a default voice", function() {
         var voice = Voice.createVoice('aditi');
         should(voice).instanceOf(Voice);
-        should(voice.language).equal("hi-IN");
+        should(voice.locale).equal("hi-IN");
         should(voice.name).equal("Aditi");
         should(voice.usage).equal("recite");
-        should(voice.languageUnknown).equal('pli');
+        should(voice.langUnknown).equal('pli');
         should(voice.stripNumbers).equal(true);
         should(voice.stripQuotes).equal(true);
 
         var voice = Voice.createVoice('amy');
         should(voice).instanceOf(Voice);
-        should(voice.language).equal("en-GB");
+        should(voice.locale).equal("en-GB");
         should(voice.name).equal("Amy");
         should(voice.usage).equal("recite");
-        should(voice.languageUnknown).equal('pli');
+        should(voice.langUnknown).equal('pli');
         should(voice.stripNumbers).equal(false);
         should(voice.stripQuotes).equal(false);
 
         var voice = Voice.createVoice('raveena');
         should(voice).instanceOf(Voice);
-        should(voice.language).equal("en-IN");
+        should(voice.locale).equal("en-IN");
         should(voice.name).equal("Raveena");
         should(voice.usage).equal("review");
-        should(voice.languageUnknown).equal('en-IN');
+        should(voice.langUnknown).equal('en-IN');
         should(voice.stripNumbers).equal(false);
         should(voice.stripQuotes).equal(false);
 
         var voice = Voice.createVoice('russell');
         should(voice).instanceOf(Voice);
-        should(voice.language).equal("en-AU");
+        should(voice.locale).equal("en-AU");
         should(voice.name).equal("Russell");
         should(voice.usage).equal("recite");
-        should(voice.languageUnknown).equal('pli');
+        should(voice.langUnknown).equal('pli');
         should(voice.stripNumbers).equal(false);
         should(voice.stripQuotes).equal(false);
     });
     it("createVoice(opts) creates a recite Voice instance", function() {
         var reciteVoice = Voice.createVoice({
-            language: 'en',
+            locale: 'en',
             usage: 'recite',
         });
         should(reciteVoice.name).equal('Amy');
@@ -167,7 +155,7 @@
         });
 
         var navVoice = Voice.createVoice({
-            language: 'en',
+            locale: 'en',
             usage: "navigate",
         });
         should(navVoice.name).equal('Raveena');
@@ -181,7 +169,7 @@
     });
     it("createVoice(opts) creates a review Voice instance", function() {
         var reviewVoice = Voice.createVoice({
-            language: "en", 
+            locale: "en", 
             usage: 'review',
         });
         should(reviewVoice.name).equal('Raveena');
@@ -251,21 +239,21 @@
          * letter theta will be voiced differently by en-IN and en-GB voices.
          * Because of this, each voice has its own IPA lexicon ("ipa") 
          * for pronunciation. Because the voice IPA lexicon represents
-         * a dialect, it overrides the default language IPA lexicon.
+         * a dialect, it overrides the default locale IPA lexicon.
          *
          * This subtle change manifests via the wordSSML() function of
          * abstractTTS.
          */
         var raveena = Voice.createVoice({
-            language: "en-IN",
-            languageUnknown: "pli",
+            locale: "en-IN",
+            langUnknown: "pli",
         });
         var amy = Voice.createVoice({
-            language: "en-GB",
-            languageUnknown: "pli",
+            locale: "en-GB",
+            langUnknown: "pli",
         });
-        should(raveena.services.navigate.languageUnknown).equal('pli');
-        should(amy.services.navigate.languageUnknown).equal('pli');
+        should(raveena.services.navigate.langUnknown).equal('pli');
+        should(amy.services.navigate.langUnknown).equal('pli');
 
         should(raveena.services.recite.wordSSML(`Ubbhaṭaka`))
         .equal(`<break time="0.001s"/><phoneme alphabet="ipa" ph="ubbʰɐtɐka">`+
@@ -310,7 +298,7 @@
         should(tts).properties({
             voice: "Raveena",
             language: "en-IN",
-            languageUnknown: "en-IN",
+            langUnknown: "en-IN",
         });
         var segments = tts.segmentSSML('sati');
         should.deepEqual(segments, [
@@ -324,7 +312,7 @@
         ]);
 
         // Interpret unknown words as Pali
-        tts.languageUnknown = "pli";
+        tts.langUnknown = "pli";
         var segments = tts.segmentSSML('Taṃ kissa hetu?');
         should.deepEqual(segments, [
             `<phoneme alphabet="ipa" ph="\u03b8\u0250\u014b">Taṃ</phoneme>${BREAK} ` +
@@ -336,7 +324,7 @@
         (async function() { try {
             var raveena = Voice.createVoice({
                 name: "raveena",
-                languageUnknown: "pli",
+                langUnknown: "pli",
             });
             var text = `Idha panudāyi, ekacco puggalo ‘upadhi dukkhassa mūlan’ti—`;
             var result = await raveena.speak(text, {usage:'recite'});
@@ -353,8 +341,8 @@
             var aditi = Voice.createVoice({
                 name: "aditi",
                 usage: 'recite',
-                languageUnknown: "pli",
-                language: 'hi-IN',
+                langUnknown: "pli",
+                locale: 'hi-IN',
                 stripNumbers: true,
                 stripQuotes: true,
             });
@@ -369,8 +357,8 @@
     });
     it("Amy phonemes", function() {
         var amy = Voice.createVoice({
-            language: "en-GB",
-            languageUnknown: "pli",
+            locale: "en-GB",
+            langUnknown: "pli",
         });
         should(amy.name).equal("Amy");
         var recite = amy.services.recite;
@@ -379,8 +367,8 @@
     it("Raveena phonemes", function() {
     return;  // TODO
         var raveena = Voice.createVoice({
-            language: "en-IN",
-            languageUnknown: "pli",
+            locale: "en-IN",
+            langUnknown: "pli",
         });
         should(raveena.name).equal("Raveena");
         var recite = raveena.services.recite;
@@ -393,10 +381,10 @@
     it("Aditi phonemes", function() {
         var aditi = Voice.createVoice({
             name: "aditi",
-            languageUnknown: "pli",
+            langUnknown: "pli",
         });
         should(aditi.name).equal("Aditi");
-        should(aditi.language).equal('hi-IN');
+        should(aditi.locale).equal('hi-IN');
         var recite = aditi.services.recite;
         should(recite.wordSSML(`vasala`)).equal(phoneme("v\\ə sə la","vasala"));
         should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑː məɲ cə","Nāmañca"));
@@ -410,7 +398,7 @@
             var raveena = Voice.createVoice({
                 name: "raveena",
                 stripNumbers: true,
-                languageUnknown: "pli",
+                langUnknown: "pli",
             });
             var text = `Bhikkhu 123`;
             var result = await raveena.speak(text, {usage:'recite'});
@@ -431,7 +419,7 @@
             var raveena = Voice.createVoice({
                 name: "raveena",
                 stripQuotes: true,
-                languageUnknown: "pli",
+                langUnknown: "pli",
             });
             var text = `“'‘Bhikkhu’'”`;
             var result = await raveena.speak(text, {usage:'recite'});

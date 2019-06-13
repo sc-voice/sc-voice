@@ -51,7 +51,7 @@
             voice = voice || Voice.createVoice({
                 name: "aditi",
                 usage: 'recite',
-                languageUnknown: "pli",
+                langUnknown: "pli",
                 language: 'hi-IN',
                 stripNumbers: true,
                 stripQuotes: true,

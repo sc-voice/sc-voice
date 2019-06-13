@@ -50,7 +50,7 @@
     });
     it("segmentSSML(text) returns SSML", function() {
         var polly = new Polly({
-            languageUnknown: 'pli',
+            langUnknown: 'pli',
             stripQuotes: true,
         });
         should.deepEqual(polly.segmentSSML('281'),

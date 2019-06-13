@@ -30,8 +30,8 @@
     it("createVoice() creates Raveena", function() {
         var raveena = Voice.createVoice('raveena');
         should(raveena.name).equal('Raveena');
-        should(raveena.language).equal('en-IN');
-        should(raveena.languageUnknown).equal('en-IN');
+        should(raveena.locale).equal('en-IN');
+        should(raveena.langUnknown).equal('en-IN');
         should(raveena.maxSegment).equal(undefined);
         should(raveena.fullStopComma).equal(undefined);
         should(raveena.syllableVowels).equal(syllableVowels);
@@ -40,8 +40,8 @@
 
         var raveena = Voice.createVoice(RAVEENA_OPTS);
         should(raveena.name).equal('Raveena');
-        should(raveena.language).equal('en-IN');
-        should(raveena.languageUnknown).equal('en-IN');
+        should(raveena.locale).equal('en-IN');
+        should(raveena.langUnknown).equal('en-IN');
         should(raveena.maxSegment).equal(undefined);
         should(raveena.fullStopComma).equal(undefined);
         should(raveena.syllableVowels).equal(syllableVowels);

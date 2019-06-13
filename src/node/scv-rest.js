@@ -96,20 +96,23 @@
                         "review/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReviewSection),
                     this.resourceMethod("get", 
-                        "play/segment/:sutta_uid/:language/:translator/:scid/:voicename", 
+                        "play/segment/:sutta_uid/:langTrans/:translator/:scid/:voicename", 
                         this.getPlaySegment),
                     this.resourceMethod("get", 
-                        "play/section/:sutta_uid/:language/:translator/:iSection/:voicename", 
+                        "play/section/:sutta_uid/:langTrans/:translator/:iSection/:voicename", 
                         this.getPlaySection),
+                    this.resourceMethod("get", 
+                        "voices",
+                        this.getVoices),
+                    this.resourceMethod("get", 
+                        "voices/:langTrans",
+                        this.getVoices),
                     this.resourceMethod("get", 
                         "recite/sutta/:sutta_uid/:language/:translator", 
                         this.getReciteSutta),
                     this.resourceMethod("get", 
                         "review/sutta/:sutta_uid/:language/:translator", 
                         this.getReviewSutta),
-                    this.resourceMethod("get", 
-                        "download/sutta/:sutta_uid/:language/:translator/:usage", 
-                        this.getDownloadSutta, this.audioMIME),
                     this.resourceMethod("get", 
                         "audio-urls/:sutta_uid", 
                         this.getAudioUrls),
@@ -209,7 +212,8 @@
 
         suttaParms(req) {
             var parms = Object.assign({
-                language: 'en',
+                language: 'en', //deprecated
+                voicename: 'amy',
                 usage: 'recite',
                 iSection: 0,
                 scid: null,
@@ -218,6 +222,7 @@
             parms.iSection = Number(parms.iSection);
             parms.iVoice = Number(parms.iVoice);
             parms.sutta_uid = parms.sutta_uid || parms.scid && parms.scid.split(':')[0];
+            parms.langTrans = parms.langTrans || parms.language || 'en';
             return parms;
         }
 
@@ -242,7 +247,7 @@
                         language,
                         usage,
                         soundStore: that.soundStore,
-                        languageUnknown: "pli",
+                        langUnknown: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });
@@ -283,7 +288,7 @@
                         language,
                         usage,
                         soundStore: that.soundStore,
-                        languageUnknown: "pli",
+                        langUnknown: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });
@@ -322,12 +327,35 @@
             return this.reciteSection(req, res, next, 'review');
         }
 
+        getVoices(req, res, next) {
+            var { 
+                langTrans,
+            } = this.suttaParms(req);
+            langTrans = langTrans || 'en';
+            var voices = VOICES.filter(v => 
+                v.langSeg === 'pli' || v.langSeg===langTrans);
+            voices.sort((a,b) => {
+                var cmp = a.langSeg === b.langSeg
+                    ? 0
+                    : a.langSeg === 'pli' ? 1 : -1;
+                if (cmp === 0) {
+                    if (a.hasOwnProperty('iVoice') && b.hasOwnProperty('iVoice')) {
+                        cmp = Number(a.iVoice) - Number(b.iVoice);
+                    }
+                    cmp = cmp || a.name.localeCompare(b.name);
+                }
+                return cmp;
+            });
+            return Promise.resolve(voices);
+        }
+
         getPlaySection(req, res, next) {
             var that = this;
             var { 
-                sutta_uid, language, translator, iSection, voicename, 
+                sutta_uid, translator, iSection, voicename, 
+                langTrans,
             } = this.suttaParms(req);
-            var suttaRef = `${sutta_uid}/${language}/${translator}`;
+            var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
             logger.info(`GET play/section/${suttaRef}/${iSection}/${voicename}`);
             var voice = Voice.voiceOfName(voiceName) || Voice.voiceOfName('Amy');
             var usage = voice.usage;
@@ -337,7 +365,7 @@
                     var sutta = await that.suttaFactory.loadSutta({
                         scid: sutta_uid,
                         translator,
-                        language,
+                        language: langTrans,
                         expand: true,
                     });
                     if (iSection < 0 || sutta.sections.length <= iSection) {
@@ -353,7 +381,7 @@
                     }
                     resolve({
                         sutta_uid,
-                        language,
+                        language: langTrans,
                         translator,
                         title: section.title,
                         section:iSection,
@@ -370,13 +398,13 @@
         getPlaySegment(req, res, next) {
             var that = this;
             var { 
-                sutta_uid, language, translator, scid, voicename, 
+                sutta_uid, langTrans, translator, scid, voicename, 
             } = this.suttaParms(req);
             if (/[0-9]+/.test(voicename)) {
                 var iVoice = Number(voicename);
             }
             var voice = Voice.voiceOfName(voicename);
-            var suttaRef = `${sutta_uid}/${language}/${translator}`;
+            var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
             logger.info(`GET play/segment/${suttaRef}/${scid}/${voicename}`);
             var usage = voice.usage || 'recite';
             return new Promise((resolve, reject) => {
@@ -384,7 +412,8 @@
                     var sutta = await that.suttaFactory.loadSutta({
                         scid: sutta_uid,
                         translator,
-                        language,
+                        language: langTrans, // deprecated
+                        langTrans,
                         expand: true,
                     });
                     if (iSection < 0 || sutta.sections.length <= iSection) {
@@ -394,7 +423,7 @@
                         name: voice.name,
                         usage,
                         soundStore: that.soundStore,
-                        languageUnknown: "pli",
+                        langUnknown: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });
@@ -413,15 +442,15 @@
                         section = sutta.sections[++iSection];
                     }
                     segment.audio = {};
-                    if (segment[language]) {
+                    if (segment[langTrans]) {
                         var speak = await voiceLang.speakSegment({
                             sutta_uid,
                             segment,
-                            language,
+                            language: langTrans, 
                             translator,
                             usage,
                         });
-                        segment.audio[language] = speak.signature.guid;
+                        segment.audio[langTrans] = speak.signature.guid;
                     }
                     if (segment.pli) {
                         var speak = await voicePali.speakSegment({
@@ -436,7 +465,8 @@
                     resolve({
                         sutta_uid,
                         scid,
-                        language,
+                        language: langTrans, // deprecated
+                        langTrans,
                         translator,
                         title: section.title,
                         section:iSection,
@@ -451,7 +481,6 @@
             });
         }
 
-
         getReciteSutta(req, res, next) {
             var { sutta_uid, language, translator } = this.suttaParms(req);
             return this.synthesizeSutta(sutta_uid, language, translator, 'recite');
@@ -460,27 +489,6 @@
         getReviewSutta(req, res, next) {
             var { sutta_uid, language, translator } = this.suttaParms(req);
             return this.synthesizeSutta(sutta_uid, language, translator, 'review');
-        }
-
-        getDownloadSutta(req, res, next) {
-            var that = this;
-            return new Promise((resolve, reject) => { try {
-                (async function() { try {
-                    var { sutta_uid, language, translator, usage } = that.suttaParms(req);
-                    var {
-                        guid,
-                    } = await that.synthesizeSutta(sutta_uid, language, translator, usage);
-                    var filePath = that.soundStore.guidPath(guid);
-                    var audioSuffix = that.soundStore.audioSuffix;
-                    var filename = `${sutta_uid}-${language}-${translator}${audioSuffix}`;
-                    var data = fs.readFileSync(filePath);
-                    res.set('Content-disposition', 'attachment; filename=' + filename);
-                    logger.info(`GET download/sutta => ` +
-                        `${filename} size:${data.length} ${guid}`);
-                    res.cookie('download-date',new Date());
-                    resolve(data);
-                } catch(e) {reject(e);} })();
-            } catch(e) {reject(e);} });
         }
 
         getSutta(req, res, next) {
@@ -566,7 +574,7 @@
                         name: vname,
                         usage,
                         soundStore: that.soundStore,
-                        languageUnknown: "pli",
+                        langUnknown: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });

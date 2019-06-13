@@ -26,7 +26,7 @@ var words = new Words(undefined, {
 
     var voice = Voice.createVoice({
         name: "marlene",
-        languageUnknown: "pli",
+        langUnknown: "pli",
     });
     var scr = await new SuttaCentralApi().initialize();
     var text = fs.readFileSync(0).toString();
