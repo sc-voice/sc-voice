@@ -160,7 +160,8 @@ export default {
                 track.language,
                 track.translator,
                 track.iSection,
-                this.gscv.iVoice,
+                this.gscv.voiceTrans,
+                //this.gscv.voicePali,
             ].join('/');
         },
         url(path) {
@@ -271,7 +272,8 @@ export default {
                     this.language,
                     this.translator,
                     scid,
-                    this.gscv.iVoice,
+                    this.gscv.voiceTrans,
+                    //this.gscv.voicePali,
                 ].join('/');
                 var url = that.url(`play/segment/${segmentRef}`);
                 that.$http.get(url).then(res => {

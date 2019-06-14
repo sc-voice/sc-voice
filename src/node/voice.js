@@ -18,8 +18,8 @@
             this.stripNumbers = opts.stripNumbers;
             this.stripQuotes = opts.stripQuotes;
             this.locale = opts.locale || "en-IN";
-            this.segLang = opts.segLang || 'en';
-            this.localeAlt = opts.localeAlt || this.segLang;
+            this.langTrans = opts.langTrans || 'en';
+            this.localeAlt = opts.localeAlt || this.langTrans;
             this.fullStopComma = opts.fullStopComma;
             this.service = opts.service || 'aws-polly';
             this.name = opts.name || 'Raveena';
@@ -84,6 +84,19 @@
                 }
                 return acc;
             }, null);
+        }
+
+        static compare(a,b) {
+            var cmp = a.langTrans === b.langTrans
+                ? 0
+                : a.langTrans === 'pli' ? 1 : -1;
+            if (cmp === 0) {
+                if (a.hasOwnProperty('iVoice') && b.hasOwnProperty('iVoice')) {
+                    cmp = Number(a.iVoice) - Number(b.iVoice);
+                }
+                cmp = cmp || a.name.localeCompare(b.name);
+            }
+            return cmp;
         }
 
         static createVoice(opts) {

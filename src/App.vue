@@ -68,12 +68,13 @@
           <v-card-text>
             <details class="scv-dialog" >
                 <summary class="subheading">Sutta Player settings</summary>
+                {{gscv.voiceTrans}}
                 <div class="scv-settings">
-                    <v-radio-group v-model="gscv.iVoice"
-                        @change="gscv.changed('iVoice')"
+                    <v-radio-group v-model="gscv.voiceTrans"
+                        @change="gscv.changed('voiceTrans')"
                         column>
-                       <v-radio v-for="(v,i) in gscv.voices"
-                         :label="v.label" :value="i" :key="`voice${i}`">
+                       <v-radio v-for="(v,i) in gscv.langVoices()"
+                         :label="v.label" :value="v.name" :key="`voice${i}`">
                          </v-radio>
                     </v-radio-group>
                     <v-radio-group v-model="gscv.showLang"
@@ -250,7 +251,7 @@ export default {
     },
     computed: {
         voice() {
-            return this.gscv.voices[this.gscv.iVoice];
+            return this.gscv.voices.filter(v => v.name === this.gscv.voiceTrans)[0];
         },
         gscv() {
             return this.$root && this.$root.$data;
@@ -323,8 +324,10 @@ export default {
             if (!this.gscv.useCookies) {
                 query.showId != null &&
                     Vue.set(this.gscv, "showId", query.showId==='true');
-                query.iVoice &&
-                    Vue.set(this.gscv, "iVoice", Number(query.iVoice||0));
+                query.voiceTrans &&
+                    Vue.set(this.gscv, "voiceTrans", query.voiceTrans);
+                query.voicePali &&
+                    Vue.set(this.gscv, "voicePali", query.voicePali);
                 query.maxResults &&
                     Vue.set(this.gscv, "maxResults", Number(query.maxResults));
                 query.showLang &&

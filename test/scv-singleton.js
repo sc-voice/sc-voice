@@ -3,6 +3,7 @@
     const ScvSingleton = require("../public/js/scv-singleton");
     const {
         Playlist,
+        Voice,
         Sutta,
     } = require('../index');
     const mockVue = {
@@ -41,6 +42,7 @@
         vueRoot: mockVueRoot,
         Vue: mockVue,
     };
+    const VOICES = Voice.loadVoices().sort(Voice.compare);
     var suttas = [
         new Sutta({
             sutta_uid: 'test1',
@@ -75,11 +77,12 @@
         }),
     ];
 
-    it("ScvSingleton() creates the SCV Vue singleton", function() {
+    it("TESTTESTScvSingleton() creates the SCV Vue singleton", function() {
         var scv = new ScvSingleton(g);
         should(scv).properties({
             showId: false,
-            iVoice: 0,
+            voiceTrans: 'Amy',
+            voicePali: 'Aditi',
             scid: null,
             showLang: 0,
             search: null,
@@ -90,7 +93,8 @@
         scv.mounted(mockVueRoot);
         should.deepEqual(Object.keys(scv).sort(), [
             "showId",
-            "iVoice",
+            "voiceTrans",
+            "voicePali",
             "scid",
             "showLang",
             "search",
@@ -98,13 +102,9 @@
             "ips",
             "lang",
         ].sort());
-        should.deepEqual(scv.voices[0], {
-            label: 'Amy (slower)',
-            name: 'Amy',
-            value: 'recite',
-        });
+        should(scv.voices).instanceOf(Array);
     });
-    it("ScvSingleton() creates the SCV Vue singleton", function() {
+    it("TESTTESTScvSingleton() creates the SCV Vue singleton", function() {
         var scv = new ScvSingleton(g);
         var testVoice = {
             name: "test-name",
@@ -115,7 +115,7 @@
         scv.voices = voices;
         should(scv.voices).equal(voices);
     });
-    it("deleteCookies() deletes ScvSingleton cookies", function() {
+    it("TESTTESTdeleteCookies() deletes ScvSingleton cookies", function() {
         mockVueRoot.$cookie.otherCookie = 'hello';
         mockVueRoot.$cookie.useCookies = true;
         mockVueRoot.$cookie.maxResults = 7;
@@ -128,7 +128,7 @@
             otherCookie: 'hello',
         });
     });
-    it("loadCookie(prop) loads cookie value", function() {
+    it("TESTTESTloadCookie(prop) loads cookie value", function() {
         mockVueRoot.$cookie.maxResults = 7;
         delete mockVueRoot.$cookie.ips;
 
@@ -140,7 +140,7 @@
         should(scv.maxResults).equal(7);
         should(scv.ips).equal(6);
     });
-    it("changed(prop) propagates properties to cookies", function() {
+    it("TESTTESTchanged(prop) propagates properties to cookies", function() {
         var scv = new ScvSingleton(g);
         mockVueRoot.$cookie.otherCookie = 'hello';
         mockVueRoot.$cookie.useCookies = true;
@@ -162,12 +162,14 @@
         scv.changed('useCookies');
         should.deepEqual(mockVueRoot.$cookie, {
             otherCookie: 'hello',
-            iVoice: "0",
             ips: "6",
             maxResults: "5",
             showId: "false",
             showLang: "0",
             useCookies: "true",
+            lang: 'en',
+            voiceTrans: 'Amy',
+            voicePali: 'Aditi',
         });
 
         // save one property
@@ -176,12 +178,14 @@
         scv.changed('maxResults');
         should.deepEqual(mockVueRoot.$cookie, {
             otherCookie: 'hello',
-            iVoice: "0",
             ips: "6",
             maxResults: "6",
             showId: "false",
             showLang: "0",
             useCookies: "true",
+            lang: 'en',
+            voiceTrans: 'Amy',
+            voicePali: 'Aditi',
         });
 
         // When useCookies is set to false, delete the cookies
@@ -191,7 +195,7 @@
             otherCookie: 'hello',
         });
     });
-    it("hash(opts) returns URL hash path", function() {
+    it("TESTTESThash(opts) returns URL hash path", function() {
         var scv = new ScvSingleton(g);
         scv.mounted(mockVueRoot);
         Object.keys(scv).forEach(key => {
@@ -200,24 +204,26 @@
 
         // default is to use own properties
         should(scv.hash()).equal([
-            "#/?iVoice=0",
-            "ips=6",
+            "#/?ips=6",
             "lang=en",
             "maxResults=5",
             "showId=false",
             "showLang=0",
+            "voicePali=Aditi",
+            "voiceTrans=Amy",
         ].join('&'));
 
         // selected properties can be changed
         should(scv.hash({
             maxResults: 6,
         })).equal([
-            "#/?iVoice=0",
-            "ips=6",
+            "#/?ips=6",
             "lang=en",
             "maxResults=6",
             "showId=false",
             "showLang=0",
+            "voicePali=Aditi",
+            "voiceTrans=Amy",
         ].join('&'));
 
         // search is a property
@@ -225,17 +231,18 @@
         should(scv.hash({
             maxResults: 2,
         })).equal([
-            "#/?iVoice=0",
-            "ips=6",
+            "#/?ips=6",
             "lang=en",
             "maxResults=2",
             "search=asdf",
             "showId=false",
             "showLang=0",
+            "voicePali=Aditi",
+            "voiceTrans=Amy",
         ].join('&'));
 
     });
-    it("ipsChoices returns array of ips choices", function() {
+    it("TESTTESTipsChoices returns array of ips choices", function() {
         var scv = new ScvSingleton(g);
         should.deepEqual(scv.ipsChoices[1], {
             url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
@@ -245,13 +252,12 @@
             value: 1,
         });
     });
-    it("has unenumerable properties", function() {
+    it("TESTTESThas unenumerable properties", function() {
         var scv = new ScvSingleton(g);
         scv.title = "titletest";
         should(scv.title).equal('titletest');
         should(scv).properties({
             showId: false,
-            iVoice: 0,
             scid: null,
             showLang: 0,
             search: null,
@@ -262,7 +268,6 @@
         scv.mounted(mockVueRoot);
         should(scv).properties({
             showId: false,
-            iVoice: 0,
             scid: null,
             showLang: 0,
             search: null,
@@ -271,13 +276,12 @@
             lang: 'en',
         });
     });
-    it("url(opts) returns url", function() {
+    it("TESTTESTurl(opts) returns url", function() {
         var scv = new ScvSingleton(g);
 
         // default
         should(scv.url()).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?iVoice=0",
-            "ips=6",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
             "lang=en",
             "maxResults=5",
             "showId=false",
@@ -288,15 +292,14 @@
         should(scv.url({
             maxResults: 6,
         })).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?iVoice=0",
-            "ips=6",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
             "lang=en",
             "maxResults=6",
             "showId=false",
             "showLang=0",
         ].join('&')));
     });
-    it("reload(opts) sets window location", function() {
+    it("TESTTESTreload(opts) sets window location", function() {
         var scv = new ScvSingleton(g);
 
         g.window.location.href = null;
@@ -304,12 +307,13 @@
         // default
         scv.reload();
         should(g.window.location.href).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?iVoice=0",
-            "ips=6",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
             "lang=en",
             "maxResults=5",
             "showId=false",
             "showLang=0",
+            "voicePali=Aditi",
+            "voiceTrans=Amy",
         ].join('&')));
 
         // with options
@@ -318,15 +322,14 @@
             lang: 'de',
         });
         should(g.window.location.href).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?iVoice=0",
-            "ips=6",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
             "lang=de",
             "maxResults=9",
             "showId=false",
             "showLang=0",
         ].join('&')));
     });
-    it("duration(nSegs) returns estimated playtime", function() {
+    it("TESTTESTduration(nSegs) returns estimated playtime", function() {
         var scv = new ScvSingleton(g);
 
         should(scv.duration(0).display).equal('--');
@@ -363,7 +366,7 @@
         should(scv.duration(10).display).equal('1m 2s');
         should(scv.duration(1000).display).equal('1h 44m');
     });
-    it("duration(chars) returns estimated playtime", function() {
+    it("TESTTESTduration(chars) returns estimated playtime", function() {
         var scv = new ScvSingleton(g);
 
         should(scv.duration({
@@ -411,7 +414,7 @@
         should(scv.duration(10).display).equal('1m 2s');
         should(scv.duration(1000).display).equal('1h 44m');
     });
-    it("showPali/showTrans are true for showing text", function() {
+    it("TESTTESTshowPali/showTrans are true for showing text", function() {
         var scv = new ScvSingleton(g);
 
         scv.showLang = 0;
@@ -426,17 +429,18 @@
         should(scv.showPali).equal(false);
         should(scv.showTrans).equal(true);
     });
-    it("mounted() loads properties from cookies", function() {
+    it("TESTTESTmounted() loads properties from cookies", function() {
         var scv = new ScvSingleton(g);
         Object.assign(mockVueRoot.$cookie, {
             showId: "true",
-            iVoice: 3,
             scid: "abc123",
             showLang: "2",
             search: "test-pat",
             maxResults: "9",
             ips: "6",
             lang: 'de',
+            voiceTrans: 'test-voiceTrans',
+            voicePali: 'test-voicePali',
         });
         should(scv.useCookies).equal(false); // initial value
 
@@ -446,13 +450,14 @@
         // useCookies not true
         should(scv).properties({
             showId: false,
-            iVoice: 0,
             scid: null,
             showLang: 0,
             search: null,
             maxResults: 5,
             ips: 6,
             lang: 'en',
+            voiceTrans: 'Amy',
+            voicePali: 'Aditi',
         });
 
         // useCookies not true
@@ -460,7 +465,6 @@
         scv.mounted(mockVueRoot);
         should(scv).properties({
             showId: true,
-            iVoice: 3,
             scid: 'abc123',
             showLang: 2,
             search: "test-pat",
@@ -469,7 +473,7 @@
             lang: 'de',
         });
     });
-    it("user stores login credentials", function() {
+    it("TESTTESTuser stores login credentials", function() {
         var scv = new ScvSingleton(g);
         should.deepEqual(scv.user, {
             username: null,
@@ -635,6 +639,29 @@
                 pli: 54,
             },
         });
+    });
+    it("TESTTESTlangVoices(lang) returns voices for language", function() {
+        var scv = new ScvSingleton(g);
+        scv.voices = VOICES;
+        should(scv.voices).equal(VOICES);
+
+        // default
+        var voices = scv.langVoices();
+        should.deepEqual(voices.map(v => v.name), [
+            'Amy', 'Russell', 'Raveena',
+        ]);
+
+        // custom
+        var voices = scv.langVoices('en');
+        should.deepEqual(voices.map(v => v.name), [
+            'Amy', 'Russell', 'Raveena',
+        ]);
+
+        // custom
+        var voices = scv.langVoices('de');
+        should.deepEqual(voices.map(v => v.name), [
+            'Marlene', 'Vicki',
+        ]);
     });
 });
 

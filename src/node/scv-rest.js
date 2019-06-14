@@ -333,19 +333,8 @@
             } = this.suttaParms(req);
             langTrans = langTrans || 'en';
             var voices = VOICES.filter(v => 
-                v.segLang === 'pli' || v.segLang===langTrans);
-            voices.sort((a,b) => {
-                var cmp = a.segLang === b.segLang
-                    ? 0
-                    : a.segLang === 'pli' ? 1 : -1;
-                if (cmp === 0) {
-                    if (a.hasOwnProperty('iVoice') && b.hasOwnProperty('iVoice')) {
-                        cmp = Number(a.iVoice) - Number(b.iVoice);
-                    }
-                    cmp = cmp || a.name.localeCompare(b.name);
-                }
-                return cmp;
-            });
+                v.langTrans === 'pli' || v.langTrans===langTrans);
+            voices.sort(Voice.compare);
             return Promise.resolve(voices);
         }
 

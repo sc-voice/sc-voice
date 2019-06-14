@@ -4,20 +4,6 @@
     const DN33_PLI_SECONDS_PER_SEGMENT = 1.8 * DN33_EN_SECONDS_PER_SEGMENT;
     const DN33_EN_SECONDS_PER_CHAR = DN33_EN_SECONDS/(83588);
     const DN33_PLI_SECONDS_PER_CHAR = DN33_EN_SECONDS/(79412);
-    const DEFAULT_VOICES = [{
-        name: 'Amy',
-        value: 'recite',
-        label: 'Amy (slower)',
-    },{
-        name: 'Russell',
-        value: 'recite',
-        label: 'Russell for general listening and high-frequency hearing loss (medium)',
-    },{
-        name: 'Raveena',
-        value: 'review',
-        label: 'Raveena (faster)',
-    }];
-
     const IPS_CHOICES = [{
         url: '',
         label: "Launch Sutta Player without sound",
@@ -61,7 +47,8 @@
     class ScvSingleton { 
         constructor(g) {
             this.showId = false;
-            this.iVoice = 0;
+            this.voiceTrans = 'Amy';
+            this.voicePali = 'Aditi';
             this.scid = null;
             this.showLang = 0;
             this.search = null;
@@ -73,7 +60,7 @@
             }
             Object.defineProperty(this, "_voices", {
                 writable: true,
-                value: null,
+                value: [],
             });
             Object.defineProperty(this, "_user", {
                 writable: true,
@@ -116,7 +103,7 @@
         }
 
         get voices() {
-            return this._voices || DEFAULT_VOICES;
+            return this._voices; 
         }
 
         set voices(value) {
@@ -181,7 +168,9 @@
                 if (prop === 'useCookies') {
                     if (v) {
                         cookie.set( "showId", this.showId, EXPIRES);
-                        cookie.set( "iVoice", this.iVoice, EXPIRES);
+                        cookie.set( "voiceTrans", this.voiceTrans, EXPIRES);
+                        cookie.set( "voicePali", this.voicePali, EXPIRES);
+                        cookie.set( "lang", this.lang, EXPIRES);
                         cookie.set( "maxResults", this.maxResults, EXPIRES);
                         cookie.set( "showLang", this.showLang, EXPIRES);
                         cookie.set( "ips", this.ips, EXPIRES);
@@ -341,6 +330,12 @@
                 }
                 return acc;
             }, {});
+        }
+        
+        langVoices(lang = this.lang) {
+            return this.voices
+                ? this.voices.filter(v => v.langTrans === lang)
+                : [];
         }
     }
 

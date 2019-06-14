@@ -232,7 +232,7 @@
                 </div>
                 <i>{{sect.title}}</i>
             </summary>
-            <div class="scv-play-controls">
+            <div class="scv-play-controls" v-if="gscv.voices">
                 <button
                     :disabled="waiting > 0"
                     @click="launchSuttaPlayer(i)"
@@ -261,7 +261,7 @@
                 <div v-html="segmentLang(seg)"/>
             </div>
           </details> <!-- section i -->
-          <scv-player v-if="tracks"
+          <scv-player v-if="tracks && gscv.voices"
             :ref="`refScvPlayer`" :tracks="tracks" :voice="voice"
             :closeFocus="playerCloseFocus"
             />
@@ -347,6 +347,9 @@ export default {
                 : 'scv-icon-btn ';
         },
         downloadUrl(search) {
+            if (this.gscv.voices == null) {
+                return "downloadUrl-unavailable";
+            }
             var langs = [];
             this.showPali && langs.push('pli');
             this.showTrans && langs.push(this.language);
@@ -418,7 +421,8 @@ export default {
                     result.lang,
                     result.author_uid,
                     scid,
-                    this.gscv.iVoice,
+                    this.gscv.voiceTrans,
+                    //this.gscv.voicePali,
                 ].join('/');
                 var url = that.url(`play/segment/${segmentRef}`);
                 var timer = that.startWaiting();
@@ -816,9 +820,14 @@ export default {
             if (this.gscv.voices == null) {
                 throw new Error("voice_error2");
             }
-            var voice = this.gscv.voices[this.gscv.iVoice];
+            if (this.gscv.voices.length == 0) {
+                throw new Error("voice_error3");
+            }
+            var voice = this.gscv.voices.filter(v => {
+                return v.name.toLowerCase() === this.gscv.voiceTrans.toLowerCase();
+            })[0];
             return voice || {
-                name: `voice_error3_${this.gscv.iVoice}`,
+                name: `voice_error4_${this.gscv.voiceTrans}`,
             };
         },
         gscv() {

@@ -32,7 +32,7 @@
         should(raveena).instanceOf(Voice);
         should(raveena).properties({
             locale: 'en-IN',
-            segLang: 'en',
+            langTrans: 'en',
             localeAlt: 'en-IN',
             name: 'Raveena',
             service: 'aws-polly',
@@ -49,7 +49,7 @@
         should(amy).instanceOf(Voice);
         should(amy).properties({
             locale: 'en-GB',
-            segLang: 'en',
+            langTrans: 'en',
             localeAlt: 'pli',
             name: 'Amy',
             service: 'aws-polly',
