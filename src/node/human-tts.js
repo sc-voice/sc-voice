@@ -18,7 +18,7 @@
             this.api = opts.api;
             this.apiVersion = opts.apiVersion;
             this.language = opts.language;
-            this.langUnknown = opts.langUnknown;
+            this.localeAlt = opts.localeAlt;
             this.noAudioPath = opts.noAudioPath;
             this.scAudio = opts.scAudio;
             this.altTts = opts.altTts;
@@ -45,7 +45,7 @@
                 audioSuffix: '.mp3', // iPhone does not support OGG
                 voice: 'sujato_pli',
                 language,
-                langUnknown: language,
+                localeAlt: language,
                 api: 'human-tts',
                 apiVersion: 'v1',
             }, opts);

@@ -121,7 +121,7 @@
             var expandedSutta = new SuttaFactory().expandSutta(sutta);
             var voice = Voice.createVoice({
                 name: "amy",
-                langUnknown: "pli",
+                localeAlt: "pli",
             });
             var lines = Sutta.textOfSegments(expandedSutta.sections[2].segments);
             should(lines.length).equal(98);
@@ -158,7 +158,7 @@
             });
             var voice = Voice.createVoice({
                 name: "amy",
-                langUnknown: "pli",
+                localeAlt: "pli",
             });
             var store = await new SuttaStore({
                 suttaCentralApi,

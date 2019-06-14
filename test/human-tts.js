@@ -20,7 +20,7 @@
         var humanTts = new HumanTts();
         should(humanTts).properties({
             language: 'pli',
-            langUnknown: 'pli',
+            localeAlt: 'pli',
             voice: 'sujato_pli',
             audioFormat: 'mp3',
             audioSuffix: '.mp3',
@@ -35,7 +35,7 @@
         });
         should(humanTts).properties({
             language: 'pli',
-            langUnknown: 'pli',
+            localeAlt: 'pli',
             voice: 'sujato_pli',
             audioFormat: 'mp3',
             audioSuffix: '.mp3',
@@ -66,7 +66,7 @@
     it("segmentSSML(text) returns SSML", function() {
         var humanTts = new HumanTts({
             language: 'pli',
-            langUnknown: 'pli',
+            localeAlt: 'pli',
             stripQuotes: true,
         });
         should.deepEqual(humanTts.segmentSSML('281'),

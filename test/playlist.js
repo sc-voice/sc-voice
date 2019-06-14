@@ -195,7 +195,7 @@
                     name:'aditi',
                     usage: 'recite',
                     language: 'hi-IN',
-                    langUnknown: 'pli',
+                    localeAlt: 'pli',
                     stripNumbers: true,
                     stripQuotes: true,
                 }),

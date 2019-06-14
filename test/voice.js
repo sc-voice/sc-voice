@@ -32,8 +32,8 @@
         should(raveena).instanceOf(Voice);
         should(raveena).properties({
             locale: 'en-IN',
-            langSeg: 'en',
-            langUnknown: 'en-IN',
+            segLang: 'en',
+            localeAlt: 'en-IN',
             name: 'Raveena',
             service: 'aws-polly',
             gender: 'female',
@@ -49,8 +49,8 @@
         should(amy).instanceOf(Voice);
         should(amy).properties({
             locale: 'en-GB',
-            langSeg: 'en',
-            langUnknown: 'pli',
+            segLang: 'en',
+            localeAlt: 'pli',
             name: 'Amy',
             service: 'aws-polly',
             gender: 'female',
@@ -103,7 +103,7 @@
         should(voice.locale).equal("hi-IN");
         should(voice.name).equal("Aditi");
         should(voice.usage).equal("recite");
-        should(voice.langUnknown).equal('pli');
+        should(voice.localeAlt).equal('pli');
         should(voice.stripNumbers).equal(true);
         should(voice.stripQuotes).equal(true);
 
@@ -112,7 +112,7 @@
         should(voice.locale).equal("en-GB");
         should(voice.name).equal("Amy");
         should(voice.usage).equal("recite");
-        should(voice.langUnknown).equal('pli');
+        should(voice.localeAlt).equal('pli');
         should(voice.stripNumbers).equal(false);
         should(voice.stripQuotes).equal(false);
 
@@ -121,7 +121,7 @@
         should(voice.locale).equal("en-IN");
         should(voice.name).equal("Raveena");
         should(voice.usage).equal("review");
-        should(voice.langUnknown).equal('en-IN');
+        should(voice.localeAlt).equal('en-IN');
         should(voice.stripNumbers).equal(false);
         should(voice.stripQuotes).equal(false);
 
@@ -130,7 +130,7 @@
         should(voice.locale).equal("en-AU");
         should(voice.name).equal("Russell");
         should(voice.usage).equal("recite");
-        should(voice.langUnknown).equal('pli');
+        should(voice.localeAlt).equal('pli');
         should(voice.stripNumbers).equal(false);
         should(voice.stripQuotes).equal(false);
     });
@@ -246,14 +246,14 @@
          */
         var raveena = Voice.createVoice({
             locale: "en-IN",
-            langUnknown: "pli",
+            localeAlt: "pli",
         });
         var amy = Voice.createVoice({
             locale: "en-GB",
-            langUnknown: "pli",
+            localeAlt: "pli",
         });
-        should(raveena.services.navigate.langUnknown).equal('pli');
-        should(amy.services.navigate.langUnknown).equal('pli');
+        should(raveena.services.navigate.localeAlt).equal('pli');
+        should(amy.services.navigate.localeAlt).equal('pli');
 
         should(raveena.services.recite.wordSSML(`Ubbhaṭaka`))
         .equal(`<break time="0.001s"/><phoneme alphabet="ipa" ph="ubbʰɐtɐka">`+
@@ -298,7 +298,7 @@
         should(tts).properties({
             voice: "Raveena",
             language: "en-IN",
-            langUnknown: "en-IN",
+            localeAlt: "en-IN",
         });
         var segments = tts.segmentSSML('sati');
         should.deepEqual(segments, [
@@ -312,7 +312,7 @@
         ]);
 
         // Interpret unknown words as Pali
-        tts.langUnknown = "pli";
+        tts.localeAlt = "pli";
         var segments = tts.segmentSSML('Taṃ kissa hetu?');
         should.deepEqual(segments, [
             `<phoneme alphabet="ipa" ph="\u03b8\u0250\u014b">Taṃ</phoneme>${BREAK} ` +
@@ -324,7 +324,7 @@
         (async function() { try {
             var raveena = Voice.createVoice({
                 name: "raveena",
-                langUnknown: "pli",
+                localeAlt: "pli",
             });
             var text = `Idha panudāyi, ekacco puggalo ‘upadhi dukkhassa mūlan’ti—`;
             var result = await raveena.speak(text, {usage:'recite'});
@@ -341,7 +341,7 @@
             var aditi = Voice.createVoice({
                 name: "aditi",
                 usage: 'recite',
-                langUnknown: "pli",
+                localeAlt: "pli",
                 locale: 'hi-IN',
                 stripNumbers: true,
                 stripQuotes: true,
@@ -358,7 +358,7 @@
     it("Amy phonemes", function() {
         var amy = Voice.createVoice({
             locale: "en-GB",
-            langUnknown: "pli",
+            localeAlt: "pli",
         });
         should(amy.name).equal("Amy");
         var recite = amy.services.recite;
@@ -368,7 +368,7 @@
     return;  // TODO
         var raveena = Voice.createVoice({
             locale: "en-IN",
-            langUnknown: "pli",
+            localeAlt: "pli",
         });
         should(raveena.name).equal("Raveena");
         var recite = raveena.services.recite;
@@ -381,7 +381,7 @@
     it("Aditi phonemes", function() {
         var aditi = Voice.createVoice({
             name: "aditi",
-            langUnknown: "pli",
+            localeAlt: "pli",
         });
         should(aditi.name).equal("Aditi");
         should(aditi.locale).equal('hi-IN');
@@ -398,7 +398,7 @@
             var raveena = Voice.createVoice({
                 name: "raveena",
                 stripNumbers: true,
-                langUnknown: "pli",
+                localeAlt: "pli",
             });
             var text = `Bhikkhu 123`;
             var result = await raveena.speak(text, {usage:'recite'});
@@ -419,7 +419,7 @@
             var raveena = Voice.createVoice({
                 name: "raveena",
                 stripQuotes: true,
-                langUnknown: "pli",
+                localeAlt: "pli",
             });
             var text = `“'‘Bhikkhu’'”`;
             var result = await raveena.speak(text, {usage:'recite'});

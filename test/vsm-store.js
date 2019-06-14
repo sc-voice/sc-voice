@@ -60,7 +60,7 @@
             var aditi = Voice.createVoice({
                 name: "aditi",
                 usage: 'recite',
-                langUnknown: "pli",
+                localeAlt: "pli",
                 language: 'hi-IN',
                 stripNumbers: true,
                 stripQuotes: true,

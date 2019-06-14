@@ -247,7 +247,7 @@
                         language,
                         usage,
                         soundStore: that.soundStore,
-                        langUnknown: "pli",
+                        localeAlt: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });
@@ -288,7 +288,7 @@
                         language,
                         usage,
                         soundStore: that.soundStore,
-                        langUnknown: "pli",
+                        localeAlt: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });
@@ -333,11 +333,11 @@
             } = this.suttaParms(req);
             langTrans = langTrans || 'en';
             var voices = VOICES.filter(v => 
-                v.langSeg === 'pli' || v.langSeg===langTrans);
+                v.segLang === 'pli' || v.segLang===langTrans);
             voices.sort((a,b) => {
-                var cmp = a.langSeg === b.langSeg
+                var cmp = a.segLang === b.segLang
                     ? 0
-                    : a.langSeg === 'pli' ? 1 : -1;
+                    : a.segLang === 'pli' ? 1 : -1;
                 if (cmp === 0) {
                     if (a.hasOwnProperty('iVoice') && b.hasOwnProperty('iVoice')) {
                         cmp = Number(a.iVoice) - Number(b.iVoice);
@@ -423,7 +423,7 @@
                         name: voice.name,
                         usage,
                         soundStore: that.soundStore,
-                        langUnknown: "pli",
+                        localeAlt: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });
@@ -574,7 +574,7 @@
                         name: vname,
                         usage,
                         soundStore: that.soundStore,
-                        langUnknown: "pli",
+                        localeAlt: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });

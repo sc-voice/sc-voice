@@ -21,7 +21,7 @@
     class AbstractTTS {
         constructor(opts={}) {
             this.language = opts.language || 'en';
-            this.langUnknown = opts.langUnknown || this.language;
+            this.localeAlt = opts.localeAlt || this.language;
             this.hits = 0;
             this.misses = 0;
             this.voice = null;
@@ -158,9 +158,9 @@
                     // ipa = null
                 } else if (this.words.isWord(word)) {
                     var w = word.endsWith(`’`) ? word.substring(0,word.length-1) : word;
-                    if (this.langUnknown !== this.language && 
+                    if (this.localeAlt !== this.language && 
                         this.words.isForeignWord(w)) { 
-                        var ipa = this.wordIPA(word, this.langUnknown);
+                        var ipa = this.wordIPA(word, this.localeAlt);
                     }
                 } else if (word.endsWith(`’`)) {
                     // ipa = null

@@ -1,14 +1,13 @@
 [{
-    "locale": "en-GB",
     "service": "aws-polly",
     "name": "Amy",
     "label": "Amy (slower)",
     "gender": "female",
-    "langSeg": "en",
-    "langUnknown": "pli",
+    "segLang": "en",
+    "locale": "en-GB",
+    "localeAlt": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
-    "locales": "en-.*",
     "iVoice": 0,
     "usage": "recite",
     "rates": {
@@ -88,16 +87,15 @@
         }
     }
 },{
-    "locale": "en-IN",
     "service": "aws-polly",
     "name": "Raveena",
     "label": "Raveena (faster)",
     "gender": "female",
-    "langSeg": "en",
-    "langUnknown": "en-IN",
+    "segLang": "en",
+    "locale": "en-IN",
+    "localeAlt": "en-IN",
     "stripNumbers": false,
     "stripQuotes": false,
-    "locales": "en-.*",
     "iVoice": 2,
     "usage": "review",
     "rates": {
@@ -173,7 +171,6 @@
         }
     }
 },{
-    "locale": "hi-IN",
     "service": "aws-polly",
     "name": "Aditi",
     "maxSegment": 400,
@@ -181,11 +178,11 @@
     "syllabifyLength": 5,
     "stripNumbers": true,
     "stripQuotes": true,
-    "locales": "pli",
     "usage": "recite",
     "ellipsisBreak": "<break time=\"0.300s\"/>",
-    "langSeg": "pli",
-    "langUnknown": "pli",
+    "segLang": "pli",
+    "locale": "hi-IN",
+    "localeAlt": "pli",
     "gender": "female",
     "pitch": "-10%",
     "fullStopComma": true,
@@ -277,16 +274,15 @@
         }
     }
 },{
-    "locale": "en-AU",
     "service": "aws-polly",
     "name": "Russell",
     "label": "Russell for general listening and high-frequency hearing loss (medium)",
     "gender": "male",
-    "langSeg": "en",
-    "langUnknown": "pli",
+    "segLang": "en",
+    "locale": "en-AU",
+    "localeAlt": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
-    "locales": "en-.*",
     "iVoice": 1,
     "usage": "recite",
     "rates": {
@@ -353,15 +349,14 @@
         }
     }
 },{
-    "locale": "de-DE",
     "service": "aws-polly",
     "name": "Marlene",
     "gender": "female",
-    "langSeg": "de",
-    "langUnknown": "pli",
+    "segLang": "de",
+    "locale": "de-DE",
+    "localeAlt": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
-    "locales": "de-.*",
     "usage": "recite",
     "rates": {
         "navigate": "-0%", 
@@ -428,14 +423,13 @@
         }
     }
 },{
-    "locale": "de-DE",
     "service": "aws-polly",
     "name": "Vicki",
-    "langSeg": "de",
-    "langUnknown": "pli",
+    "segLang": "de",
+    "locale": "de-DE",
+    "localeAlt": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
-    "locales": "de-.*",
     "usage": "recite",
     "gender": "female",
     "pitch": "-10%",
@@ -504,7 +498,6 @@
         }
     }
 },{
-    "locale": "pli",
     "service": "human-tts",
     "name": "sujato_pli",
     "maxSegment": 400,
@@ -512,10 +505,10 @@
     "syllabifyLength": 0,
     "stripNumbers": true,
     "stripQuotes": true,
-    "locales": "pli",
     "usage": "recite",
-    "langSeg": "pli",
-    "langUnknown": "pli",
+    "segLang": "pli",
+    "locale": "pli",
+    "localeAlt": "pli",
     "gender": "male",
     "pitch": "0%",
     "fullStopComma": true,

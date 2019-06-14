@@ -17,7 +17,7 @@ var words = new Words();
 (async function() { try {
     var voice = Voice.createVoice({
         name: "amy",
-        langUnknown: "pli",
+        localeAlt: "pli",
     });
     var lines = [
         `${voice.name} says:`,
