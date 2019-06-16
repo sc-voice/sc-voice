@@ -44,6 +44,15 @@
         expires: "100Y",
     };
 
+    const LANGUAGES = [{
+        name: 'en',
+        label: 'English',
+    }, {
+        name: 'de',
+        label: 'Deutsch',
+        disabled: true, // TBD
+    }];
+
     class ScvSingleton { 
         constructor(g) {
             this.showId = false;
@@ -83,6 +92,10 @@
                 writable: true,
                 value: "no title",
             });
+        }
+
+        get languages() {
+            return LANGUAGES;
         }
 
         get user() {

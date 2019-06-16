@@ -801,11 +801,14 @@
         (async function() { try {
             // default
             var url = "/scv/voices";
+            console.log(`dbg1`);
             var res = await supertest(app).get(url)
+            console.log(`dbg2`);
             should(res.statusCode).equal(200);
             var voices = res.body;
             should.deepEqual(voices.map(v=>v.name), [
                 'Amy', 'Russell', 'Raveena', // en voices first
+                'Vicki',
                 'Aditi', 'sujato_pli', // pli voices last
             ])
             should(voices[0]).properties({
@@ -830,7 +833,7 @@
             should(res.statusCode).equal(200);
             var voices = res.body;
             should.deepEqual(voices.map(v=>v.name), [
-                'Marlene', 'Vicki', // de voices first
+                'Vicki', // de voices first
                 'Aditi', 'sujato_pli', // pli voices last
             ])
 

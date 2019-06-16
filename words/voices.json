@@ -1,7 +1,7 @@
 [{
     "service": "aws-polly",
     "name": "Amy",
-    "label": "Amy (slower)",
+    "label": "\ud83e\udd16 Amy (slower)",
     "gender": "female",
     "langTrans": "en",
     "locale": "en-GB",
@@ -89,7 +89,7 @@
 },{
     "service": "aws-polly",
     "name": "Raveena",
-    "label": "Raveena (faster)",
+    "label": "\ud83e\udd16 Raveena (faster)",
     "gender": "female",
     "langTrans": "en",
     "locale": "en-IN",
@@ -173,6 +173,7 @@
 },{
     "service": "aws-polly",
     "name": "Aditi",
+    "label": "\ud83e\udd16 Aditi",
     "maxSegment": 400,
     "syllableVowels": "aeiouāīū",
     "syllabifyLength": 5,
@@ -276,7 +277,7 @@
 },{
     "service": "aws-polly",
     "name": "Russell",
-    "label": "Russell for general listening and high-frequency hearing loss (medium)",
+    "label": "\ud83e\udd16 Russell for general listening and high-frequency hearing loss (medium)",
     "gender": "male",
     "langTrans": "en",
     "locale": "en-AU",
@@ -350,81 +351,8 @@
     }
 },{
     "service": "aws-polly",
-    "name": "Marlene",
-    "gender": "female",
-    "langTrans": "de",
-    "locale": "de-DE",
-    "localeAlt": "pli",
-    "stripNumbers": false,
-    "stripQuotes": false,
-    "usage": "recite",
-    "rates": {
-        "navigate": "-0%", 
-        "recite": "-20%"
-    },
-    "usages": {
-        "navigate": {
-            "rate": "-0%",
-            "breaks": [0.001,0.1,0.2,0.3,0.4]
-        },
-        "recite": {
-            "priority": 1,
-            "rate": "-20%",
-            "breaks": [0.001,0.1,0.2,0.6,1]
-        },
-        "review": {
-            "rate": "-10%",
-            "breaks": [0.001,0.1,0.2,0.4,0.5]
-        }
-    },
-    "ipa": {
-        "pli": {
-            "a": "\u0250",
-            "a$": "a",
-            "ah": "\u0251'h",
-            "\u0101": "\u0251",
-            "aya": "aj\u0250\u02cc",
-            "bh": "b\u02b0",
-            "\u1e0d": "d",
-            "dh": "d\u02b0",
-            "du": "d\u028a",
-            "\u012b": "i\u02d0",
-            "\u1e6d\u1e6dh": "\u0288\u0306\u0288\u02b0",
-            "gh": "g\u02b0",
-            "unused-h": "h\u0308",
-            "i": "\u026a",
-            "j": "\u029d",
-            "jeta’s": "ʝeetɐ’s",
-            "jj": "\u029d.\u029d",
-            "jha": "\u0284h\u0251",
-            "kh": "k\u02b0",
-            "kk": "k.k",
-            "kkh": "k.k\u02b0",
-            "ll": "l.l",
-            "\u00f1": "\u0272",
-            "\u1e37":"\u029f\u0308",
-            "\u1e47": "n'",
-            "ma": "ma",
-            "ng": "\u014bg",
-            "\u1e43": "\u014b",
-            "nu": "nu",
-            "\u1e45g": "\u014bg",
-            "\u1e45gh": "\u014bg\u02b0",
-            "\u1e45k": "\u014bk",
-            "sutta": "\u02ccsutta\u0308",
-            "r": "\u027a",
-            "tt": "t.t",
-            "unused-th": "\u0288\u02b0",
-            "unused-u": "\u028A",
-            "\u016b": "\u028a\u02d0",
-            "\u1e6d": "t",
-            "^va": "va",
-            "y": "j"
-        }
-    }
-},{
-    "service": "aws-polly",
     "name": "Vicki",
+    "label": "\ud83e\udd16 Vicki",
     "langTrans": "de",
     "locale": "de-DE",
     "localeAlt": "pli",
@@ -500,6 +428,7 @@
 },{
     "service": "human-tts",
     "name": "sujato_pli",
+    "label": "\ud83d\udde3 Bhante Sujato",
     "maxSegment": 400,
     "syllableVowels": "aeiouāīū",
     "syllabifyLength": 0,

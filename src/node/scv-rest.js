@@ -330,10 +330,13 @@
         getVoices(req, res, next) {
             var { 
                 langTrans,
-            } = this.suttaParms(req);
-            langTrans = langTrans || 'en';
-            var voices = VOICES.filter(v => 
-                v.langTrans === 'pli' || v.langTrans===langTrans);
+            } = req.params;
+            var voices = VOICES;
+            if (!!langTrans) {
+                console.log(`dbg langTrans`, langTrans);
+                voices = voices.filter(v => 
+                    v.langTrans === 'pli' || v.langTrans===langTrans);
+            }
             voices.sort(Voice.compare);
             return Promise.resolve(voices);
         }

@@ -55,7 +55,7 @@
     </v-dialog>
     <v-dialog v-model="dialogSettings" fullscreen persistent>
         <v-card>
-          <v-card-title class="title scv-dialog-title">
+          <v-card-title class="headline scv-dialog-title">
               Settings&nbsp;&nbsp;<span class="scv-version">v{{version}}</span>
               <v-spacer/>
               <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
@@ -67,16 +67,38 @@
           </v-card-title>
           <v-card-text>
             <details class="scv-dialog" >
-                <summary class="subheading">Sutta Player settings</summary>
-                {{gscv.voiceTrans}}
+                <summary class="title scv-settings-title">Reader</summary>
                 <div class="scv-settings">
+                    <div class="subheading scv-settings-subtitle">Translation</div>
+                    <v-radio-group v-model="gscv.lang"
+                        @change="gscv.changed('lang')"
+                        column>
+                       <v-radio v-for="lang in gscv.languages"
+                         :disabled="lang.disabled"
+                         :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
+                         </v-radio>
+                    </v-radio-group>
                     <v-radio-group v-model="gscv.voiceTrans"
                         @change="gscv.changed('voiceTrans')"
                         column>
-                       <v-radio v-for="(v,i) in gscv.langVoices()"
-                         :label="v.label" :value="v.name" :key="`voice${i}`">
+                       <v-radio v-for="v in gscv.langVoices()"
+                         :label="v.label" :value="v.name" :key="`voice${v.name}`">
                          </v-radio>
                     </v-radio-group>
+
+                    <div class="subheading scv-settings-subtitle">Root Language</div>
+                    <v-radio-group v-model="gscv.voicePali"
+                        @change="gscv.changed('voiceTrans')"
+                        column>
+                       <v-radio v-for="v in gscv.langVoices('pli')"
+                         :label="v.label" :value="v.name" :key="`voice${v.name}`">
+                         </v-radio>
+                    </v-radio-group>
+                </div>
+            </details>
+            <details class="scv-dialog" >
+                <summary class="title scv-settings-title">Languages</summary>
+                <div class="scv-settings">
                     <v-radio-group v-model="gscv.showLang"
                         @change="gscv.changed('showLang')"
                         column>
@@ -84,6 +106,11 @@
                          :label="sl.label" :value="i" :key="`showLang${sl.value}`">
                          </v-radio>
                     </v-radio-group>
+                </div>
+            </details>
+            <details class="scv-dialog" >
+                <summary class="title scv-settings-title">Bell Sound</summary>
+                <div class="scv-settings">
                     <v-radio-group v-model="gscv.ips"
                         @change="gscv.changed('ips')"
                         column>
@@ -94,7 +121,7 @@
                 </div>
             </details>
             <details class="scv-dialog" >
-                <summary class="subheading">General settings</summary>
+                <summary class="title scv-settings-title">Search Results</summary>
                 <div class="scv-settings">
                     <v-radio-group v-if="gscv" v-model="gscv.maxResults"
                         @change="gscv.changed('maxResults')"
@@ -103,26 +130,28 @@
                          :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
                          </v-radio>
                     </v-radio-group>
-                    <v-checkbox v-if="gscv"
-                        v-model="gscv.showId" role="checkbox"
+                </div>
+            </details>
+            <details class="scv-dialog" >
+                <summary class="title scv-settings-title">General</summary>
+                <div class="scv-settings" v-if="gscv">
+                    <v-checkbox v-model="gscv.showId" role="checkbox"
                         :aria-checked="gscv.showId"
                         v-on:change="gscv.changed('showId')"
                         label="Show SuttaCentral text segment identifiers">
                     </v-checkbox>
+                    <v-checkbox v-model="gscv.useCookies" role="checkbox"
+                        v-on:change="gscv.changed('useCookies')"
+                        :aria-checked="gscv.useCookies"
+                        label="Store settings using web browser cookies ">
+                    </v-checkbox>
                 </div>
             </details>
-            <v-checkbox v-if="gscv"
-                v-model="gscv.useCookies" role="checkbox"
-                v-on:change="gscv.changed('useCookies')"
-                :aria-checked="gscv.useCookies"
-                style="margin-left: 0.8em"
-                label="Store settings using web browser cookies ">
-            </v-checkbox>
           </v-card-text>
           <v-card-actions>
-            <button class="scv-dialog-button" :style="cssProps"
+            <v-btn class="scv-dialog-button" :style="cssProps"
                 @click="closeDialog()" >
-                Close Settings</button>
+                Close Settings</v-btn>
           </v-card-actions>
         </v-card>
     </v-dialog>
@@ -243,7 +272,6 @@ export default {
                 var voices = res.data;
                 that.gscv.voices = res.data;
                 console.log(`voices`, voices);
-                console.log(`voices`, that.gscv.voices);
             }).catch(e => {
                 console.error(e.stack);
             });
@@ -476,6 +504,15 @@ nav ul {
 
 .about-text a {
     color: #ce8400;
+}
+
+.scv-settings-title {
+    margin-top: 0.8em;
+}
+
+.scv-settings-subtitle {
+    margin-top: 0.3em;
+    margin-top: 1em;
 }
 
 </style>

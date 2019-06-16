@@ -660,7 +660,7 @@
         // custom
         var voices = scv.langVoices('de');
         should.deepEqual(voices.map(v => v.name), [
-            'Marlene', 'Vicki',
+            'Vicki',
         ]);
     });
 });

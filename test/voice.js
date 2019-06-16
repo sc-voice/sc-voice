@@ -22,7 +22,6 @@
         should.deepEqual(voices.map(v=>v.name).sort(),[
             'Aditi', 
             'Amy', 
-            'Marlene',
             'Raveena', 
             'Russell',
             'Vicki',

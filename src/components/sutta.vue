@@ -30,7 +30,7 @@
                       </v-btn>
                   </div>
                   <div class="mb-3"
-                    v-if="waiting<=0 && sutta_uid && !searchResults"
+                    v-if="waiting<=0 && sutta_uid && !searchResults && gscv.voices.length"
                     style="display:flex; justify-content: flex-start">
                     <v-btn icon
                         :disabled="waiting > 0"
@@ -81,7 +81,7 @@
                 class='title'>
                 No suttas found
             </summary>
-            <div class="scv-playlist ml-3 pt-2 pl-3">
+            <div class="scv-playlist ml-3 pt-2 pl-3" v-if="gscv.voices.length" >
                 <v-btn icon
                     @click="playAll()"
                     class="scv-icon-btn" :style="cssProps" small>
@@ -148,7 +148,7 @@
                         class="scv-icon-btn" :style="cssProps" small>
                         <v-icon>open_in_new</v-icon>
                     </v-btn>
-                    <v-btn icon v-if="result.quote"
+                    <v-btn icon v-if="result.quote && gscv.voices.length"
                         :href="downloadUrl(resultRef(result))"
                         @click="downloadClick(resultRef(result))"
                         class="scv-icon-btn" :style="cssProps" small>
@@ -174,7 +174,7 @@
                 <details>
                     <summary class="body-2">{{suttaCode}}: Other Resources</summary>
                     <div class="caption text-xs-center">
-                        <div class="text-xs-center" v-if="hasAudio && gscv.voices">
+                        <div class="text-xs-center" v-if="hasAudio && gscv.voices.length">
                             <a :href="downloadUrl()" ref="refDownload"
                                 class="scv-a"
                                 @click="downloadClick()"
