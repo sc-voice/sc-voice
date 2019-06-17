@@ -122,7 +122,6 @@
             var fpath = store.guidPath(guid, '.txt');
             var msNow = Date.now().toString();
             while (msNow === Date.now().toString()); // busy wait
-            console.log(`dbg fpath`, fpath, name); // TBD: remove this
             fs.writeFileSync(fpath, name);
             return {
                 name,

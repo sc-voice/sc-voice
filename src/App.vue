@@ -78,8 +78,8 @@
                          :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
                          </v-radio>
                     </v-radio-group>
-                    <v-radio-group v-model="gscv.voiceTrans"
-                        @change="gscv.changed('voiceTrans')"
+                    <v-radio-group v-model="gscv.vnameTrans"
+                        @change="gscv.changed('vnameTrans')"
                         column>
                        <v-radio v-for="v in gscv.langVoices()"
                          :label="v.label" :value="v.name" :key="`voice${v.name}`">
@@ -87,8 +87,8 @@
                     </v-radio-group>
 
                     <div class="subheading scv-settings-subtitle">Root Language</div>
-                    <v-radio-group v-model="gscv.voiceRoot"
-                        @change="gscv.changed('voiceTrans')"
+                    <v-radio-group v-model="gscv.vnameRoot"
+                        @change="gscv.changed('vnameRoot')"
                         column>
                        <v-radio v-for="v in gscv.langVoices('pli')"
                          :label="v.label" :value="v.name" :key="`voice${v.name}`">
@@ -279,7 +279,7 @@ export default {
     },
     computed: {
         voice() {
-            return this.gscv.voices.filter(v => v.name === this.gscv.voiceTrans)[0];
+            return this.gscv.voices.filter(v => v.name === this.gscv.vnameTrans)[0];
         },
         gscv() {
             return this.$root && this.$root.$data;
@@ -352,10 +352,10 @@ export default {
             if (!this.gscv.useCookies) {
                 query.showId != null &&
                     Vue.set(this.gscv, "showId", query.showId==='true');
-                query.voiceTrans &&
-                    Vue.set(this.gscv, "voiceTrans", query.voiceTrans);
-                query.voiceRoot &&
-                    Vue.set(this.gscv, "voiceRoot", query.voiceRoot);
+                query.vnameTrans &&
+                    Vue.set(this.gscv, "vnameTrans", query.vnameTrans);
+                query.vnameRoot &&
+                    Vue.set(this.gscv, "vnameRoot", query.vnameRoot);
                 query.maxResults &&
                     Vue.set(this.gscv, "maxResults", Number(query.maxResults));
                 query.showLang &&

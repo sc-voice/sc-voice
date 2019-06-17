@@ -314,32 +314,32 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /scv/play/section/... returns playable section", function(done) {
+    it("TESTTESTGET /scv/play/section/... returns playable section", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iSection = 2;
-            var voicename = '0';
-            var url = `/scv/play/section/mn1/en/sujato/${iSection}/${voicename}`;
+            var vnameTrans = 'Raveena';
+            var vnameRoot = 'Aditi';
+            var url = `/scv/play/section/mn1/en/sujato/${iSection}/${vnameTrans}/${vnameRoot}`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
             var section = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(section.segments.length).equal(98);
             should(section.sutta_uid).equal('mn1');
-            should(section.voiceLang).equal('Amy');
-            should(section.voiceRoot).equal('Aditi');
+            should(section.vnameTrans).equal(vnameTrans);
+            should(section.vnameRoot).equal(vnameRoot);
             should(section.section).equal(iSection);
             should(section.nSections).equal(10);
-            should(section.voicename).equal(voicename);
             should(section.language).equal('en');
             should(section.translator).equal('sujato');
             should.deepEqual(section.segments[0].audio, {});
             var testPath = path.join(PUBLIC,
-                `play/section/mn1/en/sujato/${iSection}/${voicename}`);
+                `play/section/mn1/en/sujato/${iSection}/${vnameTrans}`);
             fs.writeFileSync(testPath, JSON.stringify(section, null,2));
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... returns playable segment", function(done) {
+    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var voicename = 'Russell';
@@ -366,7 +366,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... returns playable segment", function(done) {
+    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var voicename = '0';
@@ -385,8 +385,8 @@
                 res.statusCode.should.equal(200);
                 var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
                 should(data.sutta_uid).equal('mn1');
-                should(data.voiceLang).equal('Amy');
-                should(data.voiceRoot).equal('Aditi');
+                should(data.vnameLang).equal('Amy');
+                should(data.vnameRoot).equal('Aditi');
                 should(data.iSegment).equal(299);
                 should(data.section).equal(4);
                 should(data.nSections).equal(10);
@@ -432,27 +432,26 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles large segment", function(done) {
+    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
             var sutta_uid = scid.split(":")[0];
-            var voicename = "0";
-            var url = `/scv/play/segment/${sutta_uid}/en/sujato/${scid}/${voicename}`;
+            var vnameTrans = "1"; // Russell
+            var url = `/scv/play/segment/${sutta_uid}/en/sujato/${scid}/${vnameTrans}`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(data.sutta_uid).equal('an2.280-309');
-            should(data.voiceLang).equal('Amy');
-            should(data.voiceRoot).equal('Aditi');
+            should(data.vnameTrans).equal('Russell');
+            should(data.vnameRoot).equal('Aditi');
             should(data.iSegment).equal(8);
             should(data.section).equal(2);
             should(data.nSections).equal(3);
-            should(data.voicename).equal(voicename);
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
-            should(data.segment.audio.en).match(/^a48be6c5a442877d71d87485add271bc/);
+            should(data.segment.audio.en).match(/^6e032e4caef35cc5d009041f38c68c79/);
             should(data.segment.audio.pli).match(/d7ada11f84b7cfbcad13c6616ee0f53e/);
 
             done();
@@ -801,9 +800,7 @@
         (async function() { try {
             // default
             var url = "/scv/voices";
-            console.log(`dbg1`);
             var res = await supertest(app).get(url)
-            console.log(`dbg2`);
             should(res.statusCode).equal(200);
             var voices = res.body;
             should.deepEqual(voices.map(v=>v.name), [

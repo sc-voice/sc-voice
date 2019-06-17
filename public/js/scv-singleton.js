@@ -47,17 +47,16 @@
     const LANGUAGES = [{
         name: 'en',
         label: 'English',
-    }, {
-        name: 'de',
-        label: 'Deutsch',
-        disabled: true, // TBD
+    //}, {
+        //name: 'de',
+        //label: 'Deutsch',
     }];
 
     class ScvSingleton { 
         constructor(g) {
             this.showId = false;
-            this.voiceTrans = 'Amy';
-            this.voiceRoot = 'Aditi';
+            this.vnameTrans = 'Amy';
+            this.vnameRoot = 'Aditi';
             this.scid = null;
             this.showLang = 0;
             this.search = null;
@@ -181,8 +180,8 @@
                 if (prop === 'useCookies') {
                     if (v) {
                         cookie.set( "showId", this.showId, EXPIRES);
-                        cookie.set( "voiceTrans", this.voiceTrans, EXPIRES);
-                        cookie.set( "voiceRoot", this.voiceRoot, EXPIRES);
+                        cookie.set( "vnameTrans", this.vnameTrans, EXPIRES);
+                        cookie.set( "vnameRoot", this.vnameRoot, EXPIRES);
                         cookie.set( "lang", this.lang, EXPIRES);
                         cookie.set( "maxResults", this.maxResults, EXPIRES);
                         cookie.set( "showLang", this.showLang, EXPIRES);

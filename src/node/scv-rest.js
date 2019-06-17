@@ -96,10 +96,16 @@
                         "review/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReviewSection),
                     this.resourceMethod("get", 
-                        "play/segment/:sutta_uid/:langTrans/:translator/:scid/:voicename", 
+                        "play/segment/:sutta_uid/:langTrans/:translator/:scid/:vnameTrans", 
                         this.getPlaySegment),
                     this.resourceMethod("get", 
-                        "play/section/:sutta_uid/:langTrans/:translator/:iSection/:voicename", 
+                        "play/segment/:sutta_uid/:langTrans/:translator/:scid/:vnameTrans/:vnameRoot", 
+                        this.getPlaySegment),
+                    this.resourceMethod("get", 
+                        "play/section/:sutta_uid/:langTrans/:translator/:iSection/:vnameTrans", 
+                        this.getPlaySection),
+                    this.resourceMethod("get", 
+                        "play/section/:sutta_uid/:langTrans/:translator/:iSection/:vnameTrans/:vnameRoot", 
                         this.getPlaySection),
                     this.resourceMethod("get", 
                         "voices",
@@ -214,6 +220,8 @@
             var parms = Object.assign({
                 language: 'en', //deprecated
                 voicename: 'amy',
+                vnameTrans: 'Amy',
+                vnameRoot: 'Aditi',
                 usage: 'recite',
                 iSection: 0,
                 scid: null,
@@ -333,7 +341,6 @@
             } = req.params;
             var voices = VOICES;
             if (!!langTrans) {
-                console.log(`dbg langTrans`, langTrans);
                 voices = voices.filter(v => 
                     v.langTrans === 'pli' || v.langTrans===langTrans);
             }
@@ -344,14 +351,14 @@
         getPlaySection(req, res, next) {
             var that = this;
             var { 
-                sutta_uid, translator, iSection, voicename, 
+                sutta_uid, translator, iSection, 
+                vnameRoot, vnameTrans,
                 langTrans,
             } = this.suttaParms(req);
             var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
-            logger.info(`GET play/section/${suttaRef}/${iSection}/${voicename}`);
-            var voice = Voice.voiceOfName(voiceName) || Voice.voiceOfName('Amy');
-            var usage = voice.usage;
-            var voiceName = voice.name;
+            logger.info(`GET play/section/${suttaRef}/${iSection}/${vnameTrans}`);
+            var voiceTrans = Voice.voiceOfName(vnameTrans) || Voice.voiceOfName('Amy');
+            var usage = voiceTrans.usage;
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
@@ -378,10 +385,9 @@
                         title: section.title,
                         section:iSection,
                         nSections: sutta.sections.length,
-                        voicename,
                         segments,
-                        voiceLang: voice.name,
-                        voiceRoot: voiceRoot.name,
+                        vnameTrans: voiceTrans.name,
+                        vnameRoot: voiceRoot.name,
                     });
                 } catch(e) { reject(e); } })();
             });
@@ -390,14 +396,15 @@
         getPlaySegment(req, res, next) {
             var that = this;
             var { 
-                sutta_uid, langTrans, translator, scid, voicename, 
+                sutta_uid, langTrans, translator, scid, 
+                vnameTrans, vnameRoot,
             } = this.suttaParms(req);
-            if (/[0-9]+/.test(voicename)) {
-                var iVoice = Number(voicename);
+            if (/[0-9]+/.test(vnameTrans)) {
+                var iVoice = Number(vnameTrans);
             }
-            var voice = Voice.voiceOfName(voicename);
+            var voice = Voice.voiceOfName(vnameTrans);
             var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
-            logger.info(`GET play/segment/${suttaRef}/${scid}/${voicename}`);
+            logger.info(`GET play/segment/${suttaRef}/${scid}/${vnameTrans}/${vnameRoot}`);
             var usage = voice.usage || 'recite';
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -411,7 +418,7 @@
                     if (iSection < 0 || sutta.sections.length <= iSection) {
                         throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
                     }
-                    var voiceLang = Voice.createVoice({
+                    var voiceTrans = Voice.createVoice({
                         name: voice.name,
                         usage,
                         soundStore: that.soundStore,
@@ -419,7 +426,6 @@
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });
-                    var voiceRoot = that.voiceRoot;
                     var sections = sutta.sections;
                     var iSegment = sutta.segments
                         .reduce((acc,seg,i) => seg.scid == scid ? i : acc, null);
@@ -435,7 +441,7 @@
                     }
                     segment.audio = {};
                     if (segment[langTrans]) {
-                        var speak = await voiceLang.speakSegment({
+                        var speak = await voiceTrans.speakSegment({
                             sutta_uid,
                             segment,
                             language: langTrans, 
@@ -445,7 +451,7 @@
                         segment.audio[langTrans] = speak.signature.guid;
                     }
                     if (segment.pli) {
-                        var speak = await voiceRoot.speakSegment({
+                        var speak = await that.voiceRoot.speakSegment({
                             sutta_uid,
                             segment,
                             language: 'pli',
@@ -463,11 +469,10 @@
                         title: section.title,
                         section:iSection,
                         nSections: sutta.sections.length,
-                        voicename,
+                        vnameTrans: voiceTrans.name,
+                        vnameRoot,
                         iSegment,
                         segment,
-                        voiceLang: voiceLang.name,
-                        voiceRoot: voiceRoot.name,
                     });
                 } catch(e) { reject(e); } })();
             });

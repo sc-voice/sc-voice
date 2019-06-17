@@ -474,7 +474,6 @@
             }
             var c = 'no-c';
             return word.replace(re, (m, i, s)=> {
-                //console.log(`dbg m:${m} c:${c} i:${i} s:${s} word:${word}`);
                 var remaining = word.length - (i + m.length);
                 if (s) {
                     switch (m.length) {

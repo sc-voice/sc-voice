@@ -353,9 +353,9 @@ export default {
             var langs = [];
             this.showPali && langs.push('pli');
             this.showTrans && langs.push(this.language);
-            var voice = this.voice.name;
+            var vnameTrans = this.voice.name;
             search = encodeURIComponent(search || this.suttaRef());
-            var url = `download/playlist/${langs.join('+')}/${voice}/${search}`;
+            var url = `download/playlist/${langs.join('+')}/${vnameTrans}/${search}`;
             return this.url(url);
         },
         downloadClick(search) {
@@ -421,8 +421,8 @@ export default {
                     result.lang,
                     result.author_uid,
                     scid,
-                    this.gscv.voiceTrans,
-                    //this.gscv.voiceRoot,
+                    this.gscv.vnameTrans,
+                    //this.gscv.vnameRoot,
                 ].join('/');
                 var url = that.url(`play/segment/${segmentRef}`);
                 var timer = that.startWaiting();
@@ -726,8 +726,8 @@ export default {
                 sutta_uid,
             } = data;
             var guid = segment.audio[lang];
-            var voice = lang === 'pli' ? 'aditi' : this.voice.name;
-            var link = `./audio/${sutta_uid}/${lang}/${translator}/${voice}/${guid}`;
+            var vname = lang === 'pli' ? 'aditi' : this.voice.name;
+            var link = `./audio/${sutta_uid}/${lang}/${translator}/${vname}/${guid}`;
             //if (sutta_uid) {
                 //link += `/${this.sutta_uid}-${lang}-${trans}.mp3`;
             //}
@@ -824,10 +824,10 @@ export default {
                 throw new Error("voice_error3");
             }
             var voice = this.gscv.voices.filter(v => {
-                return v.name.toLowerCase() === this.gscv.voiceTrans.toLowerCase();
+                return v.name.toLowerCase() === this.gscv.vnameTrans.toLowerCase();
             })[0];
             return voice || {
-                name: `voice_error4_${this.gscv.voiceTrans}`,
+                name: `voice_error4_${this.gscv.vnameTrans}`,
             };
         },
         gscv() {
