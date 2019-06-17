@@ -422,7 +422,7 @@ export default {
                     result.author_uid,
                     scid,
                     this.gscv.voiceTrans,
-                    //this.gscv.voicePali,
+                    //this.gscv.voiceRoot,
                 ].join('/');
                 var url = that.url(`play/segment/${segmentRef}`);
                 var timer = that.startWaiting();

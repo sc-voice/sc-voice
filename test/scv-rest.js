@@ -60,9 +60,9 @@
         should(scvRest).instanceOf(ScvRest);
         var soundStore = scvRest.soundStore;
         should(soundStore).instanceOf(SoundStore);
-        should(scvRest.voicePali.soundStore).equal(soundStore);
-        should(scvRest.voicePali.services.recite.soundStore).equal(soundStore);
-        should(scvRest.voicePali.services.review.soundStore).equal(soundStore);
+        should(scvRest.voiceRoot.soundStore).equal(soundStore);
+        should(scvRest.voiceRoot.services.recite.soundStore).equal(soundStore);
+        should(scvRest.voiceRoot.services.review.soundStore).equal(soundStore);
     });
     it("GET /identity returns restbundle identity JSON", function(done) {
         var async = function* () { try {
@@ -326,7 +326,7 @@
             should(section.segments.length).equal(98);
             should(section.sutta_uid).equal('mn1');
             should(section.voiceLang).equal('Amy');
-            should(section.voicePali).equal('Aditi');
+            should(section.voiceRoot).equal('Aditi');
             should(section.section).equal(iSection);
             should(section.nSections).equal(10);
             should(section.voicename).equal(voicename);
@@ -386,7 +386,7 @@
                 var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
                 should(data.sutta_uid).equal('mn1');
                 should(data.voiceLang).equal('Amy');
-                should(data.voicePali).equal('Aditi');
+                should(data.voiceRoot).equal('Aditi');
                 should(data.iSegment).equal(299);
                 should(data.section).equal(4);
                 should(data.nSections).equal(10);
@@ -444,7 +444,7 @@
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(data.sutta_uid).equal('an2.280-309');
             should(data.voiceLang).equal('Amy');
-            should(data.voicePali).equal('Aditi');
+            should(data.voiceRoot).equal('Aditi');
             should(data.iSegment).equal(8);
             should(data.section).equal(2);
             should(data.nSections).equal(3);

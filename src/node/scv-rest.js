@@ -69,7 +69,7 @@
             });
             this.mdAria = opts.mdAria || new MdAria();
             this.jwtExpires = opts.jwtExpires || '1h';
-            this.voicePali = Voice.createVoice({
+            this.voiceRoot = Voice.createVoice({
                 name: 'Aditi',
                 soundStore: this.soundStore,
                 audioFormat: this.soundStore.audioFormat,
@@ -363,7 +363,7 @@
                     if (iSection < 0 || sutta.sections.length <= iSection) {
                         throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
                     }
-                    var voicePali = that.voicePali;
+                    var voiceRoot = that.voiceRoot;
                     var section = sutta.sections[iSection];
                     var segments = [];
                     for (var iSeg = 0; iSeg < section.segments.length; iSeg++) {
@@ -381,7 +381,7 @@
                         voicename,
                         segments,
                         voiceLang: voice.name,
-                        voicePali: voicePali.name,
+                        voiceRoot: voiceRoot.name,
                     });
                 } catch(e) { reject(e); } })();
             });
@@ -419,7 +419,7 @@
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });
-                    var voicePali = that.voicePali;
+                    var voiceRoot = that.voiceRoot;
                     var sections = sutta.sections;
                     var iSegment = sutta.segments
                         .reduce((acc,seg,i) => seg.scid == scid ? i : acc, null);
@@ -445,7 +445,7 @@
                         segment.audio[langTrans] = speak.signature.guid;
                     }
                     if (segment.pli) {
-                        var speak = await voicePali.speakSegment({
+                        var speak = await voiceRoot.speakSegment({
                             sutta_uid,
                             segment,
                             language: 'pli',
@@ -467,7 +467,7 @@
                         iSegment,
                         segment,
                         voiceLang: voiceLang.name,
-                        voicePali: voicePali.name,
+                        voiceRoot: voiceRoot.name,
                     });
                 } catch(e) { reject(e); } })();
             });
@@ -572,7 +572,7 @@
                     });
                     var audio = await playlist.speak({
                         voices: {
-                            pli: that.voicePali,
+                            pli: that.voiceRoot,
                             [language]: voiceLang,
                         }
                     });

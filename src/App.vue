@@ -87,7 +87,7 @@
                     </v-radio-group>
 
                     <div class="subheading scv-settings-subtitle">Root Language</div>
-                    <v-radio-group v-model="gscv.voicePali"
+                    <v-radio-group v-model="gscv.voiceRoot"
                         @change="gscv.changed('voiceTrans')"
                         column>
                        <v-radio v-for="v in gscv.langVoices('pli')"
@@ -354,8 +354,8 @@ export default {
                     Vue.set(this.gscv, "showId", query.showId==='true');
                 query.voiceTrans &&
                     Vue.set(this.gscv, "voiceTrans", query.voiceTrans);
-                query.voicePali &&
-                    Vue.set(this.gscv, "voicePali", query.voicePali);
+                query.voiceRoot &&
+                    Vue.set(this.gscv, "voiceRoot", query.voiceRoot);
                 query.maxResults &&
                     Vue.set(this.gscv, "maxResults", Number(query.maxResults));
                 query.showLang &&

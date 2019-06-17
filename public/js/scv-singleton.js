@@ -57,7 +57,7 @@
         constructor(g) {
             this.showId = false;
             this.voiceTrans = 'Amy';
-            this.voicePali = 'Aditi';
+            this.voiceRoot = 'Aditi';
             this.scid = null;
             this.showLang = 0;
             this.search = null;
@@ -182,7 +182,7 @@
                     if (v) {
                         cookie.set( "showId", this.showId, EXPIRES);
                         cookie.set( "voiceTrans", this.voiceTrans, EXPIRES);
-                        cookie.set( "voicePali", this.voicePali, EXPIRES);
+                        cookie.set( "voiceRoot", this.voiceRoot, EXPIRES);
                         cookie.set( "lang", this.lang, EXPIRES);
                         cookie.set( "maxResults", this.maxResults, EXPIRES);
                         cookie.set( "showLang", this.showLang, EXPIRES);

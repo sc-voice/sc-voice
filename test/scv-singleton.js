@@ -82,7 +82,7 @@
         should(scv).properties({
             showId: false,
             voiceTrans: 'Amy',
-            voicePali: 'Aditi',
+            voiceRoot: 'Aditi',
             scid: null,
             showLang: 0,
             search: null,
@@ -94,7 +94,7 @@
         should.deepEqual(Object.keys(scv).sort(), [
             "showId",
             "voiceTrans",
-            "voicePali",
+            "voiceRoot",
             "scid",
             "showLang",
             "search",
@@ -169,7 +169,7 @@
             useCookies: "true",
             lang: 'en',
             voiceTrans: 'Amy',
-            voicePali: 'Aditi',
+            voiceRoot: 'Aditi',
         });
 
         // save one property
@@ -185,7 +185,7 @@
             useCookies: "true",
             lang: 'en',
             voiceTrans: 'Amy',
-            voicePali: 'Aditi',
+            voiceRoot: 'Aditi',
         });
 
         // When useCookies is set to false, delete the cookies
@@ -209,7 +209,7 @@
             "maxResults=5",
             "showId=false",
             "showLang=0",
-            "voicePali=Aditi",
+            "voiceRoot=Aditi",
             "voiceTrans=Amy",
         ].join('&'));
 
@@ -222,7 +222,7 @@
             "maxResults=6",
             "showId=false",
             "showLang=0",
-            "voicePali=Aditi",
+            "voiceRoot=Aditi",
             "voiceTrans=Amy",
         ].join('&'));
 
@@ -237,7 +237,7 @@
             "search=asdf",
             "showId=false",
             "showLang=0",
-            "voicePali=Aditi",
+            "voiceRoot=Aditi",
             "voiceTrans=Amy",
         ].join('&'));
 
@@ -312,7 +312,7 @@
             "maxResults=5",
             "showId=false",
             "showLang=0",
-            "voicePali=Aditi",
+            "voiceRoot=Aditi",
             "voiceTrans=Amy",
         ].join('&')));
 
@@ -440,7 +440,7 @@
             ips: "6",
             lang: 'de',
             voiceTrans: 'test-voiceTrans',
-            voicePali: 'test-voicePali',
+            voiceRoot: 'test-voiceRoot',
         });
         should(scv.useCookies).equal(false); // initial value
 
@@ -457,7 +457,7 @@
             ips: 6,
             lang: 'en',
             voiceTrans: 'Amy',
-            voicePali: 'Aditi',
+            voiceRoot: 'Aditi',
         });
 
         // useCookies not true
