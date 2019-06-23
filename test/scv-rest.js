@@ -457,7 +457,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles HumanTts dn33", function(done) {
+    it("TESTTESTGET /play/segment/... handles HumanTts dn33", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var scid = "dn33:0.1";
@@ -487,12 +487,13 @@
             should(data.translator).equal('sujato');
             should(data.segment.pli).match(/^Dīgha Nikāya 33/);
             should(data.segment.audio.en).match(/04f204b604a4a9bc2c1ef62c9f5309b9/);
-            should(data.segment.audio.pli).match(/0d67f32509c1f17613915007e32a33ba/);
+            should(data.segment.audio.pli).match(/3269e075fe9bfd7973566445b5cdeada/);
+            should(data.segment.audio.vnamePali).equal('Aditi');
 
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles HumanTts sn1.9", function(done) {
+    it("TESTTESTGET /play/segment/... handles HumanTts sn1.9", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var scid = "sn1.9:1.1";
@@ -523,6 +524,7 @@
             should(data.segment.pli).match(/^Sāvatthinidānaṃ/);
             should(data.segment.audio.en).match(/49e50d568f490d586e4065d9c83ff979/);
             should(data.segment.audio.pli).match(/a9f2370d0d1e283a54207ece4a1b626a/);
+            should(data.segment.audio.vnamePali).equal(undefined);
 
             done();
         } catch(e) {done(e);} })();

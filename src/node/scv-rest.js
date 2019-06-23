@@ -409,7 +409,6 @@
                 name: vnameRoot,
                 scAudio: this.scAudio,
             });
-            var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
             logger.info(`GET ${req.url}`);
             var usage = voice.usage || 'recite';
             return new Promise((resolve, reject) => {
@@ -422,6 +421,7 @@
                         expand: true,
                     });
                     if (iSection < 0 || sutta.sections.length <= iSection) {
+                        var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
                         throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
                     }
                     var voiceTrans = Voice.createVoice({
@@ -465,6 +465,7 @@
                             usage: 'recite',
                         });
                         segment.audio.pli = speak.signature.guid;
+                        segment.audio.vnamePali = speak.signature.voice;
                     }
                     resolve({
                         sutta_uid,

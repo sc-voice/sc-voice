@@ -161,7 +161,7 @@ export default {
                 track.translator,
                 track.iSection,
                 this.gscv.vnameTrans,
-                //this.gscv.vnameRoot,
+                this.gscv.vnameRoot,
             ].join('/');
         },
         url(path) {
@@ -273,7 +273,7 @@ export default {
                     this.translator,
                     scid,
                     this.gscv.vnameTrans,
-                    //this.gscv.vnameRoot,
+                    this.gscv.vnameRoot,
                 ].join('/');
                 var url = that.url(`play/segment/${segmentRef}`);
                 that.$http.get(url).then(res => {
@@ -384,9 +384,12 @@ export default {
         },
         audioSrc(lang) {
             var sutta_uid = this.sutta_uid;
-            var vname = lang === 'pli' ? 'Aditi' : this.voice.name;
             var translator = this.translator;
             var segment = this.section && this.section.segments[this.iSegment];
+            var audio = segment && segment.audio || {};
+            var vname = lang === 'pli' 
+                ? audio && audio.vnamePali || this.gscv.vnameRoot 
+                : this.voice.name;
             var guid = segment && segment.audio[lang];
             var url = guid 
                 ? this.url(`audio/${sutta_uid}/${lang}/${translator}/${vname}/${guid}`)
