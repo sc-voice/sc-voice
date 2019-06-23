@@ -422,7 +422,7 @@ export default {
                     result.author_uid,
                     scid,
                     this.gscv.vnameTrans,
-                    //this.gscv.vnameRoot,
+                    this.gscv.vnameRoot,
                 ].join('/');
                 var url = that.url(`play/segment/${segmentRef}`);
                 var timer = that.startWaiting();
@@ -726,7 +726,9 @@ export default {
                 sutta_uid,
             } = data;
             var guid = segment.audio[lang];
-            var vname = lang === 'pli' ? 'aditi' : this.voice.name;
+            var vname = lang === 'pli' 
+                ? this.gscv.vnameRoot
+                : this.voice.name;
             var link = `./audio/${sutta_uid}/${lang}/${translator}/${vname}/${guid}`;
             //if (sutta_uid) {
                 //link += `/${this.sutta_uid}-${lang}-${trans}.mp3`;

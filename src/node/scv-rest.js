@@ -19,6 +19,7 @@
     const AudioUrls = require('./audio-urls');
     const Playlist = require('./playlist');
     const Section = require('./section');
+    const SCAudio = require('./sc-audio');
     const SoundStore = require('./sound-store');
     const VsmStore = require('./vsm-store');
     const Sutta = require('./sutta');
@@ -56,6 +57,7 @@
             this.soundStore = opts.soundStore || new SoundStore(opts);
             this.audioMIME = this.soundStore.audioMIME;
             this.audioUrls = opts.audioUrls || new AudioUrls();
+            this.scAudio = opts.scAudio || new SCAudio();
             this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
@@ -403,8 +405,12 @@
                 var iVoice = Number(vnameTrans);
             }
             var voice = Voice.voiceOfName(vnameTrans);
+            var voiceRoot = Voice.createVoice({
+                name: vnameRoot,
+                scAudio: this.scAudio,
+            });
             var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
-            logger.info(`GET play/segment/${suttaRef}/${scid}/${vnameTrans}/${vnameRoot}`);
+            logger.info(`GET ${req.url}`);
             var usage = voice.usage || 'recite';
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -451,7 +457,7 @@
                         segment.audio[langTrans] = speak.signature.guid;
                     }
                     if (segment.pli) {
-                        var speak = await that.voiceRoot.speakSegment({
+                        var speak = await voiceRoot.speakSegment({
                             sutta_uid,
                             segment,
                             language: 'pli',

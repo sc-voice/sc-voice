@@ -13,6 +13,7 @@
         label: "Play Rainforest Ambience Glory Sunz (Public Domain)",
         volume: 0.1,
         value: 1,
+        hide: true,
     },{
         url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
         label: "Play Indian Bell by Flemur (Sampling Plus 1.0)",
@@ -28,6 +29,7 @@
         label: "Play Bell Meditation Cleaned by JetRye (CC0)",
         volume: 0.1,
         value: 4,
+        hide: true,
     },{
         url: '/audio/STE-004-Coemgenu.mp3',
         label: "Play Mid-range Singing Bell by Coemgenu (Public Domain)",

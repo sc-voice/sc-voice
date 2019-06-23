@@ -216,12 +216,15 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     let httpx = url.startsWith('https') ? https : http;
-                    let os = fs.createWriteStream(audioPath);
                     let request = httpx.get(url, function(response) {
                         let contentType = response.headers['content-type'];
+                        let os = fs.createWriteStream(audioPath);
                         response.pipe(os);
                         response.on('end', () => {
-                            logger.info(`downloaded ${audioPath} ${contentType}`);
+                            var audioPathType = audioPath.split('.').pop();
+                            logger.info(
+                                `downloaded ${audioPath} ${contentType} `+
+                                `saved as ${audioPathType}`);
                             var response = {
                                 audioPath,
                                 suttaSegId,
@@ -232,6 +235,7 @@
                             if (contentType === 'video/webm') {
                                 resolve(response);
                             } else {
+                                fs.unlinkSync(audioPath); 
                                 var e = new Error(
                                     `download failed for url:${url} error:${audioPath}`);
                                 reject(e);

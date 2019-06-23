@@ -5,10 +5,12 @@
     const {
         Polly,
         SCAudio,
+        SoundStore,
         Voice,
         Words,
     } = require('../index');
     const BREAK = `<break time="0.001s"/>`;
+    const tmp = require('tmp');
 
     function phoneme(ph,word) {
         var ph = `<phoneme alphabet="ipa" ph="${ph}">${word}</phoneme>${BREAK}`;
@@ -95,6 +97,12 @@
         should(russell.usage).equal("recite");
         should(russell.scAudio).equal(scAudio);
         should(russell.altTts).equal(altTts);
+
+        // human
+        var sujato_pli = Voice.createVoice({
+            name: 'sujato_pli',
+        });
+        should(sujato_pli.altTts.voice).equal('Aditi');
     });
     it("createVoice(voiceName) returns a default voice", function() {
         var voice = Voice.createVoice('aditi');
@@ -105,6 +113,7 @@
         should(voice.localeAlt).equal('pli');
         should(voice.stripNumbers).equal(true);
         should(voice.stripQuotes).equal(true);
+        should(voice.altTts).equal(undefined);
 
         var voice = Voice.createVoice('amy');
         should(voice).instanceOf(Voice);
@@ -455,20 +464,16 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("speakSegment(opts) speaks human-tts", function(done) {
+    it("speakSegment(opts) human-tts requires SCAudio", function(done) {
         (async function() { try {
-            var aditi = Voice.createVoice({
-                name: 'aditi',
-            });
-            var sutta_uid = 'sn1.9';
+            var sutta_uid = 'sn1.9999'; // not a sutta
             var language = 'pli';
             var translator = 'sujato';
             var usage = 'recite';
             var segment = {
-                scid: 'sn1.9999:1.1', // not a sutta
+                scid: `${sutta_uid}:1.1`, 
                 pli: 'purple squirrels',
             }
-            var altTts = aditi.services.recite;
             var args = {
                 sutta_uid,
                 segment,
@@ -485,6 +490,26 @@
             var resSpeak = await voice.speakSegment(args).catch(e => (eCaught=e));
             should(eCaught).instanceOf(Error);
             should(eCaught.message).match(/scAudio is required/);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("speakSegment(opts) human-tts uses altTts", function(done) {
+        (async function() { try {
+            var sutta_uid = 'sn1.9999'; // not a sutta
+            var language = 'pli';
+            var translator = 'sujato';
+            var usage = 'recite';
+            var segment = { // fake segment
+                scid: `${sutta_uid}:1.1`, 
+                pli: 'purple squirrels',
+            }
+            var args = {
+                sutta_uid,
+                segment,
+                language,
+                translator,
+                usage,
+            };
 
             // sutta has no human audio
             var scAudio = new SCAudio();
@@ -492,32 +517,80 @@
                 name: 'sujato_pli',
                 scAudio,
             });
+            should(voice.altTts.voice).equal('Aditi');
             var resSpeak = await voice.speakSegment(args);
             should(resSpeak).properties([
                 'file', 'signature',
             ]);
             should(resSpeak.signature).properties({
-                api: 'human-tts',
-                guid: '1c9c6388fab93cd6c477d0de7a883eb3',
+                api: 'aws-polly',
+                voice: 'Aditi',
+                guid: '4f6a9c8ad3572ffa6bb35491a874cf4e',
             });
-            should(resSpeak.file).match(/no_audio.mp3/);
+            should(resSpeak.file).match(/sn_pli_mahasangiti_aditi.*/);
             should(fs.existsSync(resSpeak.file)).equal(true);
 
-            // suttas has human audio
-            sutta_uid = 'sn1.9:1.1';
-            args.sutta_uid = sutta_uid;
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("speakSegment(opts) downloads human-tts", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var sutta_uid = 'sn1.9';
+            var storePath = tmp.tmpNameSync();
+            var soundStore = new SoundStore({
+                storePath,
+            });
+            var language = 'pli';
+            var translator = 'sujato';
+            var usage = 'recite';
+            var segment = {
+                scid: `${sutta_uid}:1.1`, 
+                pli: 'purple squirrels',
+            }
+            var args = {
+                sutta_uid,
+                segment,
+                language,
+                translator,
+                usage,
+            };
+            var scAudio = new SCAudio();
             var voice = Voice.createVoice({
                 name: 'sujato_pli',
                 scAudio,
-                altTts, // required to generate alternate audio
+                soundStore,
             });
+
+            // Do not download if not present
+            args.downloadAudio = false;
             var resSpeak = await voice.speakSegment(args);
-            should(resSpeak).properties([
-                'file', 'signature', 
-            ]);
+            should(resSpeak).properties([ 'file', 'signature', ]);
             should(resSpeak.signature).properties({
                 api: 'aws-polly',
                 voice: 'Aditi',
+            });
+            should(resSpeak.file).match(new RegExp(resSpeak.signature.guid));
+            should(fs.existsSync(resSpeak.file)).equal(true);
+
+            // Force download audio
+            args.downloadAudio = true;
+            var resSpeak = await voice.speakSegment(args);
+            should(resSpeak).properties([ 'file', 'signature', ]);
+            should(resSpeak.signature).properties({
+                api: 'human-tts',
+                reader: 'sujato_pli',
+            });
+            should(resSpeak.file).match(new RegExp(resSpeak.signature.guid));
+            should(fs.existsSync(resSpeak.file)).equal(true);
+
+            // Audio has been downloaded, so return it
+            delete args.downloadAudio; // default is download
+            var resSpeak = await voice.speakSegment(args);
+            should(resSpeak).properties([ 'file', 'signature', ]);
+            should(resSpeak.signature).properties({
+                api: 'human-tts',
+                reader: 'sujato_pli',
             });
             should(resSpeak.file).match(new RegExp(resSpeak.signature.guid));
             should(fs.existsSync(resSpeak.file)).equal(true);

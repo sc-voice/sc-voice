@@ -175,6 +175,61 @@
             done();
         } catch(e) { done(e); } })();
     });
+    it("downloadSegmentAudio(suttaSegId,...) converts audio file", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var language = 'en';
+            var reader = 'sujato';
+            var suttaSegId = 'sn1.9:1.1';
+            var author = 'sujato';
+            var downloadDir = tmp.tmpNameSync();
+            var audioPathType = 'mp3';
+            should(fs.existsSync(downloadDir)).equal(false);
+            var sca = new SCAudio({
+                downloadDir,
+            });
+            should(sca.downloadDir).equal(downloadDir);
+            should(fs.existsSync(downloadDir)).equal(true);
+            var audioPath = path.join(downloadDir, `test_sn1.9_1.1.mp3.${audioPathType}`);
+
+            // english
+            var res = await sca.downloadSegmentAudio({
+                suttaSegId,
+                audioPath,
+            });
+            should.deepEqual(res,{
+                language: 'en',
+                reader,
+                suttaSegId,
+                audioPath,
+                author,
+            });
+            should(fs.existsSync(audioPath)).equal(true);
+            var stats = fs.statSync(audioPath);
+            should(stats.size).equal(37922);
+
+            // Pali
+            var sca = new SCAudio();
+            var res = await sca.downloadSegmentAudio({
+                suttaSegId,
+                language: 'pli',
+                audioPath, // overrides downloadDir
+            });
+            should.deepEqual(res,{
+                language: 'pli',
+                reader,
+                suttaSegId,
+                audioPath,
+                author,
+            });
+            should(fs.existsSync(audioPath)).equal(true);
+            var stats = fs.statSync(audioPath);
+            should(stats.size).above(80000);
+            should(stats.size).below(90000);
+
+            done();
+        } catch(e) { done(e); } })();
+    });
     it("cacheSuttaAudio(opts) populates cache with segment audio", function(done) {
         (async function() { try {
             var sca = new SCAudio();

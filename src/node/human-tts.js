@@ -85,6 +85,7 @@
             if (language == null) {
                 return Promise.reject(new Error(`synthesizeSegment() language is required`));
             }
+            downloadAudio = !(downloadAudio === false);
             altTts = altTts || this.altTts;
             var {
                 voice,
@@ -101,11 +102,14 @@
                 return Promise.reject(new Error(
                     `synthesizeSegment() scAudio is required`));
             }
+            var scid = segment.scid;
+            var suttaSegId = scid;
+            var author = translator;
             var signature = {
                 api: 'human-tts',
-                suttaSegId: segment.scid, 
+                suttaSegId,
                 language,
-                author: translator,
+                author,
                 reader: voice,
                 volume,
             };
@@ -113,27 +117,53 @@
                 signature,
             }
             var guid = signature[mj.hashTag] = mj.hash(signature);
-            var extSeg = scAudio.extSeg;
-            var soundPath = soundStore.signaturePath(signature, extSeg);
+            var soundPath = soundStore.signaturePath(signature);
             if (fs.existsSync(soundPath)) {
                 result.file = soundPath;
                 return Promise.resolve(result);
             }
-
-            if (altTts == null) {
-                result.file = noAudioPath;
-                return Promise.resolve(result);
-            }
-
             usage = usage || this.usage;
             var text = segment[language.split('-')[0]] || '(no text)';
-
-            return altTts.synthesizeText(text, {
-                scid: segment.scid,
+            var altVolume = altTts && SoundStore.suttaVolumeName(suttaSegId, language, 
+                    translator, altTts.voice);
+            var altArgs = {
+                scid,
                 language,
                 usage,
-                volume,
-            });
+                volume: altVolume || volume,
+            };
+
+            if (altTts == null || downloadAudio) {
+                return new Promise((resolve, reject) => {
+                    (async function() { try {
+                        var scaResult = await scAudio.downloadSegmentAudio({
+                            suttaSegId,
+                            language,
+                            author,
+                            audioPath: soundPath,
+                        });
+                        if (fs.existsSync(soundPath)) {
+                            result.file = soundPath;
+                            resolve(result);
+                        } else {
+                            result.file = noAudioPath;
+                            reject(new Error(
+                                `no ${language} audio file for:${suttaSegId}`
+                            ));
+                        }
+                    } catch(e) {
+                        if (altTts == null) {
+                            logger.warn('synthesizeSegment() failed with no altTts');
+                            reject(e);
+                        } else {
+                            var resAlt = await altTts.synthesizeText(text, altArgs);
+                            resolve(resAlt);
+                        }
+                    } })();
+                });
+            }
+
+            return altTts.synthesizeText(text, altArgs);
         }
     }
 

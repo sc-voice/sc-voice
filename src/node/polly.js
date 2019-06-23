@@ -29,7 +29,7 @@
                 this.polly = opts.polly;
             } else {
                 var cfg = this.pollyConfig;
-                logger.info(`Polly.ctor() new AWS.Polly(${JSON.stringify(cfg)})`);
+                logger.debug(`Polly.ctor() new AWS.Polly(${JSON.stringify(cfg)})`);
                 this.polly = new AWS.Polly(cfg);
             }
         }

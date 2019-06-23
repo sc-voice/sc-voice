@@ -164,6 +164,11 @@
                     `${voiceJson.name}`);
             }
             var voiceOpts = Object.assign({}, voiceJson);
+            if (voiceOpts.altTts == null) {
+                if (opts.name === 'sujato_pli') {
+                    voiceOpts.altTts = Voice.voiceOfName('Aditi').services.recite;
+                }
+            }
             voiceOpts = Object.assign(voiceOpts, opts);
             voiceOpts.locale = voiceJson.locale;
             voiceOpts.name = voiceJson.name;
@@ -244,6 +249,7 @@
                 language,
                 translator,
                 usage,
+                downloadAudio,
             } = opts;
             usage = usage || this.usage;
             var service = this.services[usage];
@@ -261,6 +267,7 @@
                 language,
                 usage,
                 volume,
+                downloadAudio,
             });
         }
 

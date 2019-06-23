@@ -277,7 +277,7 @@
 },{
     "service": "aws-polly",
     "name": "Russell",
-    "label": "\ud83e\udd16 Russell for general listening and high-frequency hearing loss (medium)",
+    "label": "\ud83e\udd16 Russell (medium)",
     "gender": "male",
     "langTrans": "en",
     "locale": "en-AU",

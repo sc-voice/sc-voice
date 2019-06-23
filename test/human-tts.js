@@ -5,6 +5,7 @@
     const { logger } = require('rest-bundle');
     const {
         HumanTts,
+        SCAudio,
     } = require("../index");
 
     const BREAK='<break time="0.001s"/>';
@@ -14,6 +15,8 @@
         return `<phoneme alphabet="ipa" ph="${ph}">${text}</phoneme>`+
             `${BREAK}`;
     }
+    
+    const TEST_SCAUDIO = new SCAudio();
 
     it("constructor", function() {
         // Default
@@ -32,6 +35,7 @@
         // Custom
         var humanTts = new HumanTts({
             language: 'pli',
+            scAudio: TEST_SCAUDIO,
         });
         should(humanTts).properties({
             language: 'pli',
@@ -39,6 +43,7 @@
             voice: 'sujato_pli',
             audioFormat: 'mp3',
             audioSuffix: '.mp3',
+            scAudio: TEST_SCAUDIO,
             prosody: {
                 rate: "0%", // can't change humans
             },

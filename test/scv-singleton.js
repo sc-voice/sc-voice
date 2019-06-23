@@ -244,12 +244,19 @@
     });
     it("ipsChoices returns array of ips choices", function() {
         var scv = new ScvSingleton(g);
+        should.deepEqual(scv.ipsChoices[2], {
+            url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
+            label: "Play Indian Bell by Flemur (Sampling Plus 1.0)",
+            volume: 0.1,
+            value: 2,
+        });
         should.deepEqual(scv.ipsChoices[1], {
             url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
             label: "Play Rainforest "+
                 "Ambience Glory Sunz (Public Domain)",
             volume: 0.1,
             value: 1,
+            hide: true, // legacy
         });
     });
     it("has unenumerable properties", function() {

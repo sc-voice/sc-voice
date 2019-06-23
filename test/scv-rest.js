@@ -314,7 +314,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /scv/play/section/... returns playable section", function(done) {
+    it("GET /scv/play/section/... returns playable section", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iSection = 2;
@@ -339,7 +339,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
+    it("GET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var voicename = 'Russell';
@@ -366,7 +366,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... returns playable segment", function(done) {
+    it("GET /play/segment/... returns playable segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var voicename = '0';
@@ -432,7 +432,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
+    it("GET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
@@ -453,6 +453,76 @@
             should(data.segment.en).match(/^.For two reasons the Realized One/);
             should(data.segment.audio.en).match(/^6e032e4caef35cc5d009041f38c68c79/);
             should(data.segment.audio.pli).match(/d7ada11f84b7cfbcad13c6616ee0f53e/);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("GET /play/segment/... handles HumanTts dn33", function(done) {
+        this.timeout(10*1000);
+        (async function() { try {
+            var scid = "dn33:0.1";
+            var sutta_uid = scid.split(":")[0];
+            var langTrans = 'en';
+            var vnameTrans = "Russell";
+            var vnameRoot = "sujato_pli";
+            var url = [
+                `/scv/play/segment`,
+                sutta_uid,
+                langTrans,
+                'sujato',
+                scid,
+                vnameTrans,
+                vnameRoot,
+            ].join('/');
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data.sutta_uid).equal(scid.split(':')[0]);
+            should(data.vnameTrans).equal('Russell');
+            should(data.vnameRoot).equal('sujato_pli');
+            should(data.iSegment).equal(0);
+            should(data.section).equal(0);
+            should(data.nSections).equal(12);
+            should(data.language).equal('en');
+            should(data.translator).equal('sujato');
+            should(data.segment.pli).match(/^Dīgha Nikāya 33/);
+            should(data.segment.audio.en).match(/04f204b604a4a9bc2c1ef62c9f5309b9/);
+            should(data.segment.audio.pli).match(/0d67f32509c1f17613915007e32a33ba/);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("GET /play/segment/... handles HumanTts sn1.9", function(done) {
+        this.timeout(10*1000);
+        (async function() { try {
+            var scid = "sn1.9:1.1";
+            var sutta_uid = scid.split(":")[0];
+            var langTrans = 'en';
+            var vnameTrans = "Russell";
+            var vnameRoot = "sujato_pli";
+            var url = [
+                `/scv/play/segment`,
+                sutta_uid,
+                langTrans,
+                'sujato',
+                scid,
+                vnameTrans,
+                vnameRoot,
+            ].join('/');
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data.sutta_uid).equal(scid.split(':')[0]);
+            should(data.vnameTrans).equal('Russell');
+            should(data.vnameRoot).equal('sujato_pli');
+            should(data.iSegment).equal(3);
+            should(data.section).equal(1);
+            should(data.nSections).equal(2);
+            should(data.language).equal('en');
+            should(data.translator).equal('sujato');
+            should(data.segment.pli).match(/^Sāvatthinidānaṃ/);
+            should(data.segment.audio.en).match(/49e50d568f490d586e4065d9c83ff979/);
+            should(data.segment.audio.pli).match(/a9f2370d0d1e283a54207ece4a1b626a/);
 
             done();
         } catch(e) {done(e);} })();
@@ -686,7 +756,7 @@
         } catch(e) {done(e);} })();
     });
     it("POST auth/vsm/restore-s3-archives restores vsm files", function(done) {
-        this.timeout(5*1000);
+        this.timeout(10*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials POST test');
@@ -702,8 +772,8 @@
 
             var url = `/scv/auth/vsm/restore-s3-archives`;
             var restore = [{
-                Key: Contents[0].Key,
-                ETag: Contents[0].ETag,
+                Key: 'kn_en_sujato_amy.tar.gz',
+                ETag: '"e2141be1eddffebe4bded17b83aaa5ee"',
             }];
             var clearVolume = false;
             var data = {
@@ -796,7 +866,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET voices returns voices", function(done) {
+    it("GET voices returns voices", function(done) {
         (async function() { try {
             // default
             var url = "/scv/voices";

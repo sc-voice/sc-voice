@@ -72,6 +72,7 @@
                     <div class="subheading scv-settings-subtitle">Translation</div>
                     <v-radio-group v-model="gscv.lang"
                         @change="gscv.changed('lang')"
+                        v-if="false==='TBD'"
                         column>
                        <v-radio v-for="lang in gscv.languages"
                          :disabled="lang.disabled"
@@ -115,6 +116,7 @@
                         @change="gscv.changed('ips')"
                         column>
                        <v-radio v-for="(ips) in ipsChoices"
+                         v-if="!ips.hide"
                          :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
                          </v-radio>
                     </v-radio-group>
@@ -304,9 +306,6 @@ export default {
         },
         maxResultsChoices() {
             return [{
-                label: "Return up to 3 search results (fast)",
-                value: 3,
-            },{
                 label: "Return up to 5 search results",
                 value: 5,
             },{
