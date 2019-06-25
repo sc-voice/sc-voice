@@ -403,6 +403,7 @@
 
         stripHtml(text) {
             text = text.replace(/<[^>]*>/ug, '');
+            text = text.replace(/\.\.\./ug, '\u2026');
             return text;
         }
 

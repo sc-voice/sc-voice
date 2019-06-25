@@ -457,7 +457,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles HumanTts dn33", function(done) {
+    it("GET /play/segment/... handles HumanTts dn33", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var scid = "dn33:0.1";
@@ -493,7 +493,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles HumanTts sn1.9", function(done) {
+    it("GET /play/segment/... handles HumanTts sn1.9", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var scid = "sn1.9:1.1";

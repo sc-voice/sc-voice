@@ -493,7 +493,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeakSegment(opts) human-tts uses altTts", function(done) {
+    it("speakSegment(opts) human-tts uses altTts", function(done) {
         (async function() { try {
             var sutta_uid = 'sn1.9999'; // not a sutta
             var language = 'pli';
