@@ -39,12 +39,14 @@
             .send(data);
     }
 
-    function testAuthGet(url) {
+    function testAuthGet(url, contentType='application/json', accept=contentType) {
         var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
         return supertest(app).get(url)
             .set("Authorization", `Bearer ${token}`)
-            .set('Content-Type', 'application/json')
-            .set('Accept', 'application/json');
+            .set('Content-Type', contentType)
+            .set('Accept', accept)
+            .expect('Content-Type', new RegExp(contentType))
+            ;
     }
 
     it("ScvRest must be initialized", function(done) {
@@ -905,6 +907,64 @@
                 'Vicki', // de voices first
                 'Aditi', 'sujato_pli', // pli voices last
             ])
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTGET auth/logs returns logfiles", function(done) {
+        (async function() { try {
+            var logDir = path.join(LOCAL, 'logs');
+            if (!fs.existsSync(logDir)) {
+                fs.mkdirSync(logDir);
+                fs.writeFileSync(path.join(logDir, 'test3'), 'test-log3');
+                fs.writeFileSync(path.join(logDir, 'test2'), 'test-log2');
+                fs.writeFileSync(path.join(logDir, 'test1'), 'test-log1');
+            }
+            var files = fs.readdirSync(logDir).sort((a,b) => -a.localeCompare(b));
+            var url = "/scv/auth/logs";
+            var res = await testAuthGet(url);
+            should(res.statusCode).equal(200);
+            var resFiles = res.body;
+            should.deepEqual(resFiles.map(f=>f.name), files);
+            should(resFiles[0]).properties(['size', 'mtime']);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTGET auth/log/:ilog returns logfile", function(done) {
+        (async function() { try {
+            var logDir = path.join(LOCAL, 'logs');
+            if (!fs.existsSync(logDir)) {
+                fs.mkdirSync(logDir);
+                fs.writeFileSync(path.join(logDir, 'test3'), 'test-log3');
+                fs.writeFileSync(path.join(logDir, 'test2'), 'test-log2');
+                fs.writeFileSync(path.join(logDir, 'test1'), 'test-log1');
+            }
+            var files = fs.readdirSync(logDir).sort((a,b) => -a.localeCompare(b));
+            var index = 0;
+            if (files.length > index) {
+                var url = `/scv/auth/log/${index}`;
+                var res = await testAuthGet(url, 'text/plain');
+                should(res.statusCode).equal(200);
+                var log = fs.readFileSync(path.join(logDir, files[index])).toString();
+                should(res.text).equal(log);
+            }
+            index++;
+            if (files.length > index) {
+                var url = `/scv/auth/log/${index}`;
+                var res = await testAuthGet(url, 'text/plain');
+                should(res.statusCode).equal(200);
+                var log = fs.readFileSync(path.join(logDir, files[index])).toString();
+                should(res.text).equal(log);
+            }
+
+            // error
+            var url = `/scv/auth/log/asdf`;
+            logger.warn('EXPECTED ERROR: BEGIN');
+            var res = await testAuthGet(url, 'text/plain');
+            logger.warn('EXPECTED ERROR: END');
+            should(res.statusCode).equal(500);
+            should(res.text).match(/Log file not found:asdf/);
 
             done();
         } catch(e) {done(e);} })();

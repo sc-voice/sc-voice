@@ -21,6 +21,10 @@
         <v-tab-item v-if="isAdmin">
             <vsm/>
         </v-tab-item>
+        <v-tab v-if="isAdmin"> Logs </v-tab>
+        <v-tab-item v-if="isAdmin">
+            <logs/>
+        </v-tab-item>
         <v-tab v-if="isTranslator || isEditor"> Content </v-tab>
         <v-tab-item v-if="isTranslator || isEditor">
             Translator/Editor stuff goes here...
@@ -34,6 +38,7 @@
 import Vue from "vue";
 import AdminUsers from "./admin-users";
 import Vsm from "./vsm";
+import Logs from "./logs";
 import Caches from "./caches";
 import Releases from "./releases";
 import Login from "./login";
@@ -88,6 +93,7 @@ export default {
         Caches,
         Releases,
         Vsm,
+        Logs,
         Login,
     },
 }

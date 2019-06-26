@@ -140,6 +140,10 @@
                     this.resourceMethod("post", "login", 
                         this.postLogin),
 
+                    this.resourceMethod("get", "auth/logs",
+                        this.getLogs),
+                    this.resourceMethod("get", "auth/log/:ilog",
+                        this.getLog, 'text/plain'),
                     this.resourceMethod("get", "auth/users", 
                         this.getUsers),
                     this.resourceMethod("get", "auth/sound-store/volume-info", 
@@ -752,6 +756,71 @@
                         };
                     }
                     resolve(users);
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        getLogs(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var logDir = path.join(LOCAL, 'logs');
+                    fs.readdir(logDir,null,(err, files) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            files.sort((a,b)=>-a.localeCompare(b));
+                            resolve(files.map(f => {
+                                var fpath = path.join(logDir, f);
+                                var stats = fs.statSync(fpath);
+                                return {
+                                    name: f,
+                                    size: stats.size,
+                                    mtime: stats.mtime,
+                                    ctime: stats.ctime,
+                                }
+                            }));
+                            
+                            //resolve(files.sort((a,b)=>-a.localeCompare(b)));
+                        }
+                    });
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        getLog(req, res, next) {
+            var that = this;
+            var {
+                ilog,
+            } = req.params;
+            if (ilog == null) {
+                ilog = 0;
+            }
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var logDir = path.join(LOCAL, 'logs');
+                    fs.readdir(logDir,null,(err, files) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            files.sort((a,b)=>-a.localeCompare(b));
+                            var file = files[ilog];
+                            if (file) {
+                                file = path.join(logDir, file);
+                                fs.readFile(file, (err, data) => {
+                                    if (err) {
+                                        reject(err);
+                                    } else {
+                                        res.set('Content-Type', 'text/plain');
+                                        resolve(data);
+                                    }
+                                });
+                            } else {
+                                reject(new Error(
+                                    `Log file not found:${ilog}`));
+                            }
+                        }
+                    });
                 } catch(e) {reject(e);} })();
             });
         }
