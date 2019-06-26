@@ -235,9 +235,10 @@
                             if (contentType === 'video/webm') {
                                 resolve(response);
                             } else {
-                                fs.unlinkSync(audioPath); 
                                 var e = new Error(
                                     `download failed for url:${url} error:${audioPath}`);
+                                logger.warn(e.stack);
+                                fs.existsSync(audioPath) && fs.unlinkSync(audioPath); 
                                 reject(e);
                             }
                         });
