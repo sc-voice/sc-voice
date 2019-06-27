@@ -391,7 +391,7 @@
         should(tts.syllabify("acchariyaabbhutasutta"))
             .equal("ac cha ri ya ab bhu ta sut ta");
     });
-    it("TESTTESTstripHtml(html) cleans html", function() {
+    it("stripHtml(html) cleans html", function() {
         var tts = new AbstractTTS();
         should(tts.stripHtml('faithless')).equal('faithless');
         should(tts.stripHtml('faithless ...')).equal('faithless \u2026');

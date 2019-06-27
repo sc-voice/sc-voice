@@ -151,7 +151,8 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).equal(37922);
+            should(stats.size).above(30000);
+            should(stats.size).below(40000);
 
             // Pali
             var sca = new SCAudio();

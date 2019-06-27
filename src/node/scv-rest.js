@@ -461,15 +461,15 @@
                         segment.audio[langTrans] = speak.signature.guid;
                     }
                     if (segment.pli) {
-                        var speak = await voiceRoot.speakSegment({
+                        var resSpeak = await voiceRoot.speakSegment({
                             sutta_uid,
                             segment,
                             language: 'pli',
                             translator,
                             usage: 'recite',
                         });
-                        segment.audio.pli = speak.signature.guid;
-                        segment.audio.vnamePali = speak.signature.voice;
+                        segment.audio.pli = resSpeak.signature.guid;
+                        segment.audio.vnamePali = resSpeak.altTts;
                     }
                     resolve({
                         sutta_uid,

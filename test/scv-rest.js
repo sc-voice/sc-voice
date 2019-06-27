@@ -531,6 +531,41 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTGET /play/segment/... handles HumanTts sn12.1", function(done) {
+        this.timeout(10*1000);
+        (async function() { try {
+            var scid = "sn12.1:1.2";
+            var sutta_uid = scid.split(":")[0];
+            var langTrans = 'en';
+            var vnameTrans = "Russell";
+            var vnameRoot = "sujato_pli";
+            var url = [
+                `/scv/play/segment`,
+                sutta_uid,
+                langTrans,
+                'sujato',
+                scid,
+                vnameTrans,
+                vnameRoot,
+            ].join('/');
+            logger.warn("EXPECTED ERROR BEGIN");
+            var res = await supertest(app).get(url);
+            logger.warn("EXPECTED ERROR END");
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            should(data.sutta_uid).equal(scid.split(':')[0]);
+            should(data.vnameTrans).equal('Russell');
+            should(data.vnameRoot).equal('sujato_pli');
+            should(data.language).equal('en');
+            should(data.translator).equal('sujato');
+            should(data.segment.pli).match(/samayaṃ bhagavā sāvatthiyaṃ/);
+            should(data.segment.audio.en).match(/b85e0f29ad151581a2c82741991a240e/);
+            should(data.segment.audio.pli).match(/d24fce55a21d8735f12b974febe32d2c/);
+            should(data.segment.audio.vnamePali).equal('Aditi');
+
+            done();
+        } catch(e) {done(e);} })();
+    });
     it("GET /examples/:n return search examples", function(done) {
         this.timeout(3*1000);
         (async function() { try {
@@ -911,7 +946,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET auth/logs returns logfiles", function(done) {
+    it("GET auth/logs returns logfiles", function(done) {
         (async function() { try {
             var logDir = path.join(LOCAL, 'logs');
             if (!fs.existsSync(logDir)) {
@@ -931,7 +966,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET auth/log/:ilog returns logfile", function(done) {
+    it("GET auth/log/:ilog returns logfile", function(done) {
         (async function() { try {
             var logDir = path.join(LOCAL, 'logs');
             if (!fs.existsSync(logDir)) {

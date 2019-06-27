@@ -79,6 +79,7 @@
                 volume,
                 downloadAudio,
             } = opts;
+            var that = this;
             if (segment == null) {
                 return Promise.reject(new Error(`synthesizeSegment() segment is required`));
             }
@@ -157,13 +158,20 @@
                             reject(e);
                         } else {
                             var resAlt = await altTts.synthesizeText(text, altArgs);
+                            resAlt.altTts = altTts.voice;
                             resolve(resAlt);
                         }
                     } })();
                 });
             }
 
-            return altTts.synthesizeText(text, altArgs);
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var resAlt = await altTts.synthesizeText(text, altArgs);
+                    resAlt.altTts = altTts.voice;
+                    resolve(resAlt);
+                } catch(e) {reject(e);} })();
+            });
         }
     }
 

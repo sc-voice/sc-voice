@@ -450,6 +450,7 @@
                             result = await that.ffmpegConcat(files, ffmpegOpts);
                         }
                         resolve(Object.assign({
+                            voice: that.voice,
                             segments,
                         }, result));
                     } else {
