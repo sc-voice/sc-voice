@@ -119,14 +119,17 @@
         publication_date: null,
         volpage: null,
     }];
-    const SCAPI_2019 = {
+    const STAGING = {
         apiUrl: 'http://staging.suttacentral.net/api',
+    };
+    const PRODUCTION = {
+        apiUrl: 'http://suttacentral.net/api',
     };
 
     it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
         this.timeout(10*1000);
         (async function() { try {
-            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var scid = 'snp1.8';
             var language = 'en';
             var sutta = await scr.loadSutta('snp1.8','en');
@@ -141,7 +144,7 @@
     });
     it("loadSutta(opts) returns english translations for Snp1.8", function(done) {
         (async function() { try {
-            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var language = 'en';
             var sutta = await scr.loadSutta({
                 scid:'snp1.8',
@@ -192,7 +195,7 @@
     it("loadSutta(opts) returns english translations for ea12.1", function(done) {
         this.timeout(5*1000);
         (async function() { try {
-            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var language = 'en';
             var sutta = await scr.loadSutta({
                 scid:'ea12.1',
@@ -239,7 +242,7 @@
     });
     it("loadSutta(opts) returns Error if sutta not found", function(done) {
         (async function() { try {
-            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
 
             // implausible sutta
             var err = null;
@@ -277,7 +280,7 @@
     it("loadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
         done(); return; // TBD staging problem dbg
         (async function() { try {
-            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var language = 'en';
             var sutta = await scr.loadSutta('an2.12');
             should(sutta).instanceOf(Sutta);
@@ -301,7 +304,7 @@
     });
     it("expandAbbreviation(abbr) expands abbreviation", function(done) {
         (async function() { try {
-            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             should.deepEqual(scr.expandAbbreviation('sk'), [
               "Sk",
               "Sekhiya"
@@ -314,7 +317,7 @@
         this.timeout(5*1000);
         logger.level = 'info';
         (async function() { try {
-            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var sutta = await scr.loadSutta("mn79", "en", "sujato");
 
             should.deepEqual(sutta.segments[0], {
@@ -341,7 +344,7 @@
         done(); return; // Pootl content is obsolete and now differs from current
         this.timeout(5*1000);
         (async function() { try {
-            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var sutta = await scr.loadSutta("mn1", "en", "sujato");
             var suttaPootl = await SuttaFactory.loadSuttaPootl('mn1');
 
@@ -374,7 +377,7 @@
     });
     it("suttaFromHtml(html, opts) should parse HTML", function(done) {
         (async function() { try {
-            var scr = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var text = [
                 'hello',
                 'there\n',

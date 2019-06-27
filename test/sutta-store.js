@@ -15,8 +15,11 @@
     const LOCAL = path.join(__dirname, '..', 'local');
     const ROOT = path.join(LOCAL, 'suttas');
     const MAXRESULTS = 5;
-    const SCAPI_2019 = {
+    const STAGING = {
         apiUrl: 'http://staging.suttacentral.net/api',
+    };
+    const PRODUCTION = {
+        apiUrl: 'http://suttacentral.net/api',
     };
     function checkSuttas(data) {
         should(data.suttas.length).equal(data.suttaRefs.length);
@@ -139,6 +142,60 @@
             done(); 
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTsearch('thig16.1') returns segmented sutta", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var voice = Voice.createVoice({
+                name: 'raveena',
+                localeAlt: 'pli',
+                usage: 'recite',
+            });
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            this.suttaFactory = new SuttaFactory({
+                suttaCentralApi,
+                autoSection: true,
+            });
+            var store = await new SuttaStore({
+                suttaCentralApi,
+                suttaFactory,
+                voice,
+            }).initialize();
+
+            // multiple results
+            var {
+                method,
+                results,
+            } = await store.search('thig16.1');
+            should(results).instanceOf(Array);
+            should(method).equal('sutta_uid');
+            should.deepEqual(results.map(r=>r.count), [1]);
+            should.deepEqual(results.map(r=>r.uid), ['thig16.1']);
+            should.deepEqual(results.map(r=>r.author_uid), [
+                'sujato']);
+            should.deepEqual(results.map(r=>r.suttaplex.acronym), [
+                'Thig 16.1']);
+            should(results[0].quote.en).match(/The Great Book/);
+            should(results[0].nSegments).equal(311);
+            var sutta = results[0].sutta;
+            should(sutta.sutta_uid).equal('thig16.1');
+            should(sutta.author_uid).equal('sujato');
+            should.deepEqual(sutta.segments[0],{
+                en: 'Verses of the Senior Nuns',
+                pli: 'Therīgāthā',
+                scid: 'thig16.1:1.1',
+            });
+            var sections = sutta.sections;
+            should.deepEqual(sections[0].segments[0],{
+                en: 'Verses of the Senior Nuns',
+                pli: 'Therīgāthā',
+                scid: 'thig16.1:1.1',
+            });
+            should(sections.length).equal(3);
+            should.deepEqual(sections.map(s => s.segments.length), [1,1,309,]);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
     it("search('thig1.1') returns segmented sutta", function(done) {
         (async function() { try {
             var voice = Voice.createVoice({
@@ -146,7 +203,7 @@
                 localeAlt: 'pli',
                 usage: 'recite',
             });
-            var suttaCentralApi = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var suttaCentralApi = await new SuttaCentralApi(PRODUCTION).initialize();
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi,
                 autoSection: true,
@@ -200,7 +257,7 @@
                 localeAlt: 'pli',
                 usage: 'recite',
             });
-            var suttaCentralApi = await new SuttaCentralApi(SCAPI_2019).initialize();
+            var suttaCentralApi = await new SuttaCentralApi(PRODUCTION).initialize();
             var store = await new SuttaStore({
                 suttaCentralApi,
                 voice,

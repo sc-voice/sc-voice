@@ -2,6 +2,7 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const { logger } = require('rest-bundle');
     const {
         Polly,
         SCAudio,
@@ -493,7 +494,8 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("speakSegment(opts) human-tts uses altTts", function(done) {
+    it("TESTTESTspeakSegment(opts) human-tts uses altTts", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var sutta_uid = 'sn1.9999'; // not a sutta
             var language = 'pli';
@@ -518,7 +520,9 @@
                 scAudio,
             });
             should(voice.altTts.voice).equal('Aditi');
+            logger.warn('EXPECTED WARNING BEGIN');
             var resSpeak = await voice.speakSegment(args);
+            logger.warn('EXPECTED WARNING END');
             should(resSpeak).properties([
                 'file', 'signature',
             ]);

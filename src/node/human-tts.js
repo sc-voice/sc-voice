@@ -119,7 +119,8 @@
             }
             var guid = signature[mj.hashTag] = mj.hash(signature);
             var soundPath = soundStore.signaturePath(signature);
-            if (fs.existsSync(soundPath)) {
+            var stats = fs.existsSync(soundPath) && fs.statSync(soundPath);
+            if (stats && stats.size > this.ERROR_SIZE) {
                 result.file = soundPath;
                 return Promise.resolve(result);
             }

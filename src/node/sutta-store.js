@@ -496,7 +496,7 @@
             if (dotParts.length > 2) {
                 throw new Error(`Invalid sutta reference: ${suttaRef} [E3]`);
             }
-            if (coll.subchapters) { // e.g., SN, AN
+            if (coll.subchapters) { // e.g., SN, AN, KN
                 if (dotParts.length === 1) { // e.g. SN50
                     var prefix = `${suttaRef}.`;
                     var first = rangeParts.length === 1 ? 1 : Number(rangeParts[0]);
@@ -520,7 +520,7 @@
                     throw new Error(`Sutta ${firstItem} not found`);
                 }
                 var endUid = this.sutta_uidSuccessor(`${prefix}${last}`);
-                var iEnd = endUid && this.suttaIndex(endUid) || 0;
+                var iEnd = endUid && this.suttaIndex(endUid) || (iCur+1);
                 for (var i = iCur; i < iEnd; i++) {
                     result.push(`${this.suttaIds[i]}${suffix}`);
                 }
