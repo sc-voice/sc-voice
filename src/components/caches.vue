@@ -1,52 +1,60 @@
 <template>
     <v-sheet style="border-top:3px solid #eee" light>
       <v-container fluid grid-list-md >
-        <div class="text-xs-center pb-3">
-        <v-progress-circular :value="cachePercent"
-            v-if="identity"
-            size="50" width="6" rotate="90"
-            color="red">
-            <div style="font-size:12px; line-height:1.1 !important">
-            {{cachePercent}}%
-            {{cacheUsed}}GB
+        <div class="stats">
+            <v-progress-circular :value="diskPercent"
+                v-if="identity"
+                title="Disk usage"
+                size="35" width="6" rotate="90"
+                color="red">
+                <div style="font-size:12px; line-height:1.1 !important"
+                    v-if="identity">
+                {{diskPercent}}%
+                </div>
+            </v-progress-circular>
+            <div v-if="identity" class="ml-3">
+                <b>Cache used:</b> {{cacheUsed}}GB
+                <br/> 
+                <b>Disk used:</b> {{diskUsed}}GB
             </div>
-        </v-progress-circular>
+            <div v-if="identity == null">(Loading...)</div>
         </div>
 
-        <v-data-iterator
-          :items="caches"
-          :rows-per-page-items="cacheRowsPerPageItems"
-          :pagination.sync="pagination"
-          content-tag="v-layout"
-          row wrap 
-        >
-            <v-flex slot="item" slot-scope="props"
-                xs12 sm6 md4 lg3 >
-                <v-card color="grey lighten-3">
-                    <v-card-title>
-                        <v-spacer/>
-                        <h3>{{props.item.name}}</h3>
-                        <v-spacer/>
-                    </v-card-title>
-                    <v-divider/>
-                    <v-list dense class="ml-2 mr-2">
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          Size:
-                        </v-list-tile-content>
-                        <v-list-tile-content class="align-end">
-                          {{ (props.item.size/1E6).toFixed(2)}}MB
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </v-list>
-                    <v-card-actions>
-                        <v-btn @click='onClearCache(props.item.name)'>
-                            Clear Cache
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-flex>
-        </v-data-iterator>
+        <div class="cache-table">
+            <v-data-table
+                v-model="selected"
+                :headers="cacheHeaders"
+                :items="caches"
+                class="elevation-1 "
+                style="max-width:40em"
+                select-all
+                item-key="name"
+              >
+                <template v-slot:items="props">
+                    <tr :active="props.selected" 
+                        @click="props.selected = !props.selected">
+                        <td>
+                            <v-checkbox 
+                                :input-value="props.selected"
+                                primary
+                                hide-details
+                                ></v-checkbox>
+                        </td>
+                        <th > {{ props.item.name }} </th>
+                        <td class="text-xs-right">
+                            {{ (props.item.size/1E6).toFixed(1) }}MB
+                        </td>
+                        <td > {{ cleared[props.item.name] }} </td>
+                    </tr>
+                </template>
+                <template v-slot:no-data>
+                    Loading...
+                </template>
+            </v-data-table>
+            <v-btn :disabled="selected.length===0"
+                @click="onClearCaches">Clear</v-btn>
+        </div>
+
       </v-container>
     </v-sheet>
 </template>
@@ -58,21 +66,28 @@ import Vue from "vue";
 export default {
     name: 'Caches',
     props: {
-        maxSize: {
-            type: Number,
-            default: 4, // GB
-        },
     },
     data: () => {
         return {
             user:{},
+            cacheHeaders: [{
+                text: 'Name',
+                align: 'left',
+                value: 'name'
+            },{
+                text: 'Size',
+                align: 'right',
+                value: 'size',
+            },{
+                text: 'Cleared',
+                align: 'right',
+                value: 'cleared',
+            }],
+            selected: [],
             caches: [],
+            cleared: {},
             identity: null,
             isWaiting: false,
-            cacheRowsPerPageItems: [4, 8, 12],
-            pagination: {
-                rowsPerPage: 4
-            },
         }
     },
     methods: {
@@ -99,15 +114,23 @@ export default {
                 console.error(`getCaches() failed`, e.stack);
             });
         },
-        onClearCache(volume) {
-            console.log('onClearCache', volume);
+        onClearCaches() {
+            this.selected.forEach(cache => {
+                this.clearCache(cache);
+            });
+        },
+        clearCache(cache) {
+            var volume = cache.name;
+            console.log('clearCache', volume);
             var urlVol = this.url("auth/sound-store/clear-volume"); 
             var data = {
                 volume,
             }
+            var that = this;
             this.$http.post(urlVol, data, this.authConfig).then(res => {
-                console.log(res.data);
-                this.getCaches();
+                console.log(`cleared cache:${volume}`,res.data);
+                that.getCaches();
+                Vue.set(that.cleared, volume, 'cleared');
             }).catch(e => {
                 console.error(`onClearCache() failed`, e.stack);
             });
@@ -123,8 +146,10 @@ export default {
     },
     mounted() {
         Vue.set(this, "user", this.gscv.user);
-        this.getCaches();
-        this.getIdentity();
+        setTimeout(() => {
+            this.getCaches();
+            this.getIdentity();
+        }, 1000);
     },
     computed: {
         gscv() {
@@ -136,7 +161,7 @@ export default {
             }, 0);
             return (used/1E9).toFixed(1);
         },
-        cachePercent() {
+        diskUsed() {
             if (!this.identity) {
                 return '--';
             }
@@ -144,9 +169,18 @@ export default {
                 diskavail,
                 disktotal,
             } = this.identity;
-            var cacheUsed = this.cacheUsed;
-            var cacheTotal = disktotal - diskavail - cacheUsed;
-            return (cacheUsed / cacheTotal * 100).toFixed(0);
+            return ((disktotal - diskavail)/1E9).toFixed(1);
+        },
+        diskPercent() {
+            if (!this.identity) {
+                return '--';
+            }
+            var {
+                diskavail,
+                disktotal,
+            } = this.identity;
+            var diskused = disktotal - diskavail;
+            return (diskused / disktotal * 100).toFixed(0);
         },
         token() {
             return this.user && this.user.token;
@@ -168,4 +202,19 @@ export default {
 </script>
 
 <style scoped>
+.stats {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-bottom: 0.5em;
+}
+.cache-table {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+th {
+    text-align: left;
+}
 </style>

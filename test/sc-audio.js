@@ -99,7 +99,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("catalog(suid...) returns sutta catalog", function(done) {
+    it("TESTTESTcatalog(suid...) returns sutta catalog", function(done) {
         (async function() { try {
             var sca = new SCAudio();
             var response = await sca.catalog();
@@ -117,7 +117,7 @@
             should(resMap.fragments[0].lines[0]).equal('Liberation');
             var resMap = await sca.mapJson(suttaSN1_2, 'pli', 'mahasangiti', 'sujato');
             should(resMap.fragments.length).equal(11);
-            should(resMap.fragments[0].lines[0]).equal('Nimokkhasutta');
+            should(resMap.fragments[0].lines[0]).match(/Nimokkhasutta/);
 
             done();
         } catch(e) { done(e); } })();
@@ -207,7 +207,8 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).equal(37922);
+            should(stats.size).above(37000);
+            should(stats.size).below(39000);
 
             // Pali
             var sca = new SCAudio();

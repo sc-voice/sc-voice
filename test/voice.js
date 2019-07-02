@@ -494,7 +494,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeakSegment(opts) human-tts uses altTts", function(done) {
+    it("speakSegment(opts) human-tts uses altTts", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var sutta_uid = 'sn1.9999'; // not a sutta

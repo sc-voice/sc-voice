@@ -142,7 +142,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch('thig16.1') returns segmented sutta", function(done) {
+    it("search('thig16.1') returns segmented sutta", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice({

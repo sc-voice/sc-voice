@@ -77,9 +77,39 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("importSpeakResult(sr) imports resource files", function(done) {
+    it("importSpeakResult(sr) imports simple guid", function(done) {
         (async function() { try {
-            var vsm = new VsmStore();
+            var storePath = tmp.tmpNameSync();;
+            var vsm = new VsmStore({
+                storePath,
+            });
+            var voice = vsm.voice;
+
+            // Vsm.speak() returns similar result as voice.speak()
+            var speakResult = await voice.speak('So I have heard', VOICE_OPTS);
+            var guid = speakResult.signature.guid;
+            var importResult = await vsm.importSpeakResult(speakResult);
+            should(importResult).properties({
+                segments: speakResult.segments,
+                signature: speakResult.signature,
+            });
+            var reFile = new RegExp(`${vsm.storePath}`,'u');
+            should(importResult.file).match(reFile);
+            should(fs.existsSync(importResult.file)).equal(true);
+
+            // the importMap has all imported guids
+            var guid = importResult.signature.guid;
+            should(vsm.importMap[guid]).equal(importResult);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTimportSpeakResult(sr) imports compound guid", function(done) {
+        (async function() { try {
+            var storePath = tmp.tmpNameSync();;
+            var vsm = new VsmStore({
+                storePath,
+            });
             var voice = vsm.voice;
 
             // Vsm.speak() returns similar result as voice.speak()
@@ -90,9 +120,19 @@
                 segments: speakResult.segments,
                 signature: speakResult.signature,
             });
+
+            // We import top-level ephemeral files
+            should(fs.existsSync(importResult.file)).equal(true);
             var reFile = new RegExp(`${vsm.storePath}`,'u');
             should(importResult.file).match(reFile);
-            should(fs.existsSync(importResult.file)).equal(true);
+
+            // We do not import files that comprise top-level files
+            var files = speakResult.signature.files;
+            should(files.length).equal(3);
+            for (var i=0; i<files.length; i++) {
+                var f = files[i];
+                should(fs.existsSync(path.join(storePath, f))).equal(false);
+            }
 
             // the importMap has all imported guids
             var guid = importResult.signature.guid;

@@ -23,6 +23,9 @@
     const VSM_S3 = path.join(LOCAL, 'vsm-s3.json');
     const tmp = require('tmp');
 
+    const IMPORT_KIDS = false;  // atomic import provides neglible benefit 
+                                // It is also complicated and buggy
+
     var suttaStore = new SuttaStore();
 
     class VsmStore extends SoundStore {
@@ -38,6 +41,7 @@
             this.importMap = {};
             this.s3Bucket = opts.s3Bucket || new S3Bucket();
             this.archiveDir = opts.archiveDir || this.storePath;
+            this.importKids = opts.importKids == null ? IMPORT_KIDS : opts.importKids;
         }
 
         static options(opts={}) {
@@ -118,7 +122,8 @@
         }
 
         importSpeakResult(speakResult) {
-            var guid = speakResult.signature.guid;
+            var signature = speakResult.signature;
+            var guid = signature.guid;
             var result = this.importMap[guid];
             if (result) {
                 return Promise.resolve(result);
@@ -127,8 +132,30 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var srcStore = that.soundStore;
-                    var volume = speakResult.signature.volume;
-                    var guidResult = await that.importGuidFiles(guid, volume);
+                    var volume = signature.volume;
+                    var kidguids = [];
+                    if (that.importKids && signature.api === 'ffmegConcat') {
+                        var files = signature.files;
+                        for (var i=0; i<files.length; i++) {
+                            var fileparts = files[i].split('/');
+                            if (fileparts[0] === volume) {
+                                var lastpart = fileparts[fileparts.length-1];
+                                kidguids.push(lastpart.split('.')[0]);
+                            } else {
+                                logger.info(`skipping atomic sound:${files[i]}`);
+                            }
+                        }
+                        if (kidguids.length !== files.length) {
+                            kidguids = [];
+                        }
+                    }
+                    if (kidguids.length > 0) {
+                        for (var i=0; i<kidguids.length; i++) {
+                            await that.importGuidFiles(kidguids[i], volume);
+                        }
+                    } else {
+                        await that.importGuidFiles(guid, volume);
+                    }
                     var importResult = Object.assign({}, speakResult);
                     importResult.file = importResult.file
                         .replace(srcStore.storePath, that.storePath);
