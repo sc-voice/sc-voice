@@ -16,6 +16,8 @@
                 <b>Cache used:</b> {{cacheUsed}}GB
                 <br/> 
                 <b>Disk used:</b> {{diskUsed}}GB
+                <br/> 
+                <b>Disk available:</b> {{(identity.diskavail/1E9).toFixed(1)}}GB
             </div>
             <div v-if="identity == null">(Loading...)</div>
         </div>
@@ -206,6 +208,7 @@ export default {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    align-items: center;
     margin-bottom: 0.5em;
 }
 .cache-table {
