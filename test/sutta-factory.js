@@ -32,10 +32,10 @@
                 prop: 'en',
             });
             var i = 0;
-            should(excerpt[i++]).equal('Middle Discourses 1\n'); // autoterminate segment
-            should(excerpt[i++]).equal('The Root of All Things\n'); // end group
-            should(excerpt[i++]).equal('So I have heard.');
-            should(excerpt[end-2]).equal('Why is that?');
+            should(excerpt[i++]).match(/Middle Discourses 1/); // autoterminate segment
+            should(excerpt[i++]).match(/The Root of All Things/); // end group
+            should(excerpt[i++]).match(/So I have heard./);
+            should(excerpt[end-2]).match(/Why is that?/);
             should(sutta.sections).instanceOf(Array);
             should(sutta.sections[0]).instanceOf(Section);
             done();

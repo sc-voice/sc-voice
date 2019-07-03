@@ -3,16 +3,13 @@
 SCRIPT_DIR=`realpath \`dirname $0\``
 echo $SCRIPT_DIR
 APP_DIR=`realpath $SCRIPT_DIR/..`
-
-mkdir -p ${APP_DIR}/local/logs
-TS=`date +%Y%m%d.%H%M%S`
-LOGFILE="${APP_DIR}/local/logs/scv-${TS}.log"
+LOGDIR="${APP_DIR}/local/logs"
+mkdir -p ${LOGDIR}
+LOGFILE="${LOGDIR}/scv-%Y%m%d.%H%M.log"
 SCVLOG="${APP_DIR}/local/scv.log" 
 rm -f $SCVLOG
-ln -sf ${LOGFILE} $SCVLOG
-echo -e "`date` START sc-voice" | tee -a ${LOGFILE}
 
-${SCRIPT_DIR}/sc-voice.js --ssl 2>&1 | tee -a ${LOGFILE}
+${SCRIPT_DIR}/sc-voice.js --ssl 2>&1 | rotatelogs -L ${APP_DIR} -f ${LOGFILE} 86400
 
-echo -e "`date` EXIT sc-voice" | tee -a ${LOGFILE}
+echo -e "`date` EXIT sc-voice" | tee -a ${SCVLOG}
 

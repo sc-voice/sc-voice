@@ -32,6 +32,15 @@ if [ "$REBOOT" == "0" ]; then
     done
 fi
 
+type rotatelogs
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: rotatelogs detected (OK)"
+else
+    echo -e "INIT\t: installing apache2-utils for rotatelogs (requires sudo)"
+    sudo apt-get update -y
+    sudo apt-get install -y apache2-utils
+fi
+
 echo -e "UPDATE\t: Installing dependencies..."
 npm install
 sync
