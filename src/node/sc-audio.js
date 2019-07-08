@@ -17,7 +17,7 @@
     const LOCAL = path.join(__dirname, '..', '..', 'local');
     const URL_RAW = 'https://raw.githubusercontent.com/sujato/sc-audio/master/flac';
     const URL_SEGMENTS = 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com';
-    const URL_MAP = 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com';
+    const URL_MAP = 'https://sc-opus-store.sgp1.digitaloceanspaces.com';
     
     class SCAudio {
         constructor(opts ={}) {
@@ -47,8 +47,8 @@
         }
 
             
-        mapUrl(suid, lang=this.language, author=this.author, reader=this.reader) {
-            suid = suid.toLowerCase();
+        aeneasMapUrl(suid, lang=this.language, author=this.author, reader=this.reader) {
+            suid = suid.toLowerCase().replace(/\.0*/ug,'.');
             var nikaya = this.nikayaOf(suid);
             var major = this.majorIdOf(suid);
             return [
@@ -60,19 +60,26 @@
             ].join('/');
         }
 
-        mapJson(suid, lang=this.language, author=this.author, reader=this.reader) {
+        aeneasMap(suid, lang=this.language, author=this.author, reader=this.reader) {
             var that = this;
-            var url = that.mapUrl(suid, lang, author, reader);
             return new Promise((resolve, reject) => {
                 (async function() { try {
+                    var catalog = await that.catalog();
+                    suid = suid.toLowerCase().replace(/\.0*/ug,'.');
+                    var entry = catalog.aeneasMaps[suid];
+                    console.log(`dbg aeneasMap`, suid, entry);
+                    if (entry) {
+                        var url = `${that.urlMap}/${entry[lang]}`;
+                    } else {
+                        var url = that.aeneasMapUrl(suid, lang, author, reader);
+                    }
                     var httpx = url.startsWith('https') ? https : http;
                     var req = httpx.get(url, res => {
                         const { statusCode } = res;
                         const contentType = res.headers['content-type'];
                         let error;
                         if (statusCode !== 200) {
-                            error = new Error('Request Failed.\n' +
-                                              `Status Code: ${statusCode}`);
+                            error = new Error(`GET ${url} => HTTP${statusCode}`);
                         } else if (/^application\/json/.test(contentType)) {
                             // OK
                         } else {
@@ -109,11 +116,19 @@
             });
         }
 
-        catalog() {
+        catalogOpts(opts={}) {
             var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
+                    var aeneasMaps = opts.aeneasMaps || {};
+                    var result = {aeneasMaps, NextMarker: ''};
+                    var marker = opts.marker;
                     var url = that.urlMap;
+                    var query = '';
+                    if (marker) {
+                        query += query.length ? `&marker=${marker}` : `?marker=${marker}`
+                    }
+                    query && (url+=query);
                     var httpx = url.startsWith('https') ? https : http;
                     var req = httpx.get(url, res => {
                         const { statusCode } = res;
@@ -131,20 +146,30 @@
                         }
 
                         res.setEncoding('utf8');
-                        let result = {suttas: [
-                        ]};
                         let remainder = '';
                         res.on('data', chunk => { 
-                            chunk = remainder + chunk.toString();
-                            var chunkLines = chunk.toString().split('.json</Key>');
+                            var chunkText = remainder + chunk.toString();
+                            if (chunkText.match(/NextMarker/)) {
+                                result.NextMarker = chunkText
+                                    .replace(/.*<NextMarker>/,'')
+                                    .replace(/<.NextMarker>.*/,'');
+                            }
+                            var chunkLines = chunkText.split('.json</Key>');
                             remainder = chunkLines[chunkLines.length-1];
                             chunkLines = chunkLines.slice(0, chunkLines.length-1);
                             chunkLines.forEach(line => {
                                 if (line.match(/Key>/u)) {
-                                    line = line.replace(/.*Key>/u,'');
-                                    line = line.replace(/.*\//u,'');
-                                    line = line.replace(/-en|-pli|-sujato/ug,'');
-                                    result.suttas.push(line);
+                                    var key = line.replace(/.*Key>/u,'');
+                                    var lang = key.split('/')[0];
+                                    var suid = key.replace(/.*\//u,'')
+                                        .replace(/\.0*/ug,'.');
+                                    suid = suid.replace(
+                                        /-en|-pli|-sujato|-mahasangiti/ug,'');
+                                    aeneasMaps[suid] = aeneasMaps[suid] || {};
+                                    var altKey = aeneasMaps[suid][lang];
+                                    if (altKey == null || altKey.length < key.length) {
+                                        aeneasMaps[suid][lang] = `${key}.json`;
+                                    }
                                 }
                             });
                         });
@@ -162,6 +187,33 @@
                         logger.error(e.stack);
                         req.abort();
                     });
+                } catch(e) {reject(e);} })();
+            });
+        }
+
+        catalog() {
+            var that = this;
+            if (!!that._catalog) {
+                return that._catalog;
+            }
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    var aeneasMaps = {};
+                    var result = {
+                        aeneasMaps,
+                        queries: 0,
+                    };
+                    var marker = '';
+                    do {
+                        var resPartial = await that.catalogOpts({
+                            marker,
+                            aeneasMaps,
+                        });
+                        result.queries++;
+                        marker = resPartial.NextMarker;
+                    } while (marker);
+                    that._catalog = result;
+                    resolve(result);
                 } catch(e) {reject(e);} })();
             });
         }
@@ -287,7 +339,7 @@
                     };
                     var {
                         fragments,
-                    } = await that.mapJson(suid, language, author, reader);
+                    } = await that.aeneasMap(suid, language, author, reader);
                     var resSearch = await suttaStore.search(suid);
                     var {
                         sutta,

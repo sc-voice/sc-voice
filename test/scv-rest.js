@@ -123,16 +123,16 @@
                     prefix: "",
                     prop: 'en',
                     template: [],
-                    title: `Middle Discourses 100`,
+                    title: `Middle Discourses 100 `,
                     type: 'Section',
                     values: [],
                     segments: [{
-                        en: 'Middle Discourses 100',
-                        pli: 'Majjhima Nikāya 100',
+                        en: 'Middle Discourses 100 ',
+                        pli: 'Majjhima Nikāya 100 ',
                         scid: 'mn100:0.1',
                     },{
-                        en: 'With Saṅgārava',
-                        pli: 'Saṅgāravasutta',
+                        en: 'With Saṅgārava ',
+                        pli: 'Saṅgāravasutta ',
                         scid: 'mn100:0.2',
                     }],
                 });

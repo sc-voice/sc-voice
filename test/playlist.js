@@ -155,14 +155,14 @@
             should.deepEqual(pl.stats(), {
                 tracks: 2,
                 chars: {
-                    en: 83585,
-                    pli: 79412,
+                    en: 84701,
+                    pli: 80393,
                 }, 
                 segments: {
-                    en: 1120,
+                    en: 1157,
                     pli: 1158,
                 },
-                duration: 14454,
+                duration: 14640,
             });
             done();
         } catch(e) { done(e); } })();

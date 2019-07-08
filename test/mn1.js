@@ -35,10 +35,10 @@
             should(sutta.support.value).equal('Legacy');
             should(sutta.metaarea).match(/.*Bhikkhu Bodhi,[^]*Blake Walsh.*/);
             should(sutta.suttaplex).properties({
-                translated_title: 'The Root of All Things',
                 type:'text',
                 root_lang: 'pli',
             });
+            should(sutta.suttaplex.translated_title).match(/The Root of All Things/);
             done();
         } catch(e) { done(e); } })();
     });

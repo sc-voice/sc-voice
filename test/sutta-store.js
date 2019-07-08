@@ -196,6 +196,34 @@
             done(); 
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTsearch('sona') finds 'Soṇa'", function(done) {
+        done(); return; // dbg TODO
+        this.timeout(5*1000);
+        (async function() { try {
+            var voice = Voice.createVoice("raveena");
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            this.suttaFactory = new SuttaFactory({
+                suttaCentralApi,
+                autoSection: true,
+            });
+            var store = await new SuttaStore({
+                suttaCentralApi,
+                suttaFactory,
+                voice,
+            }).initialize();
+
+            // multiple results
+            var {
+                method,
+                results,
+            } = await store.search('sona');
+            should(results).instanceOf(Array);
+            should(method).equal('keywords');
+            should(results.length).equal(19);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
     it("search('thig1.1') returns segmented sutta", function(done) {
         (async function() { try {
             var voice = Voice.createVoice({
@@ -941,7 +969,7 @@
                 /Translated for SuttaCentral by.*Bhikkhu Sujato/u);
             should(result0.lang).equal('en');
             should(result0.nSegments).equal(9);
-            should(result0.title).equal('Plain Version');
+            should(result0.title).match(/Plain Version/);
             should(result0.collection_id).equal('sn');
             should(result0.suttaplex.acronym).equal('SN 29.1');
             should(result0.suttaplex.uid).equal('sn29.1');
@@ -1054,10 +1082,10 @@
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
                 chars: {
-                    en: 3086,
-                    pli: 2370,
+                    en: 3124,
+                    pli: 2410,
                 },
-                duration: 483,
+                duration: 490,
                 segments: {
                     pli: 40,
                     en: 38,
@@ -1080,9 +1108,9 @@
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
                 chars: {
-                    pli: 2370,
+                    pli: 2410,
                 },
-                duration: 216,
+                duration: 220,
                 segments: {
                     pli: 40,
                 }
@@ -1127,9 +1155,9 @@
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
                 chars: {
-                    pli: 2370,
+                    pli: 2410,
                 },
-                duration: 216,
+                duration: 220,
                 segments: {
                     pli: 40,
                 }
