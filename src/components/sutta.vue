@@ -70,7 +70,7 @@ style="width:100%; margin-top:0"/>
                                     {{sutta_uid.toUpperCase()}} at SuttaCentral.net
                                 </a>
                             </li>
-                            <hr/>
+                            <div class="scv-menu-spacer">&nbsp;</div>
                             <li class="" v-if="supportedAudio.length"
                                 v-for="(audio,i) in supportedAudio" 
                                 :key="`moreaudio${i}`" >
@@ -80,7 +80,7 @@ style="width:100%; margin-top:0"/>
                                     {{audio.source}}
                                 </a>
                             </li>
-                            <hr/>
+                            <div class="scv-menu-spacer">&nbsp;</div>
                             <li v-for="translation in suttaplex.translations"
                                 :key="translation.id"
                                 v-show="author_uid !== translation.author_uid">
@@ -1207,10 +1207,8 @@ export default {
     padding: 1em;
     background-color: #000;
 }
-.scv-more-menu > hr {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    border-color: #000;
+.scv-menu-spacer {
+    height: 0.75em;
 }
 
 </style>
