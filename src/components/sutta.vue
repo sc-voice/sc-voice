@@ -394,10 +394,7 @@ export default {
                 this.moreFocus = true;
                 this.$nextTick(()=>{
                     var a1 = this.$refs['refMore1'];
-                    if (a1) {
-                        console.log(`focus`, a1);
-                        a1.focus();
-                    }
+                    a1 && a1.focus();
                 });
             }
         },

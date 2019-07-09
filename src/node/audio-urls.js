@@ -7,7 +7,7 @@
     const {
         exec,
     } = require('child_process');
-    const DEFAULT_MAX_RESULT_AGE = 24 * 60 * 60; // one day cache of audio urls
+    const DEFAULT_MAX_RESULT_AGE = 5 * 60; // how long to cache audio urls
     const FLAC_ROOT = "https://raw.githubusercontent.com/sujato/sc-audio/master/flac";
     const DO_ROOT = "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com";
     const WIKI_ROOT = "https://github.com/sc-voice/sc-voice/wiki";
