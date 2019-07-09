@@ -1,17 +1,17 @@
 <template>
 <div>
-  <v-progress-linear v-model="waiting" height="4"
-    v-if="waiting > 0"
-    aria-hidden="true"
-    background-color="#000"
-    style="width:100%; margin-top:0"/>
-  <v-container fluid class="scv-sutta">
-      <v-layout column align-left >
-          <div class="scv-search-row">
-              <div class="scv-search-col">
-                  <h1 class="title">Explore the Buddha's Teaching</h1>
-                  <div class="scv-search-field" role="search">
-                      <v-text-field ref="refSearch"
+<v-progress-linear v-model="waiting" height="4"
+v-if="waiting > 0"
+aria-hidden="true"
+background-color="#000"
+style="width:100%; margin-top:0"/>
+<v-container fluid class="scv-sutta">
+  <v-layout column align-left >
+      <div class="scv-search-row">
+          <div class="scv-search-col">
+              <h1 class="title">Explore the Buddha's Teaching</h1>
+              <div class="scv-search-field" role="search">
+                  <v-text-field ref="refSearch"
                           placeholder="Search"
                           v-model="search" v-on:keypress="onSearchKey($event)"
                           @click:append="onSearchKey()"
@@ -29,24 +29,80 @@
                           Inspire me!
                       </v-btn>
                   </div>
-                  <div class="mb-3"
-                    v-if="waiting<=0 && sutta_uid && !searchResults && gscv.voices.length"
-                    style="display:flex; justify-content: flex-start">
-                    <v-btn icon
-                        :disabled="waiting > 0"
-                        @click="launchSuttaPlayer()"
-                        ref="refPlaySutta"
-                        :aria-label="`play ${resultId()}`"
-                        class="scv-icon-btn" :style="cssProps" small>
-                        <v-icon>play_circle_outline</v-icon>
-                    </v-btn>
-                    <v-btn icon
-                        :href="downloadUrl()"
-                        @click="downloadClick()"
-                        :aria-label="`download ${resultId()}`"
-                        class="scv-icon-btn" :style="cssProps" small>
-                        <v-icon>arrow_downward</v-icon>
-                    </v-btn>
+                  <div class="scv-sutta-menubar mb-3"
+                    v-if="waiting<=0 && sutta_uid && !searchResults && gscv.voices.length">
+                    <div>
+                        <v-btn icon
+                            :disabled="waiting > 0"
+                            @click="launchSuttaPlayer()"
+                            ref="refPlaySutta"
+                            :aria-label="`play ${resultId()}`"
+                            class="scv-icon-btn" :style="cssProps" small>
+                            <v-icon>play_circle_outline</v-icon>
+                        </v-btn>
+                        <v-btn icon
+                            :href="downloadUrl()"
+                            @click="downloadClick()"
+                            :aria-label="`download ${resultId()}`"
+                            class="scv-icon-btn" :style="cssProps" small>
+                            <v-icon>arrow_downward</v-icon>
+                        </v-btn>
+                    </div>
+                    <div class="scv-more" >
+                        <v-btn icon
+                            @click="clickMore()"
+                            aria-label="More menu"
+                            aria-haspopup="true"
+                            :aria-expanded="moreVisible"
+                            class="scv-icon-btn" :style="cssProps" small>
+                            <v-icon>menu</v-icon>
+                        </v-btn>
+                        <ul class="scv-more-menu" 
+                            v-if="moreVisible"
+                            @focusin="focusMore(true)"
+                            @focusout="focusMore(false)"
+                            :aria-hidden="!moreVisible">
+                            <li class="mb-3">
+                                <a :href="`https://suttacentral.net/${sutta_uid}`"
+                                    ref="refMore1"
+                                    class="scv-a"
+                                    target="_blank">
+                                    {{sutta_uid.toUpperCase()}} at SuttaCentral.net
+                                </a>
+                            </li>
+                            <li class="mb-3" v-if="supportedAudio.length">
+                                Audio:
+                                <a class="scv-a" :href="audio.url" 
+                                    v-for="(audio,i) in supportedAudio" :key="`audio${i}`"
+                                    target="_blank">
+                                    <span v-if="i">&#x2022;</span>
+                                    {{audio.source}}
+                                </a>
+                            </li>
+                            <li v-for="translation in suttaplex.translations"
+                                :key="translation.id"
+                                v-show="author_uid !== translation.author_uid">
+                                <a :href="translationLink(translation)"
+                                    class="scv-a"
+                                    v-on:click="clickTranslation(translation,$event)">
+                                    {{translation.author}}
+                                    ({{translation.lang_name}})
+                                </a>
+                            </li>
+                            <li class="mt-3">
+                                <a class="scv-a" :style="cssProps"
+                                    target="_blank"
+                                    href="https://github.com/sc-voice/sc-voice/wiki/Support-Policy/">
+                                    <span v-if="support.value==='Legacy'">
+                                        Content is Legacy
+                                    </span>
+                                    <span v-if="support.value==='Supported'">
+                                        Content is <em>Supported</em>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                   </div>
               </div>
           </div>
@@ -296,6 +352,8 @@ export default {
             error,
             examples: null,
             hasAudio: true,
+            moreVisible: false,
+            moreFocus: false,
             search: '',
             sectionAudioGuids,
             searchResults: null,
@@ -320,6 +378,27 @@ export default {
         return that;
     },
     methods: {
+        focusMore(focus) {
+            this.moreFocus = focus;
+            setTimeout(()=>{
+                if (!this.moreFocus) {
+                    Vue.set(this, "moreVisible", false);
+                }
+            }, 500);
+        },
+        clickMore() {
+            this.moreVisible = !this.moreVisible;
+            if (this.moreVisible) {
+                this.moreFocus = true;
+                this.$nextTick(()=>{
+                    var a1 = this.$refs['refMore1'];
+                    if (a1) {
+                        console.log(`focus`, a1);
+                        a1.focus();
+                    }
+                });
+            }
+        },
         clickInspireMe() {
             var that = this;
             var url = this.url(`examples/3`);
@@ -1101,6 +1180,30 @@ export default {
 
 .scv-sutta a {
   text-decoration: none;
+}
+
+.scv-sutta-menubar {
+    display:flex; 
+    justify-content:space-between;
+    width: 100%;
+}
+.scv-more {
+    position: relative;
+    font-size: larger;
+}
+.scv-more > a {
+    color: #fff;
+}
+.scv-more-menu {
+    position: absolute;
+    list-style: none;
+    top: 2em;
+    right: 0;
+    width: 20em;
+    text-align: right;
+    border-top: 1pt solid #888;
+    padding: 1em;
+    background-color: #000;
 }
 
 </style>
