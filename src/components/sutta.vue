@@ -62,7 +62,7 @@ style="width:100%; margin-top:0"/>
                             @focusin="focusMore(true)"
                             @focusout="focusMore(false)"
                             :aria-hidden="!moreVisible">
-                            <li class="mb-3">
+                            <li class="">
                                 <a :href="`https://suttacentral.net/${sutta_uid}`"
                                     ref="refMore1"
                                     class="scv-a"
@@ -70,15 +70,17 @@ style="width:100%; margin-top:0"/>
                                     {{sutta_uid.toUpperCase()}} at SuttaCentral.net
                                 </a>
                             </li>
-                            <li class="mb-3" v-if="supportedAudio.length">
+                            <hr/>
+                            <li class="" v-if="supportedAudio.length"
+                                v-for="(audio,i) in supportedAudio" 
+                                :key="`moreaudio${i}`" >
                                 Audio:
                                 <a class="scv-a" :href="audio.url" 
-                                    v-for="(audio,i) in supportedAudio" :key="`audio${i}`"
                                     target="_blank">
-                                    <span v-if="i">&#x2022;</span>
                                     {{audio.source}}
                                 </a>
                             </li>
+                            <hr/>
                             <li v-for="translation in suttaplex.translations"
                                 :key="translation.id"
                                 v-show="author_uid !== translation.author_uid">
@@ -1204,6 +1206,11 @@ export default {
     border-top: 1pt solid #888;
     padding: 1em;
     background-color: #000;
+}
+.scv-more-menu > hr {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border-color: #000;
 }
 
 </style>
