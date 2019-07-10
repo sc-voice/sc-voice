@@ -51,36 +51,37 @@ style="width:100%; margin-top:0"/>
                     <div class="scv-more" >
                         <v-btn icon
                             @click="clickMore()"
-                            aria-label="More menu"
                             aria-haspopup="true"
                             :aria-expanded="moreVisible"
                             class="scv-icon-btn" :style="cssProps" small>
-                            <v-icon>menu</v-icon>
+                            <v-icon>more_vert</v-icon>
                         </v-btn>
                         <ul class="scv-more-menu" 
                             v-if="moreVisible"
                             @focusin="focusMore(true)"
                             @focusout="focusMore(false)"
                             :aria-hidden="!moreVisible">
+                            <div class="scv-menu-header">SuttaCentral</div>
                             <li class="">
                                 <a :href="`https://suttacentral.net/${sutta_uid}`"
                                     ref="refMore1"
                                     class="scv-a"
                                     target="_blank">
-                                    {{sutta_uid.toUpperCase()}} at SuttaCentral.net
+                                    SuttaCentral.net/{{sutta_uid.toUpperCase()}}
+                                    <v-icon class="ml-2" small>open_in_new</v-icon>
                                 </a>
                             </li>
-                            <div class="scv-menu-spacer">&nbsp;</div>
+                            <div class="scv-menu-header">Audio</div>
                             <li class="" v-if="supportedAudio.length"
                                 v-for="(audio,i) in supportedAudio" 
                                 :key="`moreaudio${i}`" >
-                                Audio:
                                 <a class="scv-a" :href="audio.url" 
                                     target="_blank">
                                     {{audio.source}}
+                                    <v-icon class="ml-2" small>open_in_new</v-icon>
                                 </a>
                             </li>
-                            <div class="scv-menu-spacer">&nbsp;</div>
+                            <div class="scv-menu-header">Translations</div>
                             <li v-for="translation in suttaplex.translations"
                                 :key="translation.id"
                                 v-show="author_uid !== translation.author_uid">
@@ -89,9 +90,10 @@ style="width:100%; margin-top:0"/>
                                     v-on:click="clickTranslation(translation,$event)">
                                     {{translation.author}}
                                     ({{translation.lang_name}})
+                                    <v-icon class="ml-2" small>call_made</v-icon>
                                 </a>
                             </li>
-                            <li class="mt-3">
+                            <!--li class="mt-3">
                                 <a class="scv-a" :style="cssProps"
                                     target="_blank"
                                     href="https://github.com/sc-voice/sc-voice/wiki/Support-Policy/">
@@ -102,7 +104,7 @@ style="width:100%; margin-top:0"/>
                                         Content is <em>Supported</em>
                                     </span>
                                 </a>
-                            </li>
+                            </li-->
                         </ul>
                     </div>
                   </div>
@@ -1204,8 +1206,10 @@ export default {
     padding: 1em;
     background-color: #000;
 }
-.scv-menu-spacer {
-    height: 0.75em;
+.scv-menu-header {
+    margin-top: 0.5em;
+    font-size: 10px;
+    text-align: left;
 }
 
 </style>
