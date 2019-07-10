@@ -601,19 +601,24 @@
                     for (var i = 0; i<sutta.segments.length; i++) {
                         var seg = sutta.segments[i];
                         var text = seg[lang];
-                        var speakResult = await that.speak(text, {
-                            volume,
-                        });
-                        var guid = speakResult.signature.guid;
-                        guids.push(guid);
-                        var guidResult = await that.importGuidFiles(guid, volume);
+                        if (text) {
+                            var speakResult = await that.speak(text, {
+                                volume,
+                            });
+                            var guid = speakResult.signature.guid;
+                            guids.push(guid);
+                            var guidResult = await that.importGuidFiles(guid, volume);
+                        }
                     }
                     resolve({
                         sutta_uid,
                         volume,
                         guids,
                     });
-                } catch(e) {reject(e);} })();
+                } catch(e) {
+                    logger.warn(`importSutta(${sutta_uid}) failed`);
+                    reject(e);
+                } })();
             });
         }
     }
