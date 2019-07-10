@@ -2,6 +2,7 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const { logger } = require('rest-bundle');
     const {
         Playlist,
         Sutta,
@@ -197,8 +198,7 @@
         } catch(e) {done(e);} })();
     });
     it("TESTTESTsearch('sona') finds 'Soṇa'", function(done) {
-        done(); return; // dbg TODO
-        this.timeout(5*1000);
+        this.timeout(10*1000);
         (async function() { try {
             var voice = Voice.createVoice("raveena");
             var suttaCentralApi = await new SuttaCentralApi().initialize();
@@ -210,6 +210,7 @@
                 suttaCentralApi,
                 suttaFactory,
                 voice,
+                maxResults: 50,
             }).initialize();
 
             // multiple results
@@ -219,7 +220,7 @@
             } = await store.search('sona');
             should(results).instanceOf(Array);
             should(method).equal('keywords');
-            should(results.length).equal(19);
+            should(results.length).equal(39);
 
             done(); 
         } catch(e) {done(e);} })();

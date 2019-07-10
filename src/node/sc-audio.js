@@ -67,7 +67,6 @@
                     var catalog = await that.catalog();
                     suid = suid.toLowerCase().replace(/\.0*/ug,'.');
                     var entry = catalog.aeneasMaps[suid];
-                    console.log(`dbg aeneasMap`, suid, entry);
                     if (entry) {
                         var url = `${that.urlMap}/${entry[lang]}`;
                     } else {

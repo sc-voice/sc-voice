@@ -79,8 +79,8 @@
             'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com'+
             '/pli/sn/sn1/sn1.58/sn1.58_2.1.webm');
     });
-    it("aeneasMap(suid...) returns aeneas map JSON", function(done) {
-        this.timeout(15*1000);
+    it("TESTTESTaeneasMap(suid...) returns aeneas map JSON", function(done) {
+        this.timeout(20*1000);
         (async function() { try {
             var sca = SCA;
             var resMap = await sca.aeneasMap('sn1.09');
@@ -101,7 +101,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTcatalog(opts) returns sutta catalog", function(done) {
+    it("catalog(opts) returns sutta catalog", function(done) {
         this.timeout(15*1000);
         (async function() { try {
             var sca = SCA;

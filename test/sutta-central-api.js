@@ -277,8 +277,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("loadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
-        done(); return; // TBD staging problem dbg
+    it("TESTTESTloadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var language = 'en';
@@ -312,8 +311,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("loadSutta(opts) loads MN79", function(done) {
-        done(); return; // TBD staging problem dbg
+    it("TESTTESTloadSutta(opts) loads MN79", function(done) {
         this.timeout(5*1000);
         logger.level = 'info';
         (async function() { try {
@@ -322,8 +320,8 @@
 
             should.deepEqual(sutta.segments[0], {
                 scid: 'mn79:0.1',
-                en: 'Middle Discourses 79',
-                pli: 'Majjhima Nikāya 79'
+                en: 'Middle Discourses 79 ',
+                pli: 'Majjhima Nikāya 79 '
             });
             should.deepEqual(sutta.segments[100], {
                 en: "“What do you think, Udāyī? ",
