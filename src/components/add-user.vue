@@ -42,7 +42,7 @@
             <v-card-actions>
                 <v-btn flat @click="dialog=false">Cancel</v-btn>
                 <v-spacer/>
-                <v-btn @click="onAddUser" flat
+                <v-btn @click="onAddUser()" flat
                     :disabled="disabled()"
                     >
                     Add User
@@ -79,6 +79,7 @@ export default {
     },
     methods: {
         onActivate() {
+            console.log('onActivate()');
             Vue.set(this, "errMsg", null);
             Vue.set(this, "statusMsg", null);
             Vue.set(this, "username", "");
@@ -87,9 +88,11 @@ export default {
             Vue.set(this, "isAdmin", false);
             Vue.set(this, "isTranslator", false);
             Vue.set(this, "isEditor", false);
+            Vue.set(this, "dialog", true);
         },
         onAddUser() {
             var username = this.username;
+            console.log(`onAddUser ${username}`);
             var url = this.url('auth/add-user');
             var config = {
                 headers: {

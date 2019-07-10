@@ -60,6 +60,7 @@ export default {
             console.log(`deleting user: ${this.username}`);
             Vue.set(this, "errMsg", null);
             Vue.set(this, "confirm", false);
+            Vue.set(this, "dialog", true);
         },
         onDeleteUser() {
             var username = this.username;
