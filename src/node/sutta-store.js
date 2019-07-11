@@ -279,7 +279,7 @@
             } = args;
             var grex = searchMetadata
                 ? pattern
-                : `"(${language}|pli)":.*${pattern}`;
+                : `"(blurb|title|${language}|pli)":.*${pattern}`;
             var root = this.root.replace(ROOT, '');
             var cmd = `grep -rciE '${grex}' `+
                 `--exclude-dir=examples `+
@@ -787,7 +787,7 @@
                 };
             }
             var searchMetadata = opts.searchMetadata == null 
-                ? true 
+                ? false 
                 : opts.searchMetadata == true || opts.searchMetadata === 'true';
             var pattern = SuttaStore.sanitizePattern(opts.pattern);
             var language = opts.language || 'en';
@@ -870,7 +870,7 @@
                 };
             }
             var searchMetadata = opts.searchMetadata == null 
-                ? true 
+                ? false 
                 : opts.searchMetadata == true || opts.searchMetadata === 'true';
             var pattern = SuttaStore.sanitizePattern(opts.pattern);
             var language = opts.language || 'en';

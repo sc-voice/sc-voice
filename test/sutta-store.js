@@ -220,7 +220,7 @@
             } = await store.search('sona');
             should(results).instanceOf(Array);
             should(method).equal('keywords');
-            should(results.length).equal(39);
+            should(results.length).equal(21);
 
             done(); 
         } catch(e) {done(e);} })();
@@ -426,6 +426,7 @@
         testPattern("sattānaṃ", "sattānaṃ");
     });
     it("search(pattern) is sanitized", function(done) {
+        this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {
@@ -579,11 +580,11 @@
                 uid:r.uid,
                 count:r.count,
             })), [{
-                count: 17,
-                uid: 'an9.36',
-            },{
                 count: 16,
                 uid: 'an6.60',
+            },{
+                count: 16,
+                uid: 'an9.36',
             },{
                 count: 16,
                 uid: 'mn108',
@@ -1021,7 +1022,8 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("keywordSearch(...) finds suttas by keywords", function(done) {
+    it("TESTTESTkeywordSearch(...) finds suttas by keywords", function(done) {
+        logger.level='info'; // dbg
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var language = 'en';
@@ -1029,13 +1031,13 @@
             // Search Pali phrase
             var pattern = store.patternKeywords('Anāthapiṇḍika')[0]; 
             var data = await store.keywordSearch({ pattern, language, });
-            should(data.lines.length).equal(223);
+            should(data.lines.length).equal(224);
 
             // Search Pali phrase
             var pattern = store.patternKeywords('anathapindika')[0]; 
             console.log(pattern);
             var data2 = await store.keywordSearch({ pattern, language, });
-            should(data2.lines.length).equal(224); // sn55.30: anāthapiṇḍikā 
+            should(data2.lines.length).equal(225); // sn55.30: anāthapiṇḍikā 
 
             done(); 
         } catch(e) {done(e);} })();

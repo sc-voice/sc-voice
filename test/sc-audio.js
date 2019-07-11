@@ -79,7 +79,7 @@
             'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com'+
             '/pli/sn/sn1/sn1.58/sn1.58_2.1.webm');
     });
-    it("TESTTESTaeneasMap(suid...) returns aeneas map JSON", function(done) {
+    it("aeneasMap(suid...) returns aeneas map JSON", function(done) {
         this.timeout(20*1000);
         (async function() { try {
             var sca = SCA;

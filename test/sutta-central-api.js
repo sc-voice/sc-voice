@@ -277,7 +277,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
+    it("loadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
         (async function() { try {
             var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var language = 'en';
@@ -311,7 +311,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) loads MN79", function(done) {
+    it("loadSutta(opts) loads MN79", function(done) {
         this.timeout(5*1000);
         logger.level = 'info';
         (async function() { try {
