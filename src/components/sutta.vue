@@ -71,7 +71,7 @@ style="width:100%; margin-top:0"/>
                                     <v-icon class="ml-2" small>open_in_new</v-icon>
                                 </a>
                             </li>
-                            <div class="scv-menu-header">Audio</div>
+                            <div class="scv-menu-header">Supported Audio Recordings</div>
                             <li class="" v-if="supportedAudio.length"
                                 v-for="(audio,i) in supportedAudio" 
                                 :key="`moreaudio${i}`" >
@@ -81,7 +81,7 @@ style="width:100%; margin-top:0"/>
                                     <v-icon class="ml-2" small>open_in_new</v-icon>
                                 </a>
                             </li>
-                            <div class="scv-menu-header">Translations</div>
+                            <div class="scv-menu-header">Legacy Translations</div>
                             <li v-for="translation in suttaplex.translations"
                                 :key="translation.id"
                                 v-show="author_uid !== translation.author_uid">
