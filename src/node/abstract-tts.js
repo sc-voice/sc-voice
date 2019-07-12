@@ -13,6 +13,7 @@
     const { exec } = require('child_process');
     const RE_PARA = new RegExp(`^[${Words.U_RSQUOTE}${Words.U_RDQUOTE}]*\n$`,'u');
     const RE_PARA_EOL = /^\n\n+$/u;
+    const RE_PAUSE3 = /[\u2014;]/;
     const RE_NUMBER = new RegExp(Words.PAT_NUMBER);
     const RE_STRIPNUMBER = new RegExp(`\\(?${Words.PAT_NUMBER}\\)?`);
     const ELLIPSIS_BREAK = '<break time="1.000s"/>';
@@ -207,8 +208,11 @@
             var tokensSSML = tokens.reduce((acc, token) => {
                 if (RE_PARA_EOL.test(token)) {
                     acc.length && acc.push('\n');
-                    acc.push(`${this.break(5)}`);
+                    acc.push(`${this.break(4)}`);
                     acc.push('\n');
+                } else if (RE_PAUSE3.test(token)) {
+                    acc.length && acc.push(' ');
+                    acc.push(`${this.break(3)} `);
                 } else if (token === '&') {
                     acc.push('&amp;');
                 } else {

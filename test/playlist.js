@@ -209,7 +209,7 @@
                 voices,
                 volume: 'test-playlist',
             });
-            should(result.signature.guid).match(/bc00790/);
+            should(result.signature.guid).match(/86043d07ec8ba96a415a48d961bfd966/);
             done();
         } catch(e) { done(e); } })();
     });

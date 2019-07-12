@@ -23,8 +23,6 @@
                 json = fs.existsSync(filePath)
                     ? JSON.parse(fs.readFileSync(filePath))
                     : {
-                        symbols: {},
-                        words: {},
                     };
                 json = Object.assign({}, commonJson, json);
                 json.words = Object.assign({}, commonJson.words, json.words);
@@ -39,7 +37,8 @@
             var wordQuotes = "'" + Words.U_RSQUOTE + Words.U_APOSTROPHE;
             this.alphabet = new RegExp(json.alphabet || `[a-z${wordQuotes}]*`, "iu");
             var symAcc= Object.keys(this.symbols).reduce((acc,sym) => {
-                if (this.symbols[sym].isWord) {
+                var symdef = this.symbols[sym];
+                if (symdef.isWord) {
                     // symbol is part of a word
                 } else {
                     if (sym === ']') {

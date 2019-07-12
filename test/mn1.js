@@ -175,7 +175,7 @@
                 },
                 volume: 'test-mn1',
             });
-            should(result.signature.guid).match(/f3610ff41766cb10679a0b19b0a3ee6f/);
+            should(result.signature.guid).match(/c53edaf8d747b795766dcd3298976c58/);
             console.log(`mn1.speak() done`, ((Date.now() - msStart)/1000).toFixed(1));
             done();
         } catch(e) { done(e); } })();

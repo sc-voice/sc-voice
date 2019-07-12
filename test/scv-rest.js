@@ -434,7 +434,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles large segment", function(done) {
+    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
@@ -454,7 +454,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.en).match(/^.For two reasons the Realized One/);
             should(data.segment.audio.en).match(/^6e032e4caef35cc5d009041f38c68c79/);
-            should(data.segment.audio.pli).match(/d7ada11f84b7cfbcad13c6616ee0f53e/);
+            should(data.segment.audio.pli).match(/60479bb5bffa55333830d80e008c7dfd/);
 
             done();
         } catch(e) {done(e);} })();
@@ -560,7 +560,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.pli).match(/samayaṃ bhagavā sāvatthiyaṃ/);
             should(data.segment.audio.en).match(/b85e0f29ad151581a2c82741991a240e/);
-            should(data.segment.audio.pli).match(/d24fce55a21d8735f12b974febe32d2c/);
+            should(data.segment.audio.pli).match(/d4b9b098ec90a84e0b77ebe66e929913/);
             should(data.segment.audio.vnamePali).equal('Aditi');
 
             done();
@@ -830,8 +830,8 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/create-archive create VSM", function(done) {
-        this.timeout(10*1000);
+    it("TESTTESTPOST auth/vsm/create-archive create VSM", function(done) {
+        this.timeout(15*1000);
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;
             var nikaya = 'kn';
@@ -887,7 +887,7 @@
 
             // and after a while it should be done
             await new Promise((resolve, reject) => {
-                setTimeout(() => resolve(true), 2000);
+                setTimeout(() => resolve(true), 5000);
             });
             var res = await testAuthGet(taskUrl);
             res.statusCode.should.equal(200);

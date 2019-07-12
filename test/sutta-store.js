@@ -197,7 +197,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch('sona') finds 'Soṇa'", function(done) {
+    it("search('sona') finds 'Soṇa'", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var voice = Voice.createVoice("raveena");
@@ -1022,7 +1022,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTkeywordSearch(...) finds suttas by keywords", function(done) {
+    it("keywordSearch(...) finds suttas by keywords", function(done) {
         logger.level='info'; // dbg
         (async function() { try {
             var store = await new SuttaStore().initialize();

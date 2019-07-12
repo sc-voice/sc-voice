@@ -55,15 +55,15 @@
         var recite = aditi.services['recite'];
         should(recite.syllableVowels).equal('aeiou');
     });
-    it("segmentSSML(text) returns SSML", function() {
+    it("TESTTESTsegmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
 
-        testPhoneme(recite, 'ə sesəŋ ;', 'asesaṃ;');
+        testPhoneme(recite, 'ə sesəŋ"', 'asesaṃ;');
 
         var ssml = recite.segmentSSML('disā, disā');
-        should(ssml.length).equal(1);
-        should(ssml[0]).match(/phoneme.*phoneme.*phoneme.*phoneme/);
+        should(ssml.length).equal(2);
+        should(ssml[0].split('phoneme').length).equal(3);
 
         testPhoneme(recite, 'pɑ’ɽe', 'pare');
 
@@ -115,7 +115,7 @@
 
         // punctuation
         var ssml = recite.segmentSSML('dve, dve');
-        should(ssml.length).equal(1);
+        should(ssml.length).equal(2);
         var ssml = recite.segmentSSML('2. Dve');
         should(ssml.length).equal(1);
     });
@@ -139,5 +139,11 @@
         ].join(' ');
         var ssml = recite.segmentSSML(text);
         should.deepEqual(ssml.filter(s=>s==='.'), []);
+    });
+    it("TESTTESTtokensSSML(text) handles UTF8 punctuation", function() {
+        var aditi = Voice.createVoice(ADITI_OPTS);
+        var recite = aditi.services['recite'];
+        var tokens = recite.tokenize("bbhantarā kammantā—uṇṇāti vā");
+        should(tokens[2]).equal('\u2014');
     });
 })

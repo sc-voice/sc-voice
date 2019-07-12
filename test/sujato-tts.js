@@ -46,7 +46,7 @@
         var ssml = recite.segmentSSML('dakkhiṇeyyaṃ');
         should.deepEqual(ssml,['dakkhiṇeyyaṃ']);
     });
-    it("speak([text],opts) returns sound file for array of text", function(done) {
+    it("TESTTESTspeak([text],opts) returns sound file for array of text", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice({
@@ -70,7 +70,7 @@
             var storePath = voice.soundStore.storePath;
             var files = result.signature.files.map(f => 
                 f.startsWith('/') ? f : path.join(storePath, f));
-            should(files.length).equal(3);
+            should(files.length).equal(4);
             should(files[0]).equal(files[1]);
             should(files[0]).equal(files[2]);
             should(files[0]).match(/break500/);
