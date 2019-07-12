@@ -13,7 +13,7 @@
     const { exec } = require('child_process');
     const RE_PARA = new RegExp(`^[${Words.U_RSQUOTE}${Words.U_RDQUOTE}]*\n$`,'u');
     const RE_PARA_EOL = /^\n\n+$/u;
-    const RE_PAUSE3 = /[\u2014;]/;
+    const RE_PAUSE3 = /[\u2014;:]/;
     const RE_NUMBER = new RegExp(Words.PAT_NUMBER);
     const RE_STRIPNUMBER = new RegExp(`\\(?${Words.PAT_NUMBER}\\)?`);
     const ELLIPSIS_BREAK = '<break time="1.000s"/>';

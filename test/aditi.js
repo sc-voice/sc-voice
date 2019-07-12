@@ -143,7 +143,9 @@
     it("TESTTESTtokensSSML(text) handles UTF8 punctuation", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
-        var tokens = recite.tokenize("bbhantarā kammantā—uṇṇāti vā");
-        should(tokens[2]).equal('\u2014');
+        var tokens = recite.tokenize("bbhantarā; kammantā—uṇṇāti: vā");
+        should(tokens[1]).equal(';');
+        should(tokens[3]).equal('\u2014');
+        should(tokens[5]).equal(':');
     });
 })

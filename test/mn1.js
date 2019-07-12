@@ -138,7 +138,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("speak() generates mn1 sounds", function(done) {
+    it("TESTTESTspeak() generates mn1 sounds", function(done) {
         console.log("mn1.speak()  may take 1-2 minutes...");
         this.timeout(120*1000); 
         /*
@@ -175,7 +175,7 @@
                 },
                 volume: 'test-mn1',
             });
-            should(result.signature.guid).match(/c53edaf8d747b795766dcd3298976c58/);
+            should(result.signature.guid).match(/c6c3a370a0d4774c28cd61349b92084a/);
             console.log(`mn1.speak() done`, ((Date.now() - msStart)/1000).toFixed(1));
             done();
         } catch(e) { done(e); } })();
