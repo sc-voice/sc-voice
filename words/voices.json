@@ -350,6 +350,34 @@
         }
     }
 },{
+    "service": "human-tts",
+    "name": "sujato_en",
+    "label": "\ud83d\udde3 Bhante Sujato (English)",
+    "maxSegment": 400,
+    "stripNumbers": false,
+    "stripQuotes": false,
+    "usage": "recite",
+    "langTrans": "en",
+    "locale": "en",
+    "localeAlt": "pli",
+    "gender": "male",
+    "pitch": "0%",
+    "fullStopComma": true,
+    "rates": {
+        "navigate": "0%", 
+        "recite": "0%"
+    },
+    "usages": {
+        "recite": {
+            "priority": 1,
+            "rate": "0%",
+            "breaks": [0.001,0.1,0.2,0.6,1]
+        }
+    },
+    "ipa": {
+        "pli": {}
+    }
+},{
     "service": "aws-polly",
     "name": "Vicki",
     "label": "\ud83e\udd16 Vicki",
@@ -428,7 +456,7 @@
 },{
     "service": "human-tts",
     "name": "sujato_pli",
-    "label": "\ud83d\udde3 Bhante Sujato",
+    "label": "\ud83d\udde3 Bhante Sujato (Pali)",
     "maxSegment": 400,
     "syllableVowels": "aeiouāīū",
     "syllabifyLength": 0,

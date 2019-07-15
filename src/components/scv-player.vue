@@ -389,7 +389,7 @@ export default {
             var audio = segment && segment.audio || {};
             var vname = lang === 'pli' 
                 ? audio && audio.vnamePali || this.gscv.vnameRoot 
-                : this.voice.name;
+                : audio && audio.vnameTrans || this.voice.name;
             var guid = segment && segment.audio[lang];
             var url = guid 
                 ? this.url(`audio/${sutta_uid}/${lang}/${translator}/${vname}/${guid}`)

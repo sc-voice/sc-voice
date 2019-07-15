@@ -647,7 +647,7 @@
             },
         });
     });
-    it("langVoices(lang) returns voices for language", function() {
+    it("TESTTESTlangVoices(lang) returns voices for language", function() {
         var scv = new ScvSingleton(g);
         scv.voices = VOICES;
         should(scv.voices).equal(VOICES);
@@ -655,13 +655,13 @@
         // default
         var voices = scv.langVoices();
         should.deepEqual(voices.map(v => v.name), [
-            'Amy', 'Russell', 'Raveena',
+            'Amy', 'Russell', 'Raveena', 'sujato_en',
         ]);
 
         // custom
         var voices = scv.langVoices('en');
         should.deepEqual(voices.map(v => v.name), [
-            'Amy', 'Russell', 'Raveena',
+            'Amy', 'Russell', 'Raveena', 'sujato_en',
         ]);
 
         // custom

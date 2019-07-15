@@ -34,6 +34,7 @@
                 `voice:${this.voice}`,
                 `language:${this.language}`,
                 `noAudioPath:${this.noAudioPath}`,
+                `scAudio:${!!this.scAudio})`,
             ].join(' '));
         }
 
@@ -62,7 +63,7 @@
                 VoiceId: that.voice,
                 LanguageCode: that.language,
             }
-            logger.info(`HumanTts.serviceSynthesize() ${JSON.stringify(request)}`);
+            logger.info(`HumanTts.serviceSynthesize(${this.voice}) ${JSON.stringify(request)}`);
 
             that.synthesizeResponse(resolve, reject, request);
         }
@@ -126,6 +127,7 @@
             }
             usage = usage || this.usage;
             var text = segment[language.split('-')[0]] || '(no text)';
+            console.log(`dbg suttaSegId`, suttaSegId);
             var altVolume = altTts && SoundStore.suttaVolumeName(suttaSegId, language, 
                     translator, altTts.voice);
             var altArgs = {

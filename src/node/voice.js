@@ -1,6 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
+    const { logger } = require('rest-bundle');
     const Polly = require('./polly');
     const HumanTts = require('./human-tts');
     const Words = require('./words');
@@ -62,7 +63,11 @@
             }
             voicePath == null && (voicePath = path.join(__dirname, '../../words/voices.json'));
             var json = JSON.parse(fs.readFileSync(voicePath).toString());
-            voicesCache = json.map(voiceOpts => new Voice(voiceOpts));
+            voicesCache = json.map(voiceOpts => {
+                var voice = new Voice(voiceOpts);
+                logger.info(`loaded Voice:${voice.name}`);
+                return voice;
+            });
             return voicesCache;
         }
 
@@ -167,6 +172,8 @@
             if (voiceOpts.altTts == null) {
                 if (opts.name === 'sujato_pli') {
                     voiceOpts.altTts = Voice.voiceOfName('Aditi').services.recite;
+                } else  if (opts.name === 'sujato_en') {
+                    voiceOpts.altTts = Voice.voiceOfName('Amy').services.recite;
                 }
             }
             voiceOpts = Object.assign(voiceOpts, opts);

@@ -104,7 +104,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTimportSpeakResult(sr) imports compound guid", function(done) {
+    it("importSpeakResult(sr) imports compound guid", function(done) {
         (async function() { try {
             var storePath = tmp.tmpNameSync();;
             var vsm = new VsmStore({

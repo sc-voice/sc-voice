@@ -408,10 +408,11 @@
             if (/[0-9]+/.test(vnameTrans)) {
                 var iVoice = Number(vnameTrans);
             }
+            var scAudio = this.scAudio;
             var voice = Voice.voiceOfName(vnameTrans);
             var voiceRoot = Voice.createVoice({
                 name: vnameRoot,
-                scAudio: this.scAudio,
+                scAudio,
             });
             logger.info(`GET ${req.url}`);
             var usage = voice.usage || 'recite';
@@ -435,6 +436,7 @@
                         localeAlt: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
+                        scAudio,
                     });
                     var sections = sutta.sections;
                     var iSegment = sutta.segments
@@ -451,14 +453,15 @@
                     }
                     segment.audio = {};
                     if (segment[langTrans]) {
-                        var speak = await voiceTrans.speakSegment({
+                        var resSpeak = await voiceTrans.speakSegment({
                             sutta_uid,
                             segment,
                             language: langTrans, 
                             translator,
                             usage,
                         });
-                        segment.audio[langTrans] = speak.signature.guid;
+                        segment.audio[langTrans] = resSpeak.signature.guid;
+                        segment.audio.vnameTrans = resSpeak.altTts;
                     }
                     if (segment.pli) {
                         var resSpeak = await voiceRoot.speakSegment({

@@ -434,7 +434,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", function(done) {
+    it("GET /play/segment/... handles large segment", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var scid = "an2.280-309:281.1.1";
@@ -465,7 +465,7 @@
             var scid = "dn33:0.1";
             var sutta_uid = scid.split(":")[0];
             var langTrans = 'en';
-            var vnameTrans = "Russell";
+            var vnameTrans = "sujato_en";
             var vnameRoot = "sujato_pli";
             var url = [
                 `/scv/play/segment`,
@@ -480,17 +480,20 @@
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(data.sutta_uid).equal(scid.split(':')[0]);
-            should(data.vnameTrans).equal('Russell');
-            should(data.vnameRoot).equal('sujato_pli');
+            should(data.vnameTrans).equal(vnameTrans);
+            should(data.vnameRoot).equal(vnameRoot);
             should(data.iSegment).equal(0);
             should(data.section).equal(0);
             should(data.nSections).equal(12);
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
             should(data.segment.pli).match(/^Dīgha Nikāya 33/);
-            should(data.segment.audio.en).match(/04f204b604a4a9bc2c1ef62c9f5309b9/);
-            should(data.segment.audio.pli).match(/3269e075fe9bfd7973566445b5cdeada/);
             should(data.segment.audio.vnamePali).equal('Aditi');
+            should(data.segment.audio.vnameTrans).equal('Amy');
+            should(data.segment.audio.en)
+                .match(/b06d3e95cd46714448903fa8bcb12004/);
+            should(data.segment.audio.pli)
+                .match(/3269e075fe9bfd7973566445b5cdeada/);
 
             done();
         } catch(e) {done(e);} })();
@@ -830,7 +833,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/vsm/create-archive create VSM", function(done) {
+    it("POST auth/vsm/create-archive create VSM", function(done) {
         this.timeout(15*1000);
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;
@@ -905,7 +908,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET voices returns voices", function(done) {
+    it("TESTTESTGET voices returns voices", function(done) {
         (async function() { try {
             // default
             var url = "/scv/voices";
@@ -913,7 +916,7 @@
             should(res.statusCode).equal(200);
             var voices = res.body;
             should.deepEqual(voices.map(v=>v.name), [
-                'Amy', 'Russell', 'Raveena', // en voices first
+                'Amy', 'Russell', 'Raveena', 'sujato_en', // en voices first
                 'Vicki',
                 'Aditi', 'sujato_pli', // pli voices last
             ])
@@ -929,7 +932,7 @@
             should(res.statusCode).equal(200);
             var voices = res.body;
             should.deepEqual(voices.map(v=>v.name), [
-                'Amy', 'Russell', 'Raveena', // en voices first
+                'Amy', 'Russell', 'Raveena', 'sujato_en', // en voices first
                 'Aditi', 'sujato_pli', // pli voices last
             ])
 

@@ -18,7 +18,7 @@
         return ph;
     }
 
-    it("loadVoices(voicePath) should return voices", function() {
+    it("TESTTESTloadVoices(voicePath) should return voices", function() {
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
         should(voices.length).greaterThan(0);
@@ -28,6 +28,7 @@
             'Raveena', 
             'Russell',
             'Vicki',
+            'sujato_en',
             'sujato_pli',
         ].sort());
         var raveena = voices.filter(voice => voice.name === 'Raveena')[0];
@@ -344,7 +345,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeak(text) can handle lengthy Pali", function(done) {
+    it("speak(text) can handle lengthy Pali", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var aditi = Voice.createVoice({

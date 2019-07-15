@@ -55,7 +55,7 @@
         var recite = aditi.services['recite'];
         should(recite.syllableVowels).equal('aeiou');
     });
-    it("TESTTESTsegmentSSML(text) returns SSML", function() {
+    it("segmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
 
@@ -140,7 +140,7 @@
         var ssml = recite.segmentSSML(text);
         should.deepEqual(ssml.filter(s=>s==='.'), []);
     });
-    it("TESTTESTtokensSSML(text) handles UTF8 punctuation", function() {
+    it("tokensSSML(text) handles UTF8 punctuation", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
         var tokens = recite.tokenize("bbhantarā; kammantā—uṇṇāti: vā");
