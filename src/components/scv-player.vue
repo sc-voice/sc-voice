@@ -108,6 +108,8 @@ export default {
             loadingAudio: 0,
             paliTextClass: "",
             langTextClass: "",
+            stats: {
+            },
         };
     },
     methods: {
@@ -120,6 +122,7 @@ export default {
                 return Promise.reject(new Error(msg));
             }
             Vue.set(this, "iTrack", iTrack);
+            Vue.set(this.stats, "tracks", iTrack+1);
             Vue.set(this, "iSegment", 0);
             console.log(`ScvPlayer.playTrack(${iTrack} of ${this.tracks.length})`);
             this.visible = true;
@@ -212,11 +215,23 @@ export default {
                 tracks,
                 section,
                 iTrack,
+                language,
+                stats,
             } = this;
             this.setTextClass();
             if (!paused && iSegment < section.segments.length-1) {
                 this.paused = true;
                 Vue.set(this, "iSegment", iSegment+1);
+                Vue.set(this.stats, "segments", iSegment+1);
+                var segment = section.segments[iSegment];
+                if (this.showTrans && segment[language]) {
+                    Vue.set(stats.text, language,
+                        (stats.text[language] || 0) + segment[language].length);
+                }
+                if (this.showPali && segment.pli) {
+                    Vue.set(stats.text, 'pli',
+                        (stats.text.pli || 0) + segment.pli.length);
+                }
                 this.$nextTick(() => {
                     this.toggleAudio();
                 });
@@ -232,6 +247,7 @@ export default {
                 console.log(`onEndLang(${evt}) seg:${iSegment} track:${iTrack}`);
                 this.playStartEndSound('onEndLang');
             }
+            Vue.set(this.stats, "elapsed", Date.now() - this.stats.startTime);
         },
         onEndPali(event) {
             var playLang = this.showTrans && this.segment.audio[this.language];
@@ -249,6 +265,7 @@ export default {
             } else {
                 this.onEndLang();
             }
+            Vue.set(this.stats, "elapsed", Date.now() - this.stats.startTime);
         },
         pauseAudio() {
             var refPli = this.$refs.refAudioPali;
@@ -305,11 +322,25 @@ export default {
                 } else {
                     resolve(false);
                 }
+                console.log(`stats ${that.paused}`, JSON.stringify(this.stats));
             } catch(e) {reject(e);} });
         },
         launch(iTrack) {
             var that = this;
             that.playStartEndSound('launch').then((play) => {
+                var stats = {
+                    sutta_uid: this.sutta_uid,
+                    tracks: 0,
+                    clicks: 0,
+                    segments: 0,
+                    text: {},
+                };
+                stats.startTime = new Date();
+                that.showTrans && (stats.text[that.language] = 0);
+                that.showPali && (stats.text.pali = 0);
+                stats.vnameTrans = that.gscv.vnameTrans;
+                stats.vnameRoot = that.gscv.vnameRoot;
+                Vue.set(that, 'stats', stats);
                 play && that.clickPlayPause();
             });
             var introAudio = that.$refs[`refIntroSound`];
@@ -325,6 +356,7 @@ export default {
             console.log(`clickPlayPause() ${this.paused ? "play" : "pause"}`);
             var introAudio = this.$refs[`refIntroSound`];
             introAudio && !introAudio.paused && introAudio.pause();
+            Vue.set(this.stats, "clicks", this.stats.clicks+1);
             this.toggleAudio();
             var refPlay = this.$refs.refPlay.$el;
             refPlay.focus();

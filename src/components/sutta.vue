@@ -61,36 +61,46 @@ style="width:100%; margin-top:0"/>
                             @focusin="focusMore(true)"
                             @focusout="focusMore(false)"
                             :aria-hidden="!moreVisible">
-                            <div class="scv-menu-header">SuttaCentral</div>
-                            <li class="">
-                                <a :href="`https://suttacentral.net/${sutta_uid}`"
-                                    ref="refMore1"
-                                    class="scv-a"
-                                    target="_blank">
-                                    SuttaCentral.net/{{sutta_uid.toUpperCase()}}
-                                    <v-icon class="ml-2" small>open_in_new</v-icon>
-                                </a>
-                            </li>
-                            <div class="scv-menu-header">Supported Audio Recordings</div>
                             <li class="" v-if="supportedAudio.length"
                                 v-for="(audio,i) in supportedAudio" 
                                 :key="`moreaudio${i}`" >
                                 <a class="scv-a" :href="audio.url" 
                                     target="_blank">
+                                    <v-icon class="ml-2" small>headset</v-icon>
                                     {{audio.source}}
-                                    <v-icon class="ml-2" small>open_in_new</v-icon>
                                 </a>
                             </li>
-                            <div class="scv-menu-header">Legacy Translations</div>
+                            <li class="" v-if="unsupportedAudio.length"
+                                v-for="(audio,i) in unsupportedAudio" 
+                                :key="`moreaudio${i}`" >
+                                <a class="scv-a" :href="audio.url" 
+                                    target="_blank">
+                                    <v-icon class="ml-2" style="color:#888" small>
+                                        headset
+                                    </v-icon>
+                                    {{audio.source}}
+                                </a>
+                            </li>
                             <li v-for="translation in suttaplex.translations"
                                 :key="translation.id"
                                 v-show="author_uid !== translation.author_uid">
                                 <a :href="translationLink(translation)"
                                     class="scv-a"
                                     v-on:click="clickTranslation(translation,$event)">
+                                    <v-icon class="ml-2" 
+                                        style="color: #888"
+                                        small>format_list_bulleted</v-icon>
                                     {{translation.author}}
                                     ({{translation.lang_name}})
-                                    <v-icon class="ml-2" small>call_made</v-icon>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a :href="`https://suttacentral.net/${sutta_uid}`"
+                                    ref="refMore1"
+                                    class="scv-a"
+                                    target="_blank">
+                                    <v-icon class="ml-2" small>notes</v-icon>
+                                    <i>SuttaCentral.net</i>
                                 </a>
                             </li>
                             <!--li class="mt-3">
@@ -230,58 +240,6 @@ style="width:100%; margin-top:0"/>
                 Translated by {{sutta.author}}
             </div>
             <div class="scv-blurb"><span v-html="metaarea"></span></div>
-            <div class="scv-blurb-more">
-                <details>
-                    <summary class="body-2">{{suttaCode}}: Other Resources</summary>
-                    <div class="caption text-xs-center">
-                        <div class="text-xs-center" v-if="hasAudio && gscv.voices.length">
-                            <a :href="downloadUrl()" ref="refDownload"
-                                class="scv-a"
-                                @click="downloadClick()"
-                                download>
-                                Download {{sutta_uid}}-{{language}}-{{author_uid}}.mp3
-                            </a>
-                        </div>
-                        <div v-for="translation in suttaplex.translations"
-                            class="text-xs-center"
-                            :key="translation.id"
-                            v-show="author_uid !== translation.author_uid">
-                            <a :href="translationLink(translation)"
-                                class="scv-a"
-                                v-on:click="clickTranslation(translation,$event)">
-                                {{translation.author}}
-                                ({{translation.lang_name}})
-                            </a>
-                        </div>
-                        <div class="text-xs-center" v-if="supportedAudio.length">
-                            Audio:
-                            <a class="scv-a" :href="audio.url" 
-                                v-for="(audio,i) in supportedAudio" :key="`audio${i}`"
-                                target="_blank">
-                                <span v-if="i">&#x2022;</span>
-                                {{audio.source}}
-                            </a>
-                        </div>
-                        <div class="text-xs-center">
-                            <a :href="`https://suttacentral.net/${sutta_uid}`"
-                                class="scv-a"
-                                target="_blank">
-                                {{sutta_uid.toUpperCase()}} at SuttaCentral.net
-                            </a>
-                        </div>
-                        <a class="text-xs-center scv-a" :style="cssProps"
-                            target="_blank"
-                            href="https://github.com/sc-voice/sc-voice/wiki/Support-Policy/">
-                            <span v-if="support.value==='Legacy'">
-                                Content support: Legacy
-                            </span>
-                            <span v-if="support.value==='Supported'">
-                                Content support: <em>Supported</em>
-                            </span>
-                        </a>
-                    </div>
-                </details>
-            </div> <!-- scv-blurb-more -->
           </details>
           <details class="scv-section-body"
             v-for="(sect,i) in sections" :key="`sect${i}`"
@@ -368,6 +326,7 @@ export default {
                 descriptions: '(n/a)',
             },
             supportedAudio: [],
+            unsupportedAudio: [],
             sutta: {},
             suttaplex: {},
             suttaCode: '',
@@ -697,7 +656,10 @@ export default {
             ['pli', language].forEach(lang => {
                 var url = that.url(`/audio-urls/${sutta_uid}`);
                 that.$http.get(url).then(res => {
-                    Vue.set(that, "supportedAudio", res.data);
+                    Vue.set(that, "supportedAudio", 
+                        res.data.filter(a=>a.supported));
+                    Vue.set(that, "unsupportedAudio", 
+                        res.data.filter(a=>!a.supported));
                 }).catch(e => {
                     console.error('supported audio:', url, e.stack, lang);
                 });
@@ -1200,8 +1162,8 @@ export default {
     list-style: none;
     top: 2em;
     right: 0;
-    width: 20em;
-    text-align: right;
+    min-width: 20em;
+    text-align: left;
     border-top: 1pt solid #888;
     padding: 1em;
     background-color: #000;

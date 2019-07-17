@@ -30,7 +30,8 @@
         lang: 'pli',
         author: 'mahasangiti',
         speaker: 'sujato',
-        source: 'Bhante Sujato (Pali)',
+        supported: true,
+        source: 'Bhikkhu Sujato (Pali)',
     };
     const SUJATO_SRC_EN = {
         rootUrl: DO_ROOT,
@@ -39,14 +40,16 @@
         author: 'sujato',
         lang: 'en',
         speaker: 'sujato',
-        source: 'Bhante Sujato (English)',
+        supported: true,
+        source: 'Bhikkhu Sujato (English)',
     };
     const WIKI_SRC = {
         rootUrl: WIKI_ROOT,
         extension: 'md',
         pathName: (opts={}) => (`Audio-${opts.suttaId}`),
         lang: 'other',
-        source: 'Other (various)',
+        supported: false,
+        source: 'Other audio sources',
     };
 
     class AudioUrls {

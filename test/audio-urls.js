@@ -137,7 +137,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("sourceUrls(...) returns verified audio urls", function(done) {
+    it("TESTTESTsourceUrls(...) returns verified audio urls", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var audio = new AudioUrls();
@@ -145,14 +145,20 @@
             // Bhante has recorded SN1.23 but nobody else has
             var result = await audio.sourceUrls('sn1.23');
             should.deepEqual(result.map(r => r.source), [
-                'Bhante Sujato (Pali)',
-                'Bhante Sujato (English)',
+                'Bhikkhu Sujato (Pali)',
+                'Bhikkhu Sujato (English)',
+            ]);
+            should.deepEqual(result.map(r => r.supported), [
+                true, true,
             ]);
 
             // Bhante has not recorded MN1, but other recordings exist
             var result = await audio.sourceUrls('MN1');
             should.deepEqual(result.map(r => r.source), [
-                'Other (various)',
+                'Other audio sources',
+            ]);
+            should.deepEqual(result.map(r => r.supported), [
+                false,
             ]);
             done(); 
         } catch(e) {done(e);} })();
