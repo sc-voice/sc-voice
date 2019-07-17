@@ -70,17 +70,6 @@ style="width:100%; margin-top:0"/>
                                     {{audio.source}}
                                 </a>
                             </li>
-                            <li class="" v-if="unsupportedAudio.length"
-                                v-for="(audio,i) in unsupportedAudio" 
-                                :key="`moreaudio${i}`" >
-                                <a class="scv-a" :href="audio.url" 
-                                    target="_blank">
-                                    <v-icon class="ml-2" style="color:#888" small>
-                                        headset
-                                    </v-icon>
-                                    {{audio.source}}
-                                </a>
-                            </li>
                             <li v-for="translation in suttaplex.translations"
                                 :key="translation.id"
                                 v-show="author_uid !== translation.author_uid">
@@ -89,9 +78,20 @@ style="width:100%; margin-top:0"/>
                                     v-on:click="clickTranslation(translation,$event)">
                                     <v-icon class="ml-2" 
                                         style="color: #888"
-                                        small>format_list_bulleted</v-icon>
+                                        small>headset</v-icon>
                                     {{translation.author}}
                                     ({{translation.lang_name}})
+                                </a>
+                            </li>
+                            <li class="" v-if="unsupportedAudio.length"
+                                v-for="(audio,i) in unsupportedAudio" 
+                                :key="`moreaudio${i}`" >
+                                <a class="scv-a" :href="audio.url" 
+                                    target="_blank">
+                                    <v-icon class="ml-2" style="color:#888" small>
+                                        format_list_bulleted
+                                    </v-icon>
+                                    <i>{{audio.source}}</i>
                                 </a>
                             </li>
                             <li class="">
