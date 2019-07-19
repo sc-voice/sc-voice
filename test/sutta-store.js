@@ -301,7 +301,7 @@
             should.deepEqual(Object.keys(results[0]).sort(), [
                 'count', 'uid', 'author', 'author_short', 'author_uid',
                 'author_blurb', 'lang', 'nSegments', 'title', 'collection_id',
-                'suttaplex', 'quote', 'sutta', 'audio',
+                'suttaplex', 'quote', 'sutta', 'audio', 'stats', 'score',
             ].sort());
             should(method).equal('phrase');
             should.deepEqual(results.map(r=>r.count), [5, 3, 2, 1]);

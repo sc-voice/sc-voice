@@ -17,6 +17,7 @@ module.exports = {
     SuttaCentralApi: require('./src/node/sutta-central-api'),
     SuttaCentralId: require("./src/node/sutta-central-id"),
     SuttaFactory: require("./src/node/sutta-factory"),
+    SuttaDuration: require("./src/node/sutta-duration"),
     SuttaSearcher: require('./src/node/sutta-searcher'),
     SuttaStore: require('./src/node/sutta-store'),
     Sutta: require("./src/node/sutta"),

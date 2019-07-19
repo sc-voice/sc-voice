@@ -196,17 +196,22 @@ export default {
                 '--success-color': this.$vuetify.theme.success,
             }, opts);
         },
-        endAudio() {
+        segmentStats(segment) {
             var {
-                iSegment,
-                iTrack,
+                showPali,
+                showTrans,
+                language,
+                stats,
             } = this;
-            this.paused = true;
-            var evt = JSON.stringify(event);
-            console.log(`onEndLang(${evt}) seg:${iSegment} track:${iTrack}`);
-            var introAudio = this.$refs[`refIntroSound`];
-            introAudio.load();
-            introAudio.play();
+            Vue.set(stats, "segments", stats.segments+1);
+            if (showTrans && segment[language]) {
+                Vue.set(stats.text, language,
+                    (stats.text[language] || 0) + segment[language].length);
+            }
+            if (showPali && segment.pli) {
+                Vue.set(stats.text, 'pli',
+                    (stats.text.pli || 0) + segment.pli.length);
+            }
         },
         onEndLang(event) {
             var {
@@ -215,23 +220,11 @@ export default {
                 tracks,
                 section,
                 iTrack,
-                language,
-                stats,
             } = this;
             this.setTextClass();
             if (!paused && iSegment < section.segments.length-1) {
                 this.paused = true;
                 Vue.set(this, "iSegment", iSegment+1);
-                Vue.set(this.stats, "segments", iSegment+1);
-                var segment = section.segments[iSegment];
-                if (this.showTrans && segment[language]) {
-                    Vue.set(stats.text, language,
-                        (stats.text[language] || 0) + segment[language].length);
-                }
-                if (this.showPali && segment.pli) {
-                    Vue.set(stats.text, 'pli',
-                        (stats.text.pli || 0) + segment.pli.length);
-                }
                 this.$nextTick(() => {
                     this.toggleAudio();
                 });
@@ -250,6 +243,7 @@ export default {
             Vue.set(this.stats, "elapsed", Date.now() - this.stats.startTime);
         },
         onEndPali(event) {
+            this.segmentStats(this.segment);
             var playLang = this.showTrans && this.segment.audio[this.language];
             if (playLang) {
                 var refLang = this.$refs.refAudioLang;

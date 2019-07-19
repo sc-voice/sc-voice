@@ -9,6 +9,7 @@
     } = require('child_process');
     const Playlist = require('./playlist');
     const Sutta = require('./sutta');
+    const SuttaDuration = require('./sutta-duration');
     const SuttaCentralApi = require('./sutta-central-api');
     const SuttaCentralId = require('./sutta-central-id');
     const SuttaFactory = require('./sutta-factory');
@@ -65,6 +66,7 @@
             this.maxResults = opts.maxResults || 5;
             this.voice = opts.voice;
             this.words = opts.words || new Words();
+            this.suttaDuration = opts.suttaDuration || new SuttaDuration();
             Object.defineProperty(this, 'isInitialized', {
                 writable: true,
                 value: false,
@@ -588,6 +590,7 @@
                     throw e;
                 }
                 sutta = this.suttaFactory.sectionSutta(sutta);
+                var stats = this.suttaDuration.measure(sutta);
                 var suttaplex = sutta.suttaplex;
                 var nSegments = sutta.segments.length;
                 var translation = sutta.translation;
@@ -600,6 +603,8 @@
                     // Pali search with no translated text
                     quote = sutta.segments[1]; // usually title
                 }
+                var count = Number(line.substring(iColon+1));
+                var score = count + count/nSegments;
                 return {
                     count: Number(line.substring(iColon+1)),
                     uid: translation.uid,
@@ -609,6 +614,8 @@
                     author_blurb: translation.author_blurb,
                     lang,
                     nSegments,
+                    score,
+                    stats,
                     title: translation.title,
                     collection_id,
                     suttaplex,

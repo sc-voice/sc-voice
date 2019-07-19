@@ -177,7 +177,8 @@ style="width:100%; margin-top:0"/>
                                 {{result.title}}
                             </div>
                             <div class="caption">
-                               matches: {{result.count}} of {{result.nSegments}}
+                               time: {{duration(result)}}
+                               score: {{score(result)}}
                             </div>
                         </div>
                     </div>
@@ -710,6 +711,7 @@ export default {
                 this.clear();
                 var data = res.data;
                 console.log('searchResults', data);
+                data.results.sort((a,b) => b.score - a.score);
                 Vue.set(this, 'searchResults', data);
                 this.stopWaiting(timer);
                 this.$nextTick(() => {
@@ -824,6 +826,20 @@ export default {
         playerCloseFocus() {
             var refClose = this.$refs.refPlaySutta;
             return refClose && refClose.$el;
+        },
+        score(result) {
+            return result.score.toFixed(2);
+        },
+        duration(result) {
+            var stats = result && result.stats;
+            var minutes = '--';
+            var seconds = '--';
+            if (stats) {
+                seconds = Math.round(stats.seconds);
+                minutes = Math.trunc(seconds/60);
+                seconds = seconds % 60;
+            }
+            return `${minutes}:${seconds}`;
         },
     },
     computed: {

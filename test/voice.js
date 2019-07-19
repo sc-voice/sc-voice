@@ -18,7 +18,7 @@
         return ph;
     }
 
-    it("TESTTESTloadVoices(voicePath) should return voices", function() {
+    it("loadVoices(voicePath) should return voices", function() {
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
         should(voices.length).greaterThan(0);

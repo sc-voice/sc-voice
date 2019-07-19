@@ -657,7 +657,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET audio-url/... returns supported audio url", function(done) {
+    it("GET audio-url/... returns supported audio url", function(done) {
         this.timeout(3*1000);
         (async function() { try {
             // short url
@@ -907,7 +907,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET voices returns voices", function(done) {
+    it("GET voices returns voices", function(done) {
         (async function() { try {
             // default
             var url = "/scv/voices";
