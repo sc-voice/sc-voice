@@ -199,11 +199,11 @@ style="width:100%; margin-top:0"/>
                             &mdash;
                             {{result.author}} 
                         </div>
-                        <div class="scv-score">relevance: {{score(result)}}</div>
                     </div>
                 </div>
                 <div class="ml-3 pt-2" 
-                    style="display:flex; justify-content: flex-start">
+                    style="display:flex; justify-content: space-between">
+                    <div>
                     <v-btn icon v-if="result.quote"
                         @click="playQuotes(i, result)"
                         :class="btnPlayQuotesClass(i)" :style="cssProps" small>
@@ -225,6 +225,8 @@ style="width:100%; margin-top:0"/>
                         class="scv-icon-btn" :style="cssProps" small>
                         <v-icon>arrow_downward</v-icon>
                     </v-btn>
+                    </div>
+                    <div class="scv-score">relevance: {{score(result)}}</div>
                 </div>
             </details><!-- search result i -->
           </details><!-- searchresults -->
