@@ -177,8 +177,7 @@ style="width:100%; margin-top:0"/>
                                 {{result.title}}
                             </div>
                             <div class="caption">
-                               time: {{duration(result)}}
-                               score: {{score(result)}}
+                               {{duration(result)}}
                             </div>
                         </div>
                     </div>
@@ -200,6 +199,7 @@ style="width:100%; margin-top:0"/>
                             &mdash;
                             {{result.author}} 
                         </div>
+                        <div class="scv-score">relevance: {{score(result)}}</div>
                     </div>
                 </div>
                 <div class="ml-3 pt-2" 
@@ -839,7 +839,7 @@ export default {
                 minutes = Math.trunc(seconds/60);
                 seconds = seconds % 60;
             }
-            return `${minutes}:${seconds}`;
+            return `${minutes}m ${seconds}s`;
         },
     },
     computed: {
@@ -1188,6 +1188,10 @@ export default {
     margin-top: 0.5em;
     font-size: 10px;
     text-align: left;
+}
+.scv-score {
+    color: #888;
+    margin-top: 0.5em;
 }
 
 </style>
