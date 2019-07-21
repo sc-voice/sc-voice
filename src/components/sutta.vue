@@ -56,13 +56,14 @@ style="width:100%; margin-top:0"/>
                             class="scv-icon-btn" :style="cssProps" small>
                             <v-icon>more_vert</v-icon>
                         </v-btn>
-                        <ul class="scv-more-menu" 
+                        <ul class="scv-more-menu" role="menu"
                             v-if="moreVisible"
                             @focusin="focusMore(true)"
                             @focusout="focusMore(false)"
                             :aria-hidden="!moreVisible">
                             <li class="" v-if="supportedAudio.length"
                                 v-for="(audio,i) in supportedAudio" 
+                                role="menu-item"
                                 :key="`moreaudio${i}`" >
                                 <a class="scv-a" :href="audio.url" 
                                     target="_blank">
@@ -72,6 +73,7 @@ style="width:100%; margin-top:0"/>
                             </li>
                             <li v-for="translation in suttaplex.translations"
                                 :key="translation.id"
+                                role="menu-item"
                                 v-show="author_uid !== translation.author_uid">
                                 <a :href="translationLink(translation)"
                                     class="scv-a"
@@ -94,7 +96,7 @@ style="width:100%; margin-top:0"/>
                                     <i>{{audio.source}}</i>
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="" role="menu-item">
                                 <a :href="`https://suttacentral.net/${sutta_uid}`"
                                     ref="refMore1"
                                     class="scv-a"
@@ -829,8 +831,8 @@ export default {
             var refClose = this.$refs.refPlaySutta;
             return refClose && refClose.$el;
         },
-        score(result) {
-            return result.score.toFixed(2);
+        score(result = {}) {
+            return result.score && result.score.toFixed(2) || '--';
         },
         duration(result) {
             var stats = result && result.stats;

@@ -21,11 +21,16 @@
             var nSections = sutta.sections.length;
             var segments = sutta.segments;
             var nSegments = segments.length;
+            var nEmptySegments = 0;
             var text = 0;
             for (var i = 0; i < nSegments; i++) {
                 var segment = segments[i];
                 var segText = segment[lang];
-                segText && (text += segText.length);
+                if (segText.trim()) {
+                    text += segText.length;
+                } else {
+                    nEmptySegments++;
+                }
             }
             var resAct = this.network.activate([
                 text,
@@ -38,6 +43,7 @@
                 text,
                 lang,
                 nSegments,
+                nEmptySegments,
                 nSections,
                 seconds: resAct[0],
             };
