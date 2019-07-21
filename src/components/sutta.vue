@@ -63,7 +63,7 @@ style="width:100%; margin-top:0"/>
                             :aria-hidden="!moreVisible">
                             <li class="" v-if="supportedAudio.length"
                                 v-for="(audio,i) in supportedAudio" 
-                                role="menu-item"
+                                role="menuitem"
                                 :key="`moreaudio${i}`" >
                                 <a class="scv-a" :href="audio.url" 
                                     target="_blank">
@@ -73,7 +73,7 @@ style="width:100%; margin-top:0"/>
                             </li>
                             <li v-for="translation in suttaplex.translations"
                                 :key="translation.id"
-                                role="menu-item"
+                                role="menuitem"
                                 v-show="author_uid !== translation.author_uid">
                                 <a :href="translationLink(translation)"
                                     class="scv-a"
@@ -96,7 +96,7 @@ style="width:100%; margin-top:0"/>
                                     <i>{{audio.source}}</i>
                                 </a>
                             </li>
-                            <li class="" role="menu-item">
+                            <li class="" role="menuitem">
                                 <a :href="`https://suttacentral.net/${sutta_uid}`"
                                     ref="refMore1"
                                     class="scv-a"
