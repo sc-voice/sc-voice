@@ -75,8 +75,10 @@ style="width:100%; margin-top:0"/>
                                     :aria-label="`${audio.source} opens in a new tab`"
                                     role="menuitem"
                                     target="_blank">
-                                    <v-icon class="ml-2" small>headset</v-icon>
-                                    <span aria-hidden="true">{{audio.source}}</span>
+                                    <span aria-hidden="true">
+                                        <v-icon class="ml-2" small>headset</v-icon>
+                                        {{audio.source}}
+                                    </span>
                                 </a>
                             </li>
                             <li v-for="translation in suttaplex.translations"
@@ -101,22 +103,24 @@ style="width:100%; margin-top:0"/>
                                     role="menuitem"
                                     :aria-label="`${audio.source} opens in a new tab`"
                                     target="_blank">
-                                    <v-icon class="ml-2" style="color:#888" small>
-                                        format_list_bulleted
-                                    </v-icon>
-                                    <i aria-hidden="true">{{audio.source}}</i>
+                                    <span aria-hidden="true">
+                                        <v-icon class="ml-2" style="color:#888" small>
+                                            format_list_bulleted
+                                        </v-icon>
+                                        <i>{{audio.source}}</i>
+                                    </span>
                                 </a>
                             </li>
-                            <li class="" 
-                                role="none"
-                                >
+                            <li class="" role="none" >
                                 <a class="scv-a" 
                                     :href="`https://suttacentral.net/${sutta_uid}`"
                                     role="menuitem"
                                     :aria-label="`sootacentral.net opens in a new tab`"
                                     target="_blank">
-                                    <v-icon class="ml-2" small>notes</v-icon>
-                                    <i aria-hidden="true">SuttaCentral.net</i>
+                                    <span aria-hidden="true">
+                                        <v-icon class="ml-2" small>notes</v-icon>
+                                        <i>SuttaCentral.net</i>
+                                    </span>
                                 </a>
                             </li>
                         </ul>
