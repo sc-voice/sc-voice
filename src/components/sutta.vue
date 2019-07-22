@@ -50,13 +50,19 @@ style="width:100%; margin-top:0"/>
                     </div>
                     <div class="scv-more" >
                         <v-btn icon
+                            id="more-menu-btn"
                             @click="clickMore()"
                             aria-haspopup="true"
+                            aria-controls="more-menu"
+                            aria-label="More menu"
                             :aria-expanded="moreVisible"
                             class="scv-icon-btn" :style="cssProps" small>
                             <v-icon>more_vert</v-icon>
                         </v-btn>
                         <ul class="scv-more-menu" role="menu"
+                            id = "more-menu"
+                            ref="ref-more-menu"
+                            aria-labelledby="more-menu-btn"
                             v-if="moreVisible"
                             @focusin="focusMore(true)"
                             @focusout="focusMore(false)"
@@ -75,8 +81,7 @@ style="width:100%; margin-top:0"/>
                                 :key="translation.id"
                                 role="menuitem"
                                 v-show="author_uid !== translation.author_uid">
-                                <a :href="translationLink(translation)"
-                                    class="scv-a"
+                                <a class="scv-a" :href="translationLink(translation)"
                                     v-on:click="clickTranslation(translation,$event)">
                                     <v-icon class="ml-2" 
                                         style="color: #888"
@@ -86,6 +91,7 @@ style="width:100%; margin-top:0"/>
                                 </a>
                             </li>
                             <li class="" v-if="unsupportedAudio.length"
+                                role="menuitem"
                                 v-for="(audio,i) in unsupportedAudio" 
                                 :key="`moreaudio${i}`" >
                                 <a class="scv-a" :href="audio.url" 
@@ -97,26 +103,13 @@ style="width:100%; margin-top:0"/>
                                 </a>
                             </li>
                             <li class="" role="menuitem">
-                                <a :href="`https://suttacentral.net/${sutta_uid}`"
-                                    ref="refMore1"
-                                    class="scv-a"
+                                <a class="scv-a" 
+                                    :href="`https://suttacentral.net/${sutta_uid}`"
                                     target="_blank">
                                     <v-icon class="ml-2" small>notes</v-icon>
                                     <i>SuttaCentral.net</i>
                                 </a>
                             </li>
-                            <!--li class="mt-3">
-                                <a class="scv-a" :style="cssProps"
-                                    target="_blank"
-                                    href="https://github.com/sc-voice/sc-voice/wiki/Support-Policy/">
-                                    <span v-if="support.value==='Legacy'">
-                                        Content is Legacy
-                                    </span>
-                                    <span v-if="support.value==='Supported'">
-                                        Content is <em>Supported</em>
-                                    </span>
-                                </a>
-                            </li-->
                         </ul>
                     </div>
                   </div>
@@ -350,6 +343,7 @@ export default {
             this.moreFocus = focus;
             setTimeout(()=>{
                 if (!this.moreFocus) {
+                    console.log('hiding more menu');
                     Vue.set(this, "moreVisible", false);
                 }
             }, 500);
@@ -358,9 +352,18 @@ export default {
             this.moreVisible = !this.moreVisible;
             if (this.moreVisible) {
                 this.moreFocus = true;
-                this.$nextTick(()=>{
-                    var a1 = this.$refs['refMore1'];
-                    a1 && a1.focus();
+                this.$nextTick(() => {
+                    var a1 = this.$refs['ref-more-menu'];
+                    var ali = a1.childNodes;
+                    for (var i = 0; i < ali.length; i++) {
+                        var li = ali[i];
+                        if (li.style.display !== 'none') {
+                            var a = li.childNodes[0];
+                            console.log(`ali[${i}]:`, li, a);
+                            a.focus();
+                            break;
+                        }
+                    }
                 });
             }
         },
@@ -672,6 +675,7 @@ export default {
             this.$nextTick(() => {
                 var refPlaySutta = this.$refs.refPlaySutta;
                 if (refPlaySutta) {
+                    console.log('focus refPlaySutta');
                     refPlaySutta.$el.focus();
                 } else {
                     console.log("no refPlaySutta");
