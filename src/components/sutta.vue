@@ -54,7 +54,7 @@ style="width:100%; margin-top:0"/>
                             @click="clickMore()"
                             aria-haspopup="true"
                             aria-controls="more-menu"
-                            aria-label="More menu"
+                            aria-label="More"
                             :aria-expanded="moreVisible"
                             class="scv-icon-btn" :style="cssProps" small>
                             <v-icon>more_vert</v-icon>
@@ -69,19 +69,22 @@ style="width:100%; margin-top:0"/>
                             :aria-hidden="!moreVisible">
                             <li class="" v-if="supportedAudio.length"
                                 v-for="(audio,i) in supportedAudio" 
-                                role="menuitem"
+                                role="none"
                                 :key="`moreaudio${i}`" >
                                 <a class="scv-a" :href="audio.url" 
+                                    :aria-label="`${audio.source} opens in a new tab`"
+                                    role="menuitem"
                                     target="_blank">
                                     <v-icon class="ml-2" small>headset</v-icon>
-                                    {{audio.source}}
+                                    <span aria-hidden="true">{{audio.source}}</span>
                                 </a>
                             </li>
                             <li v-for="translation in suttaplex.translations"
                                 :key="translation.id"
-                                role="menuitem"
+                                role="none"
                                 v-show="author_uid !== translation.author_uid">
                                 <a class="scv-a" :href="translationLink(translation)"
+                                    role="menuitem"
                                     v-on:click="clickTranslation(translation,$event)">
                                     <v-icon class="ml-2" 
                                         style="color: #888"
@@ -91,23 +94,29 @@ style="width:100%; margin-top:0"/>
                                 </a>
                             </li>
                             <li class="" v-if="unsupportedAudio.length"
-                                role="menuitem"
                                 v-for="(audio,i) in unsupportedAudio" 
+                                role="none"
                                 :key="`moreaudio${i}`" >
                                 <a class="scv-a" :href="audio.url" 
+                                    role="menuitem"
+                                    :aria-label="`${audio.source} opens in a new tab`"
                                     target="_blank">
                                     <v-icon class="ml-2" style="color:#888" small>
                                         format_list_bulleted
                                     </v-icon>
-                                    <i>{{audio.source}}</i>
+                                    <i aria-hidden="true">{{audio.source}}</i>
                                 </a>
                             </li>
-                            <li class="" role="menuitem">
+                            <li class="" 
+                                role="none"
+                                >
                                 <a class="scv-a" 
                                     :href="`https://suttacentral.net/${sutta_uid}`"
+                                    role="menuitem"
+                                    :aria-label="`sootacentral.net opens in a new tab`"
                                     target="_blank">
                                     <v-icon class="ml-2" small>notes</v-icon>
-                                    <i>SuttaCentral.net</i>
+                                    <i aria-hidden="true">SuttaCentral.net</i>
                                 </a>
                             </li>
                         </ul>
@@ -359,7 +368,6 @@ export default {
                         var li = ali[i];
                         if (li.style.display !== 'none') {
                             var a = li.childNodes[0];
-                            console.log(`ali[${i}]:`, li, a);
                             a.focus();
                             break;
                         }
@@ -1190,7 +1198,7 @@ export default {
     text-align: left;
     border-top: 1pt solid #888;
     padding: 1em;
-    background-color: #000;
+    background-color: #212121;
 }
 .scv-menu-header {
     margin-top: 0.5em;
