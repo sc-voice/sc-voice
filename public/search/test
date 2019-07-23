@@ -17,8 +17,9 @@
         "text": 3315,
         "lang": "en",
         "nSegments": 55,
+        "nEmptySegments": 1,
         "nSections": 2,
-        "seconds": 297.5920130173762
+        "seconds": 324.3981541436991
       },
       "title": "With Bhadraka ",
       "collection_id": "sn",
@@ -440,11 +441,12 @@
       "nSegments": 188,
       "score": 3.015957446808511,
       "stats": {
-        "text": 14350,
+        "text": 14343,
         "lang": "en",
         "nSegments": 188,
+        "nEmptySegments": 8,
         "nSections": 2,
-        "seconds": 1265.3975019505926
+        "seconds": 1238.6362477613827
       },
       "title": "With Sunakkhatta ",
       "collection_id": "mn",
@@ -1531,11 +1533,12 @@
       "nSegments": 334,
       "score": 2.0059880239520957,
       "stats": {
-        "text": 14246,
+        "text": 14238,
         "lang": "en",
         "nSegments": 334,
+        "nEmptySegments": 9,
         "nSections": 2,
-        "seconds": 1259.0349424859637
+        "seconds": 1250.3311523620685
       },
       "title": "The Root of All Things ",
       "collection_id": "mn",
@@ -3399,11 +3402,12 @@
       "nSegments": 202,
       "score": 1.004950495049505,
       "stats": {
-        "text": 15779,
+        "text": 15775,
         "lang": "en",
         "nSegments": 202,
+        "nEmptySegments": 5,
         "nSections": 2,
-        "seconds": 1390.3145088964093
+        "seconds": 1701.8340329936757
       },
       "title": "The Simile of the Quail ",
       "collection_id": "mn",

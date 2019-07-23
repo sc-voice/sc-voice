@@ -12,7 +12,7 @@
     } = require("../index");
 
     const suttaCentralApi = new SuttaCentralApi();
-    const TOLERANCE = 11.1;
+    const TOLERANCE = 33;
 
     function testTolerance(actual, expected, e = TOLERANCE) {
         should(actual).above(expected-e);
@@ -216,7 +216,7 @@
                 nEmptySegments: 1,
                 nSections: 2,
             });
-            testTolerance(resMeasure.seconds, 298);
+            testTolerance(resMeasure.seconds, 292);
 
             done();
         } catch(e) { done(e); } })();
@@ -260,7 +260,7 @@
                 nEmptySegments: 1,
                 nSections: 2,
             });
-            testTolerance(resMeasure.seconds, 603);
+            testTolerance(resMeasure.seconds, 719);
 
             done();
         } catch(e) { done(e); } })();

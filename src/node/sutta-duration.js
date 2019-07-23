@@ -32,20 +32,24 @@
                     nEmptySegments++;
                 }
             }
+            var lst = Math.log(nSegments/nSections);
+            var et = nEmptySegments  / (nSections * lst);
+            var logistic = (x, x0, k) => 1 / (1 + Math.exp(-k*(x - x0)));
+            var cet = logistic(et, .679, 18);
+            var dataToTarget = d => [ d.elapsed/d.text.en ];
             var resAct = this.network.activate([
-                text,
-                //Math.log(text || 1),
-                //nSegments,
-                Math.log(nSegments),
-                nSections,
+                (1-cet) * text,
+                cet * text,
+                Math.log(nSegments-nEmptySegments+1),
             ]);
+            var seconds = resAct[0] * text/1000;
             return {
                 text,
                 lang,
                 nSegments,
                 nEmptySegments,
                 nSections,
-                seconds: resAct[0],
+                seconds,
             };
         }
     }
