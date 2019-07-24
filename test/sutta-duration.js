@@ -19,11 +19,11 @@
         should(actual).below(expected+e);
     }
 
-    it("TESTTESTconstructor", function() {
+    it("constructor", function() {
         var scd = new SuttaDuration();
         should(scd.name).equal('amy');
     });
-    it("TESTTESTmeasure(sutta, lang) measures thag1.2", function(done) {
+    it("measure(sutta, lang) measures thag1.2", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -45,7 +45,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures thig1.1", function(done) {
+    it("measure(sutta, lang) measures thig1.1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -67,7 +67,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures sn2.2", function(done) {
+    it("measure(sutta, lang) measures sn2.2", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -89,7 +89,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures thig5.1", function(done) {
+    it("measure(sutta, lang) measures thig5.1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -111,7 +111,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures sn1.1", function(done) {
+    it("measure(sutta, lang) measures sn1.1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -133,7 +133,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures sn56.21", function(done) {
+    it("measure(sutta, lang) measures sn56.21", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -155,7 +155,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures thag9.1", function(done) {
+    it("measure(sutta, lang) measures thag9.1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -177,7 +177,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures sn36.11", function(done) {
+    it("measure(sutta, lang) measures sn36.11", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -199,7 +199,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures sn42.11", function(done) {
+    it("measure(sutta, lang) measures sn42.11", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -221,7 +221,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures an2.1", function(done) {
+    it("measure(sutta, lang) measures an2.1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -243,7 +243,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures sn12.51", function(done) {
+    it("measure(sutta, lang) measures sn12.51", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -265,7 +265,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures dn33", function(done) {
+    it("measure(sutta, lang) measures dn33", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
@@ -283,6 +283,42 @@
                 nSections: 12,
             });
             testTolerance(resMeasure.seconds, 7418);
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTmeasure(sutta, lang) measures mn1", function(done) {
+        (async function() { try {
+            var factory = await new SuttaFactory({
+                suttaCentralApi,
+            }).initialize();
+            var scd = new SuttaDuration();
+
+            var sutta = await factory.loadSutta('mn1');
+            sutta = factory.sectionSutta(sutta);
+
+            // unexpanded
+            var resMeasure = scd.measure(sutta);
+            should(resMeasure).properties({
+                text: 14238,
+                lang: 'en',
+                nSegments: 334,
+                nSections: 2,
+                nEmptySegments: 9,
+            });
+            testTolerance(resMeasure.seconds, 1250);
+
+            // expanded
+            sutta = factory.expandSutta(sutta);
+            var resMeasure = scd.measure(sutta);
+            should(resMeasure).properties({
+                text: 76661,
+                lang: 'en',
+                nSegments: 840,
+                nSections: 10,
+                nEmptySegments: 9,
+            });
+            testTolerance(resMeasure.seconds, 12051);
 
             done();
         } catch(e) { done(e); } })();

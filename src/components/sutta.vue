@@ -36,7 +36,7 @@ style="width:100%; margin-top:0"/>
                             :disabled="waiting > 0"
                             @click="launchSuttaPlayer()"
                             ref="refPlaySutta"
-                            :aria-label="`play ${resultId()}`"
+                            :aria-label="`play ${resultId()}. ${duration(stats.seconds).aria}`"
                             class="scv-icon-btn" :style="cssProps" small>
                             <v-icon>play_circle_outline</v-icon>
                         </v-btn>
@@ -47,6 +47,9 @@ style="width:100%; margin-top:0"/>
                             class="scv-icon-btn" :style="cssProps" small>
                             <v-icon>arrow_downward</v-icon>
                         </v-btn>
+                    </div>
+                    <div aria-hidden='true'>
+                        {{duration(stats.seconds).display}}
                     </div>
                     <div class="scv-more" >
                         <v-btn icon
@@ -184,8 +187,9 @@ style="width:100%; margin-top:0"/>
                                 {{resultId(result).toUpperCase()}}
                                 {{result.title}}
                             </div>
-                            <div class="caption">
-                               {{duration(result)}}
+                            <div class="caption" 
+                                :aria-label="duration(result.stats.seconds).aria">
+                               {{duration(result.stats.seconds).display}}
                             </div>
                         </div>
                     </div>
@@ -332,6 +336,7 @@ export default {
             searchResults: null,
             refPlaying: null,
             suttaAudioGuid: null,
+            stats: {},
             support: {
                 value: '(n/a)',
                 descriptions: '(n/a)',
@@ -436,6 +441,7 @@ export default {
             this.error.search = null;
             this.sections = null;
             this.searchResults = null;
+            this.stats = {};
             for (var i = 0; i < MAX_SECTIONS; i++) {
                 this.error[i] = null;
                 this.sectionAudioGuids[i] = null;
@@ -634,9 +640,10 @@ export default {
                 this.search && this.onSearch();
             }
         },
-        showSutta(sutta) {
+        showSutta(sutta, stats={}) {
             var that = this;
             this.clear();
+            this.stats = stats;
             var sections = this.sections = sutta.sections;
             Object.assign(this.support, sutta.support);
             this.metaarea = sutta.metaarea;
@@ -736,9 +743,10 @@ export default {
                 this.stopWaiting(timer);
                 this.$nextTick(() => {
                     if (data.results.length === 1)  {
-                        var sutta = data.results[0].sutta;
+                        var d = data.results[0];
+                        var sutta = d.sutta;
                         console.log(`searchSuttas(${search}) showSutta`, sutta);
-                        this.showSutta(sutta);
+                        this.showSutta(sutta, d.stats);
                     } else {
                         this.$refs.refResults.focus();
                     }
@@ -850,16 +858,8 @@ export default {
         score(result = {}) {
             return result.score && result.score.toFixed(2) || '--';
         },
-        duration(result) {
-            var stats = result && result.stats;
-            var minutes = '--';
-            var seconds = '--';
-            if (stats) {
-                seconds = Math.round(stats.seconds);
-                minutes = Math.trunc(seconds/60);
-                seconds = seconds % 60;
-            }
-            return `${minutes}m ${seconds}s`;
+        duration(t) {
+            return this.gscv.durationDisplay(t);
         },
     },
     computed: {
@@ -943,6 +943,17 @@ export default {
                 return titleParts[0];
             }
         },
+        playlistDuration() {
+            var results = this.searchResults && this.searchResults.results;
+            if (results) {
+                var seconds = results.reduce((acc,r) => {
+                    var stats = r.stats;
+                    return (acc + (stats && stats.seconds || 0))
+                }, 0);
+                return this.gscv.durationDisplay(seconds);
+            }
+            return {};
+        },
         segmentCount() {
             var results = this.searchResults && this.searchResults.results;
             if (results) {
@@ -956,9 +967,6 @@ export default {
             } else {
                 return 0;
             }
-        },
-        playlistDuration() {
-            return this.gscv && this.gscv.duration(this.segmentCount) || {};
         },
     },
     mounted() {

@@ -655,6 +655,7 @@
                             language: refLang,
                             expand: true,
                         });
+                        var stats = that.suttaDuration.measure(sutta);
                         var suttaplex = sutta.suttaplex;
                         var nSegments = sutta.segments.length;
                         var translation = sutta.translation;
@@ -666,6 +667,7 @@
                             author_uid: translation.author_uid,
                             author_blurb: translation.author_blurb,
                             lang,
+                            stats,
                             nSegments,
                             title: translation.title,
                             collection_id,
