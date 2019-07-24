@@ -308,9 +308,17 @@
             return this.durationDisplay(totalSeconds);
         }
 
-        timeRemaining(tracks, curTrack=0, curSeg=0) {
+        timeRemaining(tracks, curTrack=0, curSeg=0, stats) {
             var chars = this.charsRemaining(tracks, curTrack, curSeg);
-            var result = this.duration(chars);
+            var result = {
+                chars,
+            };
+            if (stats) {
+                Object.assign(result, this.durationDisplay(stats.seconds));
+            } else {
+                console.log(`timeRemaining (DEPRECATED)`);
+                Object.assign(result, this.duration(chars));
+            }
             result.chars = chars;
             return result;
         }

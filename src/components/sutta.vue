@@ -296,6 +296,7 @@ style="width:100%; margin-top:0"/>
           </details> <!-- section i -->
           <scv-player v-if="tracks && gscv.voices"
             :ref="`refScvPlayer`" :tracks="tracks" :voice="voice"
+            :time="stats"
             :closeFocus="playerCloseFocus"
             />
       </v-layout>
@@ -441,7 +442,6 @@ export default {
             this.error.search = null;
             this.sections = null;
             this.searchResults = null;
-            this.stats = {};
             for (var i = 0; i < MAX_SECTIONS; i++) {
                 this.error[i] = null;
                 this.sectionAudioGuids[i] = null;
@@ -451,7 +451,8 @@ export default {
             });
             this.segments = null;
         },
-        suttaTracks(sutta) {
+        suttaTracks(result) {
+            var sutta = result.sutta;
             var tracks = sutta.sections.reduce((acc,sect,i) => {
                 acc.push({
                     sutta_uid: sutta.sutta_uid,
@@ -467,13 +468,13 @@ export default {
             return tracks;
         },
         playOne(result) {
-            this.tracks = this.suttaTracks(result.sutta);
+            this.tracks = this.suttaTracks(result);
             this.launchSuttaPlayer();
         },
         playAll() {
             var results = this.searchResults.results;
             this.tracks = results.reduce((acc,r) => {
-                return acc.concat(this.suttaTracks(r.sutta));
+                return acc.concat(this.suttaTracks(r));
             }, []);
             this.launchSuttaPlayer();
         },
@@ -643,7 +644,7 @@ export default {
         showSutta(sutta, stats={}) {
             var that = this;
             this.clear();
-            this.stats = stats;
+            Vue.set(this.stats, 'seconds', stats.seconds);
             var sections = this.sections = sutta.sections;
             Object.assign(this.support, sutta.support);
             this.metaarea = sutta.metaarea;

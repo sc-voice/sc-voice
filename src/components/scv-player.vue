@@ -94,6 +94,7 @@ export default {
     name: 'scv-player',
     props: {
         tracks: Array,
+        time: null,
         voice: Object,
         closeFocus: Function,
     },
@@ -108,8 +109,7 @@ export default {
             loadingAudio: 0,
             paliTextClass: "",
             langTextClass: "",
-            stats: {
-            },
+            stats: {},
         };
     },
     methods: {
@@ -521,9 +521,10 @@ export default {
                 tracks,
                 iTrack,
                 iSegment,
+                time,
             } = this;
             var tr =  gscv && tracks &&
-                gscv.timeRemaining(tracks, iTrack, iSegment);
+                gscv.timeRemaining(tracks, iTrack, iSegment, time);
             return tr && tr.display || '--';
         },
         ipsChoices() {
