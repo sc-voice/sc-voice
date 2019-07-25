@@ -295,7 +295,9 @@ style="width:100%; margin-top:0"/>
             </div>
           </details> <!-- section i -->
           <scv-player v-if="tracks && gscv.voices"
-            :ref="`refScvPlayer`" :tracks="tracks" :voice="voice"
+            :ref="`refScvPlayer`" 
+            :tracks="tracks" 
+            :voice="voice"
             :time="stats"
             :closeFocus="playerCloseFocus"
             />
@@ -468,14 +470,18 @@ export default {
             return tracks;
         },
         playOne(result) {
+            Vue.set(this.stats, 'seconds', result.stats.seconds);
             this.tracks = this.suttaTracks(result);
             this.launchSuttaPlayer();
         },
         playAll() {
+            var seconds = 0;
             var results = this.searchResults.results;
             this.tracks = results.reduce((acc,r) => {
+                seconds += r.stats.seconds;
                 return acc.concat(this.suttaTracks(r));
             }, []);
+            Vue.set(this.stats, 'seconds', seconds);
             this.launchSuttaPlayer();
         },
         getResultAudio(result) {
@@ -645,6 +651,7 @@ export default {
             var that = this;
             this.clear();
             Vue.set(this.stats, 'seconds', stats.seconds);
+            console.log(`showSutta`, this.stats);
             var sections = this.sections = sutta.sections;
             Object.assign(this.support, sutta.support);
             this.metaarea = sutta.metaarea;

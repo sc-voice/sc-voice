@@ -309,17 +309,37 @@
         }
 
         timeRemaining(tracks, curTrack=0, curSeg=0, stats) {
-            var chars = this.charsRemaining(tracks, curTrack, curSeg);
+            var oChars = this.charsRemaining(tracks, curTrack, curSeg);
             var result = {
-                chars,
+                oChars,
             };
             if (stats) {
-                Object.assign(result, this.durationDisplay(stats.seconds));
+                var {
+                    showTrans,
+                    showPali,
+                } = this;
+                var charsTot = 0;
+                var chars = 0;
+                var oCharsTot = this.charsRemaining(tracks, 0, 0);
+                Object.keys(oCharsTot).forEach(lang => {
+                    if (lang === 'pli') {
+                        if (showPali) {
+                            charsTot += oCharsTot[lang];
+                            chars += oChars[lang];
+                        }
+                    } else if (showTrans) {
+                        charsTot += oCharsTot[lang];
+                        chars += oChars[lang];
+                    }
+                });
+                var secsRem = stats.seconds * chars / charsTot;
+                console.log(`timeRemaining`, secsRem, stats, charsTot, chars);
+                Object.assign(result, this.durationDisplay(secsRem));
             } else {
                 console.log(`timeRemaining (DEPRECATED)`);
-                Object.assign(result, this.duration(chars));
+                Object.assign(result, this.duration(oChars));
             }
-            result.chars = chars;
+            result.oChars = oChars;
             return result;
         }
 
