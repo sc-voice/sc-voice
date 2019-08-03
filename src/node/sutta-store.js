@@ -9,6 +9,7 @@
     } = require('child_process');
     const Playlist = require('./playlist');
     const Sutta = require('./sutta');
+    const Task = require('./task');
     const SuttaDuration = require('./sutta-duration');
     const SuttaCentralApi = require('./sutta-central-api');
     const SuttaCentralId = require('./sutta-central-id');
@@ -129,14 +130,21 @@
             });
         }
 
-        updateSuttas(suttaIds, opts={}) {
+        updateSuttas(suttaIds=[], opts={}) {
             var that = this;
+            var task = opts.task || new Task({
+                actionsTotal: 0,
+                name: `SuttaStore.updateSuttas`,
+            });
+            task.actionsTotal += suttaIds.length;
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var maxAge = opts.maxAge || 0;
                     suttaIds = suttaIds || that.suttaIds;
                     for (let i = 0; i < suttaIds.length; i++) {
                         var id = suttaIds[i];
+                        task.summary = `updating sutta: ${id}`;
+                        task.actionsDone++; // id
                         var sutta = await that.suttaCentralApi.loadSutta(id);
                         if (sutta) {
                             var translation = sutta.translation;

@@ -66,12 +66,16 @@
             if (age < this.apiCacheSeconds) {
                 var res = JSON.parse(fs.readFileSync(cachedPath));
                 logger.info(`SuttaCentralApi.loadJson(${url}) => cached:${guid}`);
-                var result = Promise.resolve(res);
+                var result = new Promise(resolve => { 
+                    setTimeout(() => resolve(res), 1);
+                }); // yield
             } else {
                 var result = this.loadJsonRest(url);
                 result.then(res => {
                     fs.writeFileSync(cachedPath, JSON.stringify(res,null,2));
-                    logger.info(`loadJson(${url}) => cached:${guid}`);
+                    logger.info(`SuttaCentralApi.loadJson(${url}) => fresh:${guid}`);
+                }).catch(e => {
+                    logger.error(e.stack);
                 });
             }
             return result;
@@ -116,7 +120,8 @@
                     res.on('end', () => {
                         try {
                             var result = JSON.parse(rawData);
-                            logger.debug(`loadJsonRest() ${url} => HTTP200`);
+                            logger.info(`SuttaCentralApi.loadJsonRest() `+
+                                `${url} => ${rawData.length}C`);
                             resolve(result);
                         } catch (e) {
                             logger.error(e.stack);
@@ -125,6 +130,7 @@
                     });
                 }).on('error', (e) => {
                     httpMonitor--;
+                    logger.error(e.stack);
                     reject(e);
                 }).on('timeout', (e) => {
                     logger.error(e.stack);
@@ -396,6 +402,7 @@
                     }
                     resolve(result);
                 } catch(e) {
+                    logger.error(e.stack);
                     reject(e);
                 } 
             })()); 

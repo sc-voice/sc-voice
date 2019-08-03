@@ -21,6 +21,10 @@
         <v-tab-item v-if="isAdmin">
             <vsm/>
         </v-tab-item>
+        <v-tab v-if="isAdmin"> Content<br/>Updater</v-tab>
+        <v-tab-item v-if="isAdmin">
+            <content-updater/>
+        </v-tab-item>
         <v-tab v-if="isAdmin"> Logs </v-tab>
         <v-tab-item v-if="isAdmin">
             <logs/>
@@ -38,6 +42,7 @@
 import Vue from "vue";
 import AdminUsers from "./admin-users";
 import Vsm from "./vsm";
+import ContentUpdater from './content-updater';
 import Logs from "./logs";
 import Caches from "./caches";
 import Releases from "./releases";
@@ -92,6 +97,7 @@ export default {
         AdminUsers,
         Caches,
         Releases,
+        ContentUpdater,
         Vsm,
         Logs,
         Login,

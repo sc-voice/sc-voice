@@ -18,6 +18,7 @@
     const S3Bucket = require('./s3-bucket');
     const AudioUrls = require('./audio-urls');
     const Playlist = require('./playlist');
+    const ContentUpdater = require('./content-updater');
     const Section = require('./section');
     const SCAudio = require('./sc-audio');
     const SoundStore = require('./sound-store');
@@ -65,6 +66,9 @@
             });
             this.vsmFactoryTask = new Task({
                 name: 'VSMFactory',
+            });
+            this.updateContentTask = new Task({
+                name: 'ContentUpdater',
             });
             this.userStore = opts.userStore || new UserStore({
                 defaultUser: DEFAULT_USER,
@@ -168,6 +172,10 @@
                         this.postVsmCreateArchive),
                     this.resourceMethod("post", "auth/vsm/restore-s3-archives", 
                         this.postVsmRestoreS3Archives),
+                    this.resourceMethod("post", "auth/update-content", 
+                        this.postUpdateContent),
+                    this.resourceMethod("get", "auth/update-content/task", 
+                        this.getUpdateContentTask),
                     this.resourceMethod("post", "auth/reboot", 
                         this.postReboot),
                     this.resourceMethod("post", "auth/update-release", 
@@ -1241,6 +1249,64 @@
                 return Promise.reject(new Error('Expected sutta_uid'));
             }
             return this.audioUrls.sourceUrls(sutta_uid);
+        }
+
+        getUpdateContentTask(req, res, next) {
+            var that = this;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "GET update-content/task");
+                    resolve(that.updateContentTask);
+                } catch(e) {
+                    reject(e);} 
+                })();
+            });
+        }
+
+        postUpdateContent(req, res, next) {
+            var that = this;
+            var {
+                nikayas,
+                suids,
+                token,
+            } = req.body || {};
+            var task = that.updateContentTask;
+            if (task.isActive) {
+                return Promise.reject(new Error([
+                    `ContentUpdater is busy`,
+                    `started:${task.started}`,
+                    `summary:${task.summary}`].join(' ')));
+            }
+            var {
+                suttaStore,
+            } = that;
+
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "POST update-content");
+                    if (nikayas instanceof Array) {
+                        if (suids != null) {
+                            logger.warn(`Ignoring provided suids:${suids}`);
+                        }
+                        suids = [];
+                        for (var i = 0; i < nikayas.length; i++) {
+                            var nikaya = nikayas[i];
+                            var nikaya_suids = 
+                                await suttaStore.nikayaSuttaIds(nikaya);
+                            suids = suids.concat(nikaya_suids);
+                        }
+                    }
+                    task.start(`Updating content for ${suids.length} suttas`);
+                    var updater = await new ContentUpdater({
+                        token,
+                    }).initialize();
+                    updater.update(suids, {
+                        task,
+                        suids,
+                    });
+                    resolve(task);
+                } catch(e) {reject(e);} })();
+            });
         }
     }
 

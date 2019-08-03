@@ -21,7 +21,7 @@ const {
     }).initialize();
     var msStart = Date.now();
     var maxAge = 24*60*60;
-    await store.updateSuttas(null, {
+    await store.updateSuttas(undefined, {
         maxAge,
     });
     logger.info(`elapsed:${((Date.now() - msStart)/1000).toFixed(1)}`);

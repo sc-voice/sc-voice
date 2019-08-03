@@ -1202,11 +1202,10 @@
             should.deepEqual(store.sutta_uidSearch("an1.2-11").uids, [
                 "an1.1-10", "an1.11-20"]);
 
-
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("nikaySuttaIds(...) returns sutta_uids", function(done) {
+    it("nikayaSuttaIds(...) returns sutta_uids", function(done) {
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
@@ -1234,8 +1233,29 @@
             // nikaya
             var ids = await store.nikayaSuttaIds('kn');
             should(ids).instanceOf(Array);
+            should(ids.length).equal(337);
             should.deepEqual(ids.slice(0,3), KNSTART);
             should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
+
+            // nikaya an
+            var ids = await store.nikayaSuttaIds('an');
+            should(ids).instanceOf(Array);
+            should(ids.length).equal(1401);
+
+            // nikaya sn
+            var ids = await store.nikayaSuttaIds('sn');
+            should(ids).instanceOf(Array);
+            should(ids.length).equal(1815);
+
+            // nikaya dn
+            var ids = await store.nikayaSuttaIds('dn');
+            should(ids).instanceOf(Array);
+            should(ids.length).equal(34);
+
+            // nikaya mn
+            var ids = await store.nikayaSuttaIds('mn');
+            should(ids).instanceOf(Array);
+            should(ids.length).equal(152);
 
             // Bad input
             var ids = await store.nikayaSuttaIds('nonikaya', 'yiddish', 'nobody');

@@ -1006,5 +1006,44 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTPOST auth/update-content", function(done) {
+        this.timeout(10*1000);
+        (async function() { try {
+            var scvRest = app.locals.scvRest;
+            var soundStore = scvRest.soundStore;
+            var url = `/scv/auth/update-content`;
+            var token = `test-token`;
+            var suids = ['mn1', 'mn2'];
+            var data = { 
+                suids, 
+                token,
+            };
+            var res = await testAuthPost(url, data);
+            /*
+             * NOTE: This test will FAIL if content needs to be updated.
+             * It will failed because the provided token is not valid.
+             * Do not replace the invalid token with a real one.
+             * Update the content from the web page.
+             */
+            res.statusCode.should.equal(200);
+            should(res.body).properties({
+                name: 'ContentUpdater.update()',
+                suids,
+            });
+            should.deepEqual(res.body.gitLog, [
+                'Already up-to-date.',
+            ]);
+            should(res.body.task).properties({
+                name: 'UpdateContent',
+                error: null,
+                isActive: false,
+                summary: 'Update completed without change',
+                actionsDone: 3,
+                actionsTotal: 3,
+            });
+
+            done();
+        } catch(e) {done(e);} })();
+    });
 });
 

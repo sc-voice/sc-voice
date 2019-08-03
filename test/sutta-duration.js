@@ -287,7 +287,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTmeasure(sutta, lang) measures mn1", function(done) {
+    it("measure(sutta, lang) measures mn1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
                 suttaCentralApi,
