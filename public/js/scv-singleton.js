@@ -60,7 +60,7 @@
             this.vnameTrans = 'Amy';
             this.vnameRoot = 'Aditi';
             this.scid = null;
-            this.showLang = 0;
+            this.showLang = this.SHOWLANG_BOTH;
             this.search = null;
             this.maxResults = 5;
             this.ips = 6;
@@ -93,6 +93,18 @@
                 writable: true,
                 value: "no title",
             });
+        }
+
+        get SHOWLANG_BOTH() {
+            return 0;
+        }
+
+        get SHOWLANG_PALI() {
+            return 1;
+        }
+
+        get SHOWLANG_TRANS() {
+            return 2;
         }
 
         get languages() {
@@ -133,11 +145,13 @@
         }
 
         get showPali( ){
-            return this.showLang === 0 || this.showLang === 1;
+            return this.showLang === this.SHOWLANG_BOTH 
+                || this.showLang === this.SHOWLANG_PALI;
         }
 
         get showTrans(){
-            return this.showLang === 0 || this.showLang === 2;
+            return this.showLang === this.SHOWLANG_BOTH 
+                || this.showLang === this.SHOWLANG_TRANS;
         }
 
         set useCookies(value) {
@@ -309,9 +323,9 @@
         }
 
         timeRemaining(tracks, curTrack=0, curSeg=0, stats) {
-            var oChars = this.charsRemaining(tracks, curTrack, curSeg);
+            var remChars = this.charsRemaining(tracks, curTrack, curSeg);
             var result = {
-                oChars,
+                chars,
             };
             if (stats) {
                 var {
@@ -320,26 +334,26 @@
                 } = this;
                 var charsTot = 0;
                 var chars = 0;
-                var oCharsTot = this.charsRemaining(tracks, 0, 0);
-                Object.keys(oCharsTot).forEach(lang => {
+                var remCharsTot = this.charsRemaining(tracks, 0, 0);
+                Object.keys(remCharsTot).forEach(lang => {
                     if (lang === 'pli') {
                         if (showPali) {
-                            charsTot += oCharsTot[lang];
-                            chars += oChars[lang];
+                            charsTot += remCharsTot[lang];
+                            chars += remChars[lang];
                         }
                     } else if (showTrans) {
-                        charsTot += oCharsTot[lang];
-                        chars += oChars[lang];
+                        charsTot += remCharsTot[lang];
+                        chars += remChars[lang];
                     }
                 });
                 var secsRem = stats.seconds * chars / charsTot;
                 console.log(`timeRemaining`, secsRem, stats, charsTot, chars);
                 Object.assign(result, this.durationDisplay(secsRem));
             } else {
-                console.log(`timeRemaining (DEPRECATED)`);
-                Object.assign(result, this.duration(oChars));
+                console.log(`timeRemaining (DEPRECATED)`, remChars);
+                Object.assign(result, this.duration(remChars));
             }
-            result.oChars = oChars;
+            result.chars = remChars;
             return result;
         }
 

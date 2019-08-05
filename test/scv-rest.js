@@ -1006,7 +1006,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/update-content", function(done) {
+    it("POST auth/update-content", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var scvRest = app.locals.scvRest;
@@ -1027,14 +1027,20 @@
              */
             res.statusCode.should.equal(200);
             should(res.body).properties({
-                name: 'ContentUpdater.update()',
-                suids,
+                name: 'ContentUpdater',
+                isActive: true,
+                error: null,
+                actionsTotal: 1,
+                actionsDone: 0,
             });
-            should.deepEqual(res.body.gitLog, [
-                'Already up-to-date.',
-            ]);
-            should(res.body.task).properties({
-                name: 'UpdateContent',
+            await new Promise((resolve, reject) => {
+                setTimeout(() => resolve(true), 5000);
+            });
+
+            var url = `/scv/auth/update-content/task`;
+            var res = await testAuthGet(url);
+            should(res.body).properties({
+                name: 'ContentUpdater',
                 error: null,
                 isActive: false,
                 summary: 'Update completed without change',

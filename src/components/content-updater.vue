@@ -2,33 +2,49 @@
     <v-sheet style="border-top:3px solid #eee" light>
         <v-card >
             <v-card-title>
-                <div class="headline"> Content Updater </div>
                 <div>
-                    SuttaCentral content changes continuously. 
-                    Use this page to update 
-                    <a href="https://github.com/sc-voice/scv-suttas" target="_blank">
-                        Voice content
-                    </a>
-                    to match the latest
-                    SuttaCentral content.
+                    <div class="headline"> Content Updater </div>
                 </div>
             </v-card-title>
             <v-card-text>
-                <div>
+                <div style="display:block; max-width:40em">
+                    SuttaCentral content changes continuously. 
+                    Use this page on a Voice staging server before
+                    every release in order to update 
+                    <a href="https://github.com/sc-voice/scv-suttas" target="_blank">
+                        Voice content
+                    </a>
+                    to for the release.
+
+
+                    <br/>
+                    WARNING: This task may take the server minutes or hours
+                    to complete! And sometimes, nothing changes. 
+                </div>
+                <div class="mt-3">
                     <details>
                         <summary class="title">
-                            Personal Access Token:
+                            Personal Access Token
                         </summary>
-                        To obtain a Github Personal Access Token, 
-                        you will need to create one after logging in to your
-                        <a href="https://github.com/settings/tokens" target="_blank">
-                            Github account
+                        <div style="width:30em" class="mt-2">
+                            Create a Github Personal Access Token 
+                            <a href="https://github.com/settings/tokens" 
+                                target="_blank">
+                                using your Github account.
+                            </a>
+                            Click <kbd>Generate New Token</kbd> and 
+                            select the "repo" checkbox.
+                            Copy the generated token and save it on your computer
+                            for later reference. Or you can generate a new
+                            token every time you Voice update content.
+                        </div>
+                        <a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/git-pat.png">
+                            <img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/git-pat.png" 
+                                style="border:1pt solid gray; margin:1em; height:300px"
+                            />
                         </a>
-
-                        Click <kbd>Generate New Token</kbd> and 
-                        select the "repo" checkbox.
                     </details>
-                    <v-text-field placeholder="Enter Token" 
+                    <v-text-field placeholder="Enter Personal Access Token" 
                         v-model="gitToken">
                     </v-text-field>
                 </div>

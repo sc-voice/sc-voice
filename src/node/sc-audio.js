@@ -73,6 +73,7 @@
                         var url = that.aeneasMapUrl(suid, lang, author, reader);
                     }
                     var httpx = url.startsWith('https') ? https : http;
+                    logger.info(`ScAudio.aeneasMap ${url}`);
                     var req = httpx.get(url, res => {
                         const { statusCode } = res;
                         const contentType = res.headers['content-type'];
@@ -123,7 +124,7 @@
                     var result = {aeneasMaps, NextMarker: ''};
                     var marker = opts.marker;
                     var url = that.urlMap;
-                    var query = '';
+                    var query = '?max-keys=16000';
                     if (marker) {
                         query += query.length ? `&marker=${marker}` : `?marker=${marker}`
                     }
@@ -160,14 +161,16 @@
                                 if (line.match(/Key>/u)) {
                                     var key = line.replace(/.*Key>/u,'');
                                     var lang = key.split('/')[0];
-                                    var suid = key.replace(/.*\//u,'')
-                                        .replace(/\.0*/ug,'.');
-                                    suid = suid.replace(
-                                        /-en|-pli|-sujato|-mahasangiti/ug,'');
-                                    aeneasMaps[suid] = aeneasMaps[suid] || {};
-                                    var altKey = aeneasMaps[suid][lang];
-                                    if (altKey == null || altKey.length < key.length) {
-                                        aeneasMaps[suid][lang] = `${key}.json`;
+                                    if (lang !== 'v01') {
+                                        var suid = key.replace(/.*\//u,'')
+                                            .replace(/\.0*/ug,'.');
+                                        suid = suid.replace(
+                                            /-en|-pli|-sujato|-mahasangiti/ug,'');
+                                        aeneasMaps[suid] = aeneasMaps[suid] || {};
+                                        var altKey = aeneasMaps[suid][lang];
+                                        if (altKey == null || altKey.length < key.length) {
+                                            aeneasMaps[suid][lang] = `${key}.json`;
+                                        }
                                     }
                                 }
                             });

@@ -14,7 +14,7 @@
     const SC_STAGING = 'http://staging.suttacentral.net/api';
     const PRODUCTION = 'http://suttacentral.net/api';
 
-    it("TESTTESTconstructor(opts)", function() {
+    it("constructor(opts)", function() {
         var updater = new ContentUpdater();
         should(updater.isInitialized).equal(false);
         should(updater.apiUrl).equal(SC_STAGING);
@@ -32,7 +32,7 @@
         should(updater.token).equal('test-token');
         should(fs.existsSync(updater.gitPath)).equal(true);
     });
-    it("TESTTESTinitialize() initializes ContentUpdater", function(done) {
+    it("initialize() initializes ContentUpdater", function(done) {
         (async function() { try {
             var updater = new ContentUpdater();
             var resInit = await updater.initialize();
@@ -46,7 +46,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTupdate(scids, opts) updates content", function(done) {
+    it("update(scids, opts) updates content", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             /*

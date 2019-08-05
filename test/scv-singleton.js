@@ -84,7 +84,7 @@
             vnameTrans: 'Amy',
             vnameRoot: 'Aditi',
             scid: null,
-            showLang: 0,
+            showLang: scv.SHOWLANG_BOTH,
             search: null,
             maxResults: 5,
             ips: 6,
@@ -525,52 +525,61 @@
             pli: 54,
         });
     });
-    it("timeRemaining(tracks,...) returns time remaining", function() {
+    it("timeRemaining(tracks,...) returns time remaining SHOWLANG_TRANS", ()=>{
         var scv = new ScvSingleton(g);
+        scv.showLang = scv.SHOWLANG_TRANS;
         should(scv.showTrans).equal(true);
-        should(scv.showPali).equal(true);
+        should(scv.showPali).equal(false);
         var pl = new Playlist();
         pl.addSutta(suttas[0]);
         pl.addSutta(suttas[1]);
         should.deepEqual(scv.timeRemaining(pl.tracks, 0, 0), {
-            aria: "11 seconds",
-            display: '11s',
+            aria: "5 seconds",
+            display: '5s',
             hours: 0,
             minutes: 0,
-            seconds: 11,
-            totalSeconds: 11,
+            seconds: 5,
+            totalSeconds: 5,
             chars: {
                 en: 53,
                 pli: 66,
             },
         });
         should.deepEqual(scv.timeRemaining(pl.tracks, 1, 0), {
-            aria: "7 seconds",
-            display: '7s',
+            aria: "3 seconds",
+            display: '3s',
             hours: 0,
             minutes: 0,
-            seconds: 7,
-            totalSeconds: 7,
+            seconds: 3,
+            totalSeconds: 3,
             chars: {
                 en: 40,
                 pli: 38,
             },
         });
         should.deepEqual(scv.timeRemaining(pl.tracks, 0, 1), {
-            aria: "8 seconds",
-            display: '8s',
+            aria: "3 seconds",
+            display: '3s',
             hours: 0,
             minutes: 0,
-            seconds: 8,
-            totalSeconds: 8,
+            seconds: 3,
+            totalSeconds: 3,
             chars: {
                 en: 40,
                 pli: 54,
             },
         });
-
+    });
+    it("timeRemaining(tracks,...) returns time remaining SHOWLANG_PALI", function() {
+        var scv = new ScvSingleton(g);
         // Show Pali
-        scv.showLang = 1;
+        scv.showLang = scv.SHOWLANG_PALI;
+        should(scv.showLang).equal(scv.SHOWLANG_PALI);
+        should(scv.showTrans).equal(false);
+        should(scv.showPali).equal(true);
+        var pl = new Playlist();
+        pl.addSutta(suttas[0]);
+        pl.addSutta(suttas[1]);
         should.deepEqual(scv.timeRemaining(pl.tracks, 0, 0), {
             aria: "6 seconds",
             display: '6s',
@@ -607,40 +616,46 @@
                 pli: 54,
             },
         });
-
-        // Show translation
-        scv.showLang = 2;
+    });
+    it("timeRemaining(tracks,...) returns time remaining SHOWLANG_BOTH", function() {
+        var scv = new ScvSingleton(g);
+        should(scv.showLang).equal(scv.SHOWLANG_BOTH);
+        should(scv.showTrans).equal(true);
+        should(scv.showPali).equal(true);
+        var pl = new Playlist();
+        pl.addSutta(suttas[0]);
+        pl.addSutta(suttas[1]);
         should.deepEqual(scv.timeRemaining(pl.tracks, 0, 0), {
-            aria: "5 seconds",
-            display: '5s',
+            aria: "11 seconds",
+            display: '11s',
             hours: 0,
             minutes: 0,
-            seconds: 5,
-            totalSeconds: 5,
+            seconds: 11,
+            totalSeconds: 11,
             chars: {
                 en: 53,
                 pli: 66,
             },
         });
         should.deepEqual(scv.timeRemaining(pl.tracks, 1, 0), {
-            aria: "3 seconds",
-            display: '3s',
+            aria: "7 seconds",
+            display: '7s',
             hours: 0,
             minutes: 0,
-            seconds: 3,
-            totalSeconds: 3,
+            seconds: 7,
+            totalSeconds: 7,
             chars: {
                 en: 40,
                 pli: 38,
             },
         });
         should.deepEqual(scv.timeRemaining(pl.tracks, 0, 1), {
-            aria: "3 seconds",
-            display: '3s',
+            aria: "8 seconds",
+            display: '8s',
             hours: 0,
             minutes: 0,
-            seconds: 3,
-            totalSeconds: 3,
+            seconds: 8,
+            totalSeconds: 8,
             chars: {
                 en: 40,
                 pli: 54,

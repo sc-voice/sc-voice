@@ -80,7 +80,7 @@
             '/pli/sn/sn1/sn1.58/sn1.58_2.1.webm');
     });
     it("aeneasMap(suid...) returns aeneas map JSON", function(done) {
-        this.timeout(20*1000);
+        this.timeout(30*1000);
         (async function() { try {
             var sca = SCA;
             var resMap = await sca.aeneasMap('sn1.09');
@@ -89,11 +89,11 @@
             ].sort());
             var fragments = resMap.fragments;
             should.deepEqual(fragments[7], {
-                begin: '27.100',
+                begin: '26.340',
                 children: [],
-                end: '32.020',
+                end: '31.260',
                 id: 'sn1.9:3.1',
-                language: 'en',
+                language: 'eng',
                 lines: [
                     'Having given up conceit, serene within oneself, ',
                 ],
@@ -102,7 +102,7 @@
         } catch(e) { done(e); } })();
     });
     it("catalog(opts) returns sutta catalog", function(done) {
-        this.timeout(15*1000);
+        this.timeout(20*1000);
         (async function() { try {
             var sca = SCA;
             var response = await sca.catalog();
@@ -119,7 +119,7 @@
             var entry = aeneasMaps[suid];
             should.deepEqual(entry, {
                 pli: 'pli/sn/sn1/sn1.02-pli-mahasangiti-sujato.json',
-                en: 'en/sn/sn1/sn1.2-en-sujato-sujato.json',
+                en: 'en/sn/sn1/sn1.02-en-sujato-sujato.json',
             });
             var resMap = await sca.aeneasMap(suid, 'pli', 'mahasangiti', 'sujato');
             should(resMap.fragments.length).equal(11);
@@ -213,7 +213,7 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(37000);
+            should(stats.size).above(34000);
             should(stats.size).below(39000);
 
             // Pali
