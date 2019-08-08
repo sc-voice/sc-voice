@@ -61,7 +61,7 @@ export default {
         getLogs() {
             var url = this.url('auth/logs');
             this.$http.get(url, this.authConfig).then(res => {
-                Vue.set(this, 'logs', res.data);
+                this.logs = res.data;
             }).catch(e => {
                 console.error(e.response);
             });
@@ -73,7 +73,7 @@ export default {
             var url = this.url(`auth/log/${ilog}`);
             this.$http.get(url, this.authConfig).then(res => {
                 Vue.set(this.logs[ilog], 'log', res.data);
-                Vue.set(this, 'iLog', ilog);
+                this.iLog = ilog;
             }).catch(e => {
                 console.error(e.response);
             });
@@ -85,7 +85,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
         this.getLogs();
     },
     computed: {

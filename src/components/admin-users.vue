@@ -83,7 +83,6 @@
 
 <script>
 /* eslint no-console: 0*/
-import Vue from "vue";
 import ChangePassword from "./change-password";
 import DeleteUser from "./delete-user";
 import AddUser from "./add-user";
@@ -112,7 +111,7 @@ export default {
             }
             this.$http.get(url, config).then(res => {
                 var usernames = Object.keys(res.data);
-                Vue.set(this, "users", usernames.map(username=>{
+                this.users = usernames.map(username=>{
                     var user = res.data[username];
                     user.dateAdded && 
                         (user.dateAdded = new Date(user.dateAdded));
@@ -121,7 +120,7 @@ export default {
                     user.dateSetPassword && 
                         (user.dateSetPassword = new Date(user.dateSetPassword));
                     return user;
-                }));
+                });
             }).catch(e => {
                 console.error(`getUsers() failed`, e.stack);
             });
@@ -144,7 +143,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
         this.getUsers();
     },
     computed: {

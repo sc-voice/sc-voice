@@ -1,8 +1,10 @@
 <template>
 <v-dialog v-model="dialog" v-if="token" persistent>
-    <v-btn flat small slot="activator">
-        Change Password
-    </v-btn>
+        <template v-slot:activator="{ on }">
+            <v-btn flat small light v-on="on" >
+                Change Password
+            </v-btn>
+        </template>
     <v-card>
         <v-card-title class="deep-orange darken-3">
             <h3 class="">
@@ -43,10 +45,9 @@
 
 <script>
 /* eslint no-console: 0*/
-import Vue from "vue";
 
 export default {
-    name: 'Login',
+    name: 'ChangePassword',
     data: () => {
         return {
             dialog: false,
@@ -54,7 +55,9 @@ export default {
             password2: "",
             user:{},
             disabled() {
-                return !this.password || this.password !== this.password2;
+                var pwdMismatch = this.password && this.password2 
+                    && this.password !== this.password2;
+                return !this.password || pwdMismatch;
             },
             isWaiting: false,
         }
@@ -90,7 +93,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
     },
     computed: {
         gscv() {
