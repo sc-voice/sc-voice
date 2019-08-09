@@ -250,7 +250,7 @@ export default {
                 that.dialogHelp = true;
                 var url = that.url('wiki-aria/Home');
                 that.$http.get(url).then(res => {
-                    Vue.set(that, "helpHtml", res.data.html);
+                    that.helpHtml = res.data.html;
                 }).catch(e => {
                     console.error(e.stack);
                 });
@@ -365,7 +365,7 @@ export default {
             var search = query.scid || query.search || '';
             query.search && Vue.set(this.gscv, "search", search);
         }
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
     },
     created() {
         var that = this;

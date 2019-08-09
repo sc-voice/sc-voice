@@ -5,6 +5,8 @@
           :items="users"
           :rows-per-page-items="userRowsPerPageItems"
           :pagination.sync="pagination"
+          :items-per-page.sync="itemsPerPage"
+          :footer-props="{ itemsPerPageOptions }"
           content-tag="v-layout"
           row wrap 
         >
@@ -95,10 +97,12 @@ export default {
             },
             users: [],
             isWaiting: false,
-            userRowsPerPageItems: [4, 8, 12],
-            pagination: {
-                rowsPerPage: 4
-            },
+            itemsPerPage: 4,
+            itemsPerPageOptions: [4, 8, 12],
+            userRowsPerPageItems: [4, 8, 12], // DEPRECATED
+            pagination: { // DEPRECATED
+                rowsPerPage: 4 // DEPRECATED
+            }, // DEPRECATED
         }
     },
     methods: {
