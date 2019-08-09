@@ -43,7 +43,7 @@
                                 ></v-checkbox>
                         </td>
                         <th > {{ props.item.name }} </th>
-                        <td class="text-xs-right">
+                        <td class="text-right">
                             {{ (props.item.size/1E6).toFixed(1) }}MB
                         </td>
                         <td > {{ cleared[props.item.name] }} </td>

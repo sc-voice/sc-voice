@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="dialog" v-if="token" persistent>
-        <v-btn flat slot="activator" @click="onActivate()">
+        <v-btn text slot="activator" @click="onActivate()">
             Add User
         </v-btn>
         <v-card>
@@ -40,9 +40,9 @@
                 </v-alert>
             </v-card-text>
             <v-card-actions>
-                <v-btn flat @click="dialog=false">Cancel</v-btn>
+                <v-btn text @click="dialog=false">Cancel</v-btn>
                 <v-spacer/>
-                <v-btn @click="onAddUser()" flat
+                <v-btn @click="onAddUser()" text
                     :disabled="disabled()"
                     >
                     Add User

@@ -1,6 +1,6 @@
 {
   "name": "sc-voice",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "SuttaCentral Voice",
   "main": "index.js",
   "directories": {
@@ -26,7 +26,7 @@
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
     "vue-cookie": "^1.1.4",
-    "vuetify": "^1.4.4",
+    "vuetify": "^2.0.5",
     "watson-developer-cloud": "^3.8.0",
     "winston": "^3.0.0"
   },

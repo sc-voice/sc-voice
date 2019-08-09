@@ -1,6 +1,8 @@
 <template>
-  <v-app dark>
-    <v-toolbar app flat dark aria-role="navigation">
+  <v-app >
+    <v-app-bar app flat dark 
+        color="grey darken-4"
+        aria-role="navigation">
         <a :href="homeHref" @click="clickHome()"
         aria-label="Soota Central Voice">
         <img aria-hidden="true" class="pt-1"
@@ -16,25 +18,23 @@
             </div>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <ul>
-            <li>
-                <v-btn id="btnHelp" icon dark class="scv-icon-btn" :style="cssProps"
-                title="About"
-                aria-label="About"
-                @click="openHelp()">
-                <v-icon aria-hidden="true">info</v-icon>
-                </v-btn>
-            </li>
-            <li>
-                <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
-                title="Settings"
-                aria-label="Settings"
-                @click="dialogSettings = !dialogSettings">
-                <v-icon aria-hidden="true">settings</v-icon>
-                </v-btn>
-            </li>
-        </ul>
-    </v-toolbar>
+        <v-btn id="btnHelp" 
+            icon dark class="scv-icon-btn" :style="cssProps"
+            small
+            title="About"
+            aria-label="About"
+            @click="openHelp()">
+            <v-icon aria-hidden="true">info</v-icon>
+        </v-btn>
+        <v-btn id="btnSettings" 
+            icon dark class="scv-icon-btn" :style="cssProps"
+            small
+            title="Settings"
+            aria-label="Settings"
+            @click="dialogSettings = !dialogSettings">
+            <v-icon aria-hidden="true">settings</v-icon>
+        </v-btn>
+    </v-app-bar>
 
     <v-dialog v-model="dialogHelp" persistent max-width="45em">
         <v-card >
@@ -484,12 +484,12 @@ button {
 .scv-logo-small {
     //cursor: pointer;
     margin-top: 2px;
-    font-size: 11px;
+    font-size: .6em;
     //font-variant: small-caps;
     color: #ce8400;
 }
 .scv-a {
-    color: #ffffff;
+    color: #ffffff !important;
 }
 scv-a-btn {
     color: #ffffff;

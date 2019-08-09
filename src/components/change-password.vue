@@ -1,7 +1,7 @@
 <template>
 <v-dialog v-model="dialog" v-if="token" persistent>
         <template v-slot:activator="{ on }">
-            <v-btn flat small light v-on="on" >
+            <v-btn text small light v-on="on" >
                 Change Password
             </v-btn>
         </template>
@@ -30,9 +30,9 @@
             </form ><!-- Chrome silliness-->
         </v-card-text>
         <v-card-actions>
-            <v-btn flat small @click="dialog=false">Cancel</v-btn>
+            <v-btn text small @click="dialog=false">Cancel</v-btn>
             <v-spacer/>
-            <v-btn flat small
+            <v-btn text small
                 :disabled="disabled()"
                 @click="onChangePassword()"
                 >

@@ -12,12 +12,12 @@
                     disable-initial-sort
                   >
                     <template v-slot:items="props">
-                      <th class="text-xs-left">
+                      <th class="text-left">
                         <a @click="getLog(props.item.name)">{{ props.item.name }}</a>
                     </th>
-                      <td class="text-xs-left">{{ props.item.size }}</td>
-                      <td class="text-xs-left">{{ props.item.ctime }}</td>
-                      <td class="text-xs-left">{{ props.item.mtime }}</td>
+                      <td class="text-left">{{ props.item.size }}</td>
+                      <td class="text-left">{{ props.item.ctime }}</td>
+                      <td class="text-left">{{ props.item.mtime }}</td>
                     </template>
                   </v-data-table>
             </v-card-text>

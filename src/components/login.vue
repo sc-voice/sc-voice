@@ -23,13 +23,13 @@
             </v-card-text>
             <v-card-actions>
                 <router-link class="scv-a" to="/app" aria-hidden=true >
-                    <v-btn small flat light
+                    <v-btn small text light
                         :disabled="isWaiting" >
                         Cancel
                     </v-btn>
                 </router-link>
                 <v-spacer/>
-                <v-btn small @click="onLogin" flat light
+                <v-btn small @click="onLogin" text light
                     type="submit"
                     :disabled="isWaiting || !username || !password" >
                     Login

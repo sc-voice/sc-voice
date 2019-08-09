@@ -347,7 +347,7 @@
                     }
                 });
                 var secsRem = stats.seconds * chars / charsTot;
-                console.log(`timeRemaining`, secsRem, stats, charsTot, chars);
+                //console.log(`timeRemaining`, secsRem, stats, charsTot, chars);
                 Object.assign(result, this.durationDisplay(secsRem));
             } else {
                 console.log(`timeRemaining (DEPRECATED)`, remChars);

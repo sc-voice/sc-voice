@@ -248,10 +248,10 @@ style="width:100%; margin-top:0"/>
                 {{suttaTitle}}
             </summary>
             <div class="scv-blurb">{{suttaplex.blurb}}</div>
-            <div class="title pt-4 pb-2 text-xs-center">
+            <div class="title pt-4 pb-2 text-center">
                 {{sutta.original_title}}
             </div>
-            <div class="subtitle font-italic pt-1 pb-3 text-xs-center">
+            <div class="subtitle font-italic pt-1 pb-3 text-center">
                 Translated by {{sutta.author}}
             </div>
             <div class="scv-blurb"><span v-html="metaarea"></span></div>

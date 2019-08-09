@@ -7,9 +7,10 @@
                 <p>Your browser doesn't support HTML5 audio</p>
             </audio>
             <v-card-text >
-                <div class="subheading pl-2 pb-2">{{title}}</div>
+                <div class="subheading pl-2 pb-2 text-center">{{title}}</div>
                 <div class="scv-player-nav">
-                    <v-btn icon class="scv-icon-btn"
+                    <v-btn icon class="scv-icon-btn" small
+                        style="border-color: #424242"
                         ref="refPrevious"
                         aria-label='Previous Section'
                         @click="playTrack(iTrack-1)"
@@ -19,28 +20,29 @@
                     <div class="scv-timelapse">
                         {{iTrack+1}} of {{section && this.tracks.length || "(n/a)"}} 
                         &nbsp;
-                        <!--v-icon small class="ml-1 mr-1">timelapse</v-icon-->
                         ({{timeRemaining}})
                     </div>
-                    <v-btn icon class="scv-icon-btn"
+                    <v-btn icon class="scv-icon-btn" small
+                        style="border-color: #424242"
                         ref="refNext"
                         aria-label='Next Section'
                         @click="playTrack(iTrack+1)"
                         :style='cssProps()'
                         ><v-icon>fast_forward</v-icon></v-btn>
                 </div>
-                <div class="body-2 mt-1 text-xs-center"> 
+                <div class="body-2 mt-1 text-center"> 
                     {{section && section.title || "(n/a)"}} 
                 </div>
                 <v-slider thumb-label v-model="iSegment"
                     ref="refSlider"
+                    v-if="refAudioPali || refAudioLang"
                     :disabled="loading || !paused"
                     always-dirty
                     class="pl-4 pr-4"
                     :label="`${iSegment+1}/${section && section.segments.length || '--'}`"
                     inverse-label
                     height="16"
-                    :max="section && section.segments.length-1"
+                    :max="section && section.segments.length-1 || 0"
                 />
                 <div v-if="showPali" :class="paliTextClass" :style="cssProps()">
                     <div >{{paliText}}</div>
@@ -52,16 +54,21 @@
             <v-card-actions class="ml-3 mr-3 pb-3">
                 <v-btn icon @click="clickPlayPause()" 
                     ref="refPlay"
-                    class="scv-icon-btn" :style="cssProps()"
+                    class="scv-icon-btn" :style="cssProps()" small
+                    style="border-color: #424242"
                     aria-label="Play">
                     <v-icon v-if="loading">hourglass_empty</v-icon>
                     <v-icon v-if="!loading && paused">play_arrow</v-icon>
                     <v-icon v-if="!loading && !paused">pause</v-icon>
                 </v-btn>
                 <v-spacer/>
-                <div class="scv-player-scid">SC&nbsp;{{scid}}</div>
+                <div class="scv-player-scid">
+                    <div class="grey--text overline">SuttaCentral</div>
+                    <div>{{scid}}</div>
+                </div>
                 <v-spacer/>
-                <v-btn icon class="scv-icon-btn"
+                <v-btn icon class="scv-icon-btn" small
+                    style="border-color: #424242"
                     ref="refClose"
                     :style='cssProps()'
                     aria-label='cloze'
@@ -109,6 +116,8 @@ export default {
             loadingAudio: 0,
             paliTextClass: "",
             langTextClass: "",
+            refAudioPali: null,
+            refAudioLang: null,
             stats: {},
         };
     },
@@ -124,7 +133,9 @@ export default {
             this.iTrack = iTrack;
             Vue.set(this.stats, "tracks", iTrack+1);
             this.iSegment = 0;
-            console.log(`ScvPlayer.playTrack(${iTrack} of ${this.tracks.length})`);
+            console.log(`ScvPlayer.playTrack(`,
+                `${iTrack} of ${this.tracks.length})`,
+                '');
             this.visible = true;
             this.section = null;
             this.progressTimer = setTimeout(() => {
@@ -221,6 +232,7 @@ export default {
                 section,
                 iTrack,
             } = this;
+            console.log(`dbg onEndLang iSegment`, iSegment, event);
             this.setTextClass();
             if (!paused && iSegment < section.segments.length-1) {
                 this.paused = true;
@@ -236,8 +248,7 @@ export default {
                 }, NEW_SECTION_PAUSE);
             } else {
                 this.paused = true;
-                var evt = JSON.stringify(event);
-                console.log(`onEndLang(${evt}) seg:${iSegment} track:${iTrack}`);
+                //var evt = JSON.stringify(event);
                 this.playStartEndSound('onEndLang');
             }
             Vue.set(this.stats, "elapsed", Date.now() - this.stats.startTime);
@@ -246,15 +257,15 @@ export default {
             this.segmentStats(this.segment);
             var playLang = this.showTrans && this.segment.audio[this.language];
             if (playLang) {
-                var refLang = this.$refs.refAudioLang;
-                refLang.play().then(() => {
+                var refAudioLang = this.$refs.refAudioLang;
+                refAudioLang.play().then(() => {
                     this.setTextClass();
                     this.loadingAudio = 0;
-                    //console.log(`onEndPali() refLang playing started`);
+                    //console.log(`onEndPali() refAudioLang playing started`);
                 }).catch(e => {
                     this.paused = true;
                     this.loadingAudio = 0;
-                    console.log(`onEndPali(${!!event}) refLang playing failed`, e.stack);
+                    console.log(`onEndPali(${!!event}) refAudioLang playing failed`, e.stack);
                 });
             } else {
                 this.onEndLang();
@@ -262,13 +273,13 @@ export default {
             Vue.set(this.stats, "elapsed", Date.now() - this.stats.startTime);
         },
         pauseAudio() {
-            var refPli = this.$refs.refAudioPali;
-            var refLang = this.$refs.refAudioLang;
+            var refAudioPali = this.$refs.refAudioPali;
+            var refAudioLang = this.$refs.refAudioLang;
             var result = true;
             if (!this.paused) { // playing
                 this.paused = true;
-                !refPli.paused && refPli.pause();
-                !refLang.paused && refLang.pause();
+                !refAudioPali.paused && refAudioPali.pause();
+                !refAudioLang.paused && refAudioLang.pause();
             } else {
                 result = false;
             }
@@ -358,8 +369,8 @@ export default {
         toggleAudio() {
             var that = this;
             (async function() {
-                var refPli = that.$refs.refAudioPali;
-                var refLang = that.$refs.refAudioLang;
+                var refAudioPali = that.$refs.refAudioPali;
+                var refAudioLang = that.$refs.refAudioLang;
                 if (that.pauseAudio()) {
                     console.log("toggleAudio() paused");
                     return;
@@ -373,23 +384,23 @@ export default {
                 }
                 var playPali = that.showPali && segment.audio.pli;
                 if (playPali) {
-                    refPli.load();
+                    refAudioPali.load();
                     that.loadingAudio++;
                 }
                 var playLang = that.showTrans && segment.audio[lang];
                 if (playLang) {
-                    refLang.load();
+                    refAudioLang.load();
                     that.loadingAudio++;
                 }
                 that.paused = false;
                 if (playPali) {
-                    refPli.play().then(() => {
+                    refAudioPali.play().then(() => {
                         that.setTextClass();
                         that.loadingAudio = 0;
                     }).catch(e => {
                         that.paused = true;
                         that.loadingAudio = 0;
-                        console.log(`refPli playing failed`, e);
+                        console.log(`refAudioPali playing failed`, e);
                     });
                 } else {
                     that.onEndPali();
@@ -397,20 +408,22 @@ export default {
             })();
         },
         setTextClass() {
-            var refPli = this.$refs.refAudioPali;
-            this.paliTextClass = refPli == null || refPli.paused 
+            var refAudioPali = this.$refs.refAudioPali;
+            this.paliTextClass = refAudioPali == null || refAudioPali.paused 
                 ? "scv-player-text scv-player-text-top"
                 : "scv-player-text scv-player-text-playing scv-player-text-top";
             //console.log(`paliTextClass ${this.paliTextClass}`);
-            var refLang = this.$refs.refAudioLang;
-            this.langTextClass = refLang == null || refLang.paused 
+            var refAudioLang = this.$refs.refAudioLang;
+            this.langTextClass = refAudioLang == null || refAudioLang.paused 
                 ? "scv-player-text"
                 : "scv-player-text scv-player-text-playing";
             //console.log(`langTextClass ${this.langTextClass}`);
         },
         audioSrc(lang) {
-            var sutta_uid = this.sutta_uid;
-            var translator = this.translator;
+            var {
+                sutta_uid,
+                translator,
+            } = this;
             var segment = this.section && this.section.segments[this.iSegment];
             var audio = segment && segment.audio || {};
             var vname = lang === 'pli' 
@@ -477,7 +490,11 @@ export default {
                 !!this.loadingAudio;
         },
         segment() {
-            return this.section && this.section.segments[this.iSegment];
+            var {
+                iSegment,
+                section,
+            } = this;
+            return section && section.segments[iSegment];
         },
         gscv() {
             return this.$root.$data;
@@ -500,6 +517,9 @@ export default {
                 "(no translation available)";
         },
         segmentsElapsed(){
+            var {
+                iSegment,
+            } = this;
             return this.tracks && this.tracks.reduce((acc, track, i) => {
                 if (this.iTrack < i) {
                     return acc;
@@ -507,7 +527,7 @@ export default {
                 if (i < this.iTrack) {
                     return acc + track.nSegments;
                 }
-                return acc + this.iSegment + 1;
+                return acc + iSegment + 1;
             }, 0) || 0;
         },
         segmentsTotal(){
@@ -538,15 +558,22 @@ export default {
             return ips && ips.url;
         },
     },
+    beforeUpdate() {
+        var refAudioPali = this.$refs.refAudioPali;
+        if (refAudioPali && this.refAudioPali !== refAudioPali) {
+            this.refAudioPali = refAudioPali;
+            refAudioPali.addEventListener("ended", this.onEndPali);
+        }
+        var refAudioLang = this.$refs.refAudioLang;
+        if (refAudioLang && this.refAudioLang !== refAudioLang) {
+            this.refAudioLang = refAudioLang;
+            refAudioLang.addEventListener("ended", this.onEndLang);
+        }
+    },
+    updated() {
+    },
     mounted() {
         this.setTextClass();
-        console.log(`mounted`, this.tracks);
-        this.$nextTick(() => {
-            var refPli = this.$refs.refAudioPali;
-            var refLang = this.$refs.refAudioLang;
-            refPli.addEventListener("ended", this.onEndPali);
-            refLang.addEventListener("ended", this.onEndLang);
-        });
     },
 }
 </script>
@@ -570,6 +597,8 @@ export default {
 }
 .scv-player-scid {
     text-transform: uppercase;
+    text-align: center;
+    line-height: 1em;
 }
 .scv-player-text-top {
     display: flex;
@@ -581,7 +610,7 @@ export default {
 .scv-player-nav {
     display: flex;
     justify-content: space-between;
-    margin-left: -0.5em;
+    margin-left: 0.5em;
     margin-right: 0.5em;
     align-items: center;
 }

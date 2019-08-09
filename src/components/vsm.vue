@@ -101,9 +101,9 @@
                       <td>
                           <v-checkbox v-model="props.selected" primary hide-details/>
                       </td>
-                      <td class="text-xs-left">{{ props.item.Key }}</td>
-                      <td class="text-xs-left">{{ props.item.upToDate }}</td>
-                      <td class="text-xs-left">{{ props.item.Size }}</td>
+                      <td class="text-left">{{ props.item.Key }}</td>
+                      <td class="text-left">{{ props.item.upToDate }}</td>
+                      <td class="text-left">{{ props.item.Size }}</td>
                       <td >{{ props.item.ETag }}</td>
                     </template>
                 </v-data-table>

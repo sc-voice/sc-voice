@@ -1,6 +1,6 @@
 <template>
 <v-dialog v-model="dialog" v-if="token" persistent>
-    <v-btn icon flat small slot="activator"
+    <v-btn icon text small slot="activator"
         @click="onActivated()">
         <v-icon>delete</v-icon>
     </v-btn>
@@ -23,9 +23,9 @@
             </v-alert>
         </v-card-text>
         <v-card-actions>
-            <v-btn flat small @click="dialog=false">Cancel</v-btn>
+            <v-btn text small @click="dialog=false">Cancel</v-btn>
             <v-spacer/>
-            <v-btn flat small
+            <v-btn text small
                 :disabled="!confirm"
                 @click="onDeleteUser()"
                 >
