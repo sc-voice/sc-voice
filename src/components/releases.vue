@@ -93,7 +93,6 @@
 
 <script>
 /* eslint no-console: 0*/
-import Vue from "vue";
 
 export default {
     name: 'Releases',
@@ -123,7 +122,7 @@ export default {
             var urlVol = this.url("identity");
             this.$http.get(urlVol).then(res => {
                 var identity = res.data;
-                Vue.set(this, "identity", identity);
+                this.identity = identity;
                 console.log(res.data);
             }).catch(e => {
                 console.error(`getIdentity() failed`, e.stack);
@@ -134,23 +133,23 @@ export default {
             console.log('onRestart');
             var url = this.url("auth/reboot"); 
             var data = {};
-            Vue.set(this, "isRestarting", true);
-            Vue.set(this, "confirmRestart", false);
-            Vue.set(that, "refreshSecs", that.restartMinutes * 60);
-            Vue.set(this, "error", null);
+            this.isRestarting = true;
+            this.confirmRestart = false;
+            this.refreshSecs = that.restartMinutes * 60;
+            this.error = null;
             this.$http.post(url, data, this.authConfig).then(res => {
                 console.log(res.data);
                 var interval = setInterval(() => {
-                    Vue.set(that, "refreshSecs", that.refreshSecs-1);
+                    that.refreshSecs = that.refreshSecs-1;
                     if (that.refreshSecs < 0) {
-                        Vue.set(this, "isRestarting", false);
+                        this.isRestarting = false;
                         clearInterval(interval);
                         window.location.reload(true);
                     }
                 }, 1000);
             }).catch(e => {
                 this.error = e;
-                Vue.set(this, "isRestarting", false);
+                this.isRestarting = false;
                 console.error(`onRestart() failed`, e.stack);
             });
         },
@@ -159,23 +158,23 @@ export default {
             console.log('onUpdateRelease');
             var url = this.url("auth/update-release"); 
             var data = {};
-            Vue.set(this, "isUpdating", true);
-            Vue.set(this, "confirmUpdate", false);
-            Vue.set(that, "refreshSecs", that.updateMinutes * 60);
-            Vue.set(that, "isReleaseCurrent", false);
-            Vue.set(this, "error", null);
+            this.isUpdating = true;
+            this.confirmUpdate = false;
+            that.refreshSecs = that.updateMinutes * 60;
+            that.isReleaseCurrent = false;
+            this.error = null;
             this.$http.post(url, data, this.authConfig).then(res => {
                 console.log(res.data);
                 if (res.data.updateRelease) {
                     var interval = setInterval(() => {
-                        Vue.set(that, "refreshSecs", that.refreshSecs-1);
+                        that.refreshSecs = that.refreshSecs-1;
                         if (that.refreshSecs < 0) {
                             clearInterval(interval);
                             window.location.reload(true);
                         }
                     }, 1000);
                 } else {
-                    Vue.set(that, "isReleaseCurrent", true);
+                    that.isReleaseCurrent = true;
                 }
             }).catch(e => {
                 this.error = e;
@@ -189,7 +188,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
         this.getIdentity();
     },
     computed: {

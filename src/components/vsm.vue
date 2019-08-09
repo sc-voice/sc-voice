@@ -260,20 +260,20 @@ export default {
     methods: {
         onVsmCreate() {
             var url = this.url('auth/vsm/create-archive');
-            Vue.set(this, 'vsmCreateError', null);
+            this.vsmCreateError = null;
             this.$http.post(url, this.vsmCreate, this.authConfig).then(res => {
                 console.log(`onVsmCreate`, res.data);
-                Vue.set(this, 'vsmFactoryDialog', false);
+                this.vsmFactoryDialog = false;
                 this.getVsmFactoryTask();
             }).catch(e => {
-                Vue.set(this, 'vsmCreateError', e);
+                this.vsmCreateError = e;
                 console.error(e.response);
             });
         },
         getListObjects() {
             var url = this.url('auth/vsm/list-objects');
             this.$http.get(url, this.authConfig).then(res => {
-                Vue.set(this, 'vsmObjects', res.data.Contents);
+                this.vsmObjects = res.data.Contents;
             }).catch(e => {
                 console.error(e.response);
             });
@@ -285,7 +285,7 @@ export default {
                 var {
                     isActive,
                 } = res.data;
-                Vue.set(that, 'vsmFactoryTask', res.data);
+                this.vsmFactoryTask = res.data;
                 if (isActive) {
                     setTimeout(() => {
                         that.getVsmFactoryTask();
@@ -300,20 +300,20 @@ export default {
         getCredentials() {
             var url = this.url('auth/vsm/s3-credentials');
             this.$http.get(url, this.authConfig).then(res => {
-                Vue.set(this, 'vsmCreds', res.data);
+                this.vsmCreds = res.data;
                 if (res.data.Bucket) {
-                    Vue.set(this, 'editCreds', JSON.parse(JSON.stringify(res.data)));
+                    this.editCreds = JSON.parse(JSON.stringify(res.data));
                     Vue.set(this.editCreds.s3, 'accessKeyId', '');
                     Vue.set(this.editCreds.s3, 'secretAccessKey', '');
                 }
                 this.getListObjects();
             }).catch(e => {
                 console.error(e.response);
-                Vue.set(this, 'vsmCreds', {});
+                this.vsmCreds = {};
             });
         },
         onEditCredentials() {
-            Vue.set(this, 'isEditCredentials', true);
+            this.isEditCredentials = true;
         },
         onVsmInstall() {
             var that = this;
@@ -321,16 +321,16 @@ export default {
             var data = {
                 restore: that.vsmSelected,
             };
-            Vue.set(that, 'isVsmRestoring', true);
-            Vue.set(that, 'vsmRestoreError', null);
+            this.isVsmRestoring = true;
+            this.vsmRestoreError = null;
             that.$http.post(url, data, that.authConfig).then(res => {
                 console.log(`restored S3 archives`, res.data);
-                Vue.set(that, 'isVsmRestoring', false);
+                this.isVsmRestoring = false;
                 that.getCredentials();
             }).catch(e => {
                 console.log('could not restore S3 archives', e.response.data);
-                Vue.set(that, 'isVsmRestoring', false);
-                Vue.set(that, 'vsmRestoreError', e);
+                this.isVsmRestoring = false;
+                this.vsmRestoreError = e;
             });
         },
         onSubmitCredentials() {
@@ -338,12 +338,12 @@ export default {
             var url = this.url('auth/vsm/s3-credentials');
             this.$http.post(url, this.editCreds, this.authConfig).then(res => {
                 console.log(`updated VSM credentials`, res.data);
-                Vue.set(this, 'isEditCredentials', false);
-                Vue.set(this, 'editCredError', null);
+                this.isEditCredentials = false;
+                this.editCredError = null;
                 that.getCredentials();
             }).catch(e => {
                 console.log('could not update credentials', e.response.data);
-                Vue.set(this, 'editCredError', e);
+                this.editCredError = e;
             });
         },
         url(path) {
@@ -353,7 +353,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
         this.getCredentials();
         this.getVsmFactoryTask();
     },

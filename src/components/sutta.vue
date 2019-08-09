@@ -365,7 +365,7 @@ export default {
             setTimeout(()=>{
                 if (!this.moreFocus) {
                     console.log('hiding more menu');
-                    Vue.set(this, "moreVisible", false);
+                    this.moreVisible = false;
                 }
             }, 500);
         },
@@ -392,7 +392,7 @@ export default {
             var url = this.url(`examples/3`);
             this.$http.get(url).then(res => {
                 var examples = res.data;
-                Vue.set(this, "examples", examples);
+                this.examples = examples;
                 that.clear();
                 that.search = examples[0];
                 that.onSearch();
@@ -610,7 +610,7 @@ export default {
                 // exponential smoothing
                 var c = 0.99;
                 var waiting = (that.waiting||1) * c + (1-c)*100;
-                Vue.set(that, "waiting", waiting);
+                that.waiting = waiting;
                 if (cookie && that.$cookie.get(cookie) !== cookieStart) {
                     that.stopWaiting(timer);
                     opts.onCookieChange && opts.onCookieChange();
@@ -630,7 +630,7 @@ export default {
         },
         stopWaiting(timer){
             clearInterval(timer);
-            Vue.set(this, "waiting", 0);
+            this.waiting = 0;
         },
         launchSuttaPlayer(iTrack=0) {
             this.$nextTick(() => {
@@ -656,7 +656,7 @@ export default {
             Object.assign(this.support, sutta.support);
             this.metaarea = sutta.metaarea;
             var suttaplex = Object.assign({}, this.suttaplex, sutta.suttaplex);
-            Vue.set(this, "suttaplex", suttaplex);
+            this.suttaplex = suttaplex;
 
             var author_uid = this.author_uid = sutta.author_uid;
             var suid = suttaplex.uid && suttaplex.uid.toUpperCase() || "NOSUID";
@@ -691,10 +691,8 @@ export default {
             ['pli', language].forEach(lang => {
                 var url = that.url(`/audio-urls/${sutta_uid}`);
                 that.$http.get(url).then(res => {
-                    Vue.set(that, "supportedAudio", 
-                        res.data.filter(a=>a.supported));
-                    Vue.set(that, "unsupportedAudio", 
-                        res.data.filter(a=>!a.supported));
+                    that.supportedAudio = res.data.filter(a=>a.supported);
+                    that.unsupportedAudio = res.data.filter(a=>!a.supported);
                 }).catch(e => {
                     console.error('supported audio:', url, e.stack, lang);
                 });
@@ -747,7 +745,7 @@ export default {
                 var data = res.data;
                 console.log('searchResults', data);
                 data.results.sort((a,b) => b.score - a.score);
-                Vue.set(this, 'searchResults', data);
+                this.searchResults = data;
                 this.stopWaiting(timer);
                 this.$nextTick(() => {
                     if (data.results.length === 1)  {
@@ -982,7 +980,7 @@ export default {
         that.$nextTick(() => {
             var search = that.gscv.search;
             console.log(`cookies`, that.$cookie);
-            Vue.set(that, 'search', search);
+            that.search = search;
             if (search) {
                 console.log(`sutta.mounted() searchSuttas(${search})`);
                 that.searchSuttas(search);

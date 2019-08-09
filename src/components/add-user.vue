@@ -54,7 +54,6 @@
 
 <script>
 /* eslint no-console: 0*/
-import Vue from "vue";
 
 export default {
     name: 'AdminUsers',
@@ -80,15 +79,15 @@ export default {
     methods: {
         onActivate() {
             console.log('onActivate()');
-            Vue.set(this, "errMsg", null);
-            Vue.set(this, "statusMsg", null);
-            Vue.set(this, "username", "");
-            Vue.set(this, "password", "");
-            Vue.set(this, "password2", "");
-            Vue.set(this, "isAdmin", false);
-            Vue.set(this, "isTranslator", false);
-            Vue.set(this, "isEditor", false);
-            Vue.set(this, "dialog", true);
+            this.errMsg = null;
+            this.statusMsg = null;
+            this.username = "";
+            this.password = "";
+            this.password2 = "";
+            this.isAdmin = false;
+            this.isTranslator = false;
+            this.isEditor = false;
+            this.dialog = true;
         },
         onAddUser() {
             var username = this.username;
@@ -106,13 +105,13 @@ export default {
                 isTranslator: this.isTranslator,
                 isEditor: this.isEditor,
             };
-            Vue.set(this, "statusMsg", `Adding user ${this.username}...`);
+            this.statusMsg = `Adding user ${this.username}...`;
             this.$http.post(url, data, config).then(res => {
                 console.log(`onAddUser() ${username} OK`, res.data);
                 this.onAdd && this.onAdd();
                 this.dialog = false;
             }).catch(e => {
-                Vue.set(this, "errMsg", e.message);
+                this.errMsg = e.message;
                 console.error(`onAddUser() ${username} failed`, e.stack);
             });
         },
@@ -127,7 +126,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
     },
     computed: {
         gscv() {

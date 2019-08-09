@@ -133,7 +133,6 @@
 
 <script>
 /* eslint no-console: 0*/
-import Vue from "vue";
 
 export default {
     name: 'ContentUpdater',
@@ -176,7 +175,7 @@ export default {
                 var {
                     isActive,
                 } = res.data;
-                Vue.set(that, 'contentUpdaterTask', res.data);
+                that.contentUpdaterTask = res.data;
                 res.data.actionsDone && that.actionsDone.push(res.data.actionsDone);
                 if (isActive) {
                     setTimeout(() => {
@@ -198,15 +197,15 @@ export default {
                 nikayas,
                 token: that.gitToken,
             };
-            Vue.set(that, 'updateError', null);
-            Vue.set(that, 'isUpdating', true);
+            that.updateError = null;
+            that.isUpdating = true;
             that.$http.post(url, data, that.authConfig).then(res => {
                 1==0 && console.log(`update-content => `, res.data);
             }).catch(e => {
                 console.log('could not update content', e.response.data);
-                Vue.set(that, 'updateError', e);
+                that.updateError = e;
             }).finally(() => {
-                Vue.set(that, 'isUpdating', false);
+                that.isUpdating = false;
                 that.$nextTick(() => that.getContentUpdaterTask());
             });
             that.$nextTick(() => that.getContentUpdaterTask());
@@ -218,7 +217,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
         this.getContentUpdaterTask();
     },
     computed: {

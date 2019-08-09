@@ -42,7 +42,6 @@
 
 <script>
 /* eslint no-console: 0*/
-import Vue from "vue";
 
 export default {
     name: 'Login',
@@ -73,13 +72,13 @@ export default {
             this.isWaiting = true;
             console.log(`onLogin() ${username}`);
             this.$http.post(url, data).then(res => {
-                Vue.set(this, "isWaiting", false);
-                this.gscv.user = res.data;
-                Vue.set(this, "user", this.gscv.user);
+                that.isWaiting = false;
+                that.gscv.user = res.data;
+                that.user = this.gscv.user;
                 console.log(`onLogin() ${username} ${this.gscv.user}`);
             }).catch(e => {
-                Vue.set(this, "isWaiting", false);
-                Vue.set(that, "loginError", "Invalid Username/Password");
+                that.isWaiting = false;
+                that.loginError = "Invalid Username/Password";
                 console.error(e.stack);
             });
         },
@@ -90,7 +89,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
     },
     computed: {
         gscv() {

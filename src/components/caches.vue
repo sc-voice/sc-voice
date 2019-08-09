@@ -97,7 +97,7 @@ export default {
             var urlVol = this.url("identity");
             this.$http.get(urlVol).then(res => {
                 var identity = res.data;
-                Vue.set(this, "identity", identity);
+                this.identity = identity;
                 console.log(res.data);
             }).catch(e => {
                 console.error(`getIdentity() failed`, e.stack);
@@ -107,10 +107,10 @@ export default {
             var urlVol = this.url("auth/sound-store/volume-info"); 
             this.$http.get(urlVol, this.authConfig).then(res => {
                 var cacheNames = Object.keys(res.data);
-                Vue.set(this, "caches", cacheNames.map(name => {
+                this.caches = cacheNames.map(name => {
                     var cache = res.data[name];
                     return cache;
-                }));
+                });
                 console.log(res.data);
             }).catch(e => {
                 console.error(`getCaches() failed`, e.stack);
@@ -147,7 +147,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
         setTimeout(() => {
             this.getCaches();
             this.getIdentity();

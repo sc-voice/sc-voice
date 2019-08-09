@@ -121,9 +121,9 @@ export default {
                 this.playStartEndSound(msg);
                 return Promise.reject(new Error(msg));
             }
-            Vue.set(this, "iTrack", iTrack);
+            this.iTrack = iTrack;
             Vue.set(this.stats, "tracks", iTrack+1);
-            Vue.set(this, "iSegment", 0);
+            this.iSegment = 0;
             console.log(`ScvPlayer.playTrack(${iTrack} of ${this.tracks.length})`);
             this.visible = true;
             this.section = null;
@@ -139,7 +139,7 @@ export default {
             var promise = this.$http.get(url);
             promise.then(res => {
                 this.stopProgress();
-                Vue.set(this, "section", res.data);
+                this.section = res.data;
                 this.$nextTick(() => {
                     var playBtn = this.$refs.refPlay.$el;
                     playBtn.focus();
@@ -203,7 +203,7 @@ export default {
                 language,
                 stats,
             } = this;
-            Vue.set(stats, "segments", stats.segments+1);
+            stats.segments = stats.segments+1;
             if (showTrans && segment[language]) {
                 Vue.set(stats.text, language,
                     (stats.text[language] || 0) + segment[language].length);
@@ -224,7 +224,7 @@ export default {
             this.setTextClass();
             if (!paused && iSegment < section.segments.length-1) {
                 this.paused = true;
-                Vue.set(this, "iSegment", iSegment+1);
+                this.iSegment = iSegment+1;
                 this.$nextTick(() => {
                     this.toggleAudio();
                 });
@@ -334,7 +334,7 @@ export default {
                 that.showPali && (stats.text.pali = 0);
                 stats.vnameTrans = that.gscv.vnameTrans;
                 stats.vnameRoot = that.gscv.vnameRoot;
-                Vue.set(that, 'stats', stats);
+                that.stats = stats;
                 play && that.clickPlayPause();
             });
             var introAudio = that.$refs[`refIntroSound`];

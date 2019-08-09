@@ -38,7 +38,6 @@
 
 <script>
 /* eslint no-console: 0*/
-import Vue from "vue";
 
 export default {
     name: 'Login',
@@ -58,9 +57,9 @@ export default {
     methods: {
         onActivated() {
             console.log(`deleting user: ${this.username}`);
-            Vue.set(this, "errMsg", null);
-            Vue.set(this, "confirm", false);
-            Vue.set(this, "dialog", true);
+            this.errMsg = null;
+            this.confirm = false;
+            this.dialog = true;
         },
         onDeleteUser() {
             var username = this.username;
@@ -79,7 +78,7 @@ export default {
                 this.onDelete && this.onDelete();
             }).catch(e => {
                 var data = e.response && e.response.data;
-                Vue.set(this, "errMsg", data.error || e.message);
+                this.errMsg = data.error || e.message;
                 console.error(`onDeleteUser() ${username} failed`, 
                     Object.keys(e.response.data), e.stack);
             });
@@ -91,7 +90,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
     },
     computed: {
         gscv() {

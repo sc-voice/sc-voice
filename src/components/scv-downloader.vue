@@ -56,8 +56,8 @@ export default {
             }
         },
         update(status) {
-            Vue.set(this, 'alert', true);
-            Vue.set(this, 'message', `${status} ${this.filename}`);
+            this.alert = true;
+            this.message = `${status} ${this.filename}`;
             var elt = this.$refs.refAlert;
             this.setFocus(elt);
         },

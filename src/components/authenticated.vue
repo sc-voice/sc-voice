@@ -1,10 +1,10 @@
 <template>
 <div class="auth-grp">
     <login/>
-    <v-tabs fixed-tabs v-model="tabsModel" v-if="token"
+    <v-tabs v-model="tabsModel" v-if="token"
        class="auth-tabs"
        dark :color="tabsColor"
-       slider-color="yellow accent-2">
+       slider-color="grey lighten-4">
         <v-tab> Users </v-tab>
         <v-tab-item dark>
             <admin-users/>
@@ -39,7 +39,6 @@
 
 <script>
 /* eslint no-console: 0*/
-import Vue from "vue";
 import AdminUsers from "./admin-users";
 import Vsm from "./vsm";
 import ContentUpdater from './content-updater';
@@ -69,7 +68,7 @@ export default {
         },
     },
     mounted() {
-        Vue.set(this, "user", this.gscv.user);
+        this.user = this.gscv.user;
     },
     computed: {
         gscv() {
