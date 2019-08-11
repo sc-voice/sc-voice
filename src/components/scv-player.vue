@@ -203,7 +203,6 @@ export default {
         },
         cssProps(opts) {
             return Object.assign({}, {
-                '--accent-color': this.$vuetify.theme.accent,
                 '--success-color': this.$vuetify.theme.success,
             }, opts);
         },
@@ -593,7 +592,7 @@ export default {
     min-height: 10em;
 }
 .scv-player-text-playing {
-    color: var(--accent-color);
+    color: #82B1FF;
 }
 .scv-player-scid {
     text-transform: uppercase;

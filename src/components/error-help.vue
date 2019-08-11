@@ -65,7 +65,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 button {
-    background-color: var(accentColor);
+    background-color: #82B1FF;
 }
 .scv-help > li {
     list-style-type: disc !important;

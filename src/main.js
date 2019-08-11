@@ -40,7 +40,16 @@ var scvSingleton = new exports.ScvSingleton({
 });
 
 const vuetifyOptions = {
-  theme: { dark: true }
+  theme: { 
+    dark: true,
+    themes: {
+        dark: {
+            primary: '#82B1FF',
+            secondary:'#00ff00',
+            accent: '#82B1FF',
+        },
+    }
+  }
 };
 
 console.log(`mounting #app ...`);

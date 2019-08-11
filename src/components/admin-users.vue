@@ -3,80 +3,84 @@
       <v-container fluid grid-list-md >
         <v-data-iterator
           :items="users"
-          :rows-per-page-items="userRowsPerPageItems"
-          :pagination.sync="pagination"
           :items-per-page.sync="itemsPerPage"
           :footer-props="{ itemsPerPageOptions }"
-          content-tag="v-layout"
           row wrap 
         >
-            <v-flex slot="item" slot-scope="props"
-                xs12 sm6 md4 lg3 >
-                <v-card color="grey lighten-3">
-                    <v-card-title>
-                        <v-spacer/>
-                        <h3>{{props.item.username}}</h3>
-                        <v-spacer/>
-                    </v-card-title>
-                    <v-divider/>
-                    <v-list dense class="ml-2 mr-2">
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          Administrator:
-                        </v-list-tile-content>
-                        <v-list-tile-content class="align-end">
-                          {{ !!props.item.isAdmin }}
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          Translator:
-                        </v-list-tile-content>
-                        <v-list-tile-content class="align-end">
-                          {{ !!props.item.isTranslator }}
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          Editor:
-                        </v-list-tile-content>
-                        <v-list-tile-content class="align-end">
-                          {{ !!props.item.isEditor }}
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          User added:
-                        </v-list-tile-content>
-                        <v-list-tile-content class="align-end">
-                          {{ dateString(props.item.dateAdded) }}
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          Password set:
-                        </v-list-tile-content>
-                        <v-list-tile-content class="align-end">
-                          {{ dateString(props.item.dateSetPassword) }}
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          Last login:
-                        </v-list-tile-content>
-                        <v-list-tile-content class="align-end">
-                          {{ dateString(props.item.dateAuthenticated) }}
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </v-list>
-                    <v-card-actions>
-                        <change-password :username="props.item.username"/>
-                        <v-spacer/>
-                        <delete-user :username="props.item.username"
-                            :onDelete="onDeleteUser"/>
-                    </v-card-actions>
-                </v-card>
-            </v-flex>
+            <template v-slot:default="props">
+                <v-layout wrap>
+                    <v-flex 
+                        v-for="item in props.items" :key="item.name"
+                        xs12 sm6 md4 lg3 >
+                        <v-card color="grey lighten-3">
+                            <v-card-title>
+                                <v-spacer/>
+                                <h4>{{item.username}}</h4>
+                                <v-spacer/>
+                            </v-card-title>
+                            <v-divider/>
+                            <v-list dense class="ml-2 mr-2">
+                              <v-list-item>
+                                <v-list-item-content>
+                                  Administrator:
+                                </v-list-item-content>
+                                <v-list-item-content class="align-end">
+                                  {{ !!item.isAdmin }}
+                                </v-list-item-content>
+                              </v-list-item>
+                              <v-list-item>
+                                <v-list-item-content>
+                                  Translator:
+                                </v-list-item-content>
+                                <v-list-item-content class="align-end">
+                                  {{ !!item.isTranslator }}
+                                </v-list-item-content>
+                              </v-list-item>
+                              <v-list-item>
+                                <v-list-item-content>
+                                  Editor:
+                                </v-list-item-content>
+                                <v-list-item-content class="align-end">
+                                  {{ !!item.isEditor }}
+                                </v-list-item-content>
+                              </v-list-item>
+                              <v-list-item>
+                                <v-list-item-content>
+                                  User added:
+                                </v-list-item-content>
+                                <v-list-item-content class="align-end">
+                                  {{ dateString(item.dateAdded) }}
+                                </v-list-item-content>
+                              </v-list-item>
+                              <v-list-item>
+                                <v-list-item-content>
+                                  Password set:
+                                </v-list-item-content>
+                                <v-list-item-content class="align-end">
+                                  {{ dateString(item.dateSetPassword) }}
+                                </v-list-item-content>
+                              </v-list-item>
+                              <v-list-item>
+                                <v-list-item-content>
+                                  Last login:
+                                </v-list-item-content>
+                                <v-list-item-content class="align-end">
+                                  {{ dateString(item.dateAuthenticated) }}
+                                </v-list-item-content>
+                              </v-list-item>
+                            </v-list>
+                            <v-card-actions>
+                                <change-password :username="item.username"/>
+                                <v-spacer/>
+                                <!--
+                                <delete-user :username="item.username"
+                                    :onDelete="onDeleteUser"/>
+                                    -->
+                            </v-card-actions>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+            </template>
         </v-data-iterator>
       </v-container>
       <add-user :onAdd="onAddUser"/>
@@ -99,10 +103,6 @@ export default {
             isWaiting: false,
             itemsPerPage: 4,
             itemsPerPageOptions: [4, 8, 12],
-            userRowsPerPageItems: [4, 8, 12], // DEPRECATED
-            pagination: { // DEPRECATED
-                rowsPerPage: 4 // DEPRECATED
-            }, // DEPRECATED
         }
     },
     methods: {

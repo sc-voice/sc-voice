@@ -19,7 +19,7 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn id="btnHelp" 
-            icon dark class="scv-icon-btn" :style="cssProps"
+            icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
             small
             title="About"
             aria-label="About"
@@ -27,7 +27,7 @@
             <v-icon aria-hidden="true">info</v-icon>
         </v-btn>
         <v-btn id="btnSettings" 
-            icon dark class="scv-icon-btn" :style="cssProps"
+            icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
             small
             title="Settings"
             aria-label="Settings"
@@ -321,7 +321,6 @@ export default {
         },
         cssProps() {
             return {
-                '--accent-color': this.$vuetify.theme.accent,
                 'margin': '0',
             };
         },
@@ -391,7 +390,7 @@ a:hover {
 }
 .scv-icon-btn:focus {
     border-radius:5px;
-    border: 1pt solid var(--accent-color);
+    border: 1pt solid #82B1FF;
 }
 .scv-dialog-button {
     border-radius: 5px;
@@ -402,8 +401,8 @@ a:hover {
     margin-left: 1.2em;
 }
 .scv-dialog-button:focus {
-    border-color: var(--accent-color);
-    outline: 1pt solid var(--accent-color);
+    border-color: #82B1FF;
+    outline: 1pt solid #82B1FF;
 }
 .scv-dialog-title {
     border-bottom: 1pt solid white;
@@ -416,7 +415,7 @@ summary {
     padding-right: 0.2em;
 }
 button {
-    background-color: var(--accent-color);
+    background-color: #82B1FF;
 }
 .scv-content {
     position: relative;
@@ -444,10 +443,13 @@ button {
 .scv-icon-btn {
     margin: 0;
     border-radius:5px;
-    border: 1pt solid #222222;
+    border: 1pt solid #303030;
 }
 .scv-icon-btn:focus {
-    border: 1pt solid var(--accent-color);
+    border: 1pt solid #82B1FF;
+}
+.scv-app-icon-btn {
+    border: 1pt solid #222222;
 }
 .scv-text-button {
     border-radius: 4px;
@@ -460,8 +462,8 @@ button {
     margin-bottom: 0.5em;
 }
 .scv-text-button:focus {
-    border-color: var(--accent-color);
-    outline: 1pt solid var(--accent-color);
+    border-color: #82B1FF;
+    outline: 1pt solid #82B1FF;
 }
 .fade-enter-active, .fade-leave-active {
     transition: opacity 10s linear !important;

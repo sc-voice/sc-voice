@@ -76,7 +76,6 @@ export default {
     computed: {
         cssProps() {
             return {
-                '--accent-color': this.$vuetify.theme.accent,
                 '--success-color': this.$vuetify.theme.success,
             }
         },

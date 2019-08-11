@@ -48,7 +48,7 @@ style="width:100%; margin-top:0"/>
                             <v-icon>arrow_downward</v-icon>
                         </v-btn>
                     </div>
-                    <div aria-hidden='true'>
+                    <div class="mt-2" aria-hidden='true'>
                         {{duration(stats.seconds).display}}
                     </div>
                     <div class="scv-more" >
@@ -334,6 +334,7 @@ export default {
             hasAudio: true,
             moreVisible: false,
             moreFocus: false,
+            testFlag: true,
             search: '',
             sectionAudioGuids,
             searchResults: null,
@@ -921,7 +922,6 @@ export default {
         },
         cssProps() {
             return {
-                '--accent-color': this.$vuetify.theme.accent,
                 '--success-color': this.$vuetify.theme.success,
             }
         },
@@ -1129,7 +1129,7 @@ export default {
     padding-left: 1.6em;
 }
 .scv-btn-playing {
-    color: var(--accent-color);
+    color: #82B1FF;
 }
 .scv-search-result-pli {
     display: flex;
@@ -1181,8 +1181,8 @@ export default {
 }
 .scv-inspire:focus {
     border: 1pt solid #888;
-    border-color: var(--accent-color);
-    outline: 1pt solid var(--accent-color);
+    border-color: #82B1FFa;
+    outline: 1pt solid #82B1FF;
 }
 .scv-inspire-row {
     margin: -0.8em 0 0.5em 0;

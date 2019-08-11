@@ -1,8 +1,10 @@
 <template>
     <v-dialog v-model="dialog" v-if="token" persistent>
-        <v-btn text slot="activator" @click="onActivate()">
-            Add User
-        </v-btn>
+        <template v-slot:activator="{ on }">
+            <v-btn text v-on="on" @click="onActivate()">
+                Add User
+            </v-btn>
+        </template>
         <v-card>
             <v-card-title class="deep-orange darken-3">
                 <h3 class="">Add User</h3>
@@ -23,7 +25,7 @@
                         v-model="password2">
                     </v-text-field>
                 </form><!--Chrome silliness-->
-                <v-checkbox label="Administrator" height="1em"
+                <v-checkbox label="Administrator asdf" height="1em"
                     v-model="isAdmin">
                 </v-checkbox>
                 <v-checkbox label="Translator" height="1em"
