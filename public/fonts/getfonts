@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+curl 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900' > 'css?family=Roboto:100,300,400,500,700,900'
+curl https://fonts.gstatic.com/s/roboto/v20/KFOkCnqEu92Fr1MmgVxIIzc.ttf > KFOkCnqEu92Fr1MmgVxIIzc.ttf
+curl https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc9.ttf > KFOlCnqEu92Fr1MmSU5fBBc9.ttf
+curl https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxP.ttf > KFOmCnqEu92Fr1Mu4mxP.ttf
+
+curl 'https://cdn.jsdelivr.net/npm/@mdi/font@latest/fonts/materialdesignicons-webfont.eot?#iefix&v=3.9.97' > 'materialdesignicons-webfont.eot?#iefix&v=3.9.97'
+curl https://cdn.jsdelivr.net/npm/@mdi/font@latest/fonts/materialdesignicons-webfont.woff2?v=3.9.97 -o materialdesignicons-webfont.woff2?v=3.9.97
+curl https://cdn.jsdelivr.net/npm/@mdi/font@latest/fonts/materialdesignicons-webfont.woff?v=3.9.97 -o materialdesignicons-webfont.woff?v=3.9.97
+curl https://cdn.jsdelivr.net/npm/@mdi/font@latest/fonts/materialdesignicons-webfont.ttf?v=3.9.97 -o materialdesignicons-webfont.ttf?v=3.9.97
