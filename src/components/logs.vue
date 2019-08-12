@@ -9,7 +9,7 @@
                     :headers="headers"
                     :items="logs"
                     class="elevation-1"
-                    disable-initial-sort
+                    sort-by=""
                   >
                     <template v-slot:items="props">
                       <th class="text-left">

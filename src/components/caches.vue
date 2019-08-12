@@ -28,11 +28,16 @@
                 :headers="cacheHeaders"
                 :items="caches"
                 class="elevation-1 "
+                dense
                 style="max-width:40em"
-                select-all
                 item-key="name"
+                :show-select="true"
+                :single-select="false"
               >
-                <template v-slot:items="props">
+                <template v-slot:item.calories="{ item }">
+                      <v-chip :color="getColor(item.calories)" dark>{{ item.calories }}</v-chip>
+                </template>
+                <!--template v-slot:items="props">
                     <tr :active="props.selected" 
                         @click="props.selected = !props.selected">
                         <td>
@@ -48,12 +53,14 @@
                         </td>
                         <td > {{ cleared[props.item.name] }} </td>
                     </tr>
-                </template>
+                </template-->
                 <template v-slot:no-data>
                     Loading...
                 </template>
             </v-data-table>
             <v-btn :disabled="selected.length===0"
+                small
+                class="mt-2 orange darken-2" dark
                 @click="onClearCaches">Clear</v-btn>
         </div>
 
@@ -105,10 +112,14 @@ export default {
         },
         getCaches() {
             var urlVol = this.url("auth/sound-store/volume-info"); 
+            var {
+                cleared,
+            } = this;
             this.$http.get(urlVol, this.authConfig).then(res => {
                 var cacheNames = Object.keys(res.data);
                 this.caches = cacheNames.map(name => {
                     var cache = res.data[name];
+                    cache.cleared = cleared[cache.name] ? 'cleared':'';
                     return cache;
                 });
                 console.log(res.data);

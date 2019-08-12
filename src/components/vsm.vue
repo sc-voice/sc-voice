@@ -94,18 +94,11 @@
                     :headers="vsmHeaders"
                     :items="vsmObjects"
                     class="elevation-1"
-                    select-all
+                    dense
+                    :show-select="true"
+                    :single-select="false"
                     item-key="Key"
                   >
-                    <template v-slot:items="props">
-                      <td>
-                          <v-checkbox v-model="props.selected" primary hide-details/>
-                      </td>
-                      <td class="text-left">{{ props.item.Key }}</td>
-                      <td class="text-left">{{ props.item.upToDate }}</td>
-                      <td class="text-left">{{ props.item.Size }}</td>
-                      <td >{{ props.item.ETag }}</td>
-                    </template>
                 </v-data-table>
                 <v-alert type="info" :value="isVsmRestoring">
                     Installing selected VSM modules...
@@ -273,7 +266,10 @@ export default {
         getListObjects() {
             var url = this.url('auth/vsm/list-objects');
             this.$http.get(url, this.authConfig).then(res => {
-                this.vsmObjects = res.data.Contents;
+                this.vsmObjects = res.data.Contents.map(vo => {
+                    vo.installed = vo.upToDate ? "\u26f1" : "\u2601";
+                    return vo;
+                });
             }).catch(e => {
                 console.error(e.response);
             });
@@ -380,7 +376,7 @@ export default {
                 value: 'Key',
             },{
                 text: 'Installed',
-                value: 'upToDate',
+                value: 'installed',
             },{
                 text: 'Size',
                 value: 'Size',

@@ -32,12 +32,12 @@ style="width:100%; margin-top:0"/>
                   <div class="scv-sutta-menubar mb-3"
                     v-if="waiting<=0 && sutta_uid && !searchResults && gscv.voices.length">
                     <div>
-                        <v-btn icon
+                        <v-btn icon small fab
                             :disabled="waiting > 0"
                             @click="launchSuttaPlayer()"
                             ref="refPlaySutta"
                             :aria-label="`play ${resultId()}. ${duration(stats.seconds).aria}`"
-                            class="scv-icon-btn" :style="cssProps" small>
+                            class="scv-icon-btn" :style="cssProps" >
                             <v-icon>play_circle_outline</v-icon>
                         </v-btn>
                         <v-btn icon
