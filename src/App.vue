@@ -41,7 +41,9 @@
           <v-card-title class="title scv-dialog-title">
               About
               <v-spacer/>
-              <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+              <v-btn id="btnSettings" 
+                icon small
+                dark class="scv-icon-btn" :style="cssProps"
                 aria-label="Close Help"
                 @click="closeDialog()"
                 >
@@ -58,7 +60,8 @@
           <v-card-title class="headline scv-dialog-title">
               Settings&nbsp;&nbsp;<span class="scv-version">v{{version}}</span>
               <v-spacer/>
-              <v-btn id="btnSettings" icon dark class="scv-icon-btn" :style="cssProps"
+              <v-btn id="btnSettings" 
+                icon small dark class="scv-icon-btn" :style="cssProps"
                 aria-label="Close Settings"
                 @click="closeDialog()"
                 >
@@ -67,18 +70,29 @@
           </v-card-title>
           <v-card-text>
             <details class="scv-dialog" >
-                <summary class="title scv-settings-title">Reader</summary>
+                <summary class="title scv-settings-title">Languages</summary>
                 <div class="scv-settings">
-                    <div class="subheading scv-settings-subtitle">Translation</div>
-                    <v-radio-group v-model="gscv.lang"
-                        @change="gscv.changed('lang')"
-                        v-if="false==='TBD'"
+                    <v-radio-group v-model="gscv.showLang"
+                        @change="gscv.changed('showLang')"
                         column>
-                       <v-radio v-for="lang in gscv.languages"
-                         :disabled="lang.disabled"
-                         :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
+                       <v-radio v-for="(sl,i) in showLangChoices"
+                         :label="sl.label" :value="i" :key="`showLang${sl.value}`">
                          </v-radio>
                     </v-radio-group>
+                </div>
+                <div class="subheading scv-settings-subtitle">Translation</div>
+                <v-radio-group v-model="gscv.lang"
+                    @change="gscv.changed('lang')"
+                    column>
+                   <v-radio v-for="lang in gscv.languages"
+                     :disabled="lang.disabled"
+                     :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
+                     </v-radio>
+                </v-radio-group>
+            </details>
+            <details class="scv-dialog" >
+                <summary class="title scv-settings-title">Reader</summary>
+                <div class="scv-settings">
                     <v-radio-group v-model="gscv.vnameTrans"
                         @change="gscv.changed('vnameTrans')"
                         column>
@@ -93,18 +107,6 @@
                         column>
                        <v-radio v-for="v in gscv.langVoices('pli')"
                          :label="v.label" :value="v.name" :key="`voice${v.name}`">
-                         </v-radio>
-                    </v-radio-group>
-                </div>
-            </details>
-            <details class="scv-dialog" >
-                <summary class="title scv-settings-title">Languages</summary>
-                <div class="scv-settings">
-                    <v-radio-group v-model="gscv.showLang"
-                        @change="gscv.changed('showLang')"
-                        column>
-                       <v-radio v-for="(sl,i) in showLangChoices"
-                         :label="sl.label" :value="i" :key="`showLang${sl.value}`">
                          </v-radio>
                     </v-radio-group>
                 </div>

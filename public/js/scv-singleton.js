@@ -49,9 +49,9 @@
     const LANGUAGES = [{
         name: 'en',
         label: 'English',
-    //}, {
-        //name: 'de',
-        //label: 'Deutsch',
+    }, {
+        name: 'de',
+        label: 'Deutsch',
     }];
 
     class ScvSingleton { 

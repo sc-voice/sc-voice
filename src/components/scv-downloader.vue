@@ -10,7 +10,8 @@
                     {{message}}
                 </div>
                 <v-spacer/>
-                <v-btn id="btnSettings" icon dark 
+                <v-btn id="btnSettings" 
+                    icon small dark 
                     class="scv-icon-btn" :style="cssProps"
                     aria-label="Cloze"
                     @click="dismiss()"

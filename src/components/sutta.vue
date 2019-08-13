@@ -911,7 +911,9 @@ export default {
                 throw new Error("voice_error3");
             }
             var voice = this.gscv.voices.filter(v => {
-                return v.name.toLowerCase() === this.gscv.vnameTrans.toLowerCase();
+                var vnameTrans = this.gscv.vnameTrans;
+                return vnameTrans 
+                    && v.name.toLowerCase() === vnameTrans.toLowerCase();
             })[0];
             return voice || {
                 name: `voice_error4_${this.gscv.vnameTrans}`,
