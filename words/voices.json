@@ -184,8 +184,8 @@
     "usage": "recite",
     "rates": {
         "navigate": "+5%", 
-        "review": "+15%",
-        "recite": "+15%"
+        "review": "+0%",
+        "recite": "+0%"
     },
     "usages": {
         "navigate": {
@@ -194,11 +194,11 @@
         },
         "recite": {
             "priority": 1,
-            "rate": "+15%",
+            "rate": "+0%",
             "breaks": [0.001,0.1,1.5,0.2,0.3]
         },
         "review": {
-            "rate": "+15%",
+            "rate": "+0%",
             "breaks": [0.001,0.1,1.5,0.2,0.3]
         }
     },
