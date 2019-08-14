@@ -1,57 +1,66 @@
 <template>
-    <v-dialog v-model="dialog" v-if="token" persistent>
-        <template v-slot:activator="{ on }">
-            <v-btn text v-on="on" @click="onActivate()">
-                Add User
-            </v-btn>
-        </template>
-        <v-card>
-            <v-card-title class="deep-orange darken-3">
-                <h3 class="">Add User</h3>
-            </v-card-title>
-            <v-card-text>
-                <v-text-field label="Username" 
-                    v-model="username">
-                </v-text-field>
-                <form><!--Chrome silliness-->
-                    <v-text-field label="Password"
-                        type="password"
-                        autocomplete
-                        v-model="password">
-                    </v-text-field>
-                    <v-text-field label="Confirm password"
-                        type="password"
-                        autocomplete
-                        v-model="password2">
-                    </v-text-field>
-                </form><!--Chrome silliness-->
-                <v-checkbox label="Administrator asdf" height="1em"
-                    v-model="isAdmin">
-                </v-checkbox>
-                <v-checkbox label="Translator" height="1em"
-                    v-model="isTranslator">
-                </v-checkbox>
-                <v-checkbox label="Editor" height="1em"
-                    v-model="isEditor">
-                </v-checkbox>
-                <v-alert type="info" :value="statusMsg">
-                    {{statusMsg}}
-                </v-alert>
-                <v-alert type="warning" :value="errMsg">
-                    {{errMsg}}
-                </v-alert>
-            </v-card-text>
-            <v-card-actions>
-                <v-btn text @click="dialog=false">Cancel</v-btn>
-                <v-spacer/>
-                <v-btn @click="onAddUser()" text
-                    :disabled="disabled()"
-                    >
-                    Add User
-                </v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog> <!-- Add User -->
+  <v-dialog v-model="dialog" v-if="token" persistent>
+    <template v-slot:activator="{ on }">
+      <v-btn text v-on="on" @click="onActivate()">
+        {{ $vuetify.lang.t('$vuetify.auth.addUser') }}
+      </v-btn>
+    </template>
+    <v-card>
+      <v-card-title class="deep-orange darken-3">
+        <h3 class="">Add User</h3>
+      </v-card-title>
+      <v-card-text>
+        <v-text-field 
+          :label="$vuetify.lang.t('$vuetify.auth.username')"
+          autofocus
+          v-model="username">
+        </v-text-field>
+        <form><!--Chrome silliness-->
+          <v-text-field 
+            :label="$vuetify.lang.t('$vuetify.auth.password')"
+            type="password"
+            autocomplete
+            v-model="password">
+          </v-text-field>
+          <v-text-field 
+            :label="$vuetify.lang.t('$vuetify.auth.confirmPassword')"
+            type="password"
+            autocomplete
+            v-model="password2">
+          </v-text-field>
+        </form><!--Chrome silliness-->
+        <v-checkbox height="1em"
+            :label="$vuetify.lang.t('$vuetify.auth.administrator')"
+            v-model="isAdmin">
+        </v-checkbox>
+        <v-checkbox height="1em"
+            :label="$vuetify.lang.t('$vuetify.auth.translator')"
+            v-model="isTranslator">
+        </v-checkbox>
+        <v-checkbox height="1em"
+            :label="$vuetify.lang.t('$vuetify.auth.editor')"
+            v-model="isEditor">
+        </v-checkbox>
+        <v-alert type="info" :value="!!statusMsg">
+            {{statusMsg}}
+        </v-alert>
+        <v-alert type="warning" :value="!!errMsg">
+            {{errMsg}}
+        </v-alert>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn text @click="dialog=false">
+            {{ $vuetify.lang.t('$vuetify.auth.cancel') }}
+        </v-btn>
+        <v-spacer/>
+        <v-btn @click="onAddUser()" text
+            :disabled="disabled()"
+            >
+            {{ $vuetify.lang.t('$vuetify.auth.addUser') }}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog> <!-- Add User -->
 </template>
 
 <script>

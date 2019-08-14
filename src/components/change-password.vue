@@ -1,45 +1,51 @@
 <template>
 <v-dialog v-model="dialog" v-if="token" persistent>
-        <template v-slot:activator="{ on }">
-            <v-btn text small light v-on="on" >
-                Change Password
-            </v-btn>
-        </template>
-    <v-card>
-        <v-card-title class="deep-orange darken-3">
-            <h3 class="">
-                Change Password 
-            </h3>
-        </v-card-title>
-        <v-card-text>
-            <v-text-field label="Username" 
-                disabled
-                v-model="username">
-            </v-text-field>
-            <form ><!-- Chrome silliness-->
-                <v-text-field label="New password" 
-                    type="password"
-                    autocomplete
-                    v-model="password">
-                </v-text-field>
-                <v-text-field label="Confirm password" 
-                    type="password"
-                    autocomplete
-                    v-model="password2">
-                </v-text-field>
-            </form ><!-- Chrome silliness-->
-        </v-card-text>
-        <v-card-actions>
-            <v-btn text small @click="dialog=false">Cancel</v-btn>
-            <v-spacer/>
-            <v-btn text small
-                :disabled="disabled()"
-                @click="onChangePassword()"
-                >
-                Change
-            </v-btn>
-        </v-card-actions>
-    </v-card>
+  <template v-slot:activator="{ on }">
+    <v-btn text small light v-on="on" >
+      {{ $vuetify.lang.t('$vuetify.auth.changePassword') }}
+    </v-btn>
+  </template>
+  <v-card>
+    <v-card-title class="deep-orange darken-3">
+      <h3 class="">
+        {{ $vuetify.lang.t('$vuetify.auth.changePassword') }}
+      </h3>
+    </v-card-title>
+    <v-card-text>
+      <v-text-field 
+        :label="$vuetify.lang.t('$vuetify.auth.username')"
+        disabled
+        v-model="username">
+      </v-text-field>
+      <form ><!-- Chrome silliness-->
+        <v-text-field 
+          :label="$vuetify.lang.t('$vuetify.auth.newPassword')"
+          type="password"
+          autofocus
+          autocomplete
+          v-model="password">
+        </v-text-field>
+        <v-text-field 
+          :label="$vuetify.lang.t('$vuetify.auth.confirmPassword')"
+          type="password"
+          autocomplete
+          v-model="password2">
+        </v-text-field>
+      </form ><!-- Chrome silliness-->
+    </v-card-text>
+    <v-card-actions>
+      <v-btn text small @click="dialog=false">
+        {{ $vuetify.lang.t('$vuetify.auth.cancel') }}
+      </v-btn>
+      <v-spacer/>
+      <v-btn text small
+          :disabled="disabled()"
+          @click="onChangePassword()"
+          >
+          {{ $vuetify.lang.t('$vuetify.auth.changePassword') }}
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </v-dialog> <!-- Change Password -->
 </template>
 
@@ -94,6 +100,8 @@ export default {
     },
     mounted() {
         this.user = this.gscv.user;
+    },
+    updated() {
     },
     computed: {
         gscv() {

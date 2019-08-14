@@ -1,39 +1,46 @@
 <template>
-<v-dialog v-model="dialog" v-if="token" persistent>
-    <v-btn icon text small slot="activator"
+  <v-dialog v-model="dialog" v-if="token" persistent>
+    <template v-slot:activator="{ on }">
+      <v-btn icon text small 
+        v-on="on"
         @click="onActivated()">
         <v-icon>delete</v-icon>
-    </v-btn>
+      </v-btn>
+    </template>
     <v-card>
-        <v-card-title class="deep-orange darken-3">
-            <h3 class="">
-                Delete User {{username}}
-            </h3>
-        </v-card-title>
-        <v-card-text>
-            Please confirm that you wish to delete user "{{username}}", who
-            will no longer have access to authenticated Voice features:
-            <v-checkbox v-model="confirm" v-if="username !== user.username"
-                :label='`Yes. I wish to delete user "${username}".`'/>
-            <v-checkbox v-model="confirm" v-else
-                class="deep-orange lighten-4 pl-2 pt-4"  light
-                :label='`Yes. I wish to delete myself`'/>
-            <v-alert type="warning" :value="errMsg">
-                {{errMsg}}
-            </v-alert>
-        </v-card-text>
-        <v-card-actions>
-            <v-btn text small @click="dialog=false">Cancel</v-btn>
-            <v-spacer/>
-            <v-btn text small
-                :disabled="!confirm"
-                @click="onDeleteUser()"
-                >
-                Delete
-            </v-btn>
-        </v-card-actions>
+      <v-card-title class="deep-orange darken-3">
+        <h3 class="">
+          {{ $vuetify.lang.t('$vuetify.auth.deleteUser') }}
+          {{username}}
+        </h3>
+      </v-card-title>
+      <v-card-text>
+          {{ $vuetify.lang.t('$vuetify.auth.confirmDeleteUser') }}
+          <v-checkbox v-model="confirm" v-if="username !== user.username"
+              autofocus
+              :label='yesDeleteUser + username'/>
+          <v-checkbox v-model="confirm" v-else
+              autofocus
+              class="deep-orange lighten-4 pl-2 pt-4"  light
+              :label='yesDeleteMe + username'/>
+          <v-alert type="warning" :value="!!errMsg">
+              {{errMsg}}
+          </v-alert>
+      </v-card-text>
+      <v-card-actions>
+          <v-btn text small @click="dialog=false">
+            {{ $vuetify.lang.t('$vuetify.auth.cancel') }}
+          </v-btn>
+          <v-spacer/>
+          <v-btn text small
+            :disabled="!confirm"
+            @click="onDeleteUser()"
+            >
+            {{ $vuetify.lang.t('$vuetify.auth.delete') }}
+          </v-btn>
+      </v-card-actions>
     </v-card>
-</v-dialog> <!-- Delete User -->
+  </v-dialog> <!-- Delete User -->
 </template>
 
 <script>
@@ -98,6 +105,12 @@ export default {
         },
         token() {
             return this.user.token;
+        },
+        yesDeleteMe() {
+            return this.$vuetify.lang.t("$vuetify.auth.yesDeleteMe");
+        },
+        yesDeleteUser() {
+            return this.$vuetify.lang.t("$vuetify.auth.yesDeleteUser");
         },
     },
 }

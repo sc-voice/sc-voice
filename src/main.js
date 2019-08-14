@@ -39,6 +39,11 @@ var scvSingleton = new exports.ScvSingleton({
     Vue,
 });
 
+import en from './i18n/vuetify/en.ts';
+//const de = require('./i18n/vuetify/de.ts');
+import de from './i18n/vuetify/de.ts';
+console.log(`dbg de`, de);
+
 const vuetifyOptions = {
   theme: { 
     dark: true,
@@ -49,7 +54,11 @@ const vuetifyOptions = {
             accent: '#82B1FF',
         },
     }
-  }
+  },
+  lang: {
+    locales: { en, de },
+    current: 'de',
+  },
 };
 
 console.log(`mounting #app ...`);

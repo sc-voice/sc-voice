@@ -3,36 +3,42 @@
     <v-card width="20em" light v-if="!user.token">
         <v-form :submit="onLogin">
             <v-card-title primary-title>
-                <h3>Voice Login</h3>
+                <h3>
+                  {{$vuetify.lang.t('$vuetify.auth.voiceLogin')}}
+                </h3>
             </v-card-title>
             <v-card-text>
-                <v-text-field label="Username" v-model="username"
+                <v-text-field 
+                    :label="$vuetify.lang.t('$vuetify.auth.username')"
+                    v-model="username"
                     ref="refUsername">
                 </v-text-field>
-                <v-text-field label="Password" v-model="password" 
+                <v-text-field 
+                    :label="$vuetify.lang.t('$vuetify.auth.password')"
+                    v-model="password" 
                     ref="refPassword"
                     type="password"   
                     autocomplete>
                 </v-text-field>
-                <v-alert type="warning" :value="loginError">
+                <v-alert type="warning" :value="!!loginError">
                     {{loginError}}
                 </v-alert>
                 <div v-if="isWaiting">
-                    Logging in...
+                    {{$vuetify.lang.t('$vuetify.auth.loggingIn')}}
                 </div>
             </v-card-text>
             <v-card-actions>
                 <router-link class="scv-a" to="/app" aria-hidden=true >
                     <v-btn small text light
                         :disabled="isWaiting" >
-                        Cancel
+                        {{$vuetify.lang.t('$vuetify.auth.cancel')}}
                     </v-btn>
                 </router-link>
                 <v-spacer/>
                 <v-btn small @click="onLogin" text light
                     type="submit"
                     :disabled="isWaiting || !username || !password" >
-                    Login
+                    {{$vuetify.lang.t('$vuetify.auth.login')}}
                 </v-btn>
             </v-card-actions>
         </v-form>
@@ -78,7 +84,8 @@ export default {
                 console.log(`onLogin() ${username} ${this.gscv.user}`);
             }).catch(e => {
                 that.isWaiting = false;
-                that.loginError = "Invalid Username/Password";
+                that.loginError = 
+                    that.$vuetify.lang.t('$vuetify.auth.invalidUsernamePassword');
                 console.error(e.stack);
             });
         },

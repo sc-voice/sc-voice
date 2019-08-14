@@ -1,71 +1,63 @@
 <template>
-    <v-sheet style="border-top:3px solid #eee" light>
-      <v-container fluid grid-list-md >
-        <div class="stats">
-            <v-progress-circular :value="diskPercent"
-                v-if="identity"
-                title="Disk usage"
-                size="35" width="6" rotate="90"
-                color="red">
-                <div style="font-size:12px; line-height:1.1 !important"
-                    v-if="identity">
-                {{diskPercent}}%
-                </div>
-            </v-progress-circular>
-            <div v-if="identity" class="ml-3">
-                <b>Cache used:</b> {{cacheUsed}}GB
-                <br/> 
-                <b>Disk used:</b> {{diskUsed}}GB
-                <br/> 
-                <b>Disk available:</b> {{(identity.diskavail/1E9).toFixed(1)}}GB
-            </div>
-            <div v-if="identity == null">(Loading...)</div>
+  <v-sheet style="border-top:3px solid #eee" light>
+    <v-container fluid grid-list-md >
+      <div class="stats">
+        <v-progress-circular :value="diskPercent"
+          v-if="identity"
+          :title="$vuetify.lang.t('$vuetify.auth.diskUsage')"
+          size="35" width="6" rotate="90"
+          color="red">
+          <div style="font-size:12px; line-height:1.1 !important"
+            v-if="identity">
+          {{diskPercent}}%
+          </div>
+        </v-progress-circular>
+        <div v-if="identity" class="ml-3">
+            <b>{{ $vuetify.lang.t('$vuetify.auth.cacheUsed') }}</b>
+            {{cacheUsed}}GB
+            <br/> 
+            <b>{{ $vuetify.lang.t('$vuetify.auth.diskUsed') }}</b>
+            {{diskUsed}}GB
+            <br/> 
+            <b>{{ $vuetify.lang.t('$vuetify.auth.diskAvailable') }}</b>
+            {{(identity.diskavail/1E9).toFixed(1)}}GB
         </div>
-
-        <div class="cache-table">
-            <v-data-table
-                v-model="selected"
-                :headers="cacheHeaders"
-                :items="caches"
-                class="elevation-1 "
-                dense
-                style="max-width:40em"
-                item-key="name"
-                :show-select="true"
-                :single-select="false"
-              >
-                <template v-slot:item.calories="{ item }">
-                      <v-chip :color="getColor(item.calories)" dark>{{ item.calories }}</v-chip>
-                </template>
-                <!--template v-slot:items="props">
-                    <tr :active="props.selected" 
-                        @click="props.selected = !props.selected">
-                        <td>
-                            <v-checkbox 
-                                :input-value="props.selected"
-                                primary
-                                hide-details
-                                ></v-checkbox>
-                        </td>
-                        <th > {{ props.item.name }} </th>
-                        <td class="text-right">
-                            {{ (props.item.size/1E6).toFixed(1) }}MB
-                        </td>
-                        <td > {{ cleared[props.item.name] }} </td>
-                    </tr>
-                </template-->
-                <template v-slot:no-data>
-                    Loading...
-                </template>
-            </v-data-table>
-            <v-btn :disabled="selected.length===0"
-                small
-                class="mt-2 orange darken-2" dark
-                @click="onClearCaches">Clear</v-btn>
+        <div v-if="identity == null">
+            {{ $vuetify.lang.t('$vuetify.auth.loading') }}
         </div>
+      </div>
 
-      </v-container>
-    </v-sheet>
+      <div class="cache-table">
+        <v-data-table
+          v-model="selected"
+          :headers="cacheHeaders"
+          :items="caches"
+          class="elevation-1 "
+          dense
+          style="max-width:40em"
+          item-key="name"
+          :show-select="true"
+          :single-select="false"
+          >
+          <template v-slot:item.calories="{ item }">
+            <v-chip :color="getColor(item.calories)" dark>
+                {{ item.calories }}
+              </v-chip>
+          </template>
+          <template v-slot:no-data>
+            {{ $vuetify.lang.t('$vuetify.auth.loading') }}
+          </template>
+        </v-data-table>
+        <v-btn :disabled="selected.length===0"
+          small
+          class="mt-2 orange darken-2" dark
+          @click="onClearCaches">
+          {{ $vuetify.lang.t('$vuetify.auth.clearCache') }}
+        </v-btn>
+      </div>
+
+    </v-container>
+  </v-sheet>
 </template>
 
 <script>
@@ -79,19 +71,6 @@ export default {
     data: () => {
         return {
             user:{},
-            cacheHeaders: [{
-                text: 'Name',
-                align: 'left',
-                value: 'name'
-            },{
-                text: 'Size',
-                align: 'right',
-                value: 'size',
-            },{
-                text: 'Cleared',
-                align: 'right',
-                value: 'cleared',
-            }],
             selected: [],
             caches: [],
             cleared: {},
@@ -119,7 +98,9 @@ export default {
                 var cacheNames = Object.keys(res.data);
                 this.caches = cacheNames.map(name => {
                     var cache = res.data[name];
-                    cache.cleared = cleared[cache.name] ? 'cleared':'';
+                    cache.cleared = cleared[cache.name] 
+                        ? this.$vuetify.lang.t("$vuetify.auth.cleared")
+                        :'';
                     return cache;
                 });
                 console.log(res.data);
@@ -165,6 +146,30 @@ export default {
         }, 1000);
     },
     computed: {
+        cacheHeaders() {
+            return [{
+                text: this.$vuetify.lang.t("$vuetify.auth.cacheName"),
+                align: 'left',
+                value: 'name'
+            },{
+                text: this.$vuetify.lang.t("$vuetify.auth.cacheSize"),
+                align: 'right',
+                value: 'size',
+            },{
+                text: this.$vuetify.lang.t("$vuetify.auth.cacheCleared"),
+                align: 'right',
+                value: 'cleared',
+            }];
+        },
+        cacheName() {
+            return this.$vuetify.lang.t("$vuetif.auth.cacheName");
+        },
+        cacheSize() {
+            return this.$vuetify.lang.t("$vuetif.auth.cacheSize");
+        },
+        cacheCleared() {
+            return this.$vuetify.lang.t("$vuetif.auth.cacheCleared");
+        },
         gscv() {
             return this.$root.$data;
         },

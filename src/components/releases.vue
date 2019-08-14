@@ -5,43 +5,43 @@
         <div class="scv-loadavg">
             <table v-if="identity" class="scv-identity">
                 <tr>
-                    <th>Application name</th>
+                    <th>{{$vuetify.lang.t('$vuetify.auth.applicationName')}}</th>
                     <td>{{identity.name}}</td>
                 </tr>
                 <tr>
-                    <th>Package</th>
+                    <th>{{$vuetify.lang.t('$vuetify.auth.packageName')}}</th>
                     <td>{{identity.package}}</td>
                 </tr>
                 <tr>
-                    <th>Hostname</th>
+                    <th>{{$vuetify.lang.t('$vuetify.auth.hostname')}}</th>
                     <td>{{identity.hostname}}</td>
                 </tr>
                 <tr>
-                    <th>Version</th>
+                    <th>{{$vuetify.lang.t('$vuetify.auth.version')}}</th>
                     <td>{{identity.version}}</td>
                 </tr>
                 <tr>
-                    <th>Free memory</th>
+                    <th>{{$vuetify.lang.t('$vuetify.auth.freeMemory')}}</th>
                     <td>{{(identity.freemem/1E9).toFixed(1)}}GB</td>
                 </tr>
                 <tr>
-                    <th>Total memory</th>
+                    <th>{{$vuetify.lang.t('$vuetify.auth.totalMemory')}}</th>
                     <td>{{(identity.totalmem/1E9).toFixed(1)}}GB</td>
                 </tr>
                 <tr>
-                    <th>Disk available</th>
+                    <th>{{$vuetify.lang.t('$vuetify.auth.diskAvailable')}}</th>
                     <td>{{(identity.diskavail/1E9).toFixed(1)}}GB</td>
                 </tr>
                 <tr>
-                    <th>Disk total</th>
+                    <th>{{$vuetify.lang.t('$vuetify.auth.diskTotal')}}</th>
                     <td>{{(identity.disktotal/1E9).toFixed(1)}}GB</td>
                 </tr>
                 <tr>
-                    <th>Uptime</th>
+                    <th>{{$vuetify.lang.t('$vuetify.auth.uptime')}}</th>
                     <td>{{(identity.uptime/(3600*24)).toFixed(1)}} days</td>
                 </tr>
                 <tr>
-                    <th>Load average</th>
+                    <th>{{$vuetify.lang.t('$vuetify.auth.loadAverage')}}</th>
                     <td>
                         <div class="scv-loadavg-line">
                         {{identity.loadavg[0].toFixed(1)}}%
@@ -54,38 +54,49 @@
             </table>
         </div>
         <div class="scv-release">
-            <h2> Update Release </h2>
+          <h2> Update Release </h2>
+          <div style="display: flex; align-items: center">
             <v-checkbox v-model="confirmRestart"
-                :label="`STEP 1: Restart server (~${restartMinutes} minutes)`">
+                :label="$vuetify.lang.t('$vuetify.auth.step1Release')"
+                >
             </v-checkbox>
             <v-btn @click="onRestart()"
+                small
                 :disabled="!confirmRestart"
-                class="error">
-                Restart
+                class="error ml-2">
+                {{ $vuetify.lang.t('$vuetify.auth.restart') }}
             </v-btn>
+          </div>
+          <div style="display: flex; align-items: center">
             <v-checkbox v-model="confirmUpdate"
-                :label="`STEP 2: Update release (~${updateMinutes} minutes)`">
+                :label="$vuetify.lang.t('$vuetify.auth.step2Release')"
+                >
             </v-checkbox>
             <v-btn @click="onUpdateRelease()"
+                small
                 :disabled="!confirmUpdate"
-                class="error">
-                Update
+                class="error ml-2">
+                {{ $vuetify.lang.t('$vuetify.auth.updateRelease') }}
             </v-btn>
-            <v-alert :value="!error && isRestarting" type="info">
-                Restarting server: {{refreshSecs}} seconds remaining...
-            </v-alert>
-            <v-alert :value="!isReleaseCurrent & !error && isUpdating" type="info">
-                Updating server in {{refreshSecs}} seconds...
-            </v-alert>
-            <v-alert v-if="(!confirmRestart || !confirmUpdate) && error" 
-                :value="error" type="error">
-                {{error.message}}
-            </v-alert>
-            <v-alert :value="isReleaseCurrent" type="success">
-                Current release is latest. No action taken.
-            </v-alert>
-            <img src="img/danger.gif" width="200px"
-                class="mb-2"/>
+          </div>
+          <v-alert :value="!error && isRestarting" type="info">
+            {{ $vuetify.lang.t('$vuetify.auth.restartingServer') }}
+            {{refreshSecs}} ...
+          </v-alert>
+          <v-alert :value="!isReleaseCurrent & !error && isUpdating" type="info">
+            {{ $vuetify.lang.t('$vuetify.auth.updatingServer') }}
+            {{refreshSecs}} ...
+          </v-alert>
+          <v-alert v-if="(!confirmRestart || !confirmUpdate) && error" 
+              :value="error" type="error">
+              {{error.message}}
+          </v-alert>
+          <v-alert :value="isReleaseCurrent" type="success">
+              {{ $vuetify.lang.t('$vuetify.auth.releaseIsCurrent') }}
+          </v-alert>
+          <img src="img/danger.gif" width="200px" 
+            style="border-radius: 0.4em;" 
+            class="mb-3"/>
         </div>
       </v-container>
     </v-sheet>

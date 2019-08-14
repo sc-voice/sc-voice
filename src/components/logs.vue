@@ -9,6 +9,7 @@
                     :headers="headers"
                     :items="logs"
                     class="elevation-1"
+                    dense
                     sort-by=""
                   >
                     <template v-slot:items="props">
