@@ -67,8 +67,9 @@
                     var catalog = await that.catalog();
                     suid = suid.toLowerCase().replace(/\.0*/ug,'.');
                     var entry = catalog.aeneasMaps[suid];
-                    if (entry) {
-                        var url = `${that.urlMap}/${entry[lang]}`;
+                    var entryLang = entry && entry[lang];
+                    if (entryLang) {
+                        var url = `${that.urlMap}/${entryLang}`;
                     } else {
                         var url = that.aeneasMapUrl(suid, lang, author, reader);
                     }

@@ -7,301 +7,303 @@ background-color="#000"
 style="width:100%; margin-top:0"/>
 <v-container fluid class="scv-sutta">
   <v-layout column align-left >
-      <div class="scv-search-row">
-          <div class="scv-search-col">
-              <h1 class="title">Explore the Buddha's Teaching</h1>
-              <div class="scv-search-field" role="search">
-                  <v-text-field ref="refSearch"
-                          placeholder="Search"
-                          v-model="search" v-on:keypress="onSearchKey($event)"
-                          @click:append="onSearchKey()"
-                          append-icon="search"
-                          flat
-                          single-line
-                          >
-                      </v-text-field>
-                  </div>
-                  <div class="scv-inspire-row">
-                      <v-btn @click="clickInspireMe()"
-                          role="button"
-                          aria-label="inspire me"
-                          class="scv-inspire " :style="cssProps" small>
-                          Inspire me!
-                      </v-btn>
-                  </div>
-                  <div class="scv-sutta-menubar mb-3"
-                    v-if="waiting<=0 && sutta_uid && !searchResults && gscv.voices.length">
-                    <div>
-                        <v-btn icon small fab
-                            :disabled="waiting > 0"
-                            @click="launchSuttaPlayer()"
-                            ref="refPlaySutta"
-                            :aria-label="`play ${resultId()}. ${duration(stats.seconds).aria}`"
-                            class="scv-icon-btn" :style="cssProps" >
-                            <v-icon>play_circle_outline</v-icon>
-                        </v-btn>
-                        <v-btn icon
-                            :href="downloadUrl()"
-                            @click="downloadClick()"
-                            :aria-label="`download ${resultId()}`"
-                            class="scv-icon-btn" :style="cssProps" small>
-                            <v-icon>arrow_downward</v-icon>
-                        </v-btn>
-                    </div>
-                    <div class="mt-2" aria-hidden='true'>
-                        {{duration(stats.seconds).display}}
-                    </div>
-                    <div class="scv-more" >
-                        <v-btn icon
-                            id="more-menu-btn"
-                            @click="clickMore()"
-                            aria-haspopup="true"
-                            aria-controls="more-menu"
-                            aria-label="More"
-                            :aria-expanded="moreVisible"
-                            class="scv-icon-btn" :style="cssProps" small>
-                            <v-icon>more_vert</v-icon>
-                        </v-btn>
-                        <ul class="scv-more-menu" role="menu"
-                            id = "more-menu"
-                            ref="ref-more-menu"
-                            aria-labelledby="more-menu-btn"
-                            v-if="moreVisible"
-                            @focusin="focusMore(true)"
-                            @focusout="focusMore(false)"
-                            :aria-hidden="!moreVisible">
-                            <li class="" v-if="supportedAudio.length"
-                                v-for="(audio,i) in supportedAudio" 
-                                role="none"
-                                :key="`moreaudio${i}`" >
-                                <a class="scv-a" :href="audio.url" 
-                                    :aria-label="`${audio.source} opens in a new tab`"
-                                    role="menuitem"
-                                    target="_blank">
-                                    <span aria-hidden="true">
-                                        <v-icon class="ml-2" small>headset</v-icon>
-                                        {{audio.source}}
-                                    </span>
-                                </a>
-                            </li>
-                            <li v-for="translation in suttaplex.translations"
-                                :key="translation.id"
-                                role="none"
-                                v-show="author_uid !== translation.author_uid">
-                                <a class="scv-a" :href="translationLink(translation)"
-                                    role="menuitem"
-                                    v-on:click="clickTranslation(translation,$event)">
-                                    <v-icon class="ml-2" 
-                                        style="color: #888"
-                                        small>headset</v-icon>
-                                    {{translation.author}}
-                                    ({{translation.lang_name}})
-                                </a>
-                            </li>
-                            <li class="" v-if="unsupportedAudio.length"
-                                v-for="(audio,i) in unsupportedAudio" 
-                                role="none"
-                                :key="`moreaudio${i}`" >
-                                <a class="scv-a" :href="audio.url" 
-                                    role="menuitem"
-                                    :aria-label="`${audio.source} opens in a new tab`"
-                                    target="_blank">
-                                    <span aria-hidden="true">
-                                        <v-icon class="ml-2" style="color:#888" small>
-                                            format_list_bulleted
-                                        </v-icon>
-                                        <i>{{audio.source}}</i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="" role="none" >
-                                <a class="scv-a" 
-                                    :href="`https://suttacentral.net/${sutta_uid}`"
-                                    role="menuitem"
-                                    :aria-label="`sootacentral.net opens in a new tab`"
-                                    target="_blank">
-                                    <span aria-hidden="true">
-                                        <v-icon class="ml-2" small>notes</v-icon>
-                                        <i>SuttaCentral.net</i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                  </div>
-              </div>
+    <div class="scv-search-row">
+      <div class="scv-search-col">
+        <h1 class="title">
+          {{$vuetify.lang.t("$vuetify.scv.exploreBuddhasTeaching")}}
+        </h1>
+        <div class="scv-search-field" role="search">
+          <v-text-field ref="refSearch"
+            :placeholder="$vuetify.lang.t('$vuetify.scv.search')"
+            v-model="search" v-on:keypress="onSearchKey($event)"
+            @click:append="onSearchKey()"
+            append-icon="search"
+            flat single-line
+            >
+          </v-text-field>
           </div>
-          <scv-downloader
-            ref="refScvDownloader"
-            :filename="downloadFile"
-            :focusElement="postDownloadFocus"
-            />
-          <div v-if="error.search" class="scv-error" >
-              <error-help ref="refErrorHelp" :title="errorSummary"
-                :search="search"
-                :httpError="error.search.http" />
-              <v-btn icon @click="error.search=null"
-                class="scv-icon-btn" :style="cssProps"
-                aria-label="Dismiss Error">
-                <v-icon>clear</v-icon>
-              </v-btn>
+          <div class="scv-inspire-row">
+            <v-btn @click="clickInspireMe()"
+              role="button"
+              :aria-label="$vuetify.lang.t('$vuetify.scv.ariaInspireMe')"
+              class="scv-inspire " :style="cssProps" small>
+              {{$vuetify.lang.t('$vuetify.scv.inspireMe')}}
+            </v-btn>
           </div>
-          <details v-show="searchResults" open>
-            <summary v-if="resultCount"
-                role="main"
-                ref="refResults"
-                aria-level="1"
-                :aria-label="`Found ${resultCount} sootas ${playlistDuration.aria}`"
-                class='title pt-1 pb-1'>
-                Found {{resultCount}} suttas
-                ({{playlistDuration.display}})
-            </summary>
-            <summary v-else
-                role="main" ref="refResults"
-                aria-level="1" :aria-label="`No suttas found`"
-                class='title'>
-                No suttas found
-            </summary>
-            <div class="scv-playlist ml-3 pt-2 pl-3" v-if="gscv.voices.length" >
-                <v-btn icon
-                    @click="playAll()"
-                    class="scv-icon-btn" :style="cssProps" small>
+          <div class="scv-sutta-menubar mb-3"
+            v-if="waiting<=0 && sutta_uid && !searchResults && gscv.voices.length">
+            <div>
+                <v-btn icon small fab
+                    :disabled="waiting > 0"
+                    @click="launchSuttaPlayer()"
+                    ref="refPlaySutta"
+                    :aria-label="ariaPlaySutta(resultId(), stats.seconds)"
+                    class="scv-icon-btn" :style="cssProps" >
                     <v-icon>play_circle_outline</v-icon>
                 </v-btn>
                 <v-btn icon
-                    :href="downloadUrl(search)"
-                    v-show="playlistDuration.totalSeconds < 3*3600"
-                    @click="downloadClick(search)"
+                    :href="downloadUrl()"
+                    @click="downloadClick()"
+                    :aria-label="`${ariaDownload} ${resultId()}`"
                     class="scv-icon-btn" :style="cssProps" small>
                     <v-icon>arrow_downward</v-icon>
                 </v-btn>
             </div>
-            <details role="heading" aria-level="2"
-                v-for="(result,i) in (searchResults && searchResults.results||[])"
-                :key="`${result.uid}_${i}`"
-                class="scv-search-result" :style="cssProps">
-                <summary class="scv-search-result-summary">
-                    <div style="display: inline-block; width: 96%; ">
-                        <div style="display:flex; justify-content: space-between; ">
-                            <div>
-                                {{resultId(result).toUpperCase()}}
-                                {{result.title}}
-                            </div>
-                            <div class="caption" 
-                                :aria-label="duration(result.stats.seconds).aria">
-                               {{duration(result.stats.seconds).display}}
-                            </div>
+            <div class="mt-2" aria-hidden='true'>
+                {{duration(stats.seconds).display}}
+            </div>
+            <div class="scv-more" >
+            <!-- i18n -->
+                <v-btn icon
+                    id="more-menu-btn"
+                    @click="clickMore()"
+                    aria-haspopup="true"
+                    aria-controls="more-menu"
+                    :aria-label="$vuetify.lang.t('$vuetify.scv.ariaMore')"
+                    :aria-expanded="moreVisible"
+                    class="scv-icon-btn" :style="cssProps" small>
+                    <v-icon>more_vert</v-icon>
+                </v-btn>
+                <ul class="scv-more-menu" role="menu"
+                    id = "more-menu"
+                    ref="ref-more-menu"
+                    aria-labelledby="more-menu-btn"
+                    v-if="moreVisible"
+                    @focusin="focusMore(true)"
+                    @focusout="focusMore(false)"
+                    :aria-hidden="!moreVisible">
+                    <li class="" v-if="supportedAudio.length"
+                        v-for="(audio,i) in supportedAudio" 
+                        role="none"
+                        :key="`moreaudio${i}`" >
+                        <a class="scv-a" :href="audio.url" 
+                            :aria-label="`${audio.source} opens in a new tab`"
+                            role="menuitem"
+                            target="_blank">
+                            <span aria-hidden="true">
+                                <v-icon class="ml-2" small>headset</v-icon>
+                                {{audio.source}}
+                            </span>
+                        </a>
+                    </li>
+                    <li v-for="translation in suttaplex.translations"
+                        :key="translation.id"
+                        role="none"
+                        v-show="author_uid !== translation.author_uid">
+                        <a class="scv-a" :href="translationLink(translation)"
+                            role="menuitem"
+                            v-on:click="clickTranslation(translation,$event)">
+                            <v-icon class="ml-2" 
+                                style="color: #888"
+                                small>headset</v-icon>
+                            {{translation.author}}
+                            ({{translation.lang_name}})
+                        </a>
+                    </li>
+                    <li class="" v-if="unsupportedAudio.length"
+                        v-for="(audio,i) in unsupportedAudio" 
+                        role="none"
+                        :key="`moreaudio${i}`" >
+                        <a class="scv-a" :href="audio.url" 
+                            role="menuitem"
+                            :aria-label="`${audio.source} opens in a new tab`"
+                            target="_blank">
+                            <span aria-hidden="true">
+                                <v-icon class="ml-2" style="color:#888" small>
+                                    format_list_bulleted
+                                </v-icon>
+                                <i>{{audio.source}}</i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="" role="none" >
+                        <a class="scv-a" 
+                            :href="`https://suttacentral.net/${sutta_uid}`"
+                            role="menuitem"
+                            :aria-label="`sootacentral.net opens in a new tab`"
+                            target="_blank">
+                            <span aria-hidden="true">
+                                <v-icon class="ml-2" small>notes</v-icon>
+                                <i>SuttaCentral.net</i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <scv-downloader
+        ref="refScvDownloader"
+        :filename="downloadFile"
+        :focusElement="postDownloadFocus"
+        />
+      <div v-if="error.search" class="scv-error" >
+          <error-help ref="refErrorHelp" :title="errorSummary"
+            :search="search"
+            :httpError="error.search.http" />
+          <v-btn icon @click="error.search=null"
+            class="scv-icon-btn" :style="cssProps"
+            aria-label="Dismiss Error">
+            <v-icon>clear</v-icon>
+          </v-btn>
+      </div>
+      <details v-show="searchResults" open>
+        <summary v-if="resultCount"
+            role="main"
+            ref="refResults"
+            aria-level="1"
+            :aria-label="`Found ${resultCount} sootas ${playlistDuration.aria}`"
+            class='title pt-1 pb-1'>
+            Found {{resultCount}} suttas
+            ({{playlistDuration.display}})
+        </summary>
+        <summary v-else
+            role="main" ref="refResults"
+            aria-level="1" :aria-label="`No suttas found`"
+            class='title'>
+            No suttas found
+        </summary>
+        <div class="scv-playlist ml-3 pt-2 pl-3" v-if="gscv.voices.length" >
+            <v-btn icon
+                @click="playAll()"
+                class="scv-icon-btn" :style="cssProps" small>
+                <v-icon>play_circle_outline</v-icon>
+            </v-btn>
+            <v-btn icon
+                :href="downloadUrl(search)"
+                v-show="playlistDuration.totalSeconds < 3*3600"
+                @click="downloadClick(search)"
+                class="scv-icon-btn" :style="cssProps" small>
+                <v-icon>arrow_downward</v-icon>
+            </v-btn>
+        </div>
+        <details role="heading" aria-level="2"
+            v-for="(result,i) in (searchResults && searchResults.results||[])"
+            :key="`${result.uid}_${i}`"
+            class="scv-search-result" :style="cssProps">
+            <summary class="scv-search-result-summary">
+                <div style="display: inline-block; width: 96%; ">
+                    <div style="display:flex; justify-content: space-between; ">
+                        <div>
+                            {{resultId(result).toUpperCase()}}
+                            {{result.title}}
+                        </div>
+                        <div class="caption" 
+                            :aria-label="duration(result.stats.seconds).aria">
+                           {{duration(result.stats.seconds).display}}
                         </div>
                     </div>
-                </summary>
-                <div v-if="gscv.showId" class="scv-search-result-scid scv-scid">
-                    SC&nbsp;{{result.quote.scid}}
                 </div>
-                <div v-if="result.quote && showPali && result.quote.pli"
-                    class="scv-search-result-pli">
-                    <div>
-                        <div v-html="result.quote.pli"></div>
+            </summary>
+            <div v-if="gscv.showId" class="scv-search-result-scid scv-scid">
+                SC&nbsp;{{result.quote.scid}}
+            </div>
+            <div v-if="result.quote && showPali && result.quote.pli"
+                class="scv-search-result-pli">
+                <div>
+                    <div v-html="result.quote.pli"></div>
+                </div>
+            </div>
+            <div v-if="result.quote && showTrans && result.quote[language]"
+                class="scv-search-result-lang">
+                <div>
+                    <span v-html="result.quote.en"></span>
+                    <div v-if="gscv.showId" class='scv-scid'>
+                        &mdash;
+                        {{result.author}} 
                     </div>
                 </div>
-                <div v-if="result.quote && showTrans && result.quote[language]"
-                    class="scv-search-result-lang">
-                    <div>
-                        <span v-html="result.quote.en"></span>
-                        <div v-if="gscv.showId" class='scv-scid'>
-                            &mdash;
-                            {{result.author}} 
-                        </div>
-                    </div>
+            </div>
+            <div class="ml-3 pt-2" 
+                style="display:flex; justify-content: space-between">
+                <div>
+                <v-btn icon v-if="result.quote"
+                    @click="playQuotes(i, result)"
+                    :class="btnPlayQuotesClass(i)" :style="cssProps" small>
+                    <v-icon>chat_bubble_outline</v-icon>
+                </v-btn>
+                <v-btn icon v-if="result.quote"
+                    @click="playOne(result)"
+                    class="scv-icon-btn" :style="cssProps" small>
+                    <v-icon>play_circle_outline</v-icon>
+                </v-btn>
+                <v-btn icon v-if="result.quote"
+                    :href="resultLink(result)"
+                    class="scv-icon-btn" :style="cssProps" small>
+                    <v-icon>open_in_new</v-icon>
+                </v-btn>
+                <v-btn icon v-if="result.quote && gscv.voices.length"
+                    :href="downloadUrl(resultRef(result))"
+                    @click="downloadClick(resultRef(result))"
+                    class="scv-icon-btn" :style="cssProps" small>
+                    <v-icon>arrow_downward</v-icon>
+                </v-btn>
                 </div>
-                <div class="ml-3 pt-2" 
-                    style="display:flex; justify-content: space-between">
-                    <div>
-                    <v-btn icon v-if="result.quote"
-                        @click="playQuotes(i, result)"
-                        :class="btnPlayQuotesClass(i)" :style="cssProps" small>
-                        <v-icon>chat_bubble_outline</v-icon>
-                    </v-btn>
-                    <v-btn icon v-if="result.quote"
-                        @click="playOne(result)"
-                        class="scv-icon-btn" :style="cssProps" small>
-                        <v-icon>play_circle_outline</v-icon>
-                    </v-btn>
-                    <v-btn icon v-if="result.quote"
-                        :href="resultLink(result)"
-                        class="scv-icon-btn" :style="cssProps" small>
-                        <v-icon>open_in_new</v-icon>
-                    </v-btn>
-                    <v-btn icon v-if="result.quote && gscv.voices.length"
-                        :href="downloadUrl(resultRef(result))"
-                        @click="downloadClick(resultRef(result))"
-                        class="scv-icon-btn" :style="cssProps" small>
-                        <v-icon>arrow_downward</v-icon>
-                    </v-btn>
-                    </div>
-                    <div class="scv-score">relevance: {{score(result)}}</div>
-                </div>
-            </details><!-- search result i -->
-          </details><!-- searchresults -->
+                <div class="scv-score">relevance: {{score(result)}}</div>
+            </div>
+        </details><!-- search result i -->
+      </details><!-- searchresults -->
 
-          <details v-if="sections && sections[0]" class="scv-header">
-            <summary class="subheading scv-header-summary" >
-                {{suttaTitle}}
-            </summary>
-            <div class="scv-blurb">{{suttaplex.blurb}}</div>
-            <div class="title pt-4 pb-2 text-center">
-                {{sutta.original_title}}
+      <details v-if="sections && sections[0]" class="scv-header">
+        <summary class="subheading scv-header-summary" >
+            {{suttaTitle}}
+        </summary>
+        <div class="scv-blurb">{{suttaplex.blurb}}</div>
+        <div class="title pt-4 pb-2 text-center">
+            {{sutta.original_title}}
+        </div>
+        <div class="subtitle font-italic pt-1 pb-3 text-center">
+            Translated by {{sutta.author}}
+        </div>
+        <div class="scv-blurb"><span v-html="metaarea"></span></div>
+      </details>
+      <details class="scv-section-body"
+        v-for="(sect,i) in sections" :key="`sect${i}`"
+        v-if="i>0">
+        <summary class="subheading" :aria-label="sectionAriaLabel(sect)">
+            <div v-if="gscv.showId" class='scv-scid'>
+                SC&nbsp;{{section_scid(sect)}}
             </div>
-            <div class="subtitle font-italic pt-1 pb-3 text-center">
-                Translated by {{sutta.author}}
+            <i>{{sect.title}}</i>
+        </summary>
+        <div class="scv-play-controls" v-if="gscv.voices">
+            <button
+                :disabled="waiting > 0"
+                @click="launchSuttaPlayer(i)"
+                class="scv-text-button mt-3"
+                :style="cssProps"
+                >
+                Play Section {{i+1}} ({{voice.name}})
+            </button>
+        </div>
+        <div v-if="error[i]" class="scv-error"
+            style="margin-left: 1.2em" >
+          <div>
+            <span class="subheading">{{error[i].data}}</span>
+            <br>
+            <span class="font-italic">{{error[i].http}}</span>
+          </div>
+          <v-btn icon @click="error[i]=null" class="scv-icon-btn" :style="cssProps"
+            aria-label="Dismiss Error">
+            <v-icon>clear</v-icon>
+          </v-btn>
+        </div>
+        <div v-for="(seg,j) in sect.segments" :key="seg+j" :class="segClass(seg)">
+            <div v-show="gscv.showId" class='scv-scid'>
+                SC&nbsp;{{seg.scid.split(":")[1]}}
             </div>
-            <div class="scv-blurb"><span v-html="metaarea"></span></div>
-          </details>
-          <details class="scv-section-body"
-            v-for="(sect,i) in sections" :key="`sect${i}`"
-            v-if="i>0">
-            <summary class="subheading" :aria-label="sectionAriaLabel(sect)">
-                <div v-if="gscv.showId" class='scv-scid'>
-                    SC&nbsp;{{section_scid(sect)}}
-                </div>
-                <i>{{sect.title}}</i>
-            </summary>
-            <div class="scv-play-controls" v-if="gscv.voices">
-                <button
-                    :disabled="waiting > 0"
-                    @click="launchSuttaPlayer(i)"
-                    class="scv-text-button mt-3"
-                    :style="cssProps"
-                    >
-                    Play Section {{i+1}} ({{voice.name}})
-                </button>
-            </div>
-            <div v-if="error[i]" class="scv-error"
-                style="margin-left: 1.2em" >
-              <div>
-                <span class="subheading">{{error[i].data}}</span>
-                <br>
-                <span class="font-italic">{{error[i].http}}</span>
-              </div>
-              <v-btn icon @click="error[i]=null" class="scv-icon-btn" :style="cssProps"
-                aria-label="Dismiss Error">
-                <v-icon>clear</v-icon>
-              </v-btn>
-            </div>
-            <div v-for="(seg,j) in sect.segments" :key="seg+j" :class="segClass(seg)">
-                <div v-show="gscv.showId" class='scv-scid'>
-                    SC&nbsp;{{seg.scid.split(":")[1]}}
-                </div>
-                <div v-html="segmentLang(seg)"/>
-            </div>
-          </details> <!-- section i -->
-          <scv-player v-if="tracks && gscv.voices"
-            :ref="`refScvPlayer`" 
-            :tracks="tracks" 
-            :voice="voice"
-            :time="stats"
-            :closeFocus="playerCloseFocus"
-            />
-      </v-layout>
+            <div v-html="segmentLang(seg)"/>
+        </div>
+      </details> <!-- section i -->
+      <scv-player v-if="tracks && gscv.voices"
+        :ref="`refScvPlayer`" 
+        :tracks="tracks" 
+        :voice="voice"
+        :time="stats"
+        :closeFocus="playerCloseFocus"
+        />
+    </v-layout>
   </v-container>
 </div>
 </template>
@@ -868,6 +870,11 @@ export default {
         duration(t) {
             return this.gscv.durationDisplay(t);
         },
+        ariaPlaySutta(resultId, seconds) {
+            var result = `play ${resultId}. ${this.duration(seconds).aria}`;
+            console.log(`dbg ariaPlaySutta ${seconds}`, result);
+            return result;
+        },
     },
     computed: {
         otherAudioUrl() {
@@ -937,7 +944,6 @@ export default {
         },
         postDownloadFocus() {
             var vSearch = this.$refs.refSearch;
-            return vSearch && vSearch.$refs.input;
         },
         resultCount() {
             return this.searchResults && this.searchResults.results.length || 0;
@@ -975,6 +981,9 @@ export default {
             } else {
                 return 0;
             }
+        },
+        ariaDownload() {
+            return this.$vuetify.lang.t("$vuetify.scv.ariaDownload");
         },
     },
     mounted() {

@@ -89,11 +89,11 @@
             ].sort());
             var fragments = resMap.fragments;
             should.deepEqual(fragments[7], {
-                begin: '26.340',
+                begin: '26.34',
                 children: [],
-                end: '31.260',
+                end: '31.26',
                 id: 'sn1.9:3.1',
-                language: 'eng',
+                language: 'en',
                 lines: [
                     'Having given up conceit, serene within oneself, ',
                 ],
@@ -106,6 +106,7 @@
         (async function() { try {
             var sca = SCA;
             var response = await sca.catalog();
+            fs.writeFileSync('/tmp/sca_catalog', JSON.stringify(response, null, 2));
             var aeneasMaps = response.aeneasMaps;
             var suids = Object.keys(aeneasMaps);
             should(suids.length).above(20);
@@ -239,6 +240,7 @@
         } catch(e) { done(e); } })();
     });
     it("cacheSuttaAudio(opts) populates cache with segment audio", function(done) {
+        this.timeout(10*1000);
         (async function() { try {
             var sca = SCA;
             var suid = 'sn1.09';

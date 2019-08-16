@@ -1256,7 +1256,9 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     that.requireAdmin(req, res, "GET update-content/task");
-                    resolve(that.updateContentTask);
+                    var task = Object.assign({}, that.updateContentTask);
+                    task.error && (task.error = task.error.message);
+                    resolve(task);
                 } catch(e) {
                     reject(e);} 
                 })();
@@ -1303,9 +1305,18 @@
                     updater.update(suids, {
                         task,
                         suids,
+                    }).then(res => {
+                        logger.info(`postUpdateContent()`,
+                            `completed: ${suids.length} suttas`);
+                    }).catch(e => {
+                        logger.warn(`postUpdateContent()`,
+                            `failed: ${e.message}`);
                     });
                     resolve(task);
-                } catch(e) {reject(e);} })();
+                } catch(e) {
+                    logger.warn(`postUpdateContent() failed: ${e.message}`);
+                    reject(e);
+                } })();
             });
         }
     }

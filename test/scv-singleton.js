@@ -16,6 +16,21 @@
     const mockVueRoot = {
         $cookie: {
         },
+        $vuetify: {
+            lang: {
+                t(key) {
+                    return {
+                        ["$vuetify.scv.and"]: "and",
+                        ["$vuetify.scv.hours"]: "hours",
+                        ["$vuetify.scv.hoursUnits"]: "h",
+                        ["$vuetify.scv.minutes"]: "minutes",
+                        ["$vuetify.scv.minutesUnits"]: "m",
+                        ["$vuetify.scv.seconds"]: "seconds",
+                        ["$vuetify.scv.secondsUnits"]: "s",
+                    }[key];
+                }
+            }
+        },
     };
     Object.defineProperty(mockVueRoot.$cookie, 'delete', {
         get() { return (cookie) => {
@@ -336,7 +351,7 @@
             "showLang=0",
         ].join('&')));
     });
-    it("duration(nSegs) returns estimated playtime", function() {
+    it("TESTTESTduration(nSegs) returns estimated playtime", function() {
         var scv = new ScvSingleton(g);
 
         should(scv.duration(0).display).equal('--');
@@ -373,7 +388,7 @@
         should(scv.duration(10).display).equal('1m 2s');
         should(scv.duration(1000).display).equal('1h 44m');
     });
-    it("duration(chars) returns estimated playtime", function() {
+    it("TESTTESTduration(chars) returns estimated playtime", function() {
         var scv = new ScvSingleton(g);
 
         should(scv.duration({
@@ -670,13 +685,13 @@
         // default
         var voices = scv.langVoices();
         should.deepEqual(voices.map(v => v.name), [
-            'Amy', 'Russell', 'Raveena', 'sujato_en',
+            'Amy', 'Russell', 'Raveena', 'Matthew', 'sujato_en',
         ]);
 
         // custom
         var voices = scv.langVoices('en');
         should.deepEqual(voices.map(v => v.name), [
-            'Amy', 'Russell', 'Raveena', 'sujato_en',
+            'Amy', 'Russell', 'Raveena', 'Matthew', 'sujato_en',
         ]);
 
         // custom

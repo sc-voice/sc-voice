@@ -1,215 +1,262 @@
 <template>
-    <v-sheet style="border-top:3px solid #eee" light>
-        <v-card >
-            <v-card-title>
-                <div class="title"> VSM S3 Credentials </div>
-                <v-spacer/>
-                <v-btn @click='onEditCredentials()' dark
-                    color="deep-orange darken-3">
-                    Edit Credentials
-                </v-btn>
-            </v-card-title>
-            <v-card-text>
-                <div v-if="vsmCreds.Bucket">
-                    <table class='vsm-cred-table'>
-                    <tr><th>endpoint:</th><td>{{vsmCreds.s3.endpoint}}</td></tr>
-                    <tr><th>region:</th><td>{{vsmCreds.s3.region}}</td></tr>
-                    <tr><th>Bucket:</th><td>{{vsmCreds.Bucket}}</td></tr>
-                    <tr><th>accessKeyId:</th><td>{{vsmCreds.s3.accessKeyId}}</td></tr>
-                    <tr>
-                        <th>secretAccessKey:</th>
-                        <td>{{vsmCreds.s3.secretAccessKey}}</td>
-                    </tr>
-                    </table>
-                </div>
-                <div v-else>
-                    (no credentials)
-                </div>
-            </v-card-text>
-            <v-dialog v-model="isEditCredentials" persistent>
-                <v-card>
-                    <v-card-title class="deep-orange darken-3">
-                        <div>
-                        <h3 class="">Edit VSM S3 Credentials</h3>
-                        </div>
-                        <v-spacer/>
-                        <v-btn @click='isEditCredentials=false' small>
-                            Cancel
-                        </v-btn>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-text-field label="endpoint" 
-                            placeholder="(e.g., 'https://s3.us-west-1.wasabisys.com')"
-                            v-model="editCreds.s3.endpoint">
-                        </v-text-field>
-                        <v-text-field label="region" 
-                            placeholder="(e.g., 'us-west-1')"
-                            v-model="editCreds.s3.region">
-                        </v-text-field>
-                        <v-text-field label="Bucket" 
-                            placeholder="(e.g., 'sc-voice-wasabi')"
-                            v-model="editCreds.Bucket">
-                        </v-text-field>
-                        <v-text-field label="accessKeyId" 
-                            placeholder="(required)"
-                            v-model="editCreds.s3.accessKeyId">
-                        </v-text-field>
-                        <v-text-field label="secretAccessKey" 
-                            placeholder="(required)"
-                            v-model="editCreds.s3.secretAccessKey">
-                        </v-text-field>
-                        <v-alert type="error" :value="editCredError">
-                            <b> Invalid credentials:
-                            {{editCredError && editCredError.response.data.error}}
-                            </b>
-                            <p>
-                            Cancel or Submit correct credentials
-                            </p>
-                        </v-alert>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer/>
-                        <v-btn @click="onSubmitCredentials()">
-                            Submit
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-        </v-card>
+  <v-sheet style="border-top:3px solid #eee" light>
+    <v-card >
+      <v-card-title>
+          <div class="title"> VSM S3 Credentials </div>
+          <v-spacer/>
+          <v-btn @click='onEditCredentials()' dark
+              color="deep-orange darken-3">
+              {{$vuetify.lang.t("$vuetify.auth.editCredentials")}}
+          </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <div v-if="vsmCreds.Bucket">
+          <table class='vsm-cred-table'>
+            <tr>
+              <th>{{$vuetify.lang.t("$vuetify.auth.endpoint")}}</th>
+              <td>{{vsmCreds.s3.endpoint}}</td>
+            </tr>
+            <tr>
+              <th>{{$vuetify.lang.t("$vuetify.auth.region")}}</th>
+              <td>{{vsmCreds.s3.region}}</td>
+            </tr>
+            <tr>
+              <th>{{$vuetify.lang.t("$vuetify.auth.bucket")}}</th>
+              <td>{{vsmCreds.s3.Bucket}}</td>
+            </tr>
+            <tr>
+              <th>{{$vuetify.lang.t("$vuetify.auth.accessKeyId")}}</th>
+              <td>{{vsmCreds.s3.accessKeyId}}</td>
+            </tr>
+            <tr>
+              <th>{{$vuetify.lang.t("$vuetify.auth.secretAccessKey")}}</th>
+              <td>{{vsmCreds.s3.secretAccessKey}}</td>
+            </tr>
+          </table>
+        </div>
+        <div v-else>
+          {{$vuetify.lang.t("$vuetify.auth.noCredentials")}}
+        </div>
+      </v-card-text>
+      <v-dialog v-model="isEditCredentials" persistent>
         <v-card>
-            <v-card-title >
-                <div class="title">Installable VSM Modules</div>
-                <v-btn icon @click="getCredentials()">
-                    <v-icon>refresh</v-icon>
-                </v-btn>
-                <v-spacer/>
-                <v-btn @click="onVsmInstall()"
-                    color="warning" :disabled="!vsmSelected.length">
-                    Install
-                </v-btn>
+          <v-card-title class="deep-orange darken-3">
+            <div>
+              <h3 class="">
+                {{$vuetify.lang.t('$vuetify.auth.editCredentials')}}
+              </h3>
+            </div>
+            <v-spacer/>
+            <v-btn @click='isEditCredentials=false' small>
+              {{ $vuetify.lang.t('$vuetify.auth.cancel') }}
+            </v-btn>
+          </v-card-title>
+          <v-card-text >
+            <v-text-field 
+                class="mt-2"
+                :label="$vuetify.lang.t('$vuetify.auth.endpoint')"
+                placeholder="(e.g., 'https://s3.us-west-1.wasabisys.com')"
+                v-model="editCreds.s3.endpoint">
+            </v-text-field>
+            <v-text-field 
+                :label="$vuetify.lang.t('$vuetify.auth.region')"
+                placeholder="(e.g., 'us-west-1')"
+                v-model="editCreds.s3.region">
+            </v-text-field>
+            <v-text-field 
+                :label="$vuetify.lang.t('$vuetify.auth.bucket')"
+                placeholder="(e.g., 'sc-voice-wasabi')"
+                v-model="editCreds.Bucket">
+            </v-text-field>
+            <v-text-field 
+                :label="$vuetify.lang.t('$vuetify.auth.accessKeyId')"
+                :placeholder="$vuetify.lang.t('$vuetify.auth.required')"
+                v-model="editCreds.s3.accessKeyId">
+            </v-text-field>
+            <v-text-field 
+                :label="$vuetify.lang.t('$vuetify.auth.secretAccessKey')"
+                :placeholder="$vuetify.lang.t('$vuetify.auth.required')"
+                v-model="editCreds.s3.secretAccessKey">
+            </v-text-field>
+            <v-alert type="error" :value="editCredError">
+              <b> 
+                {{$vuetify.lang.t("$vuetify.auth.invalidCredentials")}}
+                {{editCredError && editCredError.response.data.error}}
+              </b>
+              <p>
+                {{$vuetify.lang.t("$vuetify.auth.cancelOrSubmitCredentials")}}
+              </p>
+            </v-alert>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn @click="onSubmitCredentials()">
+              {{$vuetify.lang.t("$vuetify.auth.submit")}}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-card>
+    <v-card>
+      <v-card-title >
+        <div class="title">Installable VSM Modules</div>
+        <v-btn icon @click="getCredentials()">
+            <v-icon>refresh</v-icon>
+        </v-btn>
+        <v-spacer/>
+        <v-btn @click="onVsmInstall()"
+            color="warning" :disabled="!vsmSelected.length">
+            {{$vuetify.lang.t("$vuetify.auth.install")}}
+        </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <v-data-table
+            v-model="vsmSelected"
+            :headers="vsmHeaders"
+            :items="vsmObjects"
+            class="elevation-1"
+            dense
+            :show-select="true"
+            :single-select="false"
+            item-key="Key"
+          >
+        </v-data-table>
+        <v-alert type="info" :value="isVsmRestoring">
+            {{$vuetify.lang.t("$vuetify.auth.installingVsmModules")}}
+        </v-alert>
+        <v-alert type="error" v-if="vsmRestoreError" :value="true">
+            {{vsmRestoreError.message}}
+        </v-alert>
+      </v-card-text>
+    </v-card>
+    <v-card v-if="vsmFactoryTask">
+      <v-card-title>
+        <div class="title">
+          {{$vuetify.lang.t("$vuetify.auth.vsmFactory")}}
+        </div>
+        <v-spacer/>
+        <div v-if="vsmFactoryTask.isActive">
+          <v-progress-circular color="success" 
+           size="50"
+           :value="vsmFactoryProgress" >
+          {{vsmFactoryProgress.toFixed(0)}}%
+          </v-progress-circular>
+        </div><div v-else>
+          {{$vuetify.lang.t("$vuetify.auth.idle")}}
+        </div>
+        <v-spacer/>
+        <v-dialog v-model="vsmFactoryDialog" persistent>
+          <template v-slot:activator="{ on }">
+            <v-btn color="deep-orange darken-3" dark v-on="on" >
+              {{$vuetify.lang.t("$vuetify.auth.buildVsm")}}
+            </v-btn>
+          </template>
+          <v-card> <!-- BuildVSM -->
+            <v-card-title class="deep-orange darken-3">
+              <div class="title">
+                {{$vuetify.lang.t("$vuetify.auth.buildVsm")}}
+              </div>
+              <v-spacer/>
+              <v-btn @click="vsmFactoryDialog = false">
+                {{$vuetify.lang.t("$vuetify.auth.cancel")}}
+              </v-btn>
             </v-card-title>
             <v-card-text>
-                <v-data-table
-                    v-model="vsmSelected"
-                    :headers="vsmHeaders"
-                    :items="vsmObjects"
-                    class="elevation-1"
-                    dense
-                    :show-select="true"
-                    :single-select="false"
-                    item-key="Key"
-                  >
-                </v-data-table>
-                <v-alert type="info" :value="isVsmRestoring">
-                    Installing selected VSM modules...
-                </v-alert>
-                <v-alert type="error" v-if="vsmRestoreError" :value="true">
-                    {{vsmRestoreError.message}}
-                </v-alert>
+              <div>
+                {{$vuetify.lang.t("$vuetify.auth.vsmBuildIntro")}}
+              </div>
+              <div class="vsm-row">
+                <v-radio-group label="Suttas" v-model="vsmCreate.maxSuttas">
+                    <v-radio label="All" value="0"/>
+                    <v-radio label="1" value="1"/>
+                    <v-radio label="5" value="5"/>
+                    <v-radio label="10" value="10"/>
+                    <v-radio label="50" value="50"/>
+                    <v-radio label="100" value="100"/>
+                    <v-radio label="150" value="150"/>
+                    <v-radio label="200" value="200"/>
+                </v-radio-group>
+                <v-radio-group 
+                  label="Nikaya" 
+                  v-model="vsmCreate.nikaya">
+                  <v-radio label="Anguttara" value="an"/>
+                  <v-radio label="Digha" value="dn"/>
+                  <v-radio label="Khuddhaka" value="kn"/>
+                  <v-radio label="Majjhima" value="mn"/>
+                  <v-radio label="Saṁyutta" value="sn"/>
+                </v-radio-group>
+                <v-radio-group 
+                  :label="$vuetify.lang.t('$vuetify.auth.language')"
+                  v-model="vsmCreate.lang">
+                  <v-radio label="English" value="en"/>
+                  <v-radio label="Pali" value="pli"/>
+                </v-radio-group>
+                <v-radio-group 
+                  :label="$vuetify.lang.t('$vuetify.auth.author')"
+                  v-model="vsmCreate.author">
+                  <v-radio label="Sujato/Mahasangiti" value="sujato"/>
+                </v-radio-group>
+                <v-radio-group 
+                  :label="$vuetify.lang.t('$vuetify.auth.voice')"
+                  v-model="vsmCreate.voice">
+                  <v-radio label="Aditi (hi-IN)" value="aditi"
+                      v-show="vsmCreate.lang==='pli'" />
+                  <v-radio label="Amy (en-GB)" value="amy"
+                      v-show="vsmCreate.lang==='en'" />
+                  <v-radio label="Matthew (en-US)" value="matthew"
+                      v-show="vsmCreate.lang==='en'" />
+                  <v-radio label="Raveena (en-IN)" value="raveena"
+                      v-show="vsmCreate.lang==='en'" />
+                  <v-radio label="Russell (en-AU)" value="russell"
+                      v-show="vsmCreate.lang==='en'" />
+                  <v-radio label="Sujato (en, pli)" value="sujato" 
+                      :disabled="true" />
+                </v-radio-group>
+              </div>
+              <v-card-actions>
+                  <v-spacer/>
+                  <v-btn :disabled="!isVsmCreate"
+                      @click="onVsmCreate()">
+                      {{$vuetify.lang.t("$vuetify.auth.create")}}
+                  </v-btn>
+              </v-card-actions>
+              <v-alert type="error" v-if="vsmCreateError" :value="true">
+                  {{$vuetify.lang.t("$vuetify.auth.vsmBuildFailed")}}
+                  {{vsmCreateError.message}}
+              </v-alert>
             </v-card-text>
-        </v-card>
-        <v-card v-if="vsmFactoryTask">
-            <v-card-title>
-                <div class="title">VSM Factory</div>
-                <v-spacer/>
-                <div v-if="vsmFactoryTask.isActive">
-                    <v-progress-circular color="success" 
-                         size="50"
-                         :value="vsmFactoryProgress" >
-                        {{vsmFactoryProgress.toFixed(0)}}%
-                    </v-progress-circular>
-                </div><div v-else>
-                    Idle
-                </div>
-                <v-spacer/>
-                <v-dialog v-model="vsmFactoryDialog" persistent>
-                    <template v-slot:activator="{ on }">
-                        <v-btn color="deep-orange darken-3" dark v-on="on" >
-                            Build VSM </v-btn>
-                     </template>
-                    <v-card>
-                        <v-card-title class="deep-orange darken-3">
-                            <div class="title">Build Voice Sound Module (VSM)</div>
-                            <v-spacer/>
-                            <v-btn @click="vsmFactoryDialog = false">
-                                Cancel
-                            </v-btn>
-                        </v-card-title>
-                        <v-card-text>
-                            Building a VSM takes a long time. For testing, choose fewer suttas.
-                            <div class="vsm-row">
-                                <v-radio-group label="Suttas" v-model="vsmCreate.maxSuttas">
-                                    <v-radio label="All" value="0"/>
-                                    <v-radio label="1" value="1"/>
-                                    <v-radio label="5" value="5"/>
-                                    <v-radio label="10" value="10"/>
-                                    <v-radio label="50" value="50"/>
-                                    <v-radio label="100" value="100"/>
-                                    <v-radio label="150" value="150"/>
-                                    <v-radio label="200" value="200"/>
-                                </v-radio-group>
-                                <v-radio-group label="Nikaya" v-model="vsmCreate.nikaya">
-                                    <v-radio label="Anguttara" value="an"/>
-                                    <v-radio label="Digha" value="dn"/>
-                                    <v-radio label="Khuddhaka" value="kn"/>
-                                    <v-radio label="Majjhima" value="mn"/>
-                                    <v-radio label="Saṁyutta" value="sn"/>
-                                </v-radio-group>
-                                <v-radio-group label="Language" v-model="vsmCreate.lang">
-                                    <v-radio label="English" value="en"/>
-                                    <v-radio label="Pali" value="pli"/>
-                                </v-radio-group>
-                                <v-radio-group label="Author" v-model="vsmCreate.author">
-                                    <v-radio label="Sujato/Mahasangiti" value="sujato"/>
-                                </v-radio-group>
-                                <v-radio-group label="Voice" v-model="vsmCreate.voice">
-                                    <v-radio label="Aditi (hi-IN)" value="aditi"
-                                        v-show="vsmCreate.lang==='pli'" />
-                                    <v-radio label="Amy (en-GB)" value="amy"
-                                        v-show="vsmCreate.lang==='en'" />
-                                    <v-radio label="Raveena (en-IN)" value="raveena"
-                                        v-show="vsmCreate.lang==='en'" />
-                                    <v-radio label="Russell (en-AU)" value="russell"
-                                        v-show="vsmCreate.lang==='en'" />
-                                    <v-radio label="Sujato (en, pli)" value="sujato" 
-                                        :disabled="true" />
-                                </v-radio-group>
-                            </div>
-                            <v-card-actions>
-                                <v-spacer/>
-                                <v-btn :disabled="!isVsmCreate"
-                                    @click="onVsmCreate()">
-                                    Create
-                                </v-btn>
-                            </v-card-actions>
-                            <v-alert type="error" v-if="vsmCreateError" :value="true">
-                                VSM BUILD FAILED: {{vsmCreateError.message}}
-                            </v-alert>
-                        </v-card-text>
-                    </v-card>
-                </v-dialog>
-            </v-card-title>
-            <v-card-text>
-                <table class='vsm-cred-table'>
-                <tr><th>summary:</th> <td>{{vsmFactoryTask.summary}} </td> </tr>
-                <tr><th>started:</th>
-                    <td>{{new Date(vsmFactoryTask.started).toLocaleString()}}</td>
-                </tr>
-                <tr><th>lastActive:</th>
-                    <td>{{new Date(vsmFactoryTask.lastActive).toLocaleString()}}
-                        (started +
-                        {{(vsmFactoryTask.msActive/1000).toFixed(0)}} seconds)
-                    </td>
-                </tr>
-                </table>
-                <v-alert type="error" v-if="vsmFactoryTask.error" :value="true">
-                    <h3>VSM Build Failed</h3>
-                    {{vsmFactoryTask.error}}
-                </v-alert>
-            </v-card-text>
-        </v-card>
-
-    </v-sheet>
+          </v-card> <!-- BuildVSM -->
+        </v-dialog> <!-- VSMFactoryDialog -->
+      </v-card-title>
+      <v-card-text>
+        <table class='vsm-cred-table'>
+          <tr>
+            <th>{{$vuetify.lang.t("$vuetify.auth.summary")}}</th> 
+            <td>{{vsmFactoryTask.summary}} </td> 
+          </tr>
+          <tr>
+            <th>{{$vuetify.lang.t("$vuetify.auth.started")}}</th> 
+            <td>{{new Date(vsmFactoryTask.started).toLocaleString()}}</td>
+          </tr>
+          <tr>
+            <th>{{$vuetify.lang.t("$vuetify.auth.lastActive")}}</th> 
+            <td>{{vsmFactoryTask.summary}} </td> 
+            <td>{{new Date(vsmFactoryTask.lastActive).toLocaleString()}}
+              (started +
+              {{(vsmFactoryTask.msActive/1000).toFixed(0)}} 
+              {{$vuetify.lang.t("$vuetify.auth.seconds")}})
+            </td>
+          </tr>
+        </table>
+        <v-alert type="error" v-if="vsmFactoryTask.error" :value="true">
+          <h3>
+            {{$vuetify.lang.t('$vuetify.auth.vsmBuildFailed')}}
+          </h3>
+          {{vsmFactoryTask.error}}
+        </v-alert>
+      </v-card-text>
+    </v-card>
+  </v-sheet>
 </template>
 
 <script>
@@ -372,16 +419,16 @@ export default {
         },
         vsmHeaders() {
             return [{
-                text: 'VSM Module',
+                text: this.$vuetify.lang.t("$vuetify.auth.vsmModule"),
                 value: 'Key',
             },{
-                text: 'Installed',
+                text: this.$vuetify.lang.t("$vuetify.auth.installed"),
                 value: 'installed',
             },{
-                text: 'Size',
+                text: this.$vuetify.lang.t("$vuetify.auth.vsmSize"),
                 value: 'Size',
             },{
-                text: 'ETag',
+                text: this.$vuetify.lang.t("$vuetify.auth.eTag"),
                 value: 'ETag',
             }];
         },

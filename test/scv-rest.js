@@ -915,7 +915,7 @@
             should(res.statusCode).equal(200);
             var voices = res.body;
             should.deepEqual(voices.map(v=>v.name), [
-                'Amy', 'Russell', 'Raveena', 'sujato_en', // en voices first
+                'Amy', 'Russell', 'Raveena', 'Matthew', 'sujato_en', // en voices first
                 'Vicki',
                 'Aditi', 'sujato_pli', // pli voices last
             ])
@@ -931,7 +931,7 @@
             should(res.statusCode).equal(200);
             var voices = res.body;
             should.deepEqual(voices.map(v=>v.name), [
-                'Amy', 'Russell', 'Raveena', 'sujato_en', // en voices first
+                'Amy', 'Russell', 'Raveena', 'Matthew', 'sujato_en', // en voices first
                 'Aditi', 'sujato_pli', // pli voices last
             ])
 

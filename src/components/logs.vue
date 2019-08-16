@@ -1,35 +1,37 @@
 <template>
-    <v-sheet style="border-top:3px solid #eee" light>
-        <v-card >
-            <v-card-title>
-                <div class="title">Voice Server Logs</div>
-            </v-card-title>
-            <v-card-text>
-                <v-data-table
-                    :headers="headers"
-                    :items="logs"
-                    class="elevation-1"
-                    dense
-                    sort-by=""
-                  >
-                    <template v-slot:items="props">
-                      <th class="text-left">
-                        <a @click="getLog(props.item.name)">{{ props.item.name }}</a>
-                    </th>
-                      <td class="text-left">{{ props.item.size }}</td>
-                      <td class="text-left">{{ props.item.ctime }}</td>
-                      <td class="text-left">{{ props.item.mtime }}</td>
-                    </template>
-                  </v-data-table>
-            </v-card-text>
-        </v-card>
-        <v-card v-if="iLog != null">
-            <v-card-title class="title">{{logs[iLog].name}}</v-card-title>
-            <v-card-text>
-                <pre class="scv-log" >{{logs[iLog].log}}</pre>
-            </v-card-text>
-        </v-card>
-    </v-sheet>
+  <v-sheet style="border-top:3px solid #eee" light>
+    <v-card >
+      <v-card-title>
+          <div class="title">
+              {{$vuetify.lang.t("$vuetify.auth.voiceServerLogs")}}
+          </div>
+      </v-card-title>
+      <v-card-text>
+        <v-data-table
+            :headers="headers"
+            :items="logs"
+            class="elevation-1"
+            dense
+            sort-by=""
+          >
+          <template v-slot:items="props">
+            <th class="text-left">
+                <a @click="getLog(props.item.name)">{{ props.item.name }}</a>
+            </th>
+            <td class="text-left">{{ props.item.size }}</td>
+            <td class="text-left">{{ props.item.ctime }}</td>
+            <td class="text-left">{{ props.item.mtime }}</td>
+          </template>
+        </v-data-table>
+      </v-card-text>
+    </v-card>
+    <v-card v-if="iLog != null">
+      <v-card-title class="title">{{logs[iLog].name}}</v-card-title>
+      <v-card-text>
+        <pre class="scv-log" >{{logs[iLog].log}}</pre>
+      </v-card-text>
+    </v-card>
+  </v-sheet>
 </template>
 
 <script>
@@ -42,19 +44,6 @@ export default {
         return {
             user:{},
             logs: [],
-            headers: [{
-                text: 'Log file',
-                value: 'name',
-            },{
-                text: 'Size',
-                value: 'size',
-            },{
-                text: 'Created',
-                value: 'ctime',
-            },{
-                text: 'Last modified',
-                value: 'mtime',
-            }],
             iLog: null,
         }
     },
@@ -90,6 +79,21 @@ export default {
         this.getLogs();
     },
     computed: {
+        headers() {
+            return [{
+                text: this.$vuetify.lang.t('$vuetify.auth.logFile'),
+                value: 'name',
+            },{
+                text: this.$vuetify.lang.t('$vuetify.auth.logSize'),
+                value: 'size',
+            },{
+                text: this.$vuetify.lang.t('$vuetify.auth.logCreated'),
+                value: 'ctime',
+            },{
+                text: this.$vuetify.lang.t('$vuetify.auth.logLastModified'),
+                value: 'mtime',
+            }];
+        },
         gscv() {
             return this.$root.$data;
         },

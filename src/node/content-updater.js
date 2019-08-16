@@ -64,8 +64,19 @@
                 task && (task.summary = cmd);
                 exec(safeCmd, opts, (err,stdout,stderr) => {
                     if (err) {
-                        logger.log(stderr);
-                        reject(err.message);
+                        stderr = stderr.toString();
+                        if (/invalid username or password/iu.test(stderr)) {
+                            var msg = `Invalid Personal Access Token`;
+                            logger.warn(`ContentUpdater.git("${cmd}") ${msg}`);
+                            var e = new Error(msg);
+                            task && (task.error = e);
+                            reject(e);
+                        } else {
+                            logger.warn(`ContentUpdater.git("${cmd}") E2`);
+                            logger.warn(stderr);
+                            logger.warn(err.stack);
+                            reject(err);
+                        }
                     } else {
                         logger.info(`ContentUpdater.update() git:${stdout}`);
                         resolve(stdout.trim()) || '';
@@ -119,7 +130,8 @@
 
                     resolve(results);
                 } catch(e) {
-                    logger.warn(e);
+                    logger.warn(`ContentUpdater.update() failed ${e.message}`);
+                    logger.warn(e.stack);
                     task.error = e;
                     reject(e);
                 } })();

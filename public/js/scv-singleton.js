@@ -82,12 +82,12 @@
                     token: null,
                 },
             });
-            Object.defineProperty(this, "vueRoot", {
-                writable: true,
-                value: null,
-            });
             Object.defineProperty(this, "g", {
                 value: g,
+            });
+            Object.defineProperty(this, "vueRoot", {
+                writable: true,
+                value: g.vueRoot,
             });
             Object.defineProperty(this, "title", {
                 writable: true,
@@ -271,18 +271,26 @@
                 ? Math.ceil(seconds / 60)
                 : Math.trunc(seconds / 60);
             seconds = hours ? 0 : seconds - minutes * 60;
+            var $vuetify = this.vueRoot.$vuetify;
+            var tSeconds = $vuetify.lang.t("$vuetify.scv.seconds");
+            var tMinutes = $vuetify.lang.t("$vuetify.scv.minutes");
+            var tHours = $vuetify.lang.t("$vuetify.scv.hours");
+            var tSecondsUnits = $vuetify.lang.t("$vuetify.scv.secondsUnits");
+            var tMinutesUnits = $vuetify.lang.t("$vuetify.scv.minutesUnits");
+            var tHoursUnits = $vuetify.lang.t("$vuetify.scv.hoursUnits");
+            var tAnd = $vuetify.lang.t("$vuetify.scv.and");
             if (hours) {
-                var display =  `${hours}h ${minutes}m`; 
+                var display =  `${hours}${tHoursUnits} ${minutes}${tMinutesUnits}`; 
                 var aria = `${hours} hours and ${minutes} minutes`;
             } else if (minutes) {
-                var display =  `${minutes}m ${seconds}s`;
-                var aria = `${minutes} minutes and ${seconds} seconds`;
+                var display = `${minutes}${tMinutesUnits} ${seconds}${tSecondsUnits}`;
+                var aria = `${minutes} ${tMinutes} ${tAnd} ${seconds} ${tSeconds}`;
             } else if (seconds) {
-                var display =  `${seconds}s`;
-                var aria = `${seconds} seconds`;
+                var display =  `${seconds}${tSecondsUnits}`;
+                var aria = `${seconds} ${tSeconds}`;
             } else {
                 var display = `--`;
-                var aria = `0 seconds`;
+                var aria = `0 ${tSeconds}`;
             }
             return {
                 totalSeconds,
