@@ -149,4 +149,20 @@ export default {
     yesDeleteUser: 'Yes. Delete user: ',
 
   },
+  scv: {
+    and: "and",
+    ariaDownload: "download",
+    ariaInspireMe: "inspire me",
+    ariaMore: "more",
+    exploreBuddhasTeaching: "Explore the Buddha's Teaching",
+    hours: "hours",
+    hoursUnits: "h",
+    inspireMe: "Inspire Me!",
+    minutes: "minutes",
+    minutesUnits: "m",
+    search: "Search",
+    seconds: "seconds",
+    secondsUnits: "s",
+
+  },
 }

@@ -53,7 +53,6 @@ style="width:100%; margin-top:0"/>
                 {{duration(stats.seconds).display}}
             </div>
             <div class="scv-more" >
-            <!-- i18n -->
                 <v-btn icon
                     id="more-menu-btn"
                     @click="clickMore()"
@@ -64,6 +63,7 @@ style="width:100%; margin-top:0"/>
                     class="scv-icon-btn" :style="cssProps" small>
                     <v-icon>more_vert</v-icon>
                 </v-btn>
+            <!-- i18n -->
                 <ul class="scv-more-menu" role="menu"
                     id = "more-menu"
                     ref="ref-more-menu"

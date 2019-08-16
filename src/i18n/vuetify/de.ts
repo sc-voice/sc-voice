@@ -150,18 +150,19 @@ export default {
 
   },
   scv: {
+    and: "and",
     ariaDownload: "download",
-    exploreBuddhasTeaching: "Explore the Buddha's Teaching",
-    search: "Search",
-    inspireMe: "Inspire Me!",
     ariaInspireMe: "inspire me",
-    seconds: "seconds",
-    secondsUnits: "s",
-    minutes: "minutes",
-    minutesUnits: "m",
+    ariaMore: "more",
+    exploreBuddhasTeaching: "Explore the Buddha's Teaching",
     hours: "hours",
     hoursUnits: "h",
-    and: "and",
-    ariaMore: "more",
+    inspireMe: "Inspire Me!",
+    minutes: "minutes",
+    minutesUnits: "m",
+    search: "Search",
+    seconds: "seconds",
+    secondsUnits: "s",
+
   },
 }
