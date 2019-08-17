@@ -166,6 +166,8 @@ export default {
     ariaOpensInNewTab: "A_SOURCE öffnet in neuem Tab",
     ariaSuttaCentralNewTab: "suttacentral.net öffnet in neuem Tab",
     ariaDismissError: "dismiss error",
+    ariaFoundSuttas: "A_RESULTCOUNT suttas gefunden A_DURATION",
+    foundSuttas: "A_RESULTCOUNT suttas gefunden",
 
   },
 }

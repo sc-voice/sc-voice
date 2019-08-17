@@ -154,11 +154,13 @@ style="width:100%; margin-top:0"/>
             role="main"
             ref="refResults"
             aria-level="1"
-            :aria-label="`Found ${resultCount} sootas ${playlistDuration.aria}`"
-
+            :aria-label="ariaFoundSuttas(resultCount, playlistDuration.aria)"
             class='title pt-1 pb-1'>
-            Found {{resultCount}} suttas
-            ({{playlistDuration.display}})
+            <span aria-hidden=true>
+                {{$vuetify.lang.t('$vuetify.scv.foundSuttas')
+                    .replace(/A_RESULTCOUNT/,resultCount)}}
+                ({{playlistDuration.display}})
+            </span>
         </summary>
         <summary v-else
             role="main" ref="refResults"
@@ -881,6 +883,15 @@ export default {
             var tmplt = this.$vuetify.lang.t("$vuetify.scv.ariaOpensInNewTab");
             var text = tmplt.replace("A_SOURCE", source);
             return text;
+        },
+        ariaFoundSuttas(resultCount, duration) {
+            //:aria-label="`Found ${resultCount} sootas ${playlistDuration.aria}`"
+            var tmplt = this.$vuetify.lang.t("$vuetify.scv.ariaFoundSuttas");
+            var text = tmplt
+                .replace("A_RESULTCOUNT", resultCount)
+                .replace("A_DURATION", duration);
+            return text;
+
         },
     },
     computed: {
