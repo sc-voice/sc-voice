@@ -163,6 +163,9 @@ export default {
     search: "Search",
     seconds: "seconds",
     secondsUnits: "s",
+    ariaOpensInNewTab: "A_SOURCE öffnet in neuem Tab",
+    ariaSuttaCentralNewTab: "suttacentral.net öffnet in neuem Tab",
+    ariaDismissError: "dismiss error",
 
   },
 }

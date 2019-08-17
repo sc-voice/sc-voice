@@ -45,6 +45,7 @@ style="width:100%; margin-top:0"/>
                     :href="downloadUrl()"
                     @click="downloadClick()"
                     :aria-label="`${ariaDownload} ${resultId()}`"
+                    type="audio/mp3"
                     class="scv-icon-btn" :style="cssProps" small>
                     <v-icon>arrow_downward</v-icon>
                 </v-btn>
@@ -53,82 +54,81 @@ style="width:100%; margin-top:0"/>
                 {{duration(stats.seconds).display}}
             </div>
             <div class="scv-more" >
-                <v-btn icon
-                    id="more-menu-btn"
-                    @click="clickMore()"
-                    aria-haspopup="true"
-                    aria-controls="more-menu"
-                    :aria-label="$vuetify.lang.t('$vuetify.scv.ariaMore')"
-                    :aria-expanded="moreVisible"
-                    class="scv-icon-btn" :style="cssProps" small>
-                    <v-icon>more_vert</v-icon>
-                </v-btn>
-            <!-- i18n -->
-                <ul class="scv-more-menu" role="menu"
-                    id = "more-menu"
-                    ref="ref-more-menu"
-                    aria-labelledby="more-menu-btn"
-                    v-if="moreVisible"
-                    @focusin="focusMore(true)"
-                    @focusout="focusMore(false)"
-                    :aria-hidden="!moreVisible">
-                    <li class="" v-if="supportedAudio.length"
-                        v-for="(audio,i) in supportedAudio" 
-                        role="none"
-                        :key="`moreaudio${i}`" >
-                        <a class="scv-a" :href="audio.url" 
-                            :aria-label="`${audio.source} opens in a new tab`"
-                            role="menuitem"
-                            target="_blank">
-                            <span aria-hidden="true">
-                                <v-icon class="ml-2" small>headset</v-icon>
-                                {{audio.source}}
-                            </span>
-                        </a>
-                    </li>
-                    <li v-for="translation in suttaplex.translations"
-                        :key="translation.id"
-                        role="none"
-                        v-show="author_uid !== translation.author_uid">
-                        <a class="scv-a" :href="translationLink(translation)"
-                            role="menuitem"
-                            v-on:click="clickTranslation(translation,$event)">
-                            <v-icon class="ml-2" 
-                                style="color: #888"
-                                small>headset</v-icon>
-                            {{translation.author}}
-                            ({{translation.lang_name}})
-                        </a>
-                    </li>
-                    <li class="" v-if="unsupportedAudio.length"
-                        v-for="(audio,i) in unsupportedAudio" 
-                        role="none"
-                        :key="`moreaudio${i}`" >
-                        <a class="scv-a" :href="audio.url" 
-                            role="menuitem"
-                            :aria-label="`${audio.source} opens in a new tab`"
-                            target="_blank">
-                            <span aria-hidden="true">
-                                <v-icon class="ml-2" style="color:#888" small>
-                                    format_list_bulleted
-                                </v-icon>
-                                <i>{{audio.source}}</i>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="" role="none" >
-                        <a class="scv-a" 
-                            :href="`https://suttacentral.net/${sutta_uid}`"
-                            role="menuitem"
-                            :aria-label="`sootacentral.net opens in a new tab`"
-                            target="_blank">
-                            <span aria-hidden="true">
-                                <v-icon class="ml-2" small>notes</v-icon>
-                                <i>SuttaCentral.net</i>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
+              <v-btn icon
+                  id="more-menu-btn"
+                  @click="clickMore()"
+                  aria-haspopup="true"
+                  aria-controls="more-menu"
+                  :aria-label="$vuetify.lang.t('$vuetify.scv.ariaMore')"
+                  :aria-expanded="moreVisible"
+                  class="scv-icon-btn" :style="cssProps" small>
+                  <v-icon>more_vert</v-icon>
+              </v-btn>
+              <ul class="scv-more-menu" role="menu"
+                id = "more-menu"
+                ref="ref-more-menu"
+                aria-labelledby="more-menu-btn"
+                v-if="moreVisible"
+                @focusin="focusMore(true)"
+                @focusout="focusMore(false)"
+                :aria-hidden="!moreVisible">
+                <li class="" v-if="supportedAudio.length"
+                    v-for="(audio,i) in supportedAudio" 
+                    role="none"
+                    :key="`moreaudio${i}`" >
+                    <a class="scv-a" :href="audio.url" 
+                        :aria-label="ariaOpensInNewTab(audio.source)"
+                        role="menuitem"
+                        target="_blank">
+                        <span aria-hidden="true">
+                            <v-icon class="ml-2" small>headset</v-icon>
+                            {{audio.source}}
+                        </span>
+                    </a>
+                </li>
+                <li v-for="translation in suttaplex.translations"
+                    :key="translation.id"
+                    role="none"
+                    v-show="author_uid !== translation.author_uid">
+                    <a class="scv-a" :href="translationLink(translation)"
+                        role="menuitem"
+                        v-on:click="clickTranslation(translation,$event)">
+                        <v-icon class="ml-2" 
+                            style="color: #888"
+                            small>headset</v-icon>
+                        {{translation.author}}
+                        ({{translation.lang_name}})
+                    </a>
+                </li>
+                <li class="" v-if="unsupportedAudio.length"
+                    v-for="(audio,i) in unsupportedAudio" 
+                    role="none"
+                    :key="`moreaudio${i}`" >
+                    <a class="scv-a" :href="audio.url" 
+                        role="menuitem"
+                        :aria-label="ariaOpensInNewTab(audio.source)"
+                        target="_blank">
+                        <span aria-hidden="true">
+                            <v-icon class="ml-2" style="color:#888" small>
+                                format_list_bulleted
+                            </v-icon>
+                            <i>{{audio.source}}</i>
+                        </span>
+                    </a>
+                </li>
+                <li class="" role="none" >
+                  <a class="scv-a" 
+                    :href="`https://suttacentral.net/${sutta_uid}`"
+                    role="menuitem"
+                    :aria-label="$vuetify.lang.t('$vuetify.scv.ariaSuttaCentralNewTab')"
+                    target="_blank">
+                    <span aria-hidden="true">
+                      <v-icon class="ml-2" small>notes</v-icon>
+                      <i>SuttaCentral.net</i>
+                    </span>
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -144,7 +144,8 @@ style="width:100%; margin-top:0"/>
             :httpError="error.search.http" />
           <v-btn icon @click="error.search=null"
             class="scv-icon-btn" :style="cssProps"
-            aria-label="Dismiss Error">
+            :aria-label="$vuetify.lang.t('$vuetify.scv.ariaDismissError')"
+            >
             <v-icon>clear</v-icon>
           </v-btn>
       </div>
@@ -154,6 +155,7 @@ style="width:100%; margin-top:0"/>
             ref="refResults"
             aria-level="1"
             :aria-label="`Found ${resultCount} sootas ${playlistDuration.aria}`"
+
             class='title pt-1 pb-1'>
             Found {{resultCount}} suttas
             ({{playlistDuration.display}})
@@ -174,6 +176,7 @@ style="width:100%; margin-top:0"/>
                 :href="downloadUrl(search)"
                 v-show="playlistDuration.totalSeconds < 3*3600"
                 @click="downloadClick(search)"
+                type="audio/mp3"
                 class="scv-icon-btn" :style="cssProps" small>
                 <v-icon>arrow_downward</v-icon>
             </v-btn>
@@ -872,8 +875,12 @@ export default {
         },
         ariaPlaySutta(resultId, seconds) {
             var result = `play ${resultId}. ${this.duration(seconds).aria}`;
-            console.log(`dbg ariaPlaySutta ${seconds}`, result);
             return result;
+        },
+        ariaOpensInNewTab(source) {
+            var tmplt = this.$vuetify.lang.t("$vuetify.scv.ariaOpensInNewTab");
+            var text = tmplt.replace("A_SOURCE", source);
+            return text;
         },
     },
     computed: {
@@ -944,6 +951,7 @@ export default {
         },
         postDownloadFocus() {
             var vSearch = this.$refs.refSearch;
+            return vSearch && vSearch.$refs.input;
         },
         resultCount() {
             return this.searchResults && this.searchResults.results.length || 0;
