@@ -1,18 +1,18 @@
 export default {
-  close: 'Close',
+  close: 'Schließen',
   dataIterator: {
     pageText: '{0}-{1} von {2}',
-    noResultsText: 'Keine Elemente gefunden',
-    loadingText: 'Loading items...',
+    noResultsText: 'Keine Treffer gefunden',
+    loadingText: 'Laden...',
   },
   dataTable: {
     itemsPerPageText: 'Zeilen pro Seite:',
     ariaLabel: {
-      sortDescending: ': Sorted descending. Activate to remove sorting.',
-      sortAscending: ': Sorted ascending. Activate to sort descending.',
-      sortNone: ': Not sorted. Activate to sort ascending.',
+      sortDescending: ': Absteigend. Aktivieren, um Sortierung auszuschalten.',
+      sortAscending: ': Aufsteigend. Aktivieren für absteigende Sortierung.',
+      sortNone: ': Keine Sortierung. Aktivieren für aufsteigende Sortierung.',
     },
-    sortBy: 'Sort by',
+    sortBy: 'Sortieren nach',
   },
   dataFooter: {
     itemsPerPageText: 'Elemente pro Seite:',
