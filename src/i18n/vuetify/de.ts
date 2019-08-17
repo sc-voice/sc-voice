@@ -150,10 +150,10 @@ export default {
 
   },
   scv: {
-    and: "and",
-    ariaDownload: "download",
+    and: "und",
+    ariaDownload: "Herunterladen",
     ariaInspireMe: "inspire me",
-    ariaMore: "more",
+    ariaMore: "Mehr",
     exploreBuddhasTeaching: "Explore the Buddha's Teaching",
     hours: "Stunden",
     hoursUnits: "h",
