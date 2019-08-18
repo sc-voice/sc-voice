@@ -436,16 +436,15 @@ export default {
         downloadClick(search) {
             var elt = this.$refs['refScvDownloader'];
             console.log(`downloading:${this.downloadUrl(search)}`, elt);
-            elt && elt.update('Downloading:');
+            var downloading = this.$vuetify.lang.t('$vuetify.scv.downloading');
+            var downloadComplete = this.$vuetify.lang.t('$vuetify.scv.downloadComplete');
+            var downloadTimeout = this.$vuetify.lang.t('$vuetify.scv.downloadTimeout');
+            elt && elt.update(downloading);
             this.startWaiting({
                 cookie: 'download-date',
-                onCookieChange: () => {
-                    elt && elt.update('Download completed:');
-                },
+                onCookieChange: () => elt && elt.update(downloadComplete),
                 timeoutSec: 60,
-                onTimeout: () => {
-                    elt && elt.update('ERROR: Download timed out:');
-                },
+                onTimeout: () => elt && elt.update(downloadTimeout),
             });
         },
         clear() {

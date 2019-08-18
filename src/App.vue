@@ -81,14 +81,16 @@
                     </v-radio-group>
                 </div>
                 <div class="subheading scv-settings-subtitle">Translation</div>
-                <v-radio-group v-model="gscv.lang"
+                <div class="scv-settings">
+                  <v-radio-group v-model="gscv.lang"
                     @change="gscv.changed('lang')"
                     column>
                    <v-radio v-for="lang in gscv.languages"
                      :disabled="lang.disabled"
                      :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
                      </v-radio>
-                </v-radio-group>
+                  </v-radio-group>
+                </div>
             </details>
             <details class="scv-dialog" >
                 <summary class="title scv-settings-title">Reader</summary>
@@ -172,8 +174,11 @@
       <div style="margin-top:-0.35em" >
           <a :href="searchUrl('the dark bound for light')"
             class="scv-a"
-            aria-label="dedicated to the dark bound for light">
-              To <i>the dark bound for light</i>
+            :aria-label="$vuetify.lang.t('$vuetify.scv.ariaDedicated')"
+            >
+              To <i>
+              {{$vuetify.lang.t('$vuetify.scv.dedicated')}}
+              </i>
           </a>
       </div>
       <v-spacer/>

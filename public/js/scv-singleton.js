@@ -267,31 +267,28 @@
             var seconds = totalSeconds;
             var hours = Math.trunc(seconds / 3600);
             seconds -= hours * 3600;
-            var minutes = hours 
-                ? Math.ceil(seconds / 60)
-                : Math.trunc(seconds / 60);
-            seconds = hours ? 0 : seconds - minutes * 60;
+            var minutes = Math.trunc(seconds / 60);
+            seconds -= minutes * 60;
             var $vuetify = this.vueRoot.$vuetify;
-            var tSeconds = $vuetify.lang.t("$vuetify.scv.seconds");
-            var tMinutes = $vuetify.lang.t("$vuetify.scv.minutes");
-            var tHours = $vuetify.lang.t("$vuetify.scv.hours");
-            var tSecondsUnits = $vuetify.lang.t("$vuetify.scv.secondsUnits");
-            var tMinutesUnits = $vuetify.lang.t("$vuetify.scv.minutesUnits");
-            var tHoursUnits = $vuetify.lang.t("$vuetify.scv.hoursUnits");
-            var tAnd = $vuetify.lang.t("$vuetify.scv.and");
             if (hours) {
-                var display =  `${hours}${tHoursUnits} ${minutes}${tMinutesUnits}`; 
-                var aria = `${hours} hours and ${minutes} minutes`;
+                var tDisplay = $vuetify.lang.t('$vuetify.scv.HHMM');
+                var tAria = $vuetify.lang.t('$vuetify.scv.ariaHHMM');
             } else if (minutes) {
-                var display = `${minutes}${tMinutesUnits} ${seconds}${tSecondsUnits}`;
-                var aria = `${minutes} ${tMinutes} ${tAnd} ${seconds} ${tSeconds}`;
-            } else if (seconds) {
-                var display =  `${seconds}${tSecondsUnits}`;
-                var aria = `${seconds} ${tSeconds}`;
+                var tDisplay = $vuetify.lang.t('$vuetify.scv.MMSS');
+                var tAria = $vuetify.lang.t('$vuetify.scv.ariaMMSS');
             } else {
-                var display = `--`;
-                var aria = `0 ${tSeconds}`;
+                var tDisplay = $vuetify.lang.t('$vuetify.scv.seconds');
+                var tAria = $vuetify.lang.t('$vuetify.scv.ariaSeconds');
             }
+            var display = tDisplay
+                .replace(/A_HOURS/, hours)
+                .replace(/A_MINUTES/, minutes)
+                .replace(/A_SECONDS/, seconds);
+            var aria = tAria
+                .replace(/A_HOURS/, hours)
+                .replace(/A_MINUTES/, minutes)
+                .replace(/A_SECONDS/, seconds);
+
             return {
                 totalSeconds,
                 hours,
@@ -344,7 +341,9 @@
                 var chars = 0;
                 var remCharsTot = this.charsRemaining(tracks, 0, 0);
                 Object.keys(remCharsTot).forEach(lang => {
-                    if (lang === 'pli') {
+                    if (lang === 'expanded') {
+                        // skip
+                    } else if (lang === 'pli') {
                         if (showPali) {
                             charsTot += remCharsTot[lang];
                             chars += remChars[lang];
@@ -354,8 +353,7 @@
                         chars += remChars[lang];
                     }
                 });
-                var secsRem = stats.seconds * chars / charsTot;
-                //console.log(`timeRemaining`, secsRem, stats, charsTot, chars);
+                var secsRem = charsTot ? stats.seconds * chars / charsTot : 0;
                 Object.assign(result, this.durationDisplay(secsRem));
             } else {
                 console.log(`timeRemaining (DEPRECATED)`, remChars);

@@ -13,7 +13,7 @@
                 <v-btn id="btnSettings" 
                     icon small dark 
                     class="scv-icon-btn" :style="cssProps"
-                    aria-label="Cloze"
+                    :aria-label="$vuetify.lang.t('$vuetify.scv.ariaClose')"
                     @click="dismiss()"
                     @blur="onblur()"
                     >

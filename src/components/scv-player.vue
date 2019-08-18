@@ -1,96 +1,97 @@
 <template>
-    <v-dialog persistent v-model="visible"
-        max-width="38em" dark class="scv-player-section">
-        <v-card>
-            <audio ref="refIntroSound" preload=auto v-if="introAudioUrl">
-                <source type="audio/mp3" :src="introAudioUrl" />
-                <p>Your browser doesn't support HTML5 audio</p>
-            </audio>
-            <v-card-text >
-                <div class="subheading pl-2 pb-2 text-center">{{title}}</div>
-                <div class="scv-player-nav">
-                    <v-btn icon class="scv-icon-btn" small
-                        style="border-color: #424242"
-                        ref="refPrevious"
-                        aria-label='Previous Section'
-                        @click="playTrack(iTrack-1)"
-                        @keydown.prevent="keydownPrevious($event)"
-                        :style='cssProps()'
-                        ><v-icon>fast_rewind</v-icon></v-btn>
-                    <div class="scv-timelapse">
-                        {{iTrack+1}} of {{section && this.tracks.length || "(n/a)"}} 
-                        &nbsp;
-                        ({{timeRemaining}})
-                    </div>
-                    <v-btn icon class="scv-icon-btn" small
-                        style="border-color: #424242"
-                        ref="refNext"
-                        aria-label='Next Section'
-                        @click="playTrack(iTrack+1)"
-                        :style='cssProps()'
-                        ><v-icon>fast_forward</v-icon></v-btn>
-                </div>
-                <div class="body-2 mt-1 text-center"> 
-                    {{section && section.title || "(n/a)"}} 
-                </div>
-                <v-slider thumb-label v-model="iSegment"
-                    ref="refSlider"
-                    v-if="refAudioPali || refAudioLang"
-                    :disabled="loading || !paused"
-                    always-dirty
-                    class="pl-4 pr-4"
-                    :label="`${iSegment+1}/${section && section.segments.length || '--'}`"
-                    inverse-label
-                    height="16"
-                    :max="section && section.segments.length-1 || 0"
-                />
-                <div v-if="showPali" :class="paliTextClass" :style="cssProps()">
-                    <div >{{paliText}}</div>
-                </div>
-                <div v-if="showTrans" :class="langTextClass" :style="cssProps()">
-                    <div >{{langText}}</div>
-                </div>
-            </v-card-text>
-            <v-card-actions class="ml-3 mr-3 pb-3">
-                <v-btn icon @click="clickPlayPause()" 
-                    ref="refPlay"
-                    class="scv-icon-btn" :style="cssProps()" small
-                    style="border-color: #424242"
-                    aria-label="Play">
-                    <v-icon v-if="loading">hourglass_empty</v-icon>
-                    <v-icon v-if="!loading && paused">play_arrow</v-icon>
-                    <v-icon v-if="!loading && !paused">pause</v-icon>
-                </v-btn>
-                <v-spacer/>
-                <div class="scv-player-scid">
-                    <div class="grey--text overline">SuttaCentral</div>
-                    <div>{{scid}}</div>
-                </div>
-                <v-spacer/>
-                <v-btn icon class="scv-icon-btn" small
-                    style="border-color: #424242"
-                    ref="refClose"
-                    :style='cssProps()'
-                    aria-label='cloze'
-                    @keydown.prevent="keydownClose($event)"
-                    @click="close()">
-                    <v-icon>close</v-icon>
-                </v-btn>
-            </v-card-actions>
-            <audio ref="refAudioPali">
-                <source type="audio/mp3" :src="audioSrc('pli')"/>
-                <p>Your browser doesn't support HTML5 audio</p>
-            </audio>
-            <audio ref="refAudioLang">
-                <source type="audio/mp3" :src="audioSrc(language)"/>
-                <p>Your browser doesn't support HTML5 audio</p>
-            </audio>
-            <audio ref="refProgressAudio">
-                <source type="audio/mp3" :src="progressSrc()"/>
-                <p>Your browser doesn't support HTML5 audio</p>
-            </audio>
-        </v-card>
-    </v-dialog>
+  <v-dialog persistent v-model="visible"
+    max-width="38em" dark class="scv-player-section">
+    <v-card>
+      <audio ref="refIntroSound" preload=auto v-if="introAudioUrl">
+        <source type="audio/mp3" :src="introAudioUrl" />
+        <p>{{$vuetify.lang.t('$vuetify.scv.noHTML5')}}</p>
+      </audio>
+      <v-card-text >
+        <div class="subheading pl-2 pb-2 text-center">{{title}}</div>
+        <div class="scv-player-nav">
+          <v-btn icon class="scv-icon-btn" small
+            style="border-color: #424242"
+            ref="refPrevious"
+            aria-label='Previous Section'
+            @click="playTrack(iTrack-1)"
+            @keydown.prevent="keydownPrevious($event)"
+            :style='cssProps()'
+            ><v-icon>fast_rewind</v-icon></v-btn>
+          <div class="scv-timelapse">
+            {{trackOfSection}}
+            &nbsp;
+            ({{timeRemaining}})
+          </div>
+          <v-btn icon class="scv-icon-btn" small
+            style="border-color: #424242"
+            ref="refNext"
+            aria-label='Next Section'
+            @click="playTrack(iTrack+1)"
+            :style='cssProps()'
+            ><v-icon>fast_forward</v-icon></v-btn>
+        </div>
+        <div class="body-2 mt-1 text-center"> 
+          {{section && section.title || "(n/a)"}} 
+        </div>
+        <v-slider thumb-label v-model="iSegment"
+          ref="refSlider"
+          v-if="refAudioPali || refAudioLang"
+          :disabled="loading || !paused"
+          always-dirty
+          class="pl-4 pr-4"
+          :label="`${iSegment+1}/${section && section.segments.length || '--'}`"
+          inverse-label
+          height="16"
+          :max="section && section.segments.length-1 || 0"
+        />
+        <div v-if="showPali" :class="paliTextClass" :style="cssProps()">
+          <div >{{paliText}}</div>
+        </div>
+        <div v-if="showTrans" :class="langTextClass" :style="cssProps()">
+          <div >{{langText}}</div>
+        </div>
+      </v-card-text>
+      <v-card-actions class="ml-3 mr-3 pb-3">
+        <v-btn icon @click="clickPlayPause()" 
+          ref="refPlay"
+          class="scv-icon-btn" :style="cssProps()" small
+          style="border-color: #424242"
+          :aria-label="$vuetify.lang.t('$vuetify.scv.ariaPlay')"
+          >
+          <v-icon v-if="loading">hourglass_empty</v-icon>
+          <v-icon v-if="!loading && paused">play_arrow</v-icon>
+          <v-icon v-if="!loading && !paused">pause</v-icon>
+        </v-btn>
+        <v-spacer/>
+        <div class="scv-player-scid">
+          <div class="grey--text overline">SuttaCentral</div>
+          <div>{{scid}}</div>
+        </div>
+        <v-spacer/>
+        <v-btn icon class="scv-icon-btn" small
+          style="border-color: #424242"
+          ref="refClose"
+          :style='cssProps()'
+          :aria-label="$vuetify.lang.t('$vuetify.scv.ariaClose')"
+          @keydown.prevent="keydownClose($event)"
+          @click="close()">
+          <v-icon>close</v-icon>
+        </v-btn>
+      </v-card-actions>
+      <audio ref="refAudioPali">
+        <source type="audio/mp3" :src="audioSrc('pli')"/>
+        <p>{{$vuetify.lang.t('$vuetify.scv.noHTML5')}}</p>
+      </audio>
+      <audio ref="refAudioLang">
+        <source type="audio/mp3" :src="audioSrc(language)"/>
+        <p>{{$vuetify.lang.t('$vuetify.scv.noHTML5')}}</p>
+      </audio>
+      <audio ref="refProgressAudio">
+        <source type="audio/mp3" :src="progressSrc()"/>
+        <p>{{$vuetify.lang.t('$vuetify.scv.noHTML5')}}</p>
+      </audio>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -223,7 +224,7 @@ export default {
                     (stats.text.pli || 0) + segment.pli.length);
             }
         },
-        onEndLang(event) {
+        onEndLang(event) { // eslint-disable-line no-unused-vars
             var {
                 paused,
                 iSegment,
@@ -231,7 +232,6 @@ export default {
                 section,
                 iTrack,
             } = this;
-            console.log(`dbg onEndLang iSegment`, iSegment, event);
             this.setTextClass();
             if (!paused && iSegment < section.segments.length-1) {
                 this.paused = true;
@@ -471,6 +471,22 @@ export default {
         },
     },
     computed: {
+        trackOfSection() {
+            var {
+                iTrack,
+                section,
+                tracks,
+                $vuetify,
+            } = this;
+            var tmplt = $vuetify.lang.t('$vuetify.scv.trackOfSection');
+            var text = '--';
+            if (section && tracks.length) {
+                text = tmplt
+                    .replace(/A_TRACK/, iTrack+1)
+                    .replace(/A_TRACKS/, tracks.length);
+            }
+            return text;
+        },
         title() {
             return this.track().title;
         },
