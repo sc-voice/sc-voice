@@ -142,7 +142,7 @@ export default {
     vsmBuildIntro: 'Ein VSM zu erstellen dauert lange. Zum Testen weniger Sutta auswählen.',
     vsmFactory: 'VSM-Werkstatt',
     vsmModule: 'VSM-Modul',
-    vsmS3Credentials: 'VSM S3 Zugangsdaten',
+    vsmS3Credentials: 'VSM-S3-Zugangsdaten',
     vsmSize: 'Größe',
     vsm: 'VSM',
     yesDeleteMe: 'Ja. Mein Benutzerkonto löschen: ',
