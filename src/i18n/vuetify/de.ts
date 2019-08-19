@@ -56,7 +56,7 @@ export default {
     clearCache: 'Cache leeren',
     cleared: 'Geleert',
     confirmDeleteUser: 'Löschen des Benutzerkontos bestätigen.',
-    confirmPassword: 'Passwort bestätigen',
+    confirmPassword: 'Passwort wiederholen',
     content: 'Inhalt',
     contentUpdater: 'Inhalts-Aktualisierung',
     contentUpdaterError: 'Fehler bei Inhalts-Aktualisierung',
