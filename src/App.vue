@@ -202,7 +202,7 @@
             class="scv-a"
             :aria-label="$vuetify.lang.t('$vuetify.scv.ariaDedicated')"
             >
-              To <i>
+              <i>
               {{$vuetify.lang.t('$vuetify.scv.dedicated')}}
               </i>
           </a>
