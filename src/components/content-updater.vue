@@ -65,7 +65,7 @@
     <v-card v-if="contentUpdaterTask">
       <v-card-title>
         <div class="title">
-          {{$vuetify.lang.t('$vuetify.auth.contentUpdater')}}
+          {{$vuetify.lang.t('$vuetify.auth.contentUpdaterTask')}}
         </div>
         <v-spacer/>
         <div v-if="contentUpdaterTask.isActive">

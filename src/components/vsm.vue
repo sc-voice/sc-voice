@@ -2,7 +2,9 @@
   <v-sheet style="border-top:3px solid #eee" light>
     <v-card >
       <v-card-title>
-          <div class="title"> VSM S3 Credentials </div>
+          <div class="title"> 
+            {{$vuetify.lang.t('$vuetify.auth.vsmS3Credentials')}}
+          </div>
           <v-spacer/>
           <v-btn @click='onEditCredentials()' dark
               color="deep-orange darken-3">
@@ -99,7 +101,9 @@
     </v-card>
     <v-card>
       <v-card-title >
-        <div class="title">Installable VSM Modules</div>
+        <div class="title">
+            {{$vuetify.lang.t('$vuetify.auth.installableVsmModules')}}
+        </div>
         <v-btn icon @click="getCredentials()">
             <v-icon>refresh</v-icon>
         </v-btn>

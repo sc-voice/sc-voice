@@ -60,6 +60,7 @@ export default {
     content: 'Inhalt',
     contentUpdater: 'Inhalts-Aktualisierung',
     contentUpdaterTab: 'Inhalt',
+    contentUpdaterTask: 'Inhaltsaktualisierungdaemon',
     contentUpdaterError: 'Fehler bei Inhalts-Aktualisierung',
     contentUpdaterIntro: 'Vor jeder Freigabe Inhalt des Arbeitsservers aktualisieren:',
     contentUpdaterWarning: 'WARNUNG: Dieser Arbeitsgang kann Stunden dauern und möglicherweise nichts aktualisieren.',
