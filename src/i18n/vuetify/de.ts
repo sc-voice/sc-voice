@@ -170,7 +170,7 @@ export default {
     downloadComplete: "Herunterladen abgeschlossen:",
     downloading: "Herunterladen:",
     downloadTimeout: "Herunterladen Zeitüberschreitung:",
-    exploreBuddhasTeaching: "Erkunde die Lehren des Buddha",
+    exploreBuddhasTeaching: "Die Lehren des Buddha erkunden",
     foundSuttas: '"A_SEARCH" in A_RESULTCOUNT Suttas gefunden',
     HHMM: "A_HOURS h A_MINUTES m A_SECONDS s",
     inspireMe: "Gib mir einen Tipp!",
