@@ -199,6 +199,7 @@ export default {
     rootLanguage: "Quellsprache",
     transLanguage: "Sprache der Übersetzung",
     uiLanguage: "Sprache für Webseite",
+    reader: "Reader",
 
   },
 }

@@ -110,7 +110,9 @@
             </div>
           </details>
           <details class="scv-dialog" >
-            <summary class="title scv-settings-title">Reader</summary>
+            <summary class="title scv-settings-title">
+                {{$vuetify.lang.t('$vuetify.scv.reader')}}
+            </summary>
             <div class="scv-settings">
               <v-radio-group v-model="gscv.vnameTrans"
                   @change="gscv.changed('vnameTrans')"
