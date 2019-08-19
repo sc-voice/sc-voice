@@ -40,12 +40,6 @@
         <v-tab-item v-if="isAdmin">
             <logs/>
         </v-tab-item>
-        <v-tab v-if="isTranslator || isEditor"> 
-            {{ $vuetify.lang.t('$vuetify.auth.content') }}
-        </v-tab>
-        <v-tab-item v-if="isTranslator || isEditor">
-            Translator/Editor stuff goes here...
-        </v-tab-item>
     </v-tabs>
     <login/>
 </div>
