@@ -1,163 +1,191 @@
 <template>
   <v-app >
     <v-app-bar app flat dark 
-        color="grey darken-4"
-        aria-role="navigation">
-        <a :href="homeHref" @click="clickHome()"
-        aria-label="Soota Central Voice">
-        <img aria-hidden="true" class="pt-1"
-            style="margin-left: -4px"
-            src="img/favicon.png" height=34px/>
-        </a>
-        <v-toolbar-title style="margin-left:8px">
-            <div style="position: relative; margin-top:-2px;">
-                <div class="scv-logo-small" aria-hidden="true">
-                    SuttaCentral</div>
-                <div class="scv-logo-large" aria-hidden="true">
-                    VOICE</div>
-            </div>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn id="btnHelp" 
-            icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
-            small
-            title="About"
-            aria-label="About"
-            @click="openHelp()">
-            <v-icon aria-hidden="true">info</v-icon>
-        </v-btn>
-        <v-btn id="btnSettings" 
-            icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
-            small
-            title="Settings"
-            aria-label="Settings"
-            @click="dialogSettings = !dialogSettings">
-            <v-icon aria-hidden="true">settings</v-icon>
-        </v-btn>
+      color="grey darken-4"
+      aria-role="navigation">
+      <a :href="homeHref" @click="clickHome()"
+      aria-label="Soota Central Voice">
+      <img aria-hidden="true" class="pt-1"
+          style="margin-left: -4px"
+          src="img/favicon.png" height=34px/>
+      </a>
+      <v-toolbar-title style="margin-left:8px">
+          <div style="position: relative; margin-top:-2px;">
+              <div class="scv-logo-small" aria-hidden="true">
+                  SuttaCentral</div>
+              <div class="scv-logo-large" aria-hidden="true">
+                  VOICE</div>
+          </div>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn id="btnHelp" 
+          icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
+          small
+          :title="$vuetify.lang.t('$vuetify.scv.aboutTitle')"
+          :aria-label="$vuetify.lang.t('$vuetify.scv.ariaAbout')"
+          @click="openHelp()">
+          <v-icon aria-hidden="true">info</v-icon>
+      </v-btn>
+      <v-btn id="btnSettings" 
+          icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
+          small
+          :title="$vuetify.lang.t('$vuetify.scv.settingsTitle')"
+          :aria-label="$vuetify.lang.t('$vuetify.scv.ariaSettings')"
+          @click="dialogSettings = !dialogSettings">
+          <v-icon aria-hidden="true">settings</v-icon>
+      </v-btn>
     </v-app-bar>
 
     <v-dialog v-model="dialogHelp" persistent max-width="45em">
-        <v-card >
-          <v-card-title class="title scv-dialog-title">
-              About
-              <v-spacer/>
-              <v-btn id="btnSettings" 
-                icon small
-                dark class="scv-icon-btn" :style="cssProps"
-                aria-label="Close Help"
-                @click="closeDialog()"
-                >
-                <v-icon>close</v-icon>
-              </v-btn>
-          </v-card-title>
-          <v-card-text class="about-text">
-          <span v-html="helpHtml"/>
-          </v-card-text>
-        </v-card>
+      <v-card >
+        <v-card-title class="title scv-dialog-title">
+          {{$vuetify.lang.t('$vuetify.scv.aboutTitle')}}
+          <v-spacer/>
+          <v-btn id="btnSettings" 
+            icon small
+            dark class="scv-icon-btn" :style="cssProps"
+            :aria-label="$vuetify.lang.t('$vuetify.scv.ariaClose')"
+            @click="closeDialog()"
+            >
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text class="about-text">
+        <span v-html="helpHtml"/>
+        </v-card-text>
+      </v-card>
     </v-dialog>
     <v-dialog v-model="dialogSettings" fullscreen persistent>
-        <v-card>
-          <v-card-title class="headline scv-dialog-title">
-              Settings&nbsp;&nbsp;<span class="scv-version">v{{version}}</span>
-              <v-spacer/>
-              <v-btn id="btnSettings" 
-                icon small dark class="scv-icon-btn" :style="cssProps"
-                aria-label="Close Settings"
-                @click="closeDialog()"
-                >
-                <v-icon>close</v-icon>
-              </v-btn>
-          </v-card-title>
-          <v-card-text>
-            <details class="scv-dialog" >
-                <summary class="title scv-settings-title">Languages</summary>
-                <div class="scv-settings">
-                  <v-radio-group v-model="gscv.showLang"
-                      @change="gscv.changed('showLang')"
-                      column>
-                     <v-radio v-for="(sl,i) in showLangChoices"
-                       :label="sl.label" :value="i" :key="`showLang${sl.value}`">
-                       </v-radio>
-                  </v-radio-group>
-                  <div class="subheading scv-settings-subtitle">Translation</div>
-                  <v-radio-group v-model="gscv.lang"
-                    @change="gscv.changed('lang')"
-                    column>
-                   <v-radio v-for="lang in gscv.languages"
-                     :disabled="lang.disabled"
-                     :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
-                     </v-radio>
-                  </v-radio-group>
-                </div>
-            </details>
-            <details class="scv-dialog" >
-                <summary class="title scv-settings-title">Reader</summary>
-                <div class="scv-settings">
-                    <v-radio-group v-model="gscv.vnameTrans"
-                        @change="gscv.changed('vnameTrans')"
-                        column>
-                       <v-radio v-for="v in gscv.langVoices()"
-                         :label="v.label" :value="v.name" :key="`voice${v.name}`">
-                         </v-radio>
-                    </v-radio-group>
+      <v-card>
+        <v-card-title class="headline scv-dialog-title">
+          <div>
+            <span>{{$vuetify.lang.t('$vuetify.scv.settingsTitle')}}</span>
+            &nbsp;
+            <span class="scv-version">v{{version}}</span>
+          </div>
+          <v-spacer/>
+          <v-btn id="btnSettings" 
+            icon small dark class="scv-icon-btn" :style="cssProps"
+            :aria-label="$vuetify.lang.t('$vuetify.scv.ariaClose')"
+            @click="closeDialog()"
+            >
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          <details class="scv-dialog" >
+            <summary class="title scv-settings-title">
+                {{$vuetify.lang.t('$vuetify.scv.languages')}}
+            </summary>
+            <div class="scv-settings">
+              <v-radio-group v-model="gscv.showLang"
+                  @change="gscv.changed('showLang')"
+                  column>
+                 <v-radio v-for="(sl,i) in showLangChoices"
+                   :label="sl.label" :value="i" :key="`showLang${sl.value}`">
+                   </v-radio>
+              </v-radio-group>
+              <div class="subheading scv-settings-subtitle">
+                {{$vuetify.lang.t('$vuetify.scv.transLanguage')}}
+              </div>
+              <v-radio-group v-model="gscv.lang"
+                @change="gscv.changed('lang')"
+                column>
+               <v-radio v-for="lang in gscv.languages"
+                 :disabled="lang.disabled"
+                 :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
+                 </v-radio>
+              </v-radio-group>
+              <div class="subheading scv-settings-subtitle">
+                {{$vuetify.lang.t('$vuetify.scv.uiLanguage')}}
+              </div>
+              <v-radio-group v-model="gscv.locale"
+                @change="gscv.changed('locale')"
+                column>
+               <v-radio v-for="lang in gscv.languages"
+                 :disabled="lang.disabled"
+                 :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
+                 </v-radio>
+              </v-radio-group>
+            </div>
+          </details>
+          <details class="scv-dialog" >
+            <summary class="title scv-settings-title">Reader</summary>
+            <div class="scv-settings">
+              <v-radio-group v-model="gscv.vnameTrans"
+                  @change="gscv.changed('vnameTrans')"
+                  column>
+                 <v-radio v-for="v in gscv.langVoices()"
+                   :label="v.label" :value="v.name" :key="`voice${v.name}`">
+                   </v-radio>
+              </v-radio-group>
 
-                    <div class="subheading scv-settings-subtitle">Root Language</div>
-                    <v-radio-group v-model="gscv.vnameRoot"
-                        @change="gscv.changed('vnameRoot')"
-                        column>
-                       <v-radio v-for="v in gscv.langVoices('pli')"
-                         :label="v.label" :value="v.name" :key="`voice${v.name}`">
-                         </v-radio>
-                    </v-radio-group>
-                </div>
-            </details>
-            <details class="scv-dialog" >
-                <summary class="title scv-settings-title">Bell Sound</summary>
-                <div class="scv-settings">
-                    <v-radio-group v-model="gscv.ips"
-                        @change="gscv.changed('ips')"
-                        column>
-                       <v-radio v-for="(ips) in ipsChoices"
-                         v-if="!ips.hide"
-                         :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
-                         </v-radio>
-                    </v-radio-group>
-                </div>
-            </details>
-            <details class="scv-dialog" >
-                <summary class="title scv-settings-title">Search Results</summary>
-                <div class="scv-settings">
-                    <v-radio-group v-if="gscv" v-model="gscv.maxResults"
-                        @change="gscv.changed('maxResults')"
-                        column>
-                       <v-radio v-for="(mr) in maxResultsChoices"
-                         :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
-                         </v-radio>
-                    </v-radio-group>
-                </div>
-            </details>
-            <details class="scv-dialog" >
-                <summary class="title scv-settings-title">General</summary>
-                <div class="scv-settings" v-if="gscv">
-                    <v-checkbox v-model="gscv.showId" role="checkbox"
-                        :aria-checked="gscv.showId"
-                        v-on:change="gscv.changed('showId')"
-                        label="Show SuttaCentral text segment identifiers">
-                    </v-checkbox>
-                    <v-checkbox v-model="gscv.useCookies" role="checkbox"
-                        v-on:change="gscv.changed('useCookies')"
-                        :aria-checked="gscv.useCookies"
-                        label="Store settings using web browser cookies ">
-                    </v-checkbox>
-                </div>
-            </details>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn class="scv-dialog-button" :style="cssProps"
-                @click="closeDialog()" >
-                Close Settings</v-btn>
-          </v-card-actions>
-        </v-card>
+              <div class="subheading scv-settings-subtitle">
+                {{$vuetify.lang.t('$vuetify.scv.rootLanguage')}}
+              </div>
+              <v-radio-group v-model="gscv.vnameRoot"
+                  @change="gscv.changed('vnameRoot')"
+                  column>
+                 <v-radio v-for="v in gscv.langVoices('pli')"
+                   :label="v.label" :value="v.name" :key="`voice${v.name}`">
+                   </v-radio>
+              </v-radio-group>
+            </div>
+          </details>
+          <details class="scv-dialog" >
+            <summary class="title scv-settings-title">
+              {{$vuetify.lang.t('$vuetify.scv.bellSound')}}
+            </summary>
+            <div class="scv-settings">
+              <v-radio-group v-model="gscv.ips"
+                  @change="gscv.changed('ips')"
+                  column>
+                 <v-radio v-for="(ips) in ipsChoices"
+                   v-if="!ips.hide"
+                   :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
+                   </v-radio>
+              </v-radio-group>
+            </div>
+          </details>
+          <details class="scv-dialog" >
+            <summary class="title scv-settings-title">
+              {{$vuetify.lang.t('$vuetify.scv.searchResults')}}
+            </summary>
+            <div class="scv-settings">
+              <v-radio-group v-if="gscv" v-model="gscv.maxResults"
+                  @change="gscv.changed('maxResults')"
+                  column>
+                 <v-radio v-for="(mr) in maxResultsChoices"
+                   :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
+                   </v-radio>
+              </v-radio-group>
+            </div>
+          </details>
+          <details class="scv-dialog" >
+            <summary class="title scv-settings-title">
+              {{$vuetify.lang.t('$vuetify.scv.general')}}
+            </summary>
+            <div class="scv-settings" v-if="gscv">
+              <v-checkbox v-model="gscv.showId" role="checkbox"
+                :aria-checked="gscv.showId"
+                v-on:change="gscv.changed('showId')"
+                :label="$vuetify.lang.t('$vuetify.scv.showTextSegmentIds')"
+                />
+              <v-checkbox v-model="gscv.useCookies" role="checkbox"
+                v-on:change="gscv.changed('useCookies')"
+                :aria-checked="gscv.useCookies"
+                :label="$vuetify.lang.t('$vuetify.scv.storeSettingsInCookies')"
+                />
+            </div>
+          </details>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn class="scv-dialog-button" :style="cssProps"
+              @click="closeDialog()" >
+              {{$vuetify.lang.t('$vuetify.close')}}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
     <div class="scv-content">
         <transition name="fade">
@@ -292,14 +320,17 @@ export default {
             return this.$root && this.$root.$data;
         },
         showLangChoices() {
+            var {
+                $vuetify,
+              } = this;
             return [{
-                label: "Show both Pali text and translated text",
+                label: $vuetify.lang.t('$vuetify.scv.showPaliTransText'),
                 value: 0,
             },{
-                label: "Show only Pali text",
+                label: $vuetify.lang.t('$vuetify.scv.showPaliText'),
                 value: 1,
             },{
-                label: "Show only translated text",
+                label: $vuetify.lang.t('$vuetify.scv.showTransText'),
                 value: 2,
             }];
         },
@@ -307,22 +338,24 @@ export default {
             return `./?r=${Math.random()}#/?`;
         },
         ipsChoices() {
-            return this.gscv.ipsChoices;
+            var {
+                gscv,
+                $vuetify,
+            } = this;
+            return gscv.ipsChoices.map(ch => {
+                ch.label = ch.label
+                    .replace(/A_NOBELL/, $vuetify.lang.t('$vuetify.scv.noBell'))
+                    .replace(/A_PUBLIC/, $vuetify.lang.t('$vuetify.scv.publicDomain'))
+                    ;
+                return ch;
+            });
         },
         maxResultsChoices() {
-            return [{
-                label: "Return up to 5 search results",
-                value: 5,
-            },{
-                label: "Return up to 10 search results",
-                value: 10,
-            },{
-                label: "Return up to 25 search results",
-                value: 25,
-            },{
-                label: "Return up to 50 search results (slow)",
-                value: 50,
-            }];
+            var tmplt = this.$vuetify.lang.t('$vuetify.scv.returnSearchResults');
+            return [5,10,25,50].map(n => ({
+              label: tmplt.replace(/A_COUNT/, n),
+              value: n,
+            }));
         },
         cssProps() {
             return {

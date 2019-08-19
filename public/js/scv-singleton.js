@@ -6,38 +6,38 @@
     const DN33_PLI_SECONDS_PER_CHAR = DN33_EN_SECONDS/(79412);
     const IPS_CHOICES = [{
         url: '',
-        label: "Launch Sutta Player without sound",
+        label: "A_NOBELL",
         value: 0,
     },{
         url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
-        label: "Play Rainforest Ambience Glory Sunz (Public Domain)",
+        label: "Rainforest Ambience (Glory Sunz: A_PUBLIC)",
         volume: 0.1,
         value: 1,
         hide: true,
     },{
         url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
-        label: "Play Indian Bell by Flemur (Sampling Plus 1.0)",
+        label: "Indian Bell (Flemur: Sampling Plus 1.0)",
         volume: 0.1,
         value: 2,
     },{
         url: '/audio/tibetan-singing-bowl-horst-cc0.mp3',
-        label: "Play Tibetan Singing Bowl by Horst (CC0)",
+        label: "Tibetan Singing Bowl (Horst: CC0)",
         volume: 0.3,
         value: 3,
     },{
         url: '/audio/jetrye-bell-meditation-cleaned-CC0.mp3',
-        label: "Play Bell Meditation Cleaned by JetRye (CC0)",
+        label: "Bell Meditation Cleaned (JetRye: CC0)",
         volume: 0.1,
         value: 4,
         hide: true,
     },{
         url: '/audio/STE-004-Coemgenu.mp3',
-        label: "Play Mid-range Singing Bell by Coemgenu (Public Domain)",
+        label: "Mid-range Singing Bell (Coemgenu: A_PUBLIC)",
         volume: 0.5,
         value: 5,
     },{
         url: '/audio/simple-bell.mp3',
-        label: "Simple Bell (Public Domain)",
+        label: "Simple Bell (A_PUBLIC)",
         volume: 0.5,
         value: 6,
     }];
@@ -65,6 +65,7 @@
             this.maxResults = 5;
             this.ips = 6;
             this.lang = 'en';
+            this.locale = 'en';
             if (g == null) {
                 throw new Error(`g is required`);
             }

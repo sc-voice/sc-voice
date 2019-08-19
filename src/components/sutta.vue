@@ -158,7 +158,8 @@ style="width:100%; margin-top:0"/>
             class='title pt-1 pb-1'>
             <span aria-hidden=true>
                 {{$vuetify.lang.t('$vuetify.scv.foundSuttas')
-                    .replace(/A_RESULTCOUNT/,resultCount)}}
+                    .replace(/A_RESULTCOUNT/,resultCount)
+                    .replace(/A_SEARCH/, search)}}
                 ({{playlistDuration.display}})
             </span>
         </summary>
@@ -887,6 +888,7 @@ export default {
             //:aria-label="`Found ${resultCount} sootas ${playlistDuration.aria}`"
             var tmplt = this.$vuetify.lang.t("$vuetify.scv.ariaFoundSuttas");
             var text = tmplt
+                .replace("A_SEARCH", this.search)
                 .replace("A_RESULTCOUNT", resultCount)
                 .replace("A_DURATION", duration);
             return text;
@@ -1203,7 +1205,8 @@ export default {
     border-radius: 4px;
     text-align: center;
     margin-bottom: 1em;
-    font-size: 10px;
+    text-transform: none;
+    font-size: 12px;
     border: 1px solid #383838;
     height: 24px;
     background: #212121 !important;

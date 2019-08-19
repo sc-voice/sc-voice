@@ -52,10 +52,8 @@ app.use("/scv/index.html",
 app.use("/scv/img", express.static(path.join(__dirname, "../dist/img")));
 app.use("/audio", express.static(path.join(__dirname, "../dist/audio")));
 app.use(favicon(path.join(__dirname, "../dist/img/favicon.png")));
-app.use("/css", 
-    express.static(path.join(__dirname, "../dist/css")));
-app.use("/fonts", 
-    express.static(path.join(__dirname, "../dist/fonts")));
+app.use("/css", express.static(path.join(__dirname, "../dist/css")));
+app.use("/fonts", express.static(path.join(__dirname, "../dist/fonts")));
 app.use("/MaterialIcons.css", 
     express.static(path.join(__dirname, "../dist/MaterialIcons.css")));
 app.use("/MaterialIcons.ttf", 

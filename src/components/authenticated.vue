@@ -29,7 +29,7 @@
             <vsm/>
         </v-tab-item>
         <v-tab v-if="isAdmin"> 
-            {{ $vuetify.lang.t('$vuetify.auth.contentUpdater') }}
+            {{ $vuetify.lang.t('$vuetify.auth.contentUpdaterTab') }}
         </v-tab>
         <v-tab-item v-if="isAdmin">
             <content-updater/>
