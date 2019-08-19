@@ -90,7 +90,7 @@ export default {
     invalidUsernamePassword: 'Passwort/Benutzername ungültig',
     isAdmin: 'Admin?',
     language: 'Sprache',
-    lastActive: 'Zuletzt activ:',
+    lastActive: 'Zuletzt aktiv:',
     lastLogin: 'Letzter Login',
     loadAverage: 'Prozessor lädt durchschnittlich',
     loading: 'Laden...',
