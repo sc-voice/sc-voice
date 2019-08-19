@@ -113,7 +113,7 @@ export default {
     releaseIsCurrent: 'Jetzige Version ist die letzte. Keine Aktualisierung',
     releases: 'Versionen',
     required: '(erforderlich)',
-    restartingServer: 'Server neu starten ',
+    restartingServer: 'Server wird neu gestartet ',
     restart: 'Server neu starten',
     seconds: 'Sekunden',
     secretAccessKey: 'Geheimer Zugangsschlüssel',
