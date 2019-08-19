@@ -64,6 +64,7 @@ app.use("/scv/img", express.static(path.join(__dirname, "../dist/img")));
 app.use("/scv/audio", express.static(path.join(__dirname, "../dist/audio")));
 app.use("/scv/js", express.static(path.join(__dirname, "../dist/js")));
 app.use("/scv/css", express.static(path.join(__dirname, "../dist/css")));
+app.use("/scv/fonts", express.static(path.join(__dirname, "../dist/fonts")));
 app.use("/scv/sounds", express.static(path.join(__dirname, "../local/sounds")));
 
 app.get(["/","/scv"], function(req,res,next) {

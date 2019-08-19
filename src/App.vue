@@ -72,16 +72,14 @@
             <details class="scv-dialog" >
                 <summary class="title scv-settings-title">Languages</summary>
                 <div class="scv-settings">
-                    <v-radio-group v-model="gscv.showLang"
-                        @change="gscv.changed('showLang')"
-                        column>
-                       <v-radio v-for="(sl,i) in showLangChoices"
-                         :label="sl.label" :value="i" :key="`showLang${sl.value}`">
-                         </v-radio>
-                    </v-radio-group>
-                </div>
-                <div class="subheading scv-settings-subtitle">Translation</div>
-                <div class="scv-settings">
+                  <v-radio-group v-model="gscv.showLang"
+                      @change="gscv.changed('showLang')"
+                      column>
+                     <v-radio v-for="(sl,i) in showLangChoices"
+                       :label="sl.label" :value="i" :key="`showLang${sl.value}`">
+                       </v-radio>
+                  </v-radio-group>
+                  <div class="subheading scv-settings-subtitle">Translation</div>
                   <v-radio-group v-model="gscv.lang"
                     @change="gscv.changed('lang')"
                     column>
