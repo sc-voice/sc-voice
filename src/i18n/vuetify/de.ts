@@ -156,7 +156,7 @@ export default {
     and: "und",
     ariaAbout: "Über Voice",
     ariaClose: "schließen",
-    ariaDedicated: "Gewidmet denen im Dunkeln auf dem Weg zum Licht",
+    ariaDedicated: "Für die im Dunkeln auf dem Weg zum Licht",
     ariaDismissError: "Fehler verwerfen",
     ariaDownload: "Herunterladen",
     ariaFoundSuttas: "A_SEARCH in A_RESULTCOUNT Suttas gefunden A_DURATION",
