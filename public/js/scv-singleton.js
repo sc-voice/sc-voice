@@ -202,6 +202,7 @@
                         cookie.set( "lang", this.lang, EXPIRES);
                         cookie.set( "maxResults", this.maxResults, EXPIRES);
                         cookie.set( "showLang", this.showLang, EXPIRES);
+                        cookie.set( "locale", this.locale, EXPIRES);
                         cookie.set( "ips", this.ips, EXPIRES);
                         cookie.set( "useCookies", this.useCookies, EXPIRES);
                         console.log(`saved settings to cookies`, cookie);

@@ -280,10 +280,13 @@ export default {
         },
         openHelp() {
             var that = this;
+            var url = that.url('wiki-aria/Home.md');
             (async function() {
-                console.log('openHelp()');
                 that.dialogHelp = true;
-                var url = that.url('wiki-aria/Home');
+                if (that.gscv.locale === 'de') {
+                    url = that.url('wiki-aria/Home@Deutsch.md');
+                }
+                console.log(`openHelp(${url})`);
                 that.$http.get(url).then(res => {
                     that.helpHtml = res.data.html;
                 }).catch(e => {
@@ -400,6 +403,8 @@ export default {
                     Vue.set(this.gscv, "showLang", Number(query.showLang||0));
                 query.ips != null &&
                     Vue.set(this.gscv, "ips", Number(query.ips));
+                query.locale != null &&
+                    Vue.set(this.gscv, "locale", query.locale);
             }
             var search = query.scid || query.search || '';
             query.search && Vue.set(this.gscv, "search", search);

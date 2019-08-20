@@ -659,9 +659,10 @@
 
         getWikiAria(req, res, next) {
             var that = this;
+            var page = req.params.page || 'Home.md';
+            console.log(`dbg req.params`, req.params);
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var page = req.query.page || 'Home.md';
                     var result = `${page} not found`;
                     var wikiUrl  = `${that.wikiUrl}/${page}`;
                     var httpx = wikiUrl.startsWith('https') ? https : http;
@@ -671,6 +672,7 @@
                             //"Pragma": "no-cache",
                         },
                     }, URL.parse(wikiUrl));
+                    console.log(`dbg httpsOpts`, httpOpts);
                     var wikiReq = httpx.get(httpOpts, function(wikiRes) {
                         const { statusCode } = wikiRes;
                         const contentType = wikiRes.headers['content-type'];
@@ -711,6 +713,7 @@
                             }
                         });
                     }).on('error', (e) => {
+                        logger.error(e.stack);
                         reject(e);
                     }).on('timeout', (e) => {
                         logger.error(e);
