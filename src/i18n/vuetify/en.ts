@@ -160,7 +160,6 @@ export default {
     ariaFoundSuttas: "Found A_RESULTCOUNT suttas A_DURATION",
     ariaHHMM: "A_HOURS hours and A_MINUTES minutes",
     ariaInspireMe: "inspire me",
-    ariaHHMM: "A_HOURS hours and A_MINUTES minutes",
     ariaMMSS: "A_MINUTES minutes and A_SECONDS seconds",
     ariaMore: "more",
     ariaOpensInNewTab: "A_SOURCE opens in new tab",
