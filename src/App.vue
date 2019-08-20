@@ -383,12 +383,12 @@ export default {
 
     },
     mounted() {
+        var query = this.$route.query;
+        console.log(`App.mounted() query:`, query);
         this.getVoices();
         this.$nextTick(() => {
             console.debug(`App.mounted(nextTick)`, this.$route.query);
         });
-        var query = this.$route.query;
-        console.debug('App.mounted() with query:', query);
         if (query) {
             if (!this.gscv.useCookies) {
                 query.showId != null &&
@@ -409,6 +409,7 @@ export default {
             var search = query.scid || query.search || '';
             query.search && Vue.set(this.gscv, "search", search);
         }
+        Vue.set(this.$vuetify.lang, "current", this.gscv.locale);
         this.user = this.gscv.user;
     },
     created() {

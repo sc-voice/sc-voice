@@ -40,9 +40,7 @@ var scvSingleton = new exports.ScvSingleton({
 });
 
 import en from './i18n/vuetify/en.ts';
-//const de = require('./i18n/vuetify/de.ts');
 import de from './i18n/vuetify/de.ts';
-console.log(`dbg de`, de);
 
 const vuetifyOptions = {
   theme: { 
@@ -57,7 +55,7 @@ const vuetifyOptions = {
   },
   lang: {
     locales: { en, de },
-    current: 'de',
+    current: 'en',
   },
 };
 
@@ -69,7 +67,7 @@ var vueRoot = new Vue({
     //el: '#app',
     vuetify: new Vuetify(vuetifyOptions),
     mounted() {
-        console.log(`dbg vueRoot mounted`);
+        console.log(`vueRoot mounted`);
         scvSingleton.mounted(this);
     },
 //});

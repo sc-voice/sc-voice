@@ -19,15 +19,21 @@
         $vuetify: {
             lang: {
                 t(key) {
-                    return {
+                    var result = {
                         ["$vuetify.scv.and"]: "and",
                         ["$vuetify.scv.hours"]: "hours",
                         ["$vuetify.scv.hoursUnits"]: "h",
                         ["$vuetify.scv.minutes"]: "minutes",
                         ["$vuetify.scv.minutesUnits"]: "m",
-                        ["$vuetify.scv.seconds"]: "seconds",
+                        ["$vuetify.scv.seconds"]: "A_SECONDSs",
+                        ["$vuetify.scv.ariaSeconds"]: "A_SECONDS seconds",
                         ["$vuetify.scv.secondsUnits"]: "s",
+                        ["$vuetify.scv.HHMM"]: "A_HOURSh A_MINUTESm",
+                        ["$vuetify.scv.MMSS"]: "A_MINUTESm A_SECONDSs",
+                        ["$vuetify.scv.ariaHHMM"]: "A_HOURS hours and A_MINUTES minutes",
+                        ["$vuetify.scv.ariaMMSS"]: "A_MINUTES minutes and A_SECONDS seconds",
                     }[key];
+                    return result || key;
                 }
             }
         },
@@ -110,6 +116,7 @@
             "showId",
             "vnameTrans",
             "vnameRoot",
+            "locale",
             "scid",
             "showLang",
             "search",
@@ -183,6 +190,7 @@
             showLang: "0",
             useCookies: "true",
             lang: 'en',
+            locale: 'en',
             vnameTrans: 'Amy',
             vnameRoot: 'Aditi',
         });
@@ -198,6 +206,7 @@
             showId: "false",
             showLang: "0",
             useCookies: "true",
+            locale: 'en',
             lang: 'en',
             vnameTrans: 'Amy',
             vnameRoot: 'Aditi',
@@ -221,6 +230,7 @@
         should(scv.hash()).equal([
             "#/?ips=6",
             "lang=en",
+            "locale=en",
             "maxResults=5",
             "showId=false",
             "showLang=0",
@@ -234,6 +244,7 @@
         })).equal([
             "#/?ips=6",
             "lang=en",
+            "locale=en",
             "maxResults=6",
             "showId=false",
             "showLang=0",
@@ -248,6 +259,7 @@
         })).equal([
             "#/?ips=6",
             "lang=en",
+            "locale=en",
             "maxResults=2",
             "search=asdf",
             "showId=false",
@@ -261,14 +273,13 @@
         var scv = new ScvSingleton(g);
         should.deepEqual(scv.ipsChoices[2], {
             url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
-            label: "Play Indian Bell by Flemur (Sampling Plus 1.0)",
+            label: "Indian Bell (Flemur: Sampling Plus 1.0)",
             volume: 0.1,
             value: 2,
         });
         should.deepEqual(scv.ipsChoices[1], {
             url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
-            label: "Play Rainforest "+
-                "Ambience Glory Sunz (Public Domain)",
+            label: "Rainforest Ambience (Glory Sunz: A_PUBLIC)",
             volume: 0.1,
             value: 1,
             hide: true, // legacy
@@ -305,6 +316,7 @@
         should(scv.url()).match(new RegExp([
             "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
             "lang=en",
+            "locale=en",
             "maxResults=5",
             "showId=false",
             "showLang=0",
@@ -316,6 +328,7 @@
         })).match(new RegExp([
             "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
             "lang=en",
+            "locale=en",
             "maxResults=6",
             "showId=false",
             "showLang=0",
@@ -331,6 +344,7 @@
         should(g.window.location.href).match(new RegExp([
             "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
             "lang=en",
+            "locale=en",
             "maxResults=5",
             "showId=false",
             "showLang=0",
@@ -346,15 +360,16 @@
         should(g.window.location.href).match(new RegExp([
             "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
             "lang=de",
+            "locale=en",
             "maxResults=9",
             "showId=false",
             "showLang=0",
         ].join('&')));
     });
-    it("TESTTESTduration(nSegs) returns estimated playtime", function() {
+    it("duration(nSegs) returns estimated playtime", function() {
         var scv = new ScvSingleton(g);
 
-        should(scv.duration(0).display).equal('--');
+        should(scv.duration(0).display).equal('0s');
 
         // Pali/English
         scv.showLang = 0;
@@ -371,8 +386,8 @@
             aria: '2 minutes and 54 seconds',
         });
         should(scv.duration(1000)).properties({
-            display: '4h 52m',
-            aria: '4 hours and 52 minutes',
+            display: '4h 51m',
+            aria: '4 hours and 51 minutes',
             totalSeconds: 4*3600 + 51*60 + 14,
         });
 
@@ -380,7 +395,7 @@
         scv.showLang = 1;
         should(scv.duration(1).display).equal('11s');
         should(scv.duration(10).display).equal('1m 52s');
-        should(scv.duration(1000).display).equal('3h 8m');
+        should(scv.duration(1000).display).equal('3h 7m');
 
         // English
         scv.showLang = 2;
@@ -388,13 +403,13 @@
         should(scv.duration(10).display).equal('1m 2s');
         should(scv.duration(1000).display).equal('1h 44m');
     });
-    it("TESTTESTduration(chars) returns estimated playtime", function() {
+    it("duration(chars) returns estimated playtime", function() {
         var scv = new ScvSingleton(g);
 
         should(scv.duration({
             en: 0,      // chars
             pli: 0,     // chars
-        }).display).equal('--');
+        }).display).equal('0s');
 
         // Pali/English
         scv.showLang = 0;
@@ -419,8 +434,8 @@
             en: 60000,
             pli: 48000,
         })).properties({
-            display: '2h 40m',
-            aria: '2 hours and 40 minutes',
+            display: '2h 39m',
+            aria: '2 hours and 39 minutes',
             totalSeconds: 2*3600 + 39*60 + 16,
         });
 
@@ -428,7 +443,7 @@
         scv.showLang = 1;
         should(scv.duration(1).display).equal('11s');
         should(scv.duration(10).display).equal('1m 52s');
-        should(scv.duration(1000).display).equal('3h 8m');
+        should(scv.duration(1000).display).equal('3h 7m');
 
         // English
         scv.showLang = 2;
