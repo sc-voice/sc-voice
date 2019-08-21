@@ -875,8 +875,14 @@ export default {
         duration(t) {
             return this.gscv.durationDisplay(t);
         },
-        ariaPlaySutta(resultId, seconds) {
-            var result = `play ${resultId}. ${this.duration(seconds).aria}`;
+        ariaPlaySutta(suttaId, seconds) {
+            var search = this.search;
+            var duration = this.duration(seconds).aria;
+            var tmplt = this.$vuetify.lang.t('$vuetify.scv.ariaPlaySutta');
+            var result = tmplt
+                .replace(/A_SEARCH/, search)
+                .replace(/A_DURATION/, duration)
+                .replace(/A_SUTTAID/, suttaId);
             return result;
         },
         ariaOpensInNewTab(source) {

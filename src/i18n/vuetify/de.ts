@@ -166,6 +166,7 @@ export default {
     ariaMore: "Mehr",
     ariaOpensInNewTab: "A_SOURCE öffnet in neuem Tab",
     ariaPlay: "Start",
+    ariaPlaySutta: "A_SEARCH A_SUTTAID. A_DURATION",
     ariaSeconds: "A_SECONDS Sekunden",
     ariaSettings: "Einstellungen",
     ariaSuttaCentralNewTab: "suttacentral.net öffnet in neuem Tab",
