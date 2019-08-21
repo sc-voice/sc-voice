@@ -258,10 +258,14 @@
         mounted(vueRoot) {
             this.vueRoot = vueRoot;
             if (this.useCookies) {
+                let cookies = {};
                 Object.keys(this).forEach(key => {
                     this.loadCookie(key);
+                    cookies[key] = this[key];
                 });
-            }
+                console.log(`ScvSingleton.mounted() cookies:`, cookies);
+            };
+            vueRoot.$vuetify.lang.current = this.locale;
         }
 
         durationDisplay(totalSeconds) {

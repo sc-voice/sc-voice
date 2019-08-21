@@ -418,7 +418,7 @@ export default {
             // The background interferes with legibility
             // that.bgShow = true; // trigger CSS transition
         }, 1000);
-        that.version = scvPackage.version;
+        that.version = scvPackage.version.replace(/\./g, '. ');
     }
 }
 </script>
