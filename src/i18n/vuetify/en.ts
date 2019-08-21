@@ -170,6 +170,7 @@ export default {
     ariaSuttaCentralNewTab: "suttacentral.net opens in new tab",
     bellSound: "Bell Sound",
     dedicated: "To the dark bound for light",
+    point: "Punkt",
     downloadComplete: "Download completed:",
     downloading: "Downloading:",
     downloadTimeout: "Download timeout:",

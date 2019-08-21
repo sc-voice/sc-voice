@@ -321,6 +321,8 @@ import ScvDownloader from "./scv-downloader";
 import ErrorHelp from "./error-help";
 import ScvPlayer from "./scv-player";
 const MAX_SECTIONS = 100;
+const ZEROWIDTHSPACE = '\u200b';
+const PAT_ZWS_ug = new RegExp(ZEROWIDTHSPACE, "ug");
 
 export default {
     name: 'Sutta',
@@ -863,7 +865,7 @@ export default {
                     idchars.push(c);
                 }
             }
-            return idchars.join('\u200b');
+            return idchars.join(ZEROWIDTHSPACE);
         },
         playerCloseFocus() {
             var refClose = this.$refs.refPlaySutta;
@@ -875,14 +877,22 @@ export default {
         duration(t) {
             return this.gscv.durationDisplay(t);
         },
-        ariaPlaySutta(suttaId, seconds) {
-            var search = this.search;
+        ariaPlaySutta(resultId, seconds) {
+            var search = this.search.toLocaleUpperCase();
+            var suttaId = resultId.replace(PAT_ZWS_ug,'').toLocaleUpperCase();
+            var point = this.$vuetify.lang.t('$vuetify.scv.point');
             var duration = this.duration(seconds).aria;
             var tmplt = this.$vuetify.lang.t('$vuetify.scv.ariaPlaySutta');
-            var result = tmplt
-                .replace(/A_SEARCH/, search)
-                .replace(/A_DURATION/, duration)
+            var result = tmplt.replace(/A_DURATION/, duration);
+            var searchIsId = search.localeCompare(suttaId) === 0
+                || search.indexOf(suttaId) === 0;
+            if (searchIsId) {
+                result = result.replace(/A_SEARCH.*A_SUTTAID/, 
+                    suttaId.replace(/\./ug,` ${point} `));
+            } else {
+                result = result.replace(/A_SEARCH/, search)
                 .replace(/A_SUTTAID/, suttaId);
+            }
             return result;
         },
         ariaOpensInNewTab(source) {
