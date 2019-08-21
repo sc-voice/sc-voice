@@ -172,7 +172,7 @@ export default {
     ariaSuttaCentralNewTab: "suttacentral.net öffnet in neuem Tab",
     bellSound: "Gong",
     dedicated: "Den Dunklen auf dem Weg zum Licht",
-    point: "point",
+    point: "punkt",
     downloadComplete: "Herunterladen abgeschlossen:",
     downloading: "Herunterladen:",
     downloadTimeout: "Herunterladen Zeitüberschreitung:",
