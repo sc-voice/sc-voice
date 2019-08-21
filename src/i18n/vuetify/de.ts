@@ -186,7 +186,7 @@ export default {
     noBell: "Sutta ohne Gong abspielen",
     noHTML5: "HTML5 Audio wird von Ihrem Browser nicht unterstützt. Versuchen Sie Chrome oder Firefox",
     publicDomain: "Public Domain",
-    reader: "Stimme",
+    reader: "Stimmen",
     returnSearchResults: "A_COUNT Suchergebnisse anzeigen",
     rootLanguage: "Quellsprache",
     searchResults: "Suchergebnisse",
