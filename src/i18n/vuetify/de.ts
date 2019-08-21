@@ -193,7 +193,7 @@ export default {
     seconds: "A_SECONDS s",
     settingsTitle: "Einstellungen",
     showPaliText: "Zeige nur Palitext",
-    showPaliTransText: "Zeige Text in Pali und Übersetzung",
+    showPaliTransText: "Zeige Palitext und Übersetzung",
     showTextSegmentIds: "SuttaCentral Textsegment-Kennungen zeigen",
     showTransText: "Zeige nur Übersetzung",
     storeSettingsInCookies: "Einstellungen mittels Webbrowser-Cookies speichern",
