@@ -36,6 +36,7 @@ Vue.config.productionTip = false;
 
 var scvSingleton = new exports.ScvSingleton({
     window,
+    navigator,
     Vue,
 });
 

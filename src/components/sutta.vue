@@ -9,7 +9,7 @@ style="width:100%; margin-top:0"/>
   <v-layout column align-left >
     <div class="scv-search-row">
       <div class="scv-search-col">
-        <h1 class="title mb-3">
+        <h1 class="title mb-3" style="font-size: 18px !important">
           {{$vuetify.lang.t("$vuetify.scv.exploreBuddhasTeaching")}}
         </h1>
         <div class="scv-search-field" role="search">
@@ -813,11 +813,13 @@ export default {
                 segment,
                 sutta_uid,
             } = data;
-            var guid = segment.audio[lang];
+            var audio = segment.audio;
+            var guid = audio[lang];
             var vname = lang === 'pli' 
-                ? this.gscv.vnameRoot
-                : this.voice.name;
+                ? audio.vnamePali || this.gscv.vnameRoot
+                : audio.vnameTrans || this.voice.name;
             var link = `./audio/${sutta_uid}/${lang}/${translator}/${vname}/${guid}`;
+            console.log(`dbg audioLink`, link);
             //if (sutta_uid) {
                 //link += `/${this.sutta_uid}-${lang}-${trans}.mp3`;
             //}

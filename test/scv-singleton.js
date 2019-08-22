@@ -16,6 +16,8 @@
     const mockVueRoot = {
         $cookie: {
         },
+        $route: {
+        },
         $vuetify: {
             lang: {
                 t(key) {
@@ -59,6 +61,9 @@
                 origin: 'test-origin',
                 pathname: '/test-path',
             },
+        },
+        navigator: {
+            language: 'en',
         },
         vueRoot: mockVueRoot,
         Vue: mockVue,
@@ -466,7 +471,7 @@
         should(scv.showPali).equal(false);
         should(scv.showTrans).equal(true);
     });
-    it("mounted() loads properties from cookies", function() {
+    it("TESTTESTmounted() loads properties from cookies", function() {
         var scv = new ScvSingleton(g);
         Object.assign(mockVueRoot.$cookie, {
             showId: "true",

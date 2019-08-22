@@ -256,13 +256,14 @@
         }
 
         mounted(vueRoot) {
+            var g = this.g;
             this.vueRoot = vueRoot;
-            var navLang = navigator && navigator.language;
+            var navLang = g.navigator && g.navigator.language;
             if (navLang) {
                 this.locale = navLang.split('-')[0];
                 console.log(`ScvSingleton.mounted() navigator.language:${navLang}`);
             }
-            var query = this.vueRoot.$route.query;
+            var query = vueRoot.$route.query;
             if (this.useCookies) {
                 let cookies = {};
                 Object.keys(this).forEach(key => {
