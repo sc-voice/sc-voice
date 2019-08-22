@@ -9,7 +9,7 @@ style="width:100%; margin-top:0"/>
   <v-layout column align-left >
     <div class="scv-search-row">
       <div class="scv-search-col">
-        <h1 class="title">
+        <h1 class="title mb-3">
           {{$vuetify.lang.t("$vuetify.scv.exploreBuddhasTeaching")}}
         </h1>
         <div class="scv-search-field" role="search">

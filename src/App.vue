@@ -237,6 +237,8 @@ import Sutta from './components/sutta';
 import scvPackage from '../package';
 // eslint no-console 0
 
+const ZEROWIDTHSPACE = '\u200b';
+
 export default {
     name: 'App',
     components: {
@@ -383,33 +385,7 @@ export default {
 
     },
     mounted() {
-        var query = this.$route.query;
-        console.log(`App.mounted() query:`, query);
         this.getVoices();
-        this.$nextTick(() => {
-            console.debug(`App.mounted(nextTick)`, this.$route.query);
-        });
-        if (query) {
-            if (!this.gscv.useCookies) {
-                query.showId != null &&
-                    Vue.set(this.gscv, "showId", query.showId==='true');
-                query.vnameTrans &&
-                    Vue.set(this.gscv, "vnameTrans", query.vnameTrans);
-                query.vnameRoot &&
-                    Vue.set(this.gscv, "vnameRoot", query.vnameRoot);
-                query.maxResults &&
-                    Vue.set(this.gscv, "maxResults", Number(query.maxResults));
-                query.showLang &&
-                    Vue.set(this.gscv, "showLang", Number(query.showLang||0));
-                query.ips != null &&
-                    Vue.set(this.gscv, "ips", Number(query.ips));
-                query.locale != null &&
-                    Vue.set(this.gscv, "locale", query.locale);
-            }
-            var search = query.scid || query.search || '';
-            query.search && Vue.set(this.gscv, "search", search);
-        }
-        Vue.set(this.$vuetify.lang, "current", this.gscv.locale);
         this.user = this.gscv.user;
     },
     created() {
@@ -418,7 +394,7 @@ export default {
             // The background interferes with legibility
             // that.bgShow = true; // trigger CSS transition
         }, 1000);
-        that.version = scvPackage.version.replace(/\./g, '. ');
+        that.version = scvPackage.version.replace(/\./g, `.${ZEROWIDTHSPACE}`);
     }
 }
 </script>

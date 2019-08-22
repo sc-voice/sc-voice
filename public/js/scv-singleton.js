@@ -257,6 +257,12 @@
 
         mounted(vueRoot) {
             this.vueRoot = vueRoot;
+            var navLang = navigator && navigator.language;
+            if (navLang) {
+                this.locale = navLang.split('-')[0];
+                console.log(`ScvSingleton.mounted() navigator.language:${navLang}`);
+            }
+            var query = this.vueRoot.$route.query;
             if (this.useCookies) {
                 let cookies = {};
                 Object.keys(this).forEach(key => {
@@ -264,7 +270,32 @@
                     cookies[key] = this[key];
                 });
                 console.log(`ScvSingleton.mounted() cookies:`, cookies);
-            };
+            } 
+            if (query) {
+                console.log(`ScvSingleton.mounted() query:`, query);
+                if (!this.useCookies) {
+                    query.showId != null &&
+                        (this.showId = query.showId==='true');
+                    query.vnameTrans &&
+                        (this.vnameTrans = query.vnameTrans);
+                    query.vnameRoot &&
+                        (this.vnameRoot = query.vnameRoot);
+                    query.maxResults &&
+                        (this.maxResults = Number(query.maxResults));
+                    query.showLang &&
+                        (this.showLang = Number(query.showLang||0));
+                    query.ips != null &&
+                        (this.ips = Number(query.ips));
+                    query.locale != null &&
+                        (this.locale = query.locale);
+                }
+                var search = query.scid || query.search || '';
+                query.search && (this.search = search);
+            }
+            if (LANGUAGES.filter(l => l.name === this.locale).length === 0) {
+                console.log(`ScvSingleton.mounted() unknown locale:${this.locale}=>en`);
+                this.locale = 'en';
+            }
             vueRoot.$vuetify.lang.current = this.locale;
         }
 
