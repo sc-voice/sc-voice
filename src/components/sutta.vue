@@ -9,7 +9,7 @@ style="width:100%; margin-top:0"/>
   <v-layout column align-left >
     <div class="scv-search-row">
       <div class="scv-search-col">
-        <h1 class="title mb-3" style="font-size: 18px !important">
+        <h1 class="title " style="font-size: 18px !important">
           {{$vuetify.lang.t("$vuetify.scv.exploreBuddhasTeaching")}}
         </h1>
         <div class="scv-search-field" role="search">
@@ -246,7 +246,10 @@ style="width:100%; margin-top:0"/>
                     <v-icon>arrow_downward</v-icon>
                 </v-btn>
                 </div>
-                <div class="scv-score">relevance: {{score(result)}}</div>
+                <div class="scv-score">
+                    {{$vuetify.lang.t('$vuetify.scv.relevance')}}
+                    {{score(result)}}
+                </div>
             </div>
         </details><!-- search result i -->
       </details><!-- searchresults -->

@@ -187,6 +187,7 @@ export default {
     noHTML5: "HTML5 Audio wird von Ihrem Browser nicht unterstützt. Versuchen Sie Chrome oder Firefox",
     publicDomain: "Public Domain",
     reader: "Lesestimmen",
+    relevance: "Relevanz:",
     returnSearchResults: "A_COUNT Suchergebnisse anzeigen",
     rootLanguage: "Quellsprache",
     searchResults: "Suchergebnisse",
