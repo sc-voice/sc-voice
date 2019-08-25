@@ -165,7 +165,7 @@ export default {
     ariaMMSS: "A_MINUTES Minuten und A_SECONDS Sekunden",
     ariaMore: "Mehr",
     ariaOpensInNewTab: "A_SOURCE öffnet in neuem Tab",
-    ariaPlay: "Start",
+    ariaPlay: "Wiedergabe",
     ariaPlaySutta: "A_SEARCH A_SUTTAID. A_DURATION",
     ariaSeconds: "A_SECONDS Sekunden",
     ariaSettings: "Einstellungen",
