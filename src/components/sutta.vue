@@ -877,7 +877,10 @@ export default {
             return refClose && refClose.$el;
         },
         score(result = {}) {
-            return result.score && result.score.toFixed(2) || '--';
+            return result.score
+                ? (Math.round(result.score * 100) / 100)
+                    .toLocaleString(this.gscv.locale)
+                : '--';
         },
         duration(t) {
             return this.gscv.durationDisplay(t);
