@@ -6,38 +6,38 @@
     const DN33_PLI_SECONDS_PER_CHAR = DN33_EN_SECONDS/(79412);
     const IPS_CHOICES = [{
         url: '',
-        label: "A_NOBELL",
+        i18n: 'bellNone',
         value: 0,
     },{
         url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
-        label: "Rainforest Ambience (Glory Sunz: A_PUBLIC)",
+        i18n: 'bellRainforest',
         volume: 0.1,
         value: 1,
         hide: true,
     },{
         url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
-        label: "Indian Bell (Flemur: Sampling Plus 1.0)",
+        i18n: 'bellIndian',
         volume: 0.1,
         value: 2,
     },{
         url: '/audio/tibetan-singing-bowl-horst-cc0.mp3',
-        label: "Tibetan Singing Bowl (Horst: CC0)",
+        i18n: "bellTibetan",
         volume: 0.3,
         value: 3,
     },{
         url: '/audio/jetrye-bell-meditation-cleaned-CC0.mp3',
-        label: "Bell Meditation Cleaned (JetRye: CC0)",
+        i18n: "bellMeditation",
         volume: 0.1,
         value: 4,
         hide: true,
     },{
         url: '/audio/STE-004-Coemgenu.mp3',
-        label: "Mid-range Singing Bell (Coemgenu: A_PUBLIC)",
+        i18n: "bellMidrange",
         volume: 0.5,
         value: 5,
     },{
         url: '/audio/simple-bell.mp3',
-        label: "Simple Bell (A_PUBLIC)",
+        i18n: "bellSimple",
         volume: 0.5,
         value: 6,
     }];

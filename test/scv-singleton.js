@@ -278,13 +278,13 @@
         var scv = new ScvSingleton(g);
         should.deepEqual(scv.ipsChoices[2], {
             url: '/audio/indian-bell-flemur-sampling-plus-1.0.mp3',
-            label: "Indian Bell (Flemur: Sampling Plus 1.0)",
+            i18n: "bellIndian",
             volume: 0.1,
             value: 2,
         });
         should.deepEqual(scv.ipsChoices[1], {
             url: '/audio/rainforest-ambience-glory-sunz-public-domain.mp3',
-            label: "Rainforest Ambience (Glory Sunz: A_PUBLIC)",
+            i18n: "bellRainforest",
             volume: 0.1,
             value: 1,
             hide: true, // legacy
@@ -471,7 +471,7 @@
         should(scv.showPali).equal(false);
         should(scv.showTrans).equal(true);
     });
-    it("TESTTESTmounted() loads properties from cookies", function() {
+    it("mounted() loads properties from cookies", function() {
         var scv = new ScvSingleton(g);
         Object.assign(mockVueRoot.$cookie, {
             showId: "true",

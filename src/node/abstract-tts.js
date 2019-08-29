@@ -74,6 +74,8 @@
             this.reVowels1 = new RegExp(`^[${vowels}].*`, 'u');
         }
 
+        get SECTION_BREAK() { return -1 }
+
         get ERROR_SIZE() { return 500 }
 
         get username() {
@@ -107,6 +109,15 @@
 
         sectionBreak() {
             return this.break(this.breaks.length-1);
+        }
+
+        synthesizeBreak(index = this.SECTION_BREAK) {
+            var i = index < 0
+                ? this.breaks.length-index
+                : i;
+
+            var t = this.breaks[i] || this.breaks[this.breaks.length-1];
+            return this.synthesizeSSML(`<break time="${t}s"/>`);
         }
 
         wordInfo(word) {
@@ -317,7 +328,7 @@
                 }
                 resolve(this.createResponse(request, false, true));
             } else {
-                logger.info(`synthesizeResponse() no audio outpath:${outpath}`);
+                logger.warn(`synthesizeResponse() no audio voice:${this.voice} outpath:${outpath}`);
                 request.outpath = this.noAudioPath;
                 resolve(this.createResponse(request, false, false));
             }

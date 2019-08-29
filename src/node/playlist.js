@@ -49,9 +49,6 @@
 
         speak(opts) {
             var that = this;
-            var oipts = Object.assign({
-                usage: "recite",
-            }, opts);
             var voices = opts.voices || that.voices;
             
             return new Promise((resolve, reject) => {
@@ -60,7 +57,7 @@
                         return acc || voices[lang];
                     }, null).services.recite;
                     var trackAudioFiles = [];
-                    var sectionBreak = await tts.synthesizeSSML(tts.sectionBreak());
+                    var sectionBreak = await tts.synthesizeBreak(tts.SECTION_BREAK);
                     for (var iTrack = 0; iTrack < that.tracks.length; iTrack++) {
                         var track = that.tracks[iTrack];
                         var sutta_uid = track.sutta_uid.toLowerCase();

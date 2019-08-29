@@ -387,7 +387,7 @@
                     if (language && language !== ANY_LANGUAGE) {
                         request += `?lang=${language}`;
                     }
-                    logger.debug(`loadSuttaJson()`, request);
+                    logger.debug(`loadSuttaJson() ${request}`);
 
                     var result = await SuttaCentralApi.loadJson(request);
                     result.support = support;

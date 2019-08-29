@@ -186,7 +186,30 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
+    it("TODOGET download human audio playlist", function(done) {
+        done(); return; // TODO
+        var scvRest = app.locals.scvRest;
+        this.timeout(20*1000);
+        logger.level = 'info';
+        var async = function* () { try {
+            var apiModel = yield  scvRest.initialize()
+                .then(r=>async.next(r)).catch(e=>async.throw(e));
+            var url = `/scv/download/playlist/en/sujato_en/sn2.3%2Fen%2Fsujato`;
+            var res = yield supertest(app)
+                .get(url)
+                .expect('Content-Type', /audio\/mp3/)
+                .expect('Content-Disposition', 
+                    'attachment; filename=sn2.3-en-sujato_en_sujato_en.mp3')
+                .end((e,r) => e ? async.throw(e) : async.next(r));
+            var contentLength = Number(res.headers['content-length']);
+            should(contentLength).above(3400000);
+            should(contentLength).below(4600000);
+            should(res.statusCode).equal(200);
+            done();
+        } catch (e) { done(e); } }();
+        async.next();
+    });
+    it("TODOGET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
         var scvRest = app.locals.scvRest;
         this.timeout(20*1000);
         var async = function* () { try {

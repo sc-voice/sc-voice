@@ -615,5 +615,27 @@
         should(Voice.voiceOfName("vicki")).properties({name:"Vicki"});
         should(Voice.voiceOfName("sujato_pli")).properties({name:"sujato_pli"});
     })
+    it("TESTTESTsynthesizeBreak() for HumanTts uses altTts", function(done) {
+        this.timeout(3*1000);
+        var scAudio = new SCAudio();
+        var voice = Voice.createVoice({
+            name: 'sujato_en',
+            scAudio,
+        });
+        var altTts = voice.altTts;
+        should(altTts.voice).equal('Amy');
+        var tts = voice.services.recite;
+        (async function() { try {
+            var result = await altTts.synthesizeBreak();
+            should(result.signature.guid)
+                .match(/5a4ddf6b9c5cfd7e1ad8cf8a36e96c0f/);
+
+            var result = await tts.synthesizeBreak();
+            should(result.signature.guid)
+                .match(/5a4ddf6b9c5cfd7e1ad8cf8a36e96c0f/);
+
+            done();
+        } catch (e) {done(e);} })();
+    });
 
 })

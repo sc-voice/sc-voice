@@ -187,7 +187,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("speak(opts) adds voice audio", function(done) {
+    it("TODOspeak(opts) adds voice audio", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voices = {

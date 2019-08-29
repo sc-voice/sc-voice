@@ -83,6 +83,28 @@
             done();
         })();
     });
+    it("synthesizeBreak(...) returns sound file", function(done) {
+        this.timeout(3*1000);
+        var polly = new Polly({
+            voice: 'Matthew',
+            prosody: {},
+            language: 'en-US', // locale
+            breaks: [0.001,0.1,1.5,0.2,0.3],
+        });
+        (async function() { try {
+            // specific
+            var result = await polly.synthesizeBreak(polly.SECTION_BREAK);
+            should(result.signature.guid)
+                .match(/2571cb7f29a3c98d1899c49d2dd3b4e6/);
+
+            // default
+            var result = await polly.synthesizeBreak();
+            should(result.signature.guid)
+                .match(/2571cb7f29a3c98d1899c49d2dd3b4e6/);
+
+            done();
+        } catch (e) {done(e);} })();
+    });
     it("synthesizeText([text]) returns sound file for array of text", function(done) {
         this.timeout(3*1000);
         (async function() { try {

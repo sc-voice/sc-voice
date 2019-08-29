@@ -350,10 +350,7 @@ export default {
                 $vuetify,
             } = this;
             return gscv.ipsChoices.map(ch => {
-                ch.label = ch.label
-                    .replace(/A_NOBELL/, $vuetify.lang.t('$vuetify.scv.noBell'))
-                    .replace(/A_PUBLIC/, $vuetify.lang.t('$vuetify.scv.publicDomain'))
-                    ;
+                ch.label = $vuetify.lang.t(`$vuetify.scv.${ch.i18n}`);
                 return ch;
             });
         },

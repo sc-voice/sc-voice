@@ -54,6 +54,16 @@
             return newOpts;
         }
 
+        synthesizeBreak(index) {
+            var {
+                altTts,
+            } = this;
+
+            return altTts
+                ? altTts.synthesizeBreak(index)
+                : super.syntthesizeBreak(index);
+        }
+
         serviceSynthesize(resolve, reject, request) {
             var that = this;
             var params = {

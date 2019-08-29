@@ -69,7 +69,7 @@
         var ssml = recite.segmentSSML('dakkhiṇeyyaṃ');
         should.deepEqual(ssml,['dakkhiṇeyyaṃ']);
     });
-    it("speak([text],opts) returns empty sound file", function(done) {
+    it("TODOspeak([text],opts) returns empty sound file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice({
