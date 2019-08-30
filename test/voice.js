@@ -467,7 +467,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("speakSegment(opts) human-tts requires SCAudio", function(done) {
+    it("TESTTESTspeakSegment(opts) human-tts requires SCAudio", function(done) {
         (async function() { try {
             var sutta_uid = 'sn1.9999'; // not a sutta
             var language = 'pli';
@@ -615,7 +615,7 @@
         should(Voice.voiceOfName("vicki")).properties({name:"Vicki"});
         should(Voice.voiceOfName("sujato_pli")).properties({name:"sujato_pli"});
     })
-    it("TESTTESTsynthesizeBreak() for HumanTts uses altTts", function(done) {
+    it("synthesizeBreak() for HumanTts uses altTts", function(done) {
         this.timeout(3*1000);
         var scAudio = new SCAudio();
         var voice = Voice.createVoice({
