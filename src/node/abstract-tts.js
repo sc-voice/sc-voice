@@ -552,7 +552,11 @@
                     }
                     var inpath = soundStore.signaturePath(signature, ".txt");
                     fs.writeFileSync(inpath, inputs);
-                    var cmd = `bash -c "ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`;
+                    var cmd = [
+                        `bash -c`,
+                        `"ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`,
+                    ].join(' ');
+                    console.log(`dbg bash inpath:${inpath}`);
                     var execOpts = {
                         cwd: storePath,
                         maxBuffer,

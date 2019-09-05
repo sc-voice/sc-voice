@@ -186,7 +186,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TODOGET download human audio playlist", function(done) {
+    it("GET download human audio playlist", function(done) {
         done(); return; // TODO
         var scvRest = app.locals.scvRest;
         this.timeout(20*1000);
@@ -209,7 +209,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TODOGET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
+    it("GET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
         var scvRest = app.locals.scvRest;
         this.timeout(20*1000);
         var async = function* () { try {

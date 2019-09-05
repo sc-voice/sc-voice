@@ -39,10 +39,8 @@
           :show-select="true"
           :single-select="false"
           >
-          <template v-slot:item.calories="{ item }">
-            <v-chip :color="getColor(item.calories)" dark>
-                {{ item.calories }}
-              </v-chip>
+          <template v-slot:item.size="{ item }">
+            {{(item.size/1E6).toFixed(1)}}MB
           </template>
           <template v-slot:no-data>
             {{ $vuetify.lang.t('$vuetify.auth.loading') }}

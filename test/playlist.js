@@ -4,6 +4,8 @@
     const path = require('path');
     const {
         Playlist,
+        SCAudio,
+        SoundStore,
         Sutta,
         SuttaCentralApi,
         SuttaFactory,
@@ -187,9 +189,14 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TODOspeak(opts) adds voice audio", function(done) {
+    it("speak(opts) adds voice audio", function(done) {
         this.timeout(5*1000);
         (async function() { try {
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            var factory = new SuttaFactory({
+                suttaCentralApi,
+            });
+            var sutta = await factory.loadSutta('sn2.3');
             var voices = {
                 pli: Voice.createVoice({
                     name:'aditi',
@@ -204,12 +211,51 @@
             var pl = new Playlist({
                 languages: ['pli', 'en'], // speaking order 
             });
-            pl.addSutta(suttas[2]);
+            pl.addSutta(sutta);
             var result = await pl.speak({
                 voices,
                 volume: 'test-playlist',
             });
-            should(result.signature.guid).match(/86043d07ec8ba96a415a48d961bfd966/);
+            should(result.signature.guid).match(/e088211ba824e834914008fa9e319c0e/);
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTspeak(opts) creates human voice audio file", function(done) {
+        this.timeout(20*1000);
+        (async function() { try {
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            var factory = new SuttaFactory({
+                suttaCentralApi,
+            });
+            var sutta = await factory.loadSutta('sn2.3');
+            var soundStore = new SoundStore();
+            var scAudio = new SCAudio();
+            var voiceTrans = Voice.createVoice({
+                name: 'sujato_en',
+                usage: 'recite',
+                soundStore,
+                localeAlt: "pli",
+                audioFormat: soundStore.audioFormat,
+                audioSuffix: soundStore.audioSuffix,
+                scAudio,
+            });
+            var voiceRoot = Voice.createVoice({
+                name: 'sujato_pli',
+                scAudio,
+            });
+            var voices = {
+                pli: voiceRoot,
+                en: voiceTrans,
+            };
+            var pl = new Playlist({
+                languages: ['pli', 'en'], // speaking order 
+            });
+            pl.addSutta(sutta);
+            var result = await pl.speak({
+                voices,
+                volume: 'test-playlist',
+            });
+            should(result.signature.guid).match(/e088211ba824e834914008fa9e319c0e/);
             done();
         } catch(e) { done(e); } })();
     });

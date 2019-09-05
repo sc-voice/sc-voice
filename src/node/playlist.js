@@ -85,8 +85,23 @@
                                         segOpts.guid = filename; 
                                     }
                                     segOpts = Object.assign(segOpts, opts);
+                                    delete segOpts.voices; // not used 
 
-                                    var vdata = await voice.speak(text, segOpts);
+                                    var sutta_uid = segment.scid.split(':')[0];
+                                    var speakOpts = {
+                                        sutta_uid,
+                                        segment,
+                                        language: lang,
+                                        usage: voice.usage, 
+                                        translator: auid,
+                                    };
+
+                                    var vdata = await voice.speakSegment(speakOpts);
+                                    if (iSeg === 3) {
+                                        console.log(`dbg playlist`,
+                                            segment,
+                                            vdata);
+                                    }
                                     segmentAudioFiles.push(vdata.file);
                                     segment.audio = segment.audio || {};
                                     segment.audio[lang] = vdata.signature.guid;

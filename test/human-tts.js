@@ -83,7 +83,7 @@
         should.deepEqual(humanTts.segmentSSML('“Bhadante”ti'), ['Bhadante ti']);
         should.deepEqual(humanTts.segmentSSML('mūlaṃ'), ['mūlaṃ']);
     });
-    it("TODOsynthesizeSSML(ssml) returns sound file", function(done) {
+    it("synthesizeSSML(ssml) returns sound file", function(done) {
         this.timeout(3*1000);
         var noAudioPath = path.join(SRC, 'assets', 'no_audio.mp3');
         var humanTts = new HumanTts();
