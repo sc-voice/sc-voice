@@ -140,7 +140,7 @@
             var expandedSutta = factory.expandSutta(sutta);
             var voice = Voice.createVoice({
                 name: "amy",
-                localeAlt: "pli",
+                localeIPA: "pli",
             });
             var sections = expandedSutta.sections;
             should(sections.length).equal(4);

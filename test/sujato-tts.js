@@ -105,13 +105,13 @@
             var audioFormat = soundStore.audioFormat;
             var audioSuffix = soundStore.audioSuffix;
             var language = 'pli';
-            var localeAlt = 'pli';
+            var localeIPA = 'pli';
             var scAudio = new SCAudio();
             var voice = Voice.createVoice({
                 name: 'sujato_pli',
                 usage,
                 soundStore,
-                localeAlt,
+                localeIPA,
                 audioFormat,
                 audioSuffix,
                 scAudio,
@@ -136,7 +136,7 @@
                 translator,
                 usage,
             });
-            should(result.file).match(/053dc473f58ddee40c9b6ea073659ff8/);
+            should(result.file).match(/11bc60f9aeb6fc749b83fc354c8b4baa/);
             done();
         } catch(e) {done(e);} })();
     });
@@ -149,13 +149,13 @@
             var audioFormat = soundStore.audioFormat;
             var audioSuffix = soundStore.audioSuffix;
             var language = 'en';
-            var localeAlt = 'en';
+            var localeIPA = 'en';
             var scAudio = new SCAudio();
             var voice = Voice.createVoice({
                 name: 'sujato_pli',
                 usage,
                 soundStore,
-                localeAlt,
+                localeIPA,
                 audioFormat,
                 audioSuffix,
                 scAudio,
@@ -180,7 +180,7 @@
                 translator,
                 usage,
             });
-            should(result.file).match(/95e0b3be3f4584c0368ca38e24a623b2/);
+            should(result.file).match(/e5d1a1c4a19fa2cdbf02d489fa3792ce/);
             done();
         } catch(e) {done(e);} })();
     });

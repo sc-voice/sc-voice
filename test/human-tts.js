@@ -25,7 +25,7 @@
         var humanTts = new HumanTts();
         should(humanTts).properties({
             language: 'pli',
-            localeAlt: 'pli',
+            localeIPA: 'pli',
             voice: 'sujato_pli',
             audioFormat: 'mp3',
             audioSuffix: '.mp3',
@@ -41,7 +41,7 @@
         });
         should(humanTts).properties({
             language: 'pli',
-            localeAlt: 'pli',
+            localeIPA: 'pli',
             voice: 'sujato_pli',
             audioFormat: 'mp3',
             audioSuffix: '.mp3',
@@ -73,7 +73,7 @@
     it("segmentSSML(text) returns SSML", function() {
         var humanTts = new HumanTts({
             language: 'pli',
-            localeAlt: 'pli',
+            localeIPA: 'pli',
             stripQuotes: true,
         });
         should.deepEqual(humanTts.segmentSSML('281'),
@@ -111,7 +111,7 @@
                 pli: 'no-pali',
                 scid: 'sn2.3:1.1',
             };
-            var guid = 'd042940e328271a6dd56ba63ea5908ab';
+            var guid = 'a26ce75169deb4aa883482840733d922';
             var storePath = tmp.tmpNameSync();
             var downloadDir = tmp.tmpNameSync();
             var scAudio = new SCAudio({
@@ -139,7 +139,7 @@
             });
             var result = await humanTts.synthesizeSegment(opts);
             should(result.signature.guid).equal(guid);
-            should(result.signature.scAudioVersion).equal('1');
+            should(result.signature.scAudioVersion).equal('2');
             var guidDir = guid.substring(0,2);
             var reFile = new RegExp(`.*/${guidDir}/${guid}${soundStore.audioSuffix}$`);
             should(result.file).match(reFile);

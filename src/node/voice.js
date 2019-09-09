@@ -20,7 +20,7 @@
             this.stripQuotes = opts.stripQuotes;
             this.locale = opts.locale || "en-IN";
             this.langTrans = opts.langTrans || 'en';
-            this.localeAlt = opts.localeAlt || this.langTrans;
+            this.localeIPA = opts.localeIPA || this.langTrans;
             this.fullStopComma = opts.fullStopComma;
             this.service = opts.service || 'aws-polly';
             this.name = opts.name || 'Raveena';
@@ -192,7 +192,7 @@
                     let props= {
                         words,
                         language: this.locale,
-                        localeAlt: this.localeAlt,
+                        localeIPA: this.localeIPA,
                         fullStopComma: this.fullStopComma,
                         stripNumbers: this.stripNumbers,
                         stripQuotes: this.stripQuotes,

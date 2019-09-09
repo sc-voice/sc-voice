@@ -31,6 +31,7 @@
     const PoParser = require('./po-parser');
     const Task = require('./task');
     const Voice = require('./voice');
+    const VoiceFactory = require('./voice-factory');
     const SuttaCentralId = require('./sutta-central-id');
     const LOCAL = path.join(__dirname, '../../local');
     const PATH_SOUNDS = path.join(LOCAL, 'sounds/');
@@ -52,13 +53,21 @@
                 srcPkg,
             }, opts));
             logger.info(`ScvRest.ctor(${this.name})`);
-            this.wikiUrl = opts.wikiUrl || 'https://github.com/sc-voice/sc-voice/wiki';
-            this.wikiUrl = opts.wikiUrl || 'https://raw.githubusercontent.com/wiki/sc-voice/sc-voice';
+            this.wikiUrl = opts.wikiUrl 
+                || 'https://github.com/sc-voice/sc-voice/wiki';
+            this.wikiUrl = opts.wikiUrl 
+                || 'https://raw.githubusercontent.com/wiki/sc-voice/sc-voice';
             this.examples = opts.examples;
-            this.soundStore = opts.soundStore || new SoundStore(opts);
+            var soundStore = this.soundStore 
+                = opts.soundStore || new SoundStore(opts);
             this.audioMIME = this.soundStore.audioMIME;
             this.audioUrls = opts.audioUrls || new AudioUrls();
-            this.scAudio = opts.scAudio || new SCAudio();
+            var scAudio = this.scAudio 
+                = opts.scAudio || new SCAudio();
+            this.voiceFactory = opts.voiceFactory || new VoiceFactory({
+                scAudio,
+                soundStore,
+            });
             this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
@@ -75,12 +84,6 @@
             });
             this.mdAria = opts.mdAria || new MdAria();
             this.jwtExpires = opts.jwtExpires || '1h';
-            this.voiceRoot = Voice.createVoice({
-                name: 'Aditi',
-                soundStore: this.soundStore,
-                audioFormat: this.soundStore.audioFormat,
-                audioSuffix: this.soundStore.audioSuffix,
-            });
             this.suttaStore = new SuttaStore({
                 suttaCentralApi: this.suttaCentralApi,
                 suttaFactory: this.suttaFactory,
@@ -130,6 +133,9 @@
                         this.getAudioUrls),
                     this.resourceMethod("get", 
                         "download/playlist/:langs/:voice/:pattern",
+                        this.getDownloadPlaylist, this.audioMIME),
+                    this.resourceMethod("get", 
+                        "download/playlist/:langs/:voice/:pattern/:vroot",
                         this.getDownloadPlaylist, this.audioMIME),
                     this.resourceMethod("get", "sutta/:sutta_uid/:language/:translator", 
                         this.getSutta),
@@ -269,7 +275,7 @@
                         language,
                         usage,
                         soundStore: that.soundStore,
-                        localeAlt: "pli",
+                        localeIPA: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });
@@ -310,7 +316,7 @@
                         language,
                         usage,
                         soundStore: that.soundStore,
-                        localeAlt: "pli",
+                        localeIPA: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                     });
@@ -373,6 +379,7 @@
             logger.info(`GET play/section/${suttaRef}/${iSection}/${vnameTrans}`);
             var voiceTrans = Voice.voiceOfName(vnameTrans) || Voice.voiceOfName('Amy');
             var usage = voiceTrans.usage;
+            var voiceRoot = this.voiceFactory.voiceOfName('Aditi');
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
@@ -384,7 +391,6 @@
                     if (iSection < 0 || sutta.sections.length <= iSection) {
                         throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
                     }
-                    var voiceRoot = that.voiceRoot;
                     var section = sutta.sections[iSection];
                     var segments = [];
                     for (var iSeg = 0; iSeg < section.segments.length; iSeg++) {
@@ -418,10 +424,7 @@
             }
             var scAudio = this.scAudio;
             var voice = Voice.voiceOfName(vnameTrans);
-            var voiceRoot = Voice.createVoice({
-                name: vnameRoot,
-                scAudio,
-            });
+            var voiceRoot = this.voiceFactory.voiceOfName(vnameRoot);
             logger.info(`GET ${req.url}`);
             var usage = voice.usage || 'recite';
             return new Promise((resolve, reject) => {
@@ -441,7 +444,7 @@
                         name: voice.name,
                         usage,
                         soundStore: that.soundStore,
-                        localeAlt: "pli",
+                        localeIPA: "pli",
                         audioFormat: that.soundStore.audioFormat,
                         audioSuffix: that.soundStore.audioSuffix,
                         scAudio,
@@ -561,13 +564,14 @@
                 initialized,
                 scAudio,
                 soundStore,
-                voiceRoot,
                 suttaStore,
+                voiceFactory,
             } = this;
             if (!initialized) {
                 return Promise.reject(new Error(
                     `${this.constructor.name} is not initialized`));
             }
+            var vroot = req.params.vroot || 'Aditi';
             var langs = (req.params.langs || 'pli+en').toLowerCase().split('+');
             var language = req.query.lang || 'en';
             var vname = (req.params.voice || 'Amy').toLowerCase();
@@ -595,15 +599,8 @@
                         return;
                     }
                     var stats = playlist.stats();
-                    var voiceLang = Voice.createVoice({
-                        name: vname,
-                        usage,
-                        soundStore: soundStore,
-                        localeAlt: "pli",
-                        audioFormat: soundStore.audioFormat,
-                        audioSuffix: soundStore.audioSuffix,
-                        scAudio,
-                    });
+                    var voiceLang = voiceFactory.voiceOfName(vname);
+                    var voiceRoot = voiceFactory.voiceOfName(vroot);
                     var audio = await playlist.speak({
                         voices: {
                             pli: voiceRoot,

@@ -11,7 +11,7 @@
         name: 'Aditi',
         usage: 'recite',
         locale: 'hi-IN',
-        localeAlt: 'pli',
+        localeIPA: 'pli',
         stripNumbers: true,
         stripQuotes: true,
         //syllabifyLength,
@@ -36,7 +36,7 @@
         var aditi = Voice.createVoice('aditi');
         should(aditi.name).equal('Aditi');
         should(aditi.locale).equal('hi-IN');
-        should(aditi.localeAlt).equal('pli');
+        should(aditi.localeIPA).equal('pli');
         should(aditi.maxSegment).equal(400);
         should(aditi.fullStopComma).equal(true);
         should(aditi.syllableVowels).equal('aeiouāīū');

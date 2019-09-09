@@ -198,7 +198,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) creates sn1.9:1.1 audio file", function(done) {
+    it("downloadSegmentAudio(suttaSegId,...) creates sn1.9:1.1 audio file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
@@ -219,7 +219,6 @@
                 suttaSegId,
                 //audioPath,
             });
-            console.log(`dbg audioPath`, audioPath, res);
             var url = [
                 "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
                 "en",
@@ -268,7 +267,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) creates sn2.3:1.1 audio file", function(done) {
+    it("downloadSegmentAudio(suttaSegId,...) creates sn2.3:1.1 audio file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
@@ -289,7 +288,6 @@
                 suttaSegId,
                 //audioPath,
             });
-            console.log(`dbg audioPath`, audioPath, res);
             var url = [
                 "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
                 "en",

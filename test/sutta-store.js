@@ -148,7 +148,7 @@
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
-                localeAlt: 'pli',
+                localeIPA: 'pli',
                 usage: 'recite',
             });
             var suttaCentralApi = await new SuttaCentralApi().initialize();
@@ -229,7 +229,7 @@
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
-                localeAlt: 'pli',
+                localeIPA: 'pli',
                 usage: 'recite',
             });
             var suttaCentralApi = await new SuttaCentralApi(PRODUCTION).initialize();
@@ -283,7 +283,7 @@
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
-                localeAlt: 'pli',
+                localeIPA: 'pli',
                 usage: 'recite',
             });
             var suttaCentralApi = await new SuttaCentralApi(PRODUCTION).initialize();
@@ -485,7 +485,7 @@
         (async function() { try {
             var voice = Voice.createVoice({
                 language: 'en',
-                localeAlt: 'pli',
+                localeIPA: 'pli',
                 usage: 'recite',
             });
             var store = await new SuttaStore({

@@ -24,6 +24,7 @@ module.exports = {
     S3Bucket: require('./src/node/s3-bucket'),
     Task: require('./src/node/task'),
     Voice: require('./src/node/voice'),
+    VoiceFactory: require('./src/node/voice-factory'),
     VsmStore: require('./src/node/vsm-store'),
     Watson: require("./src/node/watson"),
     Words: require('./src/node/words'),

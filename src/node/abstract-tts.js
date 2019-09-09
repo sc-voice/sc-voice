@@ -22,7 +22,7 @@
     class AbstractTTS {
         constructor(opts={}) {
             this.language = opts.language || 'en';
-            this.localeAlt = opts.localeAlt || this.language;
+            this.localeIPA = opts.localeIPA || this.language;
             this.hits = 0;
             this.misses = 0;
             this.voice = null;
@@ -170,9 +170,9 @@
                     // ipa = null
                 } else if (this.words.isWord(word)) {
                     var w = word.endsWith(`’`) ? word.substring(0,word.length-1) : word;
-                    if (this.localeAlt !== this.language && 
+                    if (this.localeIPA !== this.language && 
                         this.words.isForeignWord(w)) { 
-                        var ipa = this.wordIPA(word, this.localeAlt);
+                        var ipa = this.wordIPA(word, this.localeIPA);
                     }
                 } else if (word.endsWith(`’`)) {
                     // ipa = null

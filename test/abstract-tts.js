@@ -22,7 +22,7 @@
         should(tts.words).equal(words);
         should(tts).properties({
             language: 'en',
-            localeAlt: 'en',
+            localeIPA: 'en',
         });
     });
     it("signature(text) returns signature that identifies synthesized speech", function() {
@@ -74,10 +74,10 @@
     });
     it("wordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS({
-            localeAlt: 'pli',
+            localeIPA: 'pli',
         });
         var ttsStrip = new AbstractTTS({
-            localeAlt: 'pli',
+            localeIPA: 'pli',
             stripNumbers: true,
         });
 
@@ -124,7 +124,7 @@
     });
     it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS({
-            localeAlt: 'pli',
+            localeIPA: 'pli',
         });
         var text = "Bhikkhus, the well-to-do Tathagata, was at Ukkaṭṭhā today.";
         var tokens = tts.tokensSSML(text);
@@ -243,7 +243,7 @@
     it("segmentSSML(text) returns array of SSML text segments", function() {
         var tts = new AbstractTTS();
         var ttsStrip = new AbstractTTS({
-            localeAlt: 'pli',
+            localeIPA: 'pli',
             stripNumbers: true,
         });
 

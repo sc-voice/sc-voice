@@ -37,7 +37,7 @@
             }
         }
 
-        static get VERSION() { return "1"; }
+        static get VERSION() { return "2"; }
 
         nikayaOf(suid) {
             return suid.replace(/[0-9].*/,'');
@@ -274,17 +274,22 @@
                 if (srcFile === dstFile) { // source is in destination format
                     resolve(response);
                 } else { // convert to destination format
-                    var cmd = `ffmpeg -i ${srcFile} -vn -b:a 128k -ar 44100 -y "${dstFile}"`;
+                    var cmd = [
+                        `ffmpeg -i ${srcFile}`,
+                        `-vn`, // omit video stream
+                        `-b:a 128k`, // audio bitrate
+                        `-ar 22050`, // audio bitrate 22050Hz
+                        //`-ar 44100`, // audio bitrate 44100Hz
+                        `-y "${dstFile}"`].join(' ');
                     cmd = `${cmd}; rm ${srcFile}`;
-                    console.log(`dbg cmd:${cmd}`);
                     exec(cmd, execOpts, (error, stdout, stderr) => {
-                        logger.info(stdout);
+                        logger.debug(stdout);
                         if (error) {
                             logger.warn(stderr);
                             reject(error);
                             return;
                         } 
-                        logger.info(stderr);
+                        logger.debug(stderr);
                         if (contentType === 'video/webm') {
                             response.audioPath = audioPath.replace(srcFile, dstFile);
                             resolve(response);

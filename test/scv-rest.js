@@ -17,6 +17,7 @@
         SuttaCentralApi,
         SuttaCentralId,
         SuttaFactory,
+        VoiceFactory,
         Words,
     } = require("../index");
     const TEST_ADMIN = {
@@ -57,14 +58,14 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("ScvRest maintains a SoundStore singleton", function() {
+    it("TESTTESTScvRest maintains a SoundStore singleton", function() {
         var scvRest = app.locals.scvRest;
         should(scvRest).instanceOf(ScvRest);
         var soundStore = scvRest.soundStore;
         should(soundStore).instanceOf(SoundStore);
-        should(scvRest.voiceRoot.soundStore).equal(soundStore);
-        should(scvRest.voiceRoot.services.recite.soundStore).equal(soundStore);
-        should(scvRest.voiceRoot.services.review.soundStore).equal(soundStore);
+        var voiceFactory = scvRest.voiceFactory;
+        should(voiceFactory).instanceOf(VoiceFactory);
+        should(voiceFactory.soundStore).equal(soundStore);
     });
     it("GET /identity returns restbundle identity JSON", function(done) {
         var async = function* () { try {
@@ -339,7 +340,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /scv/play/section/... returns playable section", function(done) {
+    it("TESTTESTGET /scv/play/section/... returns playable section", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iSection = 2;
@@ -551,7 +552,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.pli).match(/^Sāvatthinidānaṃ/);
             should(data.segment.audio.en).match(/49e50d568f490d586e4065d9c83ff979/);
-            should(data.segment.audio.pli).match(/7a0a08f645496bbaa7ebfddb3083ac36/);
+            should(data.segment.audio.pli).match(/abb4efd45c27350f0f3caa18818ca80/);
             should(data.segment.audio.vnamePali).equal(undefined);
 
             done();

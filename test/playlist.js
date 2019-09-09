@@ -202,7 +202,7 @@
                     name:'aditi',
                     usage: 'recite',
                     language: 'hi-IN',
-                    localeAlt: 'pli',
+                    localeIPA: 'pli',
                     stripNumbers: true,
                     stripQuotes: true,
                 }),
@@ -234,7 +234,7 @@
                 name: 'sujato_en',
                 usage: 'recite',
                 soundStore,
-                localeAlt: "pli",
+                localeIPA: "pli",
                 audioFormat: soundStore.audioFormat,
                 audioSuffix: soundStore.audioSuffix,
                 scAudio,
@@ -255,7 +255,7 @@
                 voices,
                 volume: 'test-playlist',
             });
-            should(result.signature.guid).match(/797e669c6203c14196dd091c3e784d90/);
+            should(result.signature.guid).match(/f9a7ce326b14d6474baa1c05c9ee4ad3/);
             done();
         } catch(e) { done(e); } })();
     });
