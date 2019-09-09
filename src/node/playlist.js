@@ -97,11 +97,6 @@
                                     };
 
                                     var vdata = await voice.speakSegment(speakOpts);
-                                    if (iSeg === 3) {
-                                        console.log(`dbg playlist`,
-                                            segment,
-                                            vdata);
-                                    }
                                     segmentAudioFiles.push(vdata.file);
                                     segment.audio = segment.audio || {};
                                     segment.audio[lang] = vdata.signature.guid;

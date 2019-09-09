@@ -7,9 +7,6 @@
     const {
         exec,
     } = require('child_process');
-    const {
-        version,
-    } = require('../../package');
     const http = require('http');
     const https = require('https');
     const SuttaStore = require('./sutta-store');
@@ -18,6 +15,7 @@
     const URL_RAW = 'https://raw.githubusercontent.com/sujato/sc-audio/master/flac';
     const URL_SEGMENTS = 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com';
     const URL_MAP = 'https://sc-opus-store.sgp1.digitaloceanspaces.com';
+    const maxBuffer = 10 * 1024 * 1024; // for exec
     
     class SCAudio {
         constructor(opts ={}) {
@@ -29,6 +27,7 @@
             this.reader = opts.reader || 'sujato';
             this.extRaw = opts.extRaw || '.flac';
             this.extSeg = opts.extSeg || '.webm';
+            this.convertTo = opts.convertTo || '.mp3';
             this.suttaStore = opts.suttaStore;
             this.soundStore = opts.soundStore;
             this.downloadDir = opts.downloadDir || path.join(LOCAL, 'sc-audio');
@@ -38,6 +37,8 @@
             }
         }
 
+        static get VERSION() { return "1"; }
+
         nikayaOf(suid) {
             return suid.replace(/[0-9].*/,'');
         }
@@ -46,7 +47,6 @@
             return suid.replace(/\..*/,'');
         }
 
-            
         aeneasMapUrl(suid, lang=this.language, author=this.author, reader=this.reader) {
             suid = suid.toLowerCase().replace(/\.0*/ug,'.');
             var nikaya = this.nikayaOf(suid);
@@ -252,22 +252,81 @@
             ].join('/');
         }
 
+        convertResponse(response, resolve, reject) {
+            var {
+                url,
+                audioPath,
+                contentType,
+            } = response;
+            var {
+                convertTo,
+            } = this;
+            (async function() { try {
+                var execOpts = {
+                    cwd: path.dirname(audioPath),
+                    shell: '/bin/bash',
+                    maxBuffer,
+                };
+                var ext = path.extname(audioPath);
+                var basename = path.basename(audioPath, ext);
+                var srcFile = path.basename(audioPath);
+                var dstFile = `${basename}${convertTo}`;
+                if (srcFile === dstFile) { // source is in destination format
+                    resolve(response);
+                } else { // convert to destination format
+                    var cmd = `ffmpeg -i ${srcFile} -vn -b:a 128k -ar 44100 -y "${dstFile}"`;
+                    cmd = `${cmd}; rm ${srcFile}`;
+                    console.log(`dbg cmd:${cmd}`);
+                    exec(cmd, execOpts, (error, stdout, stderr) => {
+                        logger.info(stdout);
+                        if (error) {
+                            logger.warn(stderr);
+                            reject(error);
+                            return;
+                        } 
+                        logger.info(stderr);
+                        if (contentType === 'video/webm') {
+                            response.audioPath = audioPath.replace(srcFile, dstFile);
+                            resolve(response);
+                        } else {
+                            var e = new Error(
+                                `download failed for url:${url} error:${audioPath}`);
+                            logger.warn(e.stack);
+                            fs.existsSync(audioPath) && fs.unlinkSync(audioPath); 
+                            reject(e);
+                        }
+                    });
+                };
+            } catch(e) {reject(e);} })();
+        }
+
         downloadSegmentAudio(opts = {}) {
-            var suttaSegId = opts.suttaSegId;
+            var {
+                suttaSegId,
+                audioPath,
+                language,
+                author,
+                reader,
+            } = opts;
             if (suttaSegId == null) {
                 return Promise.reject(new Error(`expected suttaSegId`));
             }
             suttaSegId = suttaSegId.replace(/\.00*/ug,'.');
-            var audioPath = opts.audioPath;
             if (audioPath == null) {
                 var filename = `${suttaSegId.replace(/:/g,'_')}${this.extSeg}`;
                 audioPath = path.join(this.downloadDir, filename);
+                logger.info(`ScAudio.downloadSegmentAudio() default audioPath:${audioPath}`);
+            } else {
+                logger.info(`ScAudio.downloadSegmentAudio() given audioPath:${audioPath}`);
             }
-            var language = opts.language || this.language;
-            var author = opts.author || this.author;
-            var reader = opts.reader || this.reader;
+            language = language || this.language;
+            author = author || this.author;
+            reader = reader || this.reader;
+            var url = this.segmentUrl(suttaSegId, language, author, reader);
+            var {
+                downloadDir,
+            } = this;
             var that = this;
-            var url = that.segmentUrl(suttaSegId, language, author, reader);
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     let httpx = url.startsWith('https') ? https : http;
@@ -280,22 +339,21 @@
                             logger.info(
                                 `downloaded ${audioPath} ${contentType} `+
                                 `saved as ${audioPathType}`);
+                            var execOpts = {
+                                cwd: path.dirname(audioPath),
+                                shell: '/bin/bash',
+                                maxBuffer,
+                            };
                             var response = {
+                                url,
+                                contentType,
                                 audioPath,
                                 suttaSegId,
                                 language,
                                 author,
                                 reader,
                             };
-                            if (contentType === 'video/webm') {
-                                resolve(response);
-                            } else {
-                                var e = new Error(
-                                    `download failed for url:${url} error:${audioPath}`);
-                                logger.warn(e.stack);
-                                fs.existsSync(audioPath) && fs.unlinkSync(audioPath); 
-                                reject(e);
-                            }
+                            var resCvt = that.convertResponse(response, resolve, reject);
                         });
                     }).on('error', (e) => {
                         logger.error(e.stack);
@@ -317,6 +375,7 @@
                 suttaStore,
                 soundStore,
             } = opts;
+            var that = this;
             if (suid == null) {
                 return Promise.reject(new Error('suid is required'));
             }
@@ -332,7 +391,6 @@
             author = author || this.author;
             reader = reader || this.reader;
 
-            var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var segmentAudio = {};

@@ -143,25 +143,38 @@
             });
             should(sca.downloadDir).equal(downloadDir);
             should(fs.existsSync(downloadDir)).equal(true);
-            var audioPath = path.join(downloadDir, 'sn1.9_1.1.webm');
+            var audioPath = path.join(downloadDir, 'sn1.9_1.1.mp3');
 
             // english
             var res = await sca.downloadSegmentAudio({
                 suttaSegId,
             });
+            var url = [
+                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                "en",
+                "sn/sn1/sn1.9/sn1.9_1.1.webm",
+            ].join('/');
             should.deepEqual(res,{
                 language: 'en',
                 reader,
                 suttaSegId,
                 audioPath,
                 author,
+                contentType: 'video/webm',
+                url,
             });
+
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
             should(stats.size).above(30000);
             should(stats.size).below(40000);
 
             // Pali
+            var url = [
+                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                "pli",
+                "sn/sn1/sn1.9/sn1.9_1.1.webm",
+            ].join('/');
             var sca = new SCAudio();
             var res = await sca.downloadSegmentAudio({
                 suttaSegId,
@@ -174,6 +187,8 @@
                 suttaSegId,
                 audioPath,
                 author,
+                contentType: 'video/webm',
+                url,
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
@@ -183,7 +198,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("downloadSegmentAudio(suttaSegId,...) converts audio file", function(done) {
+    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) creates sn1.9:1.1 audio file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
@@ -191,26 +206,33 @@
             var suttaSegId = 'sn1.9:1.1';
             var author = 'sujato';
             var downloadDir = tmp.tmpNameSync();
-            var audioPathType = 'mp3';
             should(fs.existsSync(downloadDir)).equal(false);
             var sca = new SCAudio({
                 downloadDir,
             });
             should(sca.downloadDir).equal(downloadDir);
             should(fs.existsSync(downloadDir)).equal(true);
-            var audioPath = path.join(downloadDir, `test_sn1.9_1.1.mp3.${audioPathType}`);
+            var audioPath = path.join(downloadDir, `sn1.9_1.1.mp3`);
 
             // english
             var res = await sca.downloadSegmentAudio({
                 suttaSegId,
-                audioPath,
+                //audioPath,
             });
+            console.log(`dbg audioPath`, audioPath, res);
+            var url = [
+                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                "en",
+                "sn/sn1/sn1.9/sn1.9_1.1.webm",
+            ].join('/');
             should.deepEqual(res,{
                 language: 'en',
                 reader,
                 suttaSegId,
                 audioPath,
                 author,
+                contentType: 'video/webm',
+                url,
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
@@ -218,6 +240,11 @@
             should(stats.size).below(39000);
 
             // Pali
+            var url = [
+                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                "pli",
+                "sn/sn1/sn1.9/sn1.9_1.1.webm",
+            ].join('/');
             var sca = new SCAudio();
             var res = await sca.downloadSegmentAudio({
                 suttaSegId,
@@ -230,6 +257,78 @@
                 suttaSegId,
                 audioPath,
                 author,
+                contentType: 'video/webm',
+                url,
+            });
+            should(fs.existsSync(audioPath)).equal(true);
+            var stats = fs.statSync(audioPath);
+            should(stats.size).above(80000);
+            should(stats.size).below(90000);
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) creates sn2.3:1.1 audio file", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var language = 'en';
+            var reader = 'sujato';
+            var suttaSegId = 'sn2.3:1.1';
+            var author = 'sujato';
+            var downloadDir = tmp.tmpNameSync();
+            should(fs.existsSync(downloadDir)).equal(false);
+            var sca = new SCAudio({
+                downloadDir,
+            });
+            should(sca.downloadDir).equal(downloadDir);
+            should(fs.existsSync(downloadDir)).equal(true);
+            var audioPath = path.join(downloadDir, `sn2.3_1.1.mp3`);
+
+            // english
+            var res = await sca.downloadSegmentAudio({
+                suttaSegId,
+                //audioPath,
+            });
+            console.log(`dbg audioPath`, audioPath, res);
+            var url = [
+                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                "en",
+                "sn/sn2/sn2.3/sn2.3_1.1.webm",
+            ].join('/');
+            should.deepEqual(res,{
+                language: 'en',
+                reader,
+                suttaSegId,
+                audioPath,
+                author,
+                contentType: 'video/webm',
+                url,
+            });
+            should(fs.existsSync(audioPath)).equal(true);
+            var stats = fs.statSync(audioPath);
+            should(stats.size).above(56000);
+            should(stats.size).below(57000);
+
+            // Pali
+            var url = [
+                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                "pli",
+                "sn/sn2/sn2.3/sn2.3_1.1.webm",
+            ].join('/');
+            var sca = new SCAudio();
+            var res = await sca.downloadSegmentAudio({
+                suttaSegId,
+                language: 'pli',
+                audioPath, // overrides downloadDir
+            });
+            should.deepEqual(res,{
+                language: 'pli',
+                reader,
+                suttaSegId,
+                audioPath,
+                author,
+                contentType: 'video/webm',
+                url,
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);

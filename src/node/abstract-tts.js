@@ -556,7 +556,6 @@
                         `bash -c`,
                         `"ffmpeg -y -safe 0 -f concat -i ${inpath} -c copy ${outpath}"`,
                     ].join(' ');
-                    console.log(`dbg bash inpath:${inpath}`);
                     var execOpts = {
                         cwd: storePath,
                         maxBuffer,

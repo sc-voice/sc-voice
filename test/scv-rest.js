@@ -551,7 +551,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.pli).match(/^Sāvatthinidānaṃ/);
             should(data.segment.audio.en).match(/49e50d568f490d586e4065d9c83ff979/);
-            should(data.segment.audio.pli).match(/a9f2370d0d1e283a54207ece4a1b626a/);
+            should(data.segment.audio.pli).match(/7a0a08f645496bbaa7ebfddb3083ac36/);
             should(data.segment.audio.vnamePali).equal(undefined);
 
             done();
@@ -939,7 +939,7 @@
             var voices = res.body;
             should.deepEqual(voices.map(v=>v.name), [
                 'Amy', 'Russell', 'Raveena', 'Matthew', 'sujato_en', // en voices first
-                'Vicki',
+                'Hans', 'Marlene', 'Vicki', // de voices
                 'Aditi', 'sujato_pli', // pli voices last
             ])
             should(voices[0]).properties({
@@ -964,7 +964,7 @@
             should(res.statusCode).equal(200);
             var voices = res.body;
             should.deepEqual(voices.map(v=>v.name), [
-                'Vicki', // de voices first
+                'Hans', 'Marlene', 'Vicki', // de voices first
                 'Aditi', 'sujato_pli', // pli voices last
             ])
 

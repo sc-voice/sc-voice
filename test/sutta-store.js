@@ -1023,7 +1023,6 @@
         } catch(e) {done(e);} })();
     });
     it("keywordSearch(...) finds suttas by keywords", function(done) {
-        logger.level='info'; // dbg
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var language = 'en';

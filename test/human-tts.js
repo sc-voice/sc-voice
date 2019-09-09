@@ -2,10 +2,12 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const tmp = require('tmp');
     const { logger } = require('rest-bundle');
     const {
         HumanTts,
         SCAudio,
+        SoundStore,
     } = require("../index");
 
     const BREAK='<break time="0.001s"/>';
@@ -83,7 +85,7 @@
         should.deepEqual(humanTts.segmentSSML('“Bhadante”ti'), ['Bhadante ti']);
         should.deepEqual(humanTts.segmentSSML('mūlaṃ'), ['mūlaṃ']);
     });
-    it("synthesizeSSML(ssml) returns sound file", function(done) {
+    it("synthesizeSSML(ssml) returns noAudio sound file", function(done) {
         this.timeout(3*1000);
         var noAudioPath = path.join(SRC, 'assets', 'no_audio.mp3');
         var humanTts = new HumanTts();
@@ -98,5 +100,53 @@
             should(result.file).equal(noAudioPath);
             done();
         } catch(e) {done(e);} })();
+    });
+    it("synthesizeSegment(ssml) returns SN2.3:1.1 sound file", function(done) {
+        this.timeout(5*1000);
+        logger.level = 'info'; // TODO
+        (async function() { try {
+            var humanTts = new HumanTts();
+            var segment = {
+                en: 'no-english',
+                pli: 'no-pali',
+                scid: 'sn2.3:1.1',
+            };
+            var guid = 'd042940e328271a6dd56ba63ea5908ab';
+            var storePath = tmp.tmpNameSync();
+            var downloadDir = tmp.tmpNameSync();
+            var scAudio = new SCAudio({
+                downloadDir,
+            });
+            var altTts = undefined;
+            var language = 'en';
+            var soundStore = new SoundStore({
+                storePath,
+            });
+            var translator = 'sujato';
+            var usage = 'recite';
+            var volume = undefined;
+            var downloadAudio = true;
+            var opts = Object.assign({}, {
+                segment,
+                scAudio,
+                altTts,
+                language,
+                soundStore,
+                translator,
+                usage,
+                volume,
+                downloadAudio,
+            });
+            var result = await humanTts.synthesizeSegment(opts);
+            should(result.signature.guid).equal(guid);
+            should(result.signature.scAudioVersion).equal('1');
+            var guidDir = guid.substring(0,2);
+            var reFile = new RegExp(`.*/${guidDir}/${guid}${soundStore.audioSuffix}$`);
+            should(result.file).match(reFile);
+            should(fs.existsSync(result.file)).equal(true);
+            var stats = fs.statSync(result.file);
+            should(stats.size).above(56000).below(57000);
+            done();
+        } catch(e) {done(e);}})();
     });
 })

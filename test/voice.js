@@ -25,6 +25,8 @@
         should.deepEqual(voices.map(v=>v.name).sort(),[
             'Aditi', 
             'Amy', 
+            'Hans',
+            'Marlene',
             'Matthew',
             'Raveena', 
             'Russell',
@@ -467,7 +469,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeakSegment(opts) human-tts requires SCAudio", function(done) {
+    it("speakSegment(opts) human-tts requires SCAudio", function(done) {
         (async function() { try {
             var sutta_uid = 'sn1.9999'; // not a sutta
             var language = 'pli';

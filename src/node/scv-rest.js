@@ -557,10 +557,16 @@
         }
 
         getDownloadPlaylist(req, res, next) {
-            var that = this;
-            if (!that.initialized) {
+            var {
+                initialized,
+                scAudio,
+                soundStore,
+                voiceRoot,
+                suttaStore,
+            } = this;
+            if (!initialized) {
                 return Promise.reject(new Error(
-                    `${that.constructor.name} is not initialized`));
+                    `${this.constructor.name} is not initialized`));
             }
             var langs = (req.params.langs || 'pli+en').toLowerCase().split('+');
             var language = req.query.lang || 'en';
@@ -570,14 +576,14 @@
                 return Promise.reject(new Error('Search pattern is required'));
             }
             var usage = req.query.usage || 'recite';
-            var maxResults = Number(req.query.maxResults || that.suttaStore.maxResults);
+            var maxResults = Number(req.query.maxResults || suttaStore.maxResults);
             if (isNaN(maxResults)) {
                 return Promise.reject(new Error('Expected number for maxResults'));
             }
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     try {
-                    var playlist = await that.suttaStore.createPlaylist({
+                    var playlist = await suttaStore.createPlaylist({
                         pattern,
                         languages: langs,
                         language,
@@ -592,14 +598,15 @@
                     var voiceLang = Voice.createVoice({
                         name: vname,
                         usage,
-                        soundStore: that.soundStore,
+                        soundStore: soundStore,
                         localeAlt: "pli",
-                        audioFormat: that.soundStore.audioFormat,
-                        audioSuffix: that.soundStore.audioSuffix,
+                        audioFormat: soundStore.audioFormat,
+                        audioSuffix: soundStore.audioSuffix,
+                        scAudio,
                     });
                     var audio = await playlist.speak({
                         voices: {
-                            pli: that.voiceRoot,
+                            pli: voiceRoot,
                             [language]: voiceLang,
                         }
                     });
@@ -607,8 +614,8 @@
                         audio,
                     }
                     var guid = audio.signature.guid;
-                    var filePath = that.soundStore.guidPath(guid);
-                    var audioSuffix = that.soundStore.audioSuffix;
+                    var filePath = soundStore.guidPath(guid);
+                    var audioSuffix = soundStore.audioSuffix;
                     var uriPattern = encodeURIComponent(
                         decodeURIComponent(pattern)
                             .replace(/[ ,\t]/g,'_')
@@ -660,7 +667,6 @@
         getWikiAria(req, res, next) {
             var that = this;
             var page = req.params.page || 'Home.md';
-            console.log(`dbg req.params`, req.params);
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var result = `${page} not found`;
@@ -672,7 +678,6 @@
                             //"Pragma": "no-cache",
                         },
                     }, URL.parse(wikiUrl));
-                    console.log(`dbg httpsOpts`, httpOpts);
                     var wikiReq = httpx.get(httpOpts, function(wikiRes) {
                         const { statusCode } = wikiRes;
                         const contentType = wikiRes.headers['content-type'];

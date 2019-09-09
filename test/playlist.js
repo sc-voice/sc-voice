@@ -220,7 +220,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTspeak(opts) creates human voice audio file", function(done) {
+    it("speak(opts) creates human voice audio file", function(done) {
         this.timeout(20*1000);
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
@@ -255,7 +255,7 @@
                 voices,
                 volume: 'test-playlist',
             });
-            should(result.signature.guid).match(/e088211ba824e834914008fa9e319c0e/);
+            should(result.signature.guid).match(/797e669c6203c14196dd091c3e784d90/);
             done();
         } catch(e) { done(e); } })();
     });

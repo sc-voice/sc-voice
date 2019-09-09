@@ -7,6 +7,7 @@
     const { MerkleJson } = require('merkle-json');
     const AbstractTTS = require('./abstract-tts');
     const SoundStore = require('./sound-store');
+    const SCAudio = require('./sc-audio');
     const SRC = path.join(__dirname, '..');
     const ASSETS = path.join(SRC, 'assets');
     const NOAUDIOPATH = path.join(ASSETS, 'no_audio.mp3');
@@ -124,12 +125,14 @@
                 author,
                 reader: voice,
                 volume,
+                scAudioVersion: SCAudio.VERSION,
             };
             var result = {
                 signature,
             }
             var guid = signature[mj.hashTag] = mj.hash(signature);
-            var soundPath = soundStore.signaturePath(signature);
+            var audioPath = soundStore.signaturePath(signature, scAudio.extSeg); // .webm
+            var soundPath = soundStore.signaturePath(signature); // .mp3
             var stats = fs.existsSync(soundPath) && fs.statSync(soundPath);
             if (stats && stats.size > this.ERROR_SIZE) {
                 result.file = soundPath;
@@ -137,7 +140,6 @@
             }
             usage = usage || this.usage;
             var text = segment[language.split('-')[0]] || '(no text)';
-            console.log(`dbg suttaSegId`, suttaSegId);
             var altVolume = altTts && SoundStore.suttaVolumeName(suttaSegId, language, 
                     translator, altTts.voice);
             var altArgs = {
@@ -154,7 +156,7 @@
                             suttaSegId,
                             language,
                             author,
-                            audioPath: soundPath,
+                            audioPath,
                         });
                         if (fs.existsSync(soundPath)) {
                             result.file = soundPath;
@@ -162,7 +164,7 @@
                         } else {
                             result.file = noAudioPath;
                             reject(new Error(
-                                `no ${language} audio file for:${suttaSegId}`
+                                `no ${language} audio file:${soundPath} for:${suttaSegId}`
                             ));
                         }
                     } catch(e) {

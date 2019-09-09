@@ -822,7 +822,6 @@ export default {
                 ? audio.vnamePali || this.gscv.vnameRoot
                 : audio.vnameTrans || this.voice.name;
             var link = `./audio/${sutta_uid}/${lang}/${translator}/${vname}/${guid}`;
-            console.log(`dbg audioLink`, link);
             //if (sutta_uid) {
                 //link += `/${this.sutta_uid}-${lang}-${trans}.mp3`;
             //}
