@@ -469,7 +469,7 @@
 },{
     "service": "aws-polly",
     "name": "Vicki",
-    "label": "\ud83e\udd16 Vicki",
+    "label": "\ud83e\udd16 Vicki (langsamer)",
     "langTrans": "de",
     "locale": "de-DE",
     "localeIPA": "pli",
@@ -545,7 +545,7 @@
 },{
     "service": "aws-polly",
     "name": "Hans",
-    "label": "\ud83e\udd16 Vicki",
+    "label": "\ud83e\udd16 Hans (mittel)",
     "langTrans": "de",
     "locale": "de-DE",
     "localeIPA": "pli",
@@ -621,7 +621,7 @@
 },{
     "service": "aws-polly",
     "name": "Marlene",
-    "label": "\ud83e\udd16 Vicki",
+    "label": "\ud83e\udd16 Marlene (schneller)",
     "langTrans": "de",
     "locale": "de-DE",
     "localeIPA": "pli",
