@@ -58,7 +58,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTScvRest maintains a SoundStore singleton", function() {
+    it("ScvRest maintains a SoundStore singleton", function() {
         var scvRest = app.locals.scvRest;
         should(scvRest).instanceOf(ScvRest);
         var soundStore = scvRest.soundStore;
@@ -340,7 +340,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /scv/play/section/... returns playable section", function(done) {
+    it("GET /scv/play/section/... returns playable section", function(done) {
         this.timeout(30*1000);
         (async function() { try {
             var iSection = 2;
@@ -1030,7 +1030,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/update-content", function(done) {
+    it("TESTTESTPOST auth/update-content", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var scvRest = app.locals.scvRest;

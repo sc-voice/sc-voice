@@ -40,7 +40,7 @@
         var vf = new VoiceFactory(opts);
         should(vf).properties(opts);
     });
-    it("TESTTESTvoiceOfName('sujato_en') returns sujato_en", function() {
+    it("voiceOfName('sujato_en') returns sujato_en", function() {
         var name = "sujato_en";
         var vf = new VoiceFactory();
         var voice = vf.voiceOfName(name);
@@ -54,7 +54,7 @@
         should(tts.localeIPA).equal('pli');
         should(tts.scAudio).instanceOf(SCAudio); // human-tts
     });
-    it("TESTTESTvoiceOfName('sujato_pli') returns sujato_pli", function() {
+    it("voiceOfName('sujato_pli') returns sujato_pli", function() {
         var name = "sujato_pli";
         var vf = new VoiceFactory();
         var voice = vf.voiceOfName(name);
@@ -68,7 +68,7 @@
         should(tts.localeIPA).equal('pli');
         should(tts.scAudio).instanceOf(SCAudio); // human-tts
     });
-    it("TESTTESTvoiceOfName('Amy') returns Amy", function() {
+    it("voiceOfName('Amy') returns Amy", function() {
         var name = "Amy";
         var vf = new VoiceFactory();
         var voice = vf.voiceOfName(name);

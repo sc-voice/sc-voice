@@ -46,7 +46,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("update(scids, opts) updates content", function(done) {
+    it("TESTTESTupdate(scids, opts) updates content", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             /*
@@ -55,6 +55,7 @@
              * and only for testing.
              */
             var token = 'test-token'; // Invalid GitHub Personal Access Token
+            var token = '42b3ae40075228d04718ea37edd1173ee3d5265c';
             var updater = await new ContentUpdater({
                 apiUrl: SC_STAGING,
                 token,
