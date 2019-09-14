@@ -39,22 +39,20 @@
             var symAcc= Object.keys(this.symbols).reduce((acc,sym) => {
                 var symdef = this.symbols[sym];
                 if (sym === '-') {
-                    // ignore RegExp range character
-                } else if (symdef.isWord) {
-                    // symbol is part of a word
-                    acc.wordSyms += sym;
+                    // ignore RegExp range character for now
                 } else {
-                    if (sym === ']') {
-                        sym = '\\' + sym;
+                    if (symdef.isWord) {
+                        // symbol is part of a word
+                    } else {
+                        (sym === ']') && (sym = '\\' + sym);
+                        acc.syms += sym;
                     }
-                    acc.syms += sym;
+                    (symdef.isWordTrim) && (acc.wordTrimSyms += sym);
                 }
                 return acc;
-            }, { syms: '' , wordSyms: '-'});
+            }, { syms: '' , wordTrimSyms: ''});
             this.symbolPat = new RegExp(`[${symAcc.syms}]`);
-            this.isSymbolPat = new RegExp(`^[${symAcc.syms}]$`, "mug");
-            this.hasSymbolPat = new RegExp(`[${symAcc.syms}]`, "mug");
-            this.wordSymbolPat = new RegExp(`[${symAcc.wordSyms}]`, "ug");
+            this.wordTrimPat = new RegExp(`[${symAcc.wordTrimSyms}]`, "mug");
         }
 
         static get PAT_NUMBER() { return PAT_NUMBER; }
@@ -145,6 +143,10 @@
             return '';
         }
                             
+        trimWordSymbols(word) {
+            return word && word.replace(this.wordTrimPat, '');
+        }
+
         isWord(token) {
             if (RE_NUMBER.test(token)) {
                 return false;

@@ -59,6 +59,11 @@
         // xml
         should(words.isWord('&amp;')).equal(false);
     });
+    it("TESTTESTtrimWordSymbols(word) removes symbols", function() {
+        var words = new Words();
+        should(words.trimWordSymbols('hello')).equal('hello');
+        should(words.trimWordSymbols(`identity’`)).equal(`identity`);
+    });
     it("isNumber(text) returns true if text is a number", function() {
         var words = new Words();
 
