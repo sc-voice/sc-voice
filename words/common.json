@@ -86,7 +86,8 @@
             "name": "ampersand"
         },
         "'": {
-            "name": "apostrophe"
+            "name": "apostrophe",
+            "isWord": false
         },
         "(": {
             "name": "left parenthesis",

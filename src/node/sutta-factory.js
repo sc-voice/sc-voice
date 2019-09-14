@@ -24,6 +24,7 @@
         sujato: true,
         'sujato-walton': true,
         bodhi: true,
+        geiger: true,
         horner: true,
         thanissaro: true,
         'caf_rhysdavids': true,
@@ -72,11 +73,14 @@
             });
         }
 
-        stripHtml(sutta) {
-            var lang = this.lang;
+        stripHtml(sutta, opts = {}) {
+            var {
+                language,
+            } = opts;
+            var lang = language || this.lang;
             sutta.segments.forEach(seg => {
                 var text = seg[lang];
-                if (text.indexOf('<') >= 0) {
+                if (text && text.indexOf('<') >= 0) {
                     text = text.replace(/<\/li>/g,'\n');
                     seg[lang] = text.replace(/<[^>]+>/g,'');
                 }

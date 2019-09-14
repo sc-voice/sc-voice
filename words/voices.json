@@ -473,6 +473,7 @@
     "langTrans": "de",
     "locale": "de-DE",
     "localeIPA": "pli",
+    "iVoice": 10,
     "stripNumbers": false,
     "stripQuotes": false,
     "usage": "recite",
@@ -551,6 +552,7 @@
     "localeIPA": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
+    "iVoice": 11,
     "usage": "recite",
     "gender": "male",
     "pitch": "-0%",
@@ -627,6 +629,7 @@
     "localeIPA": "pli",
     "stripNumbers": false,
     "stripQuotes": false,
+    "iVoice": 12,
     "usage": "recite",
     "gender": "female",
     "pitch": "-0%",
@@ -641,7 +644,7 @@
         },
         "recite": {
             "priority": 1,
-            "rate": "-20%",
+            "rate": "-0%",
             "breaks": [0.001,0.1,0.2,0.6,1]
         },
         "review": {
