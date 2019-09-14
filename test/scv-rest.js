@@ -1030,7 +1030,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/update-content", function(done) {
+    it("POST auth/update-content", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             var scvRest = app.locals.scvRest;

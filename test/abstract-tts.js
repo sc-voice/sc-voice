@@ -206,7 +206,7 @@
             'e f g',
         ]);
     });
-    it("segment(tokens) returns array of segments", function() {
+    it("TESTTESTsegment(tokens) returns array of segments", function() {
         var tts = new AbstractTTS();
         should(isNaN('\n')).equal(false); // surprising
         var ssml = tts.segment([
@@ -240,7 +240,7 @@
             'j \u2018k,\u2019 l 5 m',
         ]);
     });
-    it("segmentSSML(text) returns array of SSML text segments", function() {
+    it("TESTTESTsegmentSSML(text) returns array of SSML text segments", function() {
         var tts = new AbstractTTS();
         var ttsStrip = new AbstractTTS({
             localeIPA: 'pli',

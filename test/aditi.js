@@ -55,7 +55,7 @@
         var recite = aditi.services['recite'];
         should(recite.syllableVowels).equal('aeiou');
     });
-    it("segmentSSML(text) returns SSML", function() {
+    it("TESTTESTsegmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
 

@@ -38,8 +38,11 @@
             this.alphabet = new RegExp(json.alphabet || `[a-z${wordQuotes}]*`, "iu");
             var symAcc= Object.keys(this.symbols).reduce((acc,sym) => {
                 var symdef = this.symbols[sym];
-                if (symdef.isWord) {
+                if (sym === '-') {
+                    // ignore RegExp range character
+                } else if (symdef.isWord) {
                     // symbol is part of a word
+                    acc.wordSyms += sym;
                 } else {
                     if (sym === ']') {
                         sym = '\\' + sym;
@@ -47,8 +50,11 @@
                     acc.syms += sym;
                 }
                 return acc;
-            }, { syms: '' });
+            }, { syms: '' , wordSyms: '-'});
             this.symbolPat = new RegExp(`[${symAcc.syms}]`);
+            this.isSymbolPat = new RegExp(`^[${symAcc.syms}]$`, "mug");
+            this.hasSymbolPat = new RegExp(`[${symAcc.syms}]`, "mug");
+            this.wordSymbolPat = new RegExp(`[${symAcc.wordSyms}]`, "ug");
         }
 
         static get PAT_NUMBER() { return PAT_NUMBER; }
@@ -140,7 +146,13 @@
         }
                             
         isWord(token) {
-            return !this.symbolPat.test(token) && !RE_NUMBER.test(token);
+            if (RE_NUMBER.test(token)) {
+                return false;
+            }
+            if (this.symbolPat.test(token)) {
+                return false;
+            }
+            return true;
         }
 
         isNumber(text) {
