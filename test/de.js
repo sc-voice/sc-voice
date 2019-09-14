@@ -1,0 +1,518 @@
+(typeof describe === 'function') && describe("de", function() {
+    const should = require("should");
+    const fs = require('fs');
+    const path = require('path');
+    const { logger } = require('rest-bundle');
+    const {
+        AbstractTTS,
+        Polly,
+        SCAudio,
+        SoundStore,
+        SuttaCentralApi,
+        SuttaFactory,
+        Voice,
+        VoiceFactory,
+        Words,
+    } = require('../index');
+    const ELLIPSIS = "\u2026";
+    const ELLIPSIS_BREAK = '<break time="1.000s"/>';
+    const BREAK = `<break time="0.001s"/>`;
+    const tmp = require('tmp');
+
+    function phoneme(ph,word) {
+        var ph = `<phoneme alphabet="ipa" ph="${ph}">${word}</phoneme>${BREAK}`;
+        return ph;
+    }
+
+    it("TESTTESTloadSutta() loads sn12.3/de/geiger", function(done) {
+        (async function() { try {
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            var factory = await new SuttaFactory({
+                suttaCentralApi,
+            }).initialize();
+            var sutta = await factory.loadSutta({
+                scid: 'sn12.3',
+                language: 'de',
+                translator: 'geiger',
+            });
+            var sections = sutta.sections;
+            should.deepEqual(sections[1].segments[1], {
+                scid: 'sn12.3:1.0.2',
+                de: 'Von den Ursachen',
+            });
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("createVoice(voiceName) returns a default voice", function() {
+        var voice = Voice.createVoice('vicki');
+        should(voice).instanceOf(Voice);
+        should(voice.locale).equal("de-DE");
+        should(voice.name).equal("Vicki");
+        should(voice.usage).equal("recite");
+        should(voice.localeIPA).equal('pli');
+        should(voice.stripNumbers).equal(false);
+        should(voice.stripQuotes).equal(false);
+        should(voice.altTts).equal(undefined);
+    });
+    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
+        var tts = new AbstractTTS({
+            localeIPA: 'pli',
+        });
+        var ttsStrip = new AbstractTTS({
+            localeIPA: 'pli',
+            stripNumbers: true,
+        });
+        var lang = 'de';
+
+        // symbols
+        should(tts.wordSSML(ELLIPSIS, lang)).equal(ELLIPSIS_BREAK);
+
+        // numbers
+        should(tts.wordSSML('281–309', lang)).equal('281–309');
+        should(ttsStrip.wordSSML('281–309')).equal('281–309');
+
+        // Pali word
+        should(tts.wordSSML(`Sāvatthī`, lang))
+        .match(/<phoneme alphabet="ipa" ph="sɑvɐt.thiː">/);
+
+        return; // dbg TODO
+
+        // German word
+        should(tts.wordSSML(`Ort`, lang))
+        .equal(`Ort`);
+
+        // English word
+        should(tts.wordSSML(`identity`))
+        .equal(`identity`);
+
+        // English word
+        should(tts.wordSSML(`identity`, lang))
+        .equal(`identity`);
+
+        // word ending quote
+        should(tts.wordSSML(`identity’`))
+        .equal(`identity’`);
+
+        // words without information
+        should(tts.wordSSML(`ariyasaccan’ti`, 'pli'))
+        .equal(`<phoneme alphabet="ipa" ph="ɐˈɺɪjɐsɐccɐn’tɪ">`+
+            `ariyasaccan’ti</phoneme><break time="0.001s"/>`);
+        should(tts.wordSSML('meditation')).equal('meditation');
+
+        // words with information
+        should(tts.wordSSML('bhikkhu'))
+        .equal(`<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>${BREAK}`);
+
+        // words with voice dependent information
+        // are expanded with default words.ipa
+        should.deepEqual(tts.wordInfo('sati'), {
+            language: "pli",
+        });
+        should(tts.wordSSML('sati'))
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
+
+        // english word variant
+        should(tts.wordSSML('bowed'))
+        .equal(`<phoneme alphabet="ipa" ph="ba\u028ad">bowed</phoneme>${BREAK}`);
+
+        // hyphenated word 
+        should(tts.wordSSML('well-to-do'))
+        .equal(`well-to-do`);
+
+        // acronyms
+        should(tts.wordSSML('{mn1.2-en-test}'))
+        .equal(`<say-as interpret-as="spell">mn1.2-en-test</say-as>`);
+    });
+    it("speak([text],opts) returns sound file for array of text", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var voice = Voice.createVoice("de-DE");
+            var text = [
+                "Ort der Begebenheit: Sāvatthī.",
+            ];
+            var cache = true;
+            var opts = {
+                cache,
+                usage: "recite",
+                volume: 'test',
+                chapter: 'voice',
+            };
+            var result = await voice.speak(text, opts);
+            should(result).properties(['file','hits','misses','signature','cached']);
+            should(fs.statSync(result.file).size).above(24000).below(25000);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("placeholder words are expanded with voice ipa", function() {
+        /*
+         * TTS services such as AWS Polly tend to speak IPA phonemes
+         * in a voice-dependent manner. For example, the lower greek
+         * letter theta will be voiced differently by en-IN and en-GB voices.
+         * Because of this, each voice has its own IPA lexicon ("ipa") 
+         * for pronunciation. Because the voice IPA lexicon represents
+         * a dialect, it overrides the default locale IPA lexicon.
+         *
+         * This subtle change manifests via the wordSSML() function of
+         * abstractTTS.
+         */
+        var raveena = Voice.createVoice({
+            locale: "en-IN",
+            localeIPA: "pli",
+        });
+        var amy = Voice.createVoice({
+            locale: "en-GB",
+            localeIPA: "pli",
+        });
+        should(raveena.services.navigate.localeIPA).equal('pli');
+        should(amy.services.navigate.localeIPA).equal('pli');
+
+        should(raveena.services.recite.wordSSML(`Ubbhaṭaka`))
+        .equal(`<break time="0.001s"/><phoneme alphabet="ipa" ph="ubbʰɐtɐka">`+
+            `Ubbhaṭaka</phoneme><break time="0.001s"/>`);
+        should(amy.services.recite.wordSSML(`Ubbhaṭaka`))
+        .equal(`<break time="0.001s"/><phoneme alphabet="ipa" ph="ubbʰɐtɐka">`+
+            `Ubbhaṭaka</phoneme><break time="0.001s"/>`);
+
+        should(raveena.services.recite.wordSSML(`don't`))
+        .equal(`don't`);
+        should(amy.services.recite.wordSSML(`don't`))
+        .equal(`don't`);
+        should(raveena.services.recite.wordSSML(`don${Words.U_APOSTROPHE}t`))
+        .equal(`don${Words.U_APOSTROPHE}t`);
+        should(amy.services.recite.wordSSML(`don${Words.U_APOSTROPHE}t`))
+        .equal(`don${Words.U_APOSTROPHE}t`);
+
+        should(raveena.services.recite.wordSSML(`ariyasaccan’ti`))
+        .equal(`<phoneme alphabet="ipa" ph="ɐˈɺɪjɐsɐccɐn’θɪ">`+
+            `ariyasaccan’ti</phoneme><break time="0.001s"/>`);
+        should(amy.services.recite.wordSSML(`ariyasaccan’ti`))
+        .equal(`<phoneme alphabet="ipa" ph="ɐɺɪjɐsɐccɐn’tɪ">`+
+            `ariyasaccan’ti</phoneme><break time="0.001s"/>`);
+
+        should(raveena.services.navigate.wordSSML('sati'))
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250\u03b8\u026a">sati</phoneme>${BREAK}`);
+        should(raveena.services.navigate.wordSSML('Saṅgha'))
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250\u014bgʰa">Saṅgha</phoneme>${BREAK}`);
+
+        should(amy.services.navigate.wordSSML('sati'))
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
+        should(amy.services.navigate.wordSSML('Saṅgha'))
+        .equal(`<phoneme alphabet="ipa" ph="s\u0250\u014bgʰa">Saṅgha</phoneme>${BREAK}`);
+
+    });
+    it("placeholder words are expanded with voice ipa", function() {
+        var raveena = Voice.createVoice("raveena");
+        should(raveena).properties({
+            name: "Raveena",
+        });
+        var tts = raveena.services.navigate;
+        should(tts).properties({
+            voice: "Raveena",
+            language: "en-IN",
+            localeIPA: "en-IN",
+        });
+        var segments = tts.segmentSSML('sati');
+        should.deepEqual(segments, [
+            phoneme(`s\u0250\u03b8\u026a`,`sati`),
+        ]);
+
+        // Interpret unknown words as English
+        var segments = tts.segmentSSML('Koalas and gummibears?');
+        should.deepEqual(segments, [
+            'Koalas and gummibears?',
+        ]);
+
+        // Interpret unknown words as Pali
+        tts.localeIPA = "pli";
+        var segments = tts.segmentSSML('Taṃ kissa hetu?');
+        should.deepEqual(segments, [
+            `<phoneme alphabet="ipa" ph="\u03b8\u0250\u014b">Taṃ</phoneme>${BREAK} ` +
+            `<phoneme alphabet="ipa" ph="k\u026assa">kissa</phoneme>${BREAK} ` +
+            `<phoneme alphabet="ipa" ph="he\u03b8u">hetu</phoneme>${BREAK}?`,
+        ]);
+    });
+    it("speak(text) speaks Pali", function(done) {
+        (async function() { try {
+            var raveena = Voice.createVoice({
+                name: "raveena",
+                localeIPA: "pli",
+            });
+            var text = `Idha panudāyi, ekacco puggalo ‘upadhi dukkhassa mūlan’ti—`;
+            var result = await raveena.speak(text, {usage:'recite'});
+            should(result).properties(['file','hits','misses','signature','cached']);
+            should(result.signature.text).match(/ph="ekɐcco"/);
+            should(result.signature.text).match(/ph="dʊk.kʰɐssa"/);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("speak(text) can handle lengthy Pali", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var aditi = Voice.createVoice({
+                name: "aditi",
+                usage: 'recite',
+                localeIPA: "pli",
+                locale: 'hi-IN',
+                stripNumbers: true,
+                stripQuotes: true,
+            });
+            should(aditi.maxSegment).equal(400);
+            var text = `Cuddasa kho panimāni yonipamukhasatasahassāni saṭṭhi ca satāni cha ca satāni pañca ca kammuno satāni pañca ca kammāni, tīṇi ca kammāni, kamme ca aḍḍhakamme ca dvaṭṭhipaṭipadā, dvaṭṭhantarakappā, chaḷābhijātiyo, aṭṭha purisabhūmiyo, ekūnapaññāsa ājīvakasate, ekūnapaññāsa paribbājakasate, ekūnapaññāsa nāgavāsasate, vīse indriyasate, tiṃse nirayasate, chattiṃsarajodhātuyo, satta saññīgabbhā, satta asaññīgabbhā, satta nigaṇṭhigabbhā, satta devā, satta mānusā, satta pesācā, satta sarā, satta pavuṭā, satta papātā, satta ca papātasatāni, satta supinā, satta supinasatāni, cullāsīti mahākappino satasahassāni, yāni bāle ca paṇḍite ca sandhāvitvā saṃsaritvā dukkhassantaṃ karissanti."`;
+            var result = await aditi.speak(text, {usage:'recite'});
+            should(result.signature.api).equal('ffmegConcat');
+            should(result.signature.files.length).equal(30);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("Amy phonemes", function() {
+        var amy = Voice.createVoice({
+            locale: "en-GB",
+            localeIPA: "pli",
+        });
+        should(amy.name).equal("Amy");
+        var recite = amy.services.recite;
+        should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
+    });
+    it("Raveena phonemes", function() {
+    return;  // TODO
+        var raveena = Voice.createVoice({
+            locale: "en-IN",
+            localeIPA: "pli",
+        });
+        should(raveena.name).equal("Raveena");
+        var recite = raveena.services.recite;
+        should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
+        should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑməɲcə","Nāmañca"));
+        should(recite.wordSSML(`anottappañca`)).match(/"anoθθəppəɲcə"/);
+        should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
+        should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
+    });
+    it("Aditi phonemes", function() {
+        var aditi = Voice.createVoice({
+            name: "aditi",
+            localeIPA: "pli",
+        });
+        should(aditi.name).equal("Aditi");
+        should(aditi.locale).equal('hi-IN');
+        var recite = aditi.services.recite;
+        should(recite.wordSSML(`vasala`)).equal(phoneme("v\\ə sə la","vasala"));
+        should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑː məɲ cə","Nāmañca"));
+        should(recite.wordSSML(`anottappañca`)).match(/"ə not̪ t̪əp pəɲ cə"/);
+        should(recite.wordSSML(`Atthi`)).match(/"ət̪.t̪ʰɪ"/);
+        should(recite.wordSSML(`hoti`)).match(/"hot̪ɪ"/);
+    });
+    it("speak(text) can ignore numbers", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var raveena = Voice.createVoice({
+                name: "raveena",
+                stripNumbers: true,
+                localeIPA: "pli",
+            });
+            var text = `Bhikkhu 123`;
+            var result = await raveena.speak(text, {usage:'recite'});
+            should(result.signature.api).equal('aws-polly');
+            should(result.signature.text).not.match(/123/);
+
+            var text = `Bhikkhu (123)`;
+            var result = await raveena.speak(text, {usage:'recite'});
+            should(result.signature.api).equal('aws-polly');
+            should(result.signature.text).not.match(/\(.*\)/);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("speak(text) can ignore quotes", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var raveena = Voice.createVoice({
+                name: "raveena",
+                stripQuotes: true,
+                localeIPA: "pli",
+            });
+            var text = `“'‘Bhikkhu’'”`;
+            var result = await raveena.speak(text, {usage:'recite'});
+            should(result.signature.api).equal('aws-polly');
+            should(result.signature.text).not.match(/[“'‘’'”]/);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("speakSegment(opts) speaks aws-polly", function(done) {
+        (async function() { try {
+            var aditi = Voice.createVoice({
+                name: 'aditi',
+            });
+            var sutta_uid = 'sn1.9';
+            var language = 'pli';
+            var translator = 'sujato';
+            var usage = 'recite';
+            var segment = {
+                scid: 'sn1.9:1.1',
+                pli: 'purple squirrels',
+            }
+            var resSpeak = await aditi.speakSegment({
+                sutta_uid,
+                segment,
+                language,
+                translator,
+                usage,
+            });
+            should(resSpeak.signature).properties({
+                api: 'aws-polly',
+                guid: '4f6a9c8ad3572ffa6bb35491a874cf4e',
+            });
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("speakSegment(opts) human-tts requires SCAudio", function(done) {
+        (async function() { try {
+            var sutta_uid = 'sn1.9999'; // not a sutta
+            var language = 'pli';
+            var translator = 'sujato';
+            var usage = 'recite';
+            var segment = {
+                scid: `${sutta_uid}:1.1`, 
+                pli: 'purple squirrels',
+            }
+            var args = {
+                sutta_uid,
+                segment,
+                language,
+                translator,
+                usage,
+            };
+
+            // scAudio is required
+            var voice = Voice.createVoice({
+                name: 'sujato_pli',
+            });
+            var eCaught = null;
+            var resSpeak = await voice.speakSegment(args).catch(e => (eCaught=e));
+            should(eCaught).instanceOf(Error);
+            should(eCaught.message).match(/scAudio is required/);
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("speakSegment(opts) human-tts uses altTts", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var sutta_uid = 'sn1.9999'; // not a sutta
+            var language = 'pli';
+            var translator = 'sujato';
+            var usage = 'recite';
+            var segment = { // fake segment
+                scid: `${sutta_uid}:1.1`, 
+                pli: 'purple squirrels',
+            }
+            var args = {
+                sutta_uid,
+                segment,
+                language,
+                translator,
+                usage,
+            };
+
+            // sutta has no human audio
+            var scAudio = new SCAudio();
+            var voice = Voice.createVoice({
+                name: 'sujato_pli',
+                scAudio,
+            });
+            should(voice.altTts.voice).equal('Aditi');
+            logger.warn('EXPECTED WARNING BEGIN');
+            var resSpeak = await voice.speakSegment(args);
+            logger.warn('EXPECTED WARNING END');
+            should(resSpeak).properties([
+                'file', 'signature',
+            ]);
+            should(resSpeak.signature).properties({
+                api: 'aws-polly',
+                voice: 'Aditi',
+                guid: '4f6a9c8ad3572ffa6bb35491a874cf4e',
+            });
+            should(resSpeak.file).match(/sn_pli_mahasangiti_aditi.*/);
+            should(fs.existsSync(resSpeak.file)).equal(true);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("speakSegment(opts) downloads human-tts", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var sutta_uid = 'sn1.9';
+            var storePath = tmp.tmpNameSync();
+            var soundStore = new SoundStore({
+                storePath,
+            });
+            var language = 'pli';
+            var translator = 'sujato';
+            var usage = 'recite';
+            var segment = {
+                scid: `${sutta_uid}:1.1`, 
+                pli: 'purple squirrels',
+            }
+            var args = {
+                sutta_uid,
+                segment,
+                language,
+                translator,
+                usage,
+            };
+            var scAudio = new SCAudio();
+            var voice = Voice.createVoice({
+                name: 'sujato_pli',
+                scAudio,
+                soundStore,
+            });
+
+            // Do not download if not present
+            args.downloadAudio = false;
+            var resSpeak = await voice.speakSegment(args);
+            should(resSpeak).properties([ 'file', 'signature', ]);
+            should(resSpeak.signature).properties({
+                api: 'aws-polly',
+                voice: 'Aditi',
+            });
+            should(resSpeak.file).match(new RegExp(resSpeak.signature.guid));
+            should(fs.existsSync(resSpeak.file)).equal(true);
+
+            // Force download audio
+            args.downloadAudio = true;
+            var resSpeak = await voice.speakSegment(args);
+            should(resSpeak).properties([ 'file', 'signature', ]);
+            should(resSpeak.signature).properties({
+                api: 'human-tts',
+                reader: 'sujato_pli',
+            });
+            should(resSpeak.file).match(new RegExp(resSpeak.signature.guid));
+            should(fs.existsSync(resSpeak.file)).equal(true);
+
+            // Audio has been downloaded, so return it
+            delete args.downloadAudio; // default is download
+            var resSpeak = await voice.speakSegment(args);
+            should(resSpeak).properties([ 'file', 'signature', ]);
+            should(resSpeak.signature).properties({
+                api: 'human-tts',
+                reader: 'sujato_pli',
+            });
+            should(resSpeak.file).match(new RegExp(resSpeak.signature.guid));
+            should(fs.existsSync(resSpeak.file)).equal(true);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("voiceOfName(name) returns voice of name", function() {
+        should(Voice.voiceOfName("amy")).properties({name:"Amy"});
+        should(Voice.voiceOfName("Amy")).properties({name:"Amy"});
+        should(Voice.voiceOfName("0")).properties({name:"Amy"});
+        should(Voice.voiceOfName(0)).properties({name:"Amy"});
+        should(Voice.voiceOfName(1)).properties({name:"Russell"});
+        should(Voice.voiceOfName("raveena")).properties({name:"Raveena"});
+        should(Voice.voiceOfName(1)).properties({name:"Russell"});
+        should(Voice.voiceOfName("vicki")).properties({name:"Vicki"});
+        should(Voice.voiceOfName("sujato_pli")).properties({name:"sujato_pli"});
+    })
+})
