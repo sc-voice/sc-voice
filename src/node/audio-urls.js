@@ -9,7 +9,8 @@
     } = require('child_process');
     const DEFAULT_MAX_RESULT_AGE = 5 * 60; // how long to cache audio urls
     const FLAC_ROOT = "https://raw.githubusercontent.com/sujato/sc-audio/master/flac";
-    const DO_ROOT = "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com";
+    const SC_OPUS_STORE = "sc-opus-store";
+    const DO_ROOT = `https://${SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`;
     const WIKI_ROOT = "https://github.com/sc-voice/sc-voice/wiki";
     const PATHNAME_DEFAULT = (opts={}) => {
         var {
@@ -58,6 +59,8 @@
             this.map = {};
             this.maxResultAge = (opts.maxResultAge || DEFAULT_MAX_RESULT_AGE) * 1000;
         }
+
+        static get SC_OPUS_STORE() { return SC_OPUS_STORE; }
 
         buildUrl(opts) {
             if (typeof opts === 'string') {

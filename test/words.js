@@ -59,7 +59,7 @@
         // xml
         should(words.isWord('&amp;')).equal(false);
     });
-    it("TESTTESTtrimWordSymbols(word) removes symbols", function() {
+    it("trimWordSymbols(word) removes symbols", function() {
         var words = new Words();
         should(words.trimWordSymbols('hello')).equal('hello');
         should(words.trimWordSymbols(`identity’`)).equal(`identity`);

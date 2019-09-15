@@ -24,7 +24,7 @@
         return ph;
     }
 
-    it("TESTTESTloadSutta() loads sn12.3/de/geiger", function(done) {
+    it("loadSutta() loads sn12.3/de/geiger", function(done) {
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = await new SuttaFactory({
@@ -54,7 +54,7 @@
         should(voice.stripQuotes).equal(false);
         should(voice.altTts).equal(undefined);
     });
-    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
+    it("wordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS({
             localeIPA: 'pli',
         });

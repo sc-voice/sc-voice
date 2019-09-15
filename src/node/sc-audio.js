@@ -9,20 +9,23 @@
     } = require('child_process');
     const http = require('http');
     const https = require('https');
+    const AudioUrls = require('./audio-urls');
     const SuttaStore = require('./sutta-store');
     const SoundStore = require('./sound-store');
     const LOCAL = path.join(__dirname, '..', '..', 'local');
     const URL_RAW = 'https://raw.githubusercontent.com/sujato/sc-audio/master/flac';
-    const URL_SEGMENTS = 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com';
-    const URL_MAP = 'https://sc-opus-store.sgp1.digitaloceanspaces.com';
     const maxBuffer = 10 * 1024 * 1024; // for exec
+    const SC_OPUS_STORE = AudioUrls.SC_OPUS_STORE;
+    const VERSION = '2';
     
     class SCAudio {
         constructor(opts ={}) {
             this.language = opts.language || 'en';
             this.urlRaw = opts.urlRaw || URL_RAW;
-            this.urlSegments = opts.urlSegments || URL_SEGMENTS;
-            this.urlMap = opts.urlMap || URL_MAP;
+            this.urlSegments = opts.urlSegments ||
+                `https://${SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`;
+            this.urlMap = opts.urlMap || 
+                `https://${SC_OPUS_STORE}.sgp1.digitaloceanspaces.com`;
             this.author = opts.author || 'sujato';
             this.reader = opts.reader || 'sujato';
             this.extRaw = opts.extRaw || '.flac';
@@ -37,7 +40,8 @@
             }
         }
 
-        static get VERSION() { return "2"; }
+        static get VERSION() { return VERSION; }
+        static get SC_OPUS_STORE() { return SC_OPUS_STORE; }
 
         nikayaOf(suid) {
             return suid.replace(/[0-9].*/,'');

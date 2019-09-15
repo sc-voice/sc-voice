@@ -10,6 +10,7 @@
     } = require('rest-bundle');
     const {
         Definitions,
+        SCAudio,
         ScvRest,
         Section,
         SoundStore,
@@ -689,9 +690,9 @@
             var res = await supertest(app).get(url)
             res.statusCode.should.equal(200);
             should.deepEqual(res.body.map(src=>src.url), [
-                'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com/'+
+                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com/`+
                     'pli/sn/sn1/sn1.23-pli-mahasangiti-sujato.webm',
-                'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com/'+
+                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com/`+
                     'en/sn/sn1/sn1.23-en-sujato-sujato.webm',
             ]);
 

@@ -6,16 +6,17 @@
     const { logger } = require('rest-bundle');
     const {
         Playlist,
+        SCAudio,
         Section,
         SoundStore,
         Sutta,
-        SuttaStore,
-        SCAudio,
-        SuttaFactory,
-        SuttaCentralId,
         SuttaCentralApi,
+        SuttaCentralId,
+        SuttaFactory,
+        SuttaStore,
         Voice,
         Words,
+
     } = require("../index");
     const LOCAL = path.join(__dirname, '../local');
     var suttaStore = new SuttaStore();
@@ -29,9 +30,9 @@
             reader: 'sujato',
             author: 'sujato',
             language: 'en',
-            urlRaw: 'https://raw.githubusercontent.com/sujato/sc-audio/master/flac',
-            urlMap: 'https://sc-opus-store.sgp1.digitaloceanspaces.com',
-            urlSegments: 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com',
+            urlRaw: `https://raw.githubusercontent.com/sujato/sc-audio/master/flac`,
+            urlMap: `https://${SCAudio.SC_OPUS_STORE}.sgp1.digitaloceanspaces.com`,
+            urlSegments: `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
             extSeg: '.webm',
             extRaw: '.flac',
             downloadDir: path.join(LOCAL, 'sc-audio'),
@@ -60,23 +61,23 @@
     it("aeneasMapUrl(suid...)", function() {
         var sca = SCA;
         should(sca.aeneasMapUrl('sn1.09')).equal(
-            'https://sc-opus-store.sgp1.digitaloceanspaces.com'+
+            `https://${SCAudio.SC_OPUS_STORE}.sgp1.digitaloceanspaces.com`+
             '/en/sn/sn1/sn1.9-en-sujato-sujato.json');
     });
     it("segmentUrl(suidseg...)", function() {
         var sca = SCA;
         should(sca.segmentUrl('SN1.09:2.1','pli')).equal(
-            'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com'+
+            `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`+
             '/pli/sn/sn1/sn1.9/sn1.9_2.1.webm');
         should(sca.segmentUrl('SN1.58:2.1','pli')).equal(
-            'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com'+
+            `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`+
             '/pli/sn/sn1/sn1.58/sn1.58_2.1.webm');
 
         var sca = new SCAudio({
             language: 'pli',
         });
         should(sca.segmentUrl('SN1.58:2.1')).equal(
-            'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com'+
+            `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`+
             '/pli/sn/sn1/sn1.58/sn1.58_2.1.webm');
     });
     it("aeneasMap(suid...) returns aeneas map JSON", function(done) {
@@ -150,7 +151,7 @@
                 suttaSegId,
             });
             var url = [
-                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
                 "en",
                 "sn/sn1/sn1.9/sn1.9_1.1.webm",
             ].join('/');
@@ -171,7 +172,7 @@
 
             // Pali
             var url = [
-                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
                 "pli",
                 "sn/sn1/sn1.9/sn1.9_1.1.webm",
             ].join('/');
@@ -220,7 +221,7 @@
                 //audioPath,
             });
             var url = [
-                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
                 "en",
                 "sn/sn1/sn1.9/sn1.9_1.1.webm",
             ].join('/');
@@ -240,7 +241,7 @@
 
             // Pali
             var url = [
-                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
                 "pli",
                 "sn/sn1/sn1.9/sn1.9_1.1.webm",
             ].join('/');
@@ -289,7 +290,7 @@
                 //audioPath,
             });
             var url = [
-                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
                 "en",
                 "sn/sn2/sn2.3/sn2.3_1.1.webm",
             ].join('/');
@@ -309,7 +310,7 @@
 
             // Pali
             var url = [
-                "https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com",
+                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
                 "pli",
                 "sn/sn2/sn2.3/sn2.3_1.1.webm",
             ].join('/');

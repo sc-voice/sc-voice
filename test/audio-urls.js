@@ -2,10 +2,11 @@
     const should = require("should");
     const {
         AudioUrls,
+        SCAudio,
     } = require("../index");
 
     //const TEST_ROOT = 'https://raw.githubusercontent.com/sujato/sc-audio/master/flac';
-    const TEST_ROOT = 'https://sc-opus-store.sgp1.cdn.digitaloceanspaces.com';
+    const TEST_ROOT = `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`;
 
     it("AudioUrls(...) creates an audio url map", function() {
         var audio = new AudioUrls();
