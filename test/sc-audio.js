@@ -90,9 +90,11 @@
             ].sort());
             var fragments = resMap.fragments;
             should.deepEqual(fragments[7], {
-                begin: '26.34',
+                //begin: '26.34',
+                //end: '31.26',
+                begin: '42.832',
+                end: '47.932',
                 children: [],
-                end: '31.26',
                 id: 'sn1.9:3.1',
                 language: 'en',
                 lines: [
@@ -102,7 +104,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("catalog(opts) returns sutta catalog", function(done) {
+    it("TESTTESTcatalog(opts) returns sutta catalog", function(done) {
         this.timeout(20*1000);
         (async function() { try {
             var sca = SCA;
@@ -120,8 +122,10 @@
             var suid = 'sn1.2';
             var entry = aeneasMaps[suid];
             should.deepEqual(entry, {
-                pli: 'pli/sn/sn1/sn1.02-pli-mahasangiti-sujato.json',
-                en: 'en/sn/sn1/sn1.02-en-sujato-sujato.json',
+                //pli: 'pli/sn/sn1/sn1.02-pli-mahasangiti-sujato.json',
+                //en: 'en/sn/sn1/sn1.02-en-sujato-sujato.json',
+                pli: 'json/sn1.02-pli-mahasangiti-sujato.json',
+                en: 'json/sn1.02-en-sujato-sujato.json',
             });
             var resMap = await sca.aeneasMap(suid, 'pli', 'mahasangiti', 'sujato');
             should(resMap.fragments.length).equal(11);
@@ -130,7 +134,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("downloadSegmentAudio(suttaSegId,...) downloads audio file", function(done) {
+    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) downloads audio file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
@@ -167,8 +171,7 @@
 
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(30000);
-            should(stats.size).below(40000);
+            should(stats.size).above(21000).below(22000);
 
             // Pali
             var url = [
@@ -193,8 +196,7 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(80000);
-            should(stats.size).below(90000);
+            should(stats.size).above(27000).below(28000);
 
             done();
         } catch(e) { done(e); } })();
@@ -236,8 +238,7 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(34000);
-            should(stats.size).below(39000);
+            should(stats.size).above(21000).below(22000);
 
             // Pali
             var url = [
@@ -262,13 +263,12 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(80000);
-            should(stats.size).below(90000);
+            should(stats.size).above(27000).below(28000);
 
             done();
         } catch(e) { done(e); } })();
     });
-    it("downloadSegmentAudio(suttaSegId,...) creates sn2.3:1.1 audio file", function(done) {
+    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) creates sn2.3:1.1 audio file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
@@ -305,8 +305,7 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(56000);
-            should(stats.size).below(57000);
+            should(stats.size).above(20000).below(21000);
 
             // Pali
             var url = [
@@ -331,8 +330,7 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(80000);
-            should(stats.size).below(90000);
+            should(stats.size).above(32000).below(33000);
 
             done();
         } catch(e) { done(e); } })();

@@ -74,11 +74,12 @@
                     var entryLang = entry && entry[lang];
                     if (entryLang) {
                         var url = `${that.urlMap}/${entryLang}`;
+                        logger.info(`ScAudio.aeneasMap cached:${url}`, entry);
                     } else {
                         var url = that.aeneasMapUrl(suid, lang, author, reader);
+                        logger.info(`ScAudio.aeneasMap generated:${url}`, entry);
                     }
                     var httpx = url.startsWith('https') ? https : http;
-                    logger.info(`ScAudio.aeneasMap ${url}`);
                     var req = httpx.get(url, res => {
                         const { statusCode } = res;
                         const contentType = res.headers['content-type'];
@@ -135,6 +136,10 @@
                     }
                     query && (url+=query);
                     var httpx = url.startsWith('https') ? https : http;
+                    logger.info(`SCAudio catalog url:${url}`);
+                    if (SC_OPUS_STORE !== 'sc-opus-store') {
+                        url += `&prefix=json`;
+                    }
                     var req = httpx.get(url, res => {
                         const { statusCode } = res;
                         const contentType = res.headers['content-type'];
@@ -165,15 +170,17 @@
                             chunkLines.forEach(line => {
                                 if (line.match(/Key>/u)) {
                                     var key = line.replace(/.*Key>/u,'');
-                                    var lang = key.split('/')[0];
-                                    if (lang !== 'v01') {
-                                        var suid = key.replace(/.*\//u,'')
+                                    var slashParts = key.split('/');
+                                    var lang = slashParts[0];
+                                    if (lang === 'json') { // sc-opus-store-v1-7
+                                        var hyphenParts = key.split('-');
+                                        var suid = hyphenParts[0]
+                                            .replace(/^json./, '')
                                             .replace(/\.0*/ug,'.');
-                                        suid = suid.replace(
-                                            /-en|-pli|-sujato|-mahasangiti/ug,'');
+                                        lang = hyphenParts[1];
                                         aeneasMaps[suid] = aeneasMaps[suid] || {};
                                         var altKey = aeneasMaps[suid][lang];
-                                        if (altKey == null || altKey.length < key.length) {
+                                        if (altKey == null) {
                                             aeneasMaps[suid][lang] = `${key}.json`;
                                         }
                                     }
