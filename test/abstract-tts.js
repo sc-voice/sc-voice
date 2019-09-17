@@ -14,15 +14,60 @@
     const ELLIPSIS_BREAK = '<break time="1.000s"/>';
     var storePath = tmp.tmpNameSync();
 
-    it("AbstractTTS(opts) can be customized", function() {
+
+    it("TESTTTESTdefault ctor", () => {
+        var tts = new AbstractTTS();
+
+        // options
+        should(tts).properties({
+            api: null,
+            apiVersion: null,
+            audioFormat: 'audio/ogg',
+            audioSuffix: '.ogg',
+            breaks: [0.001,0.1,0.2,0.6,1],
+            customWords: undefined,
+            ellipsisBreak: '<break time="1.000s"/>',
+            fullStopComma: undefined,
+            language: 'en',
+            localeIPA: 'en',
+            maxConcurrentServiceCalls: 5,
+            maxCuddle: 1,
+            maxSegment: 1000,
+            maxSSML: 5000,
+            noAudioPath: undefined,
+            prosody: {
+                rate: "-10%",
+            },
+            stripChars: /[\u200b]/g,
+            stripNumbers: undefined,
+            stripQuotes: undefined,
+            syllabifyLength: undefined,
+            syllableVowels: undefined,
+            unknownLang: undefined,
+            usage: 'recite',
+            usages: {},
+        });
+        should(tts.soundStore).instanceOf(SoundStore);
+        should(tts.words).instanceOf(Words);
+    });
+    it("TESTTESTcustom ctor", function() {
         var words = new Words();
+        var unknownLang = 'de';
+        var usage = 'review';
+        var maxSSML = 6000;
         var tts = new AbstractTTS({
             words,
+            unknownLang,
+            usage,
+            maxSSML,
         });
         should(tts.words).equal(words);
         should(tts).properties({
             language: 'en',
             localeIPA: 'en',
+            unknownLang,
+            usage,
+            maxSSML,
         });
     });
     it("signature(text) returns signature that identifies synthesized speech", function() {
@@ -73,7 +118,11 @@
         should.deepEqual(tts.wordInfo(`.`), null );
 
         // custom words
-        //should.deepEqual(tts.wordInfo(`godzilla`), {language: 'en'} );
+        should.deepEqual(tts.wordInfo(`godzilla`), {language: 'en'} );
+        should.deepEqual(tts.wordInfo(`deutsch`), {language: 'de'} );
+
+        // Pali word in common.js
+        should.deepEqual(tts.wordInfo(`akkha`), {language: 'pli'} );
 
         // no information
         should.deepEqual(tts.wordInfo('asdf'), null);

@@ -33,7 +33,8 @@
             this.stripChars = opts.stripChars || /[\u200b]/g;
             this.apiVersion = opts.apiVersion || null;
             this.audioSuffix = opts.audioSuffix || ".ogg";
-            this.queue = new Queue(opts.maxConcurrentServiceCalls || 5, Infinity);
+            this.maxConcurrentServiceCalls = opts.maxConcurrentServiceCalls || 5;
+            this.queue = new Queue(this.maxConcurrentServiceCalls, Infinity);
             this.usage = opts.usage || "recite";
             this.maxSSML = opts.maxSSML || 5000;
             this.maxSegment = opts.maxSegment || MAX_SEGMENT;
@@ -43,6 +44,7 @@
             this.customWords = opts.customWords;
             this.syllableVowels = opts.syllableVowels;
             this.syllabifyLength = opts.syllabifyLength;
+            this.unknownLang = opts.unknownLang; // null or language for unknown words
             this.ellipsisBreak = opts.ellipsisBreak || ELLIPSIS_BREAK;
             this.mj = new MerkleJson({
                 hashTag: 'guid',
@@ -120,10 +122,11 @@
             return this.synthesizeSSML(`<break time="${t}s"/>`);
         }
 
-        wordInfo(word='', lang) {
+        wordInfo(word='') {
             var {
                 customWords,
                 words,
+                unknownLang,
             } = this;
             word = word.toLowerCase();
             word = word.replace(words.wordTrimPat, '');
@@ -132,9 +135,9 @@
             if (wordValue && typeof wordValue === 'string') { // synonym
                 wordValue = this.wordInfo(wordValue);
             }
-            if (word && !wordValue && this.words.isWord(word) && lang) {
+            if (unknownLang && word && !wordValue && this.words.isWord(word)) {
                 wordValue = {
-                    language: lang,
+                    language: unknownLang,
                 }
             }
 
