@@ -120,52 +120,26 @@
             return this.synthesizeSSML(`<break time="${t}s"/>`);
         }
 
-        wordInfo(word='', lang='en') {
+        wordInfo(word='', lang) {
+            var {
+                customWords,
+                words,
+            } = this;
             word = word.toLowerCase();
-            var wordValue = this.words.words[word];
-            if (!wordValue) {
-                var wordTrimPat = this.words.wordTrimPat;
-                var key = word.replace(wordTrimPat, '');
-                wordValue = this.words.words[key];
-                word = key;
-            }
+            word = word.replace(words.wordTrimPat, '');
+            var wordValue = customWords && customWords[word]
+            var wordValue = wordValue || words.words[word];
             if (wordValue && typeof wordValue === 'string') { // synonym
                 wordValue = this.wordInfo(wordValue);
             }
-            if (wordValue) {
-                var customWord = this.customWords && this.customWords[word];
-                customWord && Object.assign(wordValue, customWord);
+            if (word && !wordValue && this.words.isWord(word) && lang) {
+                wordValue = {
+                    language: lang,
+                }
             }
 
             return wordValue || null;
         }
-
-        xwordInfo(word, lang='en') {
-            word = word && word.toLowerCase();
-            var wordValue = word && this.words.words[word];
-            if (word && !wordValue) { // punctuated words
-                var wordSymbolPat = this.words.wordSymbolPat;
-                var key = word.replace(wordSymbolPat, '');
-                wordValue = this.words.words[key];
-            }
-            if (wordValue && typeof wordValue === 'string') { // synonym
-                wordValue = this.wordInfo(wordValue);
-            }
-            if (wordValue) {
-                var customWord = this.customWords && this.customWords[word];
-                customWord && Object.assign(wordValue, customWord);
-            }
-            if (this.words.isWord(word)) {
-                wordValue = wordValue || {
-                    language: lang === 'hi' || lang === 'en' ? 'pli' : lang,
-                };
-            } else { // punctuation or number
-                wordValue = wordValue || null;
-            }
-            //console.log(`dbg wordInfo`, word, lang, wordValue);
-            return wordValue;
-        }
-
 
         ipa_word(ipa, word) {
             var ssml = `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>` +
@@ -185,14 +159,14 @@
         }
 
         wordSSML(word) {
-            var wordInfo = this.wordInfo(word);
+            var wi = this.wordInfo(word);
             var symbols = this.words.symbols;
             var ipa = null;
-            if (wordInfo) {
-                if (wordInfo.ipa) { // use custom IPA
-                    ipa = wordInfo.ipa;
-                } else if (wordInfo.language !== this.language.split('-')[0]) { // generate IPA
-                    ipa = this.wordIPA(word, wordInfo.language);
+            if (wi) {
+                if (wi.ipa) { // use custom IPA
+                    ipa = wi.ipa;
+                } else if (wi.language !== this.language.split('-')[0]) { // generate IPA
+                    ipa = this.wordIPA(word, wi.language);
                 }
             } else { // unknown word or punctuation
                 if (Words.RE_ACRONYM.test(word)) {

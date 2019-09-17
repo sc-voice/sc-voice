@@ -58,7 +58,7 @@
         } catch(e) {done(e);} })();
     });
     it("upload(oname,stream) uploads stream", function(done) {
-        this.timeout(9*1000);
+        this.timeout(12*1000);
         (async function() { try {
             var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
             var Key = 'kn_en_sujato_amy.tar.gz';

@@ -43,7 +43,16 @@
         });
     });
     it("TESTTESTwordInfo(word) returns information about a word", function() {
-        var tts = new AbstractTTS();
+        var tts = new AbstractTTS({
+            customWords: {
+                godzilla: {
+                    language: 'en',
+                },
+                deutsch: {
+                    language: 'de',
+                },
+            },
+        });
         var bhikkhu = {
             ipa: "b\u026aku\u02D0",
             language: "pli",
@@ -62,6 +71,9 @@
 
         // punctuation
         should.deepEqual(tts.wordInfo(`.`), null );
+
+        // custom words
+        //should.deepEqual(tts.wordInfo(`godzilla`), {language: 'en'} );
 
         // no information
         should.deepEqual(tts.wordInfo('asdf'), null);
@@ -82,7 +94,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("wordSSML(word) returns SSML text for word", function() {
+    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS({
             localeIPA: 'pli',
         });
@@ -132,7 +144,7 @@
         should(tts.wordSSML('{mn1.2-en-test}'))
         .equal(`<say-as interpret-as="spell">mn1.2-en-test</say-as>`);
     });
-    it("tokensSSML(text) returns array of SSML tokens", function() {
+    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS({
             localeIPA: 'pli',
         });
