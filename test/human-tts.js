@@ -101,9 +101,8 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsynthesizeSegment(ssml) returns SN2.3:1.1 sound file", function(done) {
+    it("synthesizeSegment(ssml) returns SN2.3:1.1 sound file", function(done) {
         this.timeout(5*1000);
-        logger.level = 'info'; // TODO
         (async function() { try {
             var humanTts = new HumanTts();
             var segment = {

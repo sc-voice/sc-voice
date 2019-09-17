@@ -42,7 +42,7 @@
             guid,
         });
     });
-    it("wordInfo(word) returns information about a word", function() {
+    it("TESTTESTwordInfo(word) returns information about a word", function() {
         var tts = new AbstractTTS();
         var bhikkhu = {
             ipa: "b\u026aku\u02D0",
@@ -52,6 +52,16 @@
             ipa: "b\u026aku\u02D0z",
             language: "pli",
         };
+
+        // word in en.json
+        should.deepEqual(tts.wordInfo('identity'), { language: 'en'} );
+
+        // word in en.json with symbols having isWordTrim:true
+        should.deepEqual(tts.wordInfo(`identity'`), { language: 'en'} ); 
+        should.deepEqual(tts.wordInfo(`identity\u2019`), { language: 'en'} );
+
+        // punctuation
+        should.deepEqual(tts.wordInfo(`.`), null );
 
         // no information
         should.deepEqual(tts.wordInfo('asdf'), null);

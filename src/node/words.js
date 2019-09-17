@@ -50,7 +50,7 @@
                     (symdef.isWordTrim) && (acc.wordTrimSyms += sym);
                 }
                 return acc;
-            }, { syms: '' , wordTrimSyms: ''});
+            }, { syms: '' , wordTrimSyms: '-'});
             this.symbolPat = new RegExp(`[${symAcc.syms}]`);
             this.wordTrimPat = new RegExp(`[${symAcc.wordTrimSyms}]`, "mug");
         }

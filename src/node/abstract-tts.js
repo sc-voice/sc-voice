@@ -120,19 +120,52 @@
             return this.synthesizeSSML(`<break time="${t}s"/>`);
         }
 
-        wordInfo(word) {
-            word = word && word.toLowerCase();
-            var wordValue = word && this.words.words[word];
+        wordInfo(word='', lang='en') {
+            word = word.toLowerCase();
+            var wordValue = this.words.words[word];
+            if (!wordValue) {
+                var wordTrimPat = this.words.wordTrimPat;
+                var key = word.replace(wordTrimPat, '');
+                wordValue = this.words.words[key];
+                word = key;
+            }
             if (wordValue && typeof wordValue === 'string') { // synonym
                 wordValue = this.wordInfo(wordValue);
             }
-            if (!wordValue) {
-                return null;
+            if (wordValue) {
+                var customWord = this.customWords && this.customWords[word];
+                customWord && Object.assign(wordValue, customWord);
             }
-            var customWord = this.customWords && this.customWords[word];
-            customWord && Object.assign(wordValue, customWord);
+
+            return wordValue || null;
+        }
+
+        xwordInfo(word, lang='en') {
+            word = word && word.toLowerCase();
+            var wordValue = word && this.words.words[word];
+            if (word && !wordValue) { // punctuated words
+                var wordSymbolPat = this.words.wordSymbolPat;
+                var key = word.replace(wordSymbolPat, '');
+                wordValue = this.words.words[key];
+            }
+            if (wordValue && typeof wordValue === 'string') { // synonym
+                wordValue = this.wordInfo(wordValue);
+            }
+            if (wordValue) {
+                var customWord = this.customWords && this.customWords[word];
+                customWord && Object.assign(wordValue, customWord);
+            }
+            if (this.words.isWord(word)) {
+                wordValue = wordValue || {
+                    language: lang === 'hi' || lang === 'en' ? 'pli' : lang,
+                };
+            } else { // punctuation or number
+                wordValue = wordValue || null;
+            }
+            //console.log(`dbg wordInfo`, word, lang, wordValue);
             return wordValue;
         }
+
 
         ipa_word(ipa, word) {
             var ssml = `<phoneme alphabet="ipa" ph="${ipa}">${word}</phoneme>` +

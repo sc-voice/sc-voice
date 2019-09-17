@@ -340,7 +340,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeakSegment(opts) speaks aws-polly", function(done) {
+    it("speakSegment(opts) speaks aws-polly", function(done) {
         done(); return; // dbg TODO
         (async function() { try {
             var aditi = Voice.createVoice({
@@ -440,7 +440,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeakSegment(opts) downloads human-tts", function(done) {
+    it("speakSegment(opts) downloads human-tts", function(done) {
         done(); return; // dbg TODO
         this.timeout(5*1000);
         (async function() { try {
