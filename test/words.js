@@ -41,6 +41,24 @@
         should.deepEqual(words.lookup('bikkhu'), bhikkhu);
         should.deepEqual(words.lookup('bhikku'), bhikkhu);
     });
+    it("TESTTESTwordInfo(word) describes word", () => {
+        var words = new Words();
+        var en = {
+            language: 'en',
+        }
+
+        // normal English word
+        should.deepEqual(words.wordInfo("shoulders"), en);
+
+        // should.js nastiness
+        should.deepEqual(words.wordInfo("should"), en); 
+
+        // Pali word
+        var pli = {
+            language: 'pli',
+        };
+        should.deepEqual(words.wordInfo("akkha"), pli); 
+    });
     it("isWord(token) return true if token is a word", function() {
         var words = new Words();
 

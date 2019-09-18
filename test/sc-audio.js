@@ -196,12 +196,12 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(27000).below(28000);
+            should(stats.size).above(27000).below(29000);
 
             done();
         } catch(e) { done(e); } })();
     });
-    it("downloadSegmentAudio(suttaSegId,...) creates sn1.9:1.1 audio file", function(done) {
+    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) creates sn1.9:1.1 audio file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
@@ -263,12 +263,12 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(27000).below(28000);
+            should(stats.size).above(27000).below(29000);
 
             done();
         } catch(e) { done(e); } })();
     });
-    it("downloadSegmentAudio(suttaSegId,...) creates sn2.3:1.1 audio file", function(done) {
+    it("TESTTESTdownloadSegmentAudio(suttaSegId,...) creates sn2.3:1.1 audio file", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
@@ -330,7 +330,7 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(32000).below(33000);
+            should(stats.size).above(32000).below(34000);
 
             done();
         } catch(e) { done(e); } })();

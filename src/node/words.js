@@ -163,6 +163,11 @@
 
         wordInfo(word) {
             word = word && word.toLowerCase();
+            if (word === 'should') { // HACK for should.js
+                return { 
+                    language: 'en',
+                }
+            }
             var wordValue = word && this.words[word];
             if (wordValue && typeof wordValue === 'string') { // synonym
                 wordValue = this.wordInfo(wordValue);
