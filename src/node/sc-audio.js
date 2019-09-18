@@ -16,7 +16,7 @@
     const URL_RAW = 'https://raw.githubusercontent.com/sujato/sc-audio/master/flac';
     const maxBuffer = 10 * 1024 * 1024; // for exec
     const SC_OPUS_STORE = AudioUrls.SC_OPUS_STORE;
-    const VERSION = '2';
+    const VERSION = '3';
     
     class SCAudio {
         constructor(opts ={}) {

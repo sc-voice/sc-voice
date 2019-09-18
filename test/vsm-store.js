@@ -104,13 +104,14 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("importSpeakResult(sr) imports compound guid", function(done) {
+    it("importSpeakResult(sr) imports compound guid", done=>{
         (async function() { try {
             var storePath = tmp.tmpNameSync();;
+            var voice = Voice.createVoice('amy');
             var vsm = new VsmStore({
                 storePath,
+                voice,
             });
-            var voice = vsm.voice;
 
             // Vsm.speak() returns similar result as voice.speak()
             var speakResult = await voice.speak(TEST_TEXT, VOICE_OPTS);
@@ -128,7 +129,7 @@
 
             // We do not import files that comprise top-level files
             var files = speakResult.signature.files;
-            should(files.length).equal(4);
+            should(files.length).equal(2);
             for (var i=0; i<files.length; i++) {
                 var f = files[i];
                 should(fs.existsSync(path.join(storePath, f))).equal(false);

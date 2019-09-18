@@ -553,7 +553,7 @@
             should(data.translator).equal('sujato');
             should(data.segment.pli).match(/^Sāvatthinidānaṃ/);
             should(data.segment.audio.en).match(/49e50d568f490d586e4065d9c83ff979/);
-            should(data.segment.audio.pli).match(/abb4efd45c27350f0f3caa18818ca80/);
+            should(data.segment.audio.pli).match(/57eacb73319677cbe42256c332630451/);
             should(data.segment.audio.vnamePali).equal(undefined);
 
             done();

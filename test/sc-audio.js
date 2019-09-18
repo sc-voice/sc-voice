@@ -216,6 +216,7 @@
             should(sca.downloadDir).equal(downloadDir);
             should(fs.existsSync(downloadDir)).equal(true);
             var audioPath = path.join(downloadDir, `sn1.9_1.1.mp3`);
+            console.log(`dbg audioPath`, audioPath);
 
             // english
             var res = await sca.downloadSegmentAudio({

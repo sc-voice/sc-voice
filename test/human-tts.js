@@ -110,7 +110,7 @@
                 pli: 'no-pali',
                 scid: 'sn2.3:1.1',
             };
-            var guid = 'a26ce75169deb4aa883482840733d922';
+            var guid = 'b90220f1e99fb739068bc6fe4ddec005';
             var storePath = tmp.tmpNameSync();
             var downloadDir = tmp.tmpNameSync();
             var scAudio = new SCAudio({
@@ -138,7 +138,7 @@
             });
             var result = await humanTts.synthesizeSegment(opts);
             should(result.signature.guid).equal(guid);
-            should(result.signature.scAudioVersion).equal('2');
+            should(result.signature.scAudioVersion).equal('3');
             var guidDir = guid.substring(0,2);
             var reFile = new RegExp(`.*/${guidDir}/${guid}${soundStore.audioSuffix}$`);
             should(result.file).match(reFile);

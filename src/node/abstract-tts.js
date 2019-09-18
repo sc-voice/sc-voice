@@ -129,6 +129,11 @@
                 unknownLang,
             } = this;
             word = word.toLowerCase();
+            if (word === 'should') { // HACK for should.js
+                return {
+                    language: 'en',
+                }
+            }
             word = word.replace(words.wordTrimPat, '');
             var wordValue = customWords && customWords[word]
             var wordValue = wordValue || words.words[word];
@@ -161,17 +166,27 @@
             return this.words.ipa(word, language);
         }
 
-        wordSSML(word) {
-            var wi = this.wordInfo(word);
+        wordSSML(word, lang=this.language.split('-')[0]) {
+            var wi = this.wordInfo(word, lang);
             var symbols = this.words.symbols;
             var ipa = null;
             if (wi) {
                 if (wi.ipa) { // use custom IPA
+                    //console.log(`dbg wordSSML1.1`, word);
                     ipa = wi.ipa;
-                } else if (wi.language !== this.language.split('-')[0]) { // generate IPA
+                } else if (lang === 'en' && wi.language !== lang) {
+                    // use IPA for non-English words in English
+                    //console.log(`dbg wordSSML1.3`, word, lang, wi);
                     ipa = this.wordIPA(word, wi.language);
+                } else if (lang === 'pli' || wi.language === 'pli') { // generate IPA
+                    // use IPA for root text
+                    //console.log(`dbg wordSSML1.4`, word);
+                    ipa = this.wordIPA(word, wi.language);
+                } else {
+                    //console.log(`dbg wordSSML1.5`, word, lang, wi);
                 }
             } else { // unknown word or punctuation
+                //console.log(`dbg wordSSML2`, word);
                 if (Words.RE_ACRONYM.test(word)) {
                     return word
                         .replace('{', '<say-as interpret-as="spell">')
@@ -194,6 +209,7 @@
                 }
             }
             if (ipa) {
+                //console.log(`dbg wordSSML3`, word, ipa);
                 if (ipa.endsWith('(.)')) {
                     var pauses = ipa.split('(.)');
                     ipa = pauses.map(x => {

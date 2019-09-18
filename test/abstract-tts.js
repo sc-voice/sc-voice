@@ -107,6 +107,9 @@
             language: "pli",
         };
 
+        // should.js bug
+        should.deepEqual(tts.wordInfo('should'), { language: 'en'} );
+
         // word in en.json
         should.deepEqual(tts.wordInfo('identity'), { language: 'en'} );
 

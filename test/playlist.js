@@ -255,7 +255,7 @@
                 voices,
                 volume: 'test-playlist',
             });
-            should(result.signature.guid).match(/f9a7ce326b14d6474baa1c05c9ee4ad3/);
+            should(result.signature.guid).match(/8b2e0526d50af759fe45f76f63580e48/);
             done();
         } catch(e) { done(e); } })();
     });

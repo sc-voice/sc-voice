@@ -136,7 +136,7 @@
                 translator,
                 usage,
             });
-            should(result.file).match(/11bc60f9aeb6fc749b83fc354c8b4baa/);
+            should(result.file).match(/4238ffac1b51a0c7ab5551b98a776ebc/);
             done();
         } catch(e) {done(e);} })();
     });
@@ -180,7 +180,7 @@
                 translator,
                 usage,
             });
-            should(result.file).match(/e5d1a1c4a19fa2cdbf02d489fa3792ce/);
+            should(result.file).match(/f46d257294ca9bbffbb38d5a105cf84a/);
             done();
         } catch(e) {done(e);} })();
     });
