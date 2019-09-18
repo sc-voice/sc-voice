@@ -145,7 +145,7 @@
             should(fs.existsSync(result.file)).equal(true);
             var stats = fs.statSync(result.file);
             //should(stats.size).above(56000).below(57000);
-            should(stats.size).above(20000).below(21000);
+            should(stats.size).above(28000).below(29000);
             done();
         } catch(e) {done(e);}})();
     });

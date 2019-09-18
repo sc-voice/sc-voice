@@ -171,7 +171,7 @@
 
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(21000).below(22000);
+            should(stats.size).above(28000).below(29000);
 
             // Pali
             var url = [
@@ -238,7 +238,7 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(21000).below(22000);
+            should(stats.size).above(28000).below(29000);
 
             // Pali
             var url = [
@@ -305,7 +305,7 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(20000).below(21000);
+            should(stats.size).above(28000).below(29000);
 
             // Pali
             var url = [
