@@ -62,6 +62,8 @@
         var vicki = Voice.createVoice('vicki').services.recite;
         var ssml = vicki.wordSSML('Ort', 'de');
         should(ssml).equal('Ort');
+        var ssml = vicki.wordSSML('Saṃyutta', 'de');
+        should(ssml).match(/ph="sɐŋjut.ta"/);
     });
     it("TESTTESTwordInfo(word) returns SSML text for word", function() {
         var matthew = Voice.createVoice('matthew').services.recite;
