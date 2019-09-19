@@ -146,6 +146,8 @@
                 }
             }
 
+            // console.log(`dbg wordInfo`, word, unknownLang);
+
             return wordValue || null;
         }
 
@@ -186,23 +188,31 @@
                     //console.log(`dbg wordSSML1.5`, word, lang, wi);
                 }
             } else { // unknown word or punctuation
-                //console.log(`dbg wordSSML2`, word);
                 if (Words.RE_ACRONYM.test(word)) {
+                    //console.log(`dbg wordSSML2.1`, word);
                     return word
                         .replace('{', '<say-as interpret-as="spell">')
                         .replace('}', '</say-as>');
                 } else if (word.trim() === '') {
                     // ipa = null
+                    //console.log(`dbg wordSSML2.2`, word);
                 } else if (this.words.isWord(word)) {
-                    var w = word.endsWith(`’`) ? word.substring(0,word.length-1) : word;
+                    var w = word.endsWith(`’`) 
+                        ? word.substring(0,word.length-1) 
+                        : word;
                     if (this.localeIPA !== this.language && 
                         this.words.isForeignWord(w)) { 
                         var ipa = this.wordIPA(word, this.localeIPA);
+                        //console.log(`dbg wordSSML2.3.1`, word, w, wi);
+                    } else {
+                        //console.log(`dbg wordSSML2.3.2`, word, w);
                     }
                 } else if (word.endsWith(`’`)) {
                     // ipa = null
+                    //console.log(`dbg wordSSML2.4`, word, w);
                 } else {
                     var symInfo = symbols[word];
+                    //console.log(`dbg wordSSML2.5`, word, w);
                     if (symInfo && symInfo.ellipsisBreak) {
                         return this.ellipsisBreak;
                     }

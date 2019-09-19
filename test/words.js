@@ -41,7 +41,7 @@
         should.deepEqual(words.lookup('bikkhu'), bhikkhu);
         should.deepEqual(words.lookup('bhikku'), bhikkhu);
     });
-    it("TESTTESTwordInfo(word) describes word", () => {
+    it("wordInfo(word) describes word", () => {
         var words = new Words();
         var en = {
             language: 'en',

@@ -26,7 +26,7 @@
             for (var i = 0; i < nSegments; i++) {
                 var segment = segments[i];
                 var segText = segment[lang];
-                if (segText.trim()) {
+                if (segText && segText.trim()) {
                     text += segText.length;
                 } else {
                     nEmptySegments++;

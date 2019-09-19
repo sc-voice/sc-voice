@@ -683,7 +683,7 @@
         } catch(e) {done(e);} })();
     });
     it("GET audio-url/... returns supported audio url", function(done) {
-        this.timeout(3*1000);
+        this.timeout(5*1000);
         (async function() { try {
             // short url
             var url = '/scv/audio-urls/sn1.23';

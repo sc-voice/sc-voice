@@ -54,76 +54,23 @@
         should(voice.stripQuotes).equal(false);
         should(voice.altTts).equal(undefined);
     });
-    it("wordSSML(word) returns SSML text for word", function() {
-        var tts = new AbstractTTS({
-            localeIPA: 'pli',
-        });
-        var ttsStrip = new AbstractTTS({
-            localeIPA: 'pli',
-            stripNumbers: true,
-        });
-        var lang = 'de';
+    it("TESTTESTwordSSML(word) Vicki SSML text for word", function() {
+        var matthew = Voice.createVoice('matthew').services.recite;
+        var ssml = matthew.wordSSML('place');
+        should(ssml).equal('place');
 
-        // symbols
-        should(tts.wordSSML(ELLIPSIS, lang)).equal(ELLIPSIS_BREAK);
-
-        // numbers
-        should(tts.wordSSML('281–309', lang)).equal('281–309');
-        should(ttsStrip.wordSSML('281–309')).equal('281–309');
-
-        // Pali word
-        should(tts.wordSSML(`Sāvatthī`, lang))
-        .match(/<phoneme alphabet="ipa" ph="sɑvɐt.thiː">/);
-
-        return; // dbg TODO
-
-        // German word
-        should(tts.wordSSML(`Ort`, lang))
-        .equal(`Ort`);
-
-        // English word
-        should(tts.wordSSML(`identity`))
-        .equal(`identity`);
-
-        // English word
-        should(tts.wordSSML(`identity`, lang))
-        .equal(`identity`);
-
-        // word ending quote
-        should(tts.wordSSML(`identity’`))
-        .equal(`identity’`);
-
-        // words without information
-        should(tts.wordSSML(`ariyasaccan’ti`, 'pli'))
-        .equal(`<phoneme alphabet="ipa" ph="ɐˈɺɪjɐsɐccɐn’tɪ">`+
-            `ariyasaccan’ti</phoneme><break time="0.001s"/>`);
-        should(tts.wordSSML('meditation')).equal('meditation');
-
-        // words with information
-        should(tts.wordSSML('bhikkhu'))
-        .equal(`<phoneme alphabet="ipa" ph="b\u026aku\u02D0">bhikkhu</phoneme>${BREAK}`);
-
-        // words with voice dependent information
-        // are expanded with default words.ipa
-        should.deepEqual(tts.wordInfo('sati'), {
-            language: "pli",
-        });
-        should(tts.wordSSML('sati'))
-        .equal(`<phoneme alphabet="ipa" ph="s\u0250t\u026a">sati</phoneme>${BREAK}`);
-
-        // english word variant
-        should(tts.wordSSML('bowed'))
-        .equal(`<phoneme alphabet="ipa" ph="ba\u028ad">bowed</phoneme>${BREAK}`);
-
-        // hyphenated word 
-        should(tts.wordSSML('well-to-do'))
-        .equal(`well-to-do`);
-
-        // acronyms
-        should(tts.wordSSML('{mn1.2-en-test}'))
-        .equal(`<say-as interpret-as="spell">mn1.2-en-test</say-as>`);
+        var vicki = Voice.createVoice('vicki').services.recite;
+        var ssml = vicki.wordSSML('Ort', 'de');
+        should(ssml).equal('Ort');
     });
-    it("speak([text],opts) returns sound file for array of text", function(done) {
+    it("TESTTESTwordInfo(word) returns SSML text for word", function() {
+        var matthew = Voice.createVoice('matthew').services.recite;
+        should.deepEqual(matthew.wordInfo('place'), {language: 'en'} );
+
+        var vicki = Voice.createVoice('vicki').services.recite;
+        should.deepEqual(vicki.wordInfo('Ort'), {language: 'de'} );
+    });
+    it("TESTTESTspeak([text],opts) returns sound file for array of text", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice("de-DE");
@@ -139,7 +86,7 @@
             };
             var result = await voice.speak(text, opts);
             should(result).properties(['file','hits','misses','signature','cached']);
-            should(fs.statSync(result.file).size).above(24000).below(25000);
+            should(fs.statSync(result.file).size).above(20000).below(21000);
             done();
         } catch(e) {done(e);} })();
     });

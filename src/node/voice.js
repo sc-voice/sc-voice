@@ -43,6 +43,7 @@
             this.altTts = opts.altTts;
             this.iVoice = opts.iVoice; // legacy
             this.maxSegment = opts.maxSegment;
+            this.unknownLang = opts.unknownLang;
             Object.defineProperty(this, '_services', {
                 writable: true,
                 value: opts.services || null,
@@ -206,6 +207,7 @@
                         breaks: usage.breaks,
                         syllableVowels: this.syllableVowels,
                         syllabifyLength: this.syllabifyLength,
+                        unknownLang: this.unknownLang,
                         prosody: {
                             rate: usage.rate,
                             pitch: this.pitch,

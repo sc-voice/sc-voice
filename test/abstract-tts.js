@@ -15,7 +15,7 @@
     var storePath = tmp.tmpNameSync();
 
 
-    it("TESTTTESTdefault ctor", () => {
+    it("default ctor", () => {
         var tts = new AbstractTTS();
 
         // options
@@ -50,7 +50,7 @@
         should(tts.soundStore).instanceOf(SoundStore);
         should(tts.words).instanceOf(Words);
     });
-    it("TESTTESTcustom ctor", function() {
+    it("custom ctor", function() {
         var words = new Words();
         var unknownLang = 'de';
         var usage = 'review';
@@ -87,7 +87,7 @@
             guid,
         });
     });
-    it("TESTTESTwordInfo(word) returns information about a word", function() {
+    it("wordInfo(word) returns information about a word", function() {
         var tts = new AbstractTTS({
             customWords: {
                 godzilla: {
@@ -146,7 +146,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
+    it("wordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS({
             localeIPA: 'pli',
         });
@@ -196,7 +196,7 @@
         should(tts.wordSSML('{mn1.2-en-test}'))
         .equal(`<say-as interpret-as="spell">mn1.2-en-test</say-as>`);
     });
-    it("TESTTESTtokensSSML(text) returns array of SSML tokens", function() {
+    it("tokensSSML(text) returns array of SSML tokens", function() {
         var tts = new AbstractTTS({
             localeIPA: 'pli',
         });

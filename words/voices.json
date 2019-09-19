@@ -476,6 +476,7 @@
     "iVoice": 10,
     "stripNumbers": false,
     "stripQuotes": false,
+    "unknownLang": "de",
     "usage": "recite",
     "gender": "female",
     "pitch": "-10%",
