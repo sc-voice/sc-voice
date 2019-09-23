@@ -155,23 +155,79 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("loadSutta() loads AN10.26/en/bodhi", function(done) {
+    it("TESTTESTloadSutta() loads AN10.26/en/bodhi", function(done) {
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = await new SuttaFactory({
                 suttaCentralApi,
             }).initialize();
-            var eCaught = null;
-            try {
-                var sutta = await factory.loadSutta({
-                    scid: 'an10.26',
-                    language: 'en',
-                    translator: 'bodhi',
-                });
-            } catch(e) {
-                eCaught = e;
-            }
-            should(eCaught.message).match(/not found .*bodhi/);
+
+            var sutta = await factory.loadSutta({
+                scid: 'an10.26',
+                language: 'en',
+                translator: 'bodhi',
+            });
+
+            // Bodhi translation doesn't exist, expect Sujato translation
+            should(sutta.author_uid).equal('sujato');
+            should(sutta.sutta_uid).equal('an10.26');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("translators(opts) returns supported translators", (done)=>{
+        (async function() { try {
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            var factory = await new SuttaFactory({
+                suttaCentralApi,
+            }).initialize();
+            const EN_TRANSLATORS = [
+                'sujato',
+                'brahmali',
+                'bodhi',
+                'thanissaro',
+                'sujato-walton',
+                'caf-rhysdavids',
+                'horner',
+            ];
+            const DE_TRANSLATORS = [
+                'sabbamitta',
+                'geiger',
+            ];
+
+            should.deepEqual(factory.translators(), EN_TRANSLATORS)
+            should.deepEqual(factory.translators({
+                language: 'en',
+            }), EN_TRANSLATORS)
+            should.deepEqual(factory.translators({
+                language: 'de',
+            }), DE_TRANSLATORS)
+            should.deepEqual(factory.translators({
+                translator: 'bodhi',
+            }), [
+                'bodhi',
+                'sujato',
+                'brahmali',
+                'thanissaro',
+                'sujato-walton',
+                'caf-rhysdavids',
+                'horner',
+            ]);
+            should.deepEqual(factory.translators({
+                language: 'de',
+                translator: 'sabbamitta',
+            }), [
+                'sabbamitta',
+                'geiger',
+            ])
+            should.deepEqual(factory.translators({
+                language: 'de',
+                translator: 'geiger',
+            }), [
+                'geiger',
+                'sabbamitta',
+            ])
+        
             done();
         } catch(e) { done(e); } })();
     });

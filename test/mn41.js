@@ -95,9 +95,9 @@
         } catch(e) { done(e); } })();
     });
     it("parseSutta(sutta) parses mn41", function(done) {
-    //done();return; //TODO
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn41');
+            should(sutta.segments[0].scid).equal('mn41:0.1');
             var sutta2 = new SuttaFactory().parseSutta(sutta);
             should(sutta2).instanceOf(Sutta);
             var sections = sutta2.sections;

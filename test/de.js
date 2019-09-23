@@ -54,7 +54,7 @@
         should(voice.stripQuotes).equal(false);
         should(voice.altTts).equal(undefined);
     });
-    it("TESTTESTwordSSML(word) Vicki SSML text for word", function() {
+    it("wordSSML(word) Vicki SSML text for word", function() {
         var matthew = Voice.createVoice('matthew').services.recite;
         var ssml = matthew.wordSSML('place');
         should(ssml).equal('place');
@@ -65,14 +65,14 @@
         var ssml = vicki.wordSSML('Saṃyutta', 'de');
         should(ssml).match(/ph="sɐŋjut.ta"/);
     });
-    it("TESTTESTwordInfo(word) returns SSML text for word", function() {
+    it("wordInfo(word) returns SSML text for word", function() {
         var matthew = Voice.createVoice('matthew').services.recite;
         should.deepEqual(matthew.wordInfo('place'), {language: 'en'} );
 
         var vicki = Voice.createVoice('vicki').services.recite;
         should.deepEqual(vicki.wordInfo('Ort'), {language: 'de'} );
     });
-    it("TESTTESTspeak([text],opts) returns sound file for array of text", function(done) {
+    it("speak([text],opts) returns sound file for array of text", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice("de-DE");

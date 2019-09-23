@@ -683,7 +683,7 @@
         } catch(e) {done(e);} })();
     });
     it("GET audio-url/... returns supported audio url", function(done) {
-        this.timeout(5*1000);
+        this.timeout(10*1000);
         (async function() { try {
             // short url
             var url = '/scv/audio-urls/sn1.23';
@@ -821,8 +821,8 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/restore-s3-archives restores vsm files", function(done) {
-        this.timeout(10*1000);
+    it("TESTTESTPOST auth/vsm/restore-s3-archives restores vsm files", function(done) {
+        this.timeout(15*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials POST test');

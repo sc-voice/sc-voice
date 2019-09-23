@@ -19,6 +19,28 @@
         mn8: false, // very difficult to expand because of grammatical changes
         "sn12.23": true,
     };
+    const TRANSLATORS = {
+        'en': [ 
+            'sujato',
+            'brahmali',
+            'bodhi',
+            'thanissaro',
+            'sujato-walton',
+            'caf-rhysdavids',
+            'horner',
+        ],
+        'de': [
+            'sabbamitta', // supported
+            'mettiko', // high-quality
+            'geiger',
+            'nyanaponika',
+            'hecker',
+            'nanatiloka',
+            'franke',
+            //'kusalagnana-maitrimurti-traetow',  // unknown quality
+            //'vri', // unknown quality
+        ],
+    };
     const SUPPORTED_TRANSLATORS = {
         sabbamitta: true,
         sujato: true,
@@ -145,33 +167,61 @@
             }));
         }
 
+        translators(opts={}) {
+            var language = opts.language || 'en';
+            var translators = TRANSLATORS[language] || TRANSLATORS['en'];
+            var translator = opts.translator;
+            if (translator && translators.indexOf(translator) >= 0) {
+                translators = [translator].concat(
+                    translators.filter(t => t !== translator));
+            }
+
+            return translators;
+        }
+
         loadSutta(opts={}) {
+            if (typeof opts === 'string') {
+                opts = {
+                    scid: opts,
+                }
+            }
             var that = this;
             var language = opts.language || 'en';
-            var autoSection = opts.autoSection == null ? this.autoSection : opts.autoSection;
+            var autoSection = opts.autoSection == null 
+                ? this.autoSection : opts.autoSection;
             var plainText = opts.plainText == null ? this.plainText : opts.plainText;
             if (SUPPORTED_LANGUAGES[language] !== true) {
                 return Promise.reject(
                     new Error(`SC-Voice does not support language: ${language}`));
             }
-            var translator = opts.translator || 'sujato';
-            if (SUPPORTED_TRANSLATORS[translator] !== true) {
-                return Promise.reject(
-                    new Error(`SC-Voice does not support translator: ${translator}`));
-            }
+            var translators = this.translators(opts);
+            var o = Object.assign({}, opts);
+            o.id = o.id || o.scid; // for pootl
  
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var sutta = that.suttaCentralApi 
-                        ? await that.suttaCentralApi.loadSutta(opts)
-                        : await that.loadSuttaPootl(opts);
-                    if (sutta == null) {
-                        throw new Error(`loadSutta() not found opts:${JSON.stringify(opts)}`);
+                    var sutta = null;
+                    for (var i = 0; !sutta && i <= translators.length; i++) {
+                        var translator = translators[i];
+                        if (translator == null) {
+                            throw new Error(
+                                `loadSutta() not found opts:${JSON.stringify(opts)}`);
+                        }
+                        o.translator = translator;
+                        if (that.bilaraData) {
+                            // TODO
+                        } else if (that.suttaCentralApi) {
+                            //console.log(`dbg loadSutta suttaCentralApi`, o);
+                            sutta = await that.suttaCentralApi.loadSutta(o);
+                        } else {
+                            //console.log(`dbg loadSutta loadSuttaPootl`, o);
+                            sutta = await that.loadSuttaPootl(o);
+                        }
                     }
                     if (plainText) {
                         sutta = that.stripHtml(sutta);
                     }
-                    if (opts.expand && EXPANDABLE_SUTTAS[sutta.sutta_uid]) {
+                    if (o.expand && EXPANDABLE_SUTTAS[sutta.sutta_uid]) {
                         sutta = that.expandSutta(that.parseSutta(sutta))
                     }
                     if (autoSection) {

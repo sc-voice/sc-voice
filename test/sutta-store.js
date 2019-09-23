@@ -1263,5 +1263,61 @@
             done(); 
         } catch(e) {done(e);} })();
     });
+    it("search('sn12.3') returns Geiger", function(done) {
+        this.timeout(5*1000);
+        (async function() { try {
+            var voice = Voice.createVoice('Amy');
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            this.suttaFactory = new SuttaFactory({
+                suttaCentralApi,
+                autoSection: true,
+            });
+            var store = await new SuttaStore({
+                suttaCentralApi,
+                suttaFactory,
+                voice,
+            }).initialize();
+
+            // multiple results
+            var pattern = 'sn12.3';
+            var language = 'de';
+            var maxResults = 5;
+            var {
+                method,
+                results,
+            } = await store.search({
+                pattern,
+                language,
+                maxResults,
+            });
+
+            should(results).instanceOf(Array);
+            should(method).equal('sutta_uid');
+            should.deepEqual(results.map(r=>r.count), [1]);
+            should.deepEqual(results.map(r=>r.uid), ['sn12.3']);
+            should.deepEqual(results.map(r=>r.author_uid), [
+                'geiger']);
+            should.deepEqual(results.map(r=>r.suttaplex.acronym), [
+                'SN 12.3']);
+            should(results[0].quote.de).match(/Der Weg/);
+            should(results[0].nSegments).equal(9);
+            var sutta = results[0].sutta;
+            should(sutta.sutta_uid).equal('sn12.3');
+            should(sutta.author_uid).equal('geiger');
+            should.deepEqual(sutta.segments[0],{
+                de: 'Saṃyutta Nikāya 12.3',
+                scid: 'sn12.3:0.1',
+            });
+            var sections = sutta.sections;
+            should.deepEqual(sections[0].segments[0],{
+                de: 'Saṃyutta Nikāya 12.3',
+                scid: 'sn12.3:0.1',
+            });
+            should(sections.length).equal(2);
+            should.deepEqual(sections.map(s => s.segments.length), [2, 7,]);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
 
 })
