@@ -21,8 +21,8 @@
     };
     const TRANSLATORS = {
         'en': [ 
-            'sujato',
-            'brahmali',
+            'sujato', // supported
+            'brahmali', // supported
             'bodhi',
             'thanissaro',
             'sujato-walton',
@@ -37,7 +37,7 @@
             'hecker',
             'nanatiloka',
             'franke',
-            //'kusalagnana-maitrimurti-traetow',  // not reviewed
+            'kusalagnana-maitrimurti-traetow',  
             //'vri', // not reviewed
         ],
     };
