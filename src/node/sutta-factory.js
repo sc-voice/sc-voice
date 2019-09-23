@@ -36,9 +36,9 @@
             'nyanaponika',
             'hecker',
             'nanatiloka',
+            'kusalagnana-maitrimurti-traetow',
             'franke',
-            'kusalagnana-maitrimurti-traetow',  
-            //'vri', // not reviewed
+            'vri',
         ],
     };
     const SUPPORTED_TRANSLATORS = {
