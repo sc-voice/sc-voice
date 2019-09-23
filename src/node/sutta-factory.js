@@ -31,14 +31,14 @@
         ],
         'de': [
             'sabbamitta', // supported
-            'mettiko', // high-quality
+            'mettiko', 
             'geiger',
             'nyanaponika',
             'hecker',
             'nanatiloka',
             'franke',
-            //'kusalagnana-maitrimurti-traetow',  // unknown quality
-            //'vri', // unknown quality
+            //'kusalagnana-maitrimurti-traetow',  // not reviewed
+            //'vri', // not reviewed
         ],
     };
     const SUPPORTED_TRANSLATORS = {
