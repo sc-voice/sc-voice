@@ -491,8 +491,12 @@
         expandRange(suttaRef) {
             var cname = suttaRef.replace(/[-.:0-9.].*/u, '');
             var suffix = suttaRef.replace(/[^/]*([a-z\/]*)$/iu, '$1');
-            suttaRef = suttaRef.replace(suffix, '');
-            var range = suttaRef.substring(cname.length);
+            var sref = suttaRef.replace(suffix, '');
+            var range = sref.substring(cname.length);
+            if (/^[-a-z]+$/.test(range)) { 
+                // e.g., kusalagnana-maitrimurti-traetow
+                return [ suttaRef ];
+            }
             var coll = Object.keys(COLLECTIONS).reduce((acc,ck) => {
                 var c = COLLECTIONS[ck];
                 return acc || cname === c.name && c;
@@ -508,7 +512,7 @@
             }
             if (coll.subchapters) { // e.g., SN, AN, KN
                 if (dotParts.length === 1) { // e.g. SN50
-                    var prefix = `${suttaRef}.`;
+                    var prefix = `${sref}.`;
                     var first = rangeParts.length === 1 ? 1 : Number(rangeParts[0]);
                     var last = rangeParts.length === 1 ? 999 : Number(rangeParts[1]);
                 } else if (rangeParts.length === 1) {

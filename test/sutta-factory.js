@@ -175,7 +175,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("translators(opts) returns supported translators", (done)=>{
+    it("TESTTESTtranslators(opts) returns supported translators", (done)=>{
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = await new SuttaFactory({
@@ -192,7 +192,14 @@
             ];
             const DE_TRANSLATORS = [
                 'sabbamitta',
+                'mettiko',
                 'geiger',
+                'nyanaponika',
+                'hecker',
+                'nyanatiloka',
+                'kusalagnana-maitrimurti-traetow',
+                'franke',
+                'vri',
             ];
 
             should.deepEqual(factory.translators(), EN_TRANSLATORS)
@@ -218,7 +225,14 @@
                 translator: 'sabbamitta',
             }), [
                 'sabbamitta',
+                'mettiko',
                 'geiger',
+                'nyanaponika',
+                'hecker',
+                'nyanatiloka',
+                'kusalagnana-maitrimurti-traetow',
+                'franke',
+                'vri',
             ])
             should.deepEqual(factory.translators({
                 language: 'de',
@@ -226,8 +240,35 @@
             }), [
                 'geiger',
                 'sabbamitta',
+                'mettiko',
+                'nyanaponika',
+                'hecker',
+                'nyanatiloka',
+                'kusalagnana-maitrimurti-traetow',
+                'franke',
+                'vri',
             ])
         
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTloadSutta() loads dn22/de/vri", function(done) {
+        (async function() { try {
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            var factory = await new SuttaFactory({
+                suttaCentralApi,
+            }).initialize();
+
+            var sutta = await factory.loadSutta({
+                scid: 'dn22',
+                language: 'de',
+                translator: 'vri',
+            });
+
+            // Bodhi translation doesn't exist, expect Sujato translation
+            should(sutta.author_uid).equal('vri');
+            should(sutta.sutta_uid).equal('dn22');
+
             done();
         } catch(e) { done(e); } })();
     });

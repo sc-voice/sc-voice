@@ -35,7 +35,7 @@
             'geiger',
             'nyanaponika',
             'hecker',
-            'nanatiloka',
+            'nyanatiloka',
             'kusalagnana-maitrimurti-traetow',
             'franke',
             'vri',

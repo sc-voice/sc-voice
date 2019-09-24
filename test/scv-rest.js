@@ -821,7 +821,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/vsm/restore-s3-archives restores vsm files", function(done) {
+    it("POST auth/vsm/restore-s3-archives restores vsm files", function(done) {
         this.timeout(15*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {

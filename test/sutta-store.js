@@ -673,13 +673,16 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("isUidPattern(pattern) is true for sutta_uid patterns", function() {
+    it("TESTTESTisUidPattern(pattern) is true for sutta_uid patterns", function() {
         // unsupported sutta
         should(SuttaStore.isUidPattern('t1670b2.8')).equal(true);
 
         // fully specified sutta
         should(SuttaStore.isUidPattern('mn1/en/sujato')).equal(true);
-        should(SuttaStore.isUidPattern('mn1/en/sujato,mn1/en/bodhi')).equal(true);
+        should(SuttaStore.isUidPattern(
+            'mn1/en/sujato,mn1/en/bodhi')).equal(true);
+        should(SuttaStore.isUidPattern(
+            'dn7/de/kusalagnana-maitrimurti-traetow')).equal(true);
 
         // valid collection with a number
         should(SuttaStore.isUidPattern('mn2000')).equal(true);
@@ -789,9 +792,15 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("expandRange(item) handles fully sutta refs", function(done) {
+    it("TESTTESTexpandRange(item) handles fully sutta refs", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
+
+            // dashes in author
+            should.deepEqual(store.expandRange(
+                'dn7/de/kusalagnana-maitrimurti-traetow'), [
+                'dn7/de/kusalagnana-maitrimurti-traetow' ]);
+
             should.deepEqual(store.expandRange('an5.179').length,1);
 
             // no subchapters
