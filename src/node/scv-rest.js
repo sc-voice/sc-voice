@@ -141,6 +141,8 @@
                         this.getSutta),
                     this.resourceMethod("get", "search/:pattern", 
                         this.getSearch),
+                    this.resourceMethod("get", "search/:pattern/:lang", 
+                        this.getSearch),
                     this.resourceMethod("get", "examples/:n", 
                         this.getExamples),
                     this.resourceMethod("get", "wiki-aria/:page", 
@@ -535,7 +537,7 @@
 
         getSearch(req, res, next) {
             var that = this;
-            var language = req.query.language || 'en';
+            var language = req.params.lang || 'en';
             var pattern = req.params.pattern;
             if (!pattern) {
                 return Promise.reject(new Error('Search pattern is required'));

@@ -906,7 +906,7 @@
                     if (SuttaStore.isUidPattern(pattern)) {
                         var method = 'sutta_uid';
                         logger.info(`SuttaStore.search(${pattern})`+
-                            `lang:${language}`+
+                            `lang:${language} `+
                             `maxResults:${maxResults}`);
                         var uids = that.suttaList(pattern).slice(0, maxResults);
                         var results = await that.suttaSearchResults({

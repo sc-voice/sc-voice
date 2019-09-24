@@ -756,7 +756,8 @@ export default {
         },
         searchSuttas(search) {
             var uriSearch = encodeURIComponent(search);
-            var url = this.url(`search/${uriSearch}`+
+            var lang = this.gscv.lang;
+            var url = this.url(`search/${uriSearch}/${lang}`+
                 `?maxResults=${this.gscv.maxResults}`);
             var timer = this.startWaiting();
             this.$http.get(url).then(res => {

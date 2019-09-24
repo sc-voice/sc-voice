@@ -1076,5 +1076,32 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTGET /search/:pattern/:lang returns German", function(done) {
+        this.timeout(10*1000);
+        var async = function* () { try {
+            var maxResults = 3;
+            var pattern = `dn7`;
+            var lang = 'de'
+
+            var url = `/scv/search/${pattern}/${lang}?maxResults=${maxResults}`;
+            var response = yield supertest(app).get(url).expect((res) => {
+                res.statusCode.should.equal(200);
+                var {
+                    method,
+                    results,
+                } = res.body;
+                should(method).equal('sutta_uid');
+                should(results).instanceOf(Array);
+                should(results.length).equal(1);
+                should.deepEqual(results.map(r => r.uid),[
+                    'dn7', 
+                ]);
+                should(results[0].sutta.author_uid)
+                    .equal('kusalagnana-maitrimurti-traetow');
+            }).end((e,r) => e ? async.throw(e) : async.next(r));
+            done();
+        } catch (e) { done(e); } }();
+        async.next();
+    });
 });
 
