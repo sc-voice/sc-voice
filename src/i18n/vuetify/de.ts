@@ -71,7 +71,7 @@ export default {
     dateAdded: 'Datum hinzugefügt',
     delete: 'Löschen',
     deleteUser: 'Benutzerkonto löschen',
-    diskAvailable: 'Verfügbarer SSD-Speicher',
+    diskAvailable: 'Freier SSD-Speicher',
     diskTotal: 'SSD-Speicher gesamt',
     diskUsage: 'Belegung SSD-Speicher',
     diskUsed: 'Belegter SSD-Speicher',
