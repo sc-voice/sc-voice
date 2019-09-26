@@ -437,11 +437,10 @@ export default {
             var vnameTrans = this.voice.name;
             var urlPath = `download/playlist/${langs.join('+')}`;
             search = encodeURIComponent(search || this.suttaRef());
+            var url = `${urlPath}/${vnameTrans}/${search}`;
             if (this.showPali) {
                 var vnameRoot = this.gscv.vnameRoot;
-                var url = `${urlPath}/${vnameTrans}/${search}/${vnameRoot}`;
-            } else {
-                var url = `${urlPath}/${vnameTrans}/${search}`;
+                url = `${urlPath}/${vnameTrans}/${search}/${vnameRoot}`;
             }
             return this.url(url);
         },

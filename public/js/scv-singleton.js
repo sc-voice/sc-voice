@@ -261,6 +261,7 @@
             var navLang = g.navigator && g.navigator.language;
             if (navLang) {
                 this.locale = navLang.split('-')[0];
+                this.lang = this.locale;
                 console.log(`ScvSingleton.mounted() navigator.language:${navLang}`);
             }
             var query = vueRoot.$route.query;
@@ -296,6 +297,7 @@
             if (LANGUAGES.filter(l => l.name === this.locale).length === 0) {
                 console.log(`ScvSingleton.mounted() unknown locale:${this.locale}=>en`);
                 this.locale = 'en';
+                this.lang = 'en';
             }
             vueRoot.$vuetify.lang.current = this.locale;
         }
