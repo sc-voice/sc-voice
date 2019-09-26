@@ -190,13 +190,16 @@
                 var lang = this.lang;
                 var lv = this.langVoices()
                     .filter(v => v.name === this.vnameTrans);
+                var that = this;
                 if (lv.length === 0) {
-                    var voice = this.langVoices()[0];
+                    setTimeout(() => {
+                        var voice = that.langVoices()[0];
 
-                    this.vnameTrans = voice && voice.name || 'Amy';
-                    console.log(`choosing voice ${this.vnameTrans}`,
-                        `for ${lang}`);
-                    this.changed('vnameTrans');
+                        that.vnameTrans = voice && voice.name || 'Amy';
+                        console.log(`choosing voice ${that.vnameTrans}`,
+                            `for ${lang}`);
+                        that.changed('vnameTrans');
+                    }, 1000);
                 }
             }
             var v = this[prop];
@@ -275,6 +278,7 @@
             if (navLang) {
                 this.locale = navLang.split('-')[0];
                 this.lang = this.locale;
+                this.changed('lang');
                 console.log(`ScvSingleton.mounted() navigator.language:${navLang}`);
             }
             var query = vueRoot.$route.query;
@@ -297,12 +301,14 @@
                         (this.vnameRoot = query.vnameRoot);
                     query.maxResults &&
                         (this.maxResults = Number(query.maxResults));
-                    query.showLang &&
+                    query.showLang && 
                         (this.showLang = Number(query.showLang||0));
                     query.ips != null &&
                         (this.ips = Number(query.ips));
-                    query.lang != null &&
-                        (this.lang = query.lang);
+                    if (query.lang && this.lang !== query.lang) {
+                        this.lang = query.lang;
+                        this.changed('lang');
+                    }
                     query.locale != null &&
                         (this.locale = query.locale);
                 }
