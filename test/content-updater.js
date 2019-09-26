@@ -46,16 +46,21 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("update(scids, opts) updates content", function(done) {
-        this.timeout(5*1000);
+    it("TESTTESTupdate(scids, opts) updates content", function(done) {
+        this.timeout(10*1000);
         (async function() { try {
             /*
              * NOTE: This test will FAIL with invalid username or password
              * if content needs to be updated. The token provided is invalid 
              * and only for testing.
              */
-            var token = 'test-token'; // Invalid GitHub Personal Access Token
-            var token = '42b3ae40075228d04718ea37edd1173ee3d5265c';
+
+            // The following Github Personal Access Token 
+            // was valid on 2018-09-26.  It is no longer valid.
+            // If you generate a new token to upload changes,
+            // revoke the new token after testing.
+            var token = '1f5ac81c1d847d3aacf581903c9923bcf08b7035'; 
+
             var updater = await new ContentUpdater({
                 apiUrl: SC_STAGING,
                 token,
