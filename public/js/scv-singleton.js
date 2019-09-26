@@ -186,6 +186,19 @@
 
         changed(prop) {
             var cookie = this.vueRoot.$cookie;
+            if (prop === 'lang') {
+                var lang = this.lang;
+                var lv = this.langVoices()
+                    .filter(v => v.name === this.vnameTrans);
+                if (lv.length === 0) {
+                    var voice = this.langVoices()[0];
+
+                    this.vnameTrans = voice && voice.name || 'Amy';
+                    console.log(`choosing voice ${this.vnameTrans}`,
+                        `for ${lang}`);
+                    this.changed('vnameTrans');
+                }
+            }
             var v = this[prop];
             if (v != null && this.vueRoot) {
                 if (this.useCookies) {
@@ -288,6 +301,8 @@
                         (this.showLang = Number(query.showLang||0));
                     query.ips != null &&
                         (this.ips = Number(query.ips));
+                    query.lang != null &&
+                        (this.lang = query.lang);
                     query.locale != null &&
                         (this.locale = query.locale);
                 }
