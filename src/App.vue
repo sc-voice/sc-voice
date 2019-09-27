@@ -89,7 +89,7 @@
                 {{$vuetify.lang.t('$vuetify.scv.transLanguage')}}
               </div>
               <v-radio-group v-model="gscv.lang"
-                @change="gscv.changed('lang')"
+                @change="langChanged()"
                 column>
                <v-radio v-for="lang in gscv.languages"
                  :disabled="lang.disabled"
@@ -267,6 +267,10 @@ export default {
         }
     },
     methods: {
+        langChanged() {
+            this.gscv.changed('lang');
+            this.gscv.checkVoiceLang();
+        },
         clickHome() {
             Vue.set(this.gscv, "search", null);
         },
@@ -305,7 +309,7 @@ export default {
             var search = encodeURIComponent(pat);
             return `./?r=${Math.random}/#/?`+
                 `search=${search}&`+
-                `lang=${this.language}`;
+                `lang=${this.gscv.lang}`;
         },
         getVoices() {
             var that = this;

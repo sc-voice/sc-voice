@@ -14,7 +14,7 @@ style="width:100%; margin-top:0"/>
         </h1>
         <div class="scv-search-field" role="search">
           <v-text-field ref="refSearch"
-            :placeholder="$vuetify.lang.t('$vuetify.scv.search')"
+            :placeholder="searchLabel"
             v-model="search" v-on:keypress="onSearchKey($event)"
             @click:append="onSearchKey()"
             append-icon="search"
@@ -923,8 +923,19 @@ export default {
             return text;
 
         },
+        transLabel(key) {
+            var vueLang = this.$vuetify.lang;
+            var current = vueLang.current;
+            vueLang.current = this.gscv.lang;
+            var label = this.$vuetify.lang.t(key);
+            vueLang.current = current;
+            return label;
+        },
     },
     computed: {
+        searchLabel() {
+            return this.transLabel('$vuetify.scv.search');
+        },
         otherAudioUrl() {
             return `https://github.com/sc-voice/sc-voice/wiki/Audio-${this.sutta_uid}`;
         },

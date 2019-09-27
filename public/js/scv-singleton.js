@@ -57,15 +57,28 @@
     class ScvSingleton { 
         constructor(g) {
             this.showId = false;
-            this.vnameTrans = 'Amy';
+
+            // default voices
             this.vnameRoot = 'Aditi';
+            this.vnameTrans = 'Amy';
+
+            // Default language may change default vnameTrans
+            var navLang = g.navigator && g.navigator.language;
+            var navLang = g.navigator && g.navigator.language;
+            this.locale = navLang && navLang.split('-')[0] || 'en';
+            this.lang = this.locale;
+            this.changed('lang');
+            this.checkVoiceLang(false);
+            console.log(`ScvSingleton.ctor`,
+                `navLang:${navLang}`,
+                `vnameTrans:${this.vnameTrans}`,
+                '');
+
             this.scid = null;
             this.showLang = this.SHOWLANG_BOTH;
             this.search = null;
             this.maxResults = 5;
             this.ips = 6;
-            this.lang = 'en';
-            this.locale = 'en';
             if (g == null) {
                 throw new Error(`g is required`);
             }
@@ -184,24 +197,62 @@
             }
         }
 
-        changed(prop) {
-            var cookie = this.vueRoot.$cookie;
-            if (prop === 'lang') {
-                var lang = this.lang;
-                var lv = this.langVoices()
-                    .filter(v => v.name === this.vnameTrans);
-                var that = this;
-                if (lv.length === 0) {
-                    setTimeout(() => {
-                        var voice = that.langVoices()[0];
+        checkVoiceLang(save=true, tries = 1) {
+            if (!this.voices || !this.voices.length) {
+                if (tries < 3) {
+                    console.log(`checkVoiceLang(${save},${tries})`,
+                        `lang:${this.lang}`,
+                        `...`);
+                    var that = this;
+                    setTimeout(
+                        () => that.checkVoiceLang(save, tries+1), 
+                        1000);
+                } else {
+                    console.warn(`checkVoiceLang(${save},${tries})`,
+                        `lang:${this.lang}`,
+                        `GIVING UP`);
+                }
+                return;
+            }
+            console.log(`checkVoiceLang(${save},${tries})`,
+                `lang:${this.lang}`);
 
-                        that.vnameTrans = voice && voice.name || 'Amy';
-                        console.log(`choosing voice ${that.vnameTrans}`,
-                            `for ${lang}`);
-                        that.changed('vnameTrans');
-                    }, 1000);
+            var lang = this.lang;
+            var lv = this.langVoices().filter(v => 
+                v.name === this.vnameTrans);
+            if (lv.length === 0) { // no voice
+                var voice = this.langVoices()[0];
+                var vname = voice && voice.name;
+                if (vname) {
+                    console.log(
+                        `checkVoiceLang changing voice for lang:${lang}`,
+                        `${this.vnameTrans} => ${vname}`,
+                    '');
+                    this.vnameTrans = vname;
+                    save && this.changed('vnameTrans');
                 }
             }
+        }
+
+        changed(prop, tries=1) { // save changes
+            if (this.vueRoot == null) {
+                if (tries < 3) {
+                    var that = this;
+                    console.log(`changed(${prop}, ${tries})...`);
+                    setTimeout(() => that.changed(prop, tries+1));
+                    return;
+                } else {
+                    console.warn(`changed(${prop}, ${tries})`,
+                        `GIVING UP`);
+                    return;
+                }
+                return;
+            }
+            if (tries > 1) {
+                console.log(`...changed(${prop}, ${tries})`);
+            }
+
+            var cookie = this.vueRoot.$cookie;
             var v = this[prop];
             if (v != null && this.vueRoot) {
                 if (this.useCookies) {
@@ -274,19 +325,14 @@
         mounted(vueRoot) {
             var g = this.g;
             this.vueRoot = vueRoot;
-            var navLang = g.navigator && g.navigator.language;
-            if (navLang) {
-                this.locale = navLang.split('-')[0];
-                this.lang = this.locale;
-                this.changed('lang');
-                console.log(`ScvSingleton.mounted() navigator.language:${navLang}`);
-            }
             var query = vueRoot.$route.query;
             if (this.useCookies) {
                 let cookies = {};
+                let that = this;
                 Object.keys(this).forEach(key => {
                     this.loadCookie(key);
                     cookies[key] = this[key];
+                    that.changed(key);
                 });
                 console.log(`ScvSingleton.mounted() cookies:`, cookies);
             } 
@@ -307,7 +353,7 @@
                         (this.ips = Number(query.ips));
                     if (query.lang && this.lang !== query.lang) {
                         this.lang = query.lang;
-                        this.changed('lang');
+                        this.checkVoiceLang(false);
                     }
                     query.locale != null &&
                         (this.locale = query.locale);
@@ -316,9 +362,13 @@
                 query.search && (this.search = search);
             }
             if (LANGUAGES.filter(l => l.name === this.locale).length === 0) {
-                console.log(`ScvSingleton.mounted() unknown locale:${this.locale}=>en`);
+                console.log(`ScvSingleton.mounted()`,
+                    `unknown locale:${this.locale}=>en`);
                 this.locale = 'en';
+                this.changed('locale');
                 this.lang = 'en';
+                this.changed('lang');
+                this.checkVoiceLang();
             }
             vueRoot.$vuetify.lang.current = this.locale;
         }
@@ -371,10 +421,11 @@
             var chars = obj;
             var seconds = 0;
             Object.keys(obj).forEach(lang => {
+                var cl = chars[lang];
                 if (lang === 'pli') {
-                    showPali && (seconds += chars[lang] * DN33_PLI_SECONDS_PER_CHAR);
+                    showPali && (seconds += cl*DN33_PLI_SECONDS_PER_CHAR);
                 } else {
-                    showTrans && (seconds += chars[lang] * DN33_EN_SECONDS_PER_CHAR);
+                    showTrans && (seconds += cl*DN33_EN_SECONDS_PER_CHAR);
                 }
             });
             return this.durationDisplay(seconds);
