@@ -87,8 +87,9 @@
                 chapter: 'voice',
             };
             var result = await voice.speak(text, opts);
+            console.log(`dbg result`, result);
             should(result).properties(['file','hits','misses','signature','cached']);
-            should(fs.statSync(result.file).size).above(20000).below(21000);
+            should(fs.statSync(result.file).size).above(16000).below(17000);
             done();
         } catch(e) {done(e);} })();
     });
