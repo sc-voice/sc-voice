@@ -286,12 +286,10 @@ export default {
         },
         openHelp() {
             var that = this;
-            var url = that.url('wiki-aria/Home.md');
+            var wikiAria = this.$vuetify.lang.t('$vuetify.scv.wikiAria');
+            var url = that.url(`wiki-aria/${wikiAria}`);
             (async function() {
                 that.dialogHelp = true;
-                if (that.gscv.locale === 'de') {
-                    url = that.url('wiki-aria/Home@Deutsch.md');
-                }
                 console.log(`openHelp(${url})`);
                 that.$http.get(url).then(res => {
                     that.helpHtml = res.data.html;

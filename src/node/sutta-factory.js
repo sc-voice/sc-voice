@@ -40,6 +40,17 @@
             'franke',
             'vri',
         ],
+        'pt': [
+            'beisert',
+        ],
+        'pl': [
+            'kowaleski',
+            'jagodzinski',
+        ],
+        'nd': [
+        ],
+        'is': [
+        ],
     };
     const SUPPORTED_TRANSLATORS = {
         sabbamitta: true,
@@ -54,6 +65,10 @@
     const SUPPORTED_LANGUAGES = {
         en: true,
         de: true,
+        pt: true,
+        nl: true,
+        is: true,
+        pl: true,
     };
 
     class SuttaFactory { 

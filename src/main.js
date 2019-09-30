@@ -42,6 +42,10 @@ var scvSingleton = new exports.ScvSingleton({
 
 import en from './i18n/vuetify/en.ts';
 import de from './i18n/vuetify/de.ts';
+import pt from './i18n/vuetify/pt.ts';
+import pl from './i18n/vuetify/pl.ts';
+import is from './i18n/vuetify/is.ts';
+import nl from './i18n/vuetify/nl.ts';
 
 const vuetifyOptions = {
   theme: { 
@@ -55,7 +59,7 @@ const vuetifyOptions = {
     }
   },
   lang: {
-    locales: { en, de },
+    locales: { en, de, pt, pl, is, nl },
     current: 'en',
   },
 };

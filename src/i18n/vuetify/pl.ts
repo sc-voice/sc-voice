@@ -160,7 +160,7 @@ export default {
     ariaDownload: "download",
     ariaFoundSuttas: "Found A_RESULTCOUNT suttas A_DURATION",
     ariaHHMM: "A_HOURS hours and A_MINUTES minutes",
-    ariaInspireMe: "inspire me",
+    ariaInspireMe: "Zainspiruj mnie!",
     ariaMMSS: "A_MINUTES minutes and A_SECONDS seconds",
     ariaMore: "more",
     ariaOpensInNewTab: "A_SOURCE opens in new tab",
@@ -185,7 +185,7 @@ export default {
     foundSuttas: "Found A_RESULTCOUNT suttas",
     general: "General",
     HHMM: "A_HOURSh A_MINUTESm A_SECONDSs",
-    inspireMe: "Inspire Me!",
+    inspireMe: "Zainspiruj mnie!",
     languages: "Languages",
     MMSS: "A_MINUTESm A_SECONDSs",
     noBell: "Play sutta immediately",
@@ -208,6 +208,7 @@ export default {
     trackOfSection: "A_TRACK of A_TRACKS",
     transLanguage: "Translation language",
     uiLanguage: "Website language",
+    wikiAria: "Home@Polska.md",
 
   }
 }

@@ -47,11 +47,29 @@
     };
 
     const LANGUAGES = [{
-        name: 'en',
-        label: 'English',
-    }, {
         name: 'de',
         label: 'Deutsch',
+        wikiHome: 'wiki-aria/Home@Deutsch.md',
+    }, {
+        name: 'en',
+        label: 'English',
+        wikiHome: 'wiki-aria/Home@Deutsch.md',
+    }, {
+        name: 'is',
+        label: 'Íslenska',
+        wikiHome: 'wiki-aria/Home@Íslenska.md',
+    }, {
+        name: 'nl',
+        label: 'Nederlands',
+        wikiHome: 'wiki-aria/Home@Nederlands.md',
+    }, {
+        name: 'pl',
+        label: 'Polski',
+        wikiHome: 'wiki-aria/Home@Polski.md',
+    }, {
+        name: 'pt',
+        label: 'Portugues',
+        wikiHome: 'wiki-aria/Home@Portugues.md',
     }];
 
     class ScvSingleton { 

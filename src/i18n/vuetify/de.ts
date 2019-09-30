@@ -207,6 +207,7 @@ export default {
     trackOfSection: "A_TRACK von A_TRACKS",
     transLanguage: "Sprache der Übersetzung",
     uiLanguage: "Sprache für Webseite",
+    wikiAria: "Home@Deutsch.md",
 
   },
 }
