@@ -56,6 +56,9 @@
         name: 'is',
         label: 'Íslenska',
     }, {
+        name: 'nb',
+        label: 'Norsk',
+    }, {
         name: 'nl',
         label: 'Nederlands',
     }, {

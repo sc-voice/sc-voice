@@ -46,6 +46,7 @@ import pt from './i18n/vuetify/pt.ts';
 import pl from './i18n/vuetify/pl.ts';
 import is from './i18n/vuetify/is.ts';
 import nl from './i18n/vuetify/nl.ts';
+import nb from './i18n/vuetify/nb.ts';
 
 const vuetifyOptions = {
   theme: { 
@@ -59,7 +60,7 @@ const vuetifyOptions = {
     }
   },
   lang: {
-    locales: { en, de, pt, pl, is, nl },
+    locales: { en, de, pt, pl, is, nb, nl },
     current: 'en',
   },
 };
