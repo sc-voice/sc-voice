@@ -941,7 +941,7 @@
             var voices = res.body;
             should.deepEqual(voices.map(v=>v.name), [
                 'Amy', 'Russell', 'Raveena', 'Matthew', 'sujato_en', // en voices first
-                'Ines', // pt
+                'Ricardo', // pt
                 'Vicki', 'Hans', 'Marlene', // de voices
                 'Aditi', 'sujato_pli', // pli voices last
             ])

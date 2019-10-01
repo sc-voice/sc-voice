@@ -732,8 +732,8 @@
     }
 },{
     "service": "aws-polly",
-    "name": "Ines",
-    "label": "\ud83e\udd16 Inês",
+    "name": "Ricardo",
+    "label": "\ud83e\udd16 Ricardo",
     "langTrans": "pt",
     "locale": "pt-BR",
     "localeIPA": "pli",
@@ -742,24 +742,24 @@
     "stripQuotes": false,
     "unknownLang": "pt",
     "usage": "recite",
-    "gender": "female",
-    "pitch": "-10%",
+    "gender": "male",
+    "pitch": "0%",
     "rates": {
         "navigate": "-0%", 
-        "recite": "-0%"
+        "recite": "-15%"
     },
     "usages": {
         "navigate": {
-            "rate": "-0%",
+            "rate": "-15%",
             "breaks": [0.001,0.1,0.2,0.3,0.4]
         },
         "recite": {
             "priority": 1,
-            "rate": "-0%",
+            "rate": "-15%",
             "breaks": [0.001,0.1,0.2,0.6,1]
         },
         "review": {
-            "rate": "-0%",
+            "rate": "-15%",
             "breaks": [0.001,0.1,0.2,0.4,0.5]
         }
     },
