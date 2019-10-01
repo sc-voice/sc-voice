@@ -746,20 +746,20 @@
     "pitch": "0%",
     "rates": {
         "navigate": "-0%", 
-        "recite": "-15%"
+        "recite": "-10%"
     },
     "usages": {
         "navigate": {
-            "rate": "-15%",
+            "rate": "-10%",
             "breaks": [0.001,0.1,0.2,0.3,0.4]
         },
         "recite": {
             "priority": 1,
-            "rate": "-15%",
+            "rate": "-10%",
             "breaks": [0.001,0.1,0.2,0.6,1]
         },
         "review": {
-            "rate": "-15%",
+            "rate": "-10%",
             "breaks": [0.001,0.1,0.2,0.4,0.5]
         }
     },
