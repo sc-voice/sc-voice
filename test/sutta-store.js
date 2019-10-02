@@ -673,7 +673,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTisUidPattern(pattern) is true for sutta_uid patterns", function() {
+    it("isUidPattern(pattern) is true for sutta_uid patterns", function() {
         // unsupported sutta
         should(SuttaStore.isUidPattern('t1670b2.8')).equal(true);
 
@@ -792,7 +792,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTexpandRange(item) handles fully sutta refs", function(done) {
+    it("expandRange(item) handles fully sutta refs", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 

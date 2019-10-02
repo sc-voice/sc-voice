@@ -763,6 +763,12 @@
             "breaks": [0.001,0.1,0.2,0.4,0.5]
         }
     },
+    "customWords": {
+        "arahant": { "ipa": "aɾ.han.te"},
+        "o": { "ipa": "o"},
+        "êxtase": { "ipa": "'ɛχ.tase" },
+        "zzzz": {}
+    },
     "ipa": {
         "pli": {
             "a": "\u0250",

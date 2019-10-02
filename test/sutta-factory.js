@@ -155,7 +155,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTloadSutta() loads AN10.26/en/bodhi", function(done) {
+    it("loadSutta() loads AN10.26/en/bodhi", function(done) {
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = await new SuttaFactory({
@@ -175,7 +175,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTtranslators(opts) returns supported translators", (done)=>{
+    it("translators(opts) returns supported translators", (done)=>{
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = await new SuttaFactory({
@@ -252,7 +252,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTloadSutta() loads dn22/de/vri", function(done) {
+    it("loadSutta() loads dn22/de/vri", function(done) {
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = await new SuttaFactory({

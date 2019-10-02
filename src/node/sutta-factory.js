@@ -42,6 +42,8 @@
         ],
         'pt': [
             'beisert',
+            'guimaraes',
+            'laera',
         ],
         'pl': [
             'kowaleski',

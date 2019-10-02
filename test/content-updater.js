@@ -46,7 +46,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTupdate(scids, opts) updates content", function(done) {
+    it("update(scids, opts) updates content", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             /*

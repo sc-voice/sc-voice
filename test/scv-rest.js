@@ -1077,7 +1077,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /search/:pattern/:lang returns German", function(done) {
+    it("GET /search/:pattern/:lang returns German", function(done) {
         this.timeout(10*1000);
         var async = function* () { try {
             var maxResults = 3;
