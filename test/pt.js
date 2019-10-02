@@ -58,8 +58,8 @@
         var ssml = voice.wordSSML('o');
         should(ssml).match(/ph="o"/);
         var ssml = voice.wordSSML('arahant');
-        should(ssml).match(/ph="aɾ.han.te"/);
+        should(ssml).match(/ph="'a.ɾa.han.t͡ʃ"/);
         var ssml = voice.wordSSML('êxtase');
-        should(ssml).match(/ph="'ɛχ.tase"/);
+        should(ssml).match(/ph="'es.sta.se"/);
     });
 })
