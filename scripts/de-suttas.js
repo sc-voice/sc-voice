@@ -3,6 +3,10 @@
 const fs = require("fs");
 const path = require("path");
 const {
+    js,
+    logger,
+} = require('just-simple');
+const {
     execSync,
 } = require('child_process');
 const {
@@ -11,9 +15,11 @@ const {
 const LOCAL = path.join(__dirname, '..', 'local');
 const cwd = LOCAL;
 
+
 class BilaraData {
     constructor(opts={}) {
         this.root = opts.root || path.join(LOCAL, 'bilara-data');
+        this.logLevel = opts.logLevel || 'info';
         this.nikayas = opts.nikayas || ['an','mn','dn','sn'];
         this.reNikayas = new RegExp(
             `/(${this.nikayas.join('|')})/`, 'ui');
@@ -21,6 +27,18 @@ class BilaraData {
             writable: true,
             value: null,
         });
+    }
+
+    syncGit(root, repo, gitRoot='') {
+        logger.log(`root:${root}`);
+        if (fs.existsSync(root)) {
+            var cmd = `cd ${root}; git pull`;
+        } else {
+            var cmd = `git clone ${repo} ${gitRoot}`;
+        }
+        console.log(cmd);
+        var res = execSync(cmd, { cwd }).toString();
+        console.log(res);
     }
 
     isSuttaPath(fpath) {
@@ -79,18 +97,6 @@ class SuttaTransform extends BilaraData {
 
         this.deSrcSuttas = this.suttaFiles(SRC_DE_PATH);
         this.enSrcSuttas = this.suttaFiles(SRC_EN_PATH);
-    }
-
-    syncGit(root, repo, gitRoot='') {
-        console.log(`root:${root}`);
-        if (fs.existsSync(root)) {
-            var cmd = `cd ${root}; git pull`;
-        } else {
-            var cmd = `git clone ${repo} ${gitRoot}`;
-        }
-        console.log(cmd);
-        var res = execSync(cmd, { cwd }).toString();
-        console.log(res);
     }
 
     suttaFiles(suttaDir) {
