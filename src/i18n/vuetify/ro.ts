@@ -73,7 +73,7 @@ export default {
     diskAvailable: 'Spațiu disc disponibil',
     diskTotal: 'Spațiu disc total',
     diskUsage: 'Spațiu disc utilizat',
-    diskUsed: 'Disc folosit',
+    diskUsed: 'Spațiu disc utilizat',
     editCredentials: 'Editează Acreditări',
     editor: 'Editor',
     endpoint: 'Punct final',
