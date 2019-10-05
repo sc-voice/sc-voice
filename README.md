@@ -20,6 +20,7 @@ With a Linux console, install the software:
 git clone https://github.com/sc-karl/sc-voice.git
 cd sc-voice
 ./scripts/init.sh
+./scripts/update-latest
 ```
 As part of installation you will need to configure one TTS service adapter.
 

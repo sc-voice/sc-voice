@@ -186,7 +186,7 @@
                     con && console.log(`dbg wordSSML1.4`, word);
                     ipa = this.wordIPA(word, wi.language);
                 } else {
-                    console.log(`dbg wordSSML1.5`, word, lang, wi);
+                    con && console.log(`dbg wordSSML1.5`, word, lang, wi);
                 }
             } else { // unknown word or punctuation
                 if (Words.RE_ACRONYM.test(word)) {
