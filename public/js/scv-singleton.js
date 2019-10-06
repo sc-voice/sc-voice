@@ -47,29 +47,35 @@
     };
 
     const LANGUAGES = [{
+        name: 'da',
+        label: 'Dansk / Danish',
+    }, {
         name: 'de',
-        label: 'Deutsch',
+        label: 'Deutsch / German',
     }, {
         name: 'en',
         label: 'English',
     }, {
         name: 'is',
-        label: 'Íslenska',
+        label: 'Íslenska / Icelandic',
+    }, {
+        name: 'ja',
+        label: '日本語 / Japanese',
     }, {
         name: 'nb',
-        label: 'Norsk',
+        label: 'Norsk / Norwegian',
     }, {
         name: 'nl',
-        label: 'Nederlands',
+        label: 'Nederlands / Dutch',
     }, {
         name: 'pl',
-        label: 'Polski',
+        label: 'Polski / Polish',
     }, {
         name: 'pt',
-        label: 'Português',
+        label: 'Português / Portuguese',
     }, {
         name: 'ro',
-        label: 'Română',
+        label: 'Română / Romanian',
     }];
 
     class ScvSingleton { 

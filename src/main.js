@@ -48,6 +48,8 @@ import is from './i18n/vuetify/is.ts';
 import nl from './i18n/vuetify/nl.ts';
 import nb from './i18n/vuetify/nb.ts';
 import ro from './i18n/vuetify/ro.ts';
+import da from './i18n/vuetify/da.ts';
+import ja from './i18n/vuetify/ja.ts';
 
 const vuetifyOptions = {
   theme: { 
@@ -61,7 +63,7 @@ const vuetifyOptions = {
     }
   },
   lang: {
-    locales: { en, de, pt, pl, is, nb, nl, ro },
+    locales: { en, de, pt, pl, is, nb, nl, ro, da, ja },
     current: 'en',
   },
 };
