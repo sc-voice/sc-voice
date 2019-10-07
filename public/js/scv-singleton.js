@@ -48,34 +48,34 @@
 
     const LANGUAGES = [{
         name: 'da',
-        label: 'Dansk / Danish',
+        label: 'Dansk / DA',
     }, {
         name: 'de',
-        label: 'Deutsch / German',
+        label: 'Deutsch / DE',
     }, {
         name: 'en',
-        label: 'English',
+        label: 'English / EN',
     }, {
         name: 'is',
-        label: 'Íslenska / Icelandic',
+        label: 'Íslenska / IS',
     }, {
         name: 'ja',
-        label: '日本語 / Japanese',
+        label: '日本語 / JA',
     }, {
         name: 'nb',
-        label: 'Norsk / Norwegian',
+        label: 'Norsk / NB',
     }, {
         name: 'nl',
-        label: 'Nederlands / Dutch',
+        label: 'Nederlands / NL',
     }, {
         name: 'pl',
-        label: 'Polski / Polish',
+        label: 'Polski / PL',
     }, {
         name: 'pt',
-        label: 'Português / Portuguese',
+        label: 'Português / PT',
     }, {
         name: 'ro',
-        label: 'Română / Romanian',
+        label: 'Română / RO',
     }];
 
     class ScvSingleton { 
