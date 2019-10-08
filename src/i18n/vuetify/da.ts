@@ -208,7 +208,7 @@ export default {
     trackOfSection: "A_TRACK af A_TRACKS",
     transLanguage: "Oversættelsessprog",
     uiLanguage: "Webstedssprog",
-    wikiAria: "Home@Dansk.md",
+    wikiAria: "Home.md",
 
   }
 }
