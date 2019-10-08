@@ -208,7 +208,7 @@ export default {
     trackOfSection: "A_TRACK din A_TRACKS",
     transLanguage: "Limba de traducere",
     uiLanguage: "Limba site-ului web",
-    wikiAria: "Home@Românesc.md",
+    wikiAria: "Home.md",
 
   }
 }
