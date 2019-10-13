@@ -76,6 +76,9 @@
     }, {
         name: 'ro',
         label: 'Română / RO',
+    }, {
+        name: 'vi',
+        label: 'Tiếng Việt / VI',
     }];
 
     class ScvSingleton { 

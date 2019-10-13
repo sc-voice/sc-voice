@@ -181,7 +181,7 @@ export default {
     downloadComplete: "Download completed:",
     downloading: "Downloading:",
     downloadTimeout: "Download timeout:",
-    exploreBuddhasTeaching: "Explore the Buddha's Teaching",
+    exploreBuddhasTeaching: "khám phá giáo lý của phật",
     foundSuttas: "Found A_RESULTCOUNT suttas",
     general: "General",
     HHMM: "A_HOURSh A_MINUTESm A_SECONDSs",

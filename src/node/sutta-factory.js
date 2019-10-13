@@ -51,7 +51,13 @@
         ],
         'nd': [
         ],
+        'po': [
+        ],
         'is': [
+        ],
+        'ja': [
+        ],
+        'vi': [
         ],
     };
     const SUPPORTED_TRANSLATORS = {
@@ -65,12 +71,16 @@
         'caf_rhysdavids': true,
     };
     const SUPPORTED_LANGUAGES = {
-        en: true,
         de: true,
-        pt: true,
-        nl: true,
+        en: true,
         is: true,
+        ja: true,
+        nl: true,
         pl: true,
+        po: true,
+        pt: true,
+        vi: true,
+
     };
 
     class SuttaFactory { 

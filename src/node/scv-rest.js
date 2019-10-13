@@ -1013,7 +1013,7 @@
 
         vsmS3Bucket(Bucket) {
             var credPath = path.join(LOCAL, 'vsm-s3.json');
-            var creds = null;
+            var creds;
             if (fs.existsSync(credPath)) {
                 creds = JSON.parse(fs.readFileSync(credPath));
                 Bucket && (creds.Bucket = Bucket);

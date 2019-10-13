@@ -40,8 +40,6 @@
             should(updater.suttaStore).instanceOf(SuttaStore);
             should(updater.suttaStore.isInitialized).equal(true);
             should(updater.isInitialized).equal(true);
-            should(updater.remote_origin_url)
-                .equal('https://github.com/sc-voice/scv-suttas.git');
 
             done(); 
         } catch(e) {done(e);} })();
