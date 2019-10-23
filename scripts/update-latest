@@ -32,6 +32,8 @@ if [ "$REBOOT" == "0" ]; then
     done
 fi
 
+./scripts/install-nvm.sh
+
 type rotatelogs
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: rotatelogs detected (OK)"
