@@ -88,8 +88,10 @@
             };
             var result = await voice.speak(text, opts);
             console.log(`dbg result`, result);
-            should(result).properties(['file','hits','misses','signature','cached']);
-            should(fs.statSync(result.file).size).above(16000).below(17000);
+            should(result).properties([
+                'file','hits','misses','signature','cached']);
+            should(fs.statSync(result.file).size)
+                .above(15000).below(17000);
             done();
         } catch(e) {done(e);} })();
     });

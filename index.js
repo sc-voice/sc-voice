@@ -1,7 +1,6 @@
 module.exports = {
     AbstractTTS: require("./src/node/abstract-tts"),
     AudioUrls: require("./src/node/audio-urls"),
-    BilaraData: require("./src/node/bilara-data"),
     ContentUpdater: require('./src/node/content-updater'),
     Cursor: require('./src/node/cursor'),
     Definitions: require('./src/node/definitions'),

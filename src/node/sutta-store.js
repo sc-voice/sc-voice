@@ -7,6 +7,9 @@
     const {
         exec,
     } = require('child_process');
+    const {
+        BilaraData,
+    } = require('scv-bilara');
     const Playlist = require('./playlist');
     const Sutta = require('./sutta');
     const Task = require('./task');
