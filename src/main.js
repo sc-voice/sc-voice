@@ -40,16 +40,17 @@ var scvSingleton = new exports.ScvSingleton({
     Vue,
 });
 
-import en from './i18n/vuetify/en.ts';
-import de from './i18n/vuetify/de.ts';
-import pt from './i18n/vuetify/pt.ts';
-import pl from './i18n/vuetify/pl.ts';
-import is from './i18n/vuetify/is.ts';
-import nl from './i18n/vuetify/nl.ts';
-import nb from './i18n/vuetify/nb.ts';
-import ro from './i18n/vuetify/ro.ts';
 import da from './i18n/vuetify/da.ts';
+import de from './i18n/vuetify/de.ts';
+import en from './i18n/vuetify/en.ts';
+//import hi from './i18n/vuetify/hi.ts';
+import is from './i18n/vuetify/is.ts';
 import ja from './i18n/vuetify/ja.ts';
+import nb from './i18n/vuetify/nb.ts';
+import nl from './i18n/vuetify/nl.ts';
+import pl from './i18n/vuetify/pl.ts';
+import pt from './i18n/vuetify/pt.ts';
+import ro from './i18n/vuetify/ro.ts';
 import vi from './i18n/vuetify/vi.ts';
 
 const vuetifyOptions = {
@@ -64,7 +65,21 @@ const vuetifyOptions = {
     }
   },
   lang: {
-    locales: { en, de, pt, pl, is, nb, nl, ro, da, ja, vi },
+    locales: { 
+        da, 
+        de, 
+        en, 
+//        hi,
+        is, 
+        ja, 
+        nb, 
+        nl, 
+        pl, 
+        pt, 
+        ro, 
+        vi, 
+
+    },
     current: 'en',
   },
 };
