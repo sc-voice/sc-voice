@@ -12,9 +12,13 @@
         SuttaCentralId,
         Voice,
     } = require("../index");
+    const {
+        BilaraData,
+    } = require("scv-bilara");
     const LANG = 'en';
     const LOCAL = path.join(__dirname, '..', 'local');
     const ROOT = path.join(LOCAL, 'suttas');
+    const BILARA_DATA = path.join(LOCAL, 'bilara-data');
     const MAXRESULTS = 5;
     const STAGING = {
         apiUrl: 'http://staging.suttacentral.net/api',
@@ -34,7 +38,12 @@
         }
     }
 
-    it("initialize() initializes SuttaStore", function(done) {
+    it("TESTTESTdefault ctor", () => {
+        var store = new SuttaStore();
+        should(store.bilaraData).instanceOf(BilaraData);
+        should(store.bilaraData.root).equal(BILARA_DATA);
+    });
+    it("TESTTESTinitialize() initializes SuttaStore", function(done) {
         (async function() { try {
             var store = new SuttaStore();
             should(store.maxDuration).equal(3*60*60);
@@ -42,6 +51,7 @@
             should(await store.initialize()).equal(store);
             should(store.suttaCentralApi).instanceOf(SuttaCentralApi);
             should(store.root).equal(ROOT);
+            should(store.bilaraData.initialized).equal(true);
             done(); 
         } catch(e) {done(e);} })();
     });
@@ -1272,7 +1282,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search('sn12.3') returns Geiger", function(done) {
+    it("TESTTESTsearch('sn12.3') returns Geiger", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice('Amy');

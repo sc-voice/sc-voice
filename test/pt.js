@@ -24,7 +24,7 @@
         return ph;
     }
 
-    it("TESTTESTloadSutta() loads an10.2/pt/beisert", function(done) {
+    it("loadSutta() loads an10.2/pt/beisert", function(done) {
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = await new SuttaFactory({
@@ -42,7 +42,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTcreateVoice(voiceName) returns a default voice", function() {
+    it("createVoice(voiceName) returns a default voice", function() {
         var voice = Voice.createVoice('ricardo');
         should(voice).instanceOf(Voice);
         should(voice.locale).equal("pt-BR");
@@ -53,7 +53,7 @@
         should(voice.stripQuotes).equal(false);
         should(voice.altTts).equal(undefined);
     });
-    it("TESTTESTwordSSML(word) Ricardo SSML text for word", function() {
+    it("wordSSML(word) Ricardo SSML text for word", function() {
         var voice = Voice.createVoice('ricardo').services.recite;
         var ssml = voice.wordSSML('o');
         should(ssml).match(/ph="o"/);

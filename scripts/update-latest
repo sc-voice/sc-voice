@@ -88,6 +88,17 @@ else
     popd
 fi
 
+if [ ! -e local/bilara-data ]; then
+    echo -e "INIT\t: installing bilara-data..."
+    pushd local
+    git clone https://github.com/sc-voice/bilara-data
+    popd
+fi
+echo -e "INIT\t: fetching latest bilara-data..."
+pushd local/bilara-data
+git pull
+popd
+
 if [ "$REBOOT" == "y" ]; then
     sudo shutdown -r now
 fi

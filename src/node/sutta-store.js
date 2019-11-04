@@ -3,7 +3,7 @@
     const path = require('path');
     const {
         logger,
-    } = require('rest-bundle');
+    } = require('just-simple').JustSimple;
     const {
         exec,
     } = require('child_process');
@@ -63,6 +63,10 @@
             this.suttaFactory = opts.suttaFactory || new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
                 autoSection: true,
+            });
+            logger.logInstance(this, opts);
+            this.bilaraData = opts.BilaraData || new BilaraData({
+                logLevel: this.logLevel,
             });
             this.suttaIds = opts.suttaIds;
             this.maxDuration = opts.maxDuration || 3 * 60 * 60;
@@ -127,6 +131,7 @@
                             Object.keys(uids).sort(SuttaCentralId.compareLow);
                     }
                     that.suttaIds = that.suttaIds || suttaIds;
+                    await that.bilaraData.initialize();
 
                     resolve(that);
                 } catch(e) {reject(e);} })();
@@ -140,44 +145,46 @@
                 name: `SuttaStore.updateSuttas`,
             });
             task.actionsTotal += suttaIds.length;
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var maxAge = opts.maxAge || 0;
-                    suttaIds = suttaIds || that.suttaIds;
-                    for (let i = 0; i < suttaIds.length; i++) {
-                        var id = suttaIds[i];
-                        task.summary = `updating sutta: ${id}`;
-                        task.actionsDone++; // id
-                        var sutta = await that.suttaCentralApi.loadSutta(id);
-                        if (sutta) {
-                            var translation = sutta.translation;
-                            if (translation == null) {
-                                logger.info(`SuttaStore.updateSuttas(${id}) NO TRANSLATION`);
-                            } else {
-                                var language = translation.lang;
-                                var author_uid = translation.author_uid;
-                                var spath = that.suttaPath(id, language, author_uid);
-                                var updateFile = !fs.existsSync(spath) || maxAge === 0;
-                                if (!updateFile) {
-                                    var stats = fs.statSync(spath);
-                                    var age = (Date.now() - stats.mtime)/1000;
-                                    updateFile = age > maxAge;
-                                }
-                                if (updateFile) {
-                                    fs.writeFileSync(spath, JSON.stringify(sutta, null, 2));
-                                    logger.info(`SuttaStore.updateSuttas(${id}) => `+
-                                        `${spath} OK`);
-                                } else {
-                                    logger.info(`SuttaStore.updateSuttas(${id}) (no change)`);
-                                }
-                            }
+            var pbody = (resolve,reject) => { (async function() { try {
+                var maxAge = opts.maxAge || 0;
+                suttaIds = suttaIds || that.suttaIds;
+                for (let i = 0; i < suttaIds.length; i++) {
+                    var id = suttaIds[i];
+                    task.summary = `updating sutta: ${id}`;
+                    task.actionsDone++; // id
+                    var sutta = await that.suttaCentralApi.loadSutta(id);
+                    if (sutta) {
+                        var translation = sutta.translation;
+                        if (translation == null) {
+                            that.log(`updateSuttas(${id}) NO TRANSLATION`);
                         } else {
-                            logger.info(`SuttaStore.updateSuttas(${id}) (no applicable sutta)`);
+                            var language = translation.lang;
+                            var author_uid = translation.author_uid;
+                            var spath = that.suttaPath(
+                                id, language, author_uid);
+                            var updateFile = !fs.existsSync(spath) 
+                                || maxAge === 0;
+                            if (!updateFile) {
+                                var stats = fs.statSync(spath);
+                                var age = (Date.now() - stats.mtime)/1000;
+                                updateFile = age > maxAge;
+                            }
+                            if (updateFile) {
+                                fs.writeFileSync(spath, 
+                                    JSON.stringify(sutta, null, 2));
+                                that.log(`updateSuttas(${id}) => `+
+                                    `${spath} OK`);
+                            } else {
+                                that.log(`updateSuttas(${id}) (no change)`);
+                            }
                         }
-                    };
-                    resolve(suttaIds);
-                } catch(e) {reject(e);} })();
-            });
+                    } else {
+                        that.log(`updateSuttas(${id}) (no applicable sutta)`);
+                    }
+                };
+                resolve(suttaIds);
+            } catch(e) {reject(e);} })(); };
+            return new Promise(pbody);
         }
 
         suttaFolder(sutta_uid) {
@@ -191,7 +198,7 @@
             }
             var fpath = path.join(this.root, folder);
             if (!fs.existsSync(fpath)) {
-                logger.info(`SuttaStore.suttaFolder() mkdir:${fpath}`);
+                this.log(`suttaFolder() mkdir:${fpath}`);
                 fs.mkdirSync(fpath);
             }
             return fpath;
@@ -301,7 +308,7 @@
                 `|grep -v ':0'`+
                 `|sort -g -r -k 2,2 -k 1,1 -t ':'`;
             maxResults && (cmd += `|head -${maxResults}`);
-            logger.info(`SuttaStore.search() ${cmd}`);
+            this.log(`search() ${cmd}`);
             var opts = {
                 cwd: this.root,
                 shell: '/bin/bash',
@@ -310,7 +317,7 @@
             return new Promise((resolve,reject) => {
                 exec(cmd, opts, (err,stdout,stderr) => {
                     if (err) {
-                        logger.log(stderr);
+                        logger.error(stderr);
                         reject(err);
                     } else {
                         resolve(stdout && stdout.trim().split('\n') || []);
@@ -346,7 +353,7 @@
             comparator = comparator || SuttaStore.grepComparator;
             var that = this;
             var keywords = this.patternKeywords(pattern);
-            logger.info(`SuttaStore.keywordSearch(${keywords})`);
+            that.log(`keywordSearch(${keywords})`);
             var wordArgs = Object.assign({}, args, {
                 maxResults: 0,
             });
@@ -730,7 +737,7 @@
 
         phraseSearch(args) {
             var pattern = `\\b${args.pattern}\\b`;
-            logger.info(`SuttaStore.phraseSearch(${pattern})`);
+            this.log(`SuttaStore.phraseSearch(${pattern})`);
             return this.grep(Object.assign({}, args, {
                 pattern,
             }));
@@ -908,7 +915,7 @@
                 (async function() { try {
                     if (SuttaStore.isUidPattern(pattern)) {
                         var method = 'sutta_uid';
-                        logger.info(`SuttaStore.search(${pattern})`+
+                        that.log(`search(${pattern})`+
                             `lang:${language} `+
                             `maxResults:${maxResults}`);
                         var uids = that.suttaList(pattern).slice(0, maxResults);
@@ -967,7 +974,8 @@
                     var langPath = path.join(nikayaPath, lang, author);
                     fs.readdir(langPath, null, (err, files) => {
                         if (err) {
-                            logger.info(`nikayaSuttaIds(${nikaya}) ${err.message}`);
+                            that.log(`nikayaSuttaIds(${nikaya}) `+
+                                `${err.message}`);
                             resolve([]);
                         } else {
                             var sutta_uids = files.reduce((acc,f) => {
