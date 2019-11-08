@@ -19,7 +19,6 @@
 
     } = require("../index");
     const LOCAL = path.join(__dirname, '../local');
-    var suttaStore = new SuttaStore();
     var soundStore = new SoundStore();
     const SCA = new SCAudio();
 
@@ -343,10 +342,10 @@
             var suid = 'sn1.09';
             var opts = {
                 suid,
-                suttaStore,
+                suttaStore: SuttaStore.suttaStore,
                 soundStore,
             };
-            await suttaStore.initialize();
+            await SuttaStore.suttaStore.initialize();
             var res = await sca.cacheSuttaAudio(opts);
             should(res).properties({
                 suid,

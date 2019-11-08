@@ -14,7 +14,9 @@
     } = require("../index");
     const {
         BilaraData,
+        Seeker,
     } = require("scv-bilara");
+    const logLevel = false;
     const LANG = 'en';
     const LOCAL = path.join(__dirname, '..', 'local');
     const ROOT = path.join(LOCAL, 'suttas');
@@ -37,21 +39,36 @@
             should(sutta.translation.author_uid).equal(refParts[2]);
         }
     }
+    this.timeout(10*1000);
 
-    it("TESTTESTdefault ctor", () => {
+    it("default ctor", () => {
         var store = new SuttaStore();
         should(store.bilaraData).instanceOf(BilaraData);
         should(store.bilaraData.root).equal(BILARA_DATA);
+        should(store.seeker).instanceOf(Seeker);
+        should(store.seeker.bilaraData).equal(store.bilaraData);
+        should(store.bilaraData.logLevel).equal('info');
     });
-    it("TESTTESTinitialize() initializes SuttaStore", function(done) {
+    it("custom ctor", () => {
+        var store = new SuttaStore({
+            logLevel: 'warn',
+        });
+        should(store.bilaraData.logLevel).equal('warn');
+        should(store.seeker.logLevel).equal('warn');
+    });
+    it("initialize() initializes SuttaStore", function(done) {
         (async function() { try {
-            var store = new SuttaStore();
+            var store = new SuttaStore({
+                logLevel,
+            });
             should(store.maxDuration).equal(3*60*60);
             should(store.isInitialized).equal(false);
             should(await store.initialize()).equal(store);
             should(store.suttaCentralApi).instanceOf(SuttaCentralApi);
             should(store.root).equal(ROOT);
             should(store.bilaraData.initialized).equal(true);
+            should(store.seeker.initialized).equal(true);
+            should(store.seeker.logLevel).equal(logLevel);
             done(); 
         } catch(e) {done(e);} })();
     });
@@ -153,8 +170,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search('thig16.1') returns segmented sutta", function(done) {
-        this.timeout(5*1000);
+    it("TESTTESTsearch('thig16.1') returns segmented sutta", done=>{
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
@@ -208,7 +224,6 @@
         } catch(e) {done(e);} })();
     });
     it("search('sona') finds 'Soṇa'", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             var voice = Voice.createVoice("raveena");
             var suttaCentralApi = await new SuttaCentralApi().initialize();
@@ -235,7 +250,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search('thig1.1') returns segmented sutta", function(done) {
+    it("TESTTESTsearch('thig1.1') returns segmented sutta", function(done) {
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
@@ -289,7 +304,6 @@
         } catch(e) {done(e);} })();
     });
     it("search(pattern) returns search results", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
@@ -436,7 +450,6 @@
         testPattern("sattānaṃ", "sattānaṃ");
     });
     it("search(pattern) is sanitized", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {
@@ -491,7 +504,6 @@
         } })();
     });
     it("search(pattern) returns voice guid", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             var voice = Voice.createVoice({
                 language: 'en',
@@ -945,8 +957,25 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) finds suttas in range", function(done) {
-        this.timeout(7*1000);
+    it("TESTTESTsearch(pattern) finds mn1/en/sujato", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore().initialize();
+
+            // fully specified
+            var data = await store.search({ pattern: 'mn1/en/sujato', });
+            var results = data.results;
+            should.deepEqual(data.results.map(r=>r.uid), ['mn1']);
+            should.deepEqual(data.results.map(r=>r.lang), ['en']);
+            should.deepEqual(data.results.map(r=>r.author_uid), 
+                ['sujato']);
+            should(data.results.length).equal(1);
+            var sutta = data.results[0].sutta;
+            should(sutta.segments.length).above(333).below(841);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTsearch(pattern) finds suttas in range", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -955,20 +984,13 @@
             should.deepEqual(data.results.map(r=>r.uid), ['sn45.161']);
 
             // fully specified unsupported
-            var data = await store.search({ pattern: 'mn1/en/bodhi', });
-            should.deepEqual(data.results.map(r=>r.uid), ['mn1']);
-            should.deepEqual(data.results.map(r=>r.lang), ['en']);
-            should.deepEqual(data.results.map(r=>r.author_uid), ['bodhi']);
-            should.deepEqual(data.results.map(r=>r.sutta.segments.length), [55]);
-            should(data.results.length).equal(1);
-
-            // fully specified
-            var data = await store.search({ pattern: 'mn1/en/sujato', });
-            should.deepEqual(data.results.map(r=>r.uid), ['mn1']);
-            should.deepEqual(data.results.map(r=>r.lang), ['en']);
-            should.deepEqual(data.results.map(r=>r.author_uid), ['sujato']);
-            should.deepEqual(data.results.map(r=>r.sutta.segments.length), [840]);
-            should(data.results.length).equal(1);
+            var {results} = await store.search({pattern: 'mn1/en/bodhi'});
+            should.deepEqual(results.map(r=>r.uid), ['mn1']);
+            should.deepEqual(results.map(r=>r.lang), ['en']);
+            should.deepEqual(results.map(r=>r.author_uid), ['bodhi']);
+            should.deepEqual(results.map(r=>r.sutta.segments.length), 
+                [55]);
+            should(results.length).equal(1);
 
             var data = await store.search({ pattern: 'sn29.9-999', });
             should.deepEqual(data.results.map(r=>r.uid),
@@ -983,11 +1005,9 @@
             should(data.results.length).equal(MAXRESULTS);
             should(data.method).equal('sutta_uid');
             var result0 = data.results[0];
-            should(result0.author).equal('Bhikkhu Sujato');
+            should(result0.author).match(/Sujato/);
             should(result0.author_short).equal('Sujato');
             should(result0.author_uid).equal('sujato');
-            should(result0.author_blurb.en).match(
-                /Translated for SuttaCentral by.*Bhikkhu Sujato/u);
             should(result0.lang).equal('en');
             should(result0.nSegments).equal(9);
             should(result0.title).match(/Plain Version/);
@@ -1001,7 +1021,6 @@
         } catch(e) {done(e);} })();
     });
     it("findSuttas(opts) finds suttas by phrase", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -1022,7 +1041,6 @@
         } catch(e) {done(e);} })();
     });
     it("findSuttas(opts) finds suttas by keywords", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -1061,7 +1079,6 @@
         } catch(e) {done(e);} })();
     });
     it("findSuttas(opts) finds by sutta_uid", function(done) {
-        this.timeout(7*1000);
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -1141,7 +1158,6 @@
         } catch(e) {done(e);} })();
     });
     it("maxDuration limits createPlaylist()", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
@@ -1282,8 +1298,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch('sn12.3') returns Geiger", function(done) {
-        this.timeout(5*1000);
+    it("TESTTESTsearch('sn12.3') returns Deutsch", function(done) {
         (async function() { try {
             var voice = Voice.createVoice('Amy');
             var suttaCentralApi = await new SuttaCentralApi().initialize();
@@ -1295,6 +1310,7 @@
                 suttaCentralApi,
                 suttaFactory,
                 voice,
+                logLevel,
             }).initialize();
 
             // multiple results
@@ -1314,26 +1330,36 @@
             should(method).equal('sutta_uid');
             should.deepEqual(results.map(r=>r.count), [1]);
             should.deepEqual(results.map(r=>r.uid), ['sn12.3']);
-            should.deepEqual(results.map(r=>r.author_uid), [
-                'geiger']);
-            should.deepEqual(results.map(r=>r.suttaplex.acronym), [
-                'SN 12.3']);
-            should(results[0].quote.de).match(/Der Weg/);
-            should(results[0].nSegments).equal(9);
             var sutta = results[0].sutta;
             should(sutta.sutta_uid).equal('sn12.3');
-            should(sutta.author_uid).equal('geiger');
-            should.deepEqual(sutta.segments[0],{
-                de: 'Saṃyutta Nikāya 12.3',
-                scid: 'sn12.3:0.1',
-            });
-            var sections = sutta.sections;
-            should.deepEqual(sections[0].segments[0],{
-                de: 'Saṃyutta Nikāya 12.3',
-                scid: 'sn12.3:0.1',
-            });
-            should(sections.length).equal(2);
-            should.deepEqual(sections.map(s => s.segments.length), [2, 7,]);
+            if (sutta.author_uid === 'sabbamitta') {
+                should.deepEqual(results.map(r=>r.author_uid), [
+                    'sabbamitta']);
+                should.deepEqual(results.map(r=>r.suttaplex.acronym), [
+                    'SN 12.3']);
+                should(results[0].quote.de).match(/3. Übung /);
+                should(sutta.author_uid).equal('sabbamitta');
+                should.deepEqual(sutta.segments[0],{
+                    de: 'Verbundene Lehrreden 12',
+                    en: 'Linked Discourses 12 ',
+                    pli: 'Saṃyutta Nikāya 12 ',
+                    scid: 'sn12.3:0.1',
+                });
+                should(results[0].nSegments).equal(19);
+                var sections = sutta.sections;
+                should.deepEqual(sections[0].segments[0],{
+                    de: 'Verbundene Lehrreden 12',
+                    en: 'Linked Discourses 12 ',
+                    pli: 'Saṃyutta Nikāya 12 ',
+                    scid: 'sn12.3:0.1',
+                });
+                should(sections.length).equal(2);
+                should.deepEqual(sections.map(s => s.segments.length), 
+                    [3, 16,]);
+            } else { // legacy
+                should(sutta.author_uid).equal('geiger');
+                should(results[0].nSegments).equal(9);
+            }
 
             done(); 
         } catch(e) {done(e);} })();

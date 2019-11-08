@@ -9,6 +9,8 @@
     } = require('child_process');
     const {
         BilaraData,
+        BilaraPath,
+        Seeker,
     } = require('scv-bilara');
     const Playlist = require('./playlist');
     const Sutta = require('./sutta');
@@ -56,16 +58,22 @@
 
     var suttaPaths = {};
     var supportedSuttas = {}; // from https://github.com/sc-voice/scv-suttas
+    var _suttaStore;
 
     class SuttaStore {
         constructor(opts={}) {
-            this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
+            this.suttaCentralApi = opts.suttaCentralApi || 
+                new SuttaCentralApi();
             this.suttaFactory = opts.suttaFactory || new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
                 autoSection: true,
             });
             logger.logInstance(this, opts);
             this.bilaraData = opts.BilaraData || new BilaraData({
+                logLevel: this.logLevel,
+            });
+            this.seeker = opts.Seeker || new Seeker({
+                bilaraData: this.bilaraData,
                 logLevel: this.logLevel,
             });
             this.suttaIds = opts.suttaIds;
@@ -79,6 +87,13 @@
                 writable: true,
                 value: false,
             });
+        }
+
+        static get suttaStore() {
+            if (_suttaStore == null) {
+                _suttaStore = new SuttaStore();
+            }
+            return _suttaStore;
         }
 
         initialize() {
@@ -131,7 +146,7 @@
                             Object.keys(uids).sort(SuttaCentralId.compareLow);
                     }
                     that.suttaIds = that.suttaIds || suttaIds;
-                    await that.bilaraData.initialize();
+                    await that.seeker.initialize();
 
                     resolve(that);
                 } catch(e) {reject(e);} })();
@@ -890,7 +905,110 @@
             });
         }
 
+        mldResult(mld, lang='en') {
+            var {
+                suttaCentralApi,
+            } = this;
+            var that = this;
+            var pbody = (resolve, reject) => {(async function() { try {
+                var bd = that.bilaraData;
+                var sutta_uid = mld.suid;
+                var translations = mld.translations;
+                var trans = translations.filter(t => t.lang === lang)[0];
+                var author_uid = trans.author_uid;
+                var suttaplex = await suttaCentralApi
+                    .loadSuttaplexJson(sutta_uid, lang, author_uid);
+                var authorInfo = bd.authorInfo(author_uid);
+                var segments = mld.segments();
+                var titleSeg = segments[2] || 
+                    translations.reduce((a,t) => {
+                        a[t.lang] = `(no-title-${sutta_uid}-${t.lang})`;
+                        return a;
+                    }, {});
+                var translatedTitle = titleSeg[lang]
+                    .replace(/^[0-9]+\. */,'')
+                    .trim();
+                var sutta = new Sutta({
+                    sutta_uid,
+                    author_uid,
+                    support: true,
+                    suttaplex,
+                    segments,
+                });
+                resolve({
+                    count: 1,
+                    uid: sutta_uid,
+                    lang,
+                    author: authorInfo.name,
+                    author_short: author_uid.charAt(0).toUpperCase() 
+                        + author_uid.slice(1),
+                    author_uid: author_uid,
+                    author_blurb: authorInfo.blurb,
+                    nSegments: segments.length,
+                    title: translatedTitle,
+                    collection_id: trans.collection,
+                    quote: titleSeg,
+                    suttaplex,
+                    sutta,
+                    stats: that.suttaDuration.measure(sutta),
+                });
+            } catch(e) {reject(e);}})()};
+            return new Promise(pbody);
+        }
+
         search(...args) { 
+            if (1) {
+                return this.searchLegacy(...args);
+            }
+            if (!this.isInitialized) {
+                throw new Error(`initialize() is required`);
+            }
+            var that = this;
+            var opts = args[0];
+            if (typeof opts === 'string') {
+                opts = {
+                    pattern: args[0],
+                    maxResults: args[1],
+                };
+            }
+            var pattern = SuttaStore.sanitizePattern(opts.pattern);
+            var lang = opts.language || 'en';
+            var maxResults = opts.maxResults==null 
+                ? that.maxResults : opts.maxResults;
+            var maxResults = Number(maxResults);
+            if (isNaN(maxResults)) {
+                throw new Error("search() maxResults must be a number");
+            }
+            var pbody = (resolve, reject) => {(async function() { try {
+                var bdres;
+                if (SuttaStore.isUidPattern(pattern)) {
+                    bdres = await that.seeker.find({
+                        pattern,
+                        lang,
+                        maxResults,
+                        maxDoc: maxResults,
+                    });
+                    bdres.results = [];
+                    if (bdres.method === 'sutta_uid') {
+                        for (var i = 0; i < bdres.mlDocs.length; i++) {
+                            var mld = bdres.mlDocs[i];
+                            var mldRes = await that.mldResult(mld, lang);
+                            bdres.results.push(mldRes);
+                        }
+                    }
+                }
+                if (!bdres || bdres.mlDocs.length === 0) {
+                    var resLegacy = await 
+                        that.searchLegacy.apply(that, args);
+                    resolve(resLegacy);
+                    return;
+                }
+                resolve(bdres);
+            } catch(e) {reject(e);}})()};
+            return new Promise(pbody);
+        }
+
+        searchLegacy(...args) { 
             // implementation deprecated. should use findSuttas
             var that = this;
             var opts = args[0];
@@ -959,6 +1077,76 @@
                     });
                 } catch(e) {reject(e);} })();
             });
+        }
+
+        searchLegacy(...args) { 
+            // implementation deprecated. should use findSuttas
+            var that = this;
+            var opts = args[0];
+            if (typeof opts === 'string') {
+                opts = {
+                    pattern: args[0],
+                    maxResults: args[1],
+                };
+            }
+            var searchMetadata = opts.searchMetadata == null 
+                ? false 
+                : opts.searchMetadata == true || opts.searchMetadata === 'true';
+            var pattern = SuttaStore.sanitizePattern(opts.pattern);
+            var language = opts.language || 'en';
+            var maxResults = opts.maxResults==null ? that.maxResults : opts.maxResults;
+            var maxResults = Number(maxResults);
+            var sortLines = opts.sortLines;
+            if (isNaN(maxResults)) {
+                throw new Error("SuttaStore.search() maxResults must be a number");
+            }
+            var pbody = (resolve, reject) => {(async function() { try {
+                if (SuttaStore.isUidPattern(pattern)) {
+                    var method = 'sutta_uid';
+                    that.log(`search(${pattern})`+
+                        `lang:${language} `+
+                        `maxResults:${maxResults}`);
+                    var uids = that.suttaList(pattern).slice(0, maxResults);
+                    var results = await that.suttaSearchResults({
+                        suttaRefs: uids, 
+                        lang: language,
+                        maxResults,
+                    });
+                } else {
+                    var method = 'phrase';
+                    var lines = [];
+                    pattern = SuttaStore.normalizePattern(pattern);
+                    var searchOpts = {
+                        pattern, 
+                        maxResults, 
+                        language, 
+                        searchMetadata
+                    };
+
+                    if (!lines.length && !/^[a-z]+$/iu.test(pattern)) {
+                        lines = await that.phraseSearch(searchOpts);
+                    }
+                    var resultPattern = pattern;
+                    if (!lines.length) {
+                        var method = 'keywords';
+                        var data = await that.keywordSearch(searchOpts);
+                        lines = data.lines;
+                        resultPattern = data.resultPattern;
+                    }
+                    var grepSearchResults = that.grepSearchResults({
+                        lines,
+                        sortLines,
+                        pattern: resultPattern,
+                    });
+                    var results = await that.voiceResults(grepSearchResults, language);
+                }
+                resolve({
+                    method,
+                    results,
+                    resultPattern,
+                });
+            } catch(e) {reject(e);} })()};
+            return new Promise(pbody);
         }
 
         nikayaSuttaIds(nikaya, language='en', author='sujato') {

@@ -33,8 +33,6 @@
     var mj = new MerkleJson();
     logger.level = 'warn';
     var storePath = tmp.tmpNameSync();
-    var suttaStore = new SuttaStore();
-    suttaStore.initialize();
 
     it("VsmStore() creates VSM", function() {
         var vsm = new VsmStore();
@@ -166,7 +164,7 @@
             var vsm = new VsmStore({
                 storePath: tmpDirObj.name,
             });
-            var results = await suttaStore.search("thig1.2");
+            var results = await SuttaStore.suttaStore.search("thig1.2");
             var {
                 sutta,
                 author_uid,

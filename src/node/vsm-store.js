@@ -26,8 +26,6 @@
     const IMPORT_KIDS = false;  // atomic import provides neglible benefit 
                                 // It is also complicated and buggy
 
-    var suttaStore = new SuttaStore();
-
     class VsmStore extends SoundStore {
         constructor(opts) {
             super((opts = VsmStore.options(opts)));
@@ -42,6 +40,13 @@
             this.s3Bucket = opts.s3Bucket || new S3Bucket();
             this.archiveDir = opts.archiveDir || this.storePath;
             this.importKids = opts.importKids == null ? IMPORT_KIDS : opts.importKids;
+        }
+
+        static get suttaStore() {
+            if (suttaStore == null) {
+                suttaStore = new SuttaStore();
+            }
+            return suttaStore;
         }
 
         static options(opts={}) {
@@ -325,20 +330,23 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var guids = [];
-                    suttaStore = suttaStore || await new SuttaStore().initialize();
+                    suttaStore = suttaStore || 
+                        await SuttaStore.suttaStore.initialize();
                     var searchLang = lang === 'pli' ? 'en' : lang;
                     var sutta_ids = await 
                         suttaStore.nikayaSuttaIds(nikaya, searchLang, author);
                     if (maxSuttas) {
                         sutta_ids = sutta_ids.slice(0, maxSuttas);
                     }
-                    logger.info(`VSMStore.importNikaya(${nikaya}) ${sutta_ids.length} suttas`);
+                    logger.info(`VSMStore.importNikaya(${nikaya}) `+
+                        `${sutta_ids.length} suttas`);
                     var nSuttas = sutta_ids.length;
                     task.actionsTotal += nSuttas;
                     for (var iSutta = 0; iSutta < nSuttas; iSutta++) {
                         var suid = sutta_ids[iSutta];
                         var searchPattern = `${suid}/${searchLang}/${author}`;
-                        var searchResults = await suttaStore.search(searchPattern);
+                        var searchResults = await 
+                            suttaStore.search(searchPattern);
                         if (searchResults.results.length) {
                             var {
                                 sutta,
