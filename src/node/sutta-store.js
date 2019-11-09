@@ -75,6 +75,7 @@
             this.seeker = opts.Seeker || new Seeker({
                 bilaraData: this.bilaraData,
                 logLevel: this.logLevel,
+                matchHighlight: false,
             });
             this.suttaIds = opts.suttaIds;
             this.maxDuration = opts.maxDuration || 3 * 60 * 60;
@@ -88,6 +89,8 @@
                 value: false,
             });
         }
+
+        static get SEARCH_LEGACY() { return 0; }
 
         static get suttaStore() {
             if (_suttaStore == null) {
@@ -908,6 +911,7 @@
         mldResult(mld, lang='en') {
             var {
                 suttaCentralApi,
+                suttaFactory,
             } = this;
             var that = this;
             var pbody = (resolve, reject) => {(async function() { try {
@@ -935,6 +939,7 @@
                     suttaplex,
                     segments,
                 });
+                sutta = suttaFactory.sectionSutta(sutta);
                 resolve({
                     count: 1,
                     uid: sutta_uid,
@@ -957,7 +962,7 @@
         }
 
         search(...args) { 
-            if (1) {
+            if (SuttaStore.SEARCH_LEGACY) {
                 return this.searchLegacy(...args);
             }
             if (!this.isInitialized) {

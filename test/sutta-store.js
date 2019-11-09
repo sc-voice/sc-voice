@@ -201,7 +201,7 @@
                 'sujato']);
             should.deepEqual(results.map(r=>r.suttaplex.acronym), [
                 'Thig 16.1']);
-            should(results[0].quote.en).match(/The Great Book/);
+            should(results[0].quote.en).match(/16.1. Sumedhā/);
             should(results[0].nSegments).equal(311);
             var sutta = results[0].sutta;
             should(sutta.sutta_uid).equal('thig16.1');
@@ -281,7 +281,7 @@
                 'sujato']);
             should.deepEqual(results.map(r=>r.suttaplex.acronym), [
                 'Thig 1.1']);
-            should(results[0].quote.en).match(/The Book of the Ones/);
+            should(results[0].quote.en).match(/1.1. An Unnamed Nun \(1st\)/);
             should(results[0].nSegments).equal(9);
             var sutta = results[0].sutta;
             should(sutta.sutta_uid).equal('thig1.1');
@@ -297,7 +297,6 @@
                 pli: 'Therīgāthā',
                 scid: 'thig1.1:1.1',
             });
-            should(sections.length).equal(3);
             should.deepEqual(sections.map(s => s.segments.length), [1,1,7,]);
 
             done(); 

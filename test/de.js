@@ -18,6 +18,7 @@
     const ELLIPSIS_BREAK = '<break time="1.000s"/>';
     const BREAK = `<break time="0.001s"/>`;
     const tmp = require('tmp');
+    this.timeout(10*1000);
 
     function phoneme(ph,word) {
         var ph = `<phoneme alphabet="ipa" ph="${ph}">${word}</phoneme>${BREAK}`;
@@ -199,7 +200,6 @@
         } catch(e) {done(e);} })();
     });
     it("speak(text) can handle lengthy Pali", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var aditi = Voice.createVoice({
                 name: "aditi",
@@ -256,7 +256,6 @@
         should(recite.wordSSML(`hoti`)).match(/"hot̪ɪ"/);
     });
     it("speak(text) can ignore numbers", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var raveena = Voice.createVoice({
                 name: "raveena",
@@ -277,7 +276,6 @@
         } catch(e) {done(e);} })();
     });
     it("speak(text) can ignore quotes", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var raveena = Voice.createVoice({
                 name: "raveena",
@@ -350,7 +348,6 @@
         } catch(e) {done(e);} })();
     });
     it("speakSegment(opts) human-tts uses altTts", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var sutta_uid = 'sn1.9999'; // not a sutta
             var language = 'pli';
@@ -394,7 +391,6 @@
     });
     it("speakSegment(opts) downloads human-tts", function(done) {
         done(); return; // dbg TODO
-        this.timeout(5*1000);
         (async function() { try {
             var sutta_uid = 'sn1.9';
             var storePath = tmp.tmpNameSync();
