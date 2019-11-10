@@ -92,7 +92,8 @@
             this.reHeader = opts.reHeader || Sutta.RE_HEADER;
             this.suttaCentralApi = opts.suttaCentralApi;
             this.pootleParser = new PoParser();
-            this.plainText = opts.plainText === true || opts.plainText == null;
+            this.plainText = opts.plainText === true || 
+                opts.plainText == null;
         }
 
         static loadSutta(opts={}) {

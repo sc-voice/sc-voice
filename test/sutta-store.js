@@ -170,7 +170,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch('thig16.1') returns segmented sutta", done=>{
+    it("search('thig16.1') returns segmented sutta", done=>{
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
@@ -250,7 +250,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch('thig1.1') returns segmented sutta", function(done) {
+    it("search('thig1.1') returns segmented sutta", function(done) {
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
@@ -956,7 +956,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) finds mn1/en/sujato", function(done) {
+    it("search(pattern) finds mn1/en/sujato", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -974,7 +974,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) finds suttas in range", function(done) {
+    it("search(pattern) finds suttas in range", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
 
@@ -1297,7 +1297,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch('sn12.3') returns Deutsch", function(done) {
+    it("search('sn12.3') returns Deutsch", function(done) {
         (async function() { try {
             var voice = Voice.createVoice('Amy');
             var suttaCentralApi = await new SuttaCentralApi().initialize();

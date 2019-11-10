@@ -25,7 +25,9 @@
             delete this.translation.text;
             delete this.translation.strings;
             opts.metaarea && (this.metaarea = opts.metaarea);
-            this.sections = opts.sections || Sutta.defaultSections(opts.segments);
+            this.sections = opts.sections || 
+                Sutta.defaultSections(opts.segments);
+            this.lang = opts.lang || 'en';
             Object.defineProperty(this, 'suttaCode', {
                 enumerable: true,
                 get() {

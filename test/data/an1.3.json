@@ -1,0 +1,37 @@
+{
+  "bilaraPaths": [
+    "root/pli/ms/an/an1/an1.1-10_root-pli-ms.json",
+    "translation/de/sabbamitta/an/an1/an1.1-10_translation-de-sabbamitta.json",
+    "translation/en/sujato/an/an1/an1.1-10_translation-en-sujato.json"
+  ],
+  "lang": "de",
+  "segMap": {
+    "an1.3:0.1": {
+      "scid": "an1.3:0.1",
+      "pli": "3 ",
+      "de": "3 ",
+      "en": "3 "
+    },
+    "an1.3:1.1": {
+      "scid": "an1.3:1.1",
+      "pli": "“Nāhaṃ, bhikkhave, aññaṃ ekagandhampi samanupassāmi yaṃ evaṃ purisassa cittaṃ pariyādāya tiṭṭhati yathayidaṃ, bhikkhave, itthigandho. ",
+      "de": "„Mönche und Nonnen, ich sehe keinen einzigen Duft, der den Geist eines Mannes so besetzt hält wie der Duft einer Frau. ",
+      "en": "“Mendicants, I do not see a single smell that occupies a man’s mind like the smell of a woman. "
+    },
+    "an1.3:1.2": {
+      "scid": "an1.3:1.2",
+      "pli": "Itthigandho, bhikkhave, purisassa cittaṃ pariyādāya tiṭṭhatī”ti. ",
+      "de": "Der Duft einer Frau hält den Geist eines Mannes besetzt.“ ",
+      "en": "The smell of a woman occupies a man’s mind.” "
+    },
+    "an1.3:1.3": {
+      "scid": "an1.3:1.3",
+      "pli": "Tatiyaṃ. ",
+      "de": " ",
+      "en": " "
+    }
+  },
+  "score": 0,
+  "logLevel": false,
+  "segsMatched": 4
+}

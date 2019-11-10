@@ -360,12 +360,12 @@ export default {
             },
             supportedAudio: [],
             unsupportedAudio: [],
+            language: 'en',
             sutta: {},
             suttaplex: {},
             suttaCode: '',
             metaarea: '',
             sections: null,
-            language: 'en',
             tracks: null,
             translator: 'sujato',
             waiting: 0,
@@ -676,22 +676,21 @@ export default {
             var suttaplex = Object.assign({}, this.suttaplex, sutta.suttaplex);
             this.suttaplex = suttaplex;
 
-            var author_uid = this.author_uid = sutta.author_uid;
-            var suid = suttaplex.uid && suttaplex.uid.toUpperCase() || "NOSUID";
+            this.author_uid = sutta.author_uid;
+            var suid = suttaplex.uid && suttaplex.uid.toUpperCase() || 
+                "NOSUID";
             var acronym = suttaplex.acronym || suid;
-            var trans_author = suttaplex.translations
-                .filter(t => t.author_uid === author_uid);
-            var translation = trans_author[0] || {lang: this.language};
             this.suttaCode = sutta.suttaCode || '';
-            this.language = translation.lang;
-            this.translator = translation.author_uid;
-            var title = translation.title || suttaplex.translated_title;
+            this.language = sutta.lang;
+            this.translator = sutta.author_uid;
+            var title = sutta.title || suttaplex.translated_title ||
+                suttaplex.original_title;
             this.sutta.acronym = acronym;
             this.sutta.title = `${acronym}: ${title}`;
             this.sutta.original_title = suttaplex.original_title || "?";
             var seg0 = sections[0] && sections[0].segments[0] || {};
             this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
-            this.sutta.author = translation.author;
+            this.sutta.author = sutta.author || sutta.author_id;
             var {
                 sutta_uid,
                 language,
@@ -844,7 +843,9 @@ export default {
             return label;
         },
         segmentLang(seg) {
-            return seg[this.language].replace(/\n/g,'</br>');
+            var segLang = seg[this.language];
+            return segLang 
+                ? segLang.replace(/\n/g,'</br>') : '';
         },
         searchUrl(pat) {
             var search = encodeURIComponent(pat);

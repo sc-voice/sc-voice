@@ -18,8 +18,9 @@
             this.template = opts.template || [];
             this.expanded = opts.expanded || false;
             this.prop = opts.prop || DEFAULT_PROP;
+            var seg0 = this.segments[0];
             this.title = opts.title || 
-                Section.titleOfText(this.segments[0] && this.segments[0][this.prop]);
+                Section.titleOfText(seg0 && seg0[this.prop]);
 
             Object.defineProperty(this, 'expandable', {
                 enumerable: true,

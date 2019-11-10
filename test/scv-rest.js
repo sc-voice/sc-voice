@@ -91,7 +91,7 @@
                 var sutta = res.body;
                 should.deepEqual(Object.keys(sutta).sort(), [
                     'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
-                    "sections", "suttaplex", "support",
+                    "sections", "suttaplex", "support", 'lang',
                 ].sort());
                 should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Supported);
                 var sections = sutta.sections;
@@ -1033,6 +1033,8 @@
         } catch(e) {done(e);} })();
     });
     it("POST auth/update-content", function(done) {
+        done(new Error('content updater is superceded by scv-bilara'));
+        return;
         this.timeout(10*1000);
         (async function() { try {
             var scvRest = app.locals.scvRest;

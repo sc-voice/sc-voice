@@ -18,7 +18,8 @@
         constructor(opts={}) {
             this.apiUrl = opts.apiUrl || 'http://staging.suttacentral.net/api';
             this.gitPath = opts.gitPath ||  path.join(LOCAL, 'suttas');
-            this.token = opts.token || 'no-token'; // GitHub Personal Access Token
+            this.token = opts.token || // GitHub Personal Access Token
+                'no-token'; 
             Object.defineProperty(this, 'isInitialized', {
                 writable: true,
                 value: false,
@@ -55,6 +56,7 @@
                 maxBuffer,
             };
             var safeCmd = cmd;
+            console.log(`dbg token`, this.token);
             if (cmd === 'git push') {
                 var auth = `${this.token}:x-oauth-basic`;
                 safeCmd = ` git push ` + // hide from bash history

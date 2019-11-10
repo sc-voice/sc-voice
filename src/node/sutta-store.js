@@ -908,16 +908,19 @@
             });
         }
 
-        mldResult(mld, lang='en') {
+        mldResult(mld) {
             var {
                 suttaCentralApi,
                 suttaFactory,
+                bilaraData: bd,
             } = this;
             var that = this;
             var pbody = (resolve, reject) => {(async function() { try {
-                var bd = that.bilaraData;
-                var sutta_uid = mld.suid;
-                var translations = mld.translations;
+                var {
+                    lang,
+                    suid: sutta_uid,
+                    translations,
+                } = mld;
                 var trans = translations.filter(t => t.lang === lang)[0];
                 var author_uid = trans.author_uid;
                 var suttaplex = await suttaCentralApi
@@ -935,6 +938,7 @@
                 var sutta = new Sutta({
                     sutta_uid,
                     author_uid,
+                    lang,
                     support: true,
                     suttaplex,
                     segments,

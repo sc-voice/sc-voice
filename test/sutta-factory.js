@@ -11,9 +11,41 @@
         SuttaCentralApi,
         Words,
     } = require("../index");
+    const {
+        MLDoc,
+    } = require("scv-bilara");
     const SC = path.join(__dirname, '../local/sc');
+    const TEST_DATA = path.join(__dirname, 'data');
 
-    it("loadSutta(...) returns a Sutta from SuttaCentral api", function(done) {
+    function testSutta(suid='an1.3') {
+        var testPath = path.join(TEST_DATA, `${suid}.json`);
+        var json = JSON.parse(fs.readFileSync(testPath));
+        var mld = new MLDoc(json);
+        var segments = mld.segments();
+        return new Sutta({
+            sutta_uid: suid,
+            lang: mld.lang, 
+            segments,
+        });
+    }
+
+    it("default ctor", ()=>{
+        var factory = new SuttaFactory();
+        should(factory).properties({
+            lang: 'en',
+            prop: 'en',
+        });
+    });
+    it("custom ctor", ()=>{
+        var factory = new SuttaFactory({
+            lang: 'de',
+        });
+        should(factory).properties({
+            lang: 'de',
+            prop: 'de',
+        });
+    });
+    it("loadSutta(...) returns a Sutta from SuttaCentral api", done=>{
         (async function() { try {
             var suttaCentralApi = new SuttaCentralApi();
             var factory = await new SuttaFactory({
@@ -268,6 +300,14 @@
             // Bodhi translation doesn't exist, expect Sujato translation
             should(sutta.author_uid).equal('vri');
             should(sutta.sutta_uid).equal('dn22');
+
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTsectionSutta(...) adds sections", function(done) {
+        (async function() { try {
+            var sutta = testSutta('an1.3');
+            should(sutta.lang).equal('de');
 
             done();
         } catch(e) { done(e); } })();

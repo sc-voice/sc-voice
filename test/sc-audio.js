@@ -195,7 +195,7 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(27000).below(29000);
+            should(stats.size).above(16000).below(29000);
 
             done();
         } catch(e) { done(e); } })();

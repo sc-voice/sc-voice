@@ -13,6 +13,7 @@
     const MAXRESULTS = 5;
     const SC_STAGING = 'http://staging.suttacentral.net/api';
     const PRODUCTION = 'http://suttacentral.net/api';
+    this.timeout(10*1000);
 
     it("constructor(opts)", function() {
         var updater = new ContentUpdater();
@@ -45,7 +46,8 @@
         } catch(e) {done(e);} })();
     });
     it("update(scids, opts) updates content", function(done) {
-        this.timeout(10*1000);
+        done(new Error(`ContentUpdater is deprecated by scv-bilara`));
+        return;
         (async function() { try {
             /*
              * NOTE: This test will FAIL with invalid username or password
