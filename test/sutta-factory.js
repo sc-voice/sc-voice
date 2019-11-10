@@ -306,8 +306,30 @@
     });
     it("TESTTESTsectionSutta(...) adds sections", function(done) {
         (async function() { try {
+            var factory = new SuttaFactory();
             var sutta = testSutta('an1.3');
             should(sutta.lang).equal('de');
+            should.deepEqual(
+                sutta.sections.map(s=> ({
+                    prop: s.prop,
+                })), [{
+                    prop: 'de',
+                },{
+                    prop: 'de',
+                }]);
+            var res = factory.sectionSutta(sutta);
+            should(res).equal(sutta); // sutta was already sectioned
+
+            // collapse sections and resection
+            var suttaNew = testSutta('an1.3');
+            var sections = suttaNew.sections;
+            sections[0].segments = [
+                ...sections[0].segments,
+                ...sections[1].segments];
+            sections.pop();
+            var sectionedSutta = factory.sectionSutta(sutta);
+            should(sectionedSutta).not.equal(suttaNew); 
+            should.deepEqual(sectionedSutta, sutta);
 
             done();
         } catch(e) { done(e); } })();

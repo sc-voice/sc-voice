@@ -25,9 +25,9 @@
             delete this.translation.text;
             delete this.translation.strings;
             opts.metaarea && (this.metaarea = opts.metaarea);
-            this.sections = opts.sections || 
-                Sutta.defaultSections(opts.segments);
             this.lang = opts.lang || 'en';
+            this.sections = opts.sections || 
+                Sutta.defaultSections(opts.segments, this.lang);
             Object.defineProperty(this, 'suttaCode', {
                 enumerable: true,
                 get() {
@@ -45,7 +45,7 @@
             return segment && segment.scid.match(RE_HEADER);
         } 
 
-        static defaultSections(segments=[]) {
+        static defaultSections(segments=[], lang='en') {
             segments = segments.slice();
             var sections = [];
             var header = [];
@@ -54,9 +54,11 @@
             }
             header.length && sections.push(new Section({
                 segments:header,
+                prop: lang,
             }));
             segments.length && sections.push(new Section({
                 segments,
+                prop: lang,
             }));
             return sections;
         }

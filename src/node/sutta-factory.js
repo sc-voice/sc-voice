@@ -163,7 +163,7 @@
         }
 
         sectionSutta(sutta) {
-            var lang = this.lang;
+            var lang = sutta.lang || this.lang;
             var segStart = 0;
             var segments = sutta.segments;
             if (segments == null || segments.length === 0) {
@@ -178,6 +178,7 @@
                     /^[1-9]/.test(seg[lang])) {
                     acc.push(new Section({
                         segments: segments.slice(segStart,i),
+                        prop: lang,
                     }));
                     segStart = i;
                 }

@@ -357,6 +357,7 @@
     },
     "previous": null
   },
+  "lang": "en",
   "sections": [
     {
       "segments": [
@@ -4679,6 +4680,5 @@
       "expandable": false
     }
   ],
-  "lang": "en",
   "suttaCode": "mn1/en/sujato"
 }

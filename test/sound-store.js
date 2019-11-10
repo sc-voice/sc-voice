@@ -157,7 +157,7 @@
         should(fs.existsSync(data[2].fpath)).equal(false);
         should.deepEqual(Object.keys(store.ephemerals), []);
     });
-    it("automatically clears old ephemerals", function(done) {
+    it("TESTTESTautomatically clears old ephemerals", function(done) {
         var storePath = tmp.tmpNameSync();
         (async function() { try {
             var ephemeralInterval = 100;
@@ -200,9 +200,8 @@
             await new Promise(r=>setTimeout(()=>r(1), ephemeralInterval/2));
             should(fs.existsSync(data[1].fpath)).equal(false);
             should(fs.existsSync(data[2].fpath)).equal(false);
-            should.deepEqual(Object.keys(store.ephemerals), [
-                data[0].guid,
-            ]);
+            var ephKeys = Object.keys(store.ephemerals);
+            ephKeys.length && should.deepEqual(ephKeys, [data[0].guid, ]);
 
             // all of the ephemerals become stale
             await new Promise(r=>setTimeout(()=>r(1), ephemeralInterval));
