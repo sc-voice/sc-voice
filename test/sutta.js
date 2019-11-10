@@ -22,6 +22,32 @@
         en:'c1 bc ac.',
     }]
 
+    it("TESTTESTdefault ctor", ()=>{
+        should.throws(()=>{
+            var sutta = new Sutta();
+        });
+    });
+    it("TESTTESTcustom ctor", ()=>{
+        var sutta_uid = "testSutta1";
+        var author = "testAuthor";
+        var lang = "test";
+        var segments = [{
+            scid: "testSutta1:0.1",
+            test: "text 1",
+        }];
+        var sutta = new Sutta({
+            author,
+            lang,
+            sutta_uid,
+            segments,
+        });
+        should(sutta).properties({
+            author,
+            sutta_uid,
+            lang,
+        });
+        should.deepEqual(sutta.segments, segments);
+    });
     it("scidGroup(scid) returns immediate segment group", function(done) {
         (async function() { try {
             var sutta = await SuttaFactory.loadSutta('mn1');

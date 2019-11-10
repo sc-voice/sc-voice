@@ -25,6 +25,8 @@
             delete this.translation.text;
             delete this.translation.strings;
             opts.metaarea && (this.metaarea = opts.metaarea);
+
+            this.author = opts.author || "(no-author)";
             this.lang = opts.lang || 'en';
             this.sections = opts.sections || 
                 Sutta.defaultSections(opts.segments, this.lang);

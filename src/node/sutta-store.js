@@ -926,6 +926,7 @@
                 var suttaplex = await suttaCentralApi
                     .loadSuttaplexJson(sutta_uid, lang, author_uid);
                 var authorInfo = bd.authorInfo(author_uid);
+                var author = authorInfo.name;
                 var segments = mld.segments();
                 var titleSeg = segments[2] || 
                     translations.reduce((a,t) => {
@@ -937,6 +938,7 @@
                     .trim();
                 var sutta = new Sutta({
                     sutta_uid,
+                    author,
                     author_uid,
                     lang,
                     support: true,
@@ -948,7 +950,7 @@
                     count: 1,
                     uid: sutta_uid,
                     lang,
-                    author: authorInfo.name,
+                    author,
                     author_short: author_uid.charAt(0).toUpperCase() 
                         + author_uid.slice(1),
                     author_uid: author_uid,
