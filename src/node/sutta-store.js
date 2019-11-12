@@ -158,55 +158,6 @@
             });
         }
 
-        updateSuttas(suttaIds=[], opts={}) {
-            var that = this;
-            var task = opts.task || new Task({
-                actionsTotal: 0,
-                name: `SuttaStore.updateSuttas`,
-            });
-            task.actionsTotal += suttaIds.length;
-            var pbody = (resolve,reject) => { (async function() { try {
-                var maxAge = opts.maxAge || 0;
-                suttaIds = suttaIds || that.suttaIds;
-                for (let i = 0; i < suttaIds.length; i++) {
-                    var id = suttaIds[i];
-                    task.summary = `updating sutta: ${id}`;
-                    task.actionsDone++; // id
-                    var sutta = await that.suttaCentralApi.loadSutta(id);
-                    if (sutta) {
-                        var translation = sutta.translation;
-                        if (translation == null) {
-                            that.log(`updateSuttas(${id}) NO TRANSLATION`);
-                        } else {
-                            var language = translation.lang;
-                            var author_uid = translation.author_uid;
-                            var spath = that.suttaPath(
-                                id, language, author_uid);
-                            var updateFile = !fs.existsSync(spath) 
-                                || maxAge === 0;
-                            if (!updateFile) {
-                                var stats = fs.statSync(spath);
-                                var age = (Date.now() - stats.mtime)/1000;
-                                updateFile = age > maxAge;
-                            }
-                            if (updateFile) {
-                                fs.writeFileSync(spath, 
-                                    JSON.stringify(sutta, null, 2));
-                                that.log(`updateSuttas(${id}) => `+
-                                    `${spath} OK`);
-                            } else {
-                                that.log(`updateSuttas(${id}) (no change)`);
-                            }
-                        }
-                    } else {
-                        that.log(`updateSuttas(${id}) (no applicable sutta)`);
-                    }
-                };
-                resolve(suttaIds);
-            } catch(e) {reject(e);} })(); };
-            return new Promise(pbody);
-        }
-
         suttaFolder(sutta_uid) {
             var group = sutta_uid.replace(/[^a-z]*/gu,'');
             var folder = Object.keys(COLLECTIONS).reduce((acc,key) => {

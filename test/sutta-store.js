@@ -133,44 +133,6 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("updateSuttas(ids) updates suttas from SuttaCentral", function(done) {
-        var maxseconds = 5;
-        this.timeout(maxseconds*1000);
-        (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
-            await store.updateSuttas([
-                'thag1.1', 'sn39.1-15', 
-                'sn1.8', 'mn1','an1.1-10']);
-
-            /*
-            var thag1_1path = path.join(ROOT, 'kn/en/sujato-walton/thag1.1.json');
-            should(fs.existsSync(thag1_1path));
-            var stat = fs.statSync(thag1_1path);
-            var age = Date.now() - stat.mtime;
-            should(age).below(maxseconds*1000);
-            */
-
-            var sn1_8path = path.join(ROOT, 'sn/en/sujato/sn1.8.json');
-            should(fs.existsSync(sn1_8path));
-            var stat = fs.statSync(sn1_8path);
-            var age = Date.now() - stat.mtime;
-            should(age).below(maxseconds*1000);
-
-            var mn1path = path.join(ROOT, 'mn/en/sujato/mn1.json');
-            should(fs.existsSync(mn1path));
-            var stat = fs.statSync(mn1path);
-            var age = Date.now() - stat.mtime;
-            should(age).below(maxseconds*1000);
-
-            var an1path = path.join(ROOT, 'an/en/sujato/an1.1-10.json');
-            should(fs.existsSync(an1path));
-            var stat = fs.statSync(an1path);
-            var age = Date.now() - stat.mtime;
-            should(age).below(maxseconds*1000);
-
-            done(); 
-        } catch(e) {done(e);} })();
-    });
     it("search('thig16.1') returns segmented sutta", done=>{
         (async function() { try {
             var voice = Voice.createVoice({

@@ -212,6 +212,7 @@
             should(sca.downloadDir).equal(downloadDir);
             should(fs.existsSync(downloadDir)).equal(true);
             var audioPath = path.join(downloadDir, `sn1.9_1.1.mp3`);
+            var opus = SCAudio.SC_OPUS_STORE;
 
             // english
             var res = await sca.downloadSegmentAudio({
@@ -219,7 +220,7 @@
                 //audioPath,
             });
             var url = [
-                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
+                `https://${opus}.sgp1.cdn.digitaloceanspaces.com`,
                 "en",
                 "sn/sn1/sn1.9/sn1.9_1.1.webm",
             ].join('/');
@@ -238,7 +239,7 @@
 
             // Pali
             var url = [
-                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
+                `https://${opus}.sgp1.cdn.digitaloceanspaces.com`,
                 "pli",
                 "sn/sn1/sn1.9/sn1.9_1.1.webm",
             ].join('/');
@@ -259,7 +260,7 @@
             });
             should(fs.existsSync(audioPath)).equal(true);
             var stats = fs.statSync(audioPath);
-            should(stats.size).above(27000).below(29000);
+            should(stats.size).above(16000).below(29000);
 
             done();
         } catch(e) { done(e); } })();

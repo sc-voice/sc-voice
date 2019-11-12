@@ -61,10 +61,12 @@
             });
             var cachedPath = this.apiStore.guidPath(guid);
             var stat = fs.existsSync(cachedPath) && fs.statSync(cachedPath);
-            var age = stat && (Date.now() - stat.ctimeMs)/1000 || this.apiCacheSeconds;
+            var age = stat && (Date.now() - stat.ctimeMs)/1000 || 
+                this.apiCacheSeconds;
             if (age < this.apiCacheSeconds) {
                 var res = JSON.parse(fs.readFileSync(cachedPath));
-                logger.info(`SuttaCentralApi.loadJson(${url}) => cached:${guid}`);
+                logger.debug(
+                    `SuttaCentralApi.loadJson(${url}) => cached:${guid}`);
                 var result = new Promise(resolve => { 
                     setTimeout(() => resolve(res), 1);
                 }); // yield
@@ -72,7 +74,8 @@
                 var result = this.loadJsonRest(url);
                 result.then(res => {
                     fs.writeFileSync(cachedPath, JSON.stringify(res,null,2));
-                    logger.info(`SuttaCentralApi.loadJson(${url}) => fresh:${guid}`);
+                    logger.info(
+                        `SuttaCentralApi.loadJson(${url}) => fresh:${guid}`);
                 }).catch(e => {
                     logger.error(e.stack);
                 });

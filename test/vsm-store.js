@@ -33,6 +33,7 @@
     var mj = new MerkleJson();
     logger.level = 'warn';
     var storePath = tmp.tmpNameSync();
+    this.timeout(15*1000);
 
     it("VsmStore() creates VSM", function() {
         var vsm = new VsmStore();
@@ -53,7 +54,6 @@
         should(vsm.s3Bucket.initialized).equal(false);
     });
     it("VsmStore() creates custom VSM", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var aditi = Voice.createVoice({
                 name: "aditi",
@@ -156,7 +156,6 @@
         } catch(e) {done(e);} })();
     });
     it("importSutta(sutta) imports sutta segments", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var tmpDirObj = tmp.dirSync({
                 unsafeCleanup: true,
@@ -260,7 +259,6 @@
         } catch(e) {done(e);} })();
     });
     it("importNikaya(...) imports nikaya", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var tmpDirObj = tmp.dirSync({
                 unsafeCleanup: true,
@@ -306,7 +304,6 @@
         } catch(e) {done(e);} })();
     });
     it("tarPath(opts) returns tar path", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var tmpDirObj = tmp.dirSync({
                 unsafeCleanup: true,
@@ -324,7 +321,6 @@
         } catch(e) {done(e);} })();
     });
     it("zipPath(opts) returns zip path", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var tmpDirObj = tmp.dirSync({
                 unsafeCleanup: true,
@@ -342,7 +338,6 @@
         } catch(e) {done(e);} })();
     });
     it("archiveNikaya(...) archives nikaya", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             const Bucket = TEST_BUCKET;
             const s3Bucket = await new S3Bucket({ 
@@ -395,7 +390,6 @@
         } catch(e) {done(e);} })();
     });
     it("restoreS3Archives(opts) restores from S3 Bucket", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             const Bucket = TEST_BUCKET;
             const s3BucketOpts = { 
