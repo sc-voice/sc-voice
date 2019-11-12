@@ -26,10 +26,12 @@
             delete this.translation.strings;
             opts.metaarea && (this.metaarea = opts.metaarea);
 
+            var segments = opts.segments || [];
+            this.titles = opts.titles || [`(no-title-${this.sutta_uid}`];
             this.author = opts.author || "(no-author)";
             this.lang = opts.lang || 'en';
             this.sections = opts.sections || 
-                Sutta.defaultSections(opts.segments, this.lang);
+                Sutta.defaultSections(segments, this.lang);
             Object.defineProperty(this, 'suttaCode', {
                 enumerable: true,
                 get() {

@@ -155,7 +155,7 @@
             should.deepEqual(Object.keys(sutta).sort(), [
                 'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
                 'support', 'metaarea', 'sections', 'suttaplex', 'lang',
-                'author',
+                'author', 'titles',
             ].sort());
             should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
 
@@ -206,7 +206,7 @@
             should.deepEqual(Object.keys(sutta).sort(), [
                 'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
                 'support', 'metaarea', 'sections', 'suttaplex', 'lang',
-                'author',
+                'author', 'titles',
             ].sort());
             should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
 
@@ -334,6 +334,7 @@
             should.deepEqual(Object.keys(sutta).sort(), [
                 'suttaCode', 'translation', 'sutta_uid', 'author_uid', 
                 'support', 'sections', 'suttaplex', 'lang', 'author',
+                'titles',
                 //'metaarea', 
             ].sort());
 
@@ -397,6 +398,7 @@
             should.deepEqual(Object.keys(sutta).sort(), [
                 'author', 'author_uid', 'sections', 'support', 
                 'suttaCode', 'sutta_uid', 'lang', 'translation',
+                'titles',
             ].sort());
             should(sutta.author_uid).equal('sabbamitta');
             should(sutta.sections.length).equal(2);

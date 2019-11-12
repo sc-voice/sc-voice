@@ -91,7 +91,7 @@
                 var sutta = res.body;
                 should.deepEqual(Object.keys(sutta).sort(), [
                     'translation', 'suttaCode', 'sutta_uid', 
-                    'author', 'author_uid', 
+                    'author', 'author_uid', 'titles',
                     "sections", "suttaplex", "support", 'lang',
                 ].sort());
                 should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Supported);

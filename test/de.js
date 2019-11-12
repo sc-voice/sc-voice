@@ -88,7 +88,6 @@
                 chapter: 'voice',
             };
             var result = await voice.speak(text, opts);
-            console.log(`dbg result`, result);
             should(result).properties([
                 'file','hits','misses','signature','cached']);
             should(fs.statSync(result.file).size)

@@ -9,7 +9,7 @@
       "author_short": "Sujato",
       "author_uid": "sujato",
       "nSegments": 55,
-      "title": "With Bhadraka",
+      "title": "Linked Discourses 42 • 1. Chiefs • 11. With Bhadraka",
       "collection_id": "sn",
       "quote": {
         "scid": "sn42.11:2.11",
@@ -82,6 +82,11 @@
           "num": 11
         },
         "translation": {},
+        "titles": [
+          "Linked Discourses 42",
+          "1. Chiefs",
+          "11. With Bhadraka"
+        ],
         "author": "Sujato Bhikkhu",
         "lang": "en",
         "sections": [
@@ -408,7 +413,7 @@
       "author_short": "Sujato",
       "author_uid": "sujato",
       "nSegments": 188,
-      "title": "So I have heard.",
+      "title": "Middle Discourses 105 • With Sunakkhatta",
       "collection_id": "mn",
       "quote": {
         "scid": "mn105:28.2",
@@ -487,6 +492,10 @@
           "num": 5
         },
         "translation": {},
+        "titles": [
+          "Middle Discourses 105",
+          "With Sunakkhatta"
+        ],
         "author": "Sujato Bhikkhu",
         "lang": "en",
         "sections": [
@@ -1476,7 +1485,7 @@
       "author_short": "Sujato",
       "author_uid": "sujato",
       "nSegments": 334,
-      "title": "So I have heard.",
+      "title": "Middle Discourses 1 • The Root of All Things",
       "collection_id": "mn",
       "quote": {
         "scid": "mn1:171.4",
@@ -1555,6 +1564,10 @@
           "num": 1
         },
         "translation": {},
+        "titles": [
+          "Middle Discourses 1",
+          "The Root of All Things"
+        ],
         "author": "Sujato Bhikkhu",
         "lang": "en",
         "sections": [
@@ -3273,7 +3286,7 @@
       "author_short": "Sujato",
       "author_uid": "sujato",
       "nSegments": 202,
-      "title": "So I have heard.",
+      "title": "Middle Discourses 66 • The Simile of the Quail",
       "collection_id": "mn",
       "quote": {
         "scid": "mn66:17.1",
@@ -3352,6 +3365,10 @@
           "num": 6
         },
         "translation": {},
+        "titles": [
+          "Middle Discourses 66",
+          "The Simile of the Quail"
+        ],
         "author": "Sujato Bhikkhu",
         "lang": "en",
         "sections": [

@@ -260,6 +260,7 @@ style="width:100%; margin-top:0"/>
         </summary>
         <div class="scv-blurb">{{suttaplex.blurb}}</div>
         <div class="title pt-4 pb-2 text-center">
+            <div>{{this.sutta.titles[0]}}</div>
             {{sutta.original_title}}
         </div>
         <div class="subtitle font-italic pt-1 pb-3 text-center">
@@ -699,6 +700,7 @@ export default {
                 suttaplex.original_title;
             this.sutta.acronym = acronym;
             this.sutta.title = `${acronym}: ${title}`;
+            this.sutta.titles = sutta.titles;
             this.sutta.original_title = suttaplex.original_title || "?";
             var seg0 = sections[0] && sections[0].segments[0] || {};
             this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
@@ -1030,9 +1032,20 @@ export default {
             return vSearch && vSearch.$refs.input;
         },
         resultCount() {
-            return this.searchResults && this.searchResults.results.length || 0;
+            var sr = this.searchResults;
+            return sr && sr.results.length || 0;
         },
         suttaTitle() {
+            // standard title
+            var titles = this.sutta.titles;
+            if (titles) {
+                return [
+                    this.resultId().toUpperCase(),
+                    ...titles.slice(1),
+                ].join(' \u2022 ');
+            }
+
+            // legacy titles
             var titleParts = this.sutta.title.split(':');
             if (titleParts.length > 1) {
                 titleParts[0] = this.resultId().toUpperCase();

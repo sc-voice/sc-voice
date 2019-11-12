@@ -605,7 +605,6 @@
                 maxResults,
                 resultPattern,
             } = res;
-            console.log(`dbg res`, maxResults, maxDoc);
             should(maxDoc).equal(5);
             should(method).equal('phrase');
             should.deepEqual(results.map(r=> ({

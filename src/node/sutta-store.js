@@ -960,19 +960,13 @@
                 var authorInfo = bd.authorInfo(author_uid);
                 var author = authorInfo.name;
                 var segments = mld.segments();
-                var titleSeg = segments[2] || 
-                    translations.reduce((a,t) => {
-                        a[t.lang] = `(no-title-${sutta_uid}-${t.lang})`;
-                        return a;
-                    }, {});
-                var translatedTitle = titleSeg[lang]
-                    .replace(/^[0-9]+\. */,'')
-                    .trim();
+                var titles = mld.titles();
                 var sutta = new Sutta({
                     sutta_uid,
                     author,
                     author_uid,
                     lang,
+                    titles,
                     support: true,
                     suttaplex,
                     segments,
@@ -989,7 +983,7 @@
                     author_uid: author_uid,
                     author_blurb: authorInfo.blurb,
                     nSegments: segments.length,
-                    title: translatedTitle,
+                    title: titles.join(' \u2022 '),
                     collection_id: trans.collection,
                     quote,
                     suttaplex,
