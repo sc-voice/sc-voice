@@ -529,7 +529,7 @@ export default {
             var lang = this.language;
             return this.segment && this.segment[lang] ||
                 this.loading && "Loading..." ||
-                "(no translation available)";
+                this.$vuetify.lang.t('$vuetify.scv.noTranslationAvailable');
         },
         segmentsElapsed(){
             var {

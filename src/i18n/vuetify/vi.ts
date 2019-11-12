@@ -210,5 +210,6 @@ export default {
     translatedBy: "Translated by",
     uiLanguage: "Ngôn ngữ giao diên trong web",
     wikiAria: "Home.md",
+    noTranslationAvailable: "(no translation available)",
   }
 }

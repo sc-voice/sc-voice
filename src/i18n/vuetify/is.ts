@@ -210,6 +210,7 @@ export default {
     translatedBy: "Translated by",
     uiLanguage: "Tungumál vefsíðu",
     wikiAria: "Home.md",
+    noTranslationAvailable: "(no translation available)",
 
   }
 }

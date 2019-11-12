@@ -209,6 +209,7 @@ export default {
     translatedBy: "Übersetz von",
     uiLanguage: "Sprache für Webseite",
     wikiAria: "Home@Deutsch.md",
+    noTranslationAvailable: "(keine Übersetzung verfügbar)",
 
   },
 }

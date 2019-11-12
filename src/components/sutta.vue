@@ -214,7 +214,7 @@ style="width:100%; margin-top:0"/>
             <div v-if="result.quote && showTrans && result.quote[language]"
                 class="scv-search-result-lang">
                 <div>
-                    <span v-html="result.quote.en"></span>
+                    <span v-html="result.quote[gscv.lang]"></span>
                     <div v-if="gscv.showId" class='scv-scid'>
                         &mdash;
                         {{result.author}} 
@@ -546,7 +546,7 @@ export default {
                     var ref = `audioQuote${i}`;
                     var data = await that.getResultAudio(result);
                     var links = [];
-                    var lang = that.language;
+                    var lang = that.gscv.lang || that.language;
                     var dsa = data.segment.audio;
                     if (that.showPali && dsa.pli) {
                         links.push(that.audioLink(data, "pli"));
@@ -1038,6 +1038,7 @@ export default {
         suttaTitle() {
             // standard title
             var titles = this.sutta.titles;
+            console.log(`dbg titles`, titles);
             if (titles) {
                 return [
                     this.resultId().toUpperCase(),
@@ -1064,6 +1065,9 @@ export default {
                 return this.gscv.durationDisplay(seconds);
             }
             return {};
+        },
+        langQuote(seg) {
+            return seg[this.gscv.lang] || seg.en || '(n/a)';
         },
         segmentCount() {
             var results = this.searchResults && this.searchResults.results;

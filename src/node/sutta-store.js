@@ -951,7 +951,7 @@
                     author_uid: author_uid,
                     author_blurb: authorInfo.blurb,
                     nSegments: segments.length,
-                    title: titles.join(' \u2022 '),
+                    title: titles.slice(1).join(' \u2022 '),
                     collection_id: trans.collection,
                     quote,
                     suttaplex,

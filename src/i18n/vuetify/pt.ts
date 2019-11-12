@@ -210,6 +210,7 @@ export default {
     translatedBy: "Translated by",
     uiLanguage: "Idioma da página",
     wikiAria: "Home@Português.md",
+    noTranslationAvailable: "(no translation available)",
 
   }
 }
