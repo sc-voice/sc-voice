@@ -279,13 +279,14 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("loadSutta(opts) returns an2.12 as part of an2.11-20", function(done) {
+    it("loadSutta(opts) => an2.12 as part of an2.11-20", done=>{
         (async function() { try {
             var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var language = 'en';
             var sutta = await scr.loadSutta('an2.12');
             should(sutta).instanceOf(Sutta);
-            should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Supported);
+            should.deepEqual(sutta.support, 
+                Definitions.SUPPORT_LEVELS.Supported);
             should(sutta.suttaplex.uid).equal('an2.11-20');
             should(sutta.sutta_uid).equal('an2.11-20');
             var suttaplex = sutta.suttaplex;
@@ -298,7 +299,8 @@
             should(segments[0].scid).match(/an2.11-20:0.1/um);
             should(segments[0].en).match(/Numbered Discourses 2/um);
             should(segments[9].scid).match(/an2.11-20:11.1.7/um);
-            should(segments[9].en).match(/Reflecting like this[^]*keeping themselves pure./um);
+            should(segments[9].en)
+                .match(/Reflecting like this[^]*themselves pure./um);
             should(sutta.metaarea).equal(undefined);
             done();
         } catch(e) {done(e);} })();
@@ -337,41 +339,6 @@
                 'titles',
                 //'metaarea', 
             ].sort());
-
-            done();
-        } catch(e) { done(e); } })();
-    });
-    it("loadSutta(opts) returns same sutta as Pootl", function(done) {
-        done(); return; // Pootl content is obsolete and now differs from current
-        this.timeout(5*1000);
-        (async function() { try {
-            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
-            var sutta = await scr.loadSutta("mn1", "en", "sujato");
-            var suttaPootl = await SuttaFactory.loadSuttaPootl('mn1');
-
-            should.deepEqual(sutta.segments[0], {
-                scid: 'mn1:0.1',
-                en: 'Middle Discourses 1',
-                pli: 'Majjhima Nikāya 1'
-            });
-            var nSegments = suttaPootl.segments.length;
-            should.deepEqual(sutta.segments[0], suttaPootl.segments[0]);
-            should.deepEqual(sutta.segments[100], suttaPootl.segments[100]);
-            should.deepEqual(sutta.segments[nSegments-1], suttaPootl.segments[nSegments-1]);
-            should(sutta.segments.length).equal(nSegments);
-            should.deepEqual(Object.keys(sutta).sort(), [
-                'suttaCode', 'translation', 'sutta_uid', 'author_uid', 'support', 
-                'sections', 'suttaplex',
-                //'metaarea', 
-            ].sort());
-            should.deepEqual(Object.keys(sutta.sections), Object.keys(suttaPootl.sections));
-            var scrs1 = sutta.sections[1];
-            var scrp1 = suttaPootl.sections[1];
-            var nSegs = scrp1.segments.length;
-            should.deepEqual(scrs1.segments.length, nSegs);
-            var nCmp = null;
-            should.deepEqual(scrs1.segments.slice(0,nCmp), scrp1.segments.slice(0,nCmp));
-            should.deepEqual(sutta.sections, suttaPootl.sections);
 
             done();
         } catch(e) { done(e); } })();

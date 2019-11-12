@@ -9,6 +9,7 @@
         SuttaFactory,
         SuttaCentralId,
         SuttaCentralApi,
+        SuttaStore,
         Words,
     } = require("../index");
     const {
@@ -16,6 +17,16 @@
     } = require("scv-bilara");
     const SC = path.join(__dirname, '../local/sc');
     const TEST_DATA = path.join(__dirname, 'data');
+    const logLevel = false;
+    this.timeout(5*1000);
+
+    var suttaStore = new SuttaStore({
+        logLevel,
+    });
+    var suttaFactory = new SuttaFactory({
+        suttaLoader: opts => suttaStore.loadBilaraSutta(opts),
+        logLevel,
+    });
 
     function testSutta(suid='an1.3') {
         var testPath = path.join(TEST_DATA, `${suid}.json`);
@@ -47,11 +58,9 @@
     });
     it("loadSutta(...) returns a Sutta from SuttaCentral api", done=>{
         (async function() { try {
-            var suttaCentralApi = new SuttaCentralApi();
-            var factory = await new SuttaFactory({
-                suttaCentralApi,
-            }).initialize();
-            var sutta = await factory.loadSutta('mn1');
+            await suttaStore.initialize();
+            await suttaFactory.initialize();
+            var sutta = await suttaFactory.loadSutta('mn1');
             var end = 21;
             var header = sutta.excerpt({
                 start: 0,
@@ -64,8 +73,10 @@
                 prop: 'en',
             });
             var i = 0;
-            should(excerpt[i++]).match(/Middle Discourses 1/); // autoterminate segment
-            should(excerpt[i++]).match(/The Root of All Things/); // end group
+            should(excerpt[i++])
+                .match(/Middle Discourses 1/); // autoterminate segment
+            should(excerpt[i++])
+                .match(/The Root of All Things/); // end group
             should(excerpt[i++]).match(/So I have heard./);
             should(excerpt[end-2]).match(/Why is that?/);
             should(sutta.sections).instanceOf(Array);
@@ -73,10 +84,11 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("loadSutta(...) returns a Sutta", function(done) {
+    it("loadSutta(...) returns mn1", function(done) {
         (async function() { try {
-            var factory = new SuttaFactory();
-            var sutta = await factory.loadSutta('mn1');
+            await suttaStore.initialize();
+            await suttaFactory.initialize();
+            var sutta = await suttaFactory.loadSutta('mn1');
             var end = 21;
             var header = sutta.excerpt({
                 start: 0,
@@ -89,34 +101,14 @@
                 prop: 'en',
             });
             var i = 0;
-            should(excerpt[i++]).equal('Middle Discourses 1\n'); // autoterminate segment
-            should(excerpt[i++]).equal('The Root of All Things\n'); // end group
-            should(excerpt[i++]).equal('So I have heard.');
-            should(excerpt[end-2]).equal('Why is that?');
-            should(sutta.sections).instanceOf(Array);
-            should(sutta.sections[0]).instanceOf(Section);
-            done();
-        } catch(e) { done(e); } })();
-    });
-    it("loadSutta(...) returns a Sutta", function(done) {
-        (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
-            var end = 21;
-            var header = sutta.excerpt({
-                start: 0,
-                end: 2,
-                prop: 'pli',
-            });
-            var excerpt = sutta.excerpt({
-                start: 0,
-                end,
-                prop: 'en',
-            });
-            var i = 0;
-            should(excerpt[i++]).equal('Middle Discourses 1\n'); // autoterminate segment
-            should(excerpt[i++]).equal('The Root of All Things\n'); // end group
-            should(excerpt[i++]).equal('So I have heard.');
-            should(excerpt[end-2]).equal('Why is that?');
+            should(excerpt[i++])
+                .match(/Middle Discourses 1/); // autoterminate segment
+            should(excerpt[i++])
+                .match(/The Root of All Things/); // end group
+            should(excerpt[i++])
+                .match(/So I have heard./);
+            should(excerpt[end-2])
+                .match(/Why is that?/);
             should(sutta.sections).instanceOf(Array);
             should(sutta.sections[0]).instanceOf(Section);
             done();
@@ -124,95 +116,94 @@
     });
     it("loadSutta(...) loads an3.163-182", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('an3.163-182');
-            should(sutta.sections[0].segments[0].en).equal('Numbered Discourses 3');
-            should(sutta.sections[0].segments[1].en).equal(`17. Courses of Deeds`);
+            await suttaStore.initialize();
+            await suttaFactory.initialize();
+            var sutta = await suttaFactory.loadSutta('an3.163-182');
+            should(sutta.sections[0].segments[0].en)
+                .match(/Numbered Discourses 3/);
+            should(sutta.sections[0].segments[1].en)
+                .match(/17. Ways of Performing Deeds/);
             done();
         } catch(e) { done(e); } })();
     });
     it("loadSutta(...) loads dn7", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('dn7');
-            should(sutta.sections[0].segments[0].en).equal('Long Discourses 7');
-            should(sutta.sections[0].segments[1].en).equal(`With Jāliya`);
+            await suttaStore.initialize();
+            await suttaFactory.initialize();
+            var sutta = await suttaFactory.loadSutta('dn7');
+            should(sutta.sections[0].segments[0].en)
+                .match(/Long Discourses 7/);
+            should(sutta.sections[0].segments[1].en)
+                .match(/With Jāliya/);
             done();
         } catch(e) { done(e); } })();
     });
     it("loadSutta(...) loads sn22.1", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('sn22.1');
-            should(sutta.sections[0].segments[0].en).equal('Linked Discourses 22');
+            await suttaStore.initialize();
+            await suttaFactory.initialize();
+            var sutta = await suttaFactory.loadSutta('sn22.1');
+            should(sutta.sections[0].segments[0].en)
+                .match(/Linked Discourses 22/);
             should(sutta.sections[0].segments[1].en)
-                .equal(`1. Nakula${Words.U_RSQUOTE}s Father`);
+                .match(/1. Nakula/);
             done();
         } catch(e) { done(e); } })();
     });
     it("supportedSuttas() returns hierarchy of supported suttas", function(done) { 
         (async function() { try {
-            var factory = new SuttaFactory();
-            var suttas = await factory.supportedSuttas();
+            await suttaStore.initialize();
+            await suttaFactory.initialize();
+            var suttas = await suttaFactory.supportedSuttas();
             Object.keys(suttas).forEach(coll => {
                 console.log(`supported Suttas ${coll}`, suttas[coll].length);
             });
             done();
         } catch(e) { done(e); } })();
     });
-    it("loadSutta(...) automatically sections a Sutta", function(done) {
+    it("TESTTESTloadSutta(...) automatically sections a Sutta", function(done) {
         (async function() { try {
+            await suttaStore.initialize();
             var factory = new SuttaFactory({
                 autoSection: true,
+                suttaLoader: opts => suttaStore.loadBilaraSutta(opts),
             });
             should(factory.autoSection).equal(true);
             var sutta = await factory.loadSutta('sn35.66');
             should(sutta.sections).instanceOf(Array);
             should(sutta.sections.length).equal(2);
-            should(sutta.sections[0].segments.length + sutta.sections[1].segments.length)
-            .equal(sutta.segments.length);
-            should(sutta.sections[0].segments[0].en).equal('Linked Discourses 35');
-            should(sutta.sections[1].segments[0].en).match(/Sir, they speak of this thing/);
+            should(sutta.sections[0].segments.length + 
+                sutta.sections[1].segments.length)
+                .equal(sutta.segments.length);
+            should(sutta.sections[0].segments[0].en)
+                .match(/Linked Discourses 35/);
+            should(sutta.sections[1].segments[0].en)
+                .match(/Sir, they speak of this thing/);
 
             var sutta = await factory.loadSutta('dn2');
             should(sutta.sections).instanceOf(Array);
             should(sutta.sections.length).equal(37);
             should(sutta.sections[0].segments.length).equal(3);
-            should(sutta.sections[0].segments[0].en).equal('Long Discourses 2');
-            should(sutta.sections[0].segments[1].en).match(/The Fruits of the Ascetic Life/);
-            should(sutta.sections[0].segments[2].en).match(/A Discussion With the King/);
+            should(sutta.sections[0].segments[0].en)
+                .match(/Long Discourses 2/);
+            should(sutta.sections[0].segments[1].en)
+                .match(/The Fruits of the Ascetic Life/);
+            should(sutta.sections[0].segments[2].en)
+                .match(/A Discussion With the King/);
             should(sutta.sections[1].segments[0].en)
                 .match(/So I have heard/);
             should(sutta.sections[2].segments[0].en)
-                .equal(`2. A Discussion With Jīvaka Komārabhacca`);
+                .match(/2. A Discussion With Jīvaka Komārabhacca/);
             should(sutta.sections[3].title)
-                .equal(`3. The Question About the Fruits of the Ascetic${Words.U_ELLIPSIS}`);
-            done();
-        } catch(e) { done(e); } })();
-    });
-    it("loadSutta() loads AN10.26/en/bodhi", function(done) {
-        (async function() { try {
-            var suttaCentralApi = await new SuttaCentralApi().initialize();
-            var factory = await new SuttaFactory({
-                suttaCentralApi,
-            }).initialize();
-
-            var sutta = await factory.loadSutta({
-                scid: 'an10.26',
-                language: 'en',
-                translator: 'bodhi',
-            });
-
-            // Bodhi translation doesn't exist, expect Sujato translation
-            should(sutta.author_uid).equal('sujato');
-            should(sutta.sutta_uid).equal('an10.26');
-
+                .match(/3. The Question About the Fruits of the Ascetic/);
             done();
         } catch(e) { done(e); } })();
     });
     it("translators(opts) returns supported translators", (done)=>{
         (async function() { try {
-            var suttaCentralApi = await new SuttaCentralApi().initialize();
-            var factory = await new SuttaFactory({
-                suttaCentralApi,
-            }).initialize();
+            await suttaStore.initialize();
+            await suttaFactory.initialize();
+            var factory = suttaFactory;
             const EN_TRANSLATORS = [
                 'sujato',
                 'brahmali',
@@ -286,9 +277,11 @@
     });
     it("loadSutta() loads dn22/de/vri", function(done) {
         (async function() { try {
+            await suttaStore.initialize();
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = await new SuttaFactory({
                 suttaCentralApi,
+                suttaLoader: opts => suttaStore.loadBilaraSutta(opts),
             }).initialize();
 
             var sutta = await factory.loadSutta({
@@ -304,9 +297,11 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTsectionSutta(...) adds sections", function(done) {
+    it("sectionSutta(...) adds sections", function(done) {
         (async function() { try {
-            var factory = new SuttaFactory();
+            await suttaStore.initialize();
+            await suttaFactory.initialize();
+            var factory = suttaFactory;
             var sutta = testSutta('an1.3');
             should(sutta.lang).equal('de');
             should.deepEqual(

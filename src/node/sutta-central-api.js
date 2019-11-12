@@ -7,7 +7,6 @@
     const Words = require('./words');
     const Sutta = require('./sutta');
     const SuttaCentralId = require('./sutta-central-id');
-    const PoParser = require('./po-parser');
     const GuidStore = require('./guid-store');
     const Definitions = require('./definitions');
     const { MerkleJson } = require('merkle-json');
@@ -241,9 +240,12 @@
             if (!this.initialized) {
                 throw new Error('initialize() must be called');
             }
-            var translation = apiJson.translation;
+            var {
+                translation,
+                segmented,
+                suttaplex,
+            } = apiJson;
             var lang = translation.lang;
-            var suttaplex = apiJson.suttaplex;
             var uid = suttaplex.uid;
             var author_uid = translation.author_uid;
             var html = translation.text.trim();
@@ -309,7 +311,8 @@
             });
 
             if (debug) {
-                console.log('elapsed', ((Date.now() - msStart)/1000).toFixed(3));
+                console.log('elapsed', 
+                    ((Date.now() - msStart)/1000).toFixed(3));
                 textSegments.slice(debug1, debug2).forEach((seg,i) => {
                     var l = seg.en;
                     var len = Math.min(20,l.length/2-1);
@@ -335,14 +338,16 @@
             return new Sutta({
                 author_uid,
                 sutta_uid: uid,
-                support: Definitions.SUPPORT_LEVELS.Legacy,
+                support: segmented
+                    ? Definitions.SUPPORT_LEVELS.Supported
+                    : Definitions.SUPPORT_LEVELS.Legacy,
                 metaarea,
                 segments: headerSegments.concat(textSegments),
                 translation,
             });
         }
 
-        normalizeScid(id) {
+        normalizeScid(id) { // DEPRECATED
             if (id == null) {
                 throw new Error('Sutta reference identifier is required');
             }
@@ -350,19 +355,8 @@
             if (scid == null) {
                 throw new Error(`Keyword search is not yet implemented:${id}`);
             }
-            try {
-                var popath = PoParser.suttaPath(scid);
-                var basename = path.basename(popath);
-                scid = basename.substring(0, basename.length-PO_SUFFIX_LENGTH);
-                scid = scid.replace(/([^0-9])0*/gu,'$1');
-                var support = Definitions.SUPPORT_LEVELS.Supported;
-            } catch(e) {
-                // ignore and pass to api (possibly not in Pootl)
-                logger.debug(e.stack);
-                var support = Definitions.SUPPORT_LEVELS.Legacy;
-            }
             return {
-                support,
+                support: Definitions.SUPPORT_LEVELS.Legacy,
                 scid,
             };
         }
@@ -510,7 +504,9 @@
                             var segments = Object.keys(segObj).map(scid => segObj[scid]);
                             var sutta = new Sutta({
                                 sutta_uid: result.suttaplex.uid,
-                                support: result.support,
+                                support: result.segmented
+                                    ? Definitions.SUPPORT_LEVELS.Supported
+                                    : Definitions.SUPPORT_LEVELS.Legacy,
                                 segments,
                                 translation,
                             });

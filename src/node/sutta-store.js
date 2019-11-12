@@ -62,11 +62,13 @@
 
     class SuttaStore {
         constructor(opts={}) {
+            var that = this;
             this.suttaCentralApi = opts.suttaCentralApi || 
                 new SuttaCentralApi();
             this.suttaFactory = opts.suttaFactory || new SuttaFactory({
                 suttaCentralApi: this.suttaCentralApi,
                 autoSection: true,
+                suttaLoader: scid => that.loadBilaraSutta(scid),
             });
             logger.logInstance(this, opts);
             this.bilaraData = opts.BilaraData || new BilaraData({
@@ -908,7 +910,7 @@
             });
         }
 
-        loadSutta(opts) {
+        loadBilaraSutta(opts) {
             if (typeof opts === 'string') {
                 opts = {
                     scid: opts,
@@ -934,13 +936,23 @@
                 }
                 var bdres = await that.seeker.find(findOpts);
                 var mld = bdres.mlDocs[0];
+                if (mld == null) {
+                    resolve(null);
+                }
                 var mldRes = await that.mldResult(mld, lang);
                 resolve(mldRes.sutta);
             }catch(e){reject(e);}})()};
             return new Promise(pbody);
         }
 
+        loadSutta(opts) {
+            return this.loadBilaraSutta(opts);
+        }
+
         mldResult(mld) {
+            if (mld == null) {
+                throw new Error(`Expected MLDoc`);
+            }
             var {
                 suttaCentralApi,
                 suttaFactory,
@@ -961,6 +973,10 @@
                 var author = authorInfo.name;
                 var segments = mld.segments();
                 var titles = mld.titles();
+                var translation = {
+                    author_uid,
+                    lang,
+                };
                 var sutta = new Sutta({
                     sutta_uid,
                     author,
@@ -970,6 +986,7 @@
                     support: true,
                     suttaplex,
                     segments,
+                    translation,
                 });
                 sutta = suttaFactory.sectionSutta(sutta);
                 var quote = segments.filter((s,i)=>s.matched && i > 1)[0];

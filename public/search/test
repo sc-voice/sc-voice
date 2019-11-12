@@ -81,7 +81,10 @@
           "biblio": null,
           "num": 11
         },
-        "translation": {},
+        "translation": {
+          "author_uid": "sujato",
+          "lang": "en"
+        },
         "titles": [
           "Linked Discourses 42",
           "1. Chiefs",
@@ -394,7 +397,7 @@
             "expandable": false
           }
         ],
-        "suttaCode": "sn42.11//"
+        "suttaCode": "sn42.11/en/sujato"
       },
       "stats": {
         "text": 3480,
@@ -491,7 +494,10 @@
           "biblio": null,
           "num": 5
         },
-        "translation": {},
+        "translation": {
+          "author_uid": "sujato",
+          "lang": "en"
+        },
         "titles": [
           "Middle Discourses 105",
           "With Sunakkhatta"
@@ -1466,7 +1472,7 @@
             "expandable": false
           }
         ],
-        "suttaCode": "mn105//"
+        "suttaCode": "mn105/en/sujato"
       },
       "stats": {
         "text": 14442,
@@ -1563,7 +1569,10 @@
           "biblio": null,
           "num": 1
         },
-        "translation": {},
+        "translation": {
+          "author_uid": "sujato",
+          "lang": "en"
+        },
         "titles": [
           "Middle Discourses 1",
           "The Root of All Things"
@@ -3267,7 +3276,7 @@
             "expandable": false
           }
         ],
-        "suttaCode": "mn1//"
+        "suttaCode": "mn1/en/sujato"
       },
       "stats": {
         "text": 14304,
@@ -3364,7 +3373,10 @@
           "biblio": null,
           "num": 6
         },
-        "translation": {},
+        "translation": {
+          "author_uid": "sujato",
+          "lang": "en"
+        },
         "titles": [
           "Middle Discourses 66",
           "The Simile of the Quail"
@@ -4407,7 +4419,7 @@
             "expandable": false
           }
         ],
-        "suttaCode": "mn66//"
+        "suttaCode": "mn66/en/sujato"
       },
       "stats": {
         "text": 15808,

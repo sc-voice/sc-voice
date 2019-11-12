@@ -72,7 +72,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("suttaPath(opts) returns sutta filepath", function(done) {
+    it("TESTTESTsuttaPath(opts) returns sutta filepath", function(done) {
         (async function() { try {
             if (1) {
                 var suttaIdsPath = path.join(__dirname, '../src/node/sutta-ids.json');
@@ -82,7 +82,7 @@
                 fs.writeFileSync(suttaIdsPath, JSON.stringify(json, null, 2));
             }
 
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             var spath = store.suttaPath('mn1','en','test');
             should(spath).equal(path.join(ROOT,'mn/en/test/mn1.json'));
             var dir = path.dirname(spath);
@@ -100,12 +100,13 @@
             ];
             var store = await new SuttaStore({
                 suttaIds,
+                logLevel,
             }).initialize();
             var spath = store.suttaPath('an1.1','en','test');
             should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
 
             // src/node/sutta-ids.json controls suttaPath
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             var spath = store.suttaPath('an1.3','en','test');
             should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
 
@@ -114,7 +115,7 @@
     });
     it("suttaPath(opts) throws Error", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             should.throws(() => store.suttaPath()); 
             should.throws(() => store.suttaPath({
                 // sutta_uid: 'MN 1',
@@ -136,7 +137,7 @@
         var maxseconds = 5;
         this.timeout(maxseconds*1000);
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             await store.updateSuttas([
                 'thag1.1', 'sn39.1-15', 
                 'sn1.8', 'mn1','an1.1-10']);
@@ -186,6 +187,7 @@
                 suttaCentralApi,
                 suttaFactory,
                 voice,
+                logLevel,
             }).initialize();
 
             // multiple results
@@ -238,6 +240,7 @@
                 suttaFactory,
                 voice,
                 maxResults: 50,
+                logLevel,
             }).initialize();
 
             // multiple results
@@ -268,6 +271,7 @@
                 suttaCentralApi,
                 suttaFactory,
                 voice,
+                logLevel,
             }).initialize();
 
             // multiple results
@@ -319,6 +323,7 @@
             var store = await new SuttaStore({
                 suttaCentralApi,
                 voice,
+                logLevel,
             }).initialize();
 
             // multiple results
@@ -386,7 +391,7 @@
     });
     it("search(pattern) finds metadata", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
 
             // author
             var {
@@ -458,7 +463,7 @@
     });
     it("search(pattern) is sanitized", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             var {
                 method,
                 results,
@@ -485,7 +490,7 @@
     });
     it("search(pattern) handles long text", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             var longstring = new Array(100).fill("abcdefghijklmnopqrstuvwxyz").join(" ");
             await store.search(longstring);
             done(new Error("expected failure"));
@@ -499,7 +504,7 @@
     });
     it("search(pattern) handles invalid regexp", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             await store.search("not[good");
             done(new Error("expected failure"));
         } catch(e) {
@@ -518,6 +523,7 @@
                 usage: 'recite',
             });
             var store = await new SuttaStore({
+                logLevel,
                 voice,
             }).initialize();
 
@@ -534,7 +540,7 @@
     });
     it("search(pattern) sorts by numeric count", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             var {
                 method,
                 results,
@@ -548,7 +554,7 @@
     });
     it("search(pattern) performs keyword search", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             var expected = [{
                 count: 11.031,
                 uid: 'mn77',
@@ -596,7 +602,7 @@
     });
     it("search(pattern) finds romanized Pali keywords ", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             var res = await store.search('jhana');
             var {
                 method,
@@ -658,7 +664,7 @@
     });
     it("sutta_uidSuccessor(sutta_uid) returns following sutta_uid", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
 
             // logical
             should(store.sutta_uidSuccessor('mn33',true)).equal('mn34');
@@ -674,7 +680,7 @@
     });
     it("supportedSutta(pattern) return supported sutta uid", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
 
             var suttas = SuttaCentralId.supportedSuttas;
             should(store.supportedSutta(suttas[0])).equal(suttas[0]);
@@ -744,7 +750,7 @@
     });
     it("expandRange(item) expands range", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             should.deepEqual(store.expandRange('an5.179').length,1);
 
             // no subchapters
@@ -825,7 +831,7 @@
     });
     it("expandRange(item) handles fully sutta refs", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
 
             // dashes in author
             should.deepEqual(store.expandRange(
@@ -907,7 +913,7 @@
     });
     it("suttaList(pattern) finds listed suttas", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
 
             should.deepEqual( store.suttaList(
                 ['sn 45.161']), // spaces
@@ -968,7 +974,7 @@
     });
     it("search(pattern) finds mn1/en/sujato", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
 
             // fully specified
             var data = await store.search({ pattern: 'mn1/en/sujato', });
@@ -984,15 +990,10 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) finds suttas in range", function(done) {
+    it("search(pattern) finds legacy suttas", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
 
-            // spaces
-            var data = await store.search({ pattern: 'sn 45.161', });
-            should.deepEqual(data.results.map(r=>r.uid), ['sn45.161']);
-
-            // fully specified unsupported
             var {results} = await store.search({pattern: 'mn1/en/bodhi'});
             should.deepEqual(results.map(r=>r.uid), ['mn1']);
             should.deepEqual(results.map(r=>r.lang), ['en']);
@@ -1000,6 +1001,17 @@
             should.deepEqual(results.map(r=>r.sutta.segments.length), 
                 [55]);
             should(results.length).equal(1);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("search(pattern) finds suttas in range", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore({logLevel}).initialize();
+
+            // spaces
+            var data = await store.search({ pattern: 'sn 45.161', });
+            should.deepEqual(data.results.map(r=>r.uid), ['sn45.161']);
 
             var data = await store.search({ pattern: 'sn29.9-999', });
             should.deepEqual(data.results.map(r=>r.uid),
@@ -1031,7 +1043,7 @@
     });
     it("findSuttas(opts) finds suttas by phrase", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
 
             // Search english phrase
             var data = await store.findSuttas({ pattern: 'root of suffering', });
@@ -1051,7 +1063,7 @@
     });
     it("findSuttas(opts) finds suttas by keywords", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
 
             // Search keywords
             var data = await store.findSuttas({ pattern: 'root suffering', });
@@ -1070,7 +1082,7 @@
     });
     it("keywordSearch(...) finds suttas by keywords", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             var language = 'en';
 
             // Search Pali phrase
@@ -1087,9 +1099,9 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("findSuttas(opts) finds by sutta_uid", function(done) {
+    it("TESTTESTfindSuttas(opts) finds by sutta_uid", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
 
             // Search sutta uid list
             var data = await store.findSuttas({ pattern: 'mn2,mn1', });
@@ -1116,7 +1128,7 @@
     });
     it("createPlaylist(opts) creates playlist", function(done) {
         (async function() { try {
-            var store = await new SuttaStore().initialize();
+            var store = await new SuttaStore({logLevel}).initialize();
             var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
             should(playlist.tracks.length).equal(4);
             should.deepEqual(
@@ -1130,7 +1142,7 @@
                 tracks: 4,
                 chars: {
                     en: 3124,
-                    pli: 2410,
+                    pli: 2408,
                 },
                 duration: 490,
                 segments: {
@@ -1155,7 +1167,7 @@
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
                 chars: {
-                    pli: 2410,
+                    pli: 2408,
                 },
                 duration: 220,
                 segments: {
@@ -1170,6 +1182,7 @@
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
+                logLevel,
             }).initialize();
             var eCaught;
             var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
@@ -1201,7 +1214,7 @@
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
                 chars: {
-                    pli: 2410,
+                    pli: 2408,
                 },
                 duration: 220,
                 segments: {
@@ -1216,6 +1229,7 @@
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
+                logLevel,
             }).initialize();
             var {
                 method,
@@ -1234,6 +1248,7 @@
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
+                logLevel,
             }).initialize();
             var maxResults = 5;
             var language = 'en';
@@ -1252,6 +1267,7 @@
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
+                logLevel,
             }).initialize();
             var language = 'en';
             const KNSTART = [

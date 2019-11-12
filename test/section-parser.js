@@ -9,6 +9,7 @@
         SectionParser,
         Sutta,
         SuttaFactory,
+        SuttaStore,
         Words,
     } = require('../index');
 
@@ -46,7 +47,7 @@
         'the dimension of infinite consciousness',
         'the dimension of nothingness',
         'the dimension of neither perception nor non-perception',
-        'the seen', 'the heard', 'the thought', 'the cognized',
+        'the seen', 'the heard', 'the thought', 'the known',
         'oneness', 'diversity', 'all', 'extinguishment',
     ];
     const MN2_VALUES = [
@@ -69,6 +70,11 @@
         'vanity and negligence',
     ];
 
+    const logLevel = false;
+    const suttaStore = new SuttaStore({
+        logLevel,
+    });
+
     it("SectionParser(opts) creates a section parser", function() {
         // default
         var parser = new SectionParser();
@@ -86,9 +92,10 @@
         });
     });
 
-    it("parseExpandableSection(segments) parses mn1 (1)", function(done) {
+    it("TESTTESTparseExpandableSection(segments) parses mn1 (1)", done=>{
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
+            await suttaStore.initialize();
+            var sutta = await suttaStore.loadSutta('mn1');
             var prop = "xyz";
             var segments = sutta.segments.map(seg => ({
                 scid: seg.scid,
@@ -103,8 +110,9 @@
             should.deepEqual(section.values, MN1_VALUES);
             should(section.segments.length).equal(98);
             should(section.segments[0].scid).equal('mn1:3.1');
-            should(section.segments[section.segments.length-1].scid).equal('mn1:26.5');
-            should(section.prefix).equal('But then they conceive ');
+            should(section.segments[section.segments.length-1].scid)
+                .equal('mn1:26.5');
+            should(section.prefix).match(/But then they identify/);
             should.deepEqual(section.template.map(seg => seg.scid), [
                 'mn1:3.3',
             ]);
@@ -115,7 +123,8 @@
 
     it("parseExpandableSection(segments) parses mn1 (2)", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
+            await suttaStore.initialize();
+            var sutta = await suttaStore.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(109));
 
@@ -133,7 +142,8 @@
 
     it("parseExpandableSection(segments) parses mn1 (3)", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
+            await suttaStore.initialize();
+            var sutta = await suttaStore.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(139));
 
@@ -151,7 +161,8 @@
 
     it("parseExpandableSection(segments) parses mn1 (4)", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
+            await suttaStore.initialize();
+            var sutta = await suttaStore.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(169));
 
@@ -169,7 +180,8 @@
 
     it("parseExpandableSection(segments) parses mn1 (5)", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
+            await suttaStore.initialize();
+            var sutta = await suttaStore.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(199));
 
@@ -187,7 +199,8 @@
 
     it("parseExpandableSection(segments) parses mn1 (6)", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
+            await suttaStore.initialize();
+            var sutta = await suttaStore.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(229));
 
@@ -205,7 +218,8 @@
 
     it("parseExpandableSection(segments) parses mn1 (7)", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
+            await suttaStore.initialize();
+            var sutta = await suttaStore.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(260));
 
@@ -223,7 +237,8 @@
 
     it("parseExpandableSection(segments) parses mn1 (8)", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn1');
+            await suttaStore.initialize();
+            var sutta = await suttaStore.loadSutta('mn1');
             var parser = new SectionParser();
             var section = parser.parseExpandableSection(sutta.segments.slice(292));
 
@@ -239,36 +254,21 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandableSection(segments) parses mn2 (1)", function(done) {
-        done(); return; // TODO
-        (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn2');
-            var parser = new SectionParser();
-            var section = parser.parseExpandableSection(sutta.segments.slice(0));
-
-            should.deepEqual(section.values, MN2_VALUES);
-            should(section.segments.length).equal(8);
-            should(section.segments[0].scid).equal('mn2:12.2');
-            should(section.segments[section.segments.length-1].scid).equal('mn2:12.9');
-            should(section.prefix).equal('Reflecting properly, they live restraining the faculty of the ');
-            should.deepEqual(section.template.map(seg => seg.scid), 
-                [ 'mn2:12.2', 'mn2:12.3']);
-
-            done();
-        } catch(e) { done(e); } })();
-    });
-
     it("parseExpandableSection(segments) parses mn3 (1)", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn2');
+            await suttaStore.initialize();
+            var sutta = await suttaStore.loadSutta('mn2');
             var parser = new SectionParser();
-            var section = parser.parseExpandableSection(sutta.segments.slice(0));
+            var section = parser
+                .parseExpandableSection(sutta.segments.slice(0));
 
-            should.deepEqual(section.values.slice(15,20), MN2_VALUES.slice(15,20));
+            should.deepEqual(section.values.slice(15,20), 
+                MN2_VALUES.slice(15,20));
             should(section.segments.length).equal(12);
             should(section.segments[0].scid).equal('mn2:12.1');
-            should(section.segments[section.segments.length-1].scid).equal('mn2:12.12');
-            should(section.prefix).equal('Reflecting properly, they live restraining the faculty of the ');
+            should(section.segments[section.segments.length-1].scid)
+                .equal('mn2:12.12');
+            should(section.prefix).match(/Reflecting properly, /);
             should.deepEqual(section.template.map(seg => seg.scid), 
                 [ 'mn2:12.2', 'mn2:12.3']);
 

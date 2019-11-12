@@ -43,7 +43,8 @@
                 return this;
             }
             var segments = this.segments.reduce((acc,seg) => {
-                if (seg[this.prop].match(RE_ELLIPSIS)) {
+                var text = seg[this.prop];
+                if (text && text.match(RE_ELLIPSIS)) {
                     acc.push.apply(acc, this.expand(seg));
                 } else {
                     acc.push(seg);

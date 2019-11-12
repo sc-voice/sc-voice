@@ -28,7 +28,6 @@
     const SuttaStore = require('./sutta-store');
     const SuttaCentralApi = require('./sutta-central-api');
     const MdAria = require('./md-aria');
-    const PoParser = require('./po-parser');
     const Task = require('./task');
     const Voice = require('./voice');
     const VoiceFactory = require('./voice-factory');

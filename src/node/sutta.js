@@ -3,7 +3,6 @@
     const path = require('path');
     const Words = require('./words');
     const Section = require('./section');
-    const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
     const RE_HEADER = new RegExp(`^.*:0\\..*$`, 'u');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
@@ -68,28 +67,6 @@
         }
 
         static get GROUP_SEP() { return '\n'; }
-
-        static scidGroup(segments, scid) {
-            if (typeof scid === 'string') {
-                scid = new SuttaCentralId(scid);
-            }
-
-            if (!(scid instanceof SuttaCentralId)) {
-                throw new Error('expected a SuttaCentralId');
-            }
-            var parent = scid.parent;
-            if (parent.scid == null) {
-                throw new Error(`scidGroup() not implemented for sutta scid:${scid}`);
-            }
-            var wildcard = "*";
-            var segments = Sutta.findSegments(segments, parent.scid + wildcard,  {
-                prop: 'scid',
-            });
-            return {
-                scid: parent.scid,
-                segments,
-            }
-        }
 
         static findIndexes(segments, pat, opts={}) {
             var prop = opts.prop || FIND_PROP;
@@ -223,21 +200,6 @@
 
         excerpt(opts={}) {
             return Sutta.excerpt(this.segments, opts);
-        }
-
-        scidGroup(scid) {
-            return Sutta.scidGroup(this.segments, scid);
-        }
-
-        nextSegment(scid, offset=1) {
-            scid = scid.toString();
-            var indexes = this.findIndexes(scid);
-            if (indexes == null || indexes.length === 0) {
-                return null;
-            }
-            var nextIndex = offset + 
-                (offset < 0 ? indexes[0] : indexes[indexes.length-1]);
-            return this.segments[nextIndex] || null;
         }
 
         commonPrefix(s0, s1) {

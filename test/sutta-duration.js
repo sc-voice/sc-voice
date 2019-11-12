@@ -9,10 +9,11 @@
         Sutta,
         SuttaCentralApi,
         SuttaFactory,
+        SuttaStore,
     } = require("../index");
-
     const suttaCentralApi = new SuttaCentralApi();
     const TOLERANCE = 33;
+    const logLevel = false;
 
     function testTolerance(actual, expected, e = TOLERANCE) {
         should(actual).above(expected-e);
@@ -23,15 +24,13 @@
         var scd = new SuttaDuration();
         should(scd.name).equal('amy');
     });
-    it("measure(sutta, lang) measures thag1.2", function(done) {
+    it("TESTTESTmeasure(sutta, lang) measures thag1.2", function(done) {
         (async function() { try {
-            var factory = await new SuttaFactory({
-                suttaCentralApi,
-            }).initialize();
-            var scd = new SuttaDuration();
-
-            var sutta = await factory.loadSutta('thag1.2');
+            var store = await new SuttaStore({logLevel}).initialize();
+            var sutta = await store.loadSutta('thag1.2');
+            var factory = new SuttaFactory({logLevel});
             sutta = factory.sectionSutta(sutta);
+            var scd = new SuttaDuration();
             var resMeasure = scd.measure(sutta);
             should(resMeasure).properties({
                 text: 264,

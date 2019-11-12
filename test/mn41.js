@@ -8,10 +8,14 @@
         Sutta,
         SuttaFactory,
         SuttaCentralId,
+        SuttaStore,
         Voice,
         Words,
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
+    const logLevel = false;
+
+    var suttaStore = new SuttaStore({logLevel});
 
     it("parseSutta(sutta) parses mn41 structure", function(done) {
         (async function() { try {
@@ -96,9 +100,10 @@
     });
     it("parseSutta(sutta) parses mn41", function(done) {
         (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn41');
+            await suttaStore.initialize();
+            var sutta = await suttaStore.loadSutta('mn41');
             should(sutta.segments[0].scid).equal('mn41:0.1');
-            var sutta2 = new SuttaFactory().parseSutta(sutta);
+            var sutta2 = suttaStore.suttaFactory.parseSutta(sutta);
             should(sutta2).instanceOf(Sutta);
             var sections = sutta2.sections;
             should(sections.length).equal(4);
@@ -119,39 +124,6 @@
                 return acc;
             }, []);
             should.deepEqual(sectSegs, sutta.segments);
-
-            done();
-        } catch(e) { done(e); } })();
-    });
-    it("expandSutta(sutta) expands mn41", function(done) {
-    //done();return;//TODO
-        this.timeout(10*1000); // takes 2 seconds if cache is empty
-        /*
-         * This is real-world system test that exercises and requires:
-         * 1) AWS Polly
-         * 2) Internet connection
-         * 3) MN41
-         * 4) The local sound cache
-         * 5) >5MB of local disk for sound storage
-         */
-        (async function() { try {
-            var sutta = await SuttaFactory.loadSutta('mn41');
-            var factory = new SuttaFactory();
-            var expandedSutta = factory.expandSutta(sutta);
-            var voice = Voice.createVoice({
-                name: "amy",
-                localeIPA: "pli",
-            });
-            var sections = expandedSutta.sections;
-            should(sections.length).equal(4);
-            var lines = Sutta.textOfSegments(sections[2].segments);
-            var text = `${lines.join('\n')}\n`;
-            var result = await voice.speak(text, {
-                cache: true, // false: use TTS web service for every request
-                usage: "recite",
-            });
-            logger.info(`mn41 sound guid:${result.signature.guid}`);
-            should(result.signature.files.length).equal(228);
 
             done();
         } catch(e) { done(e); } })();

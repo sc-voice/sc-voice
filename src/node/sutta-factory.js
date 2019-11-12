@@ -7,7 +7,6 @@
     const SuttaCentralApi = require('./sutta-central-api');
     const Section = require('./section');
     const SectionParser = require('./section-parser');
-    const PoParser = require('./po-parser');
     const SuttaCentralId = require('./sutta-central-id');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
     const OPTS_EN = {
@@ -91,7 +90,7 @@
             this.autoSection = !!opts.autoSection;
             this.reHeader = opts.reHeader || Sutta.RE_HEADER;
             this.suttaCentralApi = opts.suttaCentralApi;
-            this.pootleParser = new PoParser();
+            this.suttaLoader = opts.suttaLoader;
             this.plainText = opts.plainText === true || 
                 opts.plainText == null;
         }
@@ -104,11 +103,6 @@
                     resolve(sutta);
                 } catch(e) {reject(e);} })();
             });
-        }
-
-        static loadSuttaPootl(opts={}) {
-            logger.warn(`loadSuttaPootl({opts}) is deprecated`);
-            return new SuttaFactory(opts).loadSuttaPootl(opts);
         }
 
         initialize() {
@@ -142,7 +136,7 @@
             var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var files = await that.pootleParser.files();
+                    var files = [];
                     var suttas = {};
                     files.forEach(f => {
                         var flocal = f.split('/sc/')[1];
@@ -237,14 +231,16 @@
                                 `loadSutta() not found opts:${JSON.stringify(opts)}`);
                         }
                         o.translator = translator;
-                        if (that.bilaraData) {
-                            // TODO
-                        } else if (that.suttaCentralApi) {
-                            //console.log(`dbg loadSutta suttaCentralApi`, o);
-                            sutta = await that.suttaCentralApi.loadSutta(o);
-                        } else {
-                            //console.log(`dbg loadSutta loadSuttaPootl`, o);
-                            sutta = await that.loadSuttaPootl(o);
+                        if (that.suttaLoader) {
+                            sutta = await that.suttaLoader(o);
+                        } 
+                        if (!sutta) {
+                            if (that.suttaCentralApi) {
+                                sutta = await that.suttaCentralApi
+                                    .loadSutta(o);
+                            } else {
+                                throw new Error(`I miss Pootl`);
+                            }
                         }
                     }
                     if (plainText) {
@@ -257,35 +253,6 @@
                         sutta = that.sectionSutta(sutta);
                     }
                     resolve(sutta);
-                } catch(e) {reject(e);} })();
-            });
-        }
-
-        loadSuttaPootl(opts={}) {
-            var that = this;
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    if (typeof opts === 'string') {
-                        opts = {
-                            id: opts,
-                        }
-                    }
-                    var language = opts.language || 'en';
-                    var translator = opts.translator || 'sujato';
-                    var parser = that.pootleParser;
-                    var id = opts.id || 'mn1';
-                    var suttaPath = PoParser.suttaPath(id, opts.root);
-                    var segments = await parser.parse(suttaPath, opts);
-                    resolve(new Sutta(Object.assign({
-                        sutta_uid: id,
-                        support: Definitions.SUPPORT_LEVELS.Supported,
-                        segments,
-                        translation: {
-                            lang: 'en',
-                            author: 'Bhikku Sujato', // TODO: just guessing
-                            author_uid: 'sujato', // TODO: just guessing
-                        },
-                    }, opts)));
                 } catch(e) {reject(e);} })();
             });
         }
