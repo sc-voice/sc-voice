@@ -21,6 +21,7 @@
     const LOCAL = path.join(__dirname, '../local');
     var soundStore = new SoundStore();
     const SCA = new SCAudio();
+    this.timeout(30*1000);
 
     it("constructor", function() {
         // Default
@@ -80,7 +81,6 @@
             '/pli/sn/sn1/sn1.58/sn1.58_2.1.webm');
     });
     it("aeneasMap(suid...) returns aeneas map JSON", function(done) {
-        this.timeout(30*1000);
         (async function() { try {
             var sca = SCA;
             var resMap = await sca.aeneasMap('sn1.09');
@@ -104,7 +104,6 @@
         } catch(e) { done(e); } })();
     });
     it("catalog(opts) returns sutta catalog", function(done) {
-        this.timeout(20*1000);
         (async function() { try {
             var sca = SCA;
             var response = await sca.catalog();
@@ -134,7 +133,6 @@
         } catch(e) { done(e); } })();
     });
     it("downloadSegmentAudio(suttaSegId,...) downloads audio file", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
             var reader = 'sujato';
@@ -201,7 +199,6 @@
         } catch(e) { done(e); } })();
     });
     it("downloadSegmentAudio(suttaSegId,...) creates sn1.9:1.1 audio file", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
             var reader = 'sujato';
@@ -268,7 +265,6 @@
         } catch(e) { done(e); } })();
     });
     it("downloadSegmentAudio(suttaSegId,...) creates sn2.3:1.1 audio file", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             var language = 'en';
             var reader = 'sujato';
@@ -335,7 +331,6 @@
         } catch(e) { done(e); } })();
     });
     it("cacheSuttaAudio(opts) populates cache with segment audio", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             var sca = SCA;
             var suid = 'sn1.09';

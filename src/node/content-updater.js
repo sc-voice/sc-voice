@@ -6,7 +6,7 @@
     } = require('child_process');
     const {
         logger,
-    } = require('rest-bundle');
+    } = require('just-simple').JustSimple;
     const Words = require('./words');
     const SuttaCentralApi = require('./sutta-central-api');
     const SuttaFactory = require('./sutta-factory');
@@ -16,6 +16,7 @@
 
     class ContentUpdater {
         constructor(opts={}) {
+            logger.logInstance(this, opts);
             this.apiUrl = opts.apiUrl || 'http://staging.suttacentral.net/api';
             this.gitPath = opts.gitPath ||  path.join(LOCAL, 'suttas');
             this.token = opts.token || // GitHub Personal Access Token
@@ -30,14 +31,17 @@
             if (this.isInitialized) {
                 return Promise.resolve(this);
             }
+            var logLevel = this.logLevel;
             var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var suttaCentralApi = await new SuttaCentralApi({
                         apiUrl: that.apiUrl,
+                        logLevel,
                     }).initialize();
                     that.suttaStore = new SuttaStore({
                         suttaCentralApi,
+                        logLevel,
                     });
                     await that.suttaStore.initialize();
                     that.remote_origin_url = await 
@@ -111,6 +115,9 @@
             var that = this;
             return new Promise((resolve, reject) => {
                 (async function() { try {
+                    await that.suttaStore.bilaraData.sync();
+                    task.summary = `Update completed`;
+                    if (0) {
                     var resPull = await that.git('git pull', task);
                     results.gitLog.push(resPull);
                     var resUpdate = await suttaStore.updateSuttas(suids, {
@@ -126,6 +133,7 @@
                         task.summary = `Update completed for ${suids.length} suttas`;
                     } else {
                         task.summary = `Update completed without change`;
+                    }
                     }
 
                     task.actionsDone++; // github

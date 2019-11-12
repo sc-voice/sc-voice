@@ -30,6 +30,7 @@
     const LOCAL = path.join(__dirname, '../local');
     const SC = path.join(LOCAL, 'sc');
     const app = require("../scripts/sc-voice.js"); // access cached instance 
+    this.timeout(15*1000);
 
 
     function testAuthPost(url, data) {
@@ -84,7 +85,6 @@
         async.next();
     });
     it("GET /sutta/mn1/en/sujato returns sutta", function(done) {
-        this.timeout(5*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -111,7 +111,6 @@
         async.next();
     });
     it("GET /sutta/mn100/en/sujato returns sutta", function(done) {
-        this.timeout(5*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn100/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -145,7 +144,6 @@
         async.next();
     });
     it("GET /recite/section/mn1/en/sujato/2 returns recitation", function(done) {
-        this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/recite/section/mn1/en/sujato/2")
                 .expect((res) => {
@@ -167,7 +165,6 @@
         async.next();
     });
     it("GET /recite/sutta/mn100/en/sujato/1 returns recitation", function(done) {
-        this.timeout(15*1000);
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/recite/section/mn100/en/sujato/1")
                 .expect((res) => {
@@ -192,7 +189,6 @@
     it("GET download human audio playlist", function(done) {
         done(); return; // TODO
         var scvRest = app.locals.scvRest;
-        this.timeout(20*1000);
         logger.level = 'info';
         var async = function* () { try {
             var apiModel = yield  scvRest.initialize()
@@ -214,7 +210,6 @@
     });
     it("GET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
         var scvRest = app.locals.scvRest;
-        this.timeout(20*1000);
         var async = function* () { try {
             var apiModel = yield  scvRest.initialize()
                 .then(r=>async.next(r)).catch(e=>async.throw(e));
@@ -300,7 +295,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET /search/:pattern returns suttaplexes found", function(done) {
-        this.timeout(10*1000);
         var async = function* () { try {
             var maxResults = 3;
             var pattern = `root of suffering`;
@@ -343,7 +337,6 @@
         async.next();
     });
     it("GET /scv/play/section/... => playable section", done=>{
-        this.timeout(30*1000);
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var iSection = 1;
@@ -371,7 +364,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET /play/segment/... => playable segment", done=>{
-        this.timeout(30*1000);
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var voicename = 'Russell';
@@ -399,7 +391,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET /play/segment/... returns playable segment", function(done) {
-        this.timeout(30*1000);
         (async function() { try {
             var voicename = '0';
             var scid = "mn1:0.1";
@@ -459,13 +450,11 @@
         } catch(e) {done(e);} })();
     });
     it("GET /play/audio/:suid/:lang/:trans/:voice/:guid returns audio", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
             done();
         } catch(e) {done(e);} })();
     });
     it("GET /play/segment/... handles large segment", done=>{
-        this.timeout(30*1000);
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var scid = "an2.281-309:1.1";
@@ -495,7 +484,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET /play/segment/... handles HumanTts dn33", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             var scid = "dn33:0.1";
             var sutta_uid = scid.split(":")[0];
@@ -534,7 +522,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET /play/segment/... handles HumanTts sn1.9", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             var scid = "sn1.9:1.1";
             var sutta_uid = scid.split(":")[0];
@@ -571,7 +558,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET /play/segment/... handles HumanTts sn12.1", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             var scid = "sn12.1:1.2";
             var sutta_uid = scid.split(":")[0];
@@ -606,7 +592,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET /examples/:n return search examples", function(done) {
-        this.timeout(3*1000);
         (async function() { try {
             var n = 3;
             var url = `/scv/examples/${n}`;
@@ -633,7 +618,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET /wiki-aria/:page return Aria for wiki page", function(done) {
-        this.timeout(3*1000);
         (async function() { try {
             var url = `/scv/wiki-aria/Home.md`;
             var res = await supertest(app).get(url);
@@ -647,7 +631,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET auth/sound-store/volume-info return stats", function(done) {
-        this.timeout(3*1000);
         (async function() { try {
             var url = `/scv/auth/sound-store/volume-info`;
             var scvRest = app.locals.scvRest;
@@ -661,7 +644,6 @@
         } catch(e) {done(e);} })();
     });
     it("POST auth/sound-store/clear-volume clears volume cache", function(done) {
-        this.timeout(3*1000);
         (async function() { try {
             var scvRest = app.locals.scvRest;
             var soundStore = scvRest.soundStore;
@@ -694,7 +676,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET audio-url/... returns supported audio url", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             // short url
             var url = '/scv/audio-urls/sn1.23';
@@ -711,7 +692,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET auth/vsm/s3-credentials returns sanitized vsm-s3.json", function(done) {
-        this.timeout(5*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials GET test');
@@ -736,7 +716,6 @@
         } catch(e) {done(e);} })();
     });
     it("POST auth/vsm/s3-credentials configures vsm-s3.json", function(done) {
-        this.timeout(5*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials POST test');
@@ -772,7 +751,6 @@
         } })();
     });
     it("GET auth/vsm/factory-task returns factory status", function(done) {
-        this.timeout(5*1000);
         (async function() { try {
 
             // Default Bucket
@@ -795,7 +773,6 @@
         } catch(e) {done(e);} })();
     });
     it("GET auth/vsm/list-objects lists bucket objects", function(done) {
-        this.timeout(5*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn("skipping auth/vsm/list-objects test");
@@ -833,7 +810,6 @@
         } catch(e) {done(e);} })();
     });
     it("POST auth/vsm/restore-s3-archives restores vsm files", function(done) {
-        this.timeout(15*1000);
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials POST test');
@@ -869,7 +845,6 @@
         } catch(e) {done(e);} })();
     });
     it("POST auth/vsm/create-archive create VSM", function(done) {
-        this.timeout(15*1000);
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;
             var nikaya = 'kn';
@@ -1044,9 +1019,6 @@
         } catch(e) {done(e);} })();
     });
     it("POST auth/update-content", function(done) {
-        done(new Error('content updater is superceded by scv-bilara'));
-        return;
-        this.timeout(10*1000);
         (async function() { try {
             var scvRest = app.locals.scvRest;
             var soundStore = scvRest.soundStore;
@@ -1082,16 +1054,15 @@
                 name: 'ContentUpdater',
                 error: null,
                 isActive: false,
-                summary: 'Update completed without change',
-                actionsDone: 3,
-                actionsTotal: 3,
+                summary: 'Update completed',
+                actionsDone: 1,
+                actionsTotal: 1,
             });
 
             done();
         } catch(e) {done(e);} })();
     });
     it("GET /search/:pattern/:lang returns German", function(done) {
-        this.timeout(10*1000);
         var async = function* () { try {
             var maxResults = 3;
             var pattern = `dn7`;
