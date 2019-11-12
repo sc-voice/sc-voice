@@ -20,11 +20,7 @@
     const ANY_LANGUAGE = '*';
     const ANY_TRANSLATOR = '*';
     const PO_SUFFIX_LENGTH = '.po'.length;
-    const { 
-        logger,
-        RbServer,
-    } = require('rest-bundle');
-    RbServer.logDefault();
+    const { logger } = require('just-simple').JustSimple;
 
     var singleton;
 
@@ -33,6 +29,7 @@
 
     class SuttaCentralApi {
         constructor(opts={}) {
+            logger.logInstance(this, opts);
             this.language = opts.language || DEFAULT_LANGUAGE;
             this.translator = opts.translator;
             this.expansion = opts.expansion || [{}];
@@ -74,8 +71,7 @@
                 var result = this.loadJsonRest(url);
                 result.then(res => {
                     fs.writeFileSync(cachedPath, JSON.stringify(res,null,2));
-                    logger.info(
-                        `SuttaCentralApi.loadJson(${url}) => fresh:${guid}`);
+                    this.log(`loadJson(${url}) => fresh:${guid}`);
                 }).catch(e => {
                     logger.error(e.stack);
                 });
@@ -84,11 +80,13 @@
         }
 
         loadJsonRest(url) {
-            return new Promise((resolve, reject) => { try {
+            var that = this;
+            var pbody = (resolve, reject) => { try {
                 var httpx = url.startsWith('https') ? https : http;
                 if (++httpMonitor > 2) {
                     // We are overwhelming SuttaCentralApi
-                    // implement throttling using Queue (see abstract-tts.js)
+                    // implement throttling using Queue 
+                    // (see abstract-tts.js)
                     logger.warn(`SuttaCentralApi.loadJsonRest() `+
                         `httpMonitor:${httpMonitor} ${url}`);
                 }
@@ -122,7 +120,7 @@
                     res.on('end', () => {
                         try {
                             var result = JSON.parse(rawData);
-                            logger.info(`SuttaCentralApi.loadJsonRest() `+
+                            that.log(`loadJsonRest() `+
                                 `${url} => ${rawData.length}C`);
                             resolve(result);
                         } catch (e) {
@@ -138,7 +136,8 @@
                     logger.error(e.stack);
                     req.abort();
                 });
-            } catch(e) {reject(e);} });
+            } catch(e) {reject(e);} };
+            return new Promise(pbody);
         }
 
         static loadUidExpansion(url=UID_EXPANSION_URL) {
@@ -197,7 +196,7 @@
             this.initialized = false;
             return new Promise((resolve,reject) => { try {
                 (async function() {
-                    logger.info(`SuttaCentralApi.initialize() apiUrl:${that.apiUrl}`);
+                    that.log(`initialize() apiUrl:${that.apiUrl}`);
                     await SuttaCentralApi.loadExpansion(that.apiUrl).then(res => {
                         that.expansion = res;
                     }).catch(e => reject(e));
@@ -443,85 +442,87 @@
 
         loadSutta(...args) {
             var that = this;
-            return new Promise((resolve, reject) => { try {
-                (async function(){ try {
-                    if (typeof args[0] === "string") {
-                        var opts = {
-                            scid: args[0],
-                            language: args[1] || that.language,
-                            translator: args[2] || that.translator,
-                        }
+            var pbody = (resolve, reject) => (async function(){ try {
+                if (typeof args[0] === "string") {
+                    var opts = {
+                        scid: args[0],
+                        language: args[1] || that.language,
+                        translator: args[2] || that.translator,
+                    }
+                } else {
+                    opts = args[0];
+                }
+                var sutta_uid = SuttaCentralId.normalizeSuttaId(opts.scid);
+                var language = opts.language;
+                var author_uid = opts.translator;
+                var suttaplex = await that
+                    .loadSuttaplexJson(sutta_uid, language, author_uid);
+                var translations = suttaplex.translations;
+                if (translations == null || translations.length == 0) {
+                    that.log(`loadSutta(${sutta_uid},${language}) `+
+                        `=> no translations`);
+                    resolve(null);
+                    return;
+                }
+
+                author_uid = translations[0].author_uid;
+                var result = await 
+                    that.loadSuttaJson(sutta_uid, language, author_uid);
+                if (result.translation == null && translations.length>0) {
+                    var trans = translations.filter(t=>t.segmented)[0];
+                    if (trans == null) {
+                        console.log('debug3 no segmented');
+                        trans = translations[0];
+                    }
+                    var {
+                        author_uid,
+                        lang,
+                    } = trans;
+
+                    var uid = result.suttaplex.uid;
+                    // multiple translations found, using first
+                    var result = await 
+                        that.loadSuttaJson(uid, lang, author_uid);
+                }
+                var translation = result.translation;
+                if (translation) {
+                    var author_uid = translation.author_uid;
+                    if (translation.text) {
+                        var sutta = that.suttaFromApiText(result);
                     } else {
-                        opts = args[0];
+                        var rootStrings = result.root_text.strings;
+                        var segObj = {};
+                        Object.keys(rootStrings).forEach(scid => {
+                            segObj[scid] = segObj[scid] || { scid };
+                            segObj[scid].pli = rootStrings[scid];
+                            segObj[scid].en = "";
+                        });
+                        var transStrings = translation.strings;
+                        Object.keys(transStrings).forEach(scid => {
+                            segObj[scid] = segObj[scid] || { scid };
+                            var text = transStrings[scid];
+                            text = text.replace(/<\/?i>/gum, '');
+                            segObj[scid][translation.lang] = text;
+                        });
+                        var segments = Object.keys(segObj)
+                            .map(scid => segObj[scid]);
+                        var sutta = new Sutta({
+                            sutta_uid: result.suttaplex.uid,
+                            support: result.segmented
+                                ? Definitions.SUPPORT_LEVELS.Supported
+                                : Definitions.SUPPORT_LEVELS.Legacy,
+                            segments,
+                            translation,
+                        });
                     }
-                    var sutta_uid = SuttaCentralId.normalizeSuttaId(opts.scid);
-                    var language = opts.language;
-                    var author_uid = opts.translator;
-                    var suttaplex = await that
-                        .loadSuttaplexJson(sutta_uid, language, author_uid);
-                    var translations = suttaplex.translations;
-                    if (translations == null || translations.length == 0) {
-                        logger.info(`SuttaCentralApi.loadSutta(${sutta_uid},${language}) `+
-                            `=> no translations`);
-                        resolve(null);
-                        return;
-                    }
-
-                    author_uid = translations[0].author_uid;
-                    var result = await that.loadSuttaJson(sutta_uid, language, author_uid);
-                    if (result.translation == null && translations.length>0) {
-                        var trans = translations.filter(t=>t.segmented)[0];
-                        if (trans == null) {
-                            console.log('debug3 no segmented');
-                            trans = translations[0];
-                        }
-                        var {
-                            author_uid,
-                            lang,
-                        } = trans;
-
-                        var uid = result.suttaplex.uid;
-                        // multiple translations found, using first
-                        var result = await that.loadSuttaJson(uid, lang, author_uid);
-                    }
-                    var translation = result.translation;
-                    if (translation) {
-                        var author_uid = translation.author_uid;
-                        if (translation.text) {
-                            var sutta = that.suttaFromApiText(result);
-                        } else {
-                            var rootStrings = result.root_text.strings;
-                            var segObj = {};
-                            Object.keys(rootStrings).forEach(scid => {
-                                segObj[scid] = segObj[scid] || { scid };
-                                segObj[scid].pli = rootStrings[scid];
-                                segObj[scid].en = "";
-                            });
-                            var transStrings = translation.strings;
-                            Object.keys(transStrings).forEach(scid => {
-                                segObj[scid] = segObj[scid] || { scid };
-                                var text = transStrings[scid];
-                                text = text.replace(/<\/?i>/gum, '');
-                                segObj[scid][translation.lang] = text;
-                            });
-                            var segments = Object.keys(segObj).map(scid => segObj[scid]);
-                            var sutta = new Sutta({
-                                sutta_uid: result.suttaplex.uid,
-                                support: result.segmented
-                                    ? Definitions.SUPPORT_LEVELS.Supported
-                                    : Definitions.SUPPORT_LEVELS.Legacy,
-                                segments,
-                                translation,
-                            });
-                        }
-                        sutta.author_uid = translation.author_uid;
-                        sutta.suttaplex = result.suttaplex,
-                        resolve(sutta);
-                    } else { // no unique translation 
-                        resolve(result);
-                    }
-                } catch(e) {reject(e);} })();
-            } catch(e) {reject(e);} });
+                    sutta.author_uid = translation.author_uid;
+                    sutta.suttaplex = result.suttaplex,
+                    resolve(sutta);
+                } else { // no unique translation 
+                    resolve(result);
+                }
+            } catch(e) {reject(e);} })();
+            return new Promise(pbody);
         }
         
     }
