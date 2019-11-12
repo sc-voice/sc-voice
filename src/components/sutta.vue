@@ -263,18 +263,24 @@ style="width:100%; margin-top:0"/>
             {{sutta.original_title}}
         </div>
         <div class="subtitle font-italic pt-1 pb-3 text-center">
-            Translated by {{sutta.author}}
+            {{$vuetify.lang.t("$vuetify.scv.translatedBy")}}
+            {{sutta.author}}
         </div>
         <div class="scv-blurb"><span v-html="metaarea"></span></div>
       </details>
       <details class="scv-section-body"
         v-for="(sect,i) in sections" :key="`sect${i}`"
         v-if="i>0">
-        <summary class="subheading" :aria-label="sectionAriaLabel(sect)">
-            <div v-if="gscv.showId" class='scv-scid'>
-                SC&nbsp;{{section_scid(sect)}}
+        <summary class="subheading" 
+            :aria-label="sectionAriaLabel(sect)"><div 
+                style="display:inline-block; width:96%;">
+                <div style="display:flex; justify-content: space-between">
+                    <div style="display:inline"><i>{{sect.title}}</i></div>
+                    <div v-if="gscv.showId" class='scv-scid'>
+                        {{section_scid(sect)}}
+                    </div>
+                </div>
             </div>
-            <i>{{sect.title}}</i>
         </summary>
         <div class="scv-play-controls" v-if="gscv.voices">
             <button
@@ -298,11 +304,17 @@ style="width:100%; margin-top:0"/>
             <v-icon>clear</v-icon>
           </v-btn>
         </div>
-        <div v-for="(seg,j) in sect.segments" :key="seg+j" :class="segClass(seg)">
-            <div v-show="gscv.showId" class='scv-scid'>
-                SC&nbsp;{{seg.scid.split(":")[1]}}
+        <div v-for="(seg,j) in sect.segments" :key="seg+j" 
+            :class="segClass(seg)">
+            <div style="display: flex; justify-content: space-between">
+                <div v-html="segmentLang(seg)" 
+                    style="display:inline-block">
+                </div>
+                <div v-show="gscv.showId" class='scv-scid' 
+                    style="display:inline-block;">
+                    {{segment_scid(seg)}}
+                </div>
             </div>
-            <div v-html="segmentLang(seg)"/>
         </div>
       </details> <!-- section i -->
       <scv-player v-if="tracks && gscv.voices"
@@ -794,7 +806,10 @@ export default {
             });
         },
         segClass(seg) {
-            return seg.expanded ? "scv-para scv-para-expanded" : "scv-para";
+            var cls = 'scv-para ';
+            seg.expanded && (cls += "scv-para-expanded ");
+            seg.matched && (cls += "scv-para-matched ");
+            return cls;
         },
         clickTranslation(trans,event) {
             var search = this.suttaRef(this.sutta_uid, trans.lang, trans.author_uid);
@@ -856,10 +871,18 @@ export default {
         suttaRef(suid = this.sutta_uid, lang = this.language, auid = this.author_uid) {
             return `${suid}/${lang}/${auid}`;
         },
+        segment_scid(seg) {
+            var scid = seg.scid || "section_scid_error1";
+            return scid.replace(/^an/,'AN')
+                .replace(/^th/,'Th')
+                .replace(/^mn/,'MN')
+                .replace(/^dn/,'DN')
+                .replace(/^sn/,'SN')
+            ;
+        },
         section_scid(sect={}) {
             var seg0 = sect.segments && sect.segments[0] || {};
-            var scid = seg0.scid || "section_scid_error1";
-            return scid.split(":")[1] || "section_scid_errro2";
+            return this.segment_scid(seg0);
         },
         resultId(result) {
             var id = result
@@ -1085,7 +1108,8 @@ export default {
     display: inline-block;
     font-size: xx-small;
     color: #888;
-    padding-right: 1em;
+    margin-top: 0.6em;
+    margin-left: 0.2em;
 }
 .scv-section-body {
     max-width: 40em;
@@ -1098,13 +1122,17 @@ export default {
     margin-left: 1.4em;
 }
 .scv-para {
-    margin-top: 0.5em;
-    padding-left: 1.5em;
-    margin-bottom: 0.2em;
+    padding-top: 0.5em;
+    margin-left: .75em;
+    padding-left: .75em;
+    padding-bottom: 0.2em;
 }
 .scv-para-expanded {
     padding-right: 1em;
     border-right: 2pt solid #444;
+}
+.scv-para-matched {
+    border-left: 1px solid #ff4;
 }
 .scv-playlist {
     margin-top: 0.5em;
@@ -1299,6 +1327,12 @@ export default {
 .scv-score {
     color: #888;
     margin-top: 0.5em;
+}
+.scv-subheading{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    min-width: 40em;
 }
 
 </style>

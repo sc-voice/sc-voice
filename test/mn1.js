@@ -30,7 +30,8 @@
             });
             should.deepEqual(Object.keys(sutta).sort(), [
                 'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
-                'metaarea', 'sections', 'support', 'suttaplex','lang'
+                'metaarea', 'sections', 'support', 'suttaplex','lang',
+                'author',
             ].sort());
             should(sutta.suttaCode).equal('mn1/en/bodhi');
             should(sutta.support.value).equal('Legacy');
@@ -76,12 +77,14 @@
             var sutta = await factory.loadSutta('mn1');
             should.deepEqual(Object.keys(sutta).sort(), [
                 'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
-                'sections', 'support', 'suttaplex', 'lang'].sort());
+                'sections', 'support', 'suttaplex', 'lang', 'author',
+            ].sort());
             var sutta2 = factory.expandSutta(sutta);
             should(sutta2).instanceOf(Sutta);
             should.deepEqual(Object.keys(sutta2).sort(), [
                 'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
-                'sections', 'support', 'suttaplex', 'lang'].sort());
+                'sections', 'support', 'suttaplex', 'lang', 'author',
+            ].sort());
             should(sutta2.suttaplex.blurb).match(/^The Buddha[^]*without attachment.$/um);
             should(sutta2.author_uid).match('sujato');
             should(sutta2.lang).equal('en');

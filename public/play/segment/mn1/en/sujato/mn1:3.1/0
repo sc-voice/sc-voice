@@ -4,9 +4,9 @@
   "language": "en",
   "langTrans": "en",
   "translator": "sujato",
-  "title": "“Take an uneducated ordinary person who has not seen…",
-  "section": 2,
-  "nSections": 10,
+  "title": "Middle Discourses 1 ",
+  "section": 0,
+  "nSections": 2,
   "vnameTrans": "Amy",
   "vnameRoot": "Aditi",
   "iSegment": 12,
@@ -14,6 +14,7 @@
     "scid": "mn1:3.1",
     "pli": "“Idha, bhikkhave, assutavā puthujjano ariyānaṃ adassāvī ariyadhammassa akovido ariyadhamme avinīto, sappurisānaṃ adassāvī sappurisadhammassa akovido sappurisadhamme avinīto—",
     "en": "“Take an uneducated ordinary person who has not seen the noble ones, and is neither skilled nor trained in the teaching of the noble ones. They’ve not seen good persons, and are neither skilled nor trained in the teaching of the good persons. ",
+    "matched": true,
     "audio": {
       "en": "f4085cffa218f32f1ee686066fc58e9f",
       "pli": "682c835408bae318082f0a15d6658adb"

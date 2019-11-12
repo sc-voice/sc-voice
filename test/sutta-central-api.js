@@ -155,6 +155,7 @@
             should.deepEqual(Object.keys(sutta).sort(), [
                 'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
                 'support', 'metaarea', 'sections', 'suttaplex', 'lang',
+                'author',
             ].sort());
             should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
 
@@ -205,6 +206,7 @@
             should.deepEqual(Object.keys(sutta).sort(), [
                 'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
                 'support', 'metaarea', 'sections', 'suttaplex', 'lang',
+                'author',
             ].sort());
             should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
 
@@ -331,7 +333,7 @@
             should(sutta.segments.length).equal(200);
             should.deepEqual(Object.keys(sutta).sort(), [
                 'suttaCode', 'translation', 'sutta_uid', 'author_uid', 
-                'support', 'sections', 'suttaplex', 'lang',
+                'support', 'sections', 'suttaplex', 'lang', 'author',
                 //'metaarea', 
             ].sort());
 
@@ -393,8 +395,8 @@
                 },
             });
             should.deepEqual(Object.keys(sutta).sort(), [
-                'author_uid', 'sections', 'support', 'suttaCode', 
-                'sutta_uid', 'lang', 'translation',
+                'author', 'author_uid', 'sections', 'support', 
+                'suttaCode', 'sutta_uid', 'lang', 'translation',
             ].sort());
             should(sutta.author_uid).equal('sabbamitta');
             should(sutta.sections.length).equal(2);

@@ -207,6 +207,7 @@ export default {
     storeSettingsInCookies: "Gem indstillinger i webbrowser cookies",
     trackOfSection: "A_TRACK af A_TRACKS",
     transLanguage: "Oversættelsessprog",
+    translatedBy: "Translated by",
     uiLanguage: "Webstedssprog",
     wikiAria: "Home.md",
 

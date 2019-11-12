@@ -207,6 +207,7 @@ export default {
     storeSettingsInCookies: "Armazenar configurações em cookies do navegador da web",
     trackOfSection: "A_TRACK of A_TRACKS",
     transLanguage: "Idioma da tradução",
+    translatedBy: "Translated by",
     uiLanguage: "Idioma da página",
     wikiAria: "Home@Português.md",
 

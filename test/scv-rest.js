@@ -90,7 +90,8 @@
                 res.statusCode.should.equal(200);
                 var sutta = res.body;
                 should.deepEqual(Object.keys(sutta).sort(), [
-                    'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
+                    'translation', 'suttaCode', 'sutta_uid', 
+                    'author', 'author_uid', 
                     "sections", "suttaplex", "support", 'lang',
                 ].sort());
                 should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Supported);
@@ -317,7 +318,8 @@
                 should.deepEqual(results.map(r => r.uid),[
                     'sn42.11', 'mn105', 'mn1',
                 ]);
-                should.deepEqual(results.map(r => r.count),[ 5,3,2, ]);
+                should.deepEqual(results.map(r => r.count),
+                    [ 5.091, 3.016, 2.006  ]);
             }).end((e,r) => e ? async.throw(e) : async.next(r));
 
             // use default maxResults
@@ -333,30 +335,32 @@
                 should(results.length).equal(5);
                 should.deepEqual(results[0].audio,undefined);
                 should.deepEqual(results.map(r => r.uid),[
-                    'sn42.11', 'mn105', 'mn1', 'sn56.21', 'mn66',
+                    'sn42.11', 'mn105', 'mn1', 'sn56.21', 'mn116',
                 ]);
-                should.deepEqual(results.map(r => r.count),[ 5,3,2,1,1 ]);
             }).end((e,r) => e ? async.throw(e) : async.next(r));
             done();
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /scv/play/section/... returns playable section", function(done) {
+    it("GET /scv/play/section/... => playable section", done=>{
         this.timeout(30*1000);
         (async function() { try {
-            var iSection = 2;
+            await new Promise(resolve=>setTimeout(()=>resolve(),1000));
+            var iSection = 1;
             var vnameTrans = 'Raveena';
             var vnameRoot = 'Aditi';
-            var url = `/scv/play/section/mn1/en/sujato/${iSection}/${vnameTrans}/${vnameRoot}`;
+            var url = `/scv/play/section/mn1/en/sujato/`+
+                `${iSection}/${vnameTrans}/${vnameRoot}`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
-            var section = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
-            should(section.segments.length).equal(98);
+            var section = res.body instanceof Buffer 
+                ? JSON.parse(res.body) : res.body;
+            should(section.segments.length).equal(332);
             should(section.sutta_uid).equal('mn1');
             should(section.vnameTrans).equal(vnameTrans);
             should(section.vnameRoot).equal(vnameRoot);
             should(section.section).equal(iSection);
-            should(section.nSections).equal(10);
+            should(section.nSections).equal(2);
             should(section.language).equal('en');
             should(section.translator).equal('sujato');
             should.deepEqual(section.segments[0].audio, {});
@@ -366,9 +370,10 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... returns playable segment", function(done) {
+    it("GET /play/segment/... => playable segment", done=>{
         this.timeout(30*1000);
         (async function() { try {
+            await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var voicename = 'Russell';
             var scid = "mn1:0.1";
             var url = `/scv/play/segment/mn1/en/sujato/${scid}/${voicename}`;
@@ -459,27 +464,32 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles large segment", function(done) {
+    it("GET /play/segment/... handles large segment", done=>{
         this.timeout(30*1000);
         (async function() { try {
-            var scid = "an2.280-309:281.1.1";
+            await new Promise(resolve=>setTimeout(()=>resolve(),1000));
+            var scid = "an2.281-309:1.1";
             var sutta_uid = scid.split(":")[0];
             var vnameTrans = "1"; // Russell
-            var url = `/scv/play/segment/${sutta_uid}/en/sujato/${scid}/${vnameTrans}`;
+            var url = `/scv/play/segment/${sutta_uid}/`+
+                `en/sujato/${scid}/${vnameTrans}`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
-            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
-            should(data.sutta_uid).equal('an2.280-309');
+            var data = res.body instanceof Buffer 
+                ? JSON.parse(res.body) : res.body;
+            should(data.sutta_uid).equal('an2.281-309');
             should(data.vnameTrans).equal('Russell');
             should(data.vnameRoot).equal('Aditi');
             should(data.iSegment).equal(8);
-            should(data.section).equal(2);
             should(data.nSections).equal(3);
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
-            should(data.segment.en).match(/^.For two reasons the Realized One/);
-            should(data.segment.audio.en).match(/^6e032e4caef35cc5d009041f38c68c79/);
-            should(data.segment.audio.pli).match(/60479bb5bffa55333830d80e008c7dfd/);
+            should(data.segment.en)
+                .match(/^.For two reasons the Realized One/);
+            should(data.segment.audio.en)
+                .match(/^6e032e4caef35cc5d009041f38c68c79/);
+            should(data.segment.audio.pli)
+                .match(/60479bb5bffa55333830d80e008c7dfd/);
 
             done();
         } catch(e) {done(e);} })();
@@ -542,13 +552,14 @@
             ].join('/');
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
-            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            var data = res.body instanceof Buffer 
+                ? JSON.parse(res.body) : res.body;
             should(data.sutta_uid).equal(scid.split(':')[0]);
             should(data.vnameTrans).equal('Russell');
             should(data.vnameRoot).equal('sujato_pli');
             should(data.iSegment).equal(3);
-            should(data.section).equal(1);
             should(data.nSections).equal(2);
+            //should(data.section).equal(1);
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
             should(data.segment.pli).match(/^Sāvatthinidānaṃ/);

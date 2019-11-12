@@ -536,5 +536,10 @@ nav ul {
     margin-top: 0.3em;
     margin-top: 1em;
 }
+.scv-matched {
+    color: #ff4;
+    font-style: italic;
+    background-color: #000;
+}
 
 </style>

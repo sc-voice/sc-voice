@@ -712,7 +712,7 @@
                             title: translation.title,
                             collection_id,
                             suttaplex,
-                            quote: sutta.segments[1], // usually title
+                            quote: sutta.segments[1],
                             sutta,
                         });
                     }
@@ -908,6 +908,38 @@
             });
         }
 
+        loadSutta(opts) {
+            if (typeof opts === 'string') {
+                opts = {
+                    scid: opts,
+                };
+            }
+            var {
+                scid,
+                language,
+                langTrans,
+                translator,
+                expand,
+                matchHighlight,
+            } = opts;
+            var that = this;
+            var lang = langTrans || language || scid.split('/')[1];
+            var pbody = (resolve, reject)=>{(async function(){try{
+                var pattern = `${scid}/${language}/${translator}`;
+                var findOpts = {
+                    pattern,
+                    lang,
+                    showMatchesOnly: false,
+                    matchHighlight,
+                }
+                var bdres = await that.seeker.find(findOpts);
+                var mld = bdres.mlDocs[0];
+                var mldRes = await that.mldResult(mld, lang);
+                resolve(mldRes.sutta);
+            }catch(e){reject(e);}})()};
+            return new Promise(pbody);
+        }
+
         mldResult(mld) {
             var {
                 suttaCentralApi,
@@ -946,8 +978,9 @@
                     segments,
                 });
                 sutta = suttaFactory.sectionSutta(sutta);
+                var quote = segments.filter((s,i)=>s.matched && i > 1)[0];
                 resolve({
-                    count: 1,
+                    count: mld.score,
                     uid: sutta_uid,
                     lang,
                     author,
@@ -958,7 +991,7 @@
                     nSegments: segments.length,
                     title: translatedTitle,
                     collection_id: trans.collection,
-                    quote: titleSeg,
+                    quote,
                     suttaplex,
                     sutta,
                     stats: that.suttaDuration.measure(sutta),
@@ -984,29 +1017,31 @@
             }
             var pattern = SuttaStore.sanitizePattern(opts.pattern);
             var lang = opts.language || 'en';
-            var maxResults = opts.maxResults==null 
+            var maxDoc = opts.maxResults==null 
                 ? that.maxResults : opts.maxResults;
-            var maxResults = Number(maxResults);
-            if (isNaN(maxResults)) {
+            var maxDoc = Number(maxDoc);
+            if (isNaN(maxDoc)) {
                 throw new Error("search() maxResults must be a number");
             }
             var pbody = (resolve, reject) => {(async function() { try {
                 var bdres;
-                if (SuttaStore.isUidPattern(pattern)) {
-                    bdres = await that.seeker.find({
-                        pattern,
-                        lang,
-                        maxResults,
-                        maxDoc: maxResults,
-                    });
-                    bdres.results = [];
-                    if (bdres.method === 'sutta_uid') {
-                        for (var i = 0; i < bdres.mlDocs.length; i++) {
-                            var mld = bdres.mlDocs[i];
-                            var mldRes = await that.mldResult(mld, lang);
-                            bdres.results.push(mldRes);
-                        }
-                    }
+                var matchHighlight = SuttaStore.isUidPattern(pattern)
+                    ? false
+                    : '<span class="scv-matched">$&</span>';
+                var findOpts = {
+                    pattern,
+                    lang,
+                    maxDoc, // user max documents
+                    maxResults: maxDoc * 2, // max grep results
+                    showMatchesOnly: false,
+                    matchHighlight,
+                }
+                bdres = await that.seeker.find(findOpts);
+                bdres.results = [];
+                for (var i = 0; i < bdres.mlDocs.length; i++) {
+                    var mld = bdres.mlDocs[i];
+                    var mldRes = await that.mldResult(mld, lang);
+                    bdres.results.push(mldRes);
                 }
                 if (!bdres || bdres.mlDocs.length === 0) {
                     var resLegacy = await 

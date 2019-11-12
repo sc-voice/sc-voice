@@ -207,6 +207,7 @@ export default {
     storeSettingsInCookies: "Geyma stillingar í vafrakökum",
     trackOfSection: "A_TRACK af A_TRACKS",
     transLanguage: "Þýðingamál",
+    translatedBy: "Translated by",
     uiLanguage: "Tungumál vefsíðu",
     wikiAria: "Home.md",
 

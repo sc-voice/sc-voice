@@ -97,7 +97,7 @@
                         "audio/:guid/:filename", this.getAudio, this.audioMIME),
                     this.resourceMethod("get", 
                         "audio/:sutta_uid/:lang/:translator/:voice/:guid", 
-                            this.getAudio, this.audioMIME),
+                        this.getAudio, this.audioMIME),
                     this.resourceMethod("get", 
                         "recite/section/:sutta_uid/:language/:translator/:iSection", 
                         this.getReciteSection),
@@ -111,10 +111,10 @@
                         "play/segment/:sutta_uid/:langTrans/:translator/:scid/:vnameTrans/:vnameRoot", 
                         this.getPlaySegment),
                     this.resourceMethod("get", 
-                        "play/section/:sutta_uid/:langTrans/:translator/:iSection/:vnameTrans", 
+"play/section/:sutta_uid/:langTrans/:translator/:iSection/:vnameTrans", 
                         this.getPlaySection),
                     this.resourceMethod("get", 
-                        "play/section/:sutta_uid/:langTrans/:translator/:iSection/:vnameTrans/:vnameRoot", 
+"play/section/:sutta_uid/:langTrans/:translator/:iSection/:vnameTrans/:vnameRoot", 
                         this.getPlaySection),
                     this.resourceMethod("get", 
                         "voices",
@@ -384,7 +384,7 @@
             var voiceRoot = this.voiceFactory.voiceOfName('Aditi');
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    var sutta = await that.suttaFactory.loadSutta({
+                    var sutta = await that.suttaStore.loadSutta({
                         scid: sutta_uid,
                         translator,
                         language: langTrans,
@@ -429,80 +429,83 @@
             var voiceRoot = this.voiceFactory.voiceOfName(vnameRoot);
             logger.info(`GET ${req.url}`);
             var usage = voice.usage || 'recite';
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var sutta = await that.suttaFactory.loadSutta({
-                        scid: sutta_uid,
-                        translator,
-                        language: langTrans, // deprecated
-                        langTrans,
-                        expand: true,
-                    });
-                    if (iSection < 0 || sutta.sections.length <= iSection) {
-                        var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
-                        throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
-                    }
-                    var voiceTrans = Voice.createVoice({
-                        name: voice.name,
-                        usage,
-                        soundStore: that.soundStore,
-                        localeIPA: "pli",
-                        audioFormat: that.soundStore.audioFormat,
-                        audioSuffix: that.soundStore.audioSuffix,
-                        scAudio,
-                    });
-                    var sections = sutta.sections;
-                    var iSegment = sutta.segments
-                        .reduce((acc,seg,i) => seg.scid == scid ? i : acc, null);
-                    if (iSegment == null) {
-                        throw new Error(`segment ${scid} not found`);
-                    }
-                    var segment = sutta.segments[iSegment];
-                    var iSection = 0;
-                    var section = sutta.sections[iSection];
-                    for (let i=iSegment; section && (section.segments.length <= i); ) {
-                        i -= section.segments.length;
-                        section = sutta.sections[++iSection];
-                    }
-                    segment.audio = {};
-                    if (segment[langTrans]) {
-                        var resSpeak = await voiceTrans.speakSegment({
-                            sutta_uid,
-                            segment,
-                            language: langTrans, 
-                            translator,
-                            usage,
-                        });
-                        segment.audio[langTrans] = resSpeak.signature.guid;
-                        segment.audio.vnameTrans = resSpeak.altTts;
-                    }
-                    if (segment.pli) {
-                        var resSpeak = await voiceRoot.speakSegment({
-                            sutta_uid,
-                            segment,
-                            language: 'pli',
-                            translator,
-                            usage: 'recite',
-                        });
-                        segment.audio.pli = resSpeak.signature.guid;
-                        segment.audio.vnamePali = resSpeak.altTts;
-                    }
-                    resolve({
+            var pbody = (resolve, reject) => {(async function(){ try {
+                var sutta = await that.suttaStore.loadSutta({
+                    scid: sutta_uid,
+                    translator,
+                    language: langTrans, // deprecated
+                    langTrans,
+                    expand: true,
+                });
+                if (iSection < 0 || sutta.sections.length <= iSection) {
+                    var suttaRef = 
+                        `${sutta_uid}/${langTrans}/${translator}`;
+                    throw new Error(
+                        `Sutta ${suttaRef} has no section:${iSection}`);
+                }
+                var voiceTrans = Voice.createVoice({
+                    name: voice.name,
+                    usage,
+                    soundStore: that.soundStore,
+                    localeIPA: "pli",
+                    audioFormat: that.soundStore.audioFormat,
+                    audioSuffix: that.soundStore.audioSuffix,
+                    scAudio,
+                });
+                var sections = sutta.sections;
+                var iSegment = sutta.segments
+                    .reduce((acc,seg,i) => seg.scid == scid ? i : acc, 
+                        null);
+                if (iSegment == null) {
+                    throw new Error(`segment ${scid} not found`);
+                }
+                var segment = sutta.segments[iSegment];
+                var iSection = 0;
+                var section = sutta.sections[iSection];
+                let nSegs = section.segments.length;
+                for (let i=iSegment; section && (nSegs.length <= i); ) {
+                    i -= section.segments.length;
+                    section = sutta.sections[++iSection];
+                }
+                segment.audio = {};
+                if (segment[langTrans]) {
+                    var resSpeak = await voiceTrans.speakSegment({
                         sutta_uid,
-                        scid,
-                        language: langTrans, // deprecated
-                        langTrans,
-                        translator,
-                        title: section.title,
-                        section:iSection,
-                        nSections: sutta.sections.length,
-                        vnameTrans: voiceTrans.name,
-                        vnameRoot,
-                        iSegment,
                         segment,
+                        language: langTrans, 
+                        translator,
+                        usage,
                     });
-                } catch(e) { reject(e); } })();
-            });
+                    segment.audio[langTrans] = resSpeak.signature.guid;
+                    segment.audio.vnameTrans = resSpeak.altTts;
+                }
+                if (segment.pli) {
+                    var resSpeak = await voiceRoot.speakSegment({
+                        sutta_uid,
+                        segment,
+                        language: 'pli',
+                        translator,
+                        usage: 'recite',
+                    });
+                    segment.audio.pli = resSpeak.signature.guid;
+                    segment.audio.vnamePali = resSpeak.altTts;
+                }
+                resolve({
+                    sutta_uid,
+                    scid,
+                    language: langTrans, // deprecated
+                    langTrans,
+                    translator,
+                    title: section.title,
+                    section:iSection,
+                    nSections: sutta.sections.length,
+                    vnameTrans: voiceTrans.name,
+                    vnameRoot,
+                    iSegment,
+                    segment,
+                });
+            } catch(e) { reject(e); } })(); }
+            return new Promise(pbody);
         }
 
         getReciteSutta(req, res, next) {

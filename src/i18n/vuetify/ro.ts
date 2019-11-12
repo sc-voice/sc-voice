@@ -207,6 +207,7 @@ export default {
     storeSettingsInCookies: "Salvează setările în browser, folosind cookie-uri",
     trackOfSection: "A_TRACK din A_TRACKS",
     transLanguage: "Limba de traducere",
+    translatedBy: "Translated by",
     uiLanguage: "Limba site-ului web",
     wikiAria: "Home.md",
 

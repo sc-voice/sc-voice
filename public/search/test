@@ -2,27 +2,21 @@
   "method": "phrase",
   "results": [
     {
-      "count": 5,
+      "count": 5.091,
       "uid": "sn42.11",
-      "author": "Bhikkhu Sujato",
+      "lang": "en",
+      "author": "Sujato Bhikkhu",
       "author_short": "Sujato",
       "author_uid": "sujato",
-      "author_blurb": {
-        "en": "Translated for SuttaCentral by <span class=”author”>Bhikkhu Sujato</span>, <span class=”publication-date”>2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
-      },
-      "lang": "en",
       "nSegments": 55,
-      "score": 5.090909090909091,
-      "stats": {
-        "text": 3315,
-        "lang": "en",
-        "nSegments": 55,
-        "nEmptySegments": 1,
-        "nSections": 2,
-        "seconds": 324.3981541436991
-      },
-      "title": "With Bhadraka ",
+      "title": "With Bhadraka",
       "collection_id": "sn",
+      "quote": {
+        "scid": "sn42.11:2.11",
+        "pli": "Chando hi mūlaṃ dukkhassa. ",
+        "en": "For desire <span class=\"scv-matched\">is the root of suffering</span>. ",
+        "matched": true
+      },
       "suttaplex": {
         "acronym": "SN 42.11",
         "volpages": "SN iv 327",
@@ -33,7 +27,6 @@
         "root_lang": "pli",
         "root_lang_name": "Pāli",
         "type": "text",
-        "from": null,
         "translated_title": "With Bhadraka ",
         "translations": [
           {
@@ -54,18 +47,10 @@
         "biblio": null,
         "num": 11
       },
-      "quote": {
-        "scid": "sn42.11:2.11",
-        "pli": "Chando hi mūlaṃ dukkhassa. ",
-        "en": "For desire is the root of suffering. "
-      },
       "sutta": {
         "sutta_uid": "sn42.11",
         "author_uid": "sujato",
-        "support": {
-          "value": "Supported",
-          "description": "Content is actively maintained. Please report errors and inconsistencies"
-        },
+        "support": true,
         "suttaplex": {
           "acronym": "SN 42.11",
           "volpages": "SN iv 327",
@@ -76,7 +61,6 @@
           "root_lang": "pli",
           "root_lang_name": "Pāli",
           "type": "text",
-          "from": null,
           "translated_title": "With Bhadraka ",
           "translations": [
             {
@@ -97,29 +81,8 @@
           "biblio": null,
           "num": 11
         },
-        "translation": {
-          "uid": "sn42.11",
-          "author": "Bhikkhu Sujato",
-          "author_short": "Sujato",
-          "author_uid": "sujato",
-          "author_blurb": {
-            "en": "Translated for SuttaCentral by <span class=”author”>Bhikkhu Sujato</span>, <span class=”publication-date”>2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
-          },
-          "lang": "en",
-          "title": "With Bhadraka ",
-          "next": {
-            "author_uid": "sujato",
-            "lang": "en",
-            "name": "With Rāsiya ",
-            "uid": "sn42.12"
-          },
-          "previous": {
-            "author_uid": "sujato",
-            "lang": "en",
-            "name": "With Maṇicūḷaka ",
-            "uid": "sn42.10"
-          }
-        },
+        "translation": {},
+        "author": "Sujato Bhikkhu",
         "lang": "en",
         "sections": [
           {
@@ -259,7 +222,8 @@
               {
                 "scid": "sn42.11:2.11",
                 "pli": "Chando hi mūlaṃ dukkhassa. ",
-                "en": "For desire is the root of suffering. "
+                "en": "For desire <span class=\"scv-matched\">is the root of suffering</span>. ",
+                "matched": true
               },
               {
                 "scid": "sn42.11:2.12",
@@ -269,7 +233,8 @@
               {
                 "scid": "sn42.11:2.13",
                 "pli": "Chando hi mūlaṃ dukkhassā’”ti. ",
-                "en": "For desire is the root of suffering.’” "
+                "en": "For desire <span class=\"scv-matched\">is the root of suffering</span>.’” ",
+                "matched": true
               },
               {
                 "scid": "sn42.11:2.14",
@@ -289,7 +254,8 @@
               {
                 "scid": "sn42.11:2.17",
                 "pli": "Chando hi mūlaṃ dukkhassā’ti. ",
-                "en": "For desire is the root of suffering.’ "
+                "en": "For desire <span class=\"scv-matched\">is the root of suffering</span>.’ ",
+                "matched": true
               },
               {
                 "scid": "sn42.11:2.18",
@@ -344,7 +310,8 @@
               {
                 "scid": "sn42.11:3.6",
                 "pli": "Chando hi mūlaṃ dukkhassā’ti. ",
-                "en": "For desire is the root of suffering.’ "
+                "en": "For desire <span class=\"scv-matched\">is the root of suffering</span>.’ ",
+                "matched": true
               },
               {
                 "scid": "sn42.11:4.1",
@@ -404,12 +371,12 @@
               {
                 "scid": "sn42.11:5.6",
                 "pli": "Chando hi mūlaṃ dukkhassā’”ti. ",
-                "en": "For desire is the root of suffering.’” "
+                "en": "For desire <span class=\"scv-matched\">is the root of suffering</span>.’” ",
+                "matched": true
               },
               {
                 "scid": "sn42.11:5.7",
-                "pli": "Ekādasamaṃ. ",
-                "en": ""
+                "pli": "Ekādasamaṃ. "
               }
             ],
             "type": "Section",
@@ -422,46 +389,46 @@
             "expandable": false
           }
         ],
-        "suttaCode": "sn42.11/en/sujato"
+        "suttaCode": "sn42.11//"
       },
-      "audio": {
-        "en": "0f8daa3d1f6e314387bc406ea02f7566",
-        "pli": "97f18c57cb5fc0eaf82606e006ae76dc"
+      "stats": {
+        "text": 3480,
+        "lang": "en",
+        "nSegments": 55,
+        "nEmptySegments": 1,
+        "nSections": 2,
+        "seconds": 340.96026484206675
       }
     },
     {
-      "count": 3,
+      "count": 3.016,
       "uid": "mn105",
-      "author": "Bhikkhu Sujato",
+      "lang": "en",
+      "author": "Sujato Bhikkhu",
       "author_short": "Sujato",
       "author_uid": "sujato",
-      "author_blurb": {
-        "en": "Translated for SuttaCentral by <span class=”author”>Bhikkhu Sujato</span>, <span class=”publication-date”>2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
-      },
-      "lang": "en",
       "nSegments": 188,
-      "score": 3.015957446808511,
-      "stats": {
-        "text": 14343,
-        "lang": "en",
-        "nSegments": 188,
-        "nEmptySegments": 8,
-        "nSections": 2,
-        "seconds": 1238.6362477613827
-      },
-      "title": "With Sunakkhatta ",
+      "title": "So I have heard.",
       "collection_id": "mn",
+      "quote": {
+        "scid": "mn105:28.2",
+        "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—netaṃ ṭhānaṃ vijjati. ",
+        "en": "Understanding that attachment <span class=\"scv-matched\">is the root of suffering</span>, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment. ",
+        "matched": true
+      },
       "suttaplex": {
         "acronym": "MN 105",
         "volpages": "MN ii 252",
         "uid": "mn105",
         "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering.",
-        "difficulty": 2,
+        "difficulty": {
+          "name": "intermediate",
+          "level": 2
+        },
         "original_title": "Sunakkhatta Sutta",
         "root_lang": "pli",
         "root_lang_name": "Pāli",
         "type": "text",
-        "from": null,
         "translated_title": "With Sunakkhatta ",
         "translations": [
           {
@@ -482,29 +449,23 @@
         "biblio": null,
         "num": 5
       },
-      "quote": {
-        "scid": "mn105:28.2",
-        "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—netaṃ ṭhānaṃ vijjati. ",
-        "en": "Understanding that attachment is the root of suffering, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment. "
-      },
       "sutta": {
         "sutta_uid": "mn105",
         "author_uid": "sujato",
-        "support": {
-          "value": "Supported",
-          "description": "Content is actively maintained. Please report errors and inconsistencies"
-        },
+        "support": true,
         "suttaplex": {
           "acronym": "MN 105",
           "volpages": "MN ii 252",
           "uid": "mn105",
           "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering.",
-          "difficulty": 2,
+          "difficulty": {
+            "name": "intermediate",
+            "level": 2
+          },
           "original_title": "Sunakkhatta Sutta",
           "root_lang": "pli",
           "root_lang_name": "Pāli",
           "type": "text",
-          "from": null,
           "translated_title": "With Sunakkhatta ",
           "translations": [
             {
@@ -525,29 +486,8 @@
           "biblio": null,
           "num": 5
         },
-        "translation": {
-          "uid": "mn105",
-          "author": "Bhikkhu Sujato",
-          "author_short": "Sujato",
-          "author_uid": "sujato",
-          "author_blurb": {
-            "en": "Translated for SuttaCentral by <span class=”author”>Bhikkhu Sujato</span>, <span class=”publication-date”>2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
-          },
-          "lang": "en",
-          "title": "With Sunakkhatta ",
-          "next": {
-            "author_uid": "sujato",
-            "lang": "en",
-            "name": "Conducive to the Imperturbable ",
-            "uid": "mn106"
-          },
-          "previous": {
-            "author_uid": "sujato",
-            "lang": "en",
-            "name": "At Sāmagāma ",
-            "uid": "mn104"
-          }
-        },
+        "translation": {},
+        "author": "Sujato Bhikkhu",
         "lang": "en",
         "sections": [
           {
@@ -736,7 +676,7 @@
               },
               {
                 "scid": "mn105:7.4",
-                "pli": "sotaviññeyyā saddā … pe … ",
+                "pli": "sotaviññeyyā saddā …pe… ",
                 "en": "Sounds known by the ear … "
               },
               {
@@ -1397,7 +1337,8 @@
               {
                 "scid": "mn105:28.2",
                 "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—netaṃ ṭhānaṃ vijjati. ",
-                "en": "Understanding that attachment is the root of suffering, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment. "
+                "en": "Understanding that attachment <span class=\"scv-matched\">is the root of suffering</span>, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment. ",
+                "matched": true
               },
               {
                 "scid": "mn105:29.1",
@@ -1442,7 +1383,8 @@
               {
                 "scid": "mn105:29.9",
                 "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—netaṃ ṭhānaṃ vijjati. ",
-                "en": "Understanding that attachment is the root of suffering, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment. "
+                "en": "Understanding that attachment <span class=\"scv-matched\">is the root of suffering</span>, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment. ",
+                "matched": true
               },
               {
                 "scid": "mn105:30.1",
@@ -1482,7 +1424,8 @@
               {
                 "scid": "mn105:30.8",
                 "pli": "iti viditvā nirupadhi upadhisaṅkhaye vimutto upadhismiṃ vā kāyaṃ upasaṃharissati cittaṃ vā uppādessatīti—",
-                "en": "Understanding that attachment is the root of suffering, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment.” "
+                "en": "Understanding that attachment <span class=\"scv-matched\">is the root of suffering</span>, they are freed with the ending of attachments. It’s not possible that they would apply their body or interest their mind in any attachment.” ",
+                "matched": true
               },
               {
                 "scid": "mn105:30.9",
@@ -1501,8 +1444,7 @@
               },
               {
                 "scid": "mn105:30.12",
-                "pli": "Sunakkhattasuttaṃ niṭṭhitaṃ pañcamaṃ. ",
-                "en": ""
+                "pli": "Sunakkhattasuttaṃ niṭṭhitaṃ pañcamaṃ. "
               }
             ],
             "type": "Section",
@@ -1515,46 +1457,46 @@
             "expandable": false
           }
         ],
-        "suttaCode": "mn105/en/sujato"
+        "suttaCode": "mn105//"
       },
-      "audio": {
-        "en": "eef69eaee85ad64df63626cdda1cb353",
-        "pli": "d79ae6a536e99635fc4a549ba097a6cd"
+      "stats": {
+        "text": 14442,
+        "lang": "en",
+        "nSegments": 188,
+        "nEmptySegments": 8,
+        "nSections": 2,
+        "seconds": 1246.0042747850705
       }
     },
     {
-      "count": 2,
+      "count": 2.006,
       "uid": "mn1",
-      "author": "Bhikkhu Sujato",
+      "lang": "en",
+      "author": "Sujato Bhikkhu",
       "author_short": "Sujato",
       "author_uid": "sujato",
-      "author_blurb": {
-        "en": "Translated for SuttaCentral by <span class=”author”>Bhikkhu Sujato</span>, <span class=”publication-date”>2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
-      },
-      "lang": "en",
       "nSegments": 334,
-      "score": 2.0059880239520957,
-      "stats": {
-        "text": 14238,
-        "lang": "en",
-        "nSegments": 334,
-        "nEmptySegments": 9,
-        "nSections": 2,
-        "seconds": 1250.3311523620685
-      },
-      "title": "The Root of All Things ",
+      "title": "So I have heard.",
       "collection_id": "mn",
+      "quote": {
+        "scid": "mn1:171.4",
+        "pli": "‘Nandī dukkhassa mūlan’ti—",
+        "en": "Because he has understood that relishing <span class=\"scv-matched\">is the root of suffering</span>, ",
+        "matched": true
+      },
       "suttaplex": {
         "acronym": "MN 1",
         "volpages": "MN i 1",
         "uid": "mn1",
         "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
-        "difficulty": 3,
+        "difficulty": {
+          "name": "advanced",
+          "level": 3
+        },
         "original_title": "Mūlapariyāya Sutta",
         "root_lang": "pli",
         "root_lang_name": "Pāli",
         "type": "text",
-        "from": null,
         "translated_title": "The Root of All Things ",
         "translations": [
           {
@@ -1569,61 +1511,29 @@
             "segmented": true,
             "title": "The Root of All Things ",
             "volpage": null
-          },
-          {
-            "author": "Bhikkhu Bodhi",
-            "author_short": "Bodhi",
-            "author_uid": "bodhi",
-            "id": "en_mn1_bodhi",
-            "is_root": false,
-            "lang": "en",
-            "lang_name": "English",
-            "publication_date": "2009",
-            "segmented": false,
-            "volpage": null,
-            "title": "The Root of All Things"
-          },
-          {
-            "author": "I.B. Horner",
-            "author_short": "Horner",
-            "author_uid": "horner",
-            "id": "en_mn1_horner",
-            "is_root": false,
-            "lang": "en",
-            "lang_name": "English",
-            "publication_date": "2017",
-            "segmented": false,
-            "volpage": null,
-            "title": "Discourse on the Synopsis of Fundamentals"
           }
         ],
         "parallel_count": 4,
         "biblio": null,
         "num": 1
       },
-      "quote": {
-        "scid": "mn1:171.4",
-        "pli": "‘Nandī dukkhassa mūlan’ti—",
-        "en": "Because he has understood that relishing is the root of suffering, "
-      },
       "sutta": {
         "sutta_uid": "mn1",
         "author_uid": "sujato",
-        "support": {
-          "value": "Supported",
-          "description": "Content is actively maintained. Please report errors and inconsistencies"
-        },
+        "support": true,
         "suttaplex": {
           "acronym": "MN 1",
           "volpages": "MN i 1",
           "uid": "mn1",
           "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
-          "difficulty": 3,
+          "difficulty": {
+            "name": "advanced",
+            "level": 3
+          },
           "original_title": "Mūlapariyāya Sutta",
           "root_lang": "pli",
           "root_lang_name": "Pāli",
           "type": "text",
-          "from": null,
           "translated_title": "The Root of All Things ",
           "translations": [
             {
@@ -1638,56 +1548,14 @@
               "segmented": true,
               "title": "The Root of All Things ",
               "volpage": null
-            },
-            {
-              "author": "Bhikkhu Bodhi",
-              "author_short": "Bodhi",
-              "author_uid": "bodhi",
-              "id": "en_mn1_bodhi",
-              "is_root": false,
-              "lang": "en",
-              "lang_name": "English",
-              "publication_date": "2009",
-              "segmented": false,
-              "volpage": null,
-              "title": "The Root of All Things"
-            },
-            {
-              "author": "I.B. Horner",
-              "author_short": "Horner",
-              "author_uid": "horner",
-              "id": "en_mn1_horner",
-              "is_root": false,
-              "lang": "en",
-              "lang_name": "English",
-              "publication_date": "2017",
-              "segmented": false,
-              "volpage": null,
-              "title": "Discourse on the Synopsis of Fundamentals"
             }
           ],
           "parallel_count": 4,
           "biblio": null,
           "num": 1
         },
-        "translation": {
-          "uid": "mn1",
-          "author": "Bhikkhu Sujato",
-          "author_short": "Sujato",
-          "author_uid": "sujato",
-          "author_blurb": {
-            "en": "Translated for SuttaCentral by <span class=”author”>Bhikkhu Sujato</span>, <span class=”publication-date”>2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
-          },
-          "lang": "en",
-          "title": "The Root of All Things ",
-          "next": {
-            "author_uid": "sujato",
-            "lang": "en",
-            "name": "All the Defilements ",
-            "uid": "mn2"
-          },
-          "previous": null
-        },
+        "translation": {},
+        "author": "Sujato Bhikkhu",
         "lang": "en",
         "sections": [
           {
@@ -2276,7 +2144,7 @@
               },
               {
                 "scid": "mn1:28-49.1",
-                "pli": "Āpaṃ … pe … ",
+                "pli": "Āpaṃ …pe… ",
                 "en": "They directly know water … "
               },
               {
@@ -2431,7 +2299,7 @@
               },
               {
                 "scid": "mn1:52-74.1",
-                "pli": "Āpaṃ … pe … ",
+                "pli": "Āpaṃ …pe… ",
                 "en": "They directly know water … "
               },
               {
@@ -2586,7 +2454,7 @@
               },
               {
                 "scid": "mn1:76-98.1",
-                "pli": "Āpaṃ … pe … ",
+                "pli": "Āpaṃ …pe… ",
                 "en": "They directly know water … "
               },
               {
@@ -2741,7 +2609,7 @@
               },
               {
                 "scid": "mn1:100-122.1",
-                "pli": "Āpaṃ … pe … ",
+                "pli": "Āpaṃ …pe… ",
                 "en": "They directly know water … "
               },
               {
@@ -2896,7 +2764,7 @@
               },
               {
                 "scid": "mn1:124-146.1",
-                "pli": "Āpaṃ … pe … ",
+                "pli": "Āpaṃ …pe… ",
                 "en": "They directly know water … "
               },
               {
@@ -3051,7 +2919,7 @@
               },
               {
                 "scid": "mn1:148-170.1",
-                "pli": "Āpaṃ … pe … ",
+                "pli": "Āpaṃ …pe… ",
                 "en": "He directly knows water … "
               },
               {
@@ -3202,7 +3070,8 @@
               {
                 "scid": "mn1:171.4",
                 "pli": "‘Nandī dukkhassa mūlan’ti—",
-                "en": "Because he has understood that relishing is the root of suffering, "
+                "en": "Because he has understood that relishing <span class=\"scv-matched\">is the root of suffering</span>, ",
+                "matched": true
               },
               {
                 "scid": "mn1:171.5",
@@ -3216,7 +3085,7 @@
               },
               {
                 "scid": "mn1:172-194.1",
-                "pli": "Āpaṃ … pe … ",
+                "pli": "Āpaṃ …pe… ",
                 "en": "He directly knows water … "
               },
               {
@@ -3342,7 +3211,8 @@
               {
                 "scid": "mn1:172-194.26",
                 "pli": "‘Nandī dukkhassa mūlan’ti—",
-                "en": "Because he has understood that relishing is the root of suffering, "
+                "en": "Because he has understood that relishing <span class=\"scv-matched\">is the root of suffering</span>, ",
+                "matched": true
               },
               {
                 "scid": "mn1:172-194.27",
@@ -3371,8 +3241,7 @@
               },
               {
                 "scid": "mn1:172-194.32",
-                "pli": "Mūlapariyāyasuttaṃ niṭṭhitaṃ paṭhamaṃ. ",
-                "en": ""
+                "pli": "Mūlapariyāyasuttaṃ niṭṭhitaṃ paṭhamaṃ. "
               }
             ],
             "type": "Section",
@@ -3385,46 +3254,46 @@
             "expandable": false
           }
         ],
-        "suttaCode": "mn1/en/sujato"
+        "suttaCode": "mn1//"
       },
-      "audio": {
-        "en": "c6043a77e3548ffa41829e4d270aa556",
-        "pli": "5c9a979ea115beabd8204e6e40a32065"
+      "stats": {
+        "text": 14304,
+        "lang": "en",
+        "nSegments": 334,
+        "nEmptySegments": 9,
+        "nSections": 2,
+        "seconds": 1255.3477467693156
       }
     },
     {
-      "count": 1,
+      "count": 1.005,
       "uid": "mn66",
-      "author": "Bhikkhu Sujato",
+      "lang": "en",
+      "author": "Sujato Bhikkhu",
       "author_short": "Sujato",
       "author_uid": "sujato",
-      "author_blurb": {
-        "en": "Translated for SuttaCentral by <span class=”author”>Bhikkhu Sujato</span>, <span class=”publication-date”>2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
-      },
-      "lang": "en",
       "nSegments": 202,
-      "score": 1.004950495049505,
-      "stats": {
-        "text": 15775,
-        "lang": "en",
-        "nSegments": 202,
-        "nEmptySegments": 5,
-        "nSections": 2,
-        "seconds": 1701.8340329936757
-      },
-      "title": "The Simile of the Quail ",
+      "title": "So I have heard.",
       "collection_id": "mn",
+      "quote": {
+        "scid": "mn66:17.1",
+        "pli": "Idha panudāyi, ekacco puggalo ‘upadhi dukkhassa mūlan’ti—",
+        "en": "Take another person who, understanding that attachment <span class=\"scv-matched\">is the root of suffering</span>, ",
+        "matched": true
+      },
       "suttaplex": {
         "acronym": "MN 66",
         "volpages": "MN i 447",
         "uid": "mn66",
         "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous.",
-        "difficulty": 2,
+        "difficulty": {
+          "name": "intermediate",
+          "level": 2
+        },
         "original_title": "Laṭukikopama Sutta",
         "root_lang": "pli",
         "root_lang_name": "Pāli",
         "type": "text",
-        "from": null,
         "translated_title": "The Simile of the Quail ",
         "translations": [
           {
@@ -3439,48 +3308,29 @@
             "segmented": true,
             "title": "The Simile of the Quail ",
             "volpage": null
-          },
-          {
-            "author": "I.B. Horner",
-            "author_short": "Horner",
-            "author_uid": "horner",
-            "id": "en_mn66_horner",
-            "is_root": false,
-            "lang": "en",
-            "lang_name": "English",
-            "publication_date": "2017",
-            "segmented": false,
-            "volpage": null,
-            "title": "Discourse on the Simile of the Quail"
           }
         ],
         "parallel_count": 5,
         "biblio": null,
         "num": 6
       },
-      "quote": {
-        "scid": "mn66:17.1",
-        "pli": "Idha panudāyi, ekacco puggalo ‘upadhi dukkhassa mūlan’ti—",
-        "en": "Take another person who, understanding that attachment is the root of suffering, "
-      },
       "sutta": {
         "sutta_uid": "mn66",
         "author_uid": "sujato",
-        "support": {
-          "value": "Supported",
-          "description": "Content is actively maintained. Please report errors and inconsistencies"
-        },
+        "support": true,
         "suttaplex": {
           "acronym": "MN 66",
           "volpages": "MN i 447",
           "uid": "mn66",
           "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous.",
-          "difficulty": 2,
+          "difficulty": {
+            "name": "intermediate",
+            "level": 2
+          },
           "original_title": "Laṭukikopama Sutta",
           "root_lang": "pli",
           "root_lang_name": "Pāli",
           "type": "text",
-          "from": null,
           "translated_title": "The Simile of the Quail ",
           "translations": [
             {
@@ -3495,48 +3345,14 @@
               "segmented": true,
               "title": "The Simile of the Quail ",
               "volpage": null
-            },
-            {
-              "author": "I.B. Horner",
-              "author_short": "Horner",
-              "author_uid": "horner",
-              "id": "en_mn66_horner",
-              "is_root": false,
-              "lang": "en",
-              "lang_name": "English",
-              "publication_date": "2017",
-              "segmented": false,
-              "volpage": null,
-              "title": "Discourse on the Simile of the Quail"
             }
           ],
           "parallel_count": 5,
           "biblio": null,
           "num": 6
         },
-        "translation": {
-          "uid": "mn66",
-          "author": "Bhikkhu Sujato",
-          "author_short": "Sujato",
-          "author_uid": "sujato",
-          "author_blurb": {
-            "en": "Translated for SuttaCentral by <span class=”author”>Bhikkhu Sujato</span>, <span class=”publication-date”>2018</span>. Dedicated to the public domain via Creative Commons Zero (CC0). You are encouraged to copy, reproduce, adapt, alter, or otherwise make use of this translation in any way you wish. Attribution is appreciated but not legally required."
-          },
-          "lang": "en",
-          "title": "The Simile of the Quail ",
-          "next": {
-            "author_uid": "sujato",
-            "lang": "en",
-            "name": "At Cātumā ",
-            "uid": "mn67"
-          },
-          "previous": {
-            "author_uid": "sujato",
-            "lang": "en",
-            "name": "With Bhaddāli ",
-            "uid": "mn65"
-          }
-        },
+        "translation": {},
+        "author": "Sujato Bhikkhu",
         "lang": "en",
         "sections": [
           {
@@ -3900,7 +3716,7 @@
               },
               {
                 "scid": "mn66:10.6",
-                "pli": "Yehi so, bhante, rañño nāgo īsādanto urūḷhavā abhijāto saṅgāmāvacaro daḷhehi varattehi bandhanehi baddho īsakaṃyeva kāyaṃ sannāmetvā tāni bandhanāni saṃchinditvā sampadāletvā yena kāmaṃ pakkamati, tañhi tassa abalaṃ bandhanaṃ … pe … asārakaṃ bandhanan”ti. ",
+                "pli": "Yehi so, bhante, rañño nāgo īsādanto urūḷhavā abhijāto saṅgāmāvacaro daḷhehi varattehi bandhanehi baddho īsakaṃyeva kāyaṃ sannāmetvā tāni bandhanāni saṃchinditvā sampadāletvā yena kāmaṃ pakkamati, tañhi tassa abalaṃ bandhanaṃ …pe… asārakaṃ bandhanan”ti. ",
                 "en": "For that bull elephant, that strong harness is weak, feeble, rotten, and insubstantial.” "
               },
               {
@@ -4241,7 +4057,8 @@
               {
                 "scid": "mn66:17.1",
                 "pli": "Idha panudāyi, ekacco puggalo ‘upadhi dukkhassa mūlan’ti—",
-                "en": "Take another person who, understanding that attachment is the root of suffering, "
+                "en": "Take another person who, understanding that attachment <span class=\"scv-matched\">is the root of suffering</span>, ",
+                "matched": true
               },
               {
                 "scid": "mn66:17.2",
@@ -4285,7 +4102,7 @@
               },
               {
                 "scid": "mn66:18.4",
-                "pli": "sotaviññeyyā saddā … pe … ",
+                "pli": "sotaviññeyyā saddā …pe… ",
                 "en": "Sounds known by the ear … "
               },
               {
@@ -4315,22 +4132,22 @@
               },
               {
                 "scid": "mn66:20.1",
-                "pli": "Idhudāyi, bhikkhu vivicceva kāmehi … pe … paṭhamaṃ jhānaṃ upasampajja viharati ",
+                "pli": "Idhudāyi, bhikkhu vivicceva kāmehi …pe… paṭhamaṃ jhānaṃ upasampajja viharati ",
                 "en": "Take a mendicant who, quite secluded from sensual pleasures, secluded from unskillful qualities, enters and remains in the first absorption … "
               },
               {
                 "scid": "mn66:20.2",
-                "pli": "vitakkavicārānaṃ vūpasamā … pe … dutiyaṃ jhānaṃ upasampajja viharati, ",
+                "pli": "vitakkavicārānaṃ vūpasamā …pe… dutiyaṃ jhānaṃ upasampajja viharati, ",
                 "en": "second absorption … "
               },
               {
                 "scid": "mn66:20.3",
-                "pli": "pītiyā ca virāgā … pe … tatiyaṃ jhānaṃ upasampajja viharati, ",
+                "pli": "pītiyā ca virāgā …pe… tatiyaṃ jhānaṃ upasampajja viharati, ",
                 "en": "third absorption … "
               },
               {
                 "scid": "mn66:20.4",
-                "pli": "sukhassa ca pahānā … pe … catutthaṃ jhānaṃ upasampajja viharati. ",
+                "pli": "sukhassa ca pahānā …pe… catutthaṃ jhānaṃ upasampajja viharati. ",
                 "en": "fourth absorption. "
               },
               {
@@ -4340,7 +4157,7 @@
               },
               {
                 "scid": "mn66:22.1",
-                "pli": "Idhudāyi, bhikkhu vivicceva kāmehi … pe … paṭhamaṃ jhānaṃ upasampajja viharati; ",
+                "pli": "Idhudāyi, bhikkhu vivicceva kāmehi …pe… paṭhamaṃ jhānaṃ upasampajja viharati; ",
                 "en": "Take a mendicant who, quite secluded from sensual pleasures, secluded from unskillful qualities, enters and remains in the first absorption. "
               },
               {
@@ -4360,7 +4177,7 @@
               },
               {
                 "scid": "mn66:23.1",
-                "pli": "Idhudāyi, bhikkhu vitakkavicārānaṃ vūpasamā … pe … dutiyaṃ jhānaṃ upasampajja viharati; ",
+                "pli": "Idhudāyi, bhikkhu vitakkavicārānaṃ vūpasamā …pe… dutiyaṃ jhānaṃ upasampajja viharati; ",
                 "en": "Take a mendicant who, as the placing of the mind and keeping it connected are stilled, enters and remains in the second absorption. "
               },
               {
@@ -4380,7 +4197,7 @@
               },
               {
                 "scid": "mn66:24.1",
-                "pli": "Idhudāyi, bhikkhu pītiyā ca virāgā … pe … tatiyaṃ jhānaṃ upasampajja viharati; ",
+                "pli": "Idhudāyi, bhikkhu pītiyā ca virāgā …pe… tatiyaṃ jhānaṃ upasampajja viharati; ",
                 "en": "Take a mendicant who, with the fading away of rapture, enters and remains in the third absorption. "
               },
               {
@@ -4400,7 +4217,7 @@
               },
               {
                 "scid": "mn66:24.5",
-                "pli": "Idhudāyi, bhikkhu sukhassa ca pahānā … pe … catutthaṃ jhānaṃ upasampajja viharati; ",
+                "pli": "Idhudāyi, bhikkhu sukhassa ca pahānā …pe… catutthaṃ jhānaṃ upasampajja viharati; ",
                 "en": "Take a mendicant who, giving up pleasure and pain, enters and remains in the fourth absorption. "
               },
               {
@@ -4410,7 +4227,7 @@
               },
               {
                 "scid": "mn66:26.1",
-                "pli": "Idhudāyi, bhikkhu vivicceva kāmehi … pe … paṭhamaṃ jhānaṃ upasampajja viharati; ",
+                "pli": "Idhudāyi, bhikkhu vivicceva kāmehi …pe… paṭhamaṃ jhānaṃ upasampajja viharati; ",
                 "en": "Take a mendicant who, quite secluded from sensual pleasures, secluded from unskillful qualities, enters and remains in the first absorption. "
               },
               {
@@ -4425,7 +4242,7 @@
               },
               {
                 "scid": "mn66:27.1",
-                "pli": "Idhudāyi, bhikkhu vitakkavicārānaṃ vūpasamā … pe … dutiyaṃ jhānaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
+                "pli": "Idhudāyi, bhikkhu vitakkavicārānaṃ vūpasamā …pe… dutiyaṃ jhānaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
                 "en": "Take a mendicant who, as the placing of the mind and keeping it connected are stilled, enters and remains in the second absorption. That goes beyond it. "
               },
               {
@@ -4440,7 +4257,7 @@
               },
               {
                 "scid": "mn66:27.4",
-                "pli": "Idhudāyi, bhikkhu pītiyā ca virāgā … pe … tatiyaṃ jhānaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
+                "pli": "Idhudāyi, bhikkhu pītiyā ca virāgā …pe… tatiyaṃ jhānaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
                 "en": "Take a mendicant who, with the fading away of rapture, enters and remains in the third absorption. That goes beyond it. "
               },
               {
@@ -4455,7 +4272,7 @@
               },
               {
                 "scid": "mn66:27.7",
-                "pli": "Idhudāyi, bhikkhu sukhassa ca pahānā … pe … catutthaṃ jhānaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
+                "pli": "Idhudāyi, bhikkhu sukhassa ca pahānā …pe… catutthaṃ jhānaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
                 "en": "Take a mendicant who, giving up pleasure and pain, enters and remains in the fourth absorption. That goes beyond it. "
               },
               {
@@ -4560,8 +4377,7 @@
               },
               {
                 "scid": "mn66:27.28",
-                "pli": "Laṭukikopamasuttaṃ niṭṭhitaṃ chaṭṭhaṃ. ",
-                "en": ""
+                "pli": "Laṭukikopamasuttaṃ niṭṭhitaṃ chaṭṭhaṃ. "
               }
             ],
             "type": "Section",
@@ -4574,11 +4390,15 @@
             "expandable": false
           }
         ],
-        "suttaCode": "mn66/en/sujato"
+        "suttaCode": "mn66//"
       },
-      "audio": {
-        "en": "5b3cb40f367220cb4e123f0c41118530",
-        "pli": "8e02755d27ddf8538a4923fac036b6aa"
+      "stats": {
+        "text": 15808,
+        "lang": "en",
+        "nSegments": 202,
+        "nEmptySegments": 5,
+        "nSections": 2,
+        "seconds": 1705.7071003556491
       }
     }
   ]

@@ -207,6 +207,7 @@ export default {
     storeSettingsInCookies: "ウェブブラウザのクッキーに設定を保存",
     trackOfSection: "A_TRACK / A_TRACKS",
     transLanguage: "訳文の言語",
+    translatedBy: "Translated by",
     uiLanguage: "ウェブサイトの言語",
     wikiAria: "Home.md",
 
