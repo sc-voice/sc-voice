@@ -91,7 +91,7 @@
               <v-radio-group v-model="gscv.lang"
                 @change="langChanged()"
                 column>
-               <v-radio v-for="lang in gscv.languages"
+               <v-radio v-for="lang in gscv.transLanguages"
                  :disabled="lang.disabled"
                  :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
                  </v-radio>
@@ -264,6 +264,8 @@ export default {
             title: 'SuttaCentral Voice Assistant',
             bgShow: false,
             user: {},
+            authors: {},
+            transLanguages: [],
         }
     },
     methods: {
@@ -308,6 +310,23 @@ export default {
             return `./?r=${Math.random}/#/?`+
                 `search=${search}&`+
                 `lang=${this.gscv.lang}`;
+        },
+        getAuthors() {
+            var that = this;
+            var {
+                gscv,
+            } = that;
+            var url = this.url(`authors`);
+            this.$http.get(url).then(res => {
+                var authors = res.data;
+                gscv.authors = authors;
+                var langs = Object.keys(authors).map(a => authors[a].lang);
+                gscv.transLanguages = gscv.languages.filter(l => 
+                    langs.indexOf(l.name) >= 0);
+                console.log(`authors`, gscv.authors, gscv.transLanguages);
+            }).catch(e => {
+                console.error(e.stack);
+            });
         },
         getVoices() {
             var that = this;
@@ -385,6 +404,7 @@ export default {
     },
     mounted() {
         this.getVoices();
+        this.getAuthors();
         this.user = this.gscv.user;
     },
     created() {

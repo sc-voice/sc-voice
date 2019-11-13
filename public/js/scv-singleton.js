@@ -46,7 +46,7 @@
         expires: "100Y",
     };
 
-    const LANGUAGES = [{
+    const WEB_LANGUAGES = [{
         name: 'da',
         label: 'Dansk / DA',
     }, {
@@ -152,7 +152,7 @@
         }
 
         get languages() {
-            return LANGUAGES;
+            return WEB_LANGUAGES;
         }
 
         get user() {
@@ -391,7 +391,7 @@
                 var search = query.scid || query.search || '';
                 query.search && (this.search = search);
             }
-            if (LANGUAGES.filter(l => l.name === this.locale).length === 0) {
+            if (WEB_LANGUAGES.filter(l => l.name === this.locale).length === 0) {
                 console.log(`ScvSingleton.mounted()`,
                     `unknown locale:${this.locale}=>en`);
                 this.locale = 'en';

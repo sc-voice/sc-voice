@@ -7,6 +7,7 @@
 
     //const TEST_ROOT = 'https://raw.githubusercontent.com/sujato/sc-audio/master/flac';
     const TEST_ROOT = `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`;
+    this.timeout(15*1000);
 
     it("AudioUrls(...) creates an audio url map", function() {
         var audio = new AudioUrls();
@@ -69,7 +70,6 @@
             `xRoot/xLang/sn/sn1/sn1.1-xLang-xAuthor-xSpeaker.xExtension`);
     });
     it("audioUrl(...) returns verified audio url", function(done) {
-        this.timeout(15*1000);
         (async function() { try {
             var audio = new AudioUrls();
 
@@ -95,7 +95,6 @@
         } catch(e) {done(e);} })();
     });
     it("audioUrl(...) handles bad url", function(done) {
-        this.timeout(15*1000);
         (async function() { try {
             var audio = new AudioUrls();
 
@@ -113,7 +112,6 @@
     });
     it("audioUrl(...) handle bad host null", function(done) {
         done(); return; // TBD  takes too long with some DNS servers
-        this.timeout(15*1000);
         (async function() { try {
             var audio = new AudioUrls();
             // bad root
@@ -139,7 +137,6 @@
         } catch(e) {done(e);} })();
     });
     it("sourceUrls(...) returns verified audio urls", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             var audio = new AudioUrls();
 

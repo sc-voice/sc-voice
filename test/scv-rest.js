@@ -960,6 +960,25 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTGET authors returns authors", function(done) {
+        (async function() { try {
+            var scvRest = app.locals.scvRest;
+            await scvRest.initialize();
+            var url = "/scv/authors";
+            var res = await supertest(app).get(url)
+            should(res.statusCode).equal(200);
+            var authors = res.body;
+            should.deepEqual(authors.sabbamitta, {
+                name: 'Sabbamitta Anagarika',
+                lang: 'de',
+                root_edition: 'ms',
+                root_lang: 'pli',
+                type: 'translator',
+            })
+
+            done();
+        } catch(e) {done(e);} })();
+    });
     it("GET auth/logs returns logfiles", function(done) {
         (async function() { try {
             var logDir = path.join(LOCAL, 'logs');
