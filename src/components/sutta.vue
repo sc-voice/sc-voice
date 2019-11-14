@@ -191,8 +191,7 @@ style="width:100%; margin-top:0"/>
             <summary class="scv-search-result-summary">
                 <div style="display: inline-block; width: 96%; ">
                     <div style="display:flex; justify-content: space-between; ">
-                        <div v-html="resultId(result).toUpperCase()+result.title">
-                        </div>
+                        <div v-html="resultTitle(result)"></div>
                         <div class="caption" 
                             :aria-label="duration(result.stats.seconds).aria">
                            {{duration(result.stats.seconds).display}}
@@ -955,6 +954,12 @@ export default {
             vueLang.current = current;
             return label;
         },
+        resultTitle(result) {
+            return [
+                this.resultId(result).toUpperCase(),
+                result.title,
+            ].join(` \u2022 `);
+        },
     },
     computed: {
         searchLabel() {
@@ -1038,10 +1043,12 @@ export default {
             var titles = this.sutta.titles;
             console.log(`dbg titles`, titles);
             if (titles) {
-                return [
-                    this.resultId().toUpperCase(),
-                    ...titles.slice(1),
-                ].join(' \u2022 ');
+                var trimTitles = titles.slice(1)
+                    .filter(t => t.length);
+                    console.log(`dbg trimTitle`, trimTitles);
+
+                return [ this.resultId().toUpperCase(), ...trimTitles ]
+                    .join(' \u2022 ');
             }
 
             // legacy titles
