@@ -191,9 +191,7 @@ style="width:100%; margin-top:0"/>
             <summary class="scv-search-result-summary">
                 <div style="display: inline-block; width: 96%; ">
                     <div style="display:flex; justify-content: space-between; ">
-                        <div>
-                            {{resultId(result).toUpperCase()}}
-                            {{result.title}}
+                        <div v-html="resultId(result).toUpperCase()+result.title">
                         </div>
                         <div class="caption" 
                             :aria-label="duration(result.stats.seconds).aria">
@@ -911,7 +909,7 @@ export default {
             return result.score
                 ? (Math.round(result.score * 100) / 100)
                     .toLocaleString(this.gscv.locale)
-                : '--';
+                : result.count || '--';
         },
         duration(t) {
             return this.gscv.durationDisplay(t);
