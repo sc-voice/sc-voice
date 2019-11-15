@@ -615,12 +615,12 @@
         }
 
         getExamples(req, res, next) {
-            var language = req.query.language || 'en';
+            var lang = req.query.lang || 'en';
             var n = Number(req.params.n);
             n = Math.max(1, isNaN(n) ? 3 : n);
             var examples = this.examples;
             if (examples == null) {
-                var fname = `examples-${language}.txt`;
+                var fname = `examples-${lang}.txt`;
                 var fpath = path.join(PATH_EXAMPLES, fname);
                 if (fs.existsSync(fpath)) {
                     examples = this.examples = fs.readFileSync(fpath)

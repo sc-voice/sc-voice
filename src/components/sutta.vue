@@ -413,9 +413,11 @@ export default {
         },
         clickInspireMe() {
             var that = this;
-            var url = this.url(`examples/3`);
+            var lang = this.gscv.lang;
+            var url = this.url(`examples/3?lang=${lang}`);
             this.$http.get(url).then(res => {
                 var examples = res.data;
+            console.log(`dbg inspireme`, url, examples);
                 this.examples = examples;
                 that.clear();
                 that.search = examples[0];
