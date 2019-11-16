@@ -2,7 +2,7 @@ export default {
   close: 'Close',
   dataIterator: {
     pageText: '{0}-{1} of {2}',
-    noResultsText: 'No matching records found',
+    noResultsText: 'No results found',
     loadingText: 'Loading items...',
   },
   dataTable: {
@@ -178,7 +178,7 @@ export default {
     bellSound: "Bell Sound",
     bellTibetan: "Tibetan Singin Bowl (Horst: CC0)",
     dedicated: "To the dark bound for light",
-    dedicatedSearch: "To the dark bound for light",
+    dedicatedSearch: "the dark bound for light",
     downloadComplete: "Download completed:",
     downloading: "Downloading:",
     downloadTimeout: "Download timeout:",

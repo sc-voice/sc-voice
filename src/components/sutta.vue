@@ -165,9 +165,10 @@ style="width:100%; margin-top:0"/>
         </summary>
         <summary v-else
             role="main" ref="refResults"
-            aria-level="1" :aria-label="`No suttas found`"
+            aria-level="1" 
+            :aria-label="$vuetify.lang.t('$vuetify.dataIterator.noResultsText')"
             class='title'>
-            No suttas found
+            {{$vuetify.lang.t('$vuetify.dataIterator.noResultsText')}}
         </summary>
         <div class="scv-playlist ml-3 pt-2 pl-3" v-if="gscv.voices.length" >
             <v-btn icon
