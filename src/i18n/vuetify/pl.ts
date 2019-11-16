@@ -178,6 +178,7 @@ export default {
     bellSound: "Bell Sound",
     bellTibetan: "Tibetan Singin Bowl (Horst: CC0)",
     dedicated: "To the dark bound for light",
+    dedicatedSearch: "To the dark bound for light",
     downloadComplete: "Download completed:",
     downloading: "Downloading:",
     downloadTimeout: "Download timeout:",

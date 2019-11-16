@@ -178,6 +178,7 @@ export default {
     bellSound: "Sino",
     bellTibetan: "Tigela musical tibetana (Horst: CC0)",
     dedicated: "Para aqueles na escuridão e tendo a luz como destino",
+    dedicatedSearch: "To the dark bound for light",
     downloadComplete: "Download completo:",
     downloading: "Fazendo downloads:",
     downloadTimeout: "Tempo limite para download:",

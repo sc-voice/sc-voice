@@ -178,6 +178,7 @@ export default {
     bellSound: "Sunet Clopot",
     bellTibetan: "Bol de Cântat Tibetan (Horst: CC0)",
     dedicated: "Pentru cei din întuneric, ce se îndreaptă spre lumină",
+    dedicatedSearch: "To the dark bound for light",
     downloadComplete: "Descărcare completă:",
     downloading: "Se descarcă:",
     downloadTimeout: "Descărcare întreruptă:",

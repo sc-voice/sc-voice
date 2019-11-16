@@ -178,6 +178,7 @@ export default {
     bellSound: "Bjellelyd",
     bellTibetan: "Tibetansk syngende skål (Horst: CC0)",
     dedicated: "Dedikert til mørket på vei mot lyset",
+    dedicatedSearch: "To the dark bound for light",
     downloadComplete: "Nedlasting ferdig:",
     downloading: "Laster ned:",
     downloadTimeout: "Nedlasting tidsavbrudd:",

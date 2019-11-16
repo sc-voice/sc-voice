@@ -178,6 +178,7 @@ export default {
     bellSound: "Bjölluhljóð",
     bellTibetan: "Tíbesk söngskál (Horst: CC0)",
     dedicated: "Tileinkað þeim í myrkri, sem stefna á ljósið",
+    dedicatedSearch: "To the dark bound for light",
     downloadComplete: "Niðurhal lokið:",
     downloading: "Að hala niður:",
     downloadTimeout: "Tímamörk niðurhals:",

@@ -342,11 +342,9 @@ export default {
     },
     computed: {
         searchDedicated() {
-            var searchEn = 'the dark bound for light';
-            var searchLang = this.$vuetify.lang.t('$vuetify.scv.dedicated');
-            return (['en','de'].indexOf(this.gscv.lang) >= 0) 
-                ? this.searchUrl(searchLang)
-                : this.searchUrl(searchEn);
+            var searchLang = this.$vuetify.lang.t(
+                '$vuetify.scv.dedicatedSearch');
+            return this.searchUrl(searchLang);
         },
         voice() {
             return this.gscv.voices.filter(v => v.name === this.gscv.vnameTrans)[0];

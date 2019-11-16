@@ -178,6 +178,7 @@ export default {
     bellSound: "鈴の音",
     bellTibetan: "チベットの鐘 (Horst: CC0)",
     dedicated: "暗闇から光へ向かう人達に",
+    dedicatedSearch: "To the dark bound for light",
     downloadComplete: "ダウンロード完了:",
     downloading: "ダウンロード中...:",
     downloadTimeout: "ダウンロード　タイムアウト:",
