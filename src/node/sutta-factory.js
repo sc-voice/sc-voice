@@ -180,6 +180,7 @@
             }, []);
             newSections.push(new Section({
                 segments: segments.slice(segStart),
+                prop: lang,
             }));
             if (newSections.length <= sutta.sections.length) {
                 return sutta; // no sections

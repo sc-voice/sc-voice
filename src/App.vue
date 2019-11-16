@@ -200,7 +200,7 @@
     </div>
     <v-footer fixed class="pt-2 pl-2 pr-2 caption" app >
       <div style="margin-top:-0.35em" >
-          <a :href="searchUrl('the dark bound for light')"
+          <a :href="searchDedicated"
             class="scv-a"
             :aria-label="$vuetify.lang.t('$vuetify.scv.ariaDedicated')"
             >
@@ -341,6 +341,13 @@ export default {
         },
     },
     computed: {
+        searchDedicated() {
+            var searchEn = 'the dark bound for light';
+            var searchLang = this.$vuetify.lang.t('$vuetify.scv.dedicated');
+            return (['en','de'].indexOf(this.gscv.lang) >= 0) 
+                ? this.searchUrl(searchLang)
+                : this.searchUrl(searchEn);
+        },
         voice() {
             return this.gscv.voices.filter(v => v.name === this.gscv.vnameTrans)[0];
         },
