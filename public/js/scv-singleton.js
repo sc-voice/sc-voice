@@ -487,15 +487,19 @@
                         // skip
                     } else if (lang === 'pli') {
                         if (showPali) {
-                            charsTot += remCharsTot[lang];
-                            chars += remChars[lang];
+                            charsTot += remCharsTot[lang] || 0;
+                            chars += remChars[lang] || 0;
                         }
-                    } else if (showTrans) {
-                        charsTot += remCharsTot[lang];
-                        chars += remChars[lang];
+                    } else if (showTrans && lang === this.lang) {
+                        charsTot += remCharsTot[lang] || 0;
+                        chars += remChars[lang] || 0;
                     }
                 });
-                var secsRem = charsTot ? stats.seconds * chars / charsTot : 0;
+
+                let seconds = stats.seconds;
+                var secsRem = charsTot === 0 || isNaN(charsTot)
+                    ? seconds
+                    : seconds * chars / charsTot ;
                 Object.assign(result, this.durationDisplay(secsRem));
             } else {
                 console.log(`timeRemaining (DEPRECATED)`, remChars);

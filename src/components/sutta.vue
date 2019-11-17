@@ -418,7 +418,6 @@ export default {
             var url = this.url(`examples/3?lang=${lang}`);
             this.$http.get(url).then(res => {
                 var examples = res.data;
-            console.log(`dbg inspireme`, url, examples);
                 this.examples = examples;
                 that.clear();
                 that.search = examples[0];
@@ -1044,11 +1043,9 @@ export default {
         suttaTitle() {
             // standard title
             var titles = this.sutta.titles;
-            console.log(`dbg titles`, titles);
             if (titles) {
                 var trimTitles = titles.slice(1)
                     .filter(t => t.length);
-                    console.log(`dbg trimTitle`, trimTitles);
 
                 return [ this.resultId().toUpperCase(), ...trimTitles ]
                     .join(' \u2022 ');

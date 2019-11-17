@@ -876,7 +876,7 @@
                 matchHighlight,
             } = opts;
             var that = this;
-            var lang = langTrans || language || scid.split('/')[1];
+            var lang = langTrans || language || scid.split('/')[1] || 'en';
             var pbody = (resolve, reject)=>{(async function(){try{
                 var pattern = `${scid}/${language}/${translator}`;
                 var findOpts = {
@@ -900,7 +900,7 @@
             return this.loadBilaraSutta(opts);
         }
 
-        mldResult(mld) {
+        mldResult(mld, lang) {
             if (mld == null) {
                 throw new Error(`Expected MLDoc`);
             }
@@ -912,11 +912,12 @@
             var that = this;
             var pbody = (resolve, reject) => {(async function() { try {
                 var {
-                    lang,
                     suid: sutta_uid,
                     translations,
                 } = mld;
-                var trans = translations.filter(t => t.lang === lang)[0];
+                lang = lang || mld.lang || 'en';
+                var trans = translations.filter(t => t.lang === lang)[0] ||
+                    translations[0];
                 var author_uid = trans.author_uid;
                 var suttaplex = await suttaCentralApi
                     .loadSuttaplexJson(sutta_uid, lang, author_uid);
@@ -939,7 +940,7 @@
                     segments,
                     translation,
                 });
-                sutta = suttaFactory.sectionSutta(sutta);
+                var sectSutta = suttaFactory.sectionSutta(sutta);
                 var quote = segments.filter((s,i)=>s.matched && i > 1)[0];
                 resolve({
                     count: mld.score,
@@ -955,7 +956,7 @@
                     collection_id: trans.collection,
                     quote,
                     suttaplex,
-                    sutta,
+                    sutta: sectSutta,
                     stats: that.suttaDuration.measure(sutta),
                 });
             } catch(e) {reject(e);}})()};
@@ -1149,7 +1150,7 @@
                     var results = await that.voiceResults(grepSearchResults, language);
                 }
                 resolve({
-                    method,
+                    method: `${method}-legacy`,
                     results,
                     resultPattern,
                 });

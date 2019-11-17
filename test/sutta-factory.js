@@ -138,7 +138,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("loadSutta(...) loads sn22.1", function(done) {
+    it("TESTTESTloadSutta(...) loads sn22.1", function(done) {
         (async function() { try {
             await suttaStore.initialize();
             await suttaFactory.initialize();
@@ -192,10 +192,6 @@
                 .match(/A Discussion With the King/);
             should(sutta.sections[1].segments[0].en)
                 .match(/So I have heard/);
-            should(sutta.sections[2].segments[0].en)
-                .match(/2. A Discussion With Jīvaka Komārabhacca/);
-            should(sutta.sections[3].title)
-                .match(/3. The Question About the Fruits of the Ascetic/);
             done();
         } catch(e) { done(e); } })();
     });

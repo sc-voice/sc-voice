@@ -48,11 +48,12 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("expandSutta(sutta) expands mn1", function(done) {
+    it("TESTTESTexpandSutta(sutta) expands mn1", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             await suttaStore.initialize();
             var sutta = await suttaStore.loadSutta('mn1');
+            should(sutta.lang).equal('en');
             var factory = new SuttaFactory({logLevel});
             should.deepEqual(Object.keys(sutta).sort(), [
                 'translation', 'suttaCode', 'sutta_uid', 'author_uid', 

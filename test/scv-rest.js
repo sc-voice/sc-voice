@@ -1087,14 +1087,15 @@
             var pattern = `dn7`;
             var lang = 'de'
 
-            var url = `/scv/search/${pattern}/${lang}?maxResults=${maxResults}`;
+            var url = 
+                `/scv/search/${pattern}/${lang}?maxResults=${maxResults}`;
             var response = yield supertest(app).get(url).expect((res) => {
                 res.statusCode.should.equal(200);
                 var {
                     method,
                     results,
                 } = res.body;
-                should(method).equal('sutta_uid');
+                should(method).equal('sutta_uid-legacy');
                 should(results).instanceOf(Array);
                 should(results.length).equal(1);
                 should.deepEqual(results.map(r => r.uid),[
