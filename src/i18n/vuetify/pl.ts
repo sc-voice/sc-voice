@@ -177,7 +177,7 @@ export default {
     bellSimple: "Prosty dzwonek (Domena Publiczna)",
     bellSound: "Dźwięk dzwonka",
     bellTibetan: "Tybetańska misa grająca (Horst: CC0)",
-    dedicated: "Dedykowane ciemności dążącej do światła",
+    dedicated: "Do ciemności dążącej do światła",
     dedicatedSearch: "To the dark bound for light",
     downloadComplete: "Pobieranie zakończone:",
     downloading: "Pobieranie:",
