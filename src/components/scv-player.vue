@@ -522,13 +522,15 @@ export default {
         },
         paliText() {
             return this.segment && this.segment.pli || 
-                this.loading && "Loading..." ||
+                this.loading && 
+                    this.$vuetify.lang.t('$vuetify.auth.loading') ||
                 "(...)";
         },
         langText(){
             var lang = this.language;
             return this.segment && this.segment[lang] ||
-                this.loading && "Loading..." ||
+                this.loading && 
+                    this.$vuetify.lang.t('$vuetify.auth.loading') ||
                 this.$vuetify.lang.t('$vuetify.scv.noTranslationAvailable');
         },
         segmentsElapsed(){
