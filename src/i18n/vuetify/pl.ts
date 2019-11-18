@@ -136,7 +136,7 @@ export default {
     username: 'Nazwa użytkownika',
     users: 'Użytkownicy',
     version: 'Wersja',
-    voiceLogin: 'Voice Logowanie głosowe',
+    voiceLogin: 'Zaloguj się w Voice',
     voiceServerLogs: 'Rejestry serwera Voice',
     voice: 'Voice',
     vsmBuildFailed: 'Kompilacja VSM zakończona niepowodzeniem:',
