@@ -55,9 +55,9 @@
     }, {
         name: 'en',
         label: 'English / EN',
-    //}, {
-        //name: 'hi',
-        //label: 'हिंदी / HI',
+    }, {
+        name: 'hi',
+        label: 'हिंदी / HI',
     }, {
         name: 'is',
         label: 'Íslenska / IS',
