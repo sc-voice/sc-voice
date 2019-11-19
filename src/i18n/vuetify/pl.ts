@@ -203,7 +203,7 @@ export default {
     settingsTitle: "Ustawienia",
     showPaliText: "Pokaż tekst tylko w Pali",
     showPaliTransText: "Pokaż tekst w Pali i tłumaczenie",
-    showTextSegmentIds: "Pokaż segmenty SuttaCentral",
+    showTextSegmentIds: "Pokazuj segmentacje tekstów SuttaCentral",
     showTransText: "Pokaż tylko tłumaczenie",
     storeSettingsInCookies: "Zachowaj ustawienia w ciasteczkach internetowej przeglądarki",
     trackOfSection: "A_TRACK z A_TRACKS",
