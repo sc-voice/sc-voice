@@ -112,6 +112,14 @@
             if (g == null) {
                 throw new Error(`g is required`);
             }
+            Object.defineProperty(this, "transLanguages", {
+                writable: true,
+                value: [],
+            });
+            Object.defineProperty(this, "authors", {
+                writable: true,
+                value: {},
+            });
             Object.defineProperty(this, "_voices", {
                 writable: true,
                 value: [],

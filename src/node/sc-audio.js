@@ -272,6 +272,7 @@
             var {
                 convertTo,
             } = this;
+            var convertErr = new Error('convertResponse() Error');
             (async function() { try {
                 var execOpts = {
                     cwd: path.dirname(audioPath),
@@ -297,6 +298,7 @@
                         logger.debug(stdout);
                         if (error) {
                             logger.warn(stderr);
+                            logger.warn(convertErr);
                             reject(error);
                             return;
                         } 
