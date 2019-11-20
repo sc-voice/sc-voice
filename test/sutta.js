@@ -22,12 +22,12 @@
         en:'c1 bc ac.',
     }]
 
-    it("TESTTESTdefault ctor", ()=>{
+    it("default ctor", ()=>{
         should.throws(()=>{
             var sutta = new Sutta();
         });
     });
-    it("TESTTESTcustom ctor", ()=>{
+    it("custom ctor", ()=>{
         var sutta_uid = "testSutta1";
         var author = "testAuthor";
         var lang = "test";

@@ -138,7 +138,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTloadSutta(...) loads sn22.1", function(done) {
+    it("loadSutta(...) loads sn22.1", function(done) {
         (async function() { try {
             await suttaStore.initialize();
             await suttaFactory.initialize();
@@ -161,7 +161,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTloadSutta(...) automatically sections a Sutta", function(done) {
+    it("loadSutta(...) automatically sections a Sutta", function(done) {
         (async function() { try {
             await suttaStore.initialize();
             var factory = new SuttaFactory({

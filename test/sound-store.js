@@ -157,7 +157,7 @@
         should(fs.existsSync(data[2].fpath)).equal(false);
         should.deepEqual(Object.keys(store.ephemerals), []);
     });
-    it("TESTTESTautomatically clears old ephemerals", function(done) {
+    it("automatically clears old ephemerals", function(done) {
         var storePath = tmp.tmpNameSync();
         (async function() { try {
             var ephemeralInterval = 100;

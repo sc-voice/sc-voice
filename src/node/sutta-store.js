@@ -726,31 +726,33 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var {
+                        lang,
                         language,
                         method,
                         suttaRefs,
                         suttas,
                         resultPattern,
                     } = await that.findSuttas(opts);
+                    lang = lang || language;
                     var maxDuration = opts.maxDuration || that.maxDuration;
-                    var playlist = new Playlist({
-                        languages: opts.languages || ['pli', language],
-                    });
-                    suttas.forEach(sutta => {
-                        playlist.addSutta(sutta);
-                    });
+                    var languages = opts.languages || ['pli', lang];
+                    var playlist = new Playlist({ languages, });
+                    suttas.forEach(sutta => playlist.addSutta(sutta));
                     var duration = playlist.stats().duration;
                     if (duration > that.maxDuration) {
-                        playlist = new Playlist({
-                            languages: opts.languages || [language],
-                        });
+                        languages = opts.languages || [lang];
+                        playlist = new Playlist({ languages, });
                         var minutes = (that.maxDuration / 60).toFixed(0);
                         playlist.addTrack("createPlaylist_error1", 
                             `Play list is too long to be played. `+
-                            `All play lists must be less than ${minutes} minutes long`);
+                            `All play lists must be less than `+
+                            `${minutes} minutes long`);
                     }
                     resolve(playlist);
-                } catch(e) {reject(e);} })();
+                } catch(e) {
+                    logger.error(e.stack);
+                    reject(e);
+                } })();
             });
         }
 
@@ -781,6 +783,22 @@
 
         findSuttas(...args) {
             var that = this;
+            var pbody = (resolve,reject) => (async function(){try{
+                var res = await that.search.apply(that, args);
+                res.suttas = res.results.map(r=>r.sutta);
+                resolve(res);
+            } catch(e) {reject(e);} })();
+            if (1) {
+                var p = new Promise(pbody);
+            } else {
+                var p = this.findSuttasDeprecated.apply(this, args);
+            }
+            return p;
+        }
+
+        findSuttasDeprecated(...args) {
+            this.log(`DANGER: findSuttasDeprecated() `);
+            var that = this;
             var opts = args[0];
             if (typeof opts === 'string') {
                 opts = {
@@ -790,13 +808,14 @@
             }
             var searchMetadata = opts.searchMetadata == null 
                 ? false 
-                : opts.searchMetadata == true || opts.searchMetadata === 'true';
+                : opts.searchMetadata+'' === 'true';
             var pattern = SuttaStore.sanitizePattern(opts.pattern);
             var language = opts.language || 'en';
-            var maxResults = Number(
-                opts.maxResults==null ? that.maxResults : opts.maxResults);
+            var maxResults = Number(opts.maxResults==null 
+                ? that.maxResults : opts.maxResults);
             if (isNaN(maxResults)) {
-                throw new Error("SuttaStore.search() maxResults must be a number");
+                throw new Error(
+                    "SuttaStore.search() maxResults must be a number");
             }
             var sortLines = opts.sortLines;
             return new Promise((resolve, reject) => {
@@ -806,7 +825,8 @@
                             method,
                             uids,
                             suttaRefs,
-                        } = that.sutta_uidSearch(pattern, maxResults, language);
+                        } = that.sutta_uidSearch(pattern, 
+                            maxResults, language);
                     } else {
                         var method = 'phrase';
                         var lines = [];
@@ -824,14 +844,16 @@
                         var resultPattern = pattern;
                         if (!lines.length) {
                             var method = 'keywords';
-                            var data = await that.keywordSearch(searchOpts);
+                            var data = await that
+                                .keywordSearch(searchOpts);
                             lines = data.lines;
                             resultPattern = data.resultPattern;
                         }
                         sortLines && lines.sort(sortLines);
                         var suttaRefs = lines.map(line => {
                             var iColon = line.indexOf(':');
-                            var pathParts = line.substring(0,iColon).split('/');
+                            var pathParts = line.substring(0,iColon)
+                                .split('/');
                             var suttaRef = 
                                 pathParts[3].replace(/.json/,'') + '/' +
                                 pathParts[1] + '/' +

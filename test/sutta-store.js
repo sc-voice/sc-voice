@@ -72,7 +72,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsuttaPath(opts) returns sutta filepath", function(done) {
+    it("suttaPath(opts) returns sutta filepath", function(done) {
         (async function() { try {
             if (1) {
                 var suttaIdsPath = path.join(__dirname, '../src/node/sutta-ids.json');
@@ -514,45 +514,6 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) performs keyword search", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
-            var expected = [{
-                count: 11.031,
-                uid: 'mn77',
-            },{
-                count: 8.068,
-                uid: 'an10.29',
-            },{
-                count: 7.004,
-                uid: 'dn16',
-            },{
-                count: 6.007,
-                uid: 'dn34',
-            },{
-                count: 6.005,
-                uid: 'dn33',
-            }];
-            var {
-                method,
-                results,
-            } = await store.search('blue yellow');
-            should(method).equal('keywords');
-            should.deepEqual(results.map(r=> ({
-                uid:r.uid,
-                count:r.count,
-            })), expected);
-            var {
-                method,
-                results,
-            } = await store.search('yellow blue');
-            should.deepEqual(results.map(r=> ({
-                uid:r.uid,
-                count:r.count,
-            })), expected);
-            done(); 
-        } catch(e) {done(e);} })();
-    });
     it("paliPattern(pattern) should return the Pali pattern", function(){
         should(SuttaStore.paliPattern("jhana")).equal('jh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
         should(SuttaStore.paliPattern("abcdefghijklmn"))
@@ -562,7 +523,7 @@
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });
-    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", function(done) {
+    it("search(pattern) finds romanized Pali keywords ", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
             var res = await store.search('jhana');
@@ -1003,95 +964,11 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("findSuttas(opts) finds suttas by phrase", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
-
-            // Search english phrase
-            var data = await store.findSuttas({ pattern: 'root of suffering', });
-            should(data.method).equal('phrase');
-            should.deepEqual(data.suttaRefs, [
-                'sn42.11/en/sujato',
-                'mn105/en/sujato',
-                'mn1/en/sujato',
-                'sn56.21/en/sujato',
-                'mn66/en/sujato',
-            ]);
-            checkSuttas(data);
-
-
-            done(); 
-        } catch(e) {done(e);} })();
-    });
-    it("findSuttas(opts) finds suttas by keywords", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
-
-            // Search keywords
-            var data = await store.findSuttas({ pattern: 'root suffering', });
-            should(data.method).equal('keywords');
-            should.deepEqual(data.suttaRefs, [
-                'dn14/en/sujato',
-                'mn9/en/sujato',
-                'dn16/en/sujato',
-                'dn33/en/sujato',
-                'mn22/en/sujato',
-            ]);
-            checkSuttas(data);
-
-            done(); 
-        } catch(e) {done(e);} })();
-    });
-    it("keywordSearch(...) finds suttas by keywords", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
-            var language = 'en';
-
-            // Search Pali phrase
-            var pattern = store.patternKeywords('Anāthapiṇḍika')[0]; 
-            var data = await store.keywordSearch({ pattern, language, });
-            should(data.lines.length).equal(224);
-
-            // Search Pali phrase
-            var pattern = store.patternKeywords('anathapindika')[0]; 
-            console.log(pattern);
-            var data2 = await store.keywordSearch({ pattern, language, });
-            should(data2.lines.length).equal(225); // sn55.30: anāthapiṇḍikā 
-
-            done(); 
-        } catch(e) {done(e);} })();
-    });
-    it("TESTTESTfindSuttas(opts) finds by sutta_uid", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
-
-            // Search sutta uid list
-            var data = await store.findSuttas({ pattern: 'mn2,mn1', });
-            should(data.method).equal('sutta_uid');
-            should.deepEqual(data.suttaRefs, [
-                'mn2/en/sujato',
-                'mn1/en/sujato',
-            ]);
-            checkSuttas(data);
-
-            // Search sutta uid range
-            var data = await store.findSuttas({ pattern: 'an3', });
-            should.deepEqual(data.suttaRefs, [
-                'an3.1/en/sujato',
-                'an3.2/en/sujato',
-                'an3.3/en/sujato',
-                'an3.4/en/sujato',
-                'an3.5/en/sujato',
-            ]);
-            checkSuttas(data);
-
-            done(); 
-        } catch(e) {done(e);} })();
-    });
     it("createPlaylist(opts) creates playlist", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
-            var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
+            var playlist = await store.createPlaylist({ 
+                pattern: 'an3.76-77', });
             should(playlist.tracks.length).equal(4);
             should.deepEqual(
                 playlist.tracks.map(track => track.segments[0].scid), [
@@ -1140,14 +1017,15 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("maxDuration limits createPlaylist()", function(done) {
+    it("TESTTESTmaxDuration limits createPlaylist()", function(done) {
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
                 logLevel,
             }).initialize();
             var eCaught;
-            var playlist = await store.createPlaylist({ pattern: 'an3.76-77', });
+            var playlist = await store.createPlaylist({ 
+                pattern: 'an3.76-77', });
             should.deepEqual(playlist.stats(), {
                 tracks: 1,
                 chars: {

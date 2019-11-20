@@ -554,17 +554,22 @@
                     `${this.constructor.name} is not initialized`));
             }
             var vroot = req.params.vroot || 'Aditi';
-            var langs = (req.params.langs || 'pli+en').toLowerCase().split('+');
-            var language = req.query.lang || 'en';
+            var langs = (req.params.langs || 'pli+en')
+                .toLowerCase().split('+');
+            var language = langs.filter(l=>l!=='pli')[0];
+            var language = language || req.query.lang || 'en';
             var vname = (req.params.voice || 'Amy').toLowerCase();
             var pattern = req.params.pattern;
             if (!pattern) {
-                return Promise.reject(new Error('Search pattern is required'));
+                return Promise.reject(new Error(
+                    'Search pattern is required'));
             }
             var usage = req.query.usage || 'recite';
-            var maxResults = Number(req.query.maxResults || suttaStore.maxResults);
+            var maxResults = 
+                Number(req.query.maxResults || suttaStore.maxResults);
             if (isNaN(maxResults)) {
-                return Promise.reject(new Error('Expected number for maxResults'));
+                return Promise.reject(new Error(
+                    'Expected number for maxResults'));
             }
             return new Promise((resolve, reject) => {
                 (async function() { try {

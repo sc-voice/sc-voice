@@ -254,7 +254,7 @@ style="width:100%; margin-top:0"/>
 
       <details v-if="sections && sections[0]" class="scv-header">
         <summary class="subheading scv-header-summary" >
-            {{suttaTitle}}
+            <span v-html="suttaTitle"></span>
         </summary>
         <div class="scv-blurb">{{suttaplex.blurb}}</div>
         <div class="title pt-4 pb-2 text-center">

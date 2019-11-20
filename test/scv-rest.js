@@ -960,7 +960,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET authors returns authors", function(done) {
+    it("GET authors returns authors", function(done) {
         (async function() { try {
             var scvRest = app.locals.scvRest;
             await scvRest.initialize();

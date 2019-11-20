@@ -48,7 +48,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTexpandSutta(sutta) expands mn1", function(done) {
+    it("expandSutta(sutta) expands mn1", function(done) {
         this.timeout(10*1000);
         (async function() { try {
             await suttaStore.initialize();
@@ -134,7 +134,8 @@
                 },
                 volume: 'test-mn1',
             });
-            should(result.signature.guid).match(/094d88b56064949b7419281fddbcddc1/);
+            should(result.signature.guid)
+                .match(/261231109fb4d82fc996ea6a0f916903/);
             console.log(`mn1.speak() done`, ((Date.now() - msStart)/1000).toFixed(1));
             done();
         } catch(e) { done(e); } })();

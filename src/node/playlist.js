@@ -50,6 +50,12 @@
         speak(opts) {
             var that = this;
             var voices = opts.voices || that.voices;
+            var nLang = that.languages.length;
+            that.languages.forEach(lang => {
+                if (voices[lang] == null) {
+                    throw new Error( `no voice for lang:${lang}`);
+                }
+            });
             
             return new Promise((resolve, reject) => {
                 (async function() { try {
@@ -57,21 +63,24 @@
                         return acc || voices[lang];
                     }, null).services.recite;
                     var trackAudioFiles = [];
-                    var sectionBreak = await tts.synthesizeBreak(tts.SECTION_BREAK);
-                    for (var iTrack = 0; iTrack < that.tracks.length; iTrack++) {
-                        var track = that.tracks[iTrack];
+                    var sectionBreak = await tts
+                        .synthesizeBreak(tts.SECTION_BREAK);
+                    for (var iTrk = 0; iTrk < that.tracks.length; iTrk++) {
+                        var track = that.tracks[iTrk];
                         var sutta_uid = track.sutta_uid.toLowerCase();
                         var auid = track.author_uid || 'no-author';
                         var lang = track.lang || 'en';
                         var segmentAudioFiles = [];
-                        for (var iSeg = 0; iSeg < track.segments.length; iSeg++) {
-                            var segment = track.segments[iSeg];
-                            for (var iLang = 0; iLang < that.languages.length; iLang++) {
+                        var trkSegs = track.segments;
+                        for (var iSeg = 0; iSeg < trkSegs.length; iSeg++) {
+                            var segment = trkSegs[iSeg];
+                            for (var iLang = 0; iLang < nLang; iLang++) {
                                 var lang = that.languages[iLang];
                                 var voice = voices[lang];
                                 var vname = voice.name.toLowerCase();
                                 var volume = opts.volume || 
-                                    SoundStore.suttaVolumeName(sutta_uid, lang, auid, voice.name);
+                                    SoundStore.suttaVolumeName(sutta_uid, 
+                                        lang, auid, voice.name);
                                 var text = segment[lang];
                                 if (voice && text) {
                                     var segOpts = {
