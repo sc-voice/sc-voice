@@ -445,7 +445,7 @@ export default {
             }
             var langs = [];
             this.showPali && langs.push('pli');
-            this.showTrans && langs.push(this.language);
+            this.showTrans && langs.push(this.gscv.lang);
             var vnameTrans = this.voice.name;
             var urlPath = `download/playlist/${langs.join('+')}`;
             search = encodeURIComponent(search || this.suttaRef());
