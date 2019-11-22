@@ -33,9 +33,11 @@
 
         static titleOfText(text='(untitled)') {
             var splits = text.split(' ');
-            return splits.length > MAX_TITLE_WORDS
+            var title = splits.length > MAX_TITLE_WORDS
                 ? splits.slice(0,MAX_TITLE_WORDS).join(' ') + Words.U_ELLIPSIS
                 : splits.join(' ');
+
+            return title.replace(/<.*$/u,'');
         }
 
         expandAll() {
