@@ -14,13 +14,10 @@
             dense
             sort-by=""
           >
-          <template v-slot:items="props">
-            <th class="text-left">
-                <a @click="getLog(props.item.name)">{{ props.item.name }}</a>
-            </th>
-            <td class="text-left">{{ props.item.size }}</td>
-            <td class="text-left">{{ props.item.ctime }}</td>
-            <td class="text-left">{{ props.item.mtime }}</td>
+          <template v-slot:item.action="{ item }">
+            <v-icon small class="mr-2" @click="getLog(item)">
+              visibility
+            </v-icon>
           </template>
         </v-data-table>
       </v-card-text>
@@ -50,16 +47,18 @@ export default {
     methods: {
         getLogs() {
             var url = this.url('auth/logs');
+            console.log(`getLogs`);
             this.$http.get(url, this.authConfig).then(res => {
                 this.logs = res.data;
             }).catch(e => {
                 console.error(e.response);
             });
         },
-        getLog(name) {
+        getLog({name}) {
             var ilog = this.logs.reduce((acc,log,i) => {
                 return log.name === name ? i : acc;
             }, 0);
+            console.log(`getLog`, name);
             var url = this.url(`auth/log/${ilog}`);
             this.$http.get(url, this.authConfig).then(res => {
                 Vue.set(this.logs[ilog], 'log', res.data);
@@ -81,6 +80,10 @@ export default {
     computed: {
         headers() {
             return [{
+                text: '',
+                value: 'action',
+                sortable: false,
+            },{
                 text: this.$vuetify.lang.t('$vuetify.auth.logFile'),
                 value: 'name',
             },{
