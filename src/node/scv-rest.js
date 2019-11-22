@@ -625,27 +625,32 @@
             n = Math.max(1, isNaN(n) ? 3 : n);
             var examples = this.examples;
             if (examples == null) {
+                examples = this.examples = {};
+            }
+            var langExamples = examples[lang];
+            if (langExamples == null) {
                 var fname = `examples-${lang}.txt`;
                 var fpath = path.join(PATH_EXAMPLES, fname);
                 if (fs.existsSync(fpath)) {
-                    examples = this.examples = fs.readFileSync(fpath)
+                    langExamples = fs.readFileSync(fpath)
                         .toString()
                         .trim()
                         .split('\n');
+                    this.examples[lang] = langExamples;
                 } else {
                     logger.warn(`File not found: ${fpath}`);
                     throw new Error(`File not found: ${fname}`);
                 }
             }
-            var nShuffle = examples.length;
+            var nShuffle = langExamples.length;
             for (var i = 0; i < nShuffle; i++) {
-                var j = Math.trunc(Math.random() * examples.length);
-                var t = examples[i];
-                examples[i] = examples[j];
-                examples[j] = t;
+                var j = Math.trunc(Math.random() * langExamples.length);
+                var t = langExamples[i];
+                langExamples[i] = langExamples[j];
+                langExamples[j] = t;
             }
             
-            return examples.slice(0, n);
+            return langExamples.slice(0, n);
         }
 
         getWikiAria(req, res, next) {
