@@ -18,6 +18,7 @@
     const ELLIPSIS_BREAK = '<break time="1.000s"/>';
     const BREAK = `<break time="0.001s"/>`;
     const tmp = require('tmp');
+    this.timeout(10*1000);
 
     function phoneme(ph,word) {
         var ph = `<phoneme alphabet="ipa" ph="${ph}">${word}</phoneme>${BREAK}`;

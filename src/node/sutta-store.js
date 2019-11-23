@@ -22,7 +22,8 @@
     const Words = require('./words');
     const ROOT = path.join(__dirname, '..', '..', 'local', 'suttas');
     const maxBuffer = 10 * 1024 * 1024;
-    const SUTTAIDS_PATH = path.join(__dirname, '..', '..', 'src', 'node', 'sutta-ids.json');
+    const SUTTAIDS_PATH = path
+        .join(__dirname, '..', '..', 'src', 'node', 'sutta-ids.json');
     const COLLECTIONS = {
         an: {
             name: 'an',
@@ -628,7 +629,8 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var results = [];
-                    for (var i = 0; i < Math.min(maxResults,suttaRefs.length); i++) {
+                    var iEnd = Math.min(maxResults,suttaRefs.length);
+                    for (var i = 0; i < iEnd; i++) {
                         var ref = suttaRefs[i];
                         var refParts = ref.split('/');
                         var uid = refParts[0];
@@ -827,7 +829,29 @@
         }
 
         loadSutta(opts) {
-            return this.loadBilaraSutta(opts);
+            var that = this;
+            var pbody = (resolve, reject) => (async function(){try{
+                var sutta = await that.loadBilaraSutta(opts);
+                if (!sutta) {
+                    var {
+                        scid,
+                        language,
+                        langTrans,
+                        translator,
+                        expand,
+                        matchHighlight,
+                    } = opts;
+                    var suttaRef = `${scid}/${language}/${translator}`;
+                    that.log(`loadSutta(${suttaRef}) legacy `);
+                    sutta = await that.suttaFactory.loadSutta({
+                        scid,
+                        translator,
+                        language,
+                    });
+                }
+                resolve(sutta);
+            } catch(e) {reject(e);}})();
+            return new Promise(pbody);
         }
 
         mldResult(mld, lang) {
@@ -958,86 +982,17 @@
                 };
             }
             var searchMetadata = opts.searchMetadata == null 
-                ? false 
-                : opts.searchMetadata == true || opts.searchMetadata === 'true';
+                ? false : opts.searchMetadata+'' == 'true';
             var pattern = SuttaStore.sanitizePattern(opts.pattern);
-            var language = opts.language || 'en';
-            var maxResults = opts.maxResults==null ? that.maxResults : opts.maxResults;
+            console.log(`dbg searchLegacy`, opts);
+            var language = opts.language || opts.lang || 'en';
+            var maxResults = opts.maxResults==null 
+                ? that.maxResults : opts.maxResults;
             var maxResults = Number(maxResults);
             var sortLines = opts.sortLines;
             if (isNaN(maxResults)) {
-                throw new Error("SuttaStore.search() maxResults must be a number");
-            }
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    if (SuttaStore.isUidPattern(pattern)) {
-                        var method = 'sutta_uid';
-                        that.log(`search(${pattern})`+
-                            `lang:${language} `+
-                            `maxResults:${maxResults}`);
-                        var uids = that.suttaList(pattern).slice(0, maxResults);
-                        var results = await that.suttaSearchResults({
-                            suttaRefs: uids, 
-                            lang: language,
-                            maxResults,
-                        });
-                    } else {
-                        var method = 'phrase';
-                        var lines = [];
-                        pattern = SuttaStore.normalizePattern(pattern);
-                        var searchOpts = {
-                            pattern, 
-                            maxResults, 
-                            language, 
-                            searchMetadata
-                        };
-
-                        if (!lines.length && !/^[a-z]+$/iu.test(pattern)) {
-                            lines = await that.phraseSearch(searchOpts);
-                        }
-                        var resultPattern = pattern;
-                        if (!lines.length) {
-                            var method = 'keywords';
-                            var data = await that.keywordSearch(searchOpts);
-                            lines = data.lines;
-                            resultPattern = data.resultPattern;
-                        }
-                        var grepSearchResults = that.grepSearchResults({
-                            lines,
-                            sortLines,
-                            pattern: resultPattern,
-                        });
-                        var results = await that.voiceResults(grepSearchResults, language);
-                    }
-                    resolve({
-                        method,
-                        results,
-                        resultPattern,
-                    });
-                } catch(e) {reject(e);} })();
-            });
-        }
-
-        searchLegacy(...args) { 
-            // implementation deprecated. should use findSuttas
-            var that = this;
-            var opts = args[0];
-            if (typeof opts === 'string') {
-                opts = {
-                    pattern: args[0],
-                    maxResults: args[1],
-                };
-            }
-            var searchMetadata = opts.searchMetadata == null 
-                ? false 
-                : opts.searchMetadata == true || opts.searchMetadata === 'true';
-            var pattern = SuttaStore.sanitizePattern(opts.pattern);
-            var language = opts.language || 'en';
-            var maxResults = opts.maxResults==null ? that.maxResults : opts.maxResults;
-            var maxResults = Number(maxResults);
-            var sortLines = opts.sortLines;
-            if (isNaN(maxResults)) {
-                throw new Error("SuttaStore.search() maxResults must be a number");
+                throw new Error(
+                    "SuttaStore.search() maxResults must be a number");
             }
             var pbody = (resolve, reject) => {(async function() { try {
                 if (SuttaStore.isUidPattern(pattern)) {
@@ -1045,7 +1000,8 @@
                     that.log(`search(${pattern})`+
                         `lang:${language} `+
                         `maxResults:${maxResults}`);
-                    var uids = that.suttaList(pattern).slice(0, maxResults);
+                    var uids = that.suttaList(pattern)
+                        .slice(0, maxResults);
                     var results = await that.suttaSearchResults({
                         suttaRefs: uids, 
                         lang: language,
@@ -1077,7 +1033,8 @@
                         sortLines,
                         pattern: resultPattern,
                     });
-                    var results = await that.voiceResults(grepSearchResults, language);
+                    var results = await that
+                        .voiceResults(grepSearchResults, language);
                 }
                 resolve({
                     method: `${method}-legacy`,

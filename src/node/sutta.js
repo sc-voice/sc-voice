@@ -3,7 +3,9 @@
     const path = require('path');
     const Words = require('./words');
     const Section = require('./section');
-    const SuttaCentralId = require('./sutta-central-id');
+    const {
+        SuttaCentralId,
+    } = require('scv-bilara');
     const RE_HEADER = new RegExp(`^.*:0\\..*$`, 'u');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
     const RE_PHRASE_END = new RegExp('.*[.?;,]$', 'u');
@@ -26,8 +28,10 @@
             opts.metaarea && (this.metaarea = opts.metaarea);
 
             var segments = opts.segments || [];
-            this.titles = opts.titles || [`(no-title-${this.sutta_uid}`];
-            this.author = opts.author || "(no-author)";
+            var suid = new SuttaCentralId(this.sutta_uid).standardForm();
+            this.titles = opts.titles || [`${suid}`];
+            this.author = opts.author || this.translation.author 
+                || '(no-author)';
             this.lang = opts.lang || 'en';
             this.sections = opts.sections || 
                 Sutta.defaultSections(segments, this.lang);

@@ -355,8 +355,10 @@
                 langTrans,
             } = this.suttaParms(req);
             var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
-            logger.info(`GET play/section/${suttaRef}/${iSection}/${vnameTrans}`);
-            var voiceTrans = Voice.voiceOfName(vnameTrans) || Voice.voiceOfName('Amy');
+            logger.info(
+                `GET play/section/${suttaRef}/${iSection}/${vnameTrans}`);
+            var voiceTrans = Voice.voiceOfName(vnameTrans) || 
+                Voice.voiceOfName('Amy');
             var usage = voiceTrans.usage;
             var voiceRoot = this.voiceFactory.voiceOfName('Aditi');
             return new Promise((resolve, reject) => {
@@ -367,13 +369,16 @@
                         language: langTrans,
                         expand: true,
                     });
-                    if (iSection < 0 || sutta.sections.length <= iSection) {
-                        throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
+                    var nSects = sutta && sutta.sections.length || 0;
+                    if (iSection < 0 || nSects <= iSection) {
+                        throw new Error(`Sutta ${suttaRef} `+
+                            `has no section:${iSection}`);
                     }
                     var section = sutta.sections[iSection];
                     var segments = [];
-                    for (var iSeg = 0; iSeg < section.segments.length; iSeg++) {
-                        var segment = Object.assign({}, section.segments[iSeg]);
+                    var sectSegs = section.segments;
+                    for (var iSeg = 0; iSeg < sectSegs.length; iSeg++) {
+                        var segment = Object.assign({}, sectSegs[iSeg]);
                         segment.audio = {};
                         segments.push(segment);
                     }

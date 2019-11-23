@@ -15,8 +15,8 @@
     const UID_EXPANSION_PATH = path.join(LOCAL, 'uid_expansion.json');
     const DEFAULT_LANGUAGE = 'en';
     const DEFAULT_API_URL = 'http://suttacentral.net/api';
-    const UID_EXPANSION_URL = 'https://raw.githubusercontent.com/suttacentral'+
-        '/sc-data/master/misc/uid_expansion.json';
+    const UID_EXPANSION_URL = 'https://raw.githubusercontent.com/'+
+        'suttacentral/sc-data/master/misc/uid_expansion.json';
     const ANY_LANGUAGE = '*';
     const ANY_TRANSLATOR = '*';
     const PO_SUFFIX_LENGTH = '.po'.length;
@@ -39,7 +39,8 @@
                 storeName: 'api',
             });
             this.apiCacheSeconds = opts.apiCacheSeconds || 7*DAY_SECONDS;
-            this.queue = new Queue(opts.maxConcurrentServiceCalls || 5, Infinity);
+            this.queue = new Queue(opts.maxConcurrentServiceCalls || 5, 
+                Infinity);
             this.mj = new MerkleJson({
                 hashTag: 'guid',
             });
@@ -104,11 +105,13 @@
                     } else if (/^text\/plain/.test(contentType)) {
                         // OK
                     } else {
-                        error = new Error(`Invalid content-type:${contentType}\n` +
-                          `Expected application/json for url:${url}`);
+                        error = new Error(
+                            `Invalid content-type:${contentType}\n` +
+                            `Expected application/json for url:${url}`);
                     }
                     if (error) {
-                        res.resume(); // consume response data to free up memory
+                        // consume response data to free up memory
+                        res.resume(); 
                         logger.error(error.stack);
                         reject(error);
                         return;
@@ -175,7 +178,8 @@
                     var url = `${apiUrl}/expansion`;
                     SuttaCentralApi.loadJson(url).then(res => {
                         logger.info(`${url}`);
-                        fs.writeFileSync(EXPANSION_PATH, JSON.stringify(res,null,2));
+                        fs.writeFileSync(EXPANSION_PATH, 
+                            JSON.stringify(res,null,2));
                         resolve(res);
                     }).catch(e => {
                         logger.error(`${url} ${e.message}`);
@@ -197,9 +201,9 @@
             return new Promise((resolve,reject) => { try {
                 (async function() {
                     that.log(`initialize() apiUrl:${that.apiUrl}`);
-                    await SuttaCentralApi.loadExpansion(that.apiUrl).then(res => {
-                        that.expansion = res;
-                    }).catch(e => reject(e));
+                    await SuttaCentralApi.loadExpansion(that.apiUrl)
+                        .then(res => { that.expansion = res; })
+                        .catch(e => reject(e));
                     await SuttaCentralApi.loadUidExpansion().then(res => {
                         that.uid_expansion = res;
                     }).catch(e => reject(e));
@@ -220,15 +224,18 @@
             if (!this.initialized) {
                 throw new Error('initialize() must be called');
             }
+            var lang = opts.lang || 'en';
+            var author_uid = opts.author_uid || 'sujato';
+            logger.info(`suttaFromHtml(${JSON.stringify(opts)})`);
             var apiText = Object.assign({
-                lang: "en",
+                lang,
                 uid: "uid?",
             }, opts);
             apiText.translation = Object.assign({
                 title: "title?",
                 text: html,
-                lang: 'en',
-                author_uid: 'sujato',
+                lang,
+                author_uid,
             }, opts.translation);
             apiText.suttaplex = Object.assign({
                 uid: "suttaplex.uid?",
@@ -337,14 +344,19 @@
                 [lang]: `${translation.title}`,
                 [suttaplex.root_lang]: `${suttaplex.original_title}`,
             }];
+            var segments = headerSegments.concat(textSegments);
+            var suttaRef = `${uid}/${lang}/${author_uid}`;
+            logger.info(`suttaFromApiText(${suttaRef}) `+
+                `segs:${segments.length}`);
             return new Sutta({
                 author_uid,
                 sutta_uid: uid,
+                lang,
                 support: segmented
                     ? Definitions.SUPPORT_LEVELS.Supported
                     : Definitions.SUPPORT_LEVELS.Legacy,
                 metaarea,
-                segments: headerSegments.concat(textSegments),
+                segments,
                 translation,
             });
         }

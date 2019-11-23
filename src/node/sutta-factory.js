@@ -70,14 +70,19 @@
         'caf_rhysdavids': true,
     };
     const SUPPORTED_LANGUAGES = {
+        da: true,
         de: true,
         en: true,
+        hi: true,
         is: true,
         ja: true,
+        nb: true,
         nl: true,
         pl: true,
+        pt: true,
         po: true,
         pt: true,
+        ro: true,
         vi: true,
 
     };
@@ -213,49 +218,49 @@
             var language = opts.language || 'en';
             var autoSection = opts.autoSection == null 
                 ? this.autoSection : opts.autoSection;
-            var plainText = opts.plainText == null ? this.plainText : opts.plainText;
+            var plainText = opts.plainText == null 
+                ? this.plainText : opts.plainText;
             if (SUPPORTED_LANGUAGES[language] !== true) {
                 return Promise.reject(
-                    new Error(`SC-Voice does not support language: ${language}`));
+                    new Error(
+                        `Voice does not support language: ${language}`));
             }
             var translators = this.translators(opts);
             var o = Object.assign({}, opts);
             o.id = o.id || o.scid; // for pootl
  
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var sutta = null;
-                    for (var i = 0; !sutta && i <= translators.length; i++) {
-                        var translator = translators[i];
-                        if (translator == null) {
-                            throw new Error(
-                                `loadSutta() not found opts:${JSON.stringify(opts)}`);
-                        }
-                        o.translator = translator;
-                        if (that.suttaLoader) {
-                            sutta = await that.suttaLoader(o);
-                        } 
-                        if (!sutta) {
-                            if (that.suttaCentralApi) {
-                                sutta = await that.suttaCentralApi
-                                    .loadSutta(o);
-                            } else {
-                                throw new Error(`I miss Pootl`);
-                            }
+            var pbody = (resolve, reject) => (async function() { try {
+                var sutta = null;
+                for (var i = 0; !sutta && i <= translators.length; i++) {
+                    var translator = translators[i];
+                    if (translator == null) {
+                        throw new Error(
+                            `Sutta not found:${JSON.stringify(opts)}`);
+                    }
+                    o.translator = translator;
+                    if (that.suttaLoader) {
+                        sutta = await that.suttaLoader(o);
+                    } 
+                    if (!sutta) {
+                        if (that.suttaCentralApi) {
+                            sutta = await that.suttaCentralApi.loadSutta(o);
+                        } else {
+                            throw new Error(`I miss Pootl`);
                         }
                     }
-                    if (plainText) {
-                        sutta = that.stripHtml(sutta);
-                    }
-                    if (o.expand && EXPANDABLE_SUTTAS[sutta.sutta_uid]) {
-                        sutta = that.expandSutta(that.parseSutta(sutta))
-                    }
-                    if (autoSection) {
-                        sutta = that.sectionSutta(sutta);
-                    }
-                    resolve(sutta);
-                } catch(e) {reject(e);} })();
-            });
+                }
+                if (plainText) {
+                    sutta = that.stripHtml(sutta);
+                }
+                if (o.expand && EXPANDABLE_SUTTAS[sutta.sutta_uid]) {
+                    sutta = that.expandSutta(that.parseSutta(sutta))
+                }
+                if (autoSection) {
+                    sutta = that.sectionSutta(sutta);
+                }
+                resolve(sutta);
+            } catch(e) {reject(e);} })();
+            return new Promise(pbody);
         }
 
         parseSutta(sutta) {
