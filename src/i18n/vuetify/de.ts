@@ -131,7 +131,7 @@ export default {
     updateRelease: 'Version aktualisieren',
     updateSeconds: 'Sekunden seit letzter Aktualisierung:',
     updatingContent: 'Inhalt wird aktualisiert',
-    updatingServer: 'Server wird aktualisiert',
+    updatingServer: 'Version wird aktualisiert',
     uptime: 'Zeit seit Inbetriebnahme',
     userAdded: 'Benutzer hinzugefügt',
     username: 'Benutzername',
