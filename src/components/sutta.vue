@@ -489,7 +489,7 @@ export default {
             var tracks = sutta.sections.reduce((acc,sect,i) => {
                 acc.push({
                     sutta_uid: sutta.sutta_uid,
-                    title: sutta.translation.title,
+                    title: sutta.suttaTitle,
                     language: sutta.translation.lang,
                     translator: sutta.author_uid,
                     iSection: i,
@@ -696,11 +696,9 @@ export default {
             this.suttaCode = sutta.suttaCode || '';
             this.language = sutta.lang;
             this.translator = sutta.author_uid;
-            var title = sutta.title || suttaplex.translated_title ||
-                suttaplex.original_title;
             this.sutta.acronym = acronym;
-            this.sutta.title = `${acronym}: ${title}`;
             this.sutta.titles = sutta.titles;
+            this.sutta.title = this.suttaTitle;
             this.sutta.original_title = suttaplex.original_title || "?";
             var seg0 = sections[0] && sections[0].segments[0] || {};
             this.sutta.collection = `${seg0.pli} / ${seg0.en}`;
