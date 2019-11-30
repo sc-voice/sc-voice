@@ -984,7 +984,7 @@
             var searchMetadata = opts.searchMetadata == null 
                 ? false : opts.searchMetadata+'' == 'true';
             var pattern = SuttaStore.sanitizePattern(opts.pattern);
-            console.log(`dbg searchLegacy`, opts);
+            that.log(`searchLegacy ${pattern}`);
             var language = opts.language || opts.lang || 'en';
             var maxResults = opts.maxResults==null 
                 ? that.maxResults : opts.maxResults;
