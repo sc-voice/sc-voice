@@ -616,9 +616,10 @@
         should(Voice.voiceOfName("raveena")).properties({name:"Raveena"});
         should(Voice.voiceOfName(1)).properties({name:"Russell"});
         should(Voice.voiceOfName("vicki")).properties({name:"Vicki"});
-        should(Voice.voiceOfName("sujato_pli")).properties({name:"sujato_pli"});
+        should(Voice.voiceOfName("sujato_pli"))
+            .properties({name:"sujato_pli"});
     })
-    it("synthesizeBreak() for HumanTts uses altTts", function(done) {
+    it("TESTTESTsynthesizeBreak() for HumanTts uses altTts", done=>{
         this.timeout(3*1000);
         var scAudio = new SCAudio();
         var voice = Voice.createVoice({

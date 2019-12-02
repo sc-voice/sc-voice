@@ -131,6 +131,7 @@ export default {
     updateSeconds: 'पिछले अपडेट से सेकंड:',
     updatingContent: 'अंतर्वस्तु अपडेट हो रहा है',
     updatingServer: 'सर्वर अपडेट हो रहा है',
+    updateBilaraIntro: 'Click Update Content to update bilara-data',
     uptime: 'शुरू होकर समय',
     userAdded: 'यूज़र मिलाया गया',
     username: 'यूज़र का नाम',

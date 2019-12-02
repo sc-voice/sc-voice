@@ -131,6 +131,7 @@ export default {
     updateSeconds: 'Segundos desde última atualização:',
     updatingContent: 'Atualizando conteúdo...',
     updatingServer: 'Atualizando servidor ',
+    updateBilaraIntro: 'Click Update Content to update bilara-data',
     uptime: 'Tempo desde inicialização',
     userAdded: 'Usuário adicionado',
     username: 'Usuário',

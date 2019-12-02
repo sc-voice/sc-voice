@@ -131,6 +131,7 @@ export default {
     updateSeconds: '最終更新時からの経過秒:',
     updatingContent: 'コンテンツを更新中',
     updatingServer: 'サーバーを更新中',
+    updateBilaraIntro: 'Click Update Content to update bilara-data',
     uptime: '起動からの経過時間',
     userAdded: 'ユーザー追加',
     username: 'ユーザーネーム',

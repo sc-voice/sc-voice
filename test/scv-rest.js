@@ -52,6 +52,16 @@
             ;
     }
 
+    function testScvRest() {
+        // Wait for server to start
+        return new Promise(resolve=>(async function(){
+            await app.locals.scvRest.initialize();
+            setTimeout(()=>{
+                resolve(app.locals.scvRest);
+            },200);
+        })());
+    }
+
     it("ScvRest must be initialized", function(done) {
         (async function() { try {
             var scvRest = app.locals.scvRest;
@@ -69,9 +79,10 @@
         should(voiceFactory).instanceOf(VoiceFactory);
         should(voiceFactory.soundStore).equal(soundStore);
     });
-    it("GET /identity returns restbundle identity JSON", function(done) {
+    it("GET /identity => restbundle identity JSON", done=>{
         var async = function* () { try {
-            var response = yield supertest(app).get("/scv/identity").expect((res) => {
+            var response = yield supertest(app)
+                .get("/scv/identity").expect((res) => {
                 res.statusCode.should.equal(200);
                 var keys = Object.keys(res.body).sort();
                 should.deepEqual(keys, [
@@ -1037,50 +1048,6 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/update-content", function(done) {
-        (async function() { try {
-            var scvRest = app.locals.scvRest;
-            var soundStore = scvRest.soundStore;
-            var url = `/scv/auth/update-content`;
-            var token = `test-token`;
-            var suids = ['mn1', 'mn2'];
-            var data = { 
-                suids, 
-                token,
-            };
-            var res = await testAuthPost(url, data);
-            /*
-             * NOTE: This test will FAIL if content needs to be updated.
-             * It will failed because the provided token is not valid.
-             * Do not replace the invalid token with a real one.
-             * Update the content from the web page.
-             */
-            res.statusCode.should.equal(200);
-            should(res.body).properties({
-                name: 'ContentUpdater',
-                isActive: true,
-                error: null,
-                actionsTotal: 1,
-                actionsDone: 0,
-            });
-            await new Promise((resolve, reject) => {
-                setTimeout(() => resolve(true), 5000);
-            });
-
-            var url = `/scv/auth/update-content/task`;
-            var res = await testAuthGet(url);
-            should(res.body).properties({
-                name: 'ContentUpdater',
-                error: null,
-                isActive: false,
-                summary: 'Update completed',
-                actionsDone: 1,
-                actionsTotal: 1,
-            });
-
-            done();
-        } catch(e) {done(e);} })();
-    });
     it("GET /search/:pattern/:lang returns German", function(done) {
         var async = function* () { try {
             var maxResults = 3;
@@ -1107,6 +1074,23 @@
             done();
         } catch (e) { done(e); } }();
         async.next();
+    });
+    it("TESTTESTPOST auth/update-bilara", done=>{
+        (async function() { try {
+            var scvRest = await(testScvRest());
+            var url = `/scv/auth/update-bilara`;
+            var data = { };
+            var res = await testAuthPost(url, data);
+            res.statusCode.should.equal(200);
+            should(res.body).properties({
+                repo: 'https://github.com/sc-voice/bilara-data.git',
+                error: null,
+                summary: 'Update completed',
+            });
+            should(res.body.elapsed).above(0);
+
+            done();
+        } catch(e) {done(e);} })();
     });
 });
 

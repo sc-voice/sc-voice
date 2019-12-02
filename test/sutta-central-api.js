@@ -45,7 +45,9 @@
     };
     const SUTTAPLEX_AN2_12_2019 = {
         acronym: null,
-        volpages: 'pts-vp-pli1.53',
+        volpages: {
+            'pts-vp-pli1ed': 'AN i 53',
+        },
         uid: 'an2.11-20',
         blurb: null,
         difficulty: null,
@@ -279,7 +281,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("loadSutta(opts) => an2.12 as part of an2.11-20", done=>{
+    it("TESTTESTloadSutta(opts) => an2.12 as part of an2.11-20", done=>{
         (async function() { try {
             var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var language = 'en';

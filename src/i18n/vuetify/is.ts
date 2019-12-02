@@ -131,6 +131,7 @@ export default {
     updateSeconds: 'Sekúndur frá síðustu uppfærslu:',
     updatingContent: 'Að uppfæra efni...',
     updatingServer: 'Að uppfæra netþjóninn ',
+    updateBilaraIntro: 'Click Update Content to update bilara-data',
     uptime: 'Tímalengd frá ræsingu',
     userAdded: 'Notandi bættur við',
     username: 'Notandanafn',

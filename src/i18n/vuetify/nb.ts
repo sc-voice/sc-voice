@@ -131,6 +131,7 @@ export default {
     updateSeconds: 'Sekunder siden forrige oppdatering:',
     updatingContent: 'Oppdaterer innhold',
     updatingServer: 'Oppdaterer server',
+    updateBilaraIntro: 'Click Update Content to update bilara-data',
     uptime: 'Tid siden oppstart',
     userAdded: 'Bruker opprettet',
     username: 'Brukernavn',

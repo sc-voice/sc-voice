@@ -131,6 +131,7 @@ export default {
     updateSeconds: 'Secunde de la ultima actualizare:',
     updatingContent: 'Se actualizează conținutul...',
     updatingServer: 'Se actualizează serverul ',
+    updateBilaraIntro: 'Click Update Content to update bilara-data',
     uptime: 'Timp de la pornire',
     userAdded: 'Utilizator adăugat',
     username: 'Nume de utiliztor',

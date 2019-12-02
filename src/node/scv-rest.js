@@ -154,6 +154,7 @@
                     this.postVsmCreateArchive],
                 ["post", "auth/vsm/restore-s3-archives", 
                     this.postVsmRestoreS3Archives],
+                ["post", "auth/update-bilara", this.postUpdateBilara],
                 ["post", "auth/update-content", this.postUpdateContent],
                 ["get", "auth/update-content/task", 
                     this.getUpdateContentTask],
@@ -1317,6 +1318,36 @@
                     resolve(task);
                 } catch(e) {
                     logger.warn(`postUpdateContent() failed: ${e.message}`);
+                    reject(e);
+                } })();
+            });
+        }
+
+        postUpdateBilara(req, res, next) {
+            var that = this;
+            var {
+                token,
+            } = req.body || {};
+            var {
+                suttaStore,
+            } = that;
+
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    that.requireAdmin(req, res, "POST update-content");
+                    var date = new Date();
+                    var res = await suttaStore.bilaraData.sync();
+                    var error = null;
+                    resolve({
+                        date,
+                        elapsed: ((Date.now() - date)/1000).toFixed(1),
+                        repo: res.repo,
+                        repoDir: res.repoDir,
+                        summary: "Update completed",
+                        error,
+                    });
+                } catch(e) {
+                    logger.warn(`postUpdateBilara() failed: ${e.message}`);
                     reject(e);
                 } })();
             });
