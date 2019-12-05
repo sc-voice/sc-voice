@@ -1117,7 +1117,15 @@ export default {
         };
 
         // TODO: wait for voices to show up
-        setTimeout(init, 500);
+        setTimeout(() => {
+            if (that.gscv.voices && that.gscv.voices.length) {
+                console.log(`voices available`);
+                init();
+            } else {
+                console.log(`voices not available`);
+                setTimeout(() => init(), 500);
+            }
+        }, 100);
     },
 
     components: {
