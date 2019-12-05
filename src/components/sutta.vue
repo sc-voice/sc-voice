@@ -722,6 +722,8 @@ export default {
                 that.$http.get(url).then(res => {
                     that.supportedAudio = res.data.filter(a=>a.supported);
                     that.unsupportedAudio = res.data.filter(a=>!a.supported);
+                    console.log(`supportedAudio`, that.supportedAudio);
+                    console.log(`unsupportedAudio`, that.unsupportedAudio);
                 }).catch(e => {
                     console.error('supported audio:', url, e.stack, lang);
                 });
@@ -1093,7 +1095,7 @@ export default {
     },
     mounted() {
         var that = this;
-        that.$nextTick(() => {
+        var init = () => {
             var search = that.gscv.search;
             console.log(`cookies`, that.$cookie);
             that.search = search;
@@ -1112,7 +1114,10 @@ export default {
                     input.focus();
                 }
             });
-        });
+        };
+
+        // TODO: wait for voices to show up
+        setTimeout(init, 500);
     },
 
     components: {
