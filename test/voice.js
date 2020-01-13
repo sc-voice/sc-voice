@@ -619,7 +619,7 @@
         should(Voice.voiceOfName("sujato_pli"))
             .properties({name:"sujato_pli"});
     })
-    it("TESTTESTsynthesizeBreak() for HumanTts uses altTts", done=>{
+    it("synthesizeBreak() for HumanTts uses altTts", done=>{
         this.timeout(3*1000);
         var scAudio = new SCAudio();
         var voice = Voice.createVoice({

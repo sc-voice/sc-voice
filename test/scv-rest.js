@@ -1075,7 +1075,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTPOST auth/update-bilara", done=>{
+    it("POST auth/update-bilara", done=>{
         (async function() { try {
             var scvRest = await(testScvRest());
             var url = `/scv/auth/update-bilara`;

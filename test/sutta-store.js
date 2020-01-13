@@ -523,7 +523,7 @@
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });
-    it("search(pattern) finds romanized Pali keywords ", function(done) {
+    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
             var res = await store.search('jhana');
@@ -531,10 +531,8 @@
                 method,
                 results,
                 maxDoc,
-                maxResults,
                 resultPattern,
             } = res;
-            should(maxDoc).equal(5);
             should(method).equal('phrase');
             should.deepEqual(results.map(r=> ({
                 uid:r.uid,
@@ -556,6 +554,7 @@
                 uid: 'an9.35',
             }]);
             should(resultPattern).equal('\\bjh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
+            should(results.length).equal(5);
 
             var {
                 method,
@@ -1017,7 +1016,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTmaxDuration limits createPlaylist()", function(done) {
+    it("maxDuration limits createPlaylist()", function(done) {
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,

@@ -34,7 +34,8 @@
     const SuttaCentralId = require('./sutta-central-id');
     const LOCAL = path.join(__dirname, '../../local');
     const PATH_SOUNDS = path.join(LOCAL, 'sounds/');
-    const PATH_EXAMPLES = path.join(LOCAL, `suttas`, `examples/`);
+    const PATH_EXAMPLES = path
+        .join(LOCAL, `bilara-data`, `.voice`, `examples/`);
     const DEFAULT_USER = {
         username: "admin",
         isAdmin: true,
@@ -160,6 +161,7 @@
                     this.getUpdateContentTask],
                 ["post", "auth/reboot", this.postReboot],
                 ["post", "auth/update-release", this.postUpdateRelease],
+                ["get", "bilara/:scid", this.getBilara],
 
             ].map(h => this.resourceMethod.apply(this, h));
             Object.defineProperty(this, "handlers", {
@@ -629,25 +631,16 @@
             var lang = req.query.lang || 'en';
             var n = Number(req.params.n);
             n = Math.max(1, isNaN(n) ? 3 : n);
-            var examples = this.examples;
-            if (examples == null) {
-                examples = this.examples = {};
+            var fname = `examples-${lang}.txt`;
+            var fpath = path.join(PATH_EXAMPLES, fname);
+            if (!fs.existsSync(fpath)) {
+                logger.warn(`File not found: ${fpath}`);
+                throw new Error(`File not found: ${fname}`);
             }
-            var langExamples = examples[lang];
-            if (langExamples == null) {
-                var fname = `examples-${lang}.txt`;
-                var fpath = path.join(PATH_EXAMPLES, fname);
-                if (fs.existsSync(fpath)) {
-                    langExamples = fs.readFileSync(fpath)
-                        .toString()
-                        .trim()
-                        .split('\n');
-                    this.examples[lang] = langExamples;
-                } else {
-                    logger.warn(`File not found: ${fpath}`);
-                    throw new Error(`File not found: ${fname}`);
-                }
-            }
+            var langExamples = fs.readFileSync(fpath)
+                .toString()
+                .trim()
+                .split('\n');
             var nShuffle = langExamples.length;
             for (var i = 0; i < nShuffle; i++) {
                 var j = Math.trunc(Math.random() * langExamples.length);
@@ -1352,6 +1345,22 @@
                 } })();
             });
         }
+
+        getBilara(req, res, next) {
+            var that = this;
+            var scid = req.params.scid ;
+            return new Promise((resolve, reject) => {
+                (async function() { try {
+                    resolve({
+                        message: `Hello World, this is Bilara!`,
+                        scid,
+                    });
+                } catch(e) {
+                    reject(e);} 
+                })();
+            });
+        }
+
     }
 
     module.exports = exports.ScvRest = ScvRest;

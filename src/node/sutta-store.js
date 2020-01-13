@@ -949,7 +949,7 @@
                     pattern,
                     lang,
                     maxDoc, // user max documents
-                    maxResults: maxDoc * 2, // max grep results
+                    maxResults: maxDoc * 3, // max grep results
                     showMatchesOnly: false,
                     matchHighlight,
                 }
