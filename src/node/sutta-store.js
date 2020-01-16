@@ -894,6 +894,11 @@
                     segments,
                     translation,
                 });
+                var blurb = await that.bilaraData.readBlurb({
+                    suid: sutta_uid,
+                    lang,
+                });
+                sutta.blurb = blurb;
                 var sectSutta = suttaFactory.sectionSutta(sutta);
                 var quote = segments.filter((s,i)=>s.matched && i > 1)[0];
                 resolve({

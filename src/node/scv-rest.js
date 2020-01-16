@@ -517,6 +517,11 @@
                         language,
                         expand: true,
                     });
+                    var blurb = await that.bilaraData.readBlurb({
+                        suid: sutta_uid,
+                        lang: language,
+                    });
+                    sutta.blurb = blurb;
                     logger.info(`GET sutta => ${sutta_uid}/${language}/${translator}`);
                     resolve(sutta);
                 } catch(e) { reject(e); } })();

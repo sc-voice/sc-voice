@@ -102,10 +102,11 @@
                 var sutta = res.body;
                 should.deepEqual(Object.keys(sutta).sort(), [
                     'translation', 'suttaCode', 'sutta_uid', 
-                    'author', 'author_uid', 'titles',
+                    'author', 'author_uid', 'titles', 'blurb',
                     "sections", "suttaplex", "support", 'lang',
                 ].sort());
-                should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Supported);
+                should.deepEqual(sutta.support, 
+                    Definitions.SUPPORT_LEVELS.Supported);
                 var sections = sutta.sections;
                 should(sections.length).equal(10);
                 should(sections[2].expandable).equal(false);
@@ -116,6 +117,8 @@
                 should(sections[2].title).match(/.Take an uneducated.*/u);
                 should(sections[2].type).equal("Section");
                 should.deepEqual(sections[2].values, []);
+                should(sutta.blurb).match(
+                    /Buddha examines how the notion of a permanent/);
             }).end((e,r) => e ? async.throw(e) : async.next(r));
             done();
         } catch (e) { done(e); } }();
@@ -936,11 +939,11 @@
             var res = await supertest(app).get(url)
             should(res.statusCode).equal(200);
             var voices = res.body;
-            should.deepEqual(voices.map(v=>v.name), [
+            should.deepEqual(voices.map(v=>v.name).slice(0,5), [
                 'Amy', 'Russell', 'Raveena', 'Matthew', 'sujato_en', // en voices first
-                'Ricardo', // pt
-                'Vicki', 'Hans', 'Marlene', // de voices
-                'Aditi', 'sujato_pli', // pli voices last
+                //'Vicki', 'Hans', 'Marlene', // de voices
+                //'Ricardo', // pt
+                //'Aditi', 'sujato_pli', // pli voices last
             ])
             should(voices[0]).properties({
                 name: "Amy",

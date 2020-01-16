@@ -256,7 +256,7 @@ style="width:100%; margin-top:0"/>
         <summary class="subheading scv-header-summary" >
             <span v-html="suttaTitle"></span>
         </summary>
-        <div class="scv-blurb">{{suttaplex.blurb}}</div>
+        <div class="scv-blurb">{{sutta.blurb}}</div>
         <div class="title pt-4 pb-2 text-center">
             <div>{{this.sutta.titles[0]}}</div>
             {{sutta.original_title}}
@@ -696,6 +696,7 @@ export default {
             this.suttaCode = sutta.suttaCode || '';
             this.language = sutta.lang;
             this.translator = sutta.author_uid;
+            this.sutta.blurb = sutta.blurb || sutta.suttaplex.blurb;
             this.sutta.acronym = acronym;
             this.sutta.titles = sutta.titles;
             this.sutta.title = this.suttaTitle;

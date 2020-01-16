@@ -57,7 +57,7 @@
             var factory = new SuttaFactory({logLevel});
             should.deepEqual(Object.keys(sutta).sort(), [
                 'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
-                'titles',
+                'titles', 'blurb',
                 'sections', 'support', 'suttaplex', 'lang', 'author',
             ].sort());
             var sutta2 = factory.expandSutta(sutta);
