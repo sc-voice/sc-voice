@@ -958,6 +958,7 @@
                     showMatchesOnly: false,
                     matchHighlight,
                 }
+                console.log(`dbg findOpts`, JSON.stringify(findOpts, null,2));
                 bdres = await that.seeker.find(findOpts);
                 bdres.results = [];
                 for (var i = 0; i < bdres.mlDocs.length; i++) {
