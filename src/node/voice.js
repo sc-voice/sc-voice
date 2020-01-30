@@ -93,14 +93,22 @@
         }
 
         static compare(a,b) {
-            var cmp = a.langTrans === b.langTrans
-                ? 0
-                : a.langTrans === 'pli' ? 1 : -1;
+            var cmp = a.langTrans.localeCompare(b.langTrans);
             if (cmp === 0) {
                 if (a.hasOwnProperty('iVoice') && b.hasOwnProperty('iVoice')) {
                     cmp = Number(a.iVoice) - Number(b.iVoice);
                 }
                 cmp = cmp || a.name.localeCompare(b.name);
+            } else { // Pali voices last; en voices first
+                if (a.langTrans === 'pli') {
+                    cmp = 1;
+                } else if (b.langTrans === 'pli') {
+                    cmp = -1;
+                } else if (a.langTrans === 'en') {
+                    cmp = -1;
+                } else if (b.langTrans === 'en') {
+                    cmp = 1;
+                }
             }
             return cmp;
         }

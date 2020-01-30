@@ -91,7 +91,7 @@
             should(result).properties([
                 'file','hits','misses','signature','cached']);
             should(fs.statSync(result.file).size)
-                .above(15000).below(17000);
+                .above(15000).below(21000);
             done();
         } catch(e) {done(e);} })();
     });

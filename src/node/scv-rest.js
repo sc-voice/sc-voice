@@ -341,7 +341,7 @@
             var { 
                 langTrans,
             } = req.params;
-            var voices = VOICES;
+            var voices = VOICES.slice();
             if (!!langTrans) {
                 voices = voices.filter(v => 
                     v.langTrans === 'pli' || v.langTrans===langTrans);

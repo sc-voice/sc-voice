@@ -901,6 +901,7 @@
                 sutta.blurb = blurb;
                 var sectSutta = suttaFactory.sectionSutta(sutta);
                 var quote = segments.filter((s,i)=>s.matched && i > 1)[0];
+                console.log(`dbg mldResult`, sutta_uid);
                 resolve({
                     count: mld.score,
                     uid: sutta_uid,
@@ -958,7 +959,6 @@
                     showMatchesOnly: false,
                     matchHighlight,
                 }
-                console.log(`dbg findOpts`, JSON.stringify(findOpts, null,2));
                 bdres = await that.seeker.find(findOpts);
                 bdres.results = [];
                 for (var i = 0; i < bdres.mlDocs.length; i++) {

@@ -523,7 +523,7 @@
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });
-    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", function(done) {
+    it("search(pattern) finds romanized Pali keywords ", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
             var res = await store.search('jhana');
@@ -942,7 +942,7 @@
             should(data.method).equal('sutta_uid');
 
             // maxResults
-            var data = await store.search({ pattern: 'sn29', });
+            var data = await store.search({ pattern: 'sn29.1-5', });
             should.deepEqual(data.results.map(r=>r.uid),
                 ['sn29.1', 'sn29.2', 'sn29.3', 'sn29.4', 'sn29.5']);
             should(data.results.length).equal(MAXRESULTS);

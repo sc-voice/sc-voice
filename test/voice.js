@@ -31,6 +31,7 @@
             'Raveena', 
             'Ricardo',
             'Russell',
+            'Takumi',
             'Vicki',
             'sujato_en',
             'sujato_pli',

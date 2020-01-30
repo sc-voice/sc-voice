@@ -939,9 +939,9 @@
             var res = await supertest(app).get(url)
             should(res.statusCode).equal(200);
             var voices = res.body;
-            should.deepEqual(voices.map(v=>v.name).slice(0,5), [
+            should.deepEqual(voices.map(v=>v.name).slice(0,8), [
                 'Amy', 'Russell', 'Raveena', 'Matthew', 'sujato_en', // en voices first
-                //'Vicki', 'Hans', 'Marlene', // de voices
+                'Vicki', 'Hans', 'Marlene', // de voices
                 //'Ricardo', // pt
                 //'Aditi', 'sujato_pli', // pli voices last
             ])
@@ -1078,7 +1078,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("POST auth/update-bilara", done=>{
+    it("TESTTESTPOST auth/update-bilara", done=>{
         (async function() { try {
             var scvRest = await(testScvRest());
             var url = `/scv/auth/update-bilara`;

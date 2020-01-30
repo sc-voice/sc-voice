@@ -281,7 +281,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(opts) => an2.12 as part of an2.11-20", done=>{
+    it("loadSutta(opts) => an2.12 as part of an2.11-20", done=>{
         (async function() { try {
             var scr = await new SuttaCentralApi(PRODUCTION).initialize();
             var language = 'en';
