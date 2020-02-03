@@ -180,7 +180,7 @@ export default {
     bellSound: "Gong",
     bellTibetan: "Tibetische Klangschale (Horst: CC0)",
     dedicated: "Den Dunklen auf dem Weg zum Licht",
-    dedicatedSearch: "the dark bound for light",
+    dedicatedSearch: "dunklen auf dem weg zum licht",
     downloadComplete: "Herunterladen abgeschlossen:",
     downloading: "Herunterladen:",
     downloadTimeout: "Herunterladen Zeitüberschreitung:",
