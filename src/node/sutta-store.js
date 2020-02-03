@@ -654,6 +654,7 @@
                         var suttaplex = sutta.suttaplex;
                         var nSegments = sutta.segments.length;
                         var translation = sutta.translation;
+                        var quote = sutta.segments[1];
                         results.push({
                             count: 1,
                             uid: translation.uid,
@@ -900,8 +901,9 @@
                 });
                 sutta.blurb = blurb;
                 var sectSutta = suttaFactory.sectionSutta(sutta);
-                var quote = segments.filter((s,i)=>s.matched && i > 1)[0];
-                console.log(`dbg mldResult`, sutta_uid);
+                var quote = // prefer non-title quotes
+                    segments.filter((s,i)=>s.matched && i > 1)[0] ||
+                    segments[0];
                 resolve({
                     count: mld.score,
                     uid: sutta_uid,
