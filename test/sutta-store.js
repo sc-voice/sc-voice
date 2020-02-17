@@ -523,7 +523,7 @@
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });
-    it("search(pattern) finds romanized Pali keywords ", function(done) {
+    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
             var res = await store.search('jhana');

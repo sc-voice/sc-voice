@@ -22,6 +22,7 @@
     const Words = require('./words');
     const ROOT = path.join(__dirname, '..', '..', 'local', 'suttas');
     const maxBuffer = 10 * 1024 * 1024;
+    const MAXRESULTS_LEGACY = 5;
     const SUTTAIDS_PATH = path
         .join(__dirname, '..', '..', 'src', 'node', 'sutta-ids.json');
     const COLLECTIONS = {
@@ -83,7 +84,7 @@
             this.suttaIds = opts.suttaIds;
             this.maxDuration = opts.maxDuration || 3 * 60 * 60;
             this.root = opts.root || ROOT;
-            this.maxResults = opts.maxResults || 5;
+            this.maxResults = opts.maxResults || MAXRESULTS_LEGACY;
             this.voice = opts.voice;
             this.words = opts.words || new Words();
             this.suttaDuration = opts.suttaDuration || new SuttaDuration();
@@ -759,7 +760,8 @@
             });
         }
 
-        sutta_uidSearch(pattern, maxResults=5, language='en') {
+        sutta_uidSearch(pattern, maxResults=MAXRESULTS_LEGACY, 
+            language='en') {
             var method = 'sutta_uid';
             var uids = this.suttaList(pattern).slice(0, maxResults);
             var suttaRefs = uids.map(ref => {
@@ -953,11 +955,12 @@
                 var matchHighlight = SuttaStore.isUidPattern(pattern)
                     ? false
                     : '<span class="scv-matched">$&</span>';
+                var maxGrepResults = Math.max(50, maxDoc*3);
                 var findOpts = {
                     pattern,
                     lang,
                     maxDoc, // user max documents
-                    maxResults: maxDoc * 3, // max grep results
+                    maxResults: maxGrepResults,
                     showMatchesOnly: false,
                     matchHighlight,
                 }
@@ -969,6 +972,7 @@
                     bdres.results.push(mldRes);
                 }
                 if (!bdres || bdres.mlDocs.length === 0) {
+                console.log(`dbg bdres`, bdres);
                     var resLegacy = await 
                         that.searchLegacy.apply(that, args);
                     resolve(resLegacy);
