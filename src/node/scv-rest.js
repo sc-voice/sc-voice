@@ -1325,6 +1325,7 @@
             var that = this;
             var {
                 token,
+                purge,
             } = req.body || {};
             var {
                 suttaStore,
@@ -1334,7 +1335,7 @@
                 (async function() { try {
                     that.requireAdmin(req, res, "POST update-content");
                     var date = new Date();
-                    var res = await suttaStore.bilaraData.sync();
+                    var res = await suttaStore.bilaraData.sync({purge});
                     var error = null;
                     resolve({
                         date,

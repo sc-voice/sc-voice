@@ -972,7 +972,6 @@
                     bdres.results.push(mldRes);
                 }
                 if (!bdres || bdres.mlDocs.length === 0) {
-                console.log(`dbg bdres`, bdres);
                     var resLegacy = await 
                         that.searchLegacy.apply(that, args);
                     resolve(resLegacy);

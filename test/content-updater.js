@@ -30,7 +30,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("update() updates content", function(done) {
+    it("TESTTESTupdate() updates content", function(done) {
         (async function() { try {
             var updater = await new ContentUpdater().initialize();
             var resUpdate = await updater.update();
