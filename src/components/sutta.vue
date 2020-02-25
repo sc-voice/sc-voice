@@ -128,8 +128,8 @@ style="width:100%; margin-top:0"/>
                     </span>
                   </a>
                 </li>
-              </ul>
-            </div>
+              </ul> <!-- scv-more-menu -->
+            </div> <!-- scv-more -->
           </div>
         </div>
       </div>

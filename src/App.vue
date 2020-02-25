@@ -1,79 +1,59 @@
-<template>
-  <v-app >
-    <v-app-bar app flat dark 
-      color="grey darken-4"
-      aria-role="navigation">
-      <a :href="homeHref" @click="clickHome()"
-      aria-label="Soota Central Voice">
-      <img aria-hidden="true" class="pt-1"
-          style="margin-left: -4px"
-          src="img/favicon.png" height=34px/>
-      </a>
-      <v-toolbar-title style="margin-left:8px">
-          <div style="position: relative; margin-top:-2px;">
-              <div class="scv-logo-small" aria-hidden="true">
-                  SuttaCentral</div>
-              <div class="scv-logo-large" aria-hidden="true">
-                  VOICE</div>
-          </div>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn id="btnHelp" 
-          icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
-          small
-          :title="$vuetify.lang.t('$vuetify.scv.aboutTitle')"
-          :aria-label="$vuetify.lang.t('$vuetify.scv.ariaAbout')"
-          @click="openHelp()">
-          <v-icon aria-hidden="true">info</v-icon>
+<template> <v-app >
+<v-app-bar app flat dark 
+  color="grey darken-4"
+  aria-role="navigation">
+  <a :href="homeHref" @click="clickHome()"
+  aria-label="Soota Central Voice">
+  <img aria-hidden="true" class="pt-1"
+      style="margin-left: -4px"
+      src="img/favicon.png" height=34px/>
+  </a>
+  <v-toolbar-title style="margin-left:8px">
+      <div style="position: relative; margin-top:-2px;">
+          <div class="scv-logo-small" aria-hidden="true">
+              SuttaCentral</div>
+          <div class="scv-logo-large" aria-hidden="true">
+              VOICE</div>
+      </div>
+  </v-toolbar-title>
+  <v-spacer></v-spacer>
+  <v-btn id="btnHelp" 
+      icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
+      small
+      :title="$vuetify.lang.t('$vuetify.scv.aboutTitle')"
+      :aria-label="$vuetify.lang.t('$vuetify.scv.ariaAbout')"
+      @click="openHelp()">
+      <v-icon aria-hidden="true">info</v-icon>
+  </v-btn>
+  <v-btn id="btnSettings" 
+      icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
+      small
+      :title="$vuetify.lang.t('$vuetify.scv.settingsTitle')"
+      :aria-label="$vuetify.lang.t('$vuetify.scv.ariaSettings')"
+      @click="dialogSettings = !dialogSettings">
+      <v-icon color="grey" aria-hidden="true">settings</v-icon>
+  </v-btn>
+    <div class="scv-more" >
+      <v-btn icon
+          id="more-menu-btn"
+          @click="clickMore()"
+          aria-haspopup="true"
+          aria-controls="more-menu"
+          :aria-label="$vuetify.lang.t('$vuetify.scv.ariaMore')"
+          :aria-expanded="moreVisible"
+          class="scv-icon-btn" :style="cssProps" small>
+          <v-icon>settings</v-icon>
       </v-btn>
-      <v-btn id="btnSettings" 
-          icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
-          small
-          :title="$vuetify.lang.t('$vuetify.scv.settingsTitle')"
-          :aria-label="$vuetify.lang.t('$vuetify.scv.ariaSettings')"
-          @click="dialogSettings = !dialogSettings">
-          <v-icon aria-hidden="true">settings</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-dialog v-model="dialogHelp" persistent max-width="45em">
-      <v-card >
-        <v-card-title class="title scv-dialog-title">
-          {{$vuetify.lang.t('$vuetify.scv.aboutTitle')}}
-          <v-spacer/>
-          <v-btn id="btnSettings" 
-            icon small
-            dark class="scv-icon-btn" :style="cssProps"
-            :aria-label="$vuetify.lang.t('$vuetify.scv.ariaClose')"
-            @click="closeDialog()"
-            >
-            <v-icon>close</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-card-text class="about-text">
-        <span v-html="helpHtml"/>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="dialogSettings" fullscreen persistent>
-      <v-card>
-        <v-card-title class="headline scv-dialog-title">
-          <div>
-            <span>{{$vuetify.lang.t('$vuetify.scv.settingsTitle')}}</span>
-            &nbsp;
-            <span class="scv-version">v{{version}}</span>
-          </div>
-          <v-spacer/>
-          <v-btn id="btnSettings" 
-            icon small dark class="scv-icon-btn" :style="cssProps"
-            :aria-label="$vuetify.lang.t('$vuetify.scv.ariaClose')"
-            @click="closeDialog()"
-            >
-            <v-icon>close</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-card-text>
-          <details class="scv-dialog" >
+      <ul class="scv-more-menu" role="menu"
+        id = "more-menu"
+        ref="ref-more-menu"
+        aria-labelledby="more-menu-btn"
+        v-if="moreVisible"
+        @focusin="focusMore(true)"
+        @focusout="focusMore(false)"
+        :aria-hidden="!moreVisible">
+        <li class="" role="none" >
+          <details role="menuitem">
             <summary class="title scv-settings-title">
                 {{$vuetify.lang.t('$vuetify.scv.languages')}}
             </summary>
@@ -109,7 +89,9 @@
               </v-radio-group>
             </div>
           </details>
-          <details class="scv-dialog" >
+        </li>
+        <li class="" role="none" >
+          <details role="menuitem">
             <summary class="title scv-settings-title">
                 {{$vuetify.lang.t('$vuetify.scv.reader')}}
             </summary>
@@ -118,7 +100,8 @@
                   @change="gscv.changed('vnameTrans')"
                   column>
                  <v-radio v-for="v in gscv.langVoices()"
-                   :label="v.label" :value="v.name" :key="`voice${v.name}`">
+                   :label="v.label" :value="v.name" 
+                   :key="`voice${v.name}`">
                    </v-radio>
               </v-radio-group>
 
@@ -134,36 +117,44 @@
               </v-radio-group>
             </div>
           </details>
-          <details class="scv-dialog" >
+        </li>
+        <li class="" role="none" >
+          <details role="menuitem" >
             <summary class="title scv-settings-title">
               {{$vuetify.lang.t('$vuetify.scv.bellSound')}}
             </summary>
-            <div class="scv-settings">
-              <v-radio-group v-model="gscv.ips"
+            <div class="scv-settings" v-if="gscv">
+              <v-radio-group v-model="gscv.ips" 
                   @change="gscv.changed('ips')"
                   column>
                  <v-radio v-for="(ips) in ipsChoices"
                    v-if="!ips.hide"
-                   :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
+                   :label="ips.label" :value="ips.value" 
+                   :key="`ips${ips.value}`">
                    </v-radio>
               </v-radio-group>
             </div>
           </details>
-          <details class="scv-dialog" >
+        </li>
+        <li class="" role="none" >
+          <details role="menuitem" >
             <summary class="title scv-settings-title">
               {{$vuetify.lang.t('$vuetify.scv.searchResults')}}
             </summary>
-            <div class="scv-settings">
-              <v-radio-group v-if="gscv" v-model="gscv.maxResults"
+            <div class="scv-settings" v-if="gscv">
+              <v-radio-group v-model="gscv.maxResults"
                   @change="gscv.changed('maxResults')"
                   column>
                  <v-radio v-for="(mr) in maxResultsChoices"
-                   :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
+                   :label="mr.label" :value="mr.value" 
+                   :key="`maxResults${mr.value}`">
                    </v-radio>
               </v-radio-group>
             </div>
           </details>
-          <details class="scv-dialog" >
+        </li>
+        <li class="" role="none" >
+          <details role="menuitem" >
             <summary class="title scv-settings-title">
               {{$vuetify.lang.t('$vuetify.scv.general')}}
             </summary>
@@ -179,57 +170,207 @@
                 :label="$vuetify.lang.t('$vuetify.scv.storeSettingsInCookies')"
                 />
             </div>
-          </details>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn class="scv-dialog-button" :style="cssProps"
-              @click="closeDialog()" >
-              {{$vuetify.lang.t('$vuetify.close')}}
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <div class="scv-content">
-        <transition name="fade">
-            <div v-if="bgShow" class="scv-background">
-            </div>
-        </transition>
-        <v-content class="" >
-            <router-view></router-view>
-        </v-content>
-    </div>
-    <v-footer fixed class="pt-2 pl-2 pr-2 caption" app >
-      <div style="margin-top:-0.35em" >
-          <a :href="searchDedicated"
-            class="scv-a"
-            :aria-label="$vuetify.lang.t('$vuetify.scv.ariaDedicated')"
-            >
-              <i>
-              {{$vuetify.lang.t('$vuetify.scv.dedicated')}}
-              </i>
-          </a>
+          </details> <!-- General -->
+        </li>
+      </ul> <!-- scv-more-menu -->
+    </div> <!-- scv-more -->
+</v-app-bar>
+
+<v-dialog v-model="dialogHelp" v-if="dialogHelp" 
+    persistent max-width="45em">
+  <v-card >
+    <v-card-title class="title scv-dialog-title">
+      {{$vuetify.lang.t('$vuetify.scv.aboutTitle')}}
+      <v-spacer/>
+      <v-btn id="btnSettings" 
+        icon small
+        dark class="scv-icon-btn" :style="cssProps"
+        :aria-label="$vuetify.lang.t('$vuetify.scv.ariaClose')"
+        @click="closeDialog()"
+        >
+        <v-icon>close</v-icon>
+      </v-btn>
+    </v-card-title>
+    <v-card-text class="about-text">
+    <span v-html="helpHtml"/>
+    </v-card-text>
+  </v-card>
+</v-dialog>
+<v-dialog v-if="dialogSettings" v-model="dialogSettings" 
+    fullscreen persistent>
+  <v-card>
+    <v-card-title class="headline scv-dialog-title">
+      <div>
+        <span>{{$vuetify.lang.t('$vuetify.scv.settingsTitle')}}</span>
+        &nbsp;
+        <span class="scv-version">v{{version}}</span>
       </div>
       <v-spacer/>
-      <div class="pl-2" style="margin-top:-0.35em" >
-        {{user.username}}
-        <router-link class="scv-a-btn" to="/app"
-            v-if="isAuth" aria-hidden=true >
-            <v-btn icon
-                :class="userBtnClass" :style="cssProps" small>
-                <v-icon>supervisor_account</v-icon>
-            </v-btn>
-        </router-link>
-        <router-link class="scv-a-btn" to="/auth"
-            v-else aria-hidden=true >
-            <v-btn icon
-                class="scv-icon-btn" :style="cssProps" small>
-                <v-icon>supervisor_account</v-icon>
-            </v-btn>
-        </router-link>
-      </div>
-    </v-footer>
-  </v-app>
-</template>
+      <v-btn id="btnSettings" 
+        icon small dark class="scv-icon-btn" :style="cssProps"
+        :aria-label="$vuetify.lang.t('$vuetify.scv.ariaClose')"
+        @click="closeDialog()"
+        >
+        <v-icon>close</v-icon>
+      </v-btn>
+    </v-card-title>
+    <v-card-text>
+      <details class="scv-dialog" >
+        <summary class="title scv-settings-title">
+            {{$vuetify.lang.t('$vuetify.scv.languages')}}
+        </summary>
+        <div class="scv-settings">
+          <v-radio-group v-model="gscv.showLang"
+              @change="gscv.changed('showLang')"
+              column>
+             <v-radio v-for="(sl,i) in showLangChoices"
+               :label="sl.label" :value="i" :key="`showLang${sl.value}`">
+               </v-radio>
+          </v-radio-group>
+          <div class="subheading scv-settings-subtitle">
+            {{$vuetify.lang.t('$vuetify.scv.transLanguage')}}
+          </div>
+          <v-radio-group v-model="gscv.lang"
+            @change="langChanged()"
+            column>
+           <v-radio v-for="lang in gscv.transLanguages"
+             :disabled="lang.disabled"
+             :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
+             </v-radio>
+          </v-radio-group>
+          <div class="subheading scv-settings-subtitle">
+            {{$vuetify.lang.t('$vuetify.scv.uiLanguage')}}
+          </div>
+          <v-radio-group v-model="gscv.locale"
+            @change="gscv.changed('locale')"
+            column>
+           <v-radio v-for="lang in gscv.languages"
+             :disabled="lang.disabled"
+             :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
+             </v-radio>
+          </v-radio-group>
+        </div>
+      </details>
+      <details class="scv-dialog" >
+        <summary class="title scv-settings-title">
+            {{$vuetify.lang.t('$vuetify.scv.reader')}}
+        </summary>
+        <div class="scv-settings">
+          <v-radio-group v-model="gscv.vnameTrans"
+              @change="gscv.changed('vnameTrans')"
+              column>
+             <v-radio v-for="v in gscv.langVoices()"
+               :label="v.label" :value="v.name" :key="`voice${v.name}`">
+               </v-radio>
+          </v-radio-group>
+
+          <div class="subheading scv-settings-subtitle">
+            {{$vuetify.lang.t('$vuetify.scv.rootLanguage')}}
+          </div>
+          <v-radio-group v-model="gscv.vnameRoot"
+              @change="gscv.changed('vnameRoot')"
+              column>
+             <v-radio v-for="v in gscv.langVoices('pli')"
+               :label="v.label" :value="v.name" :key="`voice${v.name}`">
+               </v-radio>
+          </v-radio-group>
+        </div>
+      </details>
+      <details class="scv-dialog" >
+        <summary class="title scv-settings-title">
+          {{$vuetify.lang.t('$vuetify.scv.bellSound')}}
+        </summary>
+        <div class="scv-settings">
+          <v-radio-group v-model="gscv.ips"
+              @change="gscv.changed('ips')"
+              column>
+             <v-radio v-for="(ips) in ipsChoices"
+               v-if="!ips.hide"
+               :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
+               </v-radio>
+          </v-radio-group>
+        </div>
+      </details>
+      <details class="scv-dialog" >
+        <summary class="title scv-settings-title">
+          {{$vuetify.lang.t('$vuetify.scv.searchResults')}}
+        </summary>
+        <div class="scv-settings">
+          <v-radio-group v-if="gscv" v-model="gscv.maxResults"
+              @change="gscv.changed('maxResults')"
+              column>
+             <v-radio v-for="(mr) in maxResultsChoices"
+               :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
+               </v-radio>
+          </v-radio-group>
+        </div>
+      </details>
+      <details class="scv-dialog" >
+        <summary class="title scv-settings-title">
+          {{$vuetify.lang.t('$vuetify.scv.general')}}
+        </summary>
+        <div class="scv-settings" v-if="gscv">
+          <v-checkbox v-model="gscv.showId" role="checkbox"
+            :aria-checked="gscv.showId"
+            v-on:change="gscv.changed('showId')"
+            :label="$vuetify.lang.t('$vuetify.scv.showTextSegmentIds')"
+            />
+          <v-checkbox v-model="gscv.useCookies" role="checkbox"
+            v-on:change="gscv.changed('useCookies')"
+            :aria-checked="gscv.useCookies"
+            :label="$vuetify.lang.t('$vuetify.scv.storeSettingsInCookies')"
+            />
+        </div>
+      </details>
+    </v-card-text>
+    <v-card-actions>
+      <v-btn class="scv-dialog-button" :style="cssProps"
+          @click="closeDialog()" >
+          {{$vuetify.lang.t('$vuetify.close')}}
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
+<div class="scv-content">
+    <transition name="fade">
+        <div v-if="bgShow" class="scv-background">
+        </div>
+    </transition>
+    <v-content class="" >
+        <router-view></router-view>
+    </v-content>
+</div>
+<v-footer fixed class="pt-2 pl-2 pr-2 caption" app >
+  <div style="margin-top:-0.35em" >
+      <a :href="searchDedicated"
+        class="scv-a"
+        :aria-label="$vuetify.lang.t('$vuetify.scv.ariaDedicated')"
+        >
+          <i>
+          {{$vuetify.lang.t('$vuetify.scv.dedicated')}}
+          </i>
+      </a>
+  </div>
+  <v-spacer/>
+  <div class="pl-2" style="margin-top:-0.35em" >
+    {{user.username}}
+    <router-link class="scv-a-btn" to="/app"
+        v-if="isAuth" aria-hidden=true >
+        <v-btn icon
+            :class="userBtnClass" :style="cssProps" small>
+            <v-icon>supervisor_account</v-icon>
+        </v-btn>
+    </router-link>
+    <router-link class="scv-a-btn" to="/auth"
+        v-else aria-hidden=true >
+        <v-btn icon
+            class="scv-icon-btn" :style="cssProps" small>
+            <v-icon>supervisor_account</v-icon>
+        </v-btn>
+    </router-link>
+  </div>
+</v-footer>
+</v-app> </template>
 
 <script>
 import Vue from "vue";
@@ -263,6 +404,8 @@ export default {
             }],
             title: 'SuttaCentral Voice Assistant',
             bgShow: false,
+            moreVisible: false,
+            moreFocus: false,
             user: {},
             authors: {},
             transLanguages: [],
@@ -275,6 +418,33 @@ export default {
         },
         clickHome() {
             Vue.set(this.gscv, "search", null);
+        },
+        focusMore(focus) {
+            this.moreFocus = focus;
+            setTimeout(()=>{
+                if (!this.moreFocus) {
+                    console.log('hiding more menu');
+                    this.moreVisible = false;
+                }
+            }, 500);
+        },
+        clickMore() {
+            this.moreVisible = !this.moreVisible;
+            if (this.moreVisible) {
+                this.moreFocus = true;
+                this.$nextTick(() => {
+                    var a1 = this.$refs['ref-more-menu'];
+                    var ali = a1.childNodes;
+                    for (var i = 0; i < ali.length; i++) {
+                        var li = ali[i];
+                        if (li.style.display !== 'none') {
+                            var a = li.childNodes[0];
+                            a.focus();
+                            break;
+                        }
+                    }
+                });
+            }
         },
         onfocus(id) {
             this.focused[id] = true;
@@ -553,8 +723,12 @@ nav ul {
     color: #ce8400;
 }
 
+.scv-settings {
+    padding-top: 0.8em;
+}
+
 .scv-settings-title {
-    margin-top: 0.8em;
+    margin-top: 0.4em;
 }
 
 .scv-settings-subtitle {
@@ -565,6 +739,24 @@ nav ul {
     color: #ff4;
     font-style: italic;
     background-color: #000;
+}
+.scv-more {
+    position: relative;
+    font-size: larger;
+}
+.scv-more > a {
+    color: #fff;
+}
+.scv-more-menu {
+    position: absolute;
+    list-style: none;
+    top: 2em;
+    right: 0;
+    min-width: 20em;
+    text-align: left;
+    border-top: 1pt solid #888;
+    padding: 1em;
+    background-color: #413121;
 }
 
 </style>
