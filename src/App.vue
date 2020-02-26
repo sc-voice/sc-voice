@@ -175,6 +175,7 @@
                 :aria-checked="gscv.useCookies"
                 :label="$vuetify.lang.t('$vuetify.scv.storeSettingsInCookies')"
                 />
+              <span class="scv-version">v{{version}}</span>
             </div>
           </details> <!-- General -->
         </li>
