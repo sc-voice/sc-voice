@@ -59,7 +59,7 @@
             </summary>
             <div class="scv-settings">
               <v-radio-group v-model="gscv.locale"
-                @change="gscv.changed('locale')"
+                @change="localeChanged()"
                 column>
                <v-radio v-for="lang in gscv.languages"
                  :disabled="lang.disabled"
@@ -422,6 +422,10 @@ export default {
             this.gscv.changed('lang');
             this.gscv.checkVoiceLang();
         },
+        localeChanged() {
+            this.gscv.changed('locale');
+            this.gscv.reload();
+        },
         clickHome() {
             Vue.set(this.gscv, "search", null);
         },
@@ -759,10 +763,10 @@ nav ul {
     list-style: none;
     top: 3em;
     right: 0;
-    min-width: 22em;
+    min-width: 23em;
     text-align: left;
     border-top: 1pt solid #888;
-    padding: 0.5em;
+    padding-top: 0.5em;
     padding-bottom: 1em;
     background-color: #543617;
 }
