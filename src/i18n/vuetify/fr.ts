@@ -194,7 +194,7 @@ export default {
     noHTML5: "Your browser does not support HTML5 audio. Try Chrome",
     point: "Punkt",
     publicDomain: "Public Domain",
-    reader: "Voice",
+    reader: "Speaker",
     relevance: "Relevance:",
     returnSearchResults: "A_COUNT search results returned",
     rootLanguage: "Root language",

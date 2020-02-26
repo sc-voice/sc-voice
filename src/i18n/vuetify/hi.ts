@@ -118,6 +118,7 @@ export default {
     secretAccessKey: 'गोपनीय एक्सेस की',
     selectNikayasToUpdate: 'अपडेट करने के लिए निकाय चुने:',
     selectRepo: '"रिपो" चेक बॉक्स चुने',
+    speaker: 'Speaker',
     started: 'शुरू हुआ:',
     step1Release: 'पहला क़दम. सर्वर शुरू करे (लगभग १.५ मिनिट)',
     step2Release: 'दूसरा क़दम. रिलीज़ अपडेट करे (लगभग १.५ मिनिट)',

@@ -118,6 +118,7 @@ export default {
     secretAccessKey: 'Hemmelig tilgangsnøkkel',
     selectNikayasToUpdate: 'Velg Nikaya-er som skal oppdateres:',
     selectRepo: 'Velg "repo" avkryssingsboks',
+    speaker: 'Speaker',
     started: 'Påbegynt:',
     step1Release: 'STEG 1. Omstart server (~1.5 minutter)',
     step2Release: 'STEG 2. Oppdater hovrdversjon (~1.5 minutter)',

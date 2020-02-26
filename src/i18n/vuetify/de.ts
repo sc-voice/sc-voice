@@ -109,6 +109,7 @@ export default {
     password: 'Passwort',
     passwordSet: 'Passwort gesetzt',
     personalAccessToken: 'Persönliches Zugangstoken',
+    reader: 'Speaker',
     region: 'Region',
     releaseIsCurrent: 'Jetzige Version ist die letzte. Keine Aktualisierung',
     releases: 'Versionen',

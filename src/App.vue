@@ -54,8 +54,25 @@
         :aria-hidden="!moreVisible">
         <li class="" role="none" >
           <details role="menuitem">
-            <summary class="title scv-settings-title">
-                {{$vuetify.lang.t('$vuetify.scv.languages')}}
+            <summary class="scv-settings-title">
+                {{$vuetify.lang.t('$vuetify.scv.uiLanguage')}}
+            </summary>
+            <div class="scv-settings">
+              <v-radio-group v-model="gscv.locale"
+                @change="gscv.changed('locale')"
+                column>
+               <v-radio v-for="lang in gscv.languages"
+                 :disabled="lang.disabled"
+                 :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
+                 </v-radio>
+              </v-radio-group>
+            </div>
+          </details>
+        </li>
+        <li class="" role="none" >
+          <details role="menuitem">
+            <summary class="scv-settings-title">
+                {{$vuetify.lang.t('$vuetify.scv.transLanguage')}}
             </summary>
             <div class="scv-settings">
               <v-radio-group v-model="gscv.showLang"
@@ -76,23 +93,12 @@
                  :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
                  </v-radio>
               </v-radio-group>
-              <div class="subheading scv-settings-subtitle">
-                {{$vuetify.lang.t('$vuetify.scv.uiLanguage')}}
-              </div>
-              <v-radio-group v-model="gscv.locale"
-                @change="gscv.changed('locale')"
-                column>
-               <v-radio v-for="lang in gscv.languages"
-                 :disabled="lang.disabled"
-                 :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
-                 </v-radio>
-              </v-radio-group>
             </div>
           </details>
         </li>
         <li class="" role="none" >
           <details role="menuitem">
-            <summary class="title scv-settings-title">
+            <summary class="scv-settings-title">
                 {{$vuetify.lang.t('$vuetify.scv.reader')}}
             </summary>
             <div class="scv-settings">
@@ -120,7 +126,7 @@
         </li>
         <li class="" role="none" >
           <details role="menuitem" >
-            <summary class="title scv-settings-title">
+            <summary class="scv-settings-title">
               {{$vuetify.lang.t('$vuetify.scv.bellSound')}}
             </summary>
             <div class="scv-settings" v-if="gscv">
@@ -138,7 +144,7 @@
         </li>
         <li class="" role="none" >
           <details role="menuitem" >
-            <summary class="title scv-settings-title">
+            <summary class="scv-settings-title">
               {{$vuetify.lang.t('$vuetify.scv.searchResults')}}
             </summary>
             <div class="scv-settings" v-if="gscv">
@@ -155,7 +161,7 @@
         </li>
         <li class="" role="none" >
           <details role="menuitem" >
-            <summary class="title scv-settings-title">
+            <summary class="scv-settings-title">
               {{$vuetify.lang.t('$vuetify.scv.general')}}
             </summary>
             <div class="scv-settings" v-if="gscv">
@@ -724,11 +730,13 @@ nav ul {
 }
 
 .scv-settings {
-    padding-top: 0.8em;
+    padding-top: 0.3em;
 }
 
 .scv-settings-title {
-    margin-top: 0.4em;
+    margin-top: 0.3em;
+    font-size: 120%;
+    font-weight: bold;
 }
 
 .scv-settings-subtitle {
@@ -738,11 +746,9 @@ nav ul {
 .scv-matched {
     color: #ff4;
     font-style: italic;
-    background-color: #000;
 }
 .scv-more {
     position: relative;
-    font-size: larger;
 }
 .scv-more > a {
     color: #fff;
@@ -750,13 +756,14 @@ nav ul {
 .scv-more-menu {
     position: absolute;
     list-style: none;
-    top: 2em;
+    top: 3em;
     right: 0;
-    min-width: 20em;
+    min-width: 22em;
     text-align: left;
     border-top: 1pt solid #888;
-    padding: 1em;
-    background-color: #413121;
+    padding: 0.2em;
+    padding-bottom: 1em;
+    background-color: #543617;
 }
 
 </style>

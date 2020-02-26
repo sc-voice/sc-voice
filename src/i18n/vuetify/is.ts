@@ -118,6 +118,7 @@ export default {
     secretAccessKey: 'Leynilegur aðgangslykill',
     selectNikayasToUpdate: 'Velja Niköjur til að uppfæra:',
     selectRepo: 'Select "Veldu "geymsla" gátreitinn',
+    speaker: 'Speaker',
     started: 'Byrjað:',
     step1Release: '1. SKREF. Endurræsa netþjóninn (~1.5 mínútur)',
     step2Release: '2. SKREF. Uppfæra útgáfu (~1.5 mínútur',

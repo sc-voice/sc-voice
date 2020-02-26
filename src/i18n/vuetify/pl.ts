@@ -118,6 +118,7 @@ export default {
     secretAccessKey: 'Tajny klucz dostępu',
     selectNikayasToUpdate: 'Zaznacz Nikaje do zaktualizowania:',
     selectRepo: 'Zaznacz pole wybory "repozytorium"',
+    speaker: 'Speaker',
     started: 'Uruchomiono:',
     step1Release: 'KROK 1. Uruchom ponownie serwer (~1.5 minuty)',
     step2Release: 'KROK 2. Aktualizuj wersję (~1.5 minuty)',

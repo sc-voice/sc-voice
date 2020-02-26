@@ -118,6 +118,7 @@ export default {
     secretAccessKey: '秘密キー',
     selectNikayasToUpdate: 'ニカヤ（部）を選択して更新:',
     selectRepo: '"repo" チェックボックスを選択',
+    speaker: 'Speaker',
     started: '開始されました:',
     step1Release: 'ステップ 1. サーバー再起動（〜1分半）',
     step2Release: 'ステップ 2. リリース更新（〜1分半）',

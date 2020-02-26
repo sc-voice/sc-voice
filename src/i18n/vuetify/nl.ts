@@ -118,6 +118,7 @@ export default {
     secretAccessKey: 'Geheime toegangs-sleutel',
     selectNikayasToUpdate: 'Selecteer Nikayas om te updaten:',
     selectRepo: 'Selecteer het selectievakje genaamd "repo"',
+    speaker: 'Speaker',
     started: 'Gestart:',
     step1Release: 'STAP 1. Herstart server (ca. 1.5 minuut)',
     step2Release: 'STAP 2. Update versie (ca. 1.5 minuut)',
