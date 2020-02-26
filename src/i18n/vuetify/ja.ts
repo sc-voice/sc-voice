@@ -209,6 +209,7 @@ export default {
     showTransText: "訳文のみ表示",
     storeSettingsInCookies: "ウェブブラウザのクッキーに設定を保存",
     trackOfSection: "A_TRACK / A_TRACKS",
+    translation: "Translation",
     transLanguage: "訳文の言語",
     translatedBy: "Translated by",
     uiLanguage: "ウェブサイトの言語",

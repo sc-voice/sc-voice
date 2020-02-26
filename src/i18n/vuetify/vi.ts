@@ -209,6 +209,7 @@ export default {
     showTransText: "Chỉ hiển thị bản dịch",
     storeSettingsInCookies: "Lưu thiết lập với cookies",
     trackOfSection: "A_TRACK trên tổng số A_TRACKS",
+    translation: "Translation",
     transLanguage: "Ngôn ngữ bản dịch",
     translatedBy: "Translated by",
     uiLanguage: "Ngôn ngữ giao diên trong web",

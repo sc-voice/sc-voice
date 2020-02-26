@@ -209,6 +209,7 @@ export default {
     showTransText: "Pokaż tylko tłumaczenie",
     storeSettingsInCookies: "Zachowaj ustawienia w ciasteczkach internetowej przeglądarki",
     trackOfSection: "A_TRACK z A_TRACKS",
+    translation: "Translation",
     transLanguage: "Język tłumaczenia",
     translatedBy: "Translated by",
     uiLanguage: "Język strony internetowej",

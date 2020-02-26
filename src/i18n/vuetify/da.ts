@@ -208,6 +208,7 @@ export default {
     showTransText: "Vis kun oversættelsestekst",
     storeSettingsInCookies: "Gem indstillinger i webbrowser cookies",
     trackOfSection: "A_TRACK af A_TRACKS",
+    translation: "Translation",
     transLanguage: "Oversættelsessprog",
     translatedBy: "Translated by",
     uiLanguage: "Webstedssprog",

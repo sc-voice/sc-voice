@@ -209,6 +209,7 @@ export default {
     showTransText: "Arată numai versiunea tradusă",
     storeSettingsInCookies: "Salvează setările în browser, folosind cookie-uri",
     trackOfSection: "A_TRACK din A_TRACKS",
+    translation: "Translation",
     transLanguage: "Limba de traducere",
     translatedBy: "Translated by",
     uiLanguage: "Limba site-ului web",

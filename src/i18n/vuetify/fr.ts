@@ -208,6 +208,7 @@ export default {
     showTransText: "Show only translation text",
     storeSettingsInCookies: "Store settings in web browser cookies",
     trackOfSection: "A_TRACK of A_TRACKS",
+    translation: "Translation",
     transLanguage: "Translation language",
     translatedBy: "Translated by",
     uiLanguage: "Website language",

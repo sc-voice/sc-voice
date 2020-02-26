@@ -209,6 +209,7 @@ export default {
     showTransText: "Bare vis oversatt tekst",
     storeSettingsInCookies: "Lagre innstillinger i nettleser informasjonskapsler",
     trackOfSection: "A_TRACK av A_TRACKS",
+    translation: "Translation",
     transLanguage: "Oversettelsesspråk",
     translatedBy: "Oversatt av",
     uiLanguage: "Nettsidespråk",

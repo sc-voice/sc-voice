@@ -209,6 +209,7 @@ export default {
     showTransText: "Toon alleen vertaalde tekst",
     storeSettingsInCookies: "Bewaar instellingen in webbrowser-cookies",
     trackOfSection: "A_TRACK van A_TRACKS",
+    translation: "Translation",
     transLanguage: "Taal van vertaling",
     translatedBy: "Vertaald door",
     uiLanguage: "Taal van website",

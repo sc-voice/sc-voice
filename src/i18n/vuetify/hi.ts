@@ -209,6 +209,7 @@ export default {
     showTransText: "केवल अनुवाद ही दिखाए",
     storeSettingsInCookies: "वेब ब्राउज़र कुकीज़ में सेटिंग स्टोर करे।",
     trackOfSection: "A_TRACK में से A_TRACKS",
+    translation: "Translation",
     transLanguage: "अनुवाद की भाषा",
     translatedBy: "द्वारा अनुवाद",
     uiLanguage: "वेब साइट भाषा",

@@ -209,6 +209,7 @@ export default {
     showTransText: "Sýna aðeins þýðingu",
     storeSettingsInCookies: "Geyma stillingar í vafrakökum",
     trackOfSection: "A_TRACK af A_TRACKS",
+    translation: "Translation",
     transLanguage: "Þýðingamál",
     translatedBy: "Translated by",
     uiLanguage: "Tungumál vefsíðu",

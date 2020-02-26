@@ -72,7 +72,7 @@
         <li class="" role="none" >
           <details role="menuitem">
             <summary class="scv-settings-title">
-                {{$vuetify.lang.t('$vuetify.scv.transLanguage')}}
+                {{$vuetify.lang.t('$vuetify.scv.translation')}}
             </summary>
             <div class="scv-settings">
               <v-radio-group v-model="gscv.showLang"
@@ -730,18 +730,19 @@ nav ul {
 }
 
 .scv-settings {
-    padding-top: 0.3em;
+    padding-top: 0.4em;
+    padding-left: 0.8em;
 }
 
 .scv-settings-title {
-    margin-top: 0.3em;
+    margin-top: 0.1em;
     font-size: 120%;
     font-weight: bold;
 }
 
 .scv-settings-subtitle {
-    margin-top: 0.3em;
-    margin-top: 1em;
+    margin-bottom: 0.1em;
+    font-weight: bold;
 }
 .scv-matched {
     color: #ff4;
@@ -761,7 +762,7 @@ nav ul {
     min-width: 22em;
     text-align: left;
     border-top: 1pt solid #888;
-    padding: 0.2em;
+    padding: 0.5em;
     padding-bottom: 1em;
     background-color: #543617;
 }
