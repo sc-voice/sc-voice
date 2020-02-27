@@ -800,13 +800,10 @@ nav ul {
     padding-top: 0.5em;
     padding-bottom: 1em;
     border: 1pt solid #555;
-    border-right: 1pt solid #333;
-    border-bottom: 1pt solid #333;
+    border-right: 1pt solid #555;
+    border-bottom: 1pt solid #555;
     border-radius: 2pt;
     background-color: #282727;
-    -webkit-box-shadow: 9px 9px 9px 0px rgba(33,33,33,1);
-    -moz-box-shadow: 9px 9px 9px 0px rgba(33,33,33,1);
-    box-shadow: 9px 9px 9px 0px rgba(33,33,33,1);
 }
 .settings-close {
     margin-top: .7em;
