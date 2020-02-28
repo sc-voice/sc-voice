@@ -132,7 +132,7 @@ export default {
     updateRelease: 'Version aktualisieren',
     updateSeconds: 'Sekunden seit letzter Aktualisierung:',
     updatingContent: 'Inhalt wird aktualisiert',
-    updateBilaraIntro: 'Auf „Inhalt aktualisieren“ klicken, um bilara-data zu aktualisieren',
+    updateBilaraIntro: 'Auf INHALT AKTUALISIEREN klicken, um bilara-data zu aktualisieren',
     updatingServer: 'Version wird aktualisiert',
     uptime: 'Zeit seit Inbetriebnahme',
     userAdded: 'Benutzer hinzugefügt',
