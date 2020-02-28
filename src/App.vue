@@ -75,13 +75,16 @@
               {{$vuetify.lang.t('$vuetify.scv.translation')}}
           </summary>
           <div class="scv-settings">
-            <v-radio-group v-model="gscv.showLang"
-                @change="gscv.changed('showLang')"
-                column>
-               <v-radio v-for="(sl,i) in showLangChoices"
-                 :label="sl.label" :value="i" :key="`showLang${sl.value}`">
-                 </v-radio>
-            </v-radio-group>
+            <v-checkbox v-model="showPali" role="checkbox"
+              :aria-checked="showPali"
+              v-on:change="gscv.changed('showLang')"
+              :label="$vuetify.lang.t('$vuetify.scv.showPaliText')"
+              />
+            <v-checkbox v-model="showTrans" role="checkbox"
+              :aria-checked="showTrans"
+              v-on:change="gscv.changed('showLang')"
+              :label="$vuetify.lang.t('$vuetify.scv.showTransText')"
+              />
             <div class="subheading scv-settings-subtitle">
               {{$vuetify.lang.t('$vuetify.scv.transLanguage')}}
             </div>
@@ -539,6 +542,62 @@ export default {
         },
     },
     computed: {
+        showPali: {
+            get: function() {
+                let gscv = this.gscv;
+                return gscv.showLang === gscv.SHOWLANG_BOTH ||
+                    gscv.showLang === gscv.SHOWLANG_PALI;
+            },
+            set: function(value) {
+                let gscv = this.gscv;
+                switch (gscv.showLang) {
+                case gscv.SHOWLANG_PALI:
+                    Vue.set(gscv, "showLang", value 
+                        ? gscv.SHOWLANG_PALI
+                        : gscv.SHOWLANG_TRANS);
+                    break;
+                case gscv.SHOWLANG_TRANS:
+                    Vue.set(gscv, "showLang", value 
+                        ? gscv.SHOWLANG_BOTH
+                        : gscv.SHOWLANG_TRANS);
+                    break;
+                default:
+                case gscv.SHOWLANG_BOTH:
+                    Vue.set(gscv, "showLang", value 
+                        ? gscv.SHOWLANG_BOTH 
+                        : gscv.SHOWLANG_TRANS);
+                    break;
+                }
+            },
+        },
+        showTrans: {
+            get: function() {
+                let gscv = this.gscv;
+                return gscv.showLang === gscv.SHOWLANG_BOTH ||
+                    gscv.showLang === gscv.SHOWLANG_TRANS;
+            },
+            set: function(value) {
+                let gscv = this.gscv;
+                switch (gscv.showLang) {
+                case gscv.SHOWLANG_PALI:
+                    Vue.set(gscv, "showLang", value 
+                        ? gscv.SHOWLANG_BOTH
+                        : gscv.SHOWLANG_PALI);
+                    break;
+                case gscv.SHOWLANG_TRANS:
+                    Vue.set(gscv, "showLang", value 
+                        ? gscv.SHOWLANG_TRANS
+                        : gscv.SHOWLANG_PALI);
+                    break;
+                default:
+                case gscv.SHOWLANG_BOTH:
+                    Vue.set(gscv, "showLang", value 
+                        ? gscv.SHOWLANG_BOTH 
+                        : gscv.SHOWLANG_PALI);
+                    break;
+                }
+            },
+        },
         searchDedicated() {
             var searchLang = this.$vuetify.lang.t(
                 '$vuetify.scv.dedicatedSearch');
@@ -558,10 +617,10 @@ export default {
                 label: $vuetify.lang.t('$vuetify.scv.showPaliTransText'),
                 value: 0,
             },{
-                label: $vuetify.lang.t('$vuetify.scv.showPaliText'),
+                label: $vuetify.lang.t('$vuetify.scv.showOnlyPaliText'),
                 value: 1,
             },{
-                label: $vuetify.lang.t('$vuetify.scv.showTransText'),
+                label: $vuetify.lang.t('$vuetify.scv.showOnlyTransText'),
                 value: 2,
             }];
         },
