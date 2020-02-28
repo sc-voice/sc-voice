@@ -56,6 +56,9 @@
         name: 'en',
         label: 'English / EN',
     }, {
+        name: 'fr',
+        label: 'Français / FR',
+    }, {
         name: 'hi',
         label: 'हिंदी / HI',
     }, {

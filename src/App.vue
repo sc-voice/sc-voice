@@ -818,7 +818,7 @@ nav ul {
 .scv-settings-title {
     margin-top: 0.1em;
     font-size: 120%;
-    font-weight: bold;
+    font-weight: 500;
 }
 .scv-favicon{
     border-radius: 5pt;
@@ -836,7 +836,7 @@ nav ul {
 
 .scv-settings-subtitle {
     margin-bottom: 0.1em;
-    font-weight: bold;
+    font-weight: 500;
 }
 .scv-matched {
     color: #ff4;
