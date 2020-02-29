@@ -215,7 +215,7 @@ export default {
     transLanguage: "Idioma da tradução",
     translatedBy: "Translated by",
     uiLanguage: "Idioma da página",
-    wikiAria: "Home@Português.md",
+    wikiAria: "Home-PT.md",
     noTranslationAvailable: "(no translation available)",
 
   }

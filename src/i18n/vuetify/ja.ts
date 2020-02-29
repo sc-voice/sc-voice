@@ -215,7 +215,7 @@ export default {
     transLanguage: "訳文の言語",
     translatedBy: "Translated by",
     uiLanguage: "ウェブサイトの言語",
-    wikiAria: "Home.md",
+    wikiAria: "Home-JA.md",
     noTranslationAvailable: "(no translation available)",
 
   }

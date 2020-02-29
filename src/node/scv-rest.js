@@ -665,20 +665,27 @@
                     var result = `${page} not found`;
                     var wikiUrl  = `${that.wikiUrl}/${page}`;
                     var httpx = wikiUrl.startsWith('https') ? https : http;
+                    var urlObj = URL.parse(wikiUrl);
                     var httpOpts = Object.assign({
                         headers: {
                             "Cache-Control": "no-cache",
                             //"Pragma": "no-cache",
                         },
-                    }, URL.parse(wikiUrl));
+                    }, urlObj);
                     var wikiReq = httpx.get(httpOpts, function(wikiRes) {
                         const { statusCode } = wikiRes;
                         const contentType = wikiRes.headers['content-type'];
 
                         let error;
-                        if (statusCode !== 200 && statusCode !== 302) {
-                            error = new Error('Request Failed.\n' +
-                                              `Status Code: ${statusCode}`);
+                        let okStatus = {
+                            200: true,
+                            302: true,
+                            304: true,
+                        };
+                        if (!okStatus[statusCode]) {
+                            error = new Error(
+                                `Request failed for ${wikiUrl}\n` +
+                                `Status Code: ${statusCode}`);
                         } else if (/^text\/html/.test(contentType)) {
                             // OK
                         } else if (/^text\/plain/.test(contentType)) {
