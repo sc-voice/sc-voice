@@ -65,6 +65,7 @@
         sabbamitta: true,
         sujato: true,
         'sujato-walton': true,
+        kaz: false, // ja vs jpn?
         bodhi: true,
         geiger: true,
         horner: true,

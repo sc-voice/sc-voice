@@ -750,11 +750,11 @@ export default {
                 this.stopWaiting(timer);
                 this.showSutta(res.data);
             }).catch(e => {
-                var data = e.response && e.response.data && e.response.data.error
-                    || `Not found.`;
+                var data = e.response && e.response.data;
+                var dataError = data && data.error || `Not found.`;
                 this.error.search = {
                     http: e.message,
-                    data,
+                    dataError,
                 };
                 console.error(e.stack, data);
                 this.stopWaiting(timer);

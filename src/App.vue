@@ -522,8 +522,12 @@ export default {
                 var authors = res.data;
                 gscv.authors = authors;
                 var langs = Object.keys(authors).map(a => authors[a].lang);
+                var langNames = {
+                    pt: true,
+                    ja: true,
+                };
                 gscv.transLanguages = gscv.languages.filter(l => 
-                    langs.indexOf(l.name) >= 0 || l.name==='pt');
+                    langs.indexOf(l.name) >= 0 || langNames[l.name]);
                 console.log(`authors`, gscv.authors, gscv.transLanguages);
             }).catch(e => {
                 console.error(e.stack);
