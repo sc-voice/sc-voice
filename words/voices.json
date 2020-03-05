@@ -365,8 +365,8 @@
     }
 },{
     "service": "aws-polly",
-    "name": "Russell",
-    "label": "\ud83e\udd16 Russell (medium)",
+    "name": "Brian",
+    "label": "\ud83e\udd16 Brian (medium)",
     "gender": "male",
     "langTrans": "en",
     "locale": "en-AU",

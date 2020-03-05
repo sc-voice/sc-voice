@@ -458,9 +458,9 @@
         should(Voice.voiceOfName("Amy")).properties({name:"Amy"});
         should(Voice.voiceOfName("0")).properties({name:"Amy"});
         should(Voice.voiceOfName(0)).properties({name:"Amy"});
-        should(Voice.voiceOfName(1)).properties({name:"Russell"});
+        should(Voice.voiceOfName(1)).properties({name:"Brian"});
         should(Voice.voiceOfName("raveena")).properties({name:"Raveena"});
-        should(Voice.voiceOfName(1)).properties({name:"Russell"});
+        should(Voice.voiceOfName(1)).properties({name:"Brian"});
         should(Voice.voiceOfName("vicki")).properties({name:"Vicki"});
         should(Voice.voiceOfName("sujato_pli")).properties({name:"sujato_pli"});
     })

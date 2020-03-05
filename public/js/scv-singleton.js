@@ -402,7 +402,9 @@
                 var search = query.scid || query.search || '';
                 query.search && (this.search = search);
             }
-            if (WEB_LANGUAGES.filter(l => l.name === this.locale).length === 0) {
+            var localeVoices = WEB_LANGUAGES
+                .filter(l => l.name===this.locale);
+            if (localeVoices.length === 0) {
                 console.log(`ScvSingleton.mounted()`,
                     `unknown locale:${this.locale}=>en`);
                 this.locale = 'en';
@@ -534,7 +536,8 @@
                                 iTrack === curTrack && curSeg <= iSeg;
                             remaining && Object.keys(seg).forEach(key => {
                                 if (key !== 'scid') {
-                                    acc[key] = (acc[key] || 0) + seg[key].length;
+                                    acc[key] = (acc[key] || 0) + 
+                                        seg[key].length;
                                 }
                             });
                         });
@@ -553,7 +556,7 @@
         
         langVoices(lang = this.lang) {
             return this.voices
-                ? this.voices.filter(v => v.langTrans === lang)
+                ? this.voices.filter(v => v.langTrans===lang)
                 : [];
         }
     }

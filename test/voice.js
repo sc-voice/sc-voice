@@ -25,12 +25,12 @@
         should.deepEqual(voices.map(v=>v.name).sort(),[
             'Aditi', 
             'Amy', 
+            'Brian',
             'Hans',
             'Marlene',
             'Matthew',
             'Raveena', 
             'Ricardo',
-            'Russell',
             'Takumi',
             'Vicki',
             'sujato_en',
@@ -93,17 +93,17 @@
         var scAudio = new SCAudio();
         var altTts = amy.services.recite;
         should(altTts).instanceOf(Polly);
-        var russell = Voice.createVoice({
-            locale: 'en-AU',
+        var matthew = Voice.createVoice({
+            locale: 'en-US',
             scAudio,
             altTts,
         });
-        should(russell).instanceOf(Voice);
-        should(russell.locale).equal("en-AU");
-        should(russell.name).equal("Russell");
-        should(russell.usage).equal("recite");
-        should(russell.scAudio).equal(scAudio);
-        should(russell.altTts).equal(altTts);
+        should(matthew).instanceOf(Voice);
+        should(matthew.locale).equal("en-US");
+        should(matthew.name).equal("Matthew");
+        should(matthew.usage).equal("recite");
+        should(matthew.scAudio).equal(scAudio);
+        should(matthew.altTts).equal(altTts);
 
         // human
         var sujato_pli = Voice.createVoice({
@@ -140,10 +140,10 @@
         should(voice.stripNumbers).equal(false);
         should(voice.stripQuotes).equal(false);
 
-        var voice = Voice.createVoice('russell');
+        var voice = Voice.createVoice('Matthew');
         should(voice).instanceOf(Voice);
-        should(voice.locale).equal("en-AU");
-        should(voice.name).equal("Russell");
+        should(voice.locale).equal("en-US");
+        should(voice.name).equal("Matthew");
         should(voice.usage).equal("recite");
         should(voice.localeIPA).equal('pli');
         should(voice.stripNumbers).equal(false);
@@ -608,14 +608,14 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("voiceOfName(name) returns voice of name", function() {
+    it("TESTTESTvoiceOfName(name) returns voice of name", function() {
         should(Voice.voiceOfName("amy")).properties({name:"Amy"});
         should(Voice.voiceOfName("Amy")).properties({name:"Amy"});
         should(Voice.voiceOfName("0")).properties({name:"Amy"});
         should(Voice.voiceOfName(0)).properties({name:"Amy"});
-        should(Voice.voiceOfName(1)).properties({name:"Russell"});
+        should(Voice.voiceOfName(1)).properties({name:"Brian"});
+        should(Voice.voiceOfName("Russell")).equal(null);
         should(Voice.voiceOfName("raveena")).properties({name:"Raveena"});
-        should(Voice.voiceOfName(1)).properties({name:"Russell"});
         should(Voice.voiceOfName("vicki")).properties({name:"Vicki"});
         should(Voice.voiceOfName("sujato_pli"))
             .properties({name:"sujato_pli"});

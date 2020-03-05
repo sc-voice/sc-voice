@@ -705,13 +705,13 @@
         // default
         var voices = scv.langVoices();
         should.deepEqual(voices.map(v => v.name), [
-            'Amy', 'Russell', 'Raveena', 'Matthew', 'sujato_en',
+            'Amy', 'Brian', 'Raveena', 'Matthew', 'sujato_en',
         ]);
 
         // custom
         var voices = scv.langVoices('en');
         should.deepEqual(voices.map(v => v.name), [
-            'Amy', 'Russell', 'Raveena', 'Matthew', 'sujato_en',
+            'Amy', 'Brian', 'Raveena', 'Matthew', 'sujato_en',
         ]);
 
         // custom
