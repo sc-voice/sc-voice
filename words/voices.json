@@ -377,7 +377,7 @@
     "usage": "recite",
     "rates": {
         "navigate": "-0%", 
-        "recite": "-20%"
+        "recite": "-0%"
     },
     "usages": {
         "navigate": {
@@ -386,11 +386,11 @@
         },
         "recite": {
             "priority": 1,
-            "rate": "-20%",
+            "rate": "-0%",
             "breaks": [0.001,0.1,0.2,0.6,1]
         },
         "review": {
-            "rate": "-10%",
+            "rate": "-0%",
             "breaks": [0.001,0.1,0.2,0.4,0.5]
         }
     },
