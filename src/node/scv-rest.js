@@ -618,12 +618,15 @@
                             .replace(/[ ,\t]/g,'_')
                             .replace(/[\/]/g, '-')
                     );
-                    var filename = `${uriPattern}_${langs.join('+')}_${vname}`+
+                    var filename = 
+                        `${uriPattern}_${langs.join('+')}_${vname}`+
                         `${audioSuffix}`;
                     var data = fs.readFileSync(filePath);
-                    res.set('Content-disposition', 'attachment; filename=' + filename);
+                    res.set('Content-disposition', 
+                        'attachment; filename=' + filename);
                     logger.info(`GET download/${langs}/${pattern} => ` +
-                        `${filename} size:${data.length} secs:${stats.duration} ${guid}`);
+                        `${filename} size:${data.length} `+
+                        `secs:${stats.duration} ${guid}`);
                     res.cookie('download-date',new Date());
                     resolve(data);
                 } catch(e) {

@@ -56,71 +56,73 @@
                     throw new Error( `no voice for lang:${lang}`);
                 }
             });
-            
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var tts = that.languages.reduce((acc,lang) => {
-                        return acc || voices[lang];
-                    }, null).services.recite;
-                    var trackAudioFiles = [];
-                    var sectionBreak = await tts
-                        .synthesizeBreak(tts.SECTION_BREAK);
-                    for (var iTrk = 0; iTrk < that.tracks.length; iTrk++) {
-                        var track = that.tracks[iTrk];
-                        var sutta_uid = track.sutta_uid.toLowerCase();
-                        var auid = track.author_uid || 'no-author';
-                        var lang = track.lang || 'en';
-                        var segmentAudioFiles = [];
-                        var trkSegs = track.segments;
-                        for (var iSeg = 0; iSeg < trkSegs.length; iSeg++) {
-                            var segment = trkSegs[iSeg];
-                            for (var iLang = 0; iLang < nLang; iLang++) {
-                                var lang = that.languages[iLang];
-                                var voice = voices[lang];
-                                var vname = voice.name.toLowerCase();
-                                var volume = opts.volume || 
-                                    SoundStore.suttaVolumeName(sutta_uid, 
-                                        lang, auid, voice.name);
-                                var text = segment[lang];
-                                if (voice && text) {
-                                    var segOpts = {
-                                        volume,
-                                        chapter: opts.chapter,
-                                    };
-                                    if (0) { 
-                                        // Surprisingly, using scid instead of guid 
-                                        // consumes 3x space for MN1
-                                        var filename = segment.scid.replace(/:/g,"_");
-                                        segOpts.guid = filename; 
+            var pbody = (resolve, reject) => {(async function() { try {
+                var tts = that.languages.reduce((acc,lang) => {
+                    return acc || voices[lang];
+                }, null).services.recite;
+                var trackAudioFiles = [];
+                var sectionBreak = await tts
+                    .synthesizeBreak(tts.SECTION_BREAK);
+                var prevSuid;
+                for (var iTrk = 0; iTrk < that.tracks.length; iTrk++) {
+                    var track = that.tracks[iTrk];
+                    var sutta_uid = track.sutta_uid.toLowerCase();
+                    var auid = track.author_uid || 'no-author';
+                    var lang = track.lang || 'en';
+                    var segmentAudioFiles = [];
+                    var trkSegs = track.segments;
+                    for (var iSeg = 0; iSeg < trkSegs.length; iSeg++) {
+                        var segment = trkSegs[iSeg];
+                        for (var iLang = 0; iLang < nLang; iLang++) {
+                            var lang = that.languages[iLang];
+                            var voice = voices[lang];
+                            var vname = voice.name.toLowerCase();
+                            var volume = opts.volume || 
+                                SoundStore.suttaVolumeName(sutta_uid, 
+                                    lang, auid, voice.name);
+                            var text = segment[lang];
+                            if (voice && text) {
+                                var segOpts = {
+                                    volume,
+                                    chapter: opts.chapter,
+                                };
+                                segOpts = Object.assign(segOpts, opts);
+                                delete segOpts.voices; // not used 
+
+                                var sutta_uid = segment.scid.split(':')[0];
+                                if (prevSuid !== sutta_uid) {
+                                    if (prevSuid) {
+                                        segmentAudioFiles.push(
+                                            sectionBreak.file);
                                     }
-                                    segOpts = Object.assign(segOpts, opts);
-                                    delete segOpts.voices; // not used 
-
-                                    var sutta_uid = segment.scid.split(':')[0];
-                                    var speakOpts = {
-                                        sutta_uid,
-                                        segment,
-                                        language: lang,
-                                        usage: voice.usage, 
-                                        translator: auid,
-                                    };
-
-                                    var vdata = await voice.speakSegment(speakOpts);
-                                    segmentAudioFiles.push(vdata.file);
-                                    segment.audio = segment.audio || {};
-                                    segment.audio[lang] = vdata.signature.guid;
+                                    prevSuid = sutta_uid;
                                 }
+                                var speakOpts = {
+                                    sutta_uid,
+                                    segment,
+                                    language: lang,
+                                    usage: voice.usage, 
+                                    translator: auid,
+                                };
+
+                                var vdata = await voice
+                                    .speakSegment(speakOpts);
+                                segmentAudioFiles.push(vdata.file);
+                                segment.audio = segment.audio || {};
+                                segment.audio[lang] = vdata.signature.guid;
                             }
                         }
-                        segmentAudioFiles.push(sectionBreak.file);
-                        var audio = await tts.ffmpegConcat(segmentAudioFiles);
-                        track.audio = audio;
-                        trackAudioFiles.push(audio.file);
                     }
-                    that.audio = await tts.ffmpegConcat(trackAudioFiles);
-                    resolve(that.audio);
-                } catch(e) {reject(e);} })();
-            });
+                    segmentAudioFiles.push(sectionBreak.file);
+                    var audio = await tts.ffmpegConcat(segmentAudioFiles);
+                    track.audio = audio;
+                    trackAudioFiles.push(audio.file);
+                }
+                that.audio = await tts.ffmpegConcat(trackAudioFiles);
+                resolve(that.audio);
+            } catch(e) {reject(e);} })(); }
+            
+            return new Promise(pbody);
         }
 
         addTrack(metadata, segmentsOrMessage) {

@@ -11,6 +11,7 @@
         SuttaFactory,
         Voice,
     } = require('../index');
+    this.timeout(10*1000);
 
     var suttas = [
         new Sutta({
@@ -145,7 +146,6 @@
         });
     });
     it("addSutta(sutta) adds dn33", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = new SuttaFactory({
@@ -170,7 +170,6 @@
         } catch(e) { done(e); } })();
     });
     it("addTrack(sutta_uid, segmentsOrMessage) adds a track", function(done) {
-        this.timeout(10*1000);
         (async function() { try {
             var pl = new Playlist();
             pl.addTrack("error123", "this is a test");
@@ -189,14 +188,13 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("speak(opts) adds voice audio", function(done) {
-        this.timeout(5*1000);
+    it("TESTTESTspeak(opts) adds voice audio", function(done) {
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = new SuttaFactory({
                 suttaCentralApi,
             });
-            var sutta = await factory.loadSutta('sn2.3');
+            var sutta = await factory.loadSutta('an1.31-40');
             var voices = {
                 pli: Voice.createVoice({
                     name:'aditi',
@@ -216,12 +214,46 @@
                 voices,
                 volume: 'test-playlist',
             });
-            should(result.signature.guid).match(/e088211ba824e834914008fa9e319c0e/);
+            should(result.signature.guid)
+                .match(/afbecbf62814fdb9bfb85914511639da/);
+            done();
+        } catch(e) { done(e); } })();
+    });
+    it("TESTTESTspeak(opts) adds break between suttas", function(done) {
+        (async function() { try {
+            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            var factory = new SuttaFactory({
+                suttaCentralApi,
+            });
+            var suttas = [
+                await factory.loadSutta('thig2.6'),
+                await factory.loadSutta('thig2.7'),
+            ];
+            var voices = {
+                pli: Voice.createVoice({
+                    name:'aditi',
+                    usage: 'recite',
+                    language: 'hi-IN',
+                    localeIPA: 'pli',
+                    stripNumbers: true,
+                    stripQuotes: true,
+                }),
+                en: Voice.createVoice({name:'amy'}),
+            };
+            var pl = new Playlist({
+                languages: ['en'], // speaking order 
+            });
+            suttas.forEach(s=>pl.addSutta(s));
+            var result = await pl.speak({
+                voices,
+                volume: 'test-playlist',
+            });
+            should(result.signature.guid)
+                .match(/5ed32b94d5a03f03d3fd19ec8a34b642/);
             done();
         } catch(e) { done(e); } })();
     });
     it("speak(opts) creates human voice audio file", function(done) {
-        this.timeout(20*1000);
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = new SuttaFactory({

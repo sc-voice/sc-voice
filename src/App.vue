@@ -26,14 +26,6 @@
       @click="openHelp()">
       <v-icon aria-hidden="true">info</v-icon>
   </v-btn>
-  <v-btn id="btnSettings" 
-      icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
-      small
-      :title="$vuetify.lang.t('$vuetify.scv.settingsTitle')"
-      :aria-label="$vuetify.lang.t('$vuetify.scv.ariaSettings')"
-      @click="dialogSettings = !dialogSettings">
-      <v-icon color="grey" aria-hidden="true">settings</v-icon>
-  </v-btn>
   <div class="scv-more" >
     <v-btn icon
         id="more-menu-btn"
@@ -217,141 +209,6 @@
     </v-card-text>
   </v-card>
 </v-dialog>
-<v-dialog v-if="dialogSettings" v-model="dialogSettings" 
-    fullscreen persistent>
-  <v-card>
-    <v-card-title class="headline scv-dialog-title">
-      <div>
-        <span>{{$vuetify.lang.t('$vuetify.scv.settingsTitle')}}</span>
-        &nbsp;
-        <span class="scv-version">v{{version}}</span>
-      </div>
-      <v-spacer/>
-      <v-btn id="btnSettings" 
-        icon small dark class="scv-icon-btn" :style="cssProps"
-        :aria-label="$vuetify.lang.t('$vuetify.scv.ariaClose')"
-        @click="closeDialog()"
-        >
-        <v-icon>close</v-icon>
-      </v-btn>
-    </v-card-title>
-    <v-card-text>
-      <details class="scv-dialog" >
-        <summary class="title scv-settings-title">
-            {{$vuetify.lang.t('$vuetify.scv.languages')}}
-        </summary>
-        <div class="scv-settings">
-          <v-radio-group v-model="gscv.showLang"
-              @change="gscv.changed('showLang')"
-              column>
-             <v-radio v-for="(sl,i) in showLangChoices"
-               :label="sl.label" :value="i" :key="`showLang${sl.value}`">
-               </v-radio>
-          </v-radio-group>
-          <div class="subheading scv-settings-subtitle">
-            {{$vuetify.lang.t('$vuetify.scv.transLanguage')}}
-          </div>
-          <v-radio-group v-model="gscv.lang"
-            @change="langChanged()"
-            column>
-           <v-radio v-for="lang in gscv.transLanguages"
-             :disabled="lang.disabled"
-             :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
-             </v-radio>
-          </v-radio-group>
-          <div class="subheading scv-settings-subtitle">
-            {{$vuetify.lang.t('$vuetify.scv.uiLanguage')}}
-          </div>
-          <v-radio-group v-model="gscv.locale"
-            @change="gscv.changed('locale')"
-            column>
-           <v-radio v-for="lang in gscv.languages"
-             :disabled="lang.disabled"
-             :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
-             </v-radio>
-          </v-radio-group>
-        </div>
-      </details>
-      <details class="scv-dialog" >
-        <summary class="title scv-settings-title">
-            {{$vuetify.lang.t('$vuetify.scv.reader')}}
-        </summary>
-        <div class="scv-settings">
-          <v-radio-group v-model="gscv.vnameTrans"
-              @change="gscv.changed('vnameTrans')"
-              column>
-             <v-radio v-for="v in gscv.langVoices()"
-               :label="v.label" :value="v.name" :key="`voice${v.name}`">
-               </v-radio>
-          </v-radio-group>
-
-          <div class="subheading scv-settings-subtitle">
-            {{$vuetify.lang.t('$vuetify.scv.rootLanguage')}}
-          </div>
-          <v-radio-group v-model="gscv.vnameRoot"
-              @change="gscv.changed('vnameRoot')"
-              column>
-             <v-radio v-for="v in gscv.langVoices('pli')"
-               :label="v.label" :value="v.name" :key="`voice${v.name}`">
-               </v-radio>
-          </v-radio-group>
-        </div>
-      </details>
-      <details class="scv-dialog" >
-        <summary class="title scv-settings-title">
-          {{$vuetify.lang.t('$vuetify.scv.bellSound')}}
-        </summary>
-        <div class="scv-settings">
-          <v-radio-group v-model="gscv.ips"
-              @change="gscv.changed('ips')"
-              column>
-             <v-radio v-for="(ips) in ipsChoices"
-               v-if="!ips.hide"
-               :label="ips.label" :value="ips.value" :key="`ips${ips.value}`">
-               </v-radio>
-          </v-radio-group>
-        </div>
-      </details>
-      <details class="scv-dialog" >
-        <summary class="title scv-settings-title">
-          {{$vuetify.lang.t('$vuetify.scv.searchResults')}}
-        </summary>
-        <div class="scv-settings">
-          <v-radio-group v-if="gscv" v-model="gscv.maxResults"
-              @change="gscv.changed('maxResults')"
-              column>
-             <v-radio v-for="(mr) in maxResultsChoices"
-               :label="mr.label" :value="mr.value" :key="`maxResults${mr.value}`">
-               </v-radio>
-          </v-radio-group>
-        </div>
-      </details>
-      <details class="scv-dialog" >
-        <summary class="title scv-settings-title">
-          {{$vuetify.lang.t('$vuetify.scv.general')}}
-        </summary>
-        <div class="scv-settings" v-if="gscv">
-          <v-checkbox v-model="gscv.showId" role="checkbox"
-            :aria-checked="gscv.showId"
-            v-on:change="gscv.changed('showId')"
-            :label="$vuetify.lang.t('$vuetify.scv.showTextSegmentIds')"
-            />
-          <v-checkbox v-model="gscv.useCookies" role="checkbox"
-            v-on:change="gscv.changed('useCookies')"
-            :aria-checked="gscv.useCookies"
-            :label="$vuetify.lang.t('$vuetify.scv.storeSettingsInCookies')"
-            />
-        </div>
-      </details>
-    </v-card-text>
-    <v-card-actions>
-      <v-btn class="scv-dialog-button" :style="cssProps"
-          @click="closeDialog()" >
-          {{$vuetify.lang.t('$vuetify.close')}}
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-</v-dialog>
 <div class="scv-content">
     <transition name="fade">
         <div v-if="bgShow" class="scv-background">
@@ -412,7 +269,6 @@ export default {
     },
     data () {
         return {
-            dialogSettings: false,
             dialogHelp: false,
             focused: {
                 'settings': false,

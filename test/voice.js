@@ -608,7 +608,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTvoiceOfName(name) returns voice of name", function() {
+    it("voiceOfName(name) returns voice of name", function() {
         should(Voice.voiceOfName("amy")).properties({name:"Amy"});
         should(Voice.voiceOfName("Amy")).properties({name:"Amy"});
         should(Voice.voiceOfName("0")).properties({name:"Amy"});
