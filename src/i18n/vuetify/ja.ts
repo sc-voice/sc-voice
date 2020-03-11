@@ -118,7 +118,7 @@ export default {
     secretAccessKey: '秘密キー',
     selectNikayasToUpdate: 'ニカヤ（部）を選択して更新:',
     selectRepo: '"repo" チェックボックスを選択',
-    speaker: 'Speaker',
+    speaker: 'スピーカー',
     started: '開始されました:',
     step1Release: 'ステップ 1. サーバー再起動（〜1分半）',
     step2Release: 'ステップ 2. リリース更新（〜1分半）',
@@ -132,7 +132,7 @@ export default {
     updateSeconds: '最終更新時からの経過秒:',
     updatingContent: 'コンテンツを更新中',
     updatingServer: 'サーバーを更新中',
-    updateBilaraIntro: 'Click Update Content to update bilara-data',
+    updateBilaraIntro: 'Bilara-dataを更新するため”コンテンツを更新”をクリック',
     uptime: '起動からの経過時間',
     userAdded: 'ユーザー追加',
     username: 'ユーザーネーム',
@@ -211,12 +211,12 @@ export default {
     showTransText: "訳文の表示",
     storeSettingsInCookies: "ウェブブラウザのクッキーに設定を保存",
     trackOfSection: "A_TRACK / A_TRACKS",
-    translation: "Translation",
+    translation: "翻訳",
     transLanguage: "訳文の言語",
-    translatedBy: "Translated by",
+    translatedBy: "翻訳者",
     uiLanguage: "ウェブサイトの言語",
     wikiAria: "Home-JA.md",
-    noTranslationAvailable: "(no translation available)",
+    noTranslationAvailable: "(翻訳はありません)",
 
   }
 }
