@@ -179,7 +179,7 @@ export default {
     bellSound: "Klokke Lyd",
     bellTibetan: "Tibetansk sangskål (Horst: CC0)",
     dedicated: "Til dem som lever i mørket, men er på vej til lys",
-    dedicatedSearch: "To the dark bound for light",
+    dedicatedSearch: "the dark bound for light",
     downloadComplete: "Overførslen fuldført:",
     downloading: "Overfører:",
     downloadTimeout: "Overførsel mislykkedes:",
