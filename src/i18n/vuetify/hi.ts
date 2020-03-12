@@ -180,7 +180,7 @@ export default {
     bellSound: "घंटी की आवाज़",
     bellTibetan: "तिब्बती गाता-कटोरा (Horst: CC0)",
     dedicated: "उजाले के लिए अँधेरी सीमा की ओर",
-    dedicatedSearch: "उजाले के लिए अँधेरी सीमा की ओर",
+    dedicatedSearch: "the dark bound for light",
     downloadComplete: "डाउनलोड पूर्ण हुआ:",
     downloading: "डाउनलोड हो रहा है:",
     downloadTimeout: "डाउनलोड मध्यांतर:",
