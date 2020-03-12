@@ -180,7 +180,7 @@ export default {
     bellSound: "Bell Sound",
     bellTibetan: "Tibetaanse klankschaal (Horst: CC0)",
     dedicated: "Aan hen in donkerte op weg naar licht",
-    dedicatedSearch: "Aan hen in donkerte op weg naar licht",
+    dedicatedSearch: "the dark bound for light",
     downloadComplete: "Download voltooid:",
     downloading: "Downloaden:",
     downloadTimeout: "Download time-out:",
