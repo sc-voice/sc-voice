@@ -20,8 +20,8 @@
 
             // every minute, delete ephemerals older than 5 minutes
             that.ephemerals = {};
-            that.ephemeralAge = opts.ephemeralAge || 5*MS_MINUTES;
-            that.ephemeralInterval = opts.ephemeralInterval || 1*MS_MINUTES;
+            that.ephemeralAge = opts.ephemeralAge || 15*MS_MINUTES;
+            that.ephemeralInterval = opts.ephemeralInterval || 5*MS_MINUTES;
             that.ephemeralInterval && setInterval(() => {
                 var ctime = new Date(Date.now() - that.ephemeralAge);
                 that.clearEphemerals({

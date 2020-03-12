@@ -367,6 +367,13 @@
             var g = this.g;
             this.vueRoot = vueRoot;
             var query = vueRoot.$route.query;
+            if (query && query.lang && Object.keys(query).length == 2) {
+                console.log(`ScvSingleton.mounted() SC query:`, query);
+                this.lang == query.lang;
+                this.locale == query.lang;
+            } else {
+                console.log(`ScvSingleton.mounted() Voice query:`, query);
+            }
             if (this.useCookies) {
                 let cookies = {};
                 let that = this;
@@ -378,7 +385,6 @@
                 console.log(`ScvSingleton.mounted() cookies:`, cookies);
             } 
             if (query) {
-                console.log(`ScvSingleton.mounted() query:`, query);
                 if (!this.useCookies) {
                     query.showId != null &&
                         (this.showId = query.showId==='true');

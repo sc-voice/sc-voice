@@ -39,7 +39,7 @@
             should(sutta.translation.author_uid).equal(refParts[2]);
         }
     }
-    this.timeout(10*1000);
+    this.timeout(15*1000);
 
     it("default ctor", () => {
         var store = new SuttaStore();

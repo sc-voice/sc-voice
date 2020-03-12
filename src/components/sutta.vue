@@ -1096,9 +1096,18 @@ export default {
     },
     mounted() {
         var that = this;
+        var {
+            $route,
+            $cookie,
+        } = that;
         var init = () => {
             var search = that.gscv.search;
-            console.log(`cookies`, that.$cookie);
+            var query = $route.query;
+            if (Object.keys(query).length === 2) {
+                console.log(`sutta.mounted() SC`, $cookie, query);
+            } else {
+                console.log(`sutta.mounted() Voice`, $cookie, query);
+            }
             that.search = search;
             if (search) {
                 console.log(`sutta.mounted() searchSuttas(${search})`);
@@ -1111,7 +1120,7 @@ export default {
                 var vSearch = this.$refs.refSearch;
                 var input = vSearch && vSearch.$refs.input;
                 if (input) {
-                    console.log('selected search', input);
+                    console.log('sutta.mounted() selected search', input);
                     input.focus();
                 }
             });
@@ -1120,10 +1129,10 @@ export default {
         // TODO: wait for voices to show up
         setTimeout(() => {
             if (that.gscv.voices && that.gscv.voices.length) {
-                console.log(`voices available`);
+                console.log(`sutta.mounted() voices available`);
                 init();
             } else {
-                console.log(`voices not available`);
+                console.log(`sutta.mounted() voices not available`);
                 setTimeout(() => init(), 500);
             }
         }, 100);
