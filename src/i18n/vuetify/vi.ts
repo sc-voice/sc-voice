@@ -180,7 +180,7 @@ export default {
     bellSound: "Bell Sound",
     bellTibetan: "Tibetan Singin Bowl (Horst: CC0)",
     dedicated: "Sống trong bóng tối, hướng đến ánh sáng",
-    dedicatedSearch: "To the dark bound for light",
+    dedicatedSearch: "the dark bound for light",
     downloadComplete: "Download xong:",
     downloading: "Đang download:",
     downloadTimeout: "Thời gian chờ download:",
