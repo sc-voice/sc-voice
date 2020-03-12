@@ -180,7 +180,7 @@ export default {
     bellSound: "Dźwięk dzwonka",
     bellTibetan: "Tybetańska misa grająca (Horst: CC0)",
     dedicated: "Do ciemności zmierzającej ku światłu",
-    dedicatedSearch: "To the dark bound for light",
+    dedicatedSearch: "the dark bound for light",
     downloadComplete: "Pobieranie zakończone:",
     downloading: "Pobieranie:",
     downloadTimeout: "Pozostało czasu do pobrania:",
