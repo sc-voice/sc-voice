@@ -367,13 +367,6 @@
             var g = this.g;
             this.vueRoot = vueRoot;
             var query = vueRoot.$route.query;
-            if (query && query.lang && Object.keys(query).length == 2) {
-                console.log(`ScvSingleton.mounted() SC query:`, query);
-                this.lang == query.lang;
-                this.locale == query.lang;
-            } else {
-                console.log(`ScvSingleton.mounted() Voice query:`, query);
-            }
             if (this.useCookies) {
                 let cookies = {};
                 let that = this;
@@ -384,6 +377,14 @@
                 });
                 console.log(`ScvSingleton.mounted() cookies:`, cookies);
             } 
+            var isSCLink = query && query.lang && query.locale===undefined;
+            if (isSCLink) {
+                console.log(`ScvSingleton.mounted() SC query:`, query);
+                this.lang = query.lang;
+                if (!this.useCookies) {
+                    this.locale = query.lang; 
+                }
+            }
             if (query) {
                 if (!this.useCookies) {
                     query.showId != null &&
