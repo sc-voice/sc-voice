@@ -106,15 +106,15 @@
             data[2].guid,
         ]);
     });
-    it("clearEphemeral(opts) clears old ephemeral files", function() {
+    it("clearEphemeral(opts) clears old ephemeral files", ()=>{
         var storePath = tmp.tmpNameSync();
         var store = new SoundStore({
             suffixes: ['.txt'],
             storePath,
         });
         should.deepEqual(Object.keys(store.ephemerals), []);
-        should(store.ephemeralInterval).equal(1*60*1000);
-        should(store.ephemeralAge).equal(5*60*1000);
+        should(store.ephemeralInterval).equal(5*60*1000);
+        should(store.ephemeralAge).equal(15*60*1000);
         var data = [1,2,3].map(i => {
             var name = `ephemeral-${i}`;
             var guid = mj.hash(name);
