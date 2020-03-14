@@ -1,5 +1,5 @@
 export default {
-  close: 'Close',
+  close: 'Fechar',
   dataIterator: {
     pageText: '{0}-{1} of {2}',
     noResultsText: 'Nenhum resultado encontrado',
@@ -132,7 +132,7 @@ export default {
     updateSeconds: 'Segundos desde última atualização:',
     updatingContent: 'Atualizando conteúdo...',
     updatingServer: 'Atualizando servidor ',
-    updateBilaraIntro: 'Click Update Content to update bilara-data',
+    updateBilaraIntro: 'Clique Atualizar Conteúdo para atualizar bilara-data',
     uptime: 'Tempo desde inicialização',
     userAdded: 'Usuário adicionado',
     username: 'Usuário',
@@ -156,7 +156,7 @@ export default {
     aboutTitle: "Sobre o Voice",
     and: "e",
     ariaAbout: "Sobre o Voice",
-    ariaClose: "fechar",
+    ariaClose: "Fechar",
     ariaDedicated: "Dedicado àqueles na escuridão que tem a luz como destino",
     ariaDismissError: "descartar erro",
     ariaDownload: "fazer download",
@@ -180,7 +180,7 @@ export default {
     bellSound: "Sino",
     bellTibetan: "Tigela musical tibetana (Horst: CC0)",
     dedicated: "Para aqueles na escuridão e tendo a luz como destino",
-    dedicatedSearch: "the dark bound for light",
+    dedicatedSearch: "aqueles na escuridão e tendo a luz como destino",
     downloadComplete: "Download completo:",
     downloading: "Fazendo downloads:",
     downloadTimeout: "Tempo limite para download:",
@@ -193,7 +193,7 @@ export default {
     MMSS: "A_MINUTESm A_SECONDSs",
     noBell: "Ouvir sutta imediatamente",
     noHTML5: "Seu browser não carrega áudio HTML5. Tente usar o Chrome",
-    point: "Punkt",
+    point: "Ponto",
     publicDomain: "Domínio público",
     reader: "Speaker",
     relevance: "Relevância:",
@@ -213,10 +213,10 @@ export default {
     trackOfSection: "A_TRACK of A_TRACKS",
     translation: "Translation",
     transLanguage: "Idioma da tradução",
-    translatedBy: "Translated by",
+    translatedBy: "Traduzido por",
     uiLanguage: "Idioma da página",
     wikiAria: "Home-PT.md",
-    noTranslationAvailable: "(no translation available)",
+    noTranslationAvailable: "(tradução não disponível)",
 
   }
 }
