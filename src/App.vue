@@ -128,8 +128,7 @@
             <v-radio-group v-model="gscv.ips" 
                 @change="gscv.changed('ips')"
                 column>
-               <v-radio v-for="(ips) in ipsChoices"
-                 v-if="!ips.hide"
+               <v-radio v-for="(ips) in ipsChoices.filter(ips=>!ips.hide)"
                  :label="ips.label" :value="ips.value" 
                  :key="`ips${ips.value}`">
                  </v-radio>
@@ -256,7 +255,6 @@
 
 <script>
 import Vue from "vue";
-import Sutta from './components/sutta';
 import scvPackage from '../package';
 // eslint no-console 0
 
@@ -265,7 +263,6 @@ const ZEROWIDTHSPACE = '\u200b';
 export default {
     name: 'App',
     components: {
-        Sutta
     },
     data () {
         return {

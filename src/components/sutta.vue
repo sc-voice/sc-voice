@@ -72,7 +72,7 @@ style="width:100%; margin-top:0"/>
                 @focusin="focusMore(true)"
                 @focusout="focusMore(false)"
                 :aria-hidden="!moreVisible">
-                <li class="" v-if="supportedAudio.length"
+                <li class="" 
                     v-for="(audio,i) in supportedAudio" 
                     role="none"
                     :key="`moreaudio${i}`" >
@@ -100,7 +100,7 @@ style="width:100%; margin-top:0"/>
                         ({{translation.lang_name}})
                     </a>
                 </li>
-                <li class="" v-if="unsupportedAudio.length"
+                <li class="" 
                     v-for="(audio,i) in unsupportedAudio" 
                     role="none"
                     :key="`moreaudio${i}`" >
@@ -268,8 +268,7 @@ style="width:100%; margin-top:0"/>
         <div class="scv-blurb"><span v-html="metaarea"></span></div>
       </details>
       <details class="scv-section-body"
-        v-for="(sect,i) in sections" :key="`sect${i}`"
-        v-if="i>0">
+        v-for="(sect,i) in sections1" :key="`sect${i}`" >
         <summary class="subheading" 
             :aria-label="sectionAriaLabel(sect)"><div 
                 style="display:inline-block; width:96%;">
@@ -284,21 +283,21 @@ style="width:100%; margin-top:0"/>
         <div class="scv-play-controls" v-if="gscv.voices">
             <button
                 :disabled="waiting > 0"
-                @click="launchSuttaPlayer(i)"
+                @click="launchSuttaPlayer(i+1)"
                 class="scv-text-button mt-3"
                 :style="cssProps"
                 >
-                Play Section {{i+1}} ({{voice.name}})
+                Play Section {{i+2}} ({{voice.name}})
             </button>
         </div>
-        <div v-if="error[i]" class="scv-error"
+        <div v-if="error[i+1]" class="scv-error"
             style="margin-left: 1.2em" >
           <div>
-            <span class="subheading">{{error[i].data}}</span>
+            <span class="subheading">{{error[i+1].data}}</span>
             <br>
-            <span class="font-italic">{{error[i].http}}</span>
+            <span class="font-italic">{{error[i+1].http}}</span>
           </div>
-          <v-btn icon @click="error[i]=null" class="scv-icon-btn" :style="cssProps"
+          <v-btn icon @click="error[i+1]=null" class="scv-icon-btn" :style="cssProps"
             aria-label="Dismiss Error">
             <v-icon>clear</v-icon>
           </v-btn>
@@ -555,11 +554,6 @@ export default {
                         links.push(that.audioLink(data, lang));
                     }
                     var audio = links.map(link => new Audio(link));
-                    var handler1 = () => {
-                        audio[1].removeEventListener("ended", handler1);
-                        that.refPlaying = null;
-                        console.log(`playQuotes ended1`, audio[1]);
-                    };
                     var handler0 = () => {
                         audio[0] && audio[0].removeEventListener("ended", handler0);
                         that.refPlaying = null;
@@ -966,6 +960,9 @@ export default {
         },
     },
     computed: {
+        sections1() {
+            return this.sections && this.sections.slice(1) || [];
+        },
         searchLabel() {
             return this.transLabel('$vuetify.scv.search');
         },
