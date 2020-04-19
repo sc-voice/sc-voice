@@ -240,21 +240,24 @@
             await suttaStore.initialize();
             var sutta = await suttaStore.loadSutta('mn1');
             var parser = new SectionParser();
-            var section = parser.parseExpandableSection(sutta.segments.slice(292));
+            var section = parser
+                .parseExpandableSection(sutta.segments.slice(292));
 
             should.deepEqual(section.values, MN1_VALUES);
             should(section.segments.length).equal(38);
             should(section.segments[0].scid).equal('mn1:171.1');
-            should(section.segments[section.segments.length-1].scid).equal('mn1:172-194.32');
+            should(section.segments[section.segments.length-1].scid)
+                .equal('mn1:172-194.32');
             should(section.prefix).equal('He directly knows ');
-            should.deepEqual(section.template.map(seg => seg.scid), 
-                [ 'mn1:171.1', 'mn1:171.2', 'mn1:171.3', 'mn1:171.4', 'mn1:171.5', 'mn1:171.6']);
+            should.deepEqual(section.template.map(seg => seg.scid), [
+                'mn1:171.1', 'mn1:171.2', 'mn1:171.3', 'mn1:171.4', 
+                'mn1:171.5', 'mn1:171.6']);
 
             done();
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandableSection(segments) parses mn3 (1)", function(done) {
+    it("TESTTESTparseExpandableSection(segments) parses mn3 (1)", done=>{
         (async function() { try {
             await suttaStore.initialize();
             var sutta = await suttaStore.loadSutta('mn2');
@@ -265,9 +268,9 @@
             should.deepEqual(section.values.slice(15,20), 
                 MN2_VALUES.slice(15,20));
             should(section.segments.length).equal(12);
-            should(section.segments[0].scid).equal('mn2:12.1');
+            should(section.segments[0].scid).equal('mn2:12.0');
             should(section.segments[section.segments.length-1].scid)
-                .equal('mn2:12.12');
+                .equal('mn2:12.11');
             should(section.prefix).match(/Reflecting properly, /);
             should.deepEqual(section.template.map(seg => seg.scid), 
                 [ 'mn2:12.2', 'mn2:12.3']);

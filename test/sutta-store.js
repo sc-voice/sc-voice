@@ -133,7 +133,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search('thig16.1') returns segmented sutta", done=>{
+    it("TESTTESTsearch('thig16.1') returns segmented sutta", done=>{
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
@@ -174,17 +174,18 @@
                 matched: true,
                 en: 'Verses of the Senior Nuns',
                 pli: 'Therīgāthā',
-                scid: 'thig16.1:1.1',
+                scid: 'thig16.1:0.1',
             });
             var sections = sutta.sections;
             should.deepEqual(sections[0].segments[0],{
                 en: 'Verses of the Senior Nuns',
                 matched: true,
                 pli: 'Therīgāthā',
-                scid: 'thig16.1:1.1',
+                scid: 'thig16.1:0.1',
             });
-            should(sections.length).equal(3);
-            should.deepEqual(sections.map(s => s.segments.length), [1,1,309,]);
+            should(sections.length).equal(2);
+            should.deepEqual(sections.map(s => s.segments.length), 
+                [3,308,]);
 
             done(); 
         } catch(e) {done(e);} })();
@@ -217,14 +218,15 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search('thig1.1') returns segmented sutta", function(done) {
+    it("TESTTESTsearch('thig1.1') returns segmented sutta", done=>{
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
                 localeIPA: 'pli',
                 usage: 'recite',
             });
-            var suttaCentralApi = await new SuttaCentralApi(PRODUCTION).initialize();
+            var suttaCentralApi = await new SuttaCentralApi(PRODUCTION)
+                .initialize();
             this.suttaFactory = new SuttaFactory({
                 suttaCentralApi,
                 autoSection: true,
@@ -249,7 +251,8 @@
                 'sujato']);
             should.deepEqual(results.map(r=>r.suttaplex.acronym), [
                 'Thig 1.1']);
-            should(results[0].quote.en).match(/1.1. An Unnamed Nun \(1st\)/);
+            should(results[0].quote.en)
+                .match(/1.1. An Unnamed Nun \(1st\)/);
             should(results[0].nSegments).equal(9);
             var sutta = results[0].sutta;
             should(sutta.sutta_uid).equal('thig1.1');
@@ -258,17 +261,17 @@
                 matched: true,
                 en: 'Verses of the Senior Nuns',
                 pli: 'Therīgāthā',
-                scid: 'thig1.1:1.1',
+                scid: 'thig1.1:0.1',
             });
             var sections = sutta.sections;
             should.deepEqual(sections[0].segments[0],{
                 matched: true,
                 en: 'Verses of the Senior Nuns',
                 pli: 'Therīgāthā',
-                scid: 'thig1.1:1.1',
+                scid: 'thig1.1:0.1',
             });
             should.deepEqual(sections.map(s => s.segments.length), 
-                [1,1,7,]);
+                [3,6,]);
 
             done(); 
         } catch(e) {done(e);} })();
