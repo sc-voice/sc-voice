@@ -52,14 +52,33 @@ SC-Voice can be installed as a **systemd** service that will be launched at boot
 
 Restart server to launch SC-Voice.
 
+### Unit tests
+```
+npm run test
+```
+Unit tests take about 2 minutes.
+The unit tests require AWS Polly. 
+Tests for IBM Watson are disabled by default (see `test/watson.js`). 
+
+To execute a single unit/test, simply insert the text `TESTTEST`
+into the `it("...")` title argument. Then run `npm run test:test`, 
+which selectively tests such unit tests whenever a source file changes. 
+This makes quick work of debugging or implementing a feature.
+
+##### Test failures
+* Some tests validate online APIs and may fail due to timeouts 
+or `EAI_AGAIN` responses. Re-run tests and they should pass.
+* Some tests validate online content which may change. For example, the number of search results may change slightly. Update the unit tests accordingly and re-run tests.
+
 ### Scripts
 
  | Command line script | Description |
  | :----- | :---------- |
- | `npm run test`  | Run service unit tests. The unit tests require AWS Polly. Tests for IBM Watson are disabled by default (see `test/watson.js`). |
+ | `npm run test`  | Run service unit tests (about 2 minutes). |
  | `npm run serve` | Compile and reload SC-Voice Vue for development at http://localhost:8080 |
  | `npm run build` | Create production Vue build in `dist` folder |
  | `npm run lint`  | Run esLint to check *.js and *.vue files `|
+
 
 ### Other
 #### Directory structure
