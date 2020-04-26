@@ -29,7 +29,8 @@
 
     function testPhoneme(recite, ph, text) {
         var ssml = recite.segmentSSML(text)[0];
-        should(ssml.indexOf(ph)).above(-1, `Phoneme not found.\nexpected:\t\t\t  "${ph}"\nactual:${ssml}`);
+        should(ssml.indexOf(ph)).above(-1, 
+            `Phoneme not found.\nexpected:\t\t\t  "${ph}"\nactual:${ssml}`);
     }
 
     it("createVoice() creates Aditi", function() {
@@ -76,7 +77,7 @@
         testPhoneme(recite, `ve j jɑː kə ɾə ɳəŋ`, 'veyyākaraṇaṃ'); 
         testPhoneme(recite, `pəc cə v\\ek kʰe j jə`, 'paccavekkheyya'); 
         testPhoneme(recite, `v\\e sɑː lɪ jəŋ`, 'vesāliyaṃ'); 
-        testPhoneme(recite, `pə ʈɪ 'səŋ ʋẽ d̪e t̪iː`, 'paṭisaṃvedetī'); 
+        testPhoneme(recite, `pə ʈɪ 'səŋ ʋẽ d̪e t̪ɪi`, 'paṭisaṃvedetī'); 
         testPhoneme(recite, `pə ɾɪ sʊɖ ɖʱəŋ`, `parisuddhaṃ`);
 
         // stops

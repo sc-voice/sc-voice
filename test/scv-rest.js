@@ -497,12 +497,12 @@
             should(data.segment.audio.en)
                 .match(/^fd0b08ce4c45390c4ae796fefd406a52/);
             should(data.segment.audio.pli)
-                .match(/60479bb5bffa55333830d80e008c7dfd/);
+                .match(/047140f49ce506b34dc85b39be0688ed/);
 
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles HumanTts dn33", function(done) {
+    it("GET /play/segment/... handles HumanTts dn33", done=>{
         (async function() { try {
             var scid = "dn33:0.1";
             var sutta_uid = scid.split(":")[0];
@@ -520,7 +520,8 @@
             ].join('/');
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
-            var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+            var data = res.body instanceof Buffer 
+                ? JSON.parse(res.body) : res.body;
             should(data.sutta_uid).equal(scid.split(':')[0]);
             should(data.vnameTrans).equal(vnameTrans);
             should(data.vnameRoot).equal(vnameRoot);
@@ -535,7 +536,7 @@
             should(data.segment.audio.en)
                 .match(/b06d3e95cd46714448903fa8bcb12004/);
             should(data.segment.audio.pli)
-                .match(/3269e075fe9bfd7973566445b5cdeada/);
+                .match(/899e4cd12b700b01200f295631b1576b/);
 
             done();
         } catch(e) {done(e);} })();
@@ -868,7 +869,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/create-archive create VSM", function(done) {
+    it("TESTTESTPOST auth/vsm/create-archive create VSM", function(done) {
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;
             var nikaya = 'kn';

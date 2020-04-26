@@ -247,8 +247,10 @@
     });
     it("utf16(word, minCode) return Unicode-16 string escape", function() {
         var words = new Words();
-        should(Words.utf16('a\u0123\u0abcb',0x7f)).equal('a\\u0123\\u0ABCb');
-        should(Words.utf16('a\u0123\u0abcb')).equal('\\u0061\\u0123\\u0ABC\\u0062');
+        should(Words.utf16('a\u0123\u0abcb',0x7f))
+            .equal('a\\u0123\\u0ABCb');
+        should(Words.utf16('a\u0123\u0abcb'))
+            .equal('\\u0061\\u0123\\u0ABC\\u0062');
     });
     it("ipa(word, language) return IPA for word", function() {
         var aend = `\u0061\u0308`;
@@ -262,7 +264,7 @@
         ipaCompare(`ānanda`, `\u0251nɐnd${aend}`);
         ipaCompare(`Dhamma`, `d\u02b0\u0250mm${aend}`); // SlowAmy can`t say "dh"
         ipaCompare(`aṅgaka`, `ɐ\u02c8ŋgɐk${aend}`);
-        ipaCompare(`anīgha`, `ɐ\u02c8niːg\u02b0${aend}`);
+        ipaCompare(`anīgha`, `ɐ\u02c8nɪig\u02b0${aend}`);
         ipaCompare(`anāthapiṇḍika`, `ɐˈnɑthɐpɪŋdɪk${aend}`);
         ipaCompare(`Bhāradvāja`, `b\u02b0ɑ\u027aɐdvɑʝ${aend}`);
         ipaCompare(`Cūḷataṇhāsaṅkhayasutta`, `cʊːʟ̈ɐtɐŋhɑsɐ\u1e45k\u02b0ajɐ\u02cc${sutta}`);

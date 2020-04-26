@@ -188,7 +188,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTspeak(opts) adds voice audio", function(done) {
+    it("speak(opts) adds voice audio", function(done) {
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = new SuttaFactory({
@@ -215,11 +215,11 @@
                 volume: 'test-playlist',
             });
             should(result.signature.guid)
-                .match(/afbecbf62814fdb9bfb85914511639da/);
+                .match(/20446b264163820392a0b4cb06bbf538/);
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTspeak(opts) adds break between suttas", function(done) {
+    it("speak(opts) adds break between suttas", function(done) {
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();
             var factory = new SuttaFactory({

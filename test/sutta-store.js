@@ -133,7 +133,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch('thig16.1') returns segmented sutta", done=>{
+    it("search('thig16.1') returns segmented sutta", done=>{
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',

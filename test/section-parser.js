@@ -257,7 +257,7 @@
         } catch(e) { done(e); } })();
     });
 
-    it("TESTTESTparseExpandableSection(segments) parses mn3 (1)", done=>{
+    it("parseExpandableSection(segments) parses mn3 (1)", done=>{
         (async function() { try {
             await suttaStore.initialize();
             var sutta = await suttaStore.loadSutta('mn2');

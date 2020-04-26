@@ -24,7 +24,7 @@
         var scd = new SuttaDuration();
         should(scd.name).equal('amy');
     });
-    it("TESTTESTmeasure(sutta, lang) measures thag1.2", function(done) {
+    it("measure(sutta, lang) measures thag1.2", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
             var sutta = await store.loadSutta('thag1.2');
