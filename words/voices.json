@@ -285,6 +285,9 @@
         "navigate": "+5%", 
         "recite": "-30%"
     },
+    "customWords": {
+        "pe": { "ipa": "pee" }
+    },
     "usages": {
         "navigate": {
             "priority": 1,
