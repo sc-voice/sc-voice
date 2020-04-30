@@ -286,7 +286,9 @@
         "recite": "-30%"
     },
     "customWords": {
-        "pe": { "ipa": "pee" }
+        "pe": { "ipa": "pee" },
+        "vuttā": { "ipa": "'vʊt̪ t̪ɑː" },
+        "vuttāṃ": { "ipa": "'vʊt̪ t̪ɑːŋ" }
     },
     "usages": {
         "navigate": {
