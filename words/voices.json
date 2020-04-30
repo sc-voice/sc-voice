@@ -286,9 +286,7 @@
         "recite": "-30%"
     },
     "customWords": {
-        "pe": { "ipa": "pee" },
-        "vuttā": { "ipa": "'vʊt̪ t̪ɑː" },
-        "vuttāṃ": { "ipa": "'vʊt̪ t̪ɑːŋ" }
+        "pe": { "ipa": "pee" }
     },
     "usages": {
         "navigate": {
@@ -370,6 +368,8 @@
             "vā": "v\\ɑː",
             "vi": "v\\ɪ",
             "vo": "v\\o",
+            "vut": "'vʊt̪",
+            "vū": "'vʊ",
             "yi": "'ji",
             "y": "j"
         }
