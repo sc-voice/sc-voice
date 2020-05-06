@@ -1,4 +1,4 @@
-# Über SuttaCentral
+# Ueber SuttaCentral
 SuttaCentral ist eine Webseite, die von einem kleinen Team betrieben wird, das ursprünglich in Australien ansässig war. Wir sind keiner Institution angegliedert, sondern sind eine Gruppe von Freunden, die an den Suttas interessiert sind. Begründet wurde SuttaCentral von Rod Bucknell, John Kelly und Bhante Sujato. Seit 2017 sind Bhante Sujato, Ayya Vimala und Blake Walsh die Hauptentwickler. Die Webseite wird finanziell vom *SuttaCentral Development Trust* unterstützt, einer gemeinnützigen Organisation, die in Australien registriert ist.
 
 SuttaCentral möchte das Studium der buddhistischen Texte aus vergleichender und historischer Sicht fördern. Es stellt die Texte, die den „frühen Buddhismus“ repräsentieren, in den Mittelpunkt, das sind Texte, die nicht nur im Pali-Sutta und -Vinaya Piṭaka bewahrt wurden, sondern auch in chinesischen und tibetischen Übersetzungen und als fragmentarische Reste auf Sanskrit und in anderen Sprachen.
