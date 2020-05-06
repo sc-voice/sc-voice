@@ -2,7 +2,7 @@
 
 Hello Anagarika,
 
-This web page is in *docs/index.html*
+This web page is in *docs/index.md*
 
 Here are links to other pages:
 
