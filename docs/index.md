@@ -1,5 +1,3 @@
-{% include head.html %}
-
 ### sc-voice.github.io/sc-voice
 
 Hello Anagarika,
