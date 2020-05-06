@@ -1,4 +1,4 @@
-{% include _includes/head.html %}
+{% include head.html %}
 
 ### sc-voice.github.io/sc-voice
 
