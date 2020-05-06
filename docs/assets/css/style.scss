@@ -1,8 +1,9 @@
 ---
 ---
 
-@import "{{ site.theme }}";
+@import "jekyll-theme-midnight";
 
 .sv-header{
-    background: red;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(204,204,204,0.3575641193977591) 86%, rgba(204,204,204,1) 100%);
 }
