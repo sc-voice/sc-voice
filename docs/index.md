@@ -1,14 +1,11 @@
-<html>
-<body>
-<h1>sc-voice.github.io/sc-voice</h1>
+### sc-voice.github.io/sc-voice
+
 Hello Anagarika,
 
-This web page is in <b>docs/index.html</b>.
+This web page is in *docs/index.html*
 
 Here are links to other pages:
 
-<a href="index-de.html">Deutsch</a>
+[Deutsch](index-de)
 
 Have fun!
-</body>
-</html>
