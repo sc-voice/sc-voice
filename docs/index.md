@@ -6,6 +6,6 @@ This web page is in *docs/index.md*
 
 Here are links to other pages:
 
-[Dhammaregen](index-de)
+[Dhammaregen](Dhammaregen.md)
 
 Have fun!
