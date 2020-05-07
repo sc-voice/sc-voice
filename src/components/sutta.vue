@@ -271,7 +271,7 @@ style="width:100%; margin-top:0"/>
         v-for="(sect,i) in sections1" :key="`sect${i}`" >
         <summary class="subheading" 
             :aria-label="sectionAriaLabel(sect)"><div 
-                style="display:inline-block; width:96%;">
+                style="display:inline-block; width:94%;">
                 <div style="display:flex; justify-content: space-between">
                     <div style="display:inline"><i>{{sect.title}}</i></div>
                     <div v-if="gscv.showId" class='scv-scid'>
@@ -304,9 +304,12 @@ style="width:100%; margin-top:0"/>
         </div>
         <div v-for="(seg,j) in sect.segments" :key="seg+j" 
             :class="segClass(seg)">
-            <div style="display: flex; justify-content: space-between">
-                <div v-html="segmentLang(seg)" 
-                    style="display:inline-block">
+            <div class="scv-seg">
+                <div v-html="segmentPali(seg)" v-if="showPali"
+                  class="scv-seg-pali" :style="cssVars">
+                </div>
+                <div v-html="segmentLang(seg)" v-if="showTrans"
+                  class="scv-seg-lang" :style="cssVars">
                 </div>
                 <div v-show="gscv.showId" class='scv-scid' 
                     style="display:inline-block;">
@@ -854,6 +857,11 @@ export default {
 
             return label;
         },
+        segmentPali(seg) {
+            var segLang = seg.pli;
+            return segLang 
+                ? segLang.replace(/\n/g,'</br>') : '';
+        },
         segmentLang(seg) {
             var segLang = seg[this.language];
             return segLang 
@@ -960,6 +968,20 @@ export default {
         },
     },
     computed: {
+        segTextWidth() {
+          var {
+            showPali,
+            showTrans,
+          } = this;
+          var segTextWidth = showPali && showTrans ? "48%" : "100%";
+          console.log(`dbg SegTextWidth ${segTextWidth}`, {showTrans, showPali} );
+          return segTextWidth;
+        },
+        cssVars() {
+          return {
+            "--seg-text-width": this.segTextWidth,
+          }
+        },
         sections1() {
             return this.sections && this.sections.slice(1) || [];
         },
@@ -976,12 +998,12 @@ export default {
             return `${this.sutta_uid}`;
         },
         showPali( ){
-            var showLang = this.gscv && this.gscv.showLang || 0;
-            return showLang === 0 || showLang === 1;
+          var showLang = this.gscv && this.gscv.showLang || 0;
+          return showLang === 0 || showLang === 1;
         },
         showTrans( ){
-            var showLang = this.gscv && this.gscv.showLang || 0;
-            return showLang === 0 || showLang === 2;
+          var showLang = this.gscv && this.gscv.showLang || 0;
+          return showLang === 0 || showLang === 2;
         },
         sutta_uid() {
             var query = this.$route.query;
@@ -1374,6 +1396,25 @@ export default {
     flex-flow: row nowrap;
     justify-content: space-between;
     min-width: 40em;
+}
+.scv-seg {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.scv-seg-pali {
+  width: var(--seg-text-width);
+  display:inline-block;
+  vertical-align: top;
+  font-style: italic;
+}
+
+.scv-seg-lang {
+  width: var(--seg-text-width);
+  display:inline-block;
+  vertical-align: top;
 }
 
 </style>
