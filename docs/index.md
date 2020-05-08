@@ -1,5 +1,5 @@
 ### SuttaCentral Voice
-[Deutsch](/de/Home-DE)  |  [Português](https://github.com/sc-voice/sc-voice/wiki/Home-PT)  |  [日本語](https://github.com/sc-voice/sc-voice/wiki/Home-JA)  |  [Français](https://github.com/sc-voice/sc-voice/wiki/Home-FR)
+[Deutsch](/sc-voice/de/Home-DE)  |  [Português](/sc-voice/pt/Home-PT)  |  [日本語](/sc-voice/ja/Home-JA)  |  [Français](/sc-voice/fr/Home-FR)
 
 ### Welcome to SuttaCentral Voice! 
 
@@ -55,4 +55,4 @@ The following indexes and list of terms may also help you find what you're looki
 
 ### Acknowledgements
 
-[Please click here](https://github.com/sc-voice/sc-voice/wiki/Acknowledgements)
+[Please click here](/sc-voice/en/Acknowledgements)
