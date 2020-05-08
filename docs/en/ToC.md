@@ -11,4 +11,4 @@
 * [Installation: Developer](/sc-voice/en/Installation:-Developer) provides instructions on setting up Voice development environment
 * [Translating Voice UI](/sc-voice/en/Translating-Voice-UI) gives some guidelines for translating the Voice interface into other languages.
 * [Mispronunciations](/sc-voice/en/Mispronunciations) lists words that may be mispronounced by Amy and or Raveena
-* [URL Format](/sc-voice/en/URL-Format) for external site links
+* [URL Format](/sc-voice/en/URL-format) for external site links
