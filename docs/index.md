@@ -29,5 +29,4 @@ Select language:
 
 ### Other
 * [Acknowledgements](/sc-voice/en/Acknowledgements)
-* [Release-Notes](/sc-voice/en/Release-Notes)
 * [Tipitaka-Categories](/sc-voice/en/Tipitaka-Categories)
