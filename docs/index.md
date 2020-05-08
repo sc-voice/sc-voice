@@ -20,13 +20,13 @@
 * [Translating Voice UI](/sc-voice/en/Translating-Voice-UI) gives some guidelines for translating the Voice interface into other languages.
 * [Mispronunciations](/sc-voice/en/Mispronunciations) lists words that may be mispronounced by Amy and or Raveena
 * [URL Format](/sc-voice/en/URL-format) for external site links
-* [Architecture:-Storage](/sc-voice/en/Architecture:-Storage.md)
-* [AWS-Installation](/sc-voice/en/AWS-Installation.md)
-* [AWS-Staging-911](/sc-voice/en/AWS-Staging-911.md)
-* [Notes-on-using-the-Voice-ZenHub-board](/sc-voice/en/Notes-on-using-the-Voice-ZenHub-board.md)
-* [SuttaCentral-Voice-Administration](/sc-voice/en/SuttaCentral-Voice-Administration.md)
+* [Architecture:-Storage](/sc-voice/en/Architecture:-Storage)
+* [AWS-Installation](/sc-voice/en/AWS-Installation)
+* [AWS-Staging-911](/sc-voice/en/AWS-Staging-911)
+* [Notes-on-using-the-Voice-ZenHub-board](/sc-voice/en/Notes-on-using-the-Voice-ZenHub-board)
+* [SuttaCentral-Voice-Administration](/sc-voice/en/SuttaCentral-Voice-Administration)
 
 ### Other
-* [Acknowledgements](/sc-voice/en/Acknowledgements.md)
-* [Release-Notes](/sc-voice/en/Release-Notes.md)
-* [Tipitaka-Categories](/sc-voice/en/Tipitaka-Categories.md)
+* [Acknowledgements](/sc-voice/en/Acknowledgements)
+* [Release-Notes](/sc-voice/en/Release-Notes)
+* [Tipitaka-Categories](/sc-voice/en/Tipitaka-Categories)
