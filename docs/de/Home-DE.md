@@ -1,4 +1,4 @@
-[English](/)  |  [Português](/pt/Home-PT)  |  [日本語](https://github.com/sc-voice/sc-voice/wiki/Home-JA)  |  [Français](https://github.com/sc-voice/sc-voice/wiki/Home-FR)
+[English](/sc-voice/)  |  [Português](/sc-voice/pt/Home-PT)  |  [日本語](https://github.com/sc-voice/sc-voice/wiki/Home-JA)  |  [Français](https://github.com/sc-voice/sc-voice/wiki/Home-FR)
 
 ### Willkommen bei SuttaCentral Voice! 
 
