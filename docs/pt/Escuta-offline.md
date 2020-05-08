@@ -5,7 +5,7 @@ Para ouvir offline com um telefone, é melhor baixar um arquivo de áudio do Sut
 ### Download de arquivos de áudio
 Em um computador desktop, navegue até a página da web do SuttaCentral Voice e busque por um ou mais sutta (s). Ao lado do botão Reproduzir, você vê uma seta para download. Clique nele para baixar os sutta (s) selecionados.
 
-![[https://github.com/sc-voice/sc-voice/blob/master/src/assets/download-en.png]]
+![[https://github.com/sc-voice/sc-voice/blob/master/src/assets/download-en.png?raw=true]]
 
 Copie o arquivo de áudio para o seu telefone ou outro dispositivo de áudio (veja abaixo as instruções do iPhone).
 

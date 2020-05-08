@@ -1,5 +1,3 @@
-[English](https://github.com/sc-voice/sc-voice/wiki)  |  [Deutsch](https://github.com/sc-voice/sc-voice/wiki/Home-DE)  |  [日本語](https://github.com/sc-voice/sc-voice/wiki/Home-JA)  |  [Français](https://github.com/sc-voice/sc-voice/wiki/Home-FR)
-
 ### Bem-vindo ao SuttaCentral Voice!
 
 Este aplicativo vem sendo desenvolvido para aqueles que usam leitores de tela como JAWS, NVDA e ChromeVox, mas usuários com visão também podem achar este uma maneira útil de explorar os ensinamentos do Buda.
@@ -19,7 +17,7 @@ A SuttaCentral Voice permite que as pessoas ouçam as palavras do Buda através 
 
 ### Usando o SuttaCentral Voice
 
-Para começar a usar o SuttaCentral Voice, digite uma ou mais palavras de pesquisa ou uma frase no campo de pesquisa. Para encontrar um sutta específico, como o MN1 por exemplo, basta digitar "mn1" no campo de pesquisa. Para encontrar vários suttas ao mesmo tempo, separe as referências de sutta com uma vírgula (por exemplo, “an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”). Se você deseja sugestões de alguns suttas, clique no botão "Inspire-me!". Você pode alterar a voz de leitura e outras configurações através do ícone de roda dentada no canto superior direito do aplicativo. <a href="https://github.com/sc-voice/sc-voice/wiki/%C3%8Dndice-e-conte%C3%BAdo" target="_blank">Encontre o sumário para obter mais informações.</a>
+Para começar a usar o SuttaCentral Voice, digite uma ou mais palavras de pesquisa ou uma frase no campo de pesquisa. Para encontrar um sutta específico, como o MN1 por exemplo, basta digitar "mn1" no campo de pesquisa. Para encontrar vários suttas ao mesmo tempo, separe as referências de sutta com uma vírgula (por exemplo, “an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”). Se você deseja sugestões de alguns suttas, clique no botão "Inspire-me!". Você pode alterar a voz de leitura e outras configurações através do ícone de roda dentada no canto superior direito do aplicativo. <a href="/sc-voice/pt/%C3%8Dndice-e-conte%C3%BAdo" target="_blank">Encontre o sumário para obter mais informações.</a>
 
 <a href="https://discourse.suttacentral.net/t/how-do-you-use-suttacentral-voice/12384" target="_blank">Leia como outras pessoas estão usando o SuttaCentral Voice</a> no fórum do SuttaCentral.
 
@@ -49,8 +47,8 @@ Os seguintes índices e lista de termos também podem ajudá-lo a encontrar o qu
 </details>
 
 ### Outra informação
-* <a href="https://github.com/sc-voice/sc-voice/wiki/ToC#engineering-and-development" target="_blank">Time de Engenharia e Desenvolvimento do SuttaCentral</a>
+* <a href="/sc-voice/en/ToC#engineering-and-development" target="_blank">Time de Engenharia e Desenvolvimento do SuttaCentral</a>
 * <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Comentários</a>
 
 ### Créditos/Agradecimentos
-[Clique aqui por favor](https://github.com/sc-voice/sc-voice/wiki/Acknowledgements)
+[Clique aqui por favor](/sc-voice/en/Acknowledgements)

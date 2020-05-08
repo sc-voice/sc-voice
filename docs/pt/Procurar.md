@@ -51,7 +51,7 @@ A pontuação de relevância é simplesmente **C+F**. Por exemplo, um sutta de 1
 2 + 2/100 = 2 + 0,02 = 2,02
 ``` 
 
-NOTA: Os segmentos são as menores unidades de texto, como uma única frase, frase ou parágrafo curto estruturado de acordo com as unidades semânticas no texto raiz (Pali).  (Veja [Tecnologia de segmentação](https://github.com/sc-voice/sc-voice/wiki/Segmentation-Technology))
+NOTA: Os segmentos são as menores unidades de texto, como uma única frase, frase ou parágrafo curto estruturado de acordo com as unidades semânticas no texto raiz (Pali).  (Veja [Tecnologia de segmentação](/sc-voice/en/Segmentation-Technology))
 
 #### Expressões regulares (regex)
 Muitas pessoas no SuttaCentral têm usado o `grep` para pesquisa. 
@@ -67,7 +67,7 @@ O número de resultados da pesquisa é restrito inicialmente a 5. A limitação 
 _Configurações: Buscar resultados_
 
 #### Listas de reprodução de Sutta
-![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/play-all-de.png)
+![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/play-all-de.png?raw=true)
 
 Você pode ouvir os suttas listados nos resultados da pesquisa. Basta clicar em "Reproduzir" diretamente abaixo do resumo do resultado.
 
