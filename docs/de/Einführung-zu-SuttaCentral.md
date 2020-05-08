@@ -8,7 +8,7 @@ Es gibt mehrere buddhistische Traditionen, von denen jede einen Satz alter Schri
 
 SuttaCentral beherbergt Texte in den Originalsprachen, Übersetzungen in moderne Sprachen sowie komplexe Reihen von Parallelen, die die Beziehung zwischen den Genannten aufzeigen.
 
-![download link](https://suttacentral.net/img/static-pages/Life_of_Buddha_Burmese_Manuscript_22_Volume_1_Wellcom.webp)
+![download link](/sc-voice/assets/img/Life_of_Buddha_Burmese_Manuscript_22_Volume_1_Wellcom.webp?raw=true)
 
 ## Themen
 
