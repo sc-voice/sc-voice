@@ -1,9 +1,9 @@
-1. [Hintergrund](https://github.com/sc-voice/sc-voice/wiki/Methodik-und-Quellen#Hintergrund)
-1. [Suttaparallelen](https://github.com/sc-voice/sc-voice/wiki/Methodik-und-Quellen#Suttaparallelen)
-1. [Vinayaparallelen](https://github.com/sc-voice/sc-voice/wiki/Methodik-und-Quellen#Vinayaparallelen)
-1. [Textquellen](https://github.com/sc-voice/sc-voice/wiki/Methodik-und-Quellen#Textquellen)
-1. [Markup](https://github.com/sc-voice/sc-voice/wiki/Methodik-und-Quellen#Markup)
-1. [Bibliografie](https://github.com/sc-voice/sc-voice/wiki/Methodik-und-Quellen#Bibliografie)
+1. [Hintergrund](/sc-voice/de/Methodik-und-Quellen#Hintergrund)
+1. [Suttaparallelen](/sc-voice/de/Methodik-und-Quellen#Suttaparallelen)
+1. [Vinayaparallelen](/sc-voice/de/Methodik-und-Quellen#Vinayaparallelen)
+1. [Textquellen](/sc-voice/de/Methodik-und-Quellen#Textquellen)
+1. [Markup](/sc-voice/de/Methodik-und-Quellen#Markup)
+1. [Bibliografie](/sc-voice/de/Methodik-und-Quellen#Bibliografie)
 
 ## Hintergrund
 

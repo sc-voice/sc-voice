@@ -22,7 +22,7 @@ Die gezeigte Darstellungsart wird auf SuttaCentral benutzt und ist wegen ihrer K
 * `SN 12.2/de/sabbamitta`
 * `SN 12.2/de/geiger`
 
-Sprache und Übersetzername können ausgelassen werden. Die voreingestellte Sprache ist Deutsch („de“). Die Voreinstellung für den Übersetzer wird von der ersten unterstützten Übersetzung in der jeweiligen Sprache hergeleitet (siehe [Support-Richtlinien](https://github.com/sc-voice/sc-voice/wiki/Support%E2%80%90Richtlinien)). Eine Alt-Übersetzung wird gezeigt, wenn es keine unterstützte Übersetzung gibt, und kann Aussprache- oder Schreibfehler enthalten. (Alt-Übersetzungen werden sukzessive durch unterstützte Übersetzungen ersetzt, sobald diese vorliegen.) Sprache und Übersetzer werden als Prioritäten behandelt, und wenn die eingegebene Kombination zu keinem Ergebnis führt, werden Alternativen angeboten, wenn welche gefunden werden.
+Sprache und Übersetzername können ausgelassen werden. Die voreingestellte Sprache ist Deutsch („de“). Die Voreinstellung für den Übersetzer wird von der ersten unterstützten Übersetzung in der jeweiligen Sprache hergeleitet (siehe [Support-Richtlinien](/sc-voice/de/Support%E2%80%90Richtlinien)). Eine Alt-Übersetzung wird gezeigt, wenn es keine unterstützte Übersetzung gibt, und kann Aussprache- oder Schreibfehler enthalten. (Alt-Übersetzungen werden sukzessive durch unterstützte Übersetzungen ersetzt, sobald diese vorliegen.) Sprache und Übersetzer werden als Prioritäten behandelt, und wenn die eingegebene Kombination zu keinem Ergebnis führt, werden Alternativen angeboten, wenn welche gefunden werden.
 
 Beispiele:
 
@@ -53,7 +53,7 @@ Der Relevanzwert ergibt sich einfach als **Summe T + V**. Ein Sutta mit 100 Segm
 
 `2 + 2/100 = 2 + 0,02 = 2,02`
 
-ANMERKUNG: Segmente sind die kleinsten Texteinheiten wie ein Satz, eine Wendung oder ein kurzer Abschnitt und sind nach den semantischen Einheiten des Quelltextes (Pali) gegliedert (siehe [Segmentierungstechnik](https://github.com/sc-voice/sc-voice/wiki/Segmentierungstechnik)).
+ANMERKUNG: Segmente sind die kleinsten Texteinheiten wie ein Satz, eine Wendung oder ein kurzer Abschnitt und sind nach den semantischen Einheiten des Quelltextes (Pali) gegliedert (siehe [Segmentierungstechnik](/sc-voice/de/Segmentierungstechnik)).
 
 #### Reguläre Ausdrücke
 Viele Benutzer von SuttaCentral nutzen Grep für die Suche. Das Grep-Programm ist sehr leistungsstark und unterstützt auch die Möglichkeit, Treffer über [reguläre Ausdrücke](https://www.google.com/search?q=grep+-E+option) zu finden. SuttaCentral Voice unterstützt Grep mit regulären Ausdrücken (z. B. `wurzel.*leiden`).
@@ -68,7 +68,7 @@ Die Anzahl der Suchergebnisse ist zunächst auf 5 begrenzt. Die Ergebnisse zu be
 
 #### Sutta-Wiedergabelisten
 
-![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/wiedergabeliste.png)
+![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/wiedergabeliste.png?raw=true)
 
 Sie können die Suttas hören, die als Suchergebnisse aufgeführt sind. Klicken Sie einfach auf „Wiedergabe“ direkt unter der Zusammenfassung der Suchergebnisse.
 

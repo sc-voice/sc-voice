@@ -25,5 +25,5 @@ A escuta offline com um aplicativo de telefone de serviço em nuvem consome pouc
 
 | Serviço na nuvem | Opção offline | Exemplo |
 | ----- | ---- | ---- |
-| DropBox |Disponibilizar offline | <img src=https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/offline-dropbox.jpg width=200px/> |
+| DropBox |Disponibilizar offline | <img src=https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/offline-dropbox.jpg?raw=true width=200px/> |
 

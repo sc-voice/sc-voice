@@ -1,5 +1,3 @@
-[English](/sc-voice/)  |  [Português](/sc-voice/pt/Home-PT)  |  [日本語](https://github.com/sc-voice/sc-voice/wiki/Home-JA)  |  [Français](https://github.com/sc-voice/sc-voice/wiki/Home-FR)
-
 ### Willkommen bei SuttaCentral Voice! 
 
 Diese App wird für Benutzer von Bildschirmlesern entwickelt wie JAWS, NVDA oder ChromeVox, aber Sehende können sie ebenfalls nützlich finden, um die Lehren des Buddha zu erkunden.
@@ -9,16 +7,16 @@ SuttaCentral Voice ermöglicht es, die Worte des Buddha über ein Lesegerät zu 
 <details>
 <summary>Mehr über SuttaCentral</summary>
 
-* <a href="https://github.com/sc-voice/sc-voice/wiki/%C3%9Cber-SuttaCentral">Über SuttaCentral</a>
-* <a href="https://github.com/sc-voice/sc-voice/wiki/Einf%C3%BChrung-zu-SuttaCentral" target="_blank">Einführung zu SuttaCentral</a> 
-* <a href="https://github.com/sc-voice/sc-voice/wiki/Methodik-und-Quellen" target="_blank">SuttaCentrals Methodik</a>
-* <a href="https://github.com/sc-voice/sc-voice/wiki/Nummerierung-der-Suttas" target="_blank">SuttaCentrals Nummerierungssystem</a>
-* <a href="https://github.com/sc-voice/sc-voice/wiki/Abk%C3%BCrzungen" target="_blank">Von SuttaCentral benutzte Abkürzungen</a>
-* <a href="https://github.com/sc-voice/sc-voice/wiki/Sprachen-auf-SuttaCentral">Sprachen auf SuttaCentral</a>
-* <a href="https://github.com/sc-voice/sc-voice/wiki/W%C3%BCrdigung" target="_blank">Würdigung</a>
-* <a href="https://github.com/sc-voice/sc-voice/wiki/Lizenzen">Lizenzen</a>
-* <a href="https://github.com/sc-voice/sc-voice/wiki/Zum-Herunterladen">Zum Herunterladen</a>
-* <a href="https://github.com/sc-voice/sc-voice/wiki/Spenden-an-SuttaCentral">Spenden</a>
+* <a href="/sc-voice/de/%C3%9Cber-SuttaCentral">Über SuttaCentral</a>
+* <a href="/sc-voice/de/Einf%C3%BChrung-zu-SuttaCentral" target="_blank">Einführung zu SuttaCentral</a> 
+* <a href="/sc-voice/de/Methodik-und-Quellen" target="_blank">SuttaCentrals Methodik</a>
+* <a href="/sc-voice/de/Nummerierung-der-Suttas" target="_blank">SuttaCentrals Nummerierungssystem</a>
+* <a href="/sc-voice/de/Abk%C3%BCrzungen" target="_blank">Von SuttaCentral benutzte Abkürzungen</a>
+* <a href="/sc-voice/de/Sprachen-auf-SuttaCentral">Sprachen auf SuttaCentral</a>
+* <a href="/sc-voice/de/W%C3%BCrdigung" target="_blank">Würdigung</a>
+* <a href="/sc-voice/de/Lizenzen">Lizenzen</a>
+* <a href="/sc-voice/de/Zum-Herunterladen">Zum Herunterladen</a>
+* <a href="/sc-voice/de/Spenden-an-SuttaCentral">Spenden</a>
 
 </details>
 

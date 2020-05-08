@@ -2,7 +2,7 @@ SuttaCentral Voice hat folgende Stufen der Unterstützung:
 
 ### Unterstützt
 
-Unterstützte Inhalte werden von SuttaCentral aktiv gepflegt, und alle Änderungen an den Texten werden zu SuttaCentral Voice übertragen. Von SuttaCentral werden alle Texte unterstützt, die in segmentierter Form vorliegen (siehe [Segmentierungstechnik](https://github.com/sc-voice/sc-voice/wiki/Segmentierungstechnik)). Zusätzlich zu dem, was von SuttaCentral gepflegt wird, kann SuttaCentral Voice noch phonetische Fehler bei den verschiedenen Lesestimmen anpassen; durch die Art, wie der ursprüngliche Anbieter die Stimmen programmiert hat, kann das jedoch an Grenzen stoßen.
+Unterstützte Inhalte werden von SuttaCentral aktiv gepflegt, und alle Änderungen an den Texten werden zu SuttaCentral Voice übertragen. Von SuttaCentral werden alle Texte unterstützt, die in segmentierter Form vorliegen (siehe [Segmentierungstechnik](/sc-voice/de/Segmentierungstechnik)). Zusätzlich zu dem, was von SuttaCentral gepflegt wird, kann SuttaCentral Voice noch phonetische Fehler bei den verschiedenen Lesestimmen anpassen; durch die Art, wie der ursprüngliche Anbieter die Stimmen programmiert hat, kann das jedoch an Grenzen stoßen.
 
 * Unterstützte Texte werden in SuttaCentral Voice Segment für Segment angezeigt.
 * Wenn gewünscht, können sie mit den entsprechenden Pali-Segmenten zusammengeführt und als zweisprachiger Text Zeile für Zeile vorgelesen werden (Einstellungen > Sprachen > Zeige Palitext und Übersetzung).

@@ -1,1 +1,1 @@
-* [Einführung zu SuttaCentral](https://github.com/sc-voice/sc-voice/wiki/Einf%C3%BChrung-zu-SuttaCentral)
+* [Einführung zu SuttaCentral](/sc-voice/de/Einf%C3%BChrung-zu-SuttaCentral)

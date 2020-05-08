@@ -1,18 +1,18 @@
 Bhikkhu Sujato, 2019
 (Deutsch von Sabbamitta Anagarika; [Originaltext](https://suttacentral.net/general-guide-sujato))
 
-1. **[Über diese Leitfäden](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item1)**
-1. **[Eine barrierefreie Übersetzung](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item2)**
-1. **[Planen Sie Ihre Reise oder spazieren Sie durch den Garten](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item3)**
-1. **[Nachschlagen von Quellenangaben](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item4)**
-1. **[Strukturelemente](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item5)**
-1. **[In den Tagen des Buddha: Eine Zeit des Umbruchs](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item6)**
-1. **[Wirtschaft und Politik](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item7)**
-1. **[Gesellschaftliches Leben](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item8)**
-1. **[Die zahlreichen spirituellen Pfade des alten Indien](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item9)**
-1. **[Kosmologie](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item10)**
-1. **[Über die Pali-Kommentare](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item11)**
-1. **[Eine kurze und unvollständige Textgeschichte](https://github.com/sc-voice/sc-voice/wiki/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item12)**
+1. **[Über diese Leitfäden](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item1)**
+1. **[Eine barrierefreie Übersetzung](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item2)**
+1. **[Planen Sie Ihre Reise oder spazieren Sie durch den Garten](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item3)**
+1. **[Nachschlagen von Quellenangaben](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item4)**
+1. **[Strukturelemente](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item5)**
+1. **[In den Tagen des Buddha: Eine Zeit des Umbruchs](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item6)**
+1. **[Wirtschaft und Politik](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item7)**
+1. **[Gesellschaftliches Leben](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item8)**
+1. **[Die zahlreichen spirituellen Pfade des alten Indien](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item9)**
+1. **[Kosmologie](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item10)**
+1. **[Über die Pali-Kommentare](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item11)**
+1. **[Eine kurze und unvollständige Textgeschichte](/sc-voice/de/Ein-Leitfaden-zu-den-Pali%E2%80%90Suttas#item12)**
 
 Die Suttas des Palikanon (Tipiṭaka), besonders die vier Haupt-*Nikāyas*, sind eine unerlässliche Lektüre für jeden, der den Buddha und seine Lehre verstehen möchte. Sie wurden von der Theravāda-Tradition des Buddhismus als das Wort des Buddha bewahrt und in der Palisprache weitergegeben.
 
