@@ -1,4 +1,3 @@
-[Deutsch](/sc-voice/de/Home-DE)  |  [Português](/sc-voice/pt/Home-PT)  |  [日本語](/sc-voice/ja/Home-JA)  |  [Français](/sc-voice/fr/Home-FR)
 ### Welcome to SuttaCentral Voice! 
 
 This app is being developed for those using screen readers such as JAWS, NVDA, and ChromeVox, but, sighted users may also find it a helpful way to explore the teachings of the Buddha. 
