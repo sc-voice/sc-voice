@@ -1,4 +1,5 @@
 ## Welcome to SuttaCentral Voice
+Select language:
 
 * [English / EN](/sc-voice/en/Home-EN)  
 * [Dhammaregen / DE](/sc-voice/de/Home-DE)  
