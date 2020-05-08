@@ -20,5 +20,4 @@
 
 ### Other
 * [Acknowledgements](/sc-voice/en/Acknowledgements.md)
-* [Release-Notes](/sc-voice/en/Release-Notes.md)
 * [Tipitaka-Categories](/sc-voice/en/Tipitaka-Categories.md)
