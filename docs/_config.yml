@@ -1,3 +1,4 @@
 theme: jekyll-theme-dinky
 markdown: GFM
-    parse_block_html: true
+GFM:
+  parse_block_html: true
