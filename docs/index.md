@@ -1,5 +1,5 @@
 ### SuttaCentral Voice
-[Deutsch](https://github.com/sc-voice/sc-voice/wiki/Home-DE)  |  [Português](https://github.com/sc-voice/sc-voice/wiki/Home-PT)  |  [日本語](https://github.com/sc-voice/sc-voice/wiki/Home-JA)  |  [Français](https://github.com/sc-voice/sc-voice/wiki/Home-FR)
+[Deutsch](/de/Home-DE)  |  [Português](https://github.com/sc-voice/sc-voice/wiki/Home-PT)  |  [日本語](https://github.com/sc-voice/sc-voice/wiki/Home-JA)  |  [Français](https://github.com/sc-voice/sc-voice/wiki/Home-FR)
 
 ### Welcome to SuttaCentral Voice! 
 
@@ -20,7 +20,7 @@ SuttaCentral Voice allows people to hear the Buddha's words through an audio rea
 
 ### Using SuttaCentral Voice
 
-To get started with SuttaCentral Voice, enter one or more search word, or a phrase into the search field. To find a particular sutta such as MN1, simply enter "mn1" in the search field. To find several suttas at once, separate the sutta references with a comma (for example, “an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”). If you’d like to have some suttas suggested to you click on the “Inspire Me!” button. You can change the reading voice and other settings via the gear icon on the top right of the app. <a href="https://github.com/sc-voice/sc-voice/wiki/ToC" target="_blank">Find the ToC for more information.</a>
+To get started with SuttaCentral Voice, enter one or more search word, or a phrase into the search field. To find a particular sutta such as MN1, simply enter "mn1" in the search field. To find several suttas at once, separate the sutta references with a comma (for example, “an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”). If you’d like to have some suttas suggested to you click on the “Inspire Me!” button. You can change the reading voice and other settings via the gear icon on the top right of the app. <a href="/en/ToC" target="_blank">Find the ToC for more information.</a>
 
 <a href="https://discourse.suttacentral.net/t/how-do-you-use-suttacentral-voice/12384" target="_blank">Read how others are using SuttaCentral Voice</a> on SuttaCentral's forum.
 
@@ -50,7 +50,7 @@ The following indexes and list of terms may also help you find what you're looki
 </details>
 
 ### Other Information
-* <a href="https://github.com/sc-voice/sc-voice/wiki/ToC#engineering-and-development" target="_blank">Engineering and Development</a>
+* <a href="/en/ToC#engineering-and-development" target="_blank">Engineering and Development</a>
 * <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Feedback</a>
 
 ### Acknowledgements
