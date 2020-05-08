@@ -4,7 +4,7 @@ Segmentation was first introduced when Bhante Sujato made his new English transl
 
 Once segmented texts existed on SuttaCentral it turned out that this technology allows for many more usages. It allows for example to view the root text and translation side by side on the SuttaCentral website. Sutta references can be tuned much finer by referencing to segment numbers. It will also facilitate to make new translations in languages other than English, using the matched Pali and English segments for comparison and translating from there into a third language.
 
-The development of SuttaCentral Voice fully relies on this segmentation technology, which is why only segmented texts can be fully supported (see [Support Policy](https://github.com/sc-voice/sc-voice/wiki/Support-Policy)).
+The development of SuttaCentral Voice fully relies on this segmentation technology, which is why only segmented texts can be fully supported (see [Support Policy](/sc-voice/en/Support-Policy)).
 
 Segments in SuttaCentral Voice are multilingual by design and bilingual in practice. This means each segment typically has two lines, one in the root language (Pali) and one in the translation language (English):
 
@@ -12,4 +12,4 @@ Segments in SuttaCentral Voice are multilingual by design and bilingual in pract
 pli: Chando hi mūlaṁ dukkhassa.
 en: For desire is the root of suffering.
 ```
-This makes it possible that you can listen to a sutta both in Pali and English segment by segment (see [Settings](https://github.com/sc-voice/sc-voice/wiki/Settings)).
+This makes it possible that you can listen to a sutta both in Pali and English segment by segment (see [Settings](/sc-voice/en/Settings)).

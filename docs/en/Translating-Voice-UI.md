@@ -35,7 +35,7 @@ To make your own translation file, just copy [i18n/vuetify/en.ts](https://github
 There are several options for saving your ongoing work:
 
 * Save to a file on your computer. This is least work for you. Send us your file when you are ready. That's it!
-* Become an [SC Voice Administrator](https://github.com/sc-voice/sc-voice/wiki/SuttaCentral-Voice-Administration) and save your file directly to Github. This is least work for us and you will also be able to help out with day-to-day Voice activities. Contact Anagarika Sabbamita (@sabbamitta on [SuttaCentral's discussion forum](https://discourse.suttacentral.net/)) for more information.
+* Become an [SC Voice Administrator](/sc-voice/en/SuttaCentral-Voice-Administration) and save your file directly to Github. This is least work for us and you will also be able to help out with day-to-day Voice activities. Contact Anagarika Sabbamita (@sabbamitta on [SuttaCentral's discussion forum](https://discourse.suttacentral.net/)) for more information.
 
 ### Testing your work
 

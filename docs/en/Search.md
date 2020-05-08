@@ -59,7 +59,7 @@ The relevance score is simply **M+F**. For example, a 100 segment sutta with 2 m
 2 + 2/100 = 2 + 0.02 = 2.02
 ``` 
 
-NOTE: Segments are the smallest units of text such as a single sentence, phrase or short paragraph structured according to semantic units in the root text (Pali).  (See [Segmentation Technology](https://github.com/sc-voice/sc-voice/wiki/Segmentation-Technology))
+NOTE: Segments are the smallest units of text such as a single sentence, phrase or short paragraph structured according to semantic units in the root text (Pali).  (See [Segmentation Technology](/sc-voice/en/Segmentation-Technology))
 
 #### Regular expressions
 Many people on SuttaCentral have been using `grep` for search. 
