@@ -26,7 +26,7 @@ style="width:100%; margin-top:0"/>
             <v-btn @click="clickInspireMe()"
               role="button"
               :aria-label="$vuetify.lang.t('$vuetify.scv.ariaInspireMe')"
-              class="scv-inspire " :style="cssProps" small>
+              class="scv-inspire " :style="cssVars" small>
               {{$vuetify.lang.t('$vuetify.scv.inspireMe')}}
             </v-btn>
           </div>
@@ -38,7 +38,7 @@ style="width:100%; margin-top:0"/>
                     @click="launchSuttaPlayer()"
                     ref="refPlaySutta"
                     :aria-label="ariaPlaySutta(resultId(), stats.seconds)"
-                    class="scv-icon-btn" :style="cssProps" >
+                    class="scv-icon-btn" :style="cssVars" >
                     <v-icon>play_circle_outline</v-icon>
                 </v-btn>
                 <v-btn icon
@@ -46,7 +46,7 @@ style="width:100%; margin-top:0"/>
                     @click="downloadClick()"
                     :aria-label="`${ariaDownload} ${resultId()}`"
                     type="audio/mp3"
-                    class="scv-icon-btn" :style="cssProps" small>
+                    class="scv-icon-btn" :style="cssVars" small>
                     <v-icon>arrow_downward</v-icon>
                 </v-btn>
             </div>
@@ -61,7 +61,7 @@ style="width:100%; margin-top:0"/>
                   aria-controls="more-menu"
                   :aria-label="$vuetify.lang.t('$vuetify.scv.ariaMore')"
                   :aria-expanded="moreVisible"
-                  class="scv-icon-btn" :style="cssProps" small>
+                  class="scv-icon-btn" :style="cssVars" small>
                   <v-icon>more_vert</v-icon>
               </v-btn>
               <ul class="scv-more-menu" role="menu"
@@ -143,7 +143,7 @@ style="width:100%; margin-top:0"/>
             :search="search"
             :httpError="error.search.http" />
           <v-btn icon @click="error.search=null"
-            class="scv-icon-btn" :style="cssProps"
+            class="scv-icon-btn" :style="cssVars"
             :aria-label="$vuetify.lang.t('$vuetify.scv.ariaDismissError')"
             >
             <v-icon>clear</v-icon>
@@ -173,7 +173,7 @@ style="width:100%; margin-top:0"/>
         <div class="scv-playlist ml-3 pt-2 pl-3" v-if="gscv.voices.length" >
             <v-btn icon
                 @click="playAll()"
-                class="scv-icon-btn" :style="cssProps" small>
+                class="scv-icon-btn" :style="cssVars" small>
                 <v-icon>play_circle_outline</v-icon>
             </v-btn>
             <v-btn icon
@@ -181,14 +181,14 @@ style="width:100%; margin-top:0"/>
                 v-show="playlistDuration.totalSeconds < 3*3600"
                 @click="downloadClick(search)"
                 type="audio/mp3"
-                class="scv-icon-btn" :style="cssProps" small>
+                class="scv-icon-btn" :style="cssVars" small>
                 <v-icon>arrow_downward</v-icon>
             </v-btn>
         </div>
         <details role="heading" aria-level="2"
             v-for="(result,i) in (searchResults && searchResults.results||[])"
             :key="`${result.uid}_${i}`"
-            class="scv-search-result" :style="cssProps">
+            class="scv-search-result" :style="cssVars">
             <summary class="scv-search-result-summary">
                 <div style="display: inline-block; width: 96%; ">
                     <div style="display:flex; justify-content: space-between; ">
@@ -224,23 +224,23 @@ style="width:100%; margin-top:0"/>
                 <div>
                 <v-btn icon v-if="result.quote"
                     @click="playQuotes(i, result)"
-                    :class="btnPlayQuotesClass(i)" :style="cssProps" small>
+                    :class="btnPlayQuotesClass(i)" :style="cssVars" small>
                     <v-icon>chat_bubble_outline</v-icon>
                 </v-btn>
                 <v-btn icon v-if="result.quote"
                     @click="playOne(result)"
-                    class="scv-icon-btn" :style="cssProps" small>
+                    class="scv-icon-btn" :style="cssVars" small>
                     <v-icon>play_circle_outline</v-icon>
                 </v-btn>
                 <v-btn icon v-if="result.quote"
                     :href="resultLink(result)"
-                    class="scv-icon-btn" :style="cssProps" small>
+                    class="scv-icon-btn" :style="cssVars" small>
                     <v-icon>open_in_new</v-icon>
                 </v-btn>
                 <v-btn icon v-if="result.quote && gscv.voices.length"
                     :href="downloadUrl(resultRef(result))"
                     @click="downloadClick(resultRef(result))"
-                    class="scv-icon-btn" :style="cssProps" small>
+                    class="scv-icon-btn" :style="cssVars" small>
                     <v-icon>arrow_downward</v-icon>
                 </v-btn>
                 </div>
@@ -285,7 +285,7 @@ style="width:100%; margin-top:0"/>
                 :disabled="waiting > 0"
                 @click="launchSuttaPlayer(i+1)"
                 class="scv-text-button mt-3"
-                :style="cssProps"
+                :style="cssVars"
                 >
                 Play Section {{i+2}} ({{voice.name}})
             </button>
@@ -297,14 +297,14 @@ style="width:100%; margin-top:0"/>
             <br>
             <span class="font-italic">{{error[i+1].http}}</span>
           </div>
-          <v-btn icon @click="error[i+1]=null" class="scv-icon-btn" :style="cssProps"
+          <v-btn icon @click="error[i+1]=null" class="scv-icon-btn" :style="cssVars"
             aria-label="Dismiss Error">
             <v-icon>clear</v-icon>
           </v-btn>
         </div>
         <div v-for="(seg,j) in sect.segments" :key="seg+j" 
             :class="segClass(seg)">
-            <div class="scv-seg">
+            <div class="scv-seg" :style="cssVars">
                 <div v-html="segmentPali(seg)" v-if="showPali"
                   class="scv-seg-pali" :style="cssVars">
                 </div>
@@ -973,13 +973,15 @@ export default {
             showPali,
             showTrans,
           } = this;
-          var segTextWidth = showPali && showTrans ? "48%" : "100%";
-          console.log(`dbg SegTextWidth ${segTextWidth}`, {showTrans, showPali} );
+          var wide = window.innerWidth > 600;
+          var segTextWidth = wide && showPali && showTrans 
+            ? "48%" : "100%";
           return segTextWidth;
         },
         cssVars() {
           return {
             "--seg-text-width": this.segTextWidth,
+            '--success-color': this.$vuetify.theme.success,
           }
         },
         sections1() {
@@ -1039,11 +1041,6 @@ export default {
         },
         gscv() {
             return this.$root.$data;
-        },
-        cssProps() {
-            return {
-                '--success-color': this.$vuetify.theme.success,
-            }
         },
         errorSummary() {
             return `Error: ${this.error.search.data}`;
@@ -1404,8 +1401,28 @@ export default {
   justify-content: space-between;
   align-items: flex-start;
 }
+@media print {
+  .scv-search-row,
+  .scv-icon-btn,
+  .scv-text-button,
+  .scv-inspire {
+    display: none;
+  }
+  .scv-para-matched {
+    border-left: 1px solid #eee;
+  }
+  .title,
+  .subtitle,
+  .scv-subheading,
+  .subheading,
+  .scv-seg {
+    color: black;
+  }
+}
+
 .scv-seg-pali {
   width: var(--seg-text-width);
+  color: #c0c0c0;
   display:inline-block;
   vertical-align: top;
   font-style: italic;
@@ -1416,5 +1433,6 @@ export default {
   display:inline-block;
   vertical-align: top;
 }
+
 
 </style>

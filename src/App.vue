@@ -735,4 +735,11 @@ nav ul {
     bottom: 0;
 }
 
+@media print {
+  .v-btn,
+  .scv-icon-btn {
+    display: none;
+  }
+}
+
 </style>

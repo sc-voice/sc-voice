@@ -1,0 +1,1 @@
+* [Einführung zu SuttaCentral](https://github.com/sc-voice/sc-voice/wiki/Einf%C3%BChrung-zu-SuttaCentral)
