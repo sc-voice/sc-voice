@@ -1,4 +1,4 @@
-### SuttaCentral Voice
+## Welcome to SuttaCentral Voice
 
 * [English / EN](/sc-voice/en/Home-EN)  
 * [Dhammaregen / DE](/sc-voice/de/Home-DE)  
