@@ -1,5 +1,3 @@
-[English](https://github.com/sc-voice/sc-voice/wiki)  |  [Deutsch](https://github.com/sc-voice/sc-voice/wiki/Home-DE)  |  [Português](https://github.com/sc-voice/sc-voice/wiki/Home-PT)  |  [日本語](https://github.com/sc-voice/sc-voice/wiki/Home-JA)
-
 ### Bienvenue à SuttaCentral Voice ! 
 
 Cette application est en cours de développement pour ceux qui utilisent des lecteurs d'écran tel que JAWS, NVDA, et ChromeVox, néanmoins ceux dotés de la vue peuvent également en bénéficier par ce moyen utile permettant d'explorer les enseignements du Bouddha.
@@ -19,7 +17,7 @@ SuttaCentral Voice permet à des personnes d'écouter les paroles du Bouddha via
 
 ### Utilisation de SuttaCentral Voice
 
-Afin de commencer à utiliser SuttaCentral Voice, entrez un ou plusieurs mots de recherche, ou bien une phrase dans la zone de recherche. Afin de rechercher un sutra en particulier tel que MN1, entrez simplement "mn1" dans la zone de recherche. Afin de trouver plusieurs sutras en une seule fois, séparez les références du sutras avec une virgule (par exemple, "an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”). Si vous voulez que des sutras vous soient suggérés cliquez sur le bouton "Inspirez-moi!". Vous pouvez changer la voix du lecteur et d'autres paramètres via l'icône de roue dentée en haut à droite de l'application. <a href="https://github.com/sc-voice/sc-voice/wiki/ToC-FR.md" target="_blank">Trouvez le ToC pour plus d'information.</a> 
+Afin de commencer à utiliser SuttaCentral Voice, entrez un ou plusieurs mots de recherche, ou bien une phrase dans la zone de recherche. Afin de rechercher un sutra en particulier tel que MN1, entrez simplement "mn1" dans la zone de recherche. Afin de trouver plusieurs sutras en une seule fois, séparez les références du sutras avec une virgule (par exemple, "an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”). Si vous voulez que des sutras vous soient suggérés cliquez sur le bouton "Inspirez-moi!". Vous pouvez changer la voix du lecteur et d'autres paramètres via l'icône de roue dentée en haut à droite de l'application. <a href="/sc-voice/fr/ToC-FR.md" target="_blank">Trouvez le ToC pour plus d'information.</a> 
 
 <a href="https://discourse.suttacentral.net/t/how-do-you-use-suttacentral-voice/12384" target="_blank">Découvrez comment d'autres utilisent SuttaCentral Voice</a> sur le forum de SuttaCentral.
 
@@ -52,8 +50,8 @@ Les indexes suivants et listes de termes peuvent également vous aider à trouve
 </details>
 
 ### D'autres informations
-* <a href="https://github.com/sc-voice/sc-voice/wiki/ToC#engineering-and-development" target="_blank">Conception et développement</a>
+* <a href="/sc-voice/en/ToC#engineering-and-development" target="_blank">Conception et développement</a>
 * <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Impressions</a>
 
 ### Remerciements
-[Veuillez cliquer ici](https://github.com/sc-voice/sc-voice/wiki/Acknowledgements)
+[Veuillez cliquer ici](/sc-voice/en/Acknowledgements)
