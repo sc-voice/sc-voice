@@ -1,10 +1,10 @@
 SuttaCentral Voice is customizable and has individual settings for many features.
 
-![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/wheel-en.png)
+![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/wheel-en.png?raw=true)
 
 Click on the gear icon in the top right corner to open SuttaCentral Voice Settings.
 
-![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/settings-en.png)
+![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/settings-en.png?raw=true)
 
 ### Website language
 The website language preference changes the language shown for menus, labels, messages and settings. If you would like to add your own language, please [let us know](https://discourse.suttacentral.net/t/wanted-translator-for-sc-voice-interface/13928).

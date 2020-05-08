@@ -13,16 +13,16 @@ so that you can curtail or adjust use before incurring unwanted charges.
 ### Choose AWS regional data center
 These instructions were tested in the *N. California* data center and these instructions may not apply to other regions. Choose your AWS region appropriately:
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-region.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-region.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-region.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-region.png?raw=true">
 </a>
 
 ### Create an EC2 T2 Server
 T2 servers are the bread-and-butter starter servers. Modest in size, they are still quite capable and are normally cost-effective or even free.
 
 ##### Launch instance
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-launch-instance.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-launch-instance.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-launch-instance.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-launch-instance.png?raw=true">
 </a>
 
 
@@ -30,14 +30,14 @@ T2 servers are the bread-and-butter starter servers. Modest in size, they are st
 You'll see a long list of servers. To shorten the list, select **Free tier only** and type <kbd>ubuntu</kbd> into the search box.
 You want a Free-Tier Ubuntu 16.4 server:
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ubuntu16.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ubuntu16.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ubuntu16.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ubuntu16.png?raw=true">
 </a>
 
 Confirm selection and click the <kbd>Next: Configure Instance Details</kbd> button (!!!)
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-t2.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-t2.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-t2.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-t2.png?raw=true">
 </a>
 
 ##### Configure Instance
@@ -49,8 +49,8 @@ Leave the settings on the "Configure Instance Details" page as they are.
 
 Replace the `8` with `30`:
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ebs.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ebs.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ebs.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ebs.png?raw=true">
 </a>
 
 Click <kbd>Next: Add Tags</kbd>
@@ -59,8 +59,8 @@ Click <kbd>Next: Add Tags</kbd>
 
 Click <kbd>Add Tag</kbd> to add a sensible name for your new server:
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-name-tag.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-name-tag.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-name-tag.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-name-tag.png?raw=true">
 </a>
 
 ##### Configure Security Groups
@@ -73,8 +73,8 @@ This is an important step that specifies what network access is allowed. We want
 * port 443 (standart HTTPS port)
 * port 22 (standard SSH port)
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-security-groups.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-security-groups.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-security-groups.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-security-groups.png?raw=true">
 </a>
 
 - Add SSH Port to security group
@@ -82,8 +82,8 @@ The SSH port provides super user access to your instance. As best practice, this
 
 Click Add Rule (if needed):
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port22.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port22.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port22.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port22.png?raw=true">
 </a>
 
 - Add HTTP Port to security group
@@ -91,8 +91,8 @@ The HTTP port provides standard HTTP browser access. Voice can be launched using
 
 Click Add Rule:
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port80.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port80.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port80.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port80.png?raw=true">
 </a>
 
 - Add HTTPS Port to security group
@@ -100,8 +100,8 @@ The HTTPS port provides standard HTTP browser access. Voice can be launched usin
 
 Click Add Rule:
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port443.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port443.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port443.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-port443.png?raw=true">
 </a>
 
 If you need to add other rules, do so now.
@@ -112,8 +112,8 @@ Click <kbd>Review and Launch</kbd>.
 If you already have AWS credentials, use them for your new server. Otherwise,
 create and download SSH credentials (.pem) for logging in to your new T2 instance via SSH.
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-keypair.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-keypair.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-keypair.png?raw=true?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-keypair.png?raw=true">
 </a>
 
 Download and save the .pem file in your `~/.aws` folder as `sabbamitta-ssh2.pem`.
@@ -129,8 +129,8 @@ It matters!
 Your 12 month free usage clock starts now.
 **Be sure to shut down your instance when not in use!**
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-launch-status.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-launch-status.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-launch-status.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-launch-status.png?raw=true">
 </a>
 
 ### Attach/Create IAM Role
@@ -145,8 +145,8 @@ using the EC2 Console.
 #### Using the EC2 Console, select your new server and click
 <kbd>Attach/Replace IAM Role</kbd>:
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ec2-iam.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ec2-iam.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ec2-iam.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ec2-iam.png?raw=true">
 </a>
 
 ##### Look for the `Voice-Server` IAM role in the dropdown
@@ -154,34 +154,34 @@ using the EC2 Console.
 * If `Voice-Server` is not shown, click <kbd>Create new IAM role</kbd>
 * If `Voice-Server` is shown, select it and click <kbd>Apply</kbd> and skip the instructions on creating an IAM role.
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-iam-create.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-iam-create.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-iam-create.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-iam-create.png?raw=true">
 </a>
 
 #### Creating an IAM Role
 
 ##### Click <kbd>Create role</kbd>
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-create-role.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-create-role.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-create-role.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-create-role.png?raw=true">
 </a>
 
 ##### Select EC2 use case then click <kbd>Next: Permissions</kbd>
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-service.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-service.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-service.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-service.png?raw=true">
 </a>
 
 ##### Type `polly` into the search box and select <kbd>AmazonPollyFullAccess</kbd> permissions
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-polly-role.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-polly-role.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-polly-role.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-polly-role.png?raw=true?raw=true">
 </a>
 
 ##### Type `EC2` into the search box and select <kbd>AmazonEC2ReadOnlyAccess</kbd> permissions
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ec2-role.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ec2-role.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ec2-role.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ec2-role.png?raw=true">
 </a>
 
 #### Click <kbd>Next: Tags</kbd>
@@ -189,14 +189,14 @@ using the EC2 Console.
 ##### Enter a tag that can help you remember the purpose of this role and click
 <kbd>Next:Review </kbd>:
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-role-tags.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-role-tags.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-role-tags.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-role-tags.png?raw=true">
 </a>
 
 ##### Enter `Voice-Server` as the Role name and click <kbd>Create role</kbd>
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-role-review.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-role-review.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-role-review.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-role-review.png?raw=true">
 </a>
 
 #### Once the role is created, select the IAM role and click <kbd>Apply</kbd>
@@ -305,8 +305,8 @@ to an AWS EC2 **running instance**. Note that "running" is critical here.
 You will be charged for having a static IP that is not in use.
 
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-static-ip.png">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-static-ip.png">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-static-ip.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-static-ip.png?raw=true">
 </a>
 
 To practice Elastic IP setup, do the following:

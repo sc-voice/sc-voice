@@ -1,4 +1,4 @@
-![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/sutta-player-en.png)
+![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/sutta-player-en.png?raw=true)
 
 The Sutta Player plays sutta text segments, 
 speaking Pāli and translated text in alternation.

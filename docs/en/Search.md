@@ -85,7 +85,7 @@ If you need more search results, just change the maximum in
 _Settings:Search results_
 
 #### Sutta Playlists
-![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/play-all-de.png)
+![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/play-all-de.png?raw=true)
 
 You can listen to the suttas listed in the search results. Just click "Play" directly under the result summary.
 
