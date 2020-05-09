@@ -11,7 +11,7 @@ After all these valuable contributions Aminah has retired from the team as of 20
 Currently Voice is developed by a small core team and a number of other contributors.
 #### Core Voice team:
 - **Karl Lew:** Initiator and leading developer
-- **Sabbamitta Anagarika:** Testing, planning, organization and coordination; German translation of web interface & Wiki
+- **Sabbamitta Anagarika:** Testing, planning, organization and coordination; German translation of web interface and texts for the accompanying German website *Dhammaregen*
 
 #### Others (in alphabetical order):
 - **Abhibhu Bhikkhu:** Hindi translation of web interface
