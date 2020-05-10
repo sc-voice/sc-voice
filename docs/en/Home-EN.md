@@ -48,7 +48,7 @@ The simplest way to use [Voice](https://voice.suttacentral.net) is to click
 <kbd>Inspire Me!</kbd>. This will bring up a small selection of related suttas for you to select:
 
 <a href="/sc-voice/assets/img/inspire-me.png"><img
-    src="/sc-voice/assets/img/inspire-me.png?raw=true" height=1.2em/></a>
+    src="/sc-voice/assets/img/inspire-me.png?raw=true" style="height:4em"/></a>
 
 You can also enter searches of your own, such as <kbd>root of suffering</kbd> and press <kbd>ENTER</kbd>
 

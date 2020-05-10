@@ -6,7 +6,11 @@
 kbd {
     background: #222;
     color: #eee;
-    border-radius: 0.5em;
+    padding: 0.1pt;
+    font-family: monospace;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    border-radius: 0.2em;
     border-bottom: gray;
     border-right: gray;
 }
