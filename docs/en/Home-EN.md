@@ -44,8 +44,14 @@ you can hear, memorize, and speak the Dhamma verse by verse.
 * <a href="https://suttacentral.net/acknowledgments" target="_blank">Acknowledgments</a>
 
 ### Using SuttaCentral Voice
+The simplest way to use [Voice](https://voice.suttacentral.net) is to click 
+<kbd>Inspire Me!</kbd>. This will bring up a random selections of related suttas for you to select:
 
-To get started with SuttaCentral Voice, enter one or more search word, or a phrase into the search field. To find a particular sutta such as MN1, simply enter "mn1" in the search field. To find several suttas at once, separate the sutta references with a comma (for example, “an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”). If you’d like to have some suttas suggested to you click on the “Inspire Me!” button. You can change the reading voice and other settings via the gear icon on the top right of the app. <a href="/sc-voice/en/ToC" target="_blank">Find the ToC for more information.</a>
+![Click Inspire Me](/sc-voice/assets/img/inspire-me.png?raw=true)
+
+You can also enter searches of your own, such as "root of suffering" and press <kbd>ENTER</kbd>
+
+To find a particular sutta such as MN1, simply enter "mn1" in the search field. To find several suttas at once, separate the sutta references with a comma (for example, “an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”). If you’d like to have some suttas suggested to you click on the “Inspire Me!” button. You can change the reading voice and other settings via the gear icon on the top right of the app. <a href="/sc-voice/en/ToC" target="_blank">Find the ToC for more information.</a>
 
 <a href="https://discourse.suttacentral.net/t/how-do-you-use-suttacentral-voice/12384" target="_blank">Read how others are using SuttaCentral Voice</a> on SuttaCentral's forum.
 
