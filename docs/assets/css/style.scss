@@ -3,6 +3,9 @@
 
 @import 'jekyll-theme-dinky';
 
+blockquote > p > br {
+    padding-bottom: 0.5em;
+}
 h1.header {
     font-size: 20px;
 }
