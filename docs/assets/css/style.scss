@@ -3,7 +3,9 @@
 
 @import 'jekyll-theme-dinky';
 
-code {
+kbd {
+    background: #222;
+    color: #eee;
     border-radius: 0.5em;
     border-bottom: gray;
     border-right: gray;
