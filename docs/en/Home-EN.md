@@ -45,11 +45,11 @@ you can hear, memorize, and speak the Dhamma verse by verse.
 
 ### Using SuttaCentral Voice
 The simplest way to use [Voice](https://voice.suttacentral.net) is to click 
-<kbd>Inspire Me!</kbd>. This will bring up a random selections of related suttas for you to select:
+<code>Inspire Me!</code>. This will bring up a small selection of related suttas for you to select:
 
 ![Click Inspire Me](/sc-voice/assets/img/inspire-me.png?raw=true)
 
-You can also enter searches of your own, such as "root of suffering" and press <kbd>ENTER</kbd>
+You can also enter searches of your own, such as <code>root of suffering<code> and press <code>ENTER</code>
 
 To find a particular sutta such as MN1, simply enter "mn1" in the search field. To find several suttas at once, separate the sutta references with a comma (for example, “an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”). If you’d like to have some suttas suggested to you click on the “Inspire Me!” button. You can change the reading voice and other settings via the gear icon on the top right of the app. <a href="/sc-voice/en/ToC" target="_blank">Find the ToC for more information.</a>
 

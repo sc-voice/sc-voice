@@ -3,6 +3,11 @@
 
 @import 'jekyll-theme-dinky';
 
+code {
+    border-radius: 0.5em;
+    border-bottom: gray;
+    border-right: gray;
+}
 blockquote > ul {
     margin-top: -15px;
 }
