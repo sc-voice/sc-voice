@@ -14,9 +14,11 @@ kbd {
     border-bottom: gray;
     border-right: gray;
 }
+blockquote {
+    border-left: 0.2rem solid #ccc;
+}
 blockquote > ul {
     margin-top: -15px;
-    border-left: 2pt solid #999;
 }
 h1.header {
     font-size: 20px;
