@@ -3,7 +3,7 @@ Search for and hear the words of the Buddha with
 [Voice](https://voice.suttacentral.net).
 [Voice](https://voice.suttacentral.net) 
 is a companion website for [SuttaCentral](voice.suttacentral.net),
-which hosts the vast ocean Early Buddhist Texts (aka. "EBTs") 
+which hosts the vast ocean of Early Buddhist Texts (aka. "EBTs") 
 and their translations into contemporary languages, making them
 freely available to all.
 Voice is designed to be 
