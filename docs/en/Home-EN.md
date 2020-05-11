@@ -1,13 +1,13 @@
 ### Welcome! 
-Search for and hear the words of the Buddha with 
-[Voice](https://voice.suttacentral.net).
-[Voice](https://voice.suttacentral.net) 
-is a companion website for [SuttaCentral](voice.suttacentral.net),
+Search for and hear the words of the Buddha with Voice.
+Voice is a companion website for 
+<a href="suttacentral.net" aria-label="sootacentral.net">
+  SuttaCentral</a>,
 which hosts the vast ocean of Early Buddhist Texts (aka. "EBTs") 
 and their translations into contemporary languages, making them
 freely available to all.
 Voice is designed to be 
-[audio accessible](https://www.w3.org/standards/webdesign/accessibility)
+audio accessible
 and extends the SuttaCentral texts with full support for 
 TTS readers such as JAWS, NVDA, and ChromeVox. 
 However, sighted users will also find it a helpful way 
@@ -18,48 +18,45 @@ memorized and spoken for others.
 Indeed, the hearing, memorization and speaking of the 
 Dhamma was a key part of the practice.
 
-<blockquote>
-    <p>
-  <details>
-    <summary>
-      Quote: These five things lead to...
-    </summary>
-      <a href="https://suttacentral.net/an5.155/en/sujato#an5.155:6.1">AN155:6.1:</a>What five?
-      These five things lead to the continuation, persistence, 
-      and enduring of the true teaching. What five?
-    <ul>
-      <li>
-        It’s when the mendicants memorize the teaching—
-        statements, songs, discussions, verses, inspired exclamations, 
-        legends, stories of past lives, amazing stories, 
-        and classifications. This is the first thing that leads 
-        to the continuation, persistence, and enduring of the true teaching.
-      </li>
-      <li> 
-        Furthermore, the mendicants explain the teaching in 
-        detail to others as they learned and memorized it. 
-        This is the second thing…
-      </li>
-      <li> 
-        Furthermore, the mendicants make others recite the 
-        teaching in detail as they learned and memorized it.  
-        This is the third thing…
-      </li>
-      <li> 
-        Furthermore, the mendicants recite the teaching in 
-        detail as they learned and memorized it.  This is the fourth thing…
-      </li>
-      <li> 
-        Furthermore, the mendicants think about and consider 
-        the teaching in their hearts, examining it with their 
-        minds as they learned and memorized it.
-        This is the fifth thing that leads to the continuation, 
-        persistence, and enduring of the true teaching.
-      </li>
-    </ul>
-  </details>
-    </p>
-</blockquote>
+<blockquote><p><details>
+  <summary>
+    "These five things lead to..."
+  </summary>
+  <a href="https://suttacentral.net/an5.155/en/sujato#an5.155:6.1">
+    AN155:6.1:</a>
+  These five things lead to the continuation, persistence, 
+  and enduring of the true teaching. What five?
+  <ul>
+    <li>
+      It’s when the mendicants memorize the teaching—
+      statements, songs, discussions, verses, inspired exclamations, 
+      legends, stories of past lives, amazing stories, 
+      and classifications. This is the first thing that leads 
+      to the continuation, persistence, and enduring of the true teaching.
+    </li>
+    <li> 
+      Furthermore, the mendicants explain the teaching in 
+      detail to others as they learned and memorized it. 
+      This is the second thing…
+    </li>
+    <li> 
+      Furthermore, the mendicants make others recite the 
+      teaching in detail as they learned and memorized it.  
+      This is the third thing…
+    </li>
+    <li> 
+      Furthermore, the mendicants recite the teaching in 
+      detail as they learned and memorized it.  This is the fourth thing…
+    </li>
+    <li> 
+      Furthermore, the mendicants think about and consider 
+      the teaching in their hearts, examining it with their 
+      minds as they learned and memorized it.
+      This is the fifth thing that leads to the continuation, 
+      persistence, and enduring of the true teaching.
+    </li>
+  </ul>
+</details></p></blockquote>
 
 Listen to and download the Buddha's words with 
 [Voice](https://voice.suttacentral.net). 
@@ -70,18 +67,12 @@ Furthermore, Voice provides access to *individual verses*
 [Thanks to the work of SuttaCentral and many others](https://suttacentral.net/acknowledgments),
 you can hear, memorize, and speak the Dhamma verse by verse.
 
-* <a href="https://suttacentral.net/introduction" target="_blank">Introduction to SuttaCentral</a> 
-* <a href="https://suttacentral.net/methodology" target="_blank">SuttaCentral's methodology</a>
-* <a href="https://suttacentral.net/numbering" target="_blank">SuttaCentral's numbering system</a>
-* <a href="https://suttacentral.net/abbreviations" target="_blank">Abbreviations used on SuttaCentral</a>
-* <a href="https://suttacentral.net/acknowledgments" target="_blank">Acknowledgments</a>
-
 ### Using SuttaCentral Voice
-The simplest way to use [Voice](https://voice.suttacentral.net) is to click 
+The simplest way to use Voice is to click the 
 <kbd>Inspire Me!</kbd>. This will bring up a small selection of related suttas for you to select:
 
-<a href="/sc-voice/assets/img/inspire-me.png"><img
-    src="/sc-voice/assets/img/inspire-me.png?raw=true" style="height:8em"/></a>
+<img aria-label="picture of inspire me button"
+  src="/sc-voice/assets/img/inspire-me.png?raw=true" style="height:8em"/>
 
 You can also enter searches of your own, such as <kbd>root of suffering</kbd> and press <kbd>ENTER</kbd>
 
@@ -118,6 +109,14 @@ The following indexes and list of terms may also help you find what you're looki
 * <a href="https://suttacentral.net/terminology" target="_blank">Basic Pali Terminology</a>
 
 </details>
+
+### SuttaCentral
+
+* <a href="https://suttacentral.net/introduction" target="_blank">Introduction to SuttaCentral</a> 
+* <a href="https://suttacentral.net/methodology" target="_blank">SuttaCentral's methodology</a>
+* <a href="https://suttacentral.net/numbering" target="_blank">SuttaCentral's numbering system</a>
+* <a href="https://suttacentral.net/abbreviations" target="_blank">Abbreviations used on SuttaCentral</a>
+* <a href="https://suttacentral.net/acknowledgments" target="_blank">Acknowledgments</a>
 
 ### Other Information
 * <a href="/sc-voice/en/ToC#engineering-and-development" target="_blank">Engineering and Development</a>
