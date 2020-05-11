@@ -18,6 +18,7 @@ Currently Voice is developed by a small core team and a number of other contribu
 - **Phra Robert Dhammanando:** Icelandic translation of web interface
 - **Erlend Neergaard:** Norwegian translation of web interface
 - **Gabriel Laera:** Portuguese translation of web interface & Wiki
+- **Google Analytics:** provides website usage statistics to guide features
 - **Invo & Jarek:** Polish translation of web interface
 - **Kaz Takehara:** Japanese translation of web interface & Wiki
 - **Michael H.:** Sound technology for recordings
@@ -28,3 +29,5 @@ Currently Voice is developed by a small core team and a number of other contribu
 - **Sujato Bhikkhu:** Audio recordings in Pali and English
 
 Not to mention all those who supported us with valuable feedback and suggestions who we can't name! A great THANK YOU to them all.
+
+
