@@ -19,14 +19,14 @@ Indeed, the hearing, memorization and speaking of the
 Dhamma was a key part of the practice.
 
 <blockquote>
+    <p>
   <details>
     <summary>
-      These five things lead to the continuation, persistence, 
-      and enduring of the true teaching...
+      Quote: These five things lead to...
     </summary>
-    <p>
       <a href="https://suttacentral.net/an5.155/en/sujato#an5.155:6.1">AN155:6.1:</a>What five?
-    </p>
+      These five things lead to the continuation, persistence, 
+      and enduring of the true teaching. What five?
     <ul>
       <li>
         It’s when the mendicants memorize the teaching—
@@ -58,6 +58,7 @@ Dhamma was a key part of the practice.
       </li>
     </ul>
   </details>
+    </p>
 </blockquote>
 
 Listen to and download the Buddha's words with 
