@@ -15,3 +15,5 @@ separate the sutta references with a comma
 <kbd>Inspire Me!</kbd> button. You can change the reading voice and other settings via the gear icon on the top right of the app. <a href="/sc-voice/en/ToC" target="_blank">Find the ToC for more information.</a>
 
 <a href="https://discourse.suttacentral.net/t/how-do-you-use-suttacentral-voice/12384" target="_blank">Read how others are using SuttaCentral Voice</a> on SuttaCentral's forum.
+
+<div class="next"><a href="navigating-texts">Navigating Texts</a></div>

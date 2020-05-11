@@ -67,4 +67,4 @@ Furthermore, Voice provides access to *individual verses*
 [Thanks to the work of SuttaCentral and many others](https://suttacentral.net/acknowledgments),
 you can hear, memorize, and speak the Dhamma verse by verse.
 
-[Next: Using Voice](using-voice)
+<div class="next"><a href="using-voice">Using Voice</a></div>

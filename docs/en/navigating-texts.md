@@ -30,3 +30,5 @@ The following indexes and list of terms may also help you find what you're looki
 * <a href="https://suttacentral.net/numbering" target="_blank">SuttaCentral's numbering system</a>
 * <a href="https://suttacentral.net/abbreviations" target="_blank">Abbreviations used on SuttaCentral</a>
 * <a href="https://suttacentral.net/acknowledgments" target="_blank">Acknowledgments</a>
+
+<div class="next"><a href="other">Other</a></div>

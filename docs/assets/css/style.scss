@@ -23,7 +23,15 @@ blockquote > ul {
 h1.header {
     font-size: 20px;
 }
-
 a {
     color: #800000;
+}
+.next {
+  height: 2em;
+  background: #400;
+  color: #fff;
+  border-radius: 0.2em;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
 }
