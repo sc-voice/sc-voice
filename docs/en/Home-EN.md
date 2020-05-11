@@ -20,13 +20,15 @@ Dhamma was a key part of the practice.
 
 <details>
   <summary>
-    <blockquote>
-        [AN5.155:6.1](https://suttacentral.net/an5.155/en/sujato#an5.155:6.1): 
-        These five things lead to the continuation, persistence, 
-        and enduring of the true teaching.  What five?...
-    </blockquote>
+    These five things lead to the continuation, persistence, 
+    and enduring of the true teaching.  What five?...
   </summary>
   <blockquote>
+    <p>
+      <a href="https://suttacentral.net/an5.155/en/sujato#an5.155:6.1">AN155:6.1:</a>
+      These five things lead to the continuation, persistence, 
+      and enduring of the true teaching.  What five?...
+    </p>
     <ul>
       <li>
         It’s when the mendicants memorize the teaching—
