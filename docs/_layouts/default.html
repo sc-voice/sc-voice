@@ -57,13 +57,13 @@
       </section>
 
       <footer>
-        {% if page.prev %}
+        {% if page.prev != "" %}
           <a href="{{page.prev_href}}" 
             aria-label="{{page.prev_aria || page.prev}}>
             {{page.prev}}
           </a>
         {% endif %}
-        {% if page.next %}
+        {% if page.next != "" %}
           <a href="{{page.next_href}}" 
             aria-label="{{page.next_aria || page.next}}>
             {{page.next}}
