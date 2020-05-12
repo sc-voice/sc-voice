@@ -26,10 +26,11 @@ h1.header {
 a {
     color: #800000;
 }
-footer {
+bottom-nav {
   width: inherit;
   max-width: 650px;
   position: fixed;
+  bottom: 10px;;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
