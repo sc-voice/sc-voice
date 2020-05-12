@@ -1,10 +1,13 @@
+---
+next: This is next
+---
 ### Welcome! 
 Search for and hear the words of the Buddha with Voice.
 Voice is a companion website for 
 <a href="suttacentral.net" aria-label="sootacentral.net">
   SuttaCentral</a>,
 which hosts the vast ocean of Early Buddhist Texts (aka. "EBTs") 
-and their translations into contemporary languages, making them
+along with their translations into contemporary languages, making them
 freely available to all.
 Voice is designed to be 
 audio accessible
@@ -66,5 +69,6 @@ Furthermore, Voice provides access to *individual verses*
 (i.e., "segments") of the Dhamma. 
 [Thanks to the work of SuttaCentral and many others](https://suttacentral.net/acknowledgments),
 you can hear, memorize, and speak the Dhamma verse by verse.
+
 
 <div class="next"><a href="using-voice">Using Voice</a></div>

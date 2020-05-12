@@ -57,6 +57,9 @@
       </section>
 
       <footer>
+        {% if page.next %}
+        <div class="next">{{page.next}}</div>
+        {% endif %}
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
