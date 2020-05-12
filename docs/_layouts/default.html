@@ -54,27 +54,27 @@
 
       <section>
         {{ content }}
-      </section>
 
-      <footer>
-        {% if page.prev %}
-          <div>
-            <a href="{{page.prev_href}}" 
-              aria-label="{{page.prev_aria}}">
-                {{page.prev}}
-            </a>
-          </div>
-        {% endif %}
-        <div>&nbsp;</div>
-        {% if page.next %}
-          <div>
-            <a href="{{page.next_href}}" 
-              aria-label="{{page.next_aria}}">
-                {{page.next}}
-            </a>
-          </div>
-        {% endif %}
-      </footer>
+        <footer>
+          {% if page.prev %}
+            <div>
+              <a href="{{page.prev_href}}" 
+                aria-label="{{page.prev_aria}}">
+                  {{page.prev}}
+              </a>
+            </div>
+          {% endif %}
+          <div>&nbsp;</div>
+          {% if page.next %}
+            <div>
+              <a href="{{page.next_href}}" 
+                aria-label="{{page.next_aria}}">
+                  {{page.next}}
+              </a>
+            </div>
+          {% endif %}
+        </footer>
+      </section>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     {% if site.google_analytics %}
