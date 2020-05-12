@@ -27,14 +27,23 @@ a {
     color: #800000;
 }
 bottom-nav {
-  width: inherit;
   position: fixed;
-  bottom: 10px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 0.5rem;
+  padding-left: 20px;
+  padding-right: 20px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  margin-left: 0em;
-  border: none;
+  background-color: #ffffff;
+}
+@media screen and (min-width: 768px) {
+  bottom-nav {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
 }
 .nav-button {
   background: #800000;
