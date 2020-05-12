@@ -57,8 +57,6 @@
       </section>
 
       <footer>
-        <div> this is a footer</div>
-        <div>page.next:{{page.next}}</div>
         {% if page.prev %}
           <div>
             <a href="{{page.prev_href}}" 
@@ -67,6 +65,7 @@
             </a>
           </div>
         {% endif %}
+        <div>&nbsp;</div>
         {% if page.next %}
           <div>
             <a href="{{page.next_href}}" 
