@@ -57,7 +57,8 @@
 
         <footer>
           {% if page.prev %}
-            <div>
+            <div class="nav-button">
+              Back:
               <a href="{{page.prev_href}}" 
                 aria-label="{{page.prev_aria}}">
                   {{page.prev}}
@@ -66,7 +67,8 @@
           {% endif %}
           <div>&nbsp;</div>
           {% if page.next %}
-            <div>
+            <div class="nav-button">
+              Next:
               <a href="{{page.next_href}}" 
                 aria-label="{{page.next_aria}}">
                   {{page.next}}

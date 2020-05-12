@@ -27,7 +27,14 @@ a {
     color: #800000;
 }
 footer {
+  width: inherit:
+  right: 1rem;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+}
+.nav-button: {
+  border: 1pt solid #800000;
+  border-radius: 2pt;
+  padding: 2pt;
 }
