@@ -1,3 +1,11 @@
+---
+prev: 'Using Voice'
+prev_href: 'using-voice'
+prev_aria: 'using voice'
+next: 'Navigating Texts'
+next_href: 'navigating-texts'
+next_aria: 'navigating texts'
+---
 <details>
 <summary>Navigating the texts</summary>
 

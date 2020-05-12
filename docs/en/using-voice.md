@@ -1,3 +1,11 @@
+---
+prev: 'Welcome'
+prev_href: 'Home-EN'
+prev_aria: 'Welcome'
+next: 'Navigating Texts'
+next_href: 'navigating-texts'
+next_aria: 'navigating texts'
+---
 ### Using Voice
 The simplest way to use Voice is to click the 
 <kbd>Inspire Me!</kbd>. This will bring up a small selection of related suttas for you to select:

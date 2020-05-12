@@ -1,7 +1,7 @@
 ---
-next: Using Voice
-next_href: using-voice
-next_aria: Using Voice
+next: 'Using Voice'
+next_href: 'using-voice'
+next_aria: 'using voice'
 ---
 ### Welcome! 
 Search for and hear the words of the Buddha with Voice.
