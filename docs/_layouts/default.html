@@ -56,27 +56,25 @@
         {{ content }}
 
         <bottom-nav>
-          <p style="text-align:justify-all">
 {% if page.prev %}
-            <div style="inline-block">
-              <a href="{{page.prev_href}}" 
-                class="nav-button"
-                aria-label="back: {{page.prev_aria}}">
-                  {{page.prev}}
-              </a>
-            </div>
+          <div style="inline-block">
+            <a href="{{page.prev_href}}" 
+              class="nav-button"
+              aria-label="back: {{page.prev_aria}}">
+                {{page.prev}}
+            </a>
+          </div>
 {% endif %}
-            <div style="inline-block">&nbsp;</div>
+          <div style="inline-block">&nbsp;</div>
 {% if page.next %}
-            <div style="inline-block">
-              <a href="{{page.next_href}}" 
-                class="nav-button"
-                aria-label="next: {{page.next_aria}}">
-                  &#x2b95; {{page.next}}
-              </a>
-            </div>
+          <div style="inline-block">
+            <a href="{{page.next_href}}" 
+              class="nav-button"
+              aria-label="next: {{page.next_aria}}">
+                &#x2b95; {{page.next}}
+            </a>
+          </div>
 {% endif %}
-          </p>
         </bottom-nav>
       </section>
     </div>

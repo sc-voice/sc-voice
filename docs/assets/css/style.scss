@@ -28,14 +28,13 @@ a {
 }
 bottom-nav {
   width: inherit;
-  max-width: 650px;
   position: fixed;
-  bottom: 10px;;
+  bottom: 10px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   margin-left: 0em;
-  margin-top: -0.25rem;
+  border: none;
 }
 .nav-button {
   background: #800000;
