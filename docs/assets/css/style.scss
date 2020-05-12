@@ -27,14 +27,15 @@ a {
     color: #800000;
 }
 footer {
-  width: inherit:
+  width: inherit;
   right: 1rem;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
 }
 .nav-button: {
-  border: 1pt solid #800000;
+  background: #800000;
+  color: #fff;
   border-radius: 2pt;
   padding: 2pt;
 }
