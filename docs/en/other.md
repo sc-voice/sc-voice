@@ -2,9 +2,9 @@
 prev: 'Navigating Texts'
 prev_href: 'navigating-texts'
 prev_aria: 'navigating texts'
-next: 'Return to Voice'
+next: 'Go to Voice'
 next_href: 'https://voice.suttacentral.net'
-next_aria: 'return to voice website'
+next_aria: 'go to voice website'
 ---
 ### Other Information
 * <a href="/sc-voice/en/ToC#engineering-and-development" target="_blank">Engineering and Development</a>

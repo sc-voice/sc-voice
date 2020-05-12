@@ -6,7 +6,7 @@ next_aria: 'using voice'
 ### Welcome! 
 Search for and hear the words of the Buddha with Voice.
 Voice is a companion website for 
-<a href="suttacentral.net" aria-label="sootacentral.net">
+<a href="https://suttacentral.net" aria-label="sootacentral.net">
   SuttaCentral</a>,
 which hosts the vast ocean of Early Buddhist Texts (aka. "EBTs") 
 along with their translations into contemporary languages, making them
@@ -28,7 +28,7 @@ Dhamma was a key part of the practice.
     "These five things lead to..."
   </summary>
   <a href="https://suttacentral.net/an5.155/en/sujato#an5.155:6.1">
-    AN155:6.1:</a>
+    AN5.155:6.1:</a>
   These five things lead to the continuation, persistence, 
   and enduring of the true teaching. What five?
   <ul>
