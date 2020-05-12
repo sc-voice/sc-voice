@@ -24,4 +24,3 @@ separate the sutta references with a comma
 
 <a href="https://discourse.suttacentral.net/t/how-do-you-use-suttacentral-voice/12384" target="_blank">Read how others are using SuttaCentral Voice</a> on SuttaCentral's forum.
 
-<div class="next"><a href="navigating-texts">Navigating Texts</a></div>

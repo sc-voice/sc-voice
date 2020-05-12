@@ -2,9 +2,9 @@
 prev: 'Using Voice'
 prev_href: 'using-voice'
 prev_aria: 'using voice'
-next: 'Navigating Texts'
-next_href: 'navigating-texts'
-next_aria: 'navigating texts'
+next: 'Other'
+next_href: 'other'
+next_aria: 'other'
 ---
 <details>
 <summary>Navigating the texts</summary>
@@ -39,4 +39,3 @@ The following indexes and list of terms may also help you find what you're looki
 * <a href="https://suttacentral.net/abbreviations" target="_blank">Abbreviations used on SuttaCentral</a>
 * <a href="https://suttacentral.net/acknowledgments" target="_blank">Acknowledgments</a>
 
-<div class="next"><a href="other">Other</a></div>

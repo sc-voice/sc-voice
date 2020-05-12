@@ -28,11 +28,10 @@ a {
 }
 footer {
   width: inherit;
-  right: 1rem;
+  max-width: 650px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  margin-left: 50px;
 }
 .nav-button {
   background: #800000;
