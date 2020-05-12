@@ -1,5 +1,7 @@
 ---
-next: This is next
+next: Using Voice
+next_href: using-voice
+next_aria: Next: Using Voice
 ---
 ### Welcome! 
 Search for and hear the words of the Buddha with Voice.
@@ -71,4 +73,3 @@ Furthermore, Voice provides access to *individual verses*
 you can hear, memorize, and speak the Dhamma verse by verse.
 
 
-<div class="next"><a href="using-voice">Using Voice</a></div>

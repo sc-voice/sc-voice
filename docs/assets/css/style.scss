@@ -26,12 +26,8 @@ h1.header {
 a {
     color: #800000;
 }
-.next {
-  height: 2em;
-  background: #800000;
-  color: #fff;
-  border-radius: 0.2em;
+footer {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
