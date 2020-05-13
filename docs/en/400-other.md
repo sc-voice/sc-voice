@@ -1,3 +1,12 @@
+---
+prev: 'Navigating Texts'
+prev_href: '300-navigating-texts'
+prev_aria: 'navigating texts'
+next: 'Go to Voice'
+next_href: 'https://voice.suttacentral.net'
+next_aria: 'go to voice website'
+---
+
 ### Using SuttaCentral Voice
 * [Offline Listening](/sc-voice/en/Offline-Listening) shows you how to listen to suttas on your phone
 * [Search](/sc-voice/en/Search) gives you tips on finding the sutta(s) you want
@@ -19,5 +28,6 @@
 * [SuttaCentral-Voice-Administration](/sc-voice/en/SuttaCentral-Voice-Administration.md)
 
 ### Other
-* [Acknowledgements](/sc-voice/en/Acknowledgements.md)
+* [401-acknowledgements](/sc-voice/en/401-acknowledgements.md)
 * [Tipitaka-Categories](/sc-voice/en/Tipitaka-Categories.md)
+* <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Feedback</a>

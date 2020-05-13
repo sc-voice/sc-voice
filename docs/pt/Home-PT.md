@@ -47,8 +47,8 @@ Os seguintes índices e lista de termos também podem ajudá-lo a encontrar o qu
 </details>
 
 ### Outra informação
-* <a href="/sc-voice/en/ToC#engineering-and-development" target="_blank">Time de Engenharia e Desenvolvimento do SuttaCentral</a>
+* <a href="/sc-voice/en/400-other">Time de Engenharia e Desenvolvimento do SuttaCentral</a>
 * <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Comentários</a>
 
 ### Créditos/Agradecimentos
-[Clique aqui por favor](/sc-voice/en/Acknowledgements)
+[Clique aqui por favor](/sc-voice/en/401-acknowledgements)

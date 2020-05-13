@@ -17,7 +17,7 @@ SuttaCentral Voice （スッタセントラル ボイス）は実によく調整
 
 ### SuttaCentral Voiceの使い方
 
-SuttaCentral Voiceを使うには、まず、検索したい語や表現を入力して下さい。MN1など特定の経典を探す場合は、単に "mn1" と検索欄に入力して下さい。複数の経典を一度に探す場合には、経典毎にコンマを入れて下さい (例： “an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”)。もし経典をアプリのほうから提案してほしければ、“心に響く経典を”ボタンをクリックして下さい。読み上げ音声やその他の設定はアプリの右上にあるギアのアイコンから変更が可能です。<a href="/sc-voice/en/ToC" target="_blank">使用条件についての詳細はこちら。</a>
+SuttaCentral Voiceを使うには、まず、検索したい語や表現を入力して下さい。MN1など特定の経典を探す場合は、単に "mn1" と検索欄に入力して下さい。複数の経典を一度に探す場合には、経典毎にコンマを入れて下さい (例： “an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21”)。もし経典をアプリのほうから提案してほしければ、“心に響く経典を”ボタンをクリックして下さい。読み上げ音声やその他の設定はアプリの右上にあるギアのアイコンから変更が可能です。<a href="/sc-voice/en/400-other">使用条件についての詳細はこちら。</a>
 
 SuttaCentralのフォーラムで <a href="https://discourse.suttacentral.net/t/how-do-you-use-suttacentral-voice/12384" target="_blank">他の人がSuttaCentral Voice をどう使っているかを読む</a> (英語)。
 
@@ -47,8 +47,8 @@ SuttaCentralでは、ブッダの教えを記録したパーリ仏典のうち�
 </details>
 
 ### その他の情報 (英語)
-* <a href="/sc-voice/en/ToC#engineering-and-development" target="_blank">技術開発</a>
+* <a href="/sc-voice/en/400-other">技術開発</a>
 * <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">フィードバック</a>
 
 ### 謝辞
-[ここをクリックして下さい。](/sc-voice/en/Acknowledgements)
+[ここをクリックして下さい。](/sc-voice/en/401-acknowledgements)

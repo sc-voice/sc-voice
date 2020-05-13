@@ -1,9 +1,9 @@
 ---
 prev: 'Welcome'
-prev_href: 'Home-EN'
+prev_href: '100-welcome'
 prev_aria: 'Welcome'
 next: 'Navigating Texts'
-next_href: 'navigating-texts'
+next_href: '300-navigating-texts'
 next_aria: 'navigating texts'
 ---
 ### Using Voice
@@ -20,7 +20,9 @@ in the search field. To find several suttas at once,
 separate the sutta references with a comma 
 (for example, 
 <kbd>an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21</kbd>). If you’d like to have some suttas suggested to you click on the 
-<kbd>Inspire Me!</kbd> button. You can change the reading voice and other settings via the gear icon on the top right of the app. <a href="/sc-voice/en/ToC" target="_blank">Find the ToC for more information.</a>
+<kbd>Inspire Me!</kbd> button. You can change the reading voice and other settings via the gear icon on the top right of the app. 
 
-<a href="https://discourse.suttacentral.net/t/how-do-you-use-suttacentral-voice/12384" target="_blank">Read how others are using SuttaCentral Voice</a> on SuttaCentral's forum.
+For community help, go to the 
+<a href="https://discourse.suttacentral.net/t/how-do-you-use-suttacentral-voice/12384" target="_blank">
+SuttaCentral discussion forum</a>
 

@@ -1,9 +1,9 @@
 ---
 prev: 'Using Voice'
-prev_href: 'using-voice'
+prev_href: '200-using-voice'
 prev_aria: 'using voice'
 next: 'Other'
-next_href: 'other'
+next_href: '400-other'
 next_aria: 'other'
 ---
 <details>

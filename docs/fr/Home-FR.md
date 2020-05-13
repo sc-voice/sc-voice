@@ -54,4 +54,4 @@ Les indexes suivants et listes de termes peuvent également vous aider à trouve
 * <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Impressions</a>
 
 ### Remerciements
-[Veuillez cliquer ici](/sc-voice/en/Acknowledgements)
+[Veuillez cliquer ici](/sc-voice/en/401-acknowledgements)

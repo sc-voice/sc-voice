@@ -1,7 +1,7 @@
 ## Welcome to SuttaCentral Voice
 Select language:
 
-* [English / EN](/sc-voice/en/Home-EN)  
+* [English / EN](/sc-voice/en/100-welcome)  
 * [Dhammaregen / DE](https://sc-voice.github.io/dhammaregen/)  
 * [Português / PT](/sc-voice/pt/Home-PT)  
 * [日本語 / JA](/sc-voice/ja/Home-JA)  
@@ -28,5 +28,5 @@ Select language:
 * [SuttaCentral-Voice-Administration](/sc-voice/en/SuttaCentral-Voice-Administration)
 
 ### Other
-* [Acknowledgements](/sc-voice/en/Acknowledgements)
+* [401-acknowledgements](/sc-voice/en/401-acknowledgements)
 * [Tipitaka-Categories](/sc-voice/en/Tipitaka-Categories)
