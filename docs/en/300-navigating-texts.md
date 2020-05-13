@@ -6,9 +6,7 @@ next: 'Other'
 next_href: '400-other'
 next_aria: 'other'
 ---
-<details>
-<summary>Navigating the texts</summary>
-
+###Navigating the texts
 You can read general introductions to the two sections of the Pali canon that record the Buddha's teaching on SuttaCentral: 
 
 * <a href="https://suttacentral.net/discourses" target="_blank">Introduction to the Discourses</a>
@@ -28,8 +26,6 @@ The following indexes and list of terms may also help you find what you're looki
 * <a href="https://suttacentral.net/similes" target="_blank">Index of Similes</a>
 * <a href="https://suttacentral.net/names" target="_blank">Index of Names</a>
 * <a href="https://suttacentral.net/terminology" target="_blank">Basic Pali Terminology</a>
-
-</details>
 
 ### SuttaCentral
 
