@@ -2,7 +2,7 @@
 Select language:
 
 * [English / EN](/sc-voice/en/Home-EN)  
-* [Dhammaregen / DE](/sc-voice/de/Home-DE)  
+* [Dhammaregen / DE](https://sc-voice.github.io/dhammaregen/)  
 * [Português / PT](/sc-voice/pt/Home-PT)  
 * [日本語 / JA](/sc-voice/ja/Home-JA)  
 * [Français / FR](/sc-voice/fr/Home-FR)
