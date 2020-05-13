@@ -18,12 +18,12 @@
       </div>
   </v-toolbar-title>
   <v-spacer></v-spacer>
-  <v-btn id="btnHelp" 
-      icon dark class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
-      small
-      :title="$vuetify.lang.t('$vuetify.scv.aboutTitle')"
-      :aria-label="$vuetify.lang.t('$vuetify.scv.ariaAbout')"
-      @click="openHelp()">
+  <v-btn href="https://sc-voice.github.io/sc-voice" target="_blank"
+    icon dark small
+    class="scv-icon-btn scv-app-icon-btn" :style="cssProps"
+    :title="$vuetify.lang.t('$vuetify.scv.aboutTitle')"
+    :aria-label="$vuetify.lang.t('$vuetify.scv.ariaAbout')"
+    >
       <v-icon aria-hidden="true">info</v-icon>
   </v-btn>
   <div class="scv-more" >
@@ -188,26 +188,6 @@
   </div> <!-- scv-more -->
 </v-app-bar>
 
-<v-dialog v-model="dialogHelp" v-if="dialogHelp" 
-    persistent max-width="45em">
-  <v-card >
-    <v-card-title class="title scv-dialog-title">
-      {{$vuetify.lang.t('$vuetify.scv.aboutTitle')}}
-      <v-spacer/>
-      <v-btn id="btnSettings" 
-        icon small
-        dark class="scv-icon-btn" :style="cssProps"
-        :aria-label="$vuetify.lang.t('$vuetify.scv.ariaClose')"
-        @click="closeDialog()"
-        >
-        <v-icon>close</v-icon>
-      </v-btn>
-    </v-card-title>
-    <v-card-text class="about-text">
-    <span v-html="helpHtml"/>
-    </v-card-text>
-  </v-card>
-</v-dialog>
 <div class="scv-content">
     <transition name="fade">
         <div v-if="bgShow" class="scv-background">
@@ -266,13 +246,11 @@ export default {
     },
     data () {
         return {
-            dialogHelp: false,
             focused: {
                 'settings': false,
             },
             identity: {
             },
-            helpHtml: "(...help...)",
             items: [{
                 title:'red',
             },{
@@ -339,20 +317,6 @@ export default {
         closeDialog() {
             console.log('closeDialog()');
             this.gscv.reload();
-        },
-        openHelp() {
-            var that = this;
-            var wikiAria = this.$vuetify.lang.t('$vuetify.scv.wikiAria');
-            var url = that.url(`wiki-aria/${wikiAria}`);
-            (async function() {
-                that.dialogHelp = true;
-                console.log(`openHelp(${url})`);
-                that.$http.get(url).then(res => {
-                    that.helpHtml = res.data.html;
-                }).catch(e => {
-                    console.error(e.stack);
-                });
-            })();
         },
         url(path) {
             return window.location.origin === 'http://localhost:8080'
@@ -630,12 +594,6 @@ button {
 }
 .fade-enter {
     opacity: 0;
-}
-.scv-help {
-    margin: 0em;
-}
-.scv-help > a:hover {
-    text-decoration: none;
 }
 .scv-logo-large {
     //cursor: default;
