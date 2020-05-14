@@ -8,9 +8,7 @@ next_aria: 'using sootacentral'
 ---
 ## Using Voice
 The simplest way to use Voice is to click the 
-<kbd aria-label="inspire me button">
-    <span aria-hidden="true">Inspire Me!</span>
-</kbd>. 
+<kbd><span aria-label="inspire me button">Inspire Me!</span></kbd>. 
 This will bring up a small selection of search results for you to select:
 
 <img aria-label="picture of inspire me button"
@@ -18,7 +16,9 @@ This will bring up a small selection of search results for you to select:
 
 You can also enter searches of your own, such as <kbd>root of suffering</kbd> and press <kbd>ENTER</kbd>
 
-To find a particular sutta such as MN1, enter the 
+To find a particular 
+<span aria-label="soota">sutta</span> 
+such as MN1, enter the 
 document ID in the search field. 
 Type <kbd>mn1</kbd> press <kbd>ENTER</kbd>.
 To find two or more suttas at once, 
