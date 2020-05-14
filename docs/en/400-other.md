@@ -7,15 +7,6 @@ next_href: 'https://voice.suttacentral.net'
 next_aria: 'go to voice website'
 ---
 
-### Using SuttaCentral Voice
-* [Offline Listening](/sc-voice/en/201-offline-listening) shows you how to listen to suttas on your phone
-* [Search](/sc-voice/en/201-search) gives you tips on finding the sutta(s) you want
-* [Settings](/sc-voice/en/201-settings) describes the available settings
-* [Segmentation Technology](/sc-voice/en/301-segmentation) explains the technical basis on which SuttaCentral Voice is built.
-* [Support Policy](/sc-voice/en/201-support) clarifies the distinction between Supported and Legacy content
-* [Sutta Player](/sc-voice/en/201-sutta-player) offers bi-lingual segment-by-segment audio playback of any sutta
-* [Voices](/sc-voice/en/201-voices) describes the various voices used by SuttaCentral Voice
-
 ### Translation
 * [Translating Voice UI](/sc-voice/en/401-translating-voice-ui). Help us translate the Voice Web Pages!
 * [Mispronunciations](/sc-voice/en/201-mispronunciations). The AI Narrators need help speaking. If you hear a mispronounced word, please let us know.
