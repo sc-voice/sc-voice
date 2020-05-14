@@ -2,9 +2,9 @@
 prev: 'Welcome'
 prev_href: '100-welcome'
 prev_aria: 'Welcome'
-next: 'Navigating Texts'
-next_href: '300-navigating-texts'
-next_aria: 'navigating texts'
+next: 'Using SuttaCentral'
+next_href: '300-using-suttacentral'
+next_aria: 'using sootacentral'
 ---
 ### Using Voice
 The simplest way to use Voice is to click the 

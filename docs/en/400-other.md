@@ -1,7 +1,7 @@
 ---
-prev: 'Navigating Texts'
-prev_href: '300-navigating-texts'
-prev_aria: 'navigating texts'
+prev: 'Using SuttaCentral'
+prev_href: '300-using-suttacentral'
+prev_aria: 'using sootacentral'
 next: 'Go to Voice'
 next_href: 'https://voice.suttacentral.net'
 next_aria: 'go to voice website'

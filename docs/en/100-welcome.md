@@ -27,7 +27,7 @@ Dhamma was a key part of the practice.
   <summary>
     "These five things lead to..."
   </summary>
-  <a href="https://suttacentral.net/an5.155/en/sujato#an5.155:6.1">
+  <a href="https://voice.suttacentral.net/scv/index.html?search=an5.155">
     AN5.155:6.1:</a>
   These five things lead to the continuation, persistence, 
   and enduring of the true teaching. What five?
