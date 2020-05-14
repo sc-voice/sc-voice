@@ -22,6 +22,14 @@ separate the sutta references with a comma
 <kbd>an8.71 <span aria-label="comma"> </span><span aria-hidden="true">,</span> mn32 <span aria-label="comma"> </span><span aria-hidden="true">,</span> dn21</kbd>). If you’d like to have some suttas suggested to you click on the 
 <kbd>Inspire Me!</kbd> button. You can change the reading voice and other settings via the gear icon on the top right of the app. 
 
+* [Search](/sc-voice/en/201-search) gives you tips on finding the sutta(s) you want
+* [Sutta Player](/sc-voice/en/201-sutta-player) offers bi-lingual segment-by-segment audio playback of any sutta
+* [Settings](/sc-voice/en/201-settings) describes the available settings
+* [Offline Listening](/sc-voice/en/201-offline-listening) shows you how to listen to suttas on your phone
+* [Voices](/sc-voice/en/201-voices) describes the various voices used by SuttaCentral Voice
+* [What is a text segment?](/sc-voice/en/301-segmentation) explains the technical basis on which SuttaCentral Voice is built.
+* [Support Policy](/sc-voice/en/201-support) clarifies the distinction between Supported and Legacy content
+
 For community help, go to the 
 <a href="https://discourse.suttacentral.net/t/how-do-you-use-suttacentral-voice/12384" target="_blank">
 SuttaCentral discussion forum</a>
