@@ -8,7 +8,8 @@ next_aria: 'using sootacentral'
 ---
 ## Using Voice
 The simplest way to use Voice is to click the 
-<kbd>Inspire Me!</kbd>. This will bring up a small selection of related suttas for you to select:
+<kbd aria-label="inspire me button">Inspire Me!</kbd>. 
+This will bring up a small selection of related suttas for you to select:
 
 <img aria-label="picture of inspire me button"
   src="/sc-voice/assets/img/inspire-me.png?raw=true" style="height:8em"/>
