@@ -6,10 +6,13 @@ next: 'Go to Voice'
 next_href: 'https://voice.suttacentral.net'
 next_aria: 'go to voice website'
 ---
+## Other
 
-### Translation
+### Help
+* <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Feedback</a>
 * [Translating Voice UI](/sc-voice/en/401-translating-voice-ui). Help us translate the Voice Web Pages!
-* [Mispronunciations](/sc-voice/en/201-mispronunciations). The AI Narrators need help speaking. If you hear a mispronounced word, please let us know.
+* [Mispronunciations](/sc-voice/en/401-mispronunciations). The AI Narrators need help speaking. If you hear a mispronounced word, please let us know.
+* [Acknowledgements](/sc-voice/en/401-acknowledgements.md)
 
 ### Engineering and Development
 * [Installation: Developer](/sc-voice/en/490-dev-install) provides instructions on setting up Voice development environment
@@ -20,7 +23,4 @@ next_aria: 'go to voice website'
 * [AWS-Staging-911](/sc-voice/en/490-aws-staging-911)
 * [Notes-on-using-the-Voice-ZenHub-board](/sc-voice/en/490-zenhub)
 
-### Other
-* [Acknowledgements](/sc-voice/en/401-acknowledgements.md)
-* <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Feedback</a>
 

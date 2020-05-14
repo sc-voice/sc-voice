@@ -10,5 +10,5 @@
 ### Engenharia e Desenvolvimento
 * [Instalação: o desenvolvedor](/sc-voice/en/Installation:-Developer) fornece instruções sobre como configurar o ambiente de desenvolvimento de voz (inglês).
 * [Translating Voice UI](/sc-voice/en/401-translating-voice-ui) gives some guidelines for translating the Voice interface into other languages (inglês).
-* [As declarações erradas](/sc-voice/en/201-mispronunciations) listam palavras que podem ser pronunciadas incorretamente por Amy e / ou Raveena (inglês).
+* [As declarações erradas](/sc-voice/en/401-mispronunciations) listam palavras que podem ser pronunciadas incorretamente por Amy e / ou Raveena (inglês).
 * [Formato de URL](/sc-voice/en/URL-Format) para links de sites externos (inglês).

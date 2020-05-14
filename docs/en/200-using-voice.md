@@ -6,7 +6,7 @@ next: 'Using SuttaCentral'
 next_href: '300-using-suttacentral'
 next_aria: 'using sootacentral'
 ---
-### Using Voice
+## Using Voice
 The simplest way to use Voice is to click the 
 <kbd>Inspire Me!</kbd>. This will bring up a small selection of related suttas for you to select:
 
