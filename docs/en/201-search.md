@@ -89,18 +89,54 @@ _Settings:Search results_
 
 You can listen to the suttas listed in the search results. Just click "Play" directly under the result summary.
 
-#### Advanced Search
 <detail>
-    <summary>
-        You can customize search with advanced settings. 
-        Advanced settings are prefixed with a minus sign, "-":
-    </summary>
+    <summary><h3>Advanced Search</h3></summary>
+You can customize search with advanced settings. 
+Advanced settings are prefixed with a minus sign, "-":
 
 * **-sl ISO_LANG_2**  Set search language, e.g.: <kbd>-sl de</kbd> chooses Deutsch
 * **-d NUMBER**  Set maximum result documents, e.g.: <kbd>-d 50</kbd> finds up to 50 suttas
 * **-ml 3**  Require trilingual results.
 * **-tc:mn** Restrict search results to Majjhima Nikaya. See [[Tipitaka Categories]]
-* [Tipitaka Categories](/sc-voice/en/201-tipitaka.md)
+
+##### Tipitaka category
+Voice search can filter results by *Tipitaka category*. 
+To search by Tipitaka category, you 
+will need to use the `-tc` option in your search string. 
+For example, to search Digha Nikaya and Saṃyutta Nikāya.
+
+```
+-tc:dn,sn root of suffering
+```
+
+| Abbreviation | Tipitaka Category |
+| :-----: | :-----: |
+| ab | Abhidhamma |
+| an | Aṅguttara Nikāya |
+| as | Adhikaraṇasamatha |
+| ay | Aniyata |
+| bi | Bhikkhuni |
+| bu | Bhikkhu |
+| dn | Dīgha Nikāya |
+| kd | Khandhaka |
+| kn | Khuddaka Nikāya |
+| mn | Majjhima Nikāya |
+| ms | Mahasaṅgīti Tipiṭaka |
+| np | Nissaggiya Pācittiya |
+| pc | Pācittiya |
+| pd | Pātidesanīya |
+| pj | Pārājika |
+| pvr | Parivāra | 
+| prv | Parivāra | 
+| sk | Sekhiya |
+| sn | Saṃyutta Nikāya |
+| ss | Saṅghādisesa |
+| su | Sutta |
+| thag | Theragāthā |
+| thig | Therīgāthā |
+| tv | Theravāda |
+| vb | Vibhaṅga |
+| vin | Vinaya |
 </details>
 
 ### FAQ
