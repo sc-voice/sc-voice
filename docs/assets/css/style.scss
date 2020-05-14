@@ -3,7 +3,7 @@
 
 @import 'jekyll-theme-dinky';
 
-kbd {
+.kbd,kbd {
     background: #ccc;
     color: #400;
     padding: 1pt;
@@ -19,6 +19,15 @@ blockquote {
 }
 blockquote > ul {
     margin-top: -15px;
+}
+.header-link {
+    font-size:0.64em; 
+    line-height: 0.64em;
+}
+.header-main {
+    font-size: 1.5em;
+    line-height: 1.2em;
+    margin-top: 0.2em;
 }
 h1.header {
     font-size: 20px;
