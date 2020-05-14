@@ -1,9 +1,13 @@
-Voice search can filter results by *Tipitaka category*. To search by Tipitaka category, you will need to use the `-tc` option in your search string. For example, to search Digha Nikaya and Saṃyutta Nikāya.
+
+### Advanced Search: Tipitaka Category
+Voice search can filter results by *Tipitaka category*. 
+To search by Tipitaka category, you 
+will need to use the `-tc` option in your search string. 
+For example, to search Digha Nikaya and Saṃyutta Nikāya.
 
 ```
 -tc:dn,sn root of suffering
 ```
-
 
 | Abbreviation | Tipitaka Category |
 | :-----: | :-----: |

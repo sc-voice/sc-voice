@@ -22,6 +22,5 @@ next_aria: 'go to voice website'
 
 ### Other
 * [Acknowledgements](/sc-voice/en/401-acknowledgements.md)
-* [Tipitaka Categories](/sc-voice/en/301-tipitaka.md)
 * <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Feedback</a>
 

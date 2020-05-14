@@ -90,12 +90,18 @@ _Settings:Search results_
 You can listen to the suttas listed in the search results. Just click "Play" directly under the result summary.
 
 #### Advanced Search
-You can customize search with advanced settings. Advanced settings are prefixed with a minus sign, "-":
+<detail>
+    <summary>
+        You can customize search with advanced settings. 
+        Advanced settings are prefixed with a minus sign, "-":
+    </summary>
 
 * **-sl ISO_LANG_2**  Set search language, e.g.: <kbd>-sl de</kbd> chooses Deutsch
 * **-d NUMBER**  Set maximum result documents, e.g.: <kbd>-d 50</kbd> finds up to 50 suttas
 * **-ml 3**  Require trilingual results.
 * **-tc:mn** Restrict search results to Majjhima Nikaya. See [[Tipitaka Categories]]
+* [Tipitaka Categories](/sc-voice/en/201-tipitaka.md)
+</details>
 
 ### FAQ
 ##### Why are my results different than SuttaCentral.net search?
