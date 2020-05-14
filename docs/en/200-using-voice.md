@@ -8,7 +8,7 @@ next_aria: 'using sootacentral'
 ---
 ## Using Voice
 The simplest way to use Voice is to click the 
-<kbd><span aria-label="inspire me button">Inspire Me!</span></kbd>. 
+<span class="kbd" aria-label="inspire me button">Inspire Me!</span>. 
 This will bring up a small selection of search results for you to select:
 
 <img aria-label="picture of inspire me button"
