@@ -14,12 +14,14 @@ next_aria: 'go to voice website'
 * [Segmentation Technology](/sc-voice/en/301-segmentation) explains the technical basis on which SuttaCentral Voice is built.
 * [Support Policy](/sc-voice/en/201-support) clarifies the distinction between Supported and Legacy content
 * [Sutta Player](/sc-voice/en/201-sutta-player) offers bi-lingual segment-by-segment audio playback of any sutta
-* [201-voices](/sc-voice/en/201-voices) describes the various voices used by SuttaCentral Voice
+* [Voices](/sc-voice/en/201-voices) describes the various voices used by SuttaCentral Voice
+
+### Translation
+* [Translating Voice UI](/sc-voice/en/401-translating-voice-ui). Help us translate the Voice Web Pages!
+* [Mispronunciations](/sc-voice/en/201-mispronunciations). The AI Narrators need help speaking. If you hear a mispronounced word, please let us know.
 
 ### Engineering and Development
 * [Installation: Developer](/sc-voice/en/490-dev-install) provides instructions on setting up Voice development environment
-* [Translating Voice UI](/sc-voice/en/401-translating-voice-ui) gives some guidelines for translating the Voice interface into other languages.
-* [201-mispronunciations](/sc-voice/en/201-mispronunciations) lists words that may be mispronounced by Amy and or Raveena
 * [URL Format](/sc-voice/en/490-url-format) for external site links
 * [Architecture:-Storage](/sc-voice/en/490-arch-storage)
 * [SuttaCentral-Voice-Administration](/sc-voice/en/490-scv-admin)
@@ -29,6 +31,6 @@ next_aria: 'go to voice website'
 
 ### Other
 * [Acknowledgements](/sc-voice/en/401-acknowledgements.md)
-* [301-tipitaka](/sc-voice/en/301-tipitaka.md)
+* [Tipitaka Categories](/sc-voice/en/301-tipitaka.md)
 * <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Feedback</a>
 

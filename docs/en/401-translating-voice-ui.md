@@ -1,5 +1,16 @@
-Thank you for volunteering to help translate the Voice web user interface for your language. By doing so, we are helping to build a bridge for the world to hear and see the words of the Buddha recorded and translated on 
-[https://suttacentral.net](SuttaCentral). You will be helping to build a bridge especially for those with visual disabilities.
+### Translating Voice User Interface
+Voice supports many contemporary languages
+and the list of supported languages is growing.
+If the Voice web page doesn't support your language,
+please do consider helping us translate the Voice web pages
+to your own native language. 
+
+Help us build a bridge for the world to hear and see 
+the words of the Buddha recorded and translated on 
+[https://suttacentral.net](SuttaCentral). 
+Furthermore, since Voice is designed to be audio accessible,
+you will be helping to build a bridge especially for 
+those with visual disabilities.
 
 ### Overview
 The process of web pages in different languages is known as **internationalization**, which is such a large mouthful of letters that some of us affectionately refer to this as **i18n**, omitting eighteen of the mouthful of letters. Voice uses the [Vuetify 2.0](https://vuetifyjs.com/en/) Javascript web framework, which was released in 2019 with i18n support. 

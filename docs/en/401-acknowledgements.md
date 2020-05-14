@@ -1,3 +1,4 @@
+### Acknowledgements
 SuttaCentral Voice has been developed as a “younger sister” of [SuttaCentral](suttacentral.net). It was started in 2018 by Karl Lew who was soon joined by Aminah Borg-Luck. Some time later Anagarika Sabbamitta came as a third person to increase the team.
 
 The Voice application uses content from the SuttaCentral website and produces it in voice output. We'd like to thank [all those who did and do contribute](https://suttacentral.net/acknowledgments) to this extraordinary collection of early Buddhist texts.
@@ -9,6 +10,7 @@ Aminah researched Voice requirements for both assisted and non-assisted users an
 After all these valuable contributions Aminah has retired from the team as of 2020, currently pursuing other interests, but graciously helping out Voice with occasional consult as the first Voice Emerita. We'd like to express our utmost gratitude!
 
 Currently Voice is developed by a small core team and a number of other contributors.
+
 #### Core Voice team:
 - **Karl Lew:** Initiator and leading developer
 - **Sabbamitta Anagarika:** Testing, planning, organization and coordination; German translation of web interface and texts for the accompanying German website *Dhammaregen*
