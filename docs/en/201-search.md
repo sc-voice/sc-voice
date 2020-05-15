@@ -1,7 +1,7 @@
 ---
-prev: 'Using Voice'
-prev_href: '200-using-voice'
-prev_aria: 'using voice'
+next: 'Using Voice'
+next_href: '200-using-voice'
+next_aria: 'using voice'
 ---
 
 ## Understanding Search
@@ -99,14 +99,17 @@ Use [Settings](201-settings) to increase the maximum search results.
 It takes longer to show more results.
 </details><!--COMMENT:Number of Search Results-->
 
-<details>><summary><h3Advanced Search</h3></summary>
+<details>><summary><h3>Advanced Search</h3></summary>
+
 #### Regular expressions
+
 Many people on SuttaCentral have been using `grep` for search. 
 The `grep` program is very powerful and supports the ability to match 
 [regular expressions](https://www.google.com/search?q=grep+-E+option). 
 SuttaCentral Voice supports grep regular expressions (e.g., `root.*suffering`).
 
 #### Search Parameters
+
 You can customize search with advanced settings. 
 Advanced settings are prefixed with a minus sign, "-":
 
