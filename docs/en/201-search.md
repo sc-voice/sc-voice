@@ -6,16 +6,28 @@ prev_aria: 'using voice'
 
 ## Understanding Search
 
-<detail>
-<summary><h3>## Suttas, Phrases and Keywords</h3></summary>
+<details><summary><h3>Suttas, Phrases and Keywords</h3></summary>
 Voice searches for suttas, phrases or keywords in 
 translated or Pali documents.
 
-<detail>
-<summary><h4>Sutta Search</h4></summary>
-To show a specific sutta, enter the sutta acronym, such as: <kbd>AN12.23</kbd>
+<details><summary><h4>Sutta Search</h4></summary>
+To show a specific sutta, enter the sutta acronym, such as: 
+<kbd>AN12.23</kbd>
 
-Suttas are uniquely identified by the combination of 
+For a longer playlist, enter a comma separated list of suttas such as:
+<kbd>SN12.22, SN12.23</kbd>
+
+Use a dash to indicate a range of suttas such as:
+<kbd>SN12.22-23</kbd>
+
+![picture of playlist example](https://github.com/sc-voice/sc-voice/blob/master/src/assets/play-all-de.png?raw=true)
+
+You can listen to the suttas listed in the search results. Just click "Play" directly under the result summary.
+
+##### Language and Translator
+Suttas have multiple translations in different languages 
+and by different translators.
+Voice lets you specify language as well as translator.
 sutta identifier, language, translator.
 For example, following are designations for different documents:
 
@@ -54,28 +66,23 @@ Sutta documents sometimes combine multiple short suttas into a single document. 
 You can also enter a list of suttas for a playlist. When multiple suttas are returned, they are normally shown alphabetically. However, in this case, the suttas returned will be ordered as requested:
 
 * `MN1, SN2.3, AN1.1`
-</detail>
+</details><!--COMMENT: Sutta Search-->
 
-<detail>
-<summary><h4>Phrase Search</h4></summary>
+<details><summary><h4>Phrase Search</h4></summary>
 Enter an exact phrase in upper or lower case to find suttas with that phrase. For example: <kbd>root of suffering</kbd>. For Pali searches, enter the romanized phrase such as: <kbd>nandi dukkhassa mulan</kbd>
-</detail>
+</details><!--COMMENT: Phrase Search-->
 
-<detail>
-<summary><h4>Keyword Search</h4></summary>
+<details><summary><h4>Keyword Search</h4></summary>
 If you can't remember the exact phrase, 
 simply enter the words you know separated by spaces. 
 Voice will find the suttas having all the search words.
 For example: <kbd>suffering root</kbd>.
 Keyword search is slower than phrase search and will return more results.
-</detail><!--COMMENT: Keyword search-->
+</details><!--COMMENT: Keyword search-->
+</details><!--COMMENT: Suttas, phrases and keywords-->
 
-</detail><!--COMMENT: Suttas, phrases and keywords-->
-
-<detail>
-<summary><h3>Search Results</h3></summary>
-<detail>
-<summary><h4>Sorting Search Results</h4></summary>
+<details><summary><h3>Search Results</h3></summary>
+<details><summary><h4>Sorting Search Results</h4></summary>
 Search results are sorted in descending order by relevance score. Relevance is calculated based on:
 
 * *M*: The more matches, the more relevance. This will be 1 or greater for a matching sutta.
@@ -88,11 +95,17 @@ The relevance score is simply **M+F**. For example, a 100 segment sutta with 2 m
 ``` 
 
 NOTE: Segments are the smallest units of text such as a single sentence, phrase or short paragraph structured according to semantic units in the root text (Pali).  (See [Segmentation Technology](/sc-voice/en/301-segmentation))
-</detail>
-</detail>
+</details><!--COMMENT: Sorting Search Results-->
 
-<detail>
-<summary>Advanced Searche</summary>
+<details><summary><h4>Number of Search Results </h4></summary>
+Voice normally returns up to 5 search results.
+Use [Settings](201-settings) to increase the maximum search results.
+It takes longer to show more results.
+</details><!--COMMENT:Number of Search Results-->
+</details><!--COMMENT: Search Results-->
+
+
+<details><h3><summary>Advanced Search</h3></summary>
 #### Regular expressions
 Many people on SuttaCentral have been using `grep` for search. 
 The `grep` program is very powerful and supports the ability to match 
@@ -110,19 +123,9 @@ no sutta uses both spellings.
 To search for all alternate spellings, use the vertical bar "|" to separate
 alternates. For example, searching for "bodhisattva|bodhisatta" returns
 all suttas with either spelling.
-</detail>
+</details><!--COMMENT: Advanced Search-->
 
-#### Number of Search Results 
-The number of search results is constrained initially to 5. Limiting search results gives you something useful quickly. 
-If you need more search results, just change the maximum in 
-_Settings:Search results_
-
-#### Sutta Playlists
-![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/play-all-de.png?raw=true)
-
-You can listen to the suttas listed in the search results. Just click "Play" directly under the result summary.
-
-<detail>
+<details>
     <summary><h3>Advanced Search</h3></summary>
 You can customize search with advanced settings. 
 Advanced settings are prefixed with a minus sign, "-":
