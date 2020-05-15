@@ -12,7 +12,7 @@ next_aria: 'go to voice website'
 * <a href="https://discourse.suttacentral.net/tags/sc-voice" target="_blank">Feedback</a>
 * [Translating Voice UI](/sc-voice/en/401-translating-voice-ui). Help us translate the Voice Web Pages!
 * [Mispronunciations](/sc-voice/en/401-mispronunciations). The AI Narrators need help speaking. If you hear a mispronounced word, please let us know.
-* [Acknowledgements](/sc-voice/en/401-acknowledgements.md)
+* [Acknowledgements](/sc-voice/en/401-acknowledgements)
 
 ### Engineering and Development
 * [Installation: Developer](/sc-voice/en/490-dev-install) provides instructions on setting up Voice development environment
