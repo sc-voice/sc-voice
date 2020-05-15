@@ -27,6 +27,9 @@ specify the language and translator. For example:
 * <kbd>mn1/en/sujato</kbd> is the English translation of MN 1 by Bhikkhu Sujato
 * <kbd>mn1/en/bodhi</kbd> is the English translation of MN 1 by Bhikku Bodhi
 
+To search for a different language, change the 
+Translation language in Voice Settings.
+
 </details><!--COMMENT: Sutta Search-->
 
 <details><summary><h3>Search by Phrase</h3></summary>
