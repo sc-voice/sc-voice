@@ -65,9 +65,11 @@ You can also enter a list of suttas for a playlist. When multiple suttas are ret
 </details><!--COMMENT: Sutta Search-->
 
 <details><summary><h3>Search by Phrase</h3></summary>
+
 Enter an exact phrase in upper or lower case 
 to find suttas with that phrase. 
 For example: <kbd>root of suffering</kbd>.
+
 For Pali searches, enter the romanized phrase such as:
 <kbd>nandi dukkhassa mulan</kbd>
 
@@ -75,15 +77,18 @@ Enter partial phrases if you are uncertain about word endings:
 <kbd>nandi dukkha</kbd>
 </details><!--COMMENT: Phrase Search-->
 
-<details><summary><h3>Keyword Search</h3></summary>
+<details><summary><h3>Search by Keyword</h3></summary>
+
 If you can't remember the exact phrase, 
 simply enter the words you know separated by spaces. 
 Voice will find the suttas having all the search words.
 For example: <kbd>suffering root</kbd>.
+
 Keyword search is slower than phrase search and will return more results.
 </details><!--COMMENT: Keyword search-->
 
 <details><summary><h3>Search Results</h3></summary>
+
 Search results are sorted by relevance.
 The relevance score is simply the sum of the number of matches plus 
 the fraction of matching segments.
@@ -94,7 +99,7 @@ Use [Settings](201-settings) to increase the maximum search results.
 It takes longer to show more results.
 </details><!--COMMENT:Number of Search Results-->
 
-<details><h3><summary>Advanced Search</h3></summary>
+<details>><summary><h3Advanced Search</h3></summary>
 #### Regular expressions
 Many people on SuttaCentral have been using `grep` for search. 
 The `grep` program is very powerful and supports the ability to match 
@@ -140,7 +145,7 @@ Advanced settings are prefixed with a minus sign, "-":
 | -tc:vin | Vinaya |
 </details>
 
-<details><h3>Frequently Asked Questions</h3></detail>
+<details><summary><h3>Frequently Asked Questions</h3></summary>
 #### Why are my results different than SuttaCentral.net search?
 **SuttaCentral Voice search includes only supported texts; legacy texts are not being searched.**
 SuttaCentral Voice search is different than SuttaCentral.net search. By design, SuttaCentral Voice search only shows suttas with topmost relevance score and will not show all the results shown by SuttaCentral.net search. Unlike SuttaCentral.net, SuttaCentral Voice search does not return results from outside the four main Nikayas of the Pali canon and the early parts of the Khuddaka Nikaya. (The Vinaya texts will be included as soon as they are available in segmented form.) Since visual scanning of search results is difficult or impossible for the assisted user, the design prioritizes simple utility over exhaustive results to avoid overwhelming the user.
