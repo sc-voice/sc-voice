@@ -16,52 +16,17 @@ For a longer playlist, enter a comma separated list of suttas such as:
 Use a dash to indicate a range of suttas such as:
 <kbd>SN12.22-23</kbd>
 
-![picture of playlist example](https://github.com/sc-voice/sc-voice/blob/master/src/assets/play-all-de.png?raw=true)
-
-You can listen to the suttas listed in the search results. Just click "Play" directly under the result summary.
+You can listen to or download audio for the 
+suttas listed in the search results. 
 
 ##### Language and Translator
-Suttas have multiple translations in different languages 
-and by different translators.
-Voice lets you specify language as well as translator.
-sutta identifier, language, translator.
-For example, following are designations for different documents:
 
-* `mn1/en/sujato` is the English translation of MN 1 by Bhikkhu Sujato
-* `mn1/en/bodhi` is the English translation of MN 1 by Bhikku Bodhi
+If you need a specific translation,
+specify the language and translator. For example:
 
-The above notation is a SuttaCentral convention 
-that is convenient for its terseness.
-You can also use commonly accepted abbreviations with 
-spaces and alternate capitalization:
+* <kbd>mn1/en/sujato</kbd> is the English translation of MN 1 by Bhikkhu Sujato
+* <kbd>mn1/en/bodhi</kbd> is the English translation of MN 1 by Bhikku Bodhi
 
-* `MN 1/en/sujato`
-* `MN 1/en/bodhi`
-* `Sn 1.1/en/sujato`
-
-The language and translator name can be omitted. 
-The default language is English (i.e., 'en').
-The default translator is inferred from the first 
-Supported translation (see [[Support Policy]]).
-A Legacy translation is only returned if there is no 
-Supported translation and may contain mispronunciations or misspellings.
-Lastly, language and translator are taken as preferences, 
-and in case the combination entered will not lead to a result,
-alternates will be provided if found:
-
-* `MN 1` is equivalent to `mn1/en/sujato` (Supported)
-* `Sn1.1` is equivalent to `sn1.1/en/sujato` (Supported)
-* `sn12.3/de/sujato` is equivalent to `sn12.3/de/geiger` (Alternate)
-
-Sutta documents sometimes combine multiple short suttas into a single document. You can enter the specific sutta directly by number or use the entire range:
-
-* `AN 1.1-10` returns the document having suttas AN 1.1 through AN 1.10
-* `AN 1.2` also returns the document having suttas AN 1.1 through AN 1.10
-* `an1.2` also returns the document having suttas AN 1.1 through AN 1.10
-
-You can also enter a list of suttas for a playlist. When multiple suttas are returned, they are normally shown alphabetically. However, in this case, the suttas returned will be ordered as requested:
-
-* `MN1, SN2.3, AN1.1`
 </details><!--COMMENT: Sutta Search-->
 
 <details><summary><h3>Search by Phrase</h3></summary>
@@ -99,7 +64,7 @@ Use [Settings](201-settings) to increase the maximum search results.
 It takes longer to show more results.
 </details><!--COMMENT:Number of Search Results-->
 
-<details>><summary><h3>Advanced Search</h3></summary>
+<details><summary><h3>Advanced Search</h3></summary>
 
 #### Regular expressions
 
@@ -149,8 +114,13 @@ Advanced settings are prefixed with a minus sign, "-":
 </details>
 
 <details><summary><h3>Frequently Asked Questions</h3></summary>
+
 #### Why are my results different than SuttaCentral.net search?
-**SuttaCentral Voice search includes only supported texts; legacy texts are not being searched.**
-SuttaCentral Voice search is different than SuttaCentral.net search. By design, SuttaCentral Voice search only shows suttas with topmost relevance score and will not show all the results shown by SuttaCentral.net search. Unlike SuttaCentral.net, SuttaCentral Voice search does not return results from outside the four main Nikayas of the Pali canon and the early parts of the Khuddaka Nikaya. (The Vinaya texts will be included as soon as they are available in segmented form.) Since visual scanning of search results is difficult or impossible for the assisted user, the design prioritizes simple utility over exhaustive results to avoid overwhelming the user.
+Voice only searches segmented texts. 
+Segmented texts whose verses have been numbered for reference
+across multiple translations.
+Voice does not search all translations available in SuttaCentral,
+however many are working to add more segmented texts.
+
 </details>
 
