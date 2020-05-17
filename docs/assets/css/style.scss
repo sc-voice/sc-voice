@@ -62,12 +62,18 @@ bottom-nav {
   }
 }
 .nav-button {
-  background: #800000;
-  color: #fff;
+  color: #754A00;
   border-radius: 3pt;
+  border-style: solid;
+  border-width: 2.5px;
+  border-color: #754A00;
   padding: 0.3em;
   padding-left: 0.6em;
-  padding-left: 0.6em;
+  padding-right: 0.6em;
+}
+.nav-button:focus {
+  color: #754A00;
+  border-color: #c9e1f7; 
 }
 summary > h3 {
   display: inline-block;
