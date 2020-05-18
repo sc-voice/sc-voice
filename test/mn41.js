@@ -14,6 +14,7 @@
     } = require("../index");
     const SC = path.join(__dirname, '../local/sc');
     const logLevel = false;
+    this.timeout(10*1000);
 
     var suttaStore = new SuttaStore({logLevel});
 
