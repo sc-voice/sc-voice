@@ -13,11 +13,11 @@ next_aria: 'other'
 You can read general introductions to the two sections of the Pali canon that record the Buddha's teaching on SuttaCentral: 
 
 * <a href="https://suttacentral.net/discourses" target="_blank">
-    Discourses <i>by Bhikkhu Sujato</i></a>
+    Discourses </a><i>by Bhikkhu Sujato</i>
 * <a href="https://suttacentral.net/vinaya" target="_blank">
-    The Monastic Law <i>by Bhikkhu Brahmali</i></a>
+    The Monastic Law</a> <i>by Bhikkhu Brahmali</i>
 * <a href="https://suttacentral.net/abhidhamma" target="_blank">
-    Abhidhamma <i>by Bhikkhu Sujato</i></a>
+    Abhidhamma </a><i>by Bhikkhu Sujato</i>
 </details>
 
 <details>
