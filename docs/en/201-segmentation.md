@@ -7,7 +7,7 @@ next_href: '201-support'
 next_aria: 'Support Policy'
 ---
 
-## What is text segmentation?
+## Text Segmentation?
 
 Much of the Pali canon on SuttaCentral is available in segmented form. This means the Pali text is broken down into small semantic units the range of which can extend from a small phrase to a few sentences or in some cases even a somewhat longer paragraph.
 
