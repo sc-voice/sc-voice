@@ -38,11 +38,12 @@ header {
     min-width: 200px;
     font-size: 24px;
     font-family: Arvo, sans-serif;
+    line-height: 1em;
 }
 .header-link {
-    font-size:0.64em; 
+    font-size: 15.7px;
     font-style: italic;
-    line-height: 0.64em;
+    line-height: 1em;
     margin-top: 0.2em;
     color: #ce8400;
 }
@@ -77,9 +78,10 @@ bottom-nav {
   border-width: 1pt;
   border-color: #000000;
   font-weight: 600;
-  font-style: Helvetica, sans-serif;
-  font-height: 12px;
-  padding: 0.3em;
+  font-family: Helvetica, sans-serif;
+  font-size: 12px;
+  padding-top: 0.2em;
+  padding-bottom: 0.3em;
   padding-left: 0.6em;
   padding-right: 0.6em;
 }
