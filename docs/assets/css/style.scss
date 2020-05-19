@@ -35,7 +35,9 @@ blockquote > ul {
     margin-top: -15px;
 }
 header {
-  background-image: url("/sc-voice/assets/img/candle-medium.png");
+  background-image: url("/sc-voice/assets/img/candle-small.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
   min-width: 200px;
   font-size: 24px;
   font-family: Helvetica, sans-serif;
