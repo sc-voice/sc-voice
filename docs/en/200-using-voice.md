@@ -32,7 +32,7 @@ separate the sutta references with a comma
 * [Settings](/sc-voice/en/201-settings) describes the available settings
 * [Offline Listening](/sc-voice/en/201-offline-listening) shows you how to listen to suttas on your phone
 * [Voices](/sc-voice/en/201-voices) describes the various voices used by SuttaCentral Voice
-* [What is a text segment?](/sc-voice/en/201-segmentation) explains the technical basis on which SuttaCentral Voice is built.
+* [Text segments](/sc-voice/en/201-segmentation) explains the technical basis on which SuttaCentral Voice is built.
 * [Support Policy](/sc-voice/en/201-support) clarifies the distinction between Supported and Legacy content
 
 For community help, go to the 

@@ -2,9 +2,9 @@
 prev: 'Offline Listening'
 prev_href: '201-offline-listening'
 prev_aria: 'Offline Listening'
-next: 'What is a text segment?'
+next: 'Text segments'
 next_href: '201-segmentation'
-next_aria: 'What is a text segment?'
+next_aria: 'Text segments'
 ---
 
 ## Voices
