@@ -44,7 +44,7 @@ header {
 }
 @media print, screen and (max-width: 720px)  {
   header {
-    padding: 14px 0px 20px 10px;
+    padding: 14px 0px 20px 20px;
     margin-right: 0;
   }
 }
@@ -57,7 +57,7 @@ header {
 }
 .header-main {
   font-size: 24px;
-  line-height: 1em;
+  line-height: 1.1em;
 }
 a {
   color: #000000;
