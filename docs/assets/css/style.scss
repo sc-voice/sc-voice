@@ -36,6 +36,8 @@ blockquote > ul {
 }
 header {
     min-width: 200px;
+    font-size: 24px;
+    font-family: Arvo, sans-serif;
 }
 .header-link {
     font-size:0.64em; 
@@ -44,17 +46,10 @@ header {
     margin-top: 0.2em;
     color: #ce8400;
 }
-.header-main {
-  font-size: 1.2em;
-  font-family: Arvo, sans-serif;
-}
-h1.header {
-  font-size: 20px;
-  font-family: Helvetica, sans-serif;
-}
 a {
   color: #000000;
-  font-weight: 600;
+  font-weight: 200;
+  font-family: Arvo, sans-serif;
 }
 bottom-nav {
   position: fixed;
