@@ -42,9 +42,9 @@ header {
   line-height: 1em;
 }
 h1.header {
+  font-size: 24px;
   line-height: 1em;
   padding-bottom: 0.3em;
-  font-size: 24px;
 }
 .header-link {
   font-size: 12.7px;
@@ -52,6 +52,10 @@ h1.header {
   line-height: 1em;
   margin-top: 0.2em;
   color: #ce8400;
+}
+.header-main {
+  font-size: 24px;
+  line-height: 1em;
 }
 a {
   color: #000000;
