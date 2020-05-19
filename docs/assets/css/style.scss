@@ -4,8 +4,17 @@
 @import 'jekyll-theme-dinky';
 
 h1,h2,h3,h4,h5 {
-  font-family: Helvetica, sans-serif;
+  font-family: Arvo, sans-serif;
   font-weight: 500;
+}
+h1 {
+  font-size: 24px;
+}
+h2 {
+  font-size: 20px;
+}
+h3 {
+  font-size: 16px;
 }
 
 .kbd,kbd {
@@ -36,7 +45,8 @@ header {
     color: #ce8400;
 }
 .header-main {
-  font-size: 1.5em;
+  font-size: 1.2em;
+  font-family: Arvo, sans-serif;
 }
 h1.header {
   font-size: 20px;
@@ -71,10 +81,12 @@ bottom-nav {
   border-style: solid;
   border-width: 1pt;
   border-color: #000000;
+  font-weight: 600;
+  font-style: Helvetica, sans-serif;
+  font-height: 12px;
   padding: 0.3em;
   padding-left: 0.6em;
   padding-right: 0.6em;
-  font-weight: 600;
 }
 .nav-button:focus {
   border-color: #c9e1f7; 
