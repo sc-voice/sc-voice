@@ -1,3 +1,14 @@
+---
+prev: 'Offline Listening'
+prev_href: '201-offline-listening'
+prev_aria: 'Offline Listening'
+next: 'What is a text segment?'
+next_href: '201-segmentation'
+next_aria: 'What is a text segment?'
+---
+
+## Voices
+
 SuttaCentral Voice uses different voices depending on user preference and/or context. These voices serve a need but should not be taken as ideal. They simply are the best we can do at this time. Please consult ordained humans for proper guidance on chanting.
 
 ### Amy (en-GB)

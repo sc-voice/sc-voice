@@ -1,3 +1,14 @@
+---
+prev: 'Settings'
+prev_href: '201-settings'
+prev_aria: 'Settings'
+next: 'Voices'
+next_href: '201-voices'
+next_aria: 'Voices'
+---
+
+## Offline Listening
+
 Listening to SuttaCentral Voice on a phone is challenging. The most annoying issue is that an unattended phone will shut down power consumption and activate the screensaver. Although delaying the screensaver (e.g., `Display > Screen Timeout`) is a workable solution to mobile listening, it does consume a lot of battery.  A more efficient way to listen to the suttas is to download them for offline listening.
 
 For offline listening with a phone, it is best to download an audio file from SuttaCentral Voice. A downloaded file can be loaded onto your phone for offline listening. The SuttaCentral Voice web page is not intended for mobile listening. Mobile devices are powerful, but using a web browser on a phone requires a lot of battery power. Instead of using a mobile web browser, listen directly to the downloaded audio file for offline listening. This is particularly important for iPhones, which place severe restrictions on HTML5 Audio elements.

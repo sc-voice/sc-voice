@@ -1,3 +1,14 @@
+---
+prev: 'Sutta Player'
+prev_href: '201-sutta-player'
+prev_aria: 'Sutta Player'
+next: 'Offline Listening'
+next_href: '201-offline-listening'
+next_aria: 'Offline Listening'
+---
+
+## Settings
+
 SuttaCentral Voice is customizable and has individual settings for many features.
 
 ![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/wheel-en.png?raw=true)

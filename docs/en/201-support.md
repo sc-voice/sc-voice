@@ -1,3 +1,14 @@
+---
+prev: 'What is a text segment?'
+prev_href: '201-segmentation'
+prev_aria: 'What is a text segment?'
+next: 'Using Voice'
+next_href: '200-using-voice'
+next_aria: 'Using Voice'
+---
+
+## Support Policy
+
 SuttaCentral Voice provides the following levels of support:
 
 ### Supported

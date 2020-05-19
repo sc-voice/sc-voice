@@ -51,7 +51,7 @@ A pontuação de relevância é simplesmente **C+F**. Por exemplo, um sutta de 1
 2 + 2/100 = 2 + 0,02 = 2,02
 ``` 
 
-NOTA: Os segmentos são as menores unidades de texto, como uma única frase, frase ou parágrafo curto estruturado de acordo com as unidades semânticas no texto raiz (Pali).  (Veja [Tecnologia de segmentação](/sc-voice/en/301-segmentation))
+NOTA: Os segmentos são as menores unidades de texto, como uma única frase, frase ou parágrafo curto estruturado de acordo com as unidades semânticas no texto raiz (Pali).  (Veja [Tecnologia de segmentação](/sc-voice/en/201-segmentation))
 
 #### Expressões regulares (regex)
 Muitas pessoas no SuttaCentral têm usado o `grep` para pesquisa. 

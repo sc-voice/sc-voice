@@ -1,3 +1,14 @@
+---
+prev: 'Voices'
+prev_href: '200-voices'
+prev_aria: 'Voices'
+next: 'Support Policy'
+next_href: '301-support'
+next_aria: 'Support Policy'
+---
+
+## What is text segmentation?
+
 Much of the Pali canon on SuttaCentral is available in segmented form. This means the Pali text is broken down into small semantic units the range of which can extend from a small phrase to a few sentences or in some cases even a somewhat longer paragraph.
 
 Segmentation was first introduced when Bhante Sujato made his new English translation of the four main Pali Nikayas; it was required for using a computer assisted translation software. Now it is being extended to the early parts of the Khuddaka Nikaya and the Vinaya texts.

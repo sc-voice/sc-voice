@@ -1,3 +1,14 @@
+---
+prev: 'Understanding Search'
+prev_href: '201-search'
+prev_aria: 'Understanding Search'
+next: 'Settings'
+next_href: '201-settings'
+next_aria: 'Settings'
+---
+
+## Sutta Player
+
 ![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/sutta-player-en.png?raw=true)
 
 The Sutta Player plays sutta text segments, 

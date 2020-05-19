@@ -2,7 +2,7 @@
 * [Escuta offline](/sc-voice/pt/Escuta-offline) mostra como baixar e ouvir a leitura de suttas no seu telefone.
 * [Pesquisa](/sc-voice/pt/Procurar) fornece dicas sobre como encontrar o sutta que você deseja.
 * [Configurações](/sc-voice/en/201-settings) descreve as configurações disponíveis.
-* [Tecnologia de segmentação](/sc-voice/en/301-segmentation) explica a base técnica na qual o SuttaCentral Voice é construído.
+* [Tecnologia de segmentação](/sc-voice/en/201-segmentation) explica a base técnica na qual o SuttaCentral Voice é construído.
 * [Política de suporte](/sc-voice/en/201-support) esclarece a distinção entre o conteúdo suportado e o herdado.
 * [O Sutta Player](/sc-voice/en/201-sutta-player) oferece reprodução de áudio bilíngüe por segmento de qualquer sutta.
 * [Vozes](/sc-voice/en/201-voices) descreve as várias vozes digitais usadas pelo SuttaCentral Voice.

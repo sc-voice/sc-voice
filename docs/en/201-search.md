@@ -2,8 +2,8 @@
 prev: 'Using Voice'
 prev_href: '200-using-voice'
 prev_aria: 'using voice'
-next: 'Using Voice'
-next_href: '200-using-voice'
+next: 'Sutta Player'
+next_href: '201-sutta-player'
 next_aria: 'using voice'
 ---
 
