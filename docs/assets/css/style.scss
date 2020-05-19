@@ -42,10 +42,11 @@ header {
   line-height: 1em;
   padding: 30px 22px 0 0;
 }
-@media print, screen and (max-width: 720px) 
-header {
-  padding: 10px 20px 0;
-  margin-right: 0;
+@media print, screen and (max-width: 720px)  {
+  header {
+    padding: 10px 20px 0;
+    margin-right: 0;
+  }
 }
 .header-link {
   font-size: 12.7px;
