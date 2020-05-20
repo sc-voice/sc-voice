@@ -54,6 +54,7 @@ header {
 .header-link {
   font-size: 12.7px;
   font-style: italic;
+  text-decoration: none;
   line-height: 1em;
   margin-top: 0.2em;
   color: #ce8400;
@@ -61,13 +62,23 @@ header {
 .header-main {
   font-size: 24px;
   line-height: 1.1em;
+  text-decoration: none;
 }
+.header-main:hover {
+  color: #ffffff;
+}
+
 a {
-  color: #222;
-  font-weight: 600;
-  font-family: Helvetica, sans-serif;
-  font-size: 0.9em;
+  text-decoration: underline;
+  color: #232323;
 }
+a:hover {
+  color: #754A00;
+}
+a:focus {
+  color: #754A00;
+}
+
 bottom-nav {
   position: fixed;
   bottom: 0px;
@@ -96,13 +107,14 @@ bottom-nav {
   font-weight: 600;
   font-family: Helvetica, sans-serif;
   font-size: 14px;
+  text-decoration: none;
   padding-top: 0.2em;
   padding-bottom: 0.3em;
   padding-left: 0.6em;
   padding-right: 0.6em;
 }
 .nav-button:focus {
-  border-color: #c9e1f7; 
+  border-color: #754A00; 
 }
 .nav-img {
   width: 1.1em;
