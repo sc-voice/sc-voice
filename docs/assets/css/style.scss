@@ -94,6 +94,7 @@ bottom-nav {
   flex-flow: row nowrap;
   justify-content: space-between;
   background-color: #ffffff;
+  border-top: 1pt solid #FBFAF7;
 }
 @media screen and (min-width: 768px) {
   bottom-nav {
