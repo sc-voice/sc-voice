@@ -9,8 +9,8 @@ next_aria: 'Settings'
 
 ## Sutta Player
 
-<a href="/sc-voice/assets/img/sutta-player.png" width="300px" >
-  <img src="/sc-voice/assets/img/sutta-player.png"/></a>
+<a href="/sc-voice/assets/img/sutta-player.png" >
+  <img src="/sc-voice/assets/img/sutta-player.png" width="100%"/></a>
 
 The Sutta Player plays sutta text segments, 
 speaking Pāli and translated text in alternation.
