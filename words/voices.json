@@ -274,7 +274,7 @@
     "stripNumbers": true,
     "stripQuotes": true,
     "usage": "recite",
-    "ellipsisBreak": "<break time=\"0.300s\"/>",
+    "ellipsisBreak": ".",
     "langTrans": "pli",
     "locale": "hi-IN",
     "localeIPA": "pli",
@@ -287,7 +287,6 @@
     },
     "customWords": {
         "pāṇisu": { "ipa": "p ɑː ɳɪ sʊ" },
-        "pe": { "ipa": "pee" },
         "purāṇānaṃ": { "ipa": "'pʊ ɾɑː ɳɑː nəŋ" },
         "phussa": { "ipa": "'phʊs sə" }
     },

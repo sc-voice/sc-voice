@@ -1234,7 +1234,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("loadSutta(...) returns scv-bilara sutta", function(done) {
+    it("TESTTESTloadSutta(...) returns scv-bilara sutta", function(done) {
         (async function() { try {
             var voice = Voice.createVoice('Amy');
             var suttaCentralApi = await new SuttaCentralApi().initialize();
@@ -1252,7 +1252,7 @@
                 scid: 'an1.2/de/sabbamitta',
             });
             should(sutta).properties({
-                author: 'Sabbamitta Anagarika',
+                author: 'Anagarika Sabbamitta',
                 sutta_uid: 'an1.1-10',
                 lang: 'de',
             });

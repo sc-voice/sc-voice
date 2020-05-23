@@ -473,7 +473,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles large segment", done=>{
+    it("TESTTESTGET /play/segment/... handles large segment", done=>{
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var scid = "an2.281-309:1.1";
@@ -495,9 +495,9 @@
             should(data.segment.en)
                 .match(/^.For two reasons the Realized One/);
             should(data.segment.audio.en)
-                .match(/^fd0b08ce4c45390c4ae796fefd406a52/);
+                .match(/4341471c187e12334475901a9599698c/);
             should(data.segment.audio.pli)
-                .match(/79796702bc56c4a9e4b39660b26c9249/);
+                .match(/ce166cf288d128cf4c0c8f337c8b179f/);
 
             done();
         } catch(e) {done(e);} })();
@@ -869,7 +869,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/vsm/create-archive create VSM", function(done) {
+    it("POST auth/vsm/create-archive create VSM", function(done) {
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;
             var nikaya = 'kn';
@@ -987,7 +987,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET authors returns authors", function(done) {
+    it("TESTTESTGET authors returns authors", function(done) {
         (async function() { try {
             var scvRest = app.locals.scvRest;
             await scvRest.initialize();
@@ -996,10 +996,8 @@
             should(res.statusCode).equal(200);
             var authors = res.body;
             should.deepEqual(authors.sabbamitta, {
-                name: 'Sabbamitta Anagarika',
+                name: 'Anagarika Sabbamitta',
                 lang: 'de',
-                root_edition: 'ms',
-                root_lang: 'pli',
                 type: 'translator',
             })
 

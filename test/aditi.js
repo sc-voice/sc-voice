@@ -149,4 +149,18 @@
         should(tokens[3]).equal('\u2014');
         should(tokens[5]).equal(':');
     });
+    it("TESTTESTtokensSSML(text) handles pe", function() {
+        var aditi = Voice.createVoice(ADITI_OPTS);
+        var recite = aditi.services['recite'];
+        var tokens = recite.tokensSSML("dosassa …pe… mohassa");
+        var ph = (a,b)=>`<phoneme alphabet="ipa" ph="${a}">${b}</phoneme>`;
+        var brk = t=>`<break time="${t}s"/>`;
+        should.deepEqual(tokens, [
+         `${ph("d̪o səs sə", "dosassa")}${brk("0.001")}`,
+         `.`,
+         `${ph("pe", "pe")}${brk("0.001")}`,
+         `.`,
+         `${ph("mo həs sə", "mohassa")}${brk("0.001")}`,
+        ]);
+    });
 })

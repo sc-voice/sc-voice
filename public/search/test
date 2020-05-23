@@ -5,7 +5,7 @@
       "count": 5.091,
       "uid": "sn42.11",
       "lang": "en",
-      "author": "Sujato Bhikkhu",
+      "author": "Bhikkhu Sujato",
       "author_short": "Sujato",
       "author_uid": "sujato",
       "nSegments": 55,
@@ -90,7 +90,7 @@
           "1. Chiefs",
           "11. With Bhadraka"
         ],
-        "author": "Sujato Bhikkhu",
+        "author": "Bhikkhu Sujato",
         "lang": "en",
         "sections": [
           {
@@ -413,7 +413,7 @@
       "count": 3.016,
       "uid": "mn105",
       "lang": "en",
-      "author": "Sujato Bhikkhu",
+      "author": "Bhikkhu Sujato",
       "author_short": "Sujato",
       "author_uid": "sujato",
       "nSegments": 188,
@@ -503,7 +503,7 @@
           "Middle Discourses 105",
           "With Sunakkhatta"
         ],
-        "author": "Sujato Bhikkhu",
+        "author": "Bhikkhu Sujato",
         "lang": "en",
         "sections": [
           {
@@ -1489,7 +1489,7 @@
       "count": 2.006,
       "uid": "mn1",
       "lang": "en",
-      "author": "Sujato Bhikkhu",
+      "author": "Bhikkhu Sujato",
       "author_short": "Sujato",
       "author_uid": "sujato",
       "nSegments": 334,
@@ -1579,7 +1579,7 @@
           "Middle Discourses 1",
           "The Root of All Things"
         ],
-        "author": "Sujato Bhikkhu",
+        "author": "Bhikkhu Sujato",
         "lang": "en",
         "sections": [
           {
@@ -3294,7 +3294,7 @@
       "count": 1.005,
       "uid": "mn66",
       "lang": "en",
-      "author": "Sujato Bhikkhu",
+      "author": "Bhikkhu Sujato",
       "author_short": "Sujato",
       "author_uid": "sujato",
       "nSegments": 202,
@@ -3384,7 +3384,7 @@
           "Middle Discourses 66",
           "The Simile of the Quail"
         ],
-        "author": "Sujato Bhikkhu",
+        "author": "Bhikkhu Sujato",
         "lang": "en",
         "sections": [
           {
@@ -3457,12 +3457,12 @@
                 "en": "Then as Venerable Udāyī was in private retreat this thought came to his mind: "
               },
               {
-                "scid": "mn66:3.5",
+                "scid": "mn66:4.1",
                 "pli": "“bahūnaṃ vata no bhagavā dukkhadhammānaṃ apahattā, bahūnaṃ vata no bhagavā sukhadhammānaṃ upahattā; ",
                 "en": "“The Buddha has rid us of so many things that bring suffering and gifted us so many things that bring happiness! "
               },
               {
-                "scid": "mn66:3.6",
+                "scid": "mn66:4.2",
                 "pli": "bahūnaṃ vata no bhagavā akusalānaṃ dhammānaṃ apahattā, bahūnaṃ vata no bhagavā kusalānaṃ dhammānaṃ upahattā”ti. ",
                 "en": "He has rid us of so many unskillful things and gifted us so many skillful things!” "
               },
@@ -3472,157 +3472,157 @@
                 "en": "Then in the late afternoon, Udāyī came out of retreat and went to the Buddha. He bowed, sat down to one side, and said to him: "
               },
               {
-                "scid": "mn66:5.2",
+                "scid": "mn66:6.1",
                 "pli": "“idha mayhaṃ, bhante, rahogatassa paṭisallīnassa evaṃ cetaso parivitakko udapādi: ",
                 "en": "“Just now, sir, as I was in private retreat this thought came to mind: "
               },
               {
-                "scid": "mn66:5.3",
+                "scid": "mn66:6.2",
                 "pli": "‘bahūnaṃ vata no bhagavā dukkhadhammānaṃ apahattā, bahūnaṃ vata no bhagavā sukhadhammānaṃ upahattā; ",
                 "en": "‘The Buddha has rid us of so many things that bring suffering and gifted us so many things that bring happiness! "
               },
               {
-                "scid": "mn66:5.4",
+                "scid": "mn66:6.3",
                 "pli": "bahūnaṃ vata no bhagavā akusalānaṃ dhammānaṃ apahattā, bahūnaṃ vata no bhagavā kusalānaṃ dhammānaṃ upahattā’ti. ",
                 "en": "He has rid us of so many unskillful things and gifted us so many skillful things!’ "
               },
               {
-                "scid": "mn66:5.5",
+                "scid": "mn66:6.4",
                 "pli": "Mayañhi, bhante, pubbe sāyañceva bhuñjāma pāto ca divā ca vikāle. ",
                 "en": "For we used to eat in the evening, the morning, and at the wrong time of day. "
               },
               {
-                "scid": "mn66:5.6",
+                "scid": "mn66:6.5",
                 "pli": "Ahu kho so, bhante, samayo yaṃ bhagavā bhikkhū āmantesi: ",
                 "en": "But then there came a time when the Buddha addressed the mendicants, saying, "
               },
               {
-                "scid": "mn66:5.7",
+                "scid": "mn66:6.6",
                 "pli": "‘iṅgha tumhe, bhikkhave, etaṃ divāvikālabhojanaṃ pajahathā’ti. ",
                 "en": "‘Please, mendicants, give up that meal at the wrong time of day.’ "
               },
               {
-                "scid": "mn66:5.8",
+                "scid": "mn66:6.7",
                 "pli": "Tassa mayhaṃ, bhante, ahudeva aññathattaṃ, ahudeva domanassaṃ: ",
                 "en": "At that, sir, we became sad and upset, "
               },
               {
-                "scid": "mn66:5.9",
+                "scid": "mn66:6.8",
                 "pli": "‘yampi no saddhā gahapatikā divā vikāle paṇītaṃ khādanīyaṃ bhojanīyaṃ denti tassapi no bhagavā pahānamāha, tassapi no sugato paṭinissaggamāhā’ti. ",
                 "en": "‘But these faithful householders give us a variety of delicious foods at the wrong time of day. And the Blessed One tells us to give it up! The Holy One tells us to let it go!’ "
               },
               {
-                "scid": "mn66:5.10",
+                "scid": "mn66:6.9",
                 "pli": "Te mayaṃ, bhante, bhagavati pemañca gāravañca hiriñca ottappañca sampassamānā evaṃ taṃ divāvikālabhojanaṃ pajahimhā. ",
                 "en": "But when we considered our love and respect for the Buddha, and our sense of conscience and prudence, we gave up that meal at the wrong time of day. "
               },
               {
-                "scid": "mn66:5.11",
+                "scid": "mn66:6.10",
                 "pli": "Te mayaṃ, bhante, sāyañceva bhuñjāma pāto ca. ",
                 "en": "Then we ate in the evening and the morning. "
               },
               {
-                "scid": "mn66:5.12",
+                "scid": "mn66:6.11",
                 "pli": "Ahu kho so, bhante, samayo yaṃ bhagavā bhikkhū āmantesi: ",
                 "en": "But then there came a time when the Buddha addressed the mendicants, saying, "
               },
               {
-                "scid": "mn66:5.13",
+                "scid": "mn66:6.12",
                 "pli": "‘iṅgha tumhe, bhikkhave, etaṃ rattiṃvikālabhojanaṃ pajahathā’ti. ",
                 "en": "‘Please, mendicants, give up that meal at the wrong time of night.’ "
               },
               {
-                "scid": "mn66:5.14",
+                "scid": "mn66:6.13",
                 "pli": "Tassa mayhaṃ, bhante, ahudeva aññathattaṃ ahudeva domanassaṃ: ",
                 "en": "At that, sir, we became sad and upset, "
               },
               {
-                "scid": "mn66:5.15",
+                "scid": "mn66:6.14",
                 "pli": "‘yampi no imesaṃ dvinnaṃ bhattānaṃ paṇītasaṅkhātataraṃ tassapi no bhagavā pahānamāha, tassapi no sugato paṭinissaggamāhā’ti. ",
                 "en": "‘But that’s considered the more delicious of the two meals. And the Blessed One tells us to give it up! The Holy One tells us to let it go!’ "
               },
               {
-                "scid": "mn66:5.16",
+                "scid": "mn66:6.15",
                 "pli": "Bhūtapubbaṃ, bhante, aññataro puriso divā sūpeyyaṃ labhitvā evamāha: ",
                 "en": "Once it so happened that a certain person got some soup during the day. He said, "
               },
               {
-                "scid": "mn66:5.17",
+                "scid": "mn66:6.16",
                 "pli": "‘handa ca imaṃ nikkhipatha, sāyaṃ sabbeva samaggā bhuñjissāmā’ti. ",
                 "en": "‘Come, let’s set this aside; we’ll enjoy it together this evening.’ "
               },
               {
-                "scid": "mn66:5.18",
+                "scid": "mn66:6.17",
                 "pli": "Yā kāci, bhante, saṅkhatiyo sabbā tā rattiṃ, appā divā. ",
                 "en": "Nearly all meals are prepared at night, only a few in the day. "
               },
               {
-                "scid": "mn66:5.19",
+                "scid": "mn66:6.18",
                 "pli": "Te mayaṃ, bhante, bhagavati pemañca gāravañca hiriñca ottappañca sampassamānā evaṃ taṃ rattiṃvikālabhojanaṃ pajahimhā. ",
                 "en": "But when we considered our love and respect for the Buddha, and our sense of conscience and prudence, we gave up that meal at the wrong time of night. "
               },
               {
-                "scid": "mn66:5.20",
+                "scid": "mn66:6.19",
                 "pli": "Bhūtapubbaṃ, bhante, bhikkhū rattandhakāratimisāyaṃ piṇḍāya carantā candanikampi pavisanti, oligallepi papatanti, kaṇṭakāvāṭampi ārohanti, suttampi gāviṃ ārohanti, māṇavehipi samāgacchanti katakammehipi akatakammehipi, mātugāmopi te asaddhammena nimanteti. ",
                 "en": "In the past, mendicants went wandering for alms in the dark of the night. They walked into a swamp, or fell into a sewer, or collided with a thorn bush, or collided with a sleeping cow, or encountered youths escaping a crime or on their way to commit one, or were invited by a female to commit a lewd act. "
               },
               {
-                "scid": "mn66:5.21",
+                "scid": "mn66:6.20",
                 "pli": "Bhūtapubbāhaṃ, bhante, rattandhakāratimisāyaṃ piṇḍāya carāmi. ",
                 "en": "Once it so happened that I wandered for alms in the dark of the night. "
               },
               {
-                "scid": "mn66:5.22",
+                "scid": "mn66:6.21",
                 "pli": "Addasā kho maṃ, bhante, aññatarā itthī vijjantarikāya bhājanaṃ dhovantī. ",
                 "en": "A woman washing a pot saw me by a flash of lightning. "
               },
               {
-                "scid": "mn66:5.23",
+                "scid": "mn66:6.22",
                 "pli": "Disvā maṃ bhītā vissaramakāsi: ",
                 "en": "Startled, she cried out, "
               },
               {
-                "scid": "mn66:5.24",
+                "scid": "mn66:6.23",
                 "pli": "‘abhumme pisāco vata man’ti. ",
                 "en": "‘Bloody hell! A goblin’s upon me!’ "
               },
               {
-                "scid": "mn66:5.25",
+                "scid": "mn66:6.24",
                 "pli": "Evaṃ vutte, ahaṃ, bhante, taṃ itthiṃ etadavocaṃ: ",
                 "en": "When she said this, I said to her, "
               },
               {
-                "scid": "mn66:5.26",
+                "scid": "mn66:6.25",
                 "pli": "‘nāhaṃ, bhagini, pisāco; ",
                 "en": "‘Sister, I am no goblin. "
               },
               {
-                "scid": "mn66:5.27",
+                "scid": "mn66:6.26",
                 "pli": "bhikkhu piṇḍāya ṭhito’ti. ",
                 "en": "I’m a mendicant waiting for alms.’ "
               },
               {
-                "scid": "mn66:5.28",
+                "scid": "mn66:6.27",
                 "pli": "‘Bhikkhussa ātumārī, bhikkhussa mātumārī. ",
                 "en": "‘Then it’s a mendicant whose ma died and pa died! "
               },
               {
-                "scid": "mn66:5.29",
+                "scid": "mn66:6.28",
                 "pli": "Varaṃ te, bhikkhu, tiṇhena govikantanena kucchi parikanto, na tveva varaṃ yaṃ rattandhakāratimisāyaṃ kucchihetu piṇḍāya carasī’ti. ",
                 "en": "You’d be better off having your belly sliced open with a meat cleaver than to wander for alms in the dark of night for the sake of your belly.’ "
               },
               {
-                "scid": "mn66:5.30",
+                "scid": "mn66:6.29",
                 "pli": "Tassa mayhaṃ, bhante, tadanussarato evaṃ hoti: ",
                 "en": "Recollecting that, I thought, "
               },
               {
-                "scid": "mn66:5.31",
+                "scid": "mn66:6.30",
                 "pli": "‘bahūnaṃ vata no bhagavā dukkhadhammānaṃ apahattā, bahūnaṃ vata no bhagavā sukhadhammānaṃ upahattā; ",
                 "en": "‘The Buddha has rid us of so many things that bring suffering and gifted us so many things that bring happiness! "
               },
               {
-                "scid": "mn66:5.32",
+                "scid": "mn66:6.31",
                 "pli": "bahūnaṃ vata no bhagavā akusalānaṃ dhammānaṃ apahattā, bahūnaṃ vata no bhagavā kusalānaṃ dhammānaṃ upahattā’”ti. ",
                 "en": "He has rid us of so many unskillful things and gifted us so many skillful things!’” "
               },
@@ -4248,12 +4248,12 @@
                 "en": "Whatever equanimous bliss has not ceased there is what belongs to the perturbable. "
               },
               {
-                "scid": "mn66:24.5",
+                "scid": "mn66:25.1",
                 "pli": "Idhudāyi, bhikkhu sukhassa ca pahānā …pe… catutthaṃ jhānaṃ upasampajja viharati; ",
                 "en": "Take a mendicant who, giving up pleasure and pain, enters and remains in the fourth absorption. "
               },
               {
-                "scid": "mn66:24.6",
+                "scid": "mn66:25.2",
                 "pli": "idaṃ kho ahaṃ, udāyi, aniñjitasmiṃ vadāmi. ",
                 "en": "This belongs to the imperturbable. "
               },
@@ -4288,127 +4288,127 @@
                 "en": "And what goes beyond it? "
               },
               {
-                "scid": "mn66:27.4",
+                "scid": "mn66:28.1",
                 "pli": "Idhudāyi, bhikkhu pītiyā ca virāgā …pe… tatiyaṃ jhānaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
                 "en": "Take a mendicant who, with the fading away of rapture, enters and remains in the third absorption. That goes beyond it. "
               },
               {
-                "scid": "mn66:27.5",
+                "scid": "mn66:28.2",
                 "pli": "idampi kho ahaṃ, udāyi, ‘analan’ti vadāmi, ‘pajahathā’ti vadāmi, ‘samatikkamathā’ti vadāmi. ",
                 "en": "But this too is not enough, I say: give it up, go beyond it. "
               },
               {
-                "scid": "mn66:27.6",
+                "scid": "mn66:28.3",
                 "pli": "Ko ca tassa samatikkamo? ",
                 "en": "And what goes beyond it? "
               },
               {
-                "scid": "mn66:27.7",
+                "scid": "mn66:29.1",
                 "pli": "Idhudāyi, bhikkhu sukhassa ca pahānā …pe… catutthaṃ jhānaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
                 "en": "Take a mendicant who, giving up pleasure and pain, enters and remains in the fourth absorption. That goes beyond it. "
               },
               {
-                "scid": "mn66:27.8",
+                "scid": "mn66:29.2",
                 "pli": "idampi kho ahaṃ, udāyi, ‘analan’ti vadāmi, ‘pajahathā’ti vadāmi, ‘samatikkamathā’ti vadāmi. ",
                 "en": "But this too is not enough, I say: give it up, go beyond it. "
               },
               {
-                "scid": "mn66:27.9",
+                "scid": "mn66:29.3",
                 "pli": "Ko ca tassa samatikkamo? ",
                 "en": "And what goes beyond it? "
               },
               {
-                "scid": "mn66:27.10",
+                "scid": "mn66:30.1",
                 "pli": "Idhudāyi, bhikkhu sabbaso rūpasaññānaṃ samatikkamā paṭighasaññānaṃ atthaṅgamā nānattasaññānaṃ amanasikārā ‘ananto ākāso’ti ākāsānañcāyatanaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
                 "en": "Take a mendicant who, going totally beyond perceptions of form, with the ending of perceptions of impingement, not focusing on perceptions of diversity, aware that ‘space is infinite’, enters and remains in the dimension of infinite space. That goes beyond it. "
               },
               {
-                "scid": "mn66:27.11",
+                "scid": "mn66:30.2",
                 "pli": "idampi kho ahaṃ, udāyi, ‘analan’ti vadāmi, ‘pajahathā’ti vadāmi, ‘samatikkamathā’ti vadāmi. ",
                 "en": "But this too is not enough, I say: give it up, go beyond it. "
               },
               {
-                "scid": "mn66:27.12",
+                "scid": "mn66:30.3",
                 "pli": "Ko ca tassa samatikkamo? ",
                 "en": "And what goes beyond it? "
               },
               {
-                "scid": "mn66:27.13",
+                "scid": "mn66:31.1",
                 "pli": "Idhudāyi, bhikkhu sabbaso ākāsānañcāyatanaṃ samatikkamma ‘anantaṃ viññāṇan’ti viññāṇañcāyatanaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
                 "en": "Take a mendicant who, going totally beyond the dimension of infinite space, aware that ‘consciousness is infinite’, enters and remains in the dimension of infinite consciousness. That goes beyond it. "
               },
               {
-                "scid": "mn66:27.14",
+                "scid": "mn66:31.2",
                 "pli": "idampi kho ahaṃ, udāyi, ‘analan’ti vadāmi, ‘pajahathā’ti vadāmi, ‘samatikkamathā’ti vadāmi. ",
                 "en": "But this too is not enough, I say: give it up, go beyond it. "
               },
               {
-                "scid": "mn66:27.15",
+                "scid": "mn66:31.3",
                 "pli": "Ko ca tassa samatikkamo? ",
                 "en": "And what goes beyond it? "
               },
               {
-                "scid": "mn66:27.16",
+                "scid": "mn66:32.1",
                 "pli": "Idhudāyi, bhikkhu sabbaso viññāṇañcāyatanaṃ samatikkamma ‘natthi kiñcī’ti ākiñcaññāyatanaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
                 "en": "Take a mendicant who, going totally beyond the dimension of infinite consciousness, aware that ‘there is nothing at all’, enters and remains in the dimension of nothingness. That goes beyond it. "
               },
               {
-                "scid": "mn66:27.17",
+                "scid": "mn66:32.2",
                 "pli": "idampi kho ahaṃ, udāyi, ‘analan’ti vadāmi, ‘pajahathā’ti vadāmi, ‘samatikkamathā’ti vadāmi. ",
                 "en": "But this too is not enough, I say: give it up, go beyond it. "
               },
               {
-                "scid": "mn66:27.18",
+                "scid": "mn66:32.3",
                 "pli": "Ko ca tassa samatikkamo? ",
                 "en": "And what goes beyond it? "
               },
               {
-                "scid": "mn66:27.19",
+                "scid": "mn66:33.1",
                 "pli": "Idhudāyi, bhikkhu sabbaso ākiñcaññāyatanaṃ samatikkamma nevasaññānāsaññāyatanaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
                 "en": "Take a mendicant who, going totally beyond the dimension of nothingness, enters and remains in the dimension of neither perception nor non-perception. That goes beyond it. "
               },
               {
-                "scid": "mn66:27.20",
+                "scid": "mn66:33.2",
                 "pli": "idampi kho ahaṃ, udāyi, ‘analan’ti vadāmi, ‘pajahathā’ti vadāmi, ‘samatikkamathā’ti vadāmi. ",
                 "en": "But this too is not enough, I say: give it up, go beyond it. "
               },
               {
-                "scid": "mn66:27.21",
+                "scid": "mn66:33.3",
                 "pli": "Ko ca tassa samatikkamo? ",
                 "en": "And what goes beyond it? "
               },
               {
-                "scid": "mn66:27.22",
+                "scid": "mn66:34.1",
                 "pli": "Idhudāyi, bhikkhu sabbaso nevasaññānāsaññāyatanaṃ samatikkamma saññāvedayitanirodhaṃ upasampajja viharati, ayaṃ tassa samatikkamo; ",
                 "en": "Take a mendicant who, going totally beyond the dimension of neither perception nor non-perception, enters and remains in the cessation of perception and feeling. That goes beyond it. "
               },
               {
-                "scid": "mn66:27.23",
+                "scid": "mn66:34.2",
                 "pli": "iti kho ahaṃ, udāyi, nevasaññānāsaññāyatanassapi pahānaṃ vadāmi. ",
                 "en": "So, Udāyī, I even recommend giving up the dimension of neither perception nor non-perception. "
               },
               {
-                "scid": "mn66:27.24",
+                "scid": "mn66:34.3",
                 "pli": "Passasi no tvaṃ, udāyi, taṃ saṃyojanaṃ aṇuṃ vā thūlaṃ vā yassāhaṃ no pahānaṃ vadāmī”ti? ",
                 "en": "Do you see any fetter, large or small, that I don’t recommend giving up?” "
               },
               {
-                "scid": "mn66:27.25",
+                "scid": "mn66:34.4",
                 "pli": "“No hetaṃ, bhante”ti. ",
                 "en": "“No, sir.” "
               },
               {
-                "scid": "mn66:27.26",
+                "scid": "mn66:34.5",
                 "pli": "Idamavoca bhagavā. ",
                 "en": "That is what the Buddha said. "
               },
               {
-                "scid": "mn66:27.27",
+                "scid": "mn66:34.6",
                 "pli": "Attamano āyasmā udāyī bhagavato bhāsitaṃ abhinandīti. ",
                 "en": "Satisfied, Venerable Udāyī was happy with what the Buddha said. "
               },
               {
-                "scid": "mn66:27.28",
+                "scid": "mn66:34.7",
                 "pli": "Laṭukikopamasuttaṃ niṭṭhitaṃ chaṭṭhaṃ. "
               }
             ],

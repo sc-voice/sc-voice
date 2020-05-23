@@ -16,7 +16,8 @@
     const RE_PAUSE3 = /[\u2014;:]/;
     const RE_NUMBER = new RegExp(Words.PAT_NUMBER);
     const RE_STRIPNUMBER = new RegExp(`\\(?${Words.PAT_NUMBER}\\)?`);
-    const ELLIPSIS_BREAK = '<break time="1.000s"/>';
+    //const ELLIPSIS_BREAK = '<break time="1.000s"/>';
+    const ELLIPSIS_BREAK = '.';
     const MAX_SEGMENT = 1000;
 
     class AbstractTTS {
@@ -33,8 +34,10 @@
             this.stripChars = opts.stripChars || /[\u200b]/g;
             this.apiVersion = opts.apiVersion || null;
             this.audioSuffix = opts.audioSuffix || ".ogg";
-            this.maxConcurrentServiceCalls = opts.maxConcurrentServiceCalls || 5;
-            this.queue = new Queue(this.maxConcurrentServiceCalls, Infinity);
+            this.maxConcurrentServiceCalls = 
+                opts.maxConcurrentServiceCalls || 5;
+            this.queue = new Queue(this.maxConcurrentServiceCalls, 
+                Infinity);
             this.usage = opts.usage || "recite";
             this.maxSSML = opts.maxSSML || 5000;
             this.maxSegment = opts.maxSegment || MAX_SEGMENT;
@@ -44,7 +47,7 @@
             this.customWords = opts.customWords;
             this.syllableVowels = opts.syllableVowels;
             this.syllabifyLength = opts.syllabifyLength;
-            this.unknownLang = opts.unknownLang; // null or language for unknown words
+            this.unknownLang = opts.unknownLang; // optional lang to use
             this.ellipsisBreak = opts.ellipsisBreak || ELLIPSIS_BREAK;
             this.mj = new MerkleJson({
                 hashTag: 'guid',

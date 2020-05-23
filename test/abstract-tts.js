@@ -11,7 +11,7 @@
     const BREAK = `<break time="0.001s"/>`;
     const PARA_BREAK = `<break time="1.5s"/>`;
     const ELLIPSIS = "\u2026";
-    const ELLIPSIS_BREAK = '<break time="1.000s"/>';
+    const ELLIPSIS_BREAK = '.';
     var storePath = tmp.tmpNameSync();
 
 
@@ -26,7 +26,7 @@
             audioSuffix: '.ogg',
             breaks: [0.001,0.1,0.2,0.6,1],
             customWords: undefined,
-            ellipsisBreak: '<break time="1.000s"/>',
+            ellipsisBreak: '.',
             fullStopComma: undefined,
             language: 'en',
             localeIPA: 'en',
@@ -146,7 +146,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("wordSSML(word) returns SSML text for word", function() {
+    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS({
             localeIPA: 'pli',
         });
