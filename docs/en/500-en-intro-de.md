@@ -48,7 +48,7 @@ Feedback to the translations is most welcome. You can send an email to dhammareg
 
 ---
 #### Other German translations by Anagarika Sabbamitta on SuttaCentral
-- *Die Rede über den Kuhhirten* from the Chinese Saṁyuktāgama, <a href="https://suttacentral.net/sa1249/de/sabbamitta" target="_blank">SA 1249</a>, eine Parallele zu <a href="https://voice.suttacentral.net/scv/index.html?r=0.02687837185806985#/sutta?search=mn33" target="_blank">MN 33</a> (The translation has been made on the basis of <a href="https://www.buddhismuskunde.uni-hamburg.de/personen/analayo" target="_blank">Bhikkhu Anālayo's English translation</a>.)
+- *Die Rede über den Kuhhirten* from the Chinese Saṁyuktāgama, <a href="https://suttacentral.net/sa1249/de/sabbamitta" target="_blank">SA 1249</a>, a parallel to <a href="https://voice.suttacentral.net/scv/index.html?r=0.02687837185806985#/sutta?search=mn33" target="_blank">MN 33</a> (The translation has been made on the basis of <a href="https://www.buddhismuskunde.uni-hamburg.de/personen/analayo" target="_blank">Bhikkhu Anālayo's English translation</a>.)
 - Saarländisch: *Es Metta-Sutta* in <a href="https://suttacentral.net/snp1.8/sld/sabbamitta" target="_blank">Snp 1.8</a> and <a href="https://suttacentral.net/kp9/sld/sabbamitta" target="_blank">Kp 9</a> (The translation has been made on the basis of <a href="https://suttacentral.net/kp9/en/amaravati" target="_blank">the English translation of the Amaravati Sangha</a>.)  
 
   Audio: <a href="/dhammaregen/assets/audio/mettasutta-sld.mp3" target="_blank">Metta-Sutta Saarländisch</a>
