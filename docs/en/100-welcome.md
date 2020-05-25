@@ -85,6 +85,6 @@ There are two conditions for the arising of right view: the words of another and
 Here you will find the voices and works of many. Thanks be to all.
 </p>
 
-<a href="https://unsplash.com/photos/Pg2jm-PMVWs"><img
+<a href="https://unsplash.com/photos/Pg2jm-PMVWs" target="_blank"><img
   src="/sc-voice/assets/img/candle-large.png" class="welcome-img"/></a>
 
