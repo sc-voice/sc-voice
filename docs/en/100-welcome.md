@@ -81,5 +81,7 @@ will always need to be translated and spoken anew.
 There are two conditions for the arising of right view: the words of another and proper attention.
 </blockquote>
 
-<img src="/sc-voice/assets/img/candle-large.png" class="welcome-img"/>
+
+<a href="https://unsplash.com/photos/Pg2jm-PMVWs"><img
+  src="/sc-voice/assets/img/candle-large.png" class="welcome-img"/></a>
 
