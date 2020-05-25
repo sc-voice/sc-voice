@@ -1,3 +1,8 @@
+---
+prev: 'Welcome'
+prev_href: '100-welcome'
+prev_aria: 'Welcome'
+---
 # On the German Sutta translations in Voice
 
 SuttaCentral Voice hosts new segmented German translations of the Suttas of the Pali canon by Anagarika Sabbamitta, and in addition to that all existing German translations of these texts that can be found on SuttaCentral.
