@@ -71,3 +71,15 @@ Furthermore, Voice provides access to *individual verses*
 (i.e., "segments") of the Dhamma. 
 Here you can hear, memorize, and speak the Dhamma verse by verse.
 
+### About Voice
+Voice has ongoing support for contemporary languages. 
+Living languages change constantly and the Dhamma 
+will always need to be translated and spoken anew.
+
+<blockquote>
+<a href="https://suttacentral.net/mn43/en/sujato">MN43:13.2: </a>
+There are two conditions for the arising of right view: the words of another and proper attention.
+</blockquote>
+
+<img src="/sc-voice/assets/img/candle-large.png" class="welcome-img"/>
+
