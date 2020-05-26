@@ -82,7 +82,7 @@ There are two conditions for the arising of right view: the words of another and
 </blockquote>
 
 <p style="margin-top: 1em">
-Here you will find the voices and works of many. Thanks be to all.
+  Here you will find the voices and <a href="https://sc-voice.github.io/sc-voice/en/500-intro-de">works of many</a>. Thanks be to all.
 </p>
 
 <a href="https://unsplash.com/photos/Pg2jm-PMVWs" target="_blank"><img
