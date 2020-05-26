@@ -1,7 +1,7 @@
 ---
-prev: 'Acknowledgements'
-prev_href: '401-acknowledgements'
-prev_aria: 'acknowledgements'
+prev: 'Welcome'
+prev_href: '100-welcome'
+prev_aria: 'welcome'
 ---
 # On the German Sutta translations in Voice
 
