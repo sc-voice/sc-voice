@@ -81,15 +81,10 @@ will always need to be translated and spoken anew.
 There are two conditions for the arising of right view: the words of another and proper attention.
 </blockquote>
 
-<details>
-<summary>Here you will find the voices and <a href="https://sc-voice.github.io/sc-voice/en/500-intro-de">works of many</a>. Thanks be to all.</summary>
+Here you will find the voices and 
+<a href="401-acknowledgements">works of many.</a>
+Thanks be to all.
 
-<ul>
-  <li><a href="https://sc-voice.github.io/sc-voice/en/500-intro-de"
-    >German translation by Anagarika Sabbamitta</a></li>
-  <li>...</li>
-</ul>
-</details>
 
 <a href="https://unsplash.com/photos/Pg2jm-PMVWs" target="_blank"><img
   src="/sc-voice/assets/img/candle-large.png" class="welcome-img"/></a>
