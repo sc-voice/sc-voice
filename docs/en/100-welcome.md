@@ -76,14 +76,20 @@ Voice has ongoing support for contemporary languages.
 Living languages change constantly and the Dhamma 
 will always need to be translated and spoken anew.
 
-<blockquote>
+<blockquote style="margin-bottom: 1em">
 <a href="https://voice.suttacentral.net/scv/index.html?r=0.01754791483451945#/sutta?ips=6&lang=en&locale=en&maxResults=5&search=an2.118-129%2Fen%2Fsujato&showId=false&showLang=0&vnameRoot=Aditi&vnameTrans=Amy">AN2.118-129: </a>
 There are two conditions for the arising of right view: the words of another and proper attention.
 </blockquote>
 
-<p style="margin-top: 1em">
-  Here you will find the voices and <a href="https://sc-voice.github.io/sc-voice/en/500-intro-de">works of many</a>. Thanks be to all.
-</p>
+<details>
+<summary>Here you will find the voices and <a href="https://sc-voice.github.io/sc-voice/en/500-intro-de">works of many</a>. Thanks be to all.</summary>
+
+<ul>
+  <li><a href="https://sc-voice.github.io/sc-voice/en/500-intro-de"
+    >German translation by Anagarika Sabbamitta</a></li>
+  <li>...</li>
+</ul>
+</details>
 
 <a href="https://unsplash.com/photos/Pg2jm-PMVWs" target="_blank"><img
   src="/sc-voice/assets/img/candle-large.png" class="welcome-img"/></a>
