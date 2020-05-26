@@ -71,7 +71,7 @@ Furthermore, Voice provides access to *individual verses*
 (i.e., "segments") of the Dhamma. 
 Here you can hear, memorize, and speak the Dhamma verse by verse.
 
-### About Voice
+### Translating the Dhamma
 Voice has ongoing support for contemporary languages. 
 Living languages change constantly and the Dhamma 
 will always need to be translated and spoken anew.
