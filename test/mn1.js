@@ -97,7 +97,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTspeak() generates mn1 sounds", function(done) {
+    it("speak() generates mn1 sounds", function(done) {
         console.log("mn1.speak()  may take 1-2 minutes...");
         this.timeout(120*1000); 
         /*

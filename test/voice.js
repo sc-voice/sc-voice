@@ -370,13 +370,14 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("Amy phonemes", function() {
+    it("TESTTESTAmy phonemes", function() {
         var amy = Voice.createVoice({
             locale: "en-GB",
             localeIPA: "pli",
         });
         should(amy.name).equal("Amy");
         var recite = amy.services.recite;
+        should(recite.wordSSML("self-mortifiers")).equal("self-mortifiers");
         should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
     });
     it("Raveena phonemes", function() {

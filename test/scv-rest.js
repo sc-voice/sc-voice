@@ -473,7 +473,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", done=>{
+    it("GET /play/segment/... handles large segment", done=>{
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var scid = "an2.281-309:1.1";
@@ -987,7 +987,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET authors returns authors", function(done) {
+    it("GET authors returns authors", function(done) {
         (async function() { try {
             var scvRest = app.locals.scvRest;
             await scvRest.initialize();
@@ -1089,7 +1089,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTPOST auth/update-bilara", done=>{
+    it("POST auth/update-bilara", done=>{
         (async function() { try {
             var scvRest = await(testScvRest());
             var url = `/scv/auth/update-bilara`;

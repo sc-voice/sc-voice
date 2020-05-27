@@ -149,7 +149,7 @@
         should(tokens[3]).equal('\u2014');
         should(tokens[5]).equal(':');
     });
-    it("TESTTESTtokensSSML(text) handles pe", function() {
+    it("tokensSSML(text) handles pe", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
         var tokens = recite.tokensSSML("dosassa …pe… mohassa");
