@@ -286,8 +286,6 @@
         "recite": "-30%"
     },
     "customWords": {
-        "pāṇisu": { "ipa": "p ɑː ɳɪ sʊ" },
-        "purāṇānaṃ": { "ipa": "'pʊ ɾɑː ɳɑː nəŋ" },
         "phussa": { "ipa": "'phʊs sə" },
         "vuccati": { "ipa": "'vʊc c ə t̪ɪ" }
     },
@@ -345,6 +343,8 @@
             "mā$": "m'ɑː",
             "ṁ": "ŋ",
             "ṃ": "ŋ",
+            "^pā" : "'pɑː",
+            "^pu" : "'pʊ",
             "pare": "pɑ’ɽe",
             "saṃ ye":"'səŋ je",
             "taṃ ye":"'t̪əŋ je",

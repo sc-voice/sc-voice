@@ -312,7 +312,7 @@
             });
             should(resSpeak.signature).properties({
                 api: 'aws-polly',
-                guid: '4f6a9c8ad3572ffa6bb35491a874cf4e',
+                guid: '23aba87c0acf41410b14e1de1658a7ae',
             });
             done();
         } catch(e) {done(e);} })();
@@ -380,7 +380,7 @@
             should(resSpeak.signature).properties({
                 api: 'aws-polly',
                 voice: 'Aditi',
-                guid: '4f6a9c8ad3572ffa6bb35491a874cf4e',
+                guid: '23aba87c0acf41410b14e1de1658a7ae',
             });
             should(resSpeak.file).match(/sn_pli_mahasangiti_aditi.*/);
             should(fs.existsSync(resSpeak.file)).equal(true);
