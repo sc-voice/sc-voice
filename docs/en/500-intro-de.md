@@ -18,7 +18,7 @@ Until … well, until I came across Bhikkhu Bodhi's English translations. This w
 
 When in 2018 Bhante Sujato published his new English translations on SuttaCentral, this was another experience that moved me further in the same direction. In his translation the Suttas sound so fresh and vivid and I very much enjoy reading them. And little by little there developed in me the wish to share this joy with German speakers who don't understand English.
 
-In no way, however, would I like to belittle the excellent accomplishments of previous German translators. Thanks to their work it was possible that the Buddha's teaching was already known in German-speaking countries a long time ago and it has inspired many people. New translations will always be built on the basis of what exists already. To put it in Bhante Sujato's words: Those who come after stand on the shoulders if those who came before.
+In no way, however, would I like to belittle the excellent accomplishments of previous German translators. Thanks to their work it was possible that the Buddha's teaching was already known in German-speaking countries a long time ago and it has inspired many people. New translations will always be built on the basis of what exists already. To put it in Bhante Sujato's words: Those who come after stand on the shoulders of those who came before.
 
 Also, there will never be the *one and only* perfect translation that's valid forever. Society is changing, language is changing, and reading habits are also changing … maybe each generation will have to produce its own new translations.
 
