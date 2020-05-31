@@ -112,7 +112,7 @@
         testPhoneme(recite, "ẽ ʟ̈ə kəŋ", 'eḷakaṃ');
         testPhoneme(recite, "ẽsə", 'esa');
         testPhoneme(recite, "pə sẽ nə d̪ɪs sə", 'pasenadissa');
-        testPhoneme(recite, "v\\e sɑː ɾəʝ ʝəp pət̪ t̪o", 'vesārajjappatto');
+        testPhoneme(recite, "v\\e sɑː ɾəʝ.ʝəp pət̪ t̪o", 'vesārajjappatto');
 
         // punctuation
         var ssml = recite.segmentSSML('dve, dve');
@@ -161,6 +161,16 @@
          `${ph("pe", "pe")}${brk("0.001")}`,
          `.`,
          `${ph("mo həs sə", "mohassa")}${brk("0.001")}`,
+        ]);
+    });
+    it("TESTTESTtokensSSML(text) handles jj", function() {
+        var aditi = Voice.createVoice(ADITI_OPTS);
+        var recite = aditi.services['recite'];
+        var tokens = recite.tokensSSML("saṃvijjamānā");
+        var ph = (a,b)=>`<phoneme alphabet="ipa" ph="${a}">${b}</phoneme>`;
+        var brk = t=>`<break time="${t}s"/>`;
+        should.deepEqual(tokens, [
+         `${ph("səŋ v\\ɪʝ.ʝə mɑː nɑː", "saṃvijjamānā")}${brk("0.001")}`,
         ]);
     });
 })

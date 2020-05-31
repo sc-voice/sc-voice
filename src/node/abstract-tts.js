@@ -165,10 +165,13 @@
         }
 
         wordIPA(word, language) {
-            if (this.syllabifyLength && word.length >= this.syllabifyLength) {
-                word = this.syllabify(word);
-            }
-            return this.words.ipa(word, language);
+            var {
+                syllabifyLength: sylLen,
+            } = this;
+            var sylWord = sylLen && word.length >= sylLen
+                ? this.syllabify(word)
+                : word;
+            return this.words.ipa(sylWord, language);
         }
 
         wordSSML(word, lang=this.language.split('-')[0]) {
