@@ -56,7 +56,7 @@
         var recite = aditi.services['recite'];
         should(recite.syllableVowels).equal('aeiou');
     });
-    it("segmentSSML(text) returns SSML", function() {
+    it("TESTTESTsegmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
 
@@ -86,7 +86,7 @@
         testPhoneme(recite, 'pəɲ ɲə','Pañña');
         testPhoneme(recite, 'səŋ kʰɑː ɾə','saṅkhāra');
         testPhoneme(recite, 'bɾɑːh mə ɳəŋ','brāhmaṇaṃ');
-        testPhoneme(recite, 'gɪdʒ dʒʱə ku: ʈe','gijjhakūṭe');
+        testPhoneme(recite, 'gɪdʒ.dʒʱə ku: ʈe','gijjhakūṭe');
         testPhoneme(recite, 'cɪt̪ t̪əs sə','cittassa');
         testPhoneme(recite, 'chən no v\\ɑː d̪ə','Channovāda');
         testPhoneme(recite, 'phəg gʊ ɳə','Phagguṇa');
@@ -166,11 +166,17 @@
     it("TESTTESTtokensSSML(text) handles jj", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
-        var tokens = recite.tokensSSML("saṃvijjamānā");
         var ph = (a,b)=>`<phoneme alphabet="ipa" ph="${a}">${b}</phoneme>`;
-        var brk = t=>`<break time="${t}s"/>`;
+        var brk = `<break time="0.001s"/>`;
+
+        var tokens = recite.tokensSSML("satisambojjhaṅgaṃ");
         should.deepEqual(tokens, [
-         `${ph("səŋ v\\ɪʝ.ʝə mɑː nɑː", "saṃvijjamānā")}${brk("0.001")}`,
+         `${ph("sə t̪ɪ səm bodʒ.dʒʱəŋ gəŋ", "satisambojjhaṅgaṃ")}${brk}`,
+        ]);
+
+        var tokens = recite.tokensSSML("saṃvijjamānā");
+        should.deepEqual(tokens, [
+         `${ph("səŋ v\\ɪʝ.ʝə mɑː nɑː", "saṃvijjamānā")}${brk}`,
         ]);
     });
 })

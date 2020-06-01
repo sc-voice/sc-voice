@@ -377,7 +377,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... => playable segment", done=>{
+    it("TESTTESTGET /play/segment/... => playable segment", done=>{
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var voicename = 'Matthew';
@@ -390,7 +390,7 @@
                 ? JSON.parse(res.body) : res.body;
             should(data.segment.en).match(/^Middle Discourses 1/);
             should(data.segment.audio.pli)
-                .match(/6ba33aa963c46b629d0ec036d570ef19/); // no numbers
+                .match(/eb2c6cf0626c7a0f422da93a230c4ab7/); // no numbers
 
             var scid = "mn1:3.1";
             var url = 
@@ -409,7 +409,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... returns playable segment", function(done) {
+    it("TESTTESTGET /play/segment/... => playable segment", done=>{
         (async function() { try {
             var voicename = '0';
             var scid = "mn1:0.1";
@@ -418,7 +418,7 @@
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
             should(data.segment.en).match(/^Middle Discourses 1/);
-            should(data.segment.audio.pli).match(/6ba33aa963c46b629d0ec036d570ef19/); // no numbers
+            should(data.segment.audio.pli).match(/eb2c6cf0626c7a0f422da93a230c4ab7/); // no numbers
 
             if (0) {
                 var scid = "mn1:52-74.23";
