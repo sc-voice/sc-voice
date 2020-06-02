@@ -274,7 +274,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("speak(text) can ignore quotes", function(done) {
+    it("TESTTESTspeak(text) can ignore quotes", function(done) {
         (async function() { try {
             var raveena = Voice.createVoice({
                 name: "raveena",
@@ -284,7 +284,7 @@
             var text = `“'‘Bhikkhu’'”`;
             var result = await raveena.speak(text, {usage:'recite'});
             should(result.signature.api).equal('aws-polly');
-            should(result.signature.text).not.match(/[“'‘’'”]/);
+            should(result.signature.text).not.match(/[“'‘'”]/);
 
             done();
         } catch(e) {done(e);} })();

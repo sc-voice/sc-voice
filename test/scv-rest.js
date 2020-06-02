@@ -377,7 +377,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... => playable segment", done=>{
+    it("GET /play/segment/... => playable segment", done=>{
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var voicename = 'Matthew';
@@ -409,7 +409,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... => playable segment", done=>{
+    it("GET /play/segment/... => playable segment", done=>{
         (async function() { try {
             var voicename = '0';
             var scid = "mn1:0.1";

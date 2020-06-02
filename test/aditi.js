@@ -24,7 +24,8 @@
     const BREAK='<break time="0.001s"/>';
 
     function phoneme(ph, text) {
-        return new RegExp(`<phoneme alphabet="ipa" ph="${ph}">${text}</phoneme>`);
+        return new RegExp(
+            `<phoneme alphabet="ipa" ph="${ph}">${text}</phoneme>`);
     }
 
     function testPhoneme(recite, ph, text) {
@@ -59,6 +60,9 @@
     it("TESTTESTsegmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
+
+        // apostrophe
+        testPhoneme(recite, 'm’ɪɖʱe kəc ce', 'm’idhekacce');
 
         testPhoneme(recite, 'ə sesəŋ"', 'asesaṃ;');
 
@@ -163,7 +167,7 @@
          `${ph("mo həs sə", "mohassa")}${brk("0.001")}`,
         ]);
     });
-    it("TESTTESTtokensSSML(text) handles jj", function() {
+    it("tokensSSML(text) handles jj", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
         var ph = (a,b)=>`<phoneme alphabet="ipa" ph="${a}">${b}</phoneme>`;

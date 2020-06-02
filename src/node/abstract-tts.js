@@ -249,7 +249,7 @@
                 text = text.replace(RE_STRIPNUMBER,' ');
             }
             if (this.stripQuotes) {
-                text = text.replace(/[„“‟‘‛'’"”»«]+/ug,' ');
+                text = text.replace(/[„“‟‘‛'"”»«]+/ug,' ');
             }
             if (this.fullStopComma) {
                 text = text.replace(/, /ug,'. ');

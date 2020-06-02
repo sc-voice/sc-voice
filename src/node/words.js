@@ -4,20 +4,22 @@
     const PAT_NUMBER = '[-+]?[0-9]+([.–,0-9]+[0-9])?';
     const RE_ISNUMBER = new RegExp(`^${PAT_NUMBER}$`);
     const RE_NUMBER = new RegExp(PAT_NUMBER);
+    const WORDS_PATH = path.join(__dirname, `..`, `..`, `words`);
 
     class Words { 
         constructor(json, opts={}) {
             this.language = opts.language || 'en';
             var commonJson = {};
-            var commonPath = path.join(__dirname, `../../words/common.json`);
+            var commonPath = path.join(WORDS_PATH, `common.json`);
             if (fs.existsSync(commonPath)) {
                 commonJson  = JSON.parse(fs.readFileSync(commonPath));
             }
             if (json == null) {
                 var filePath = opts.filePath 
-                    || path.join(__dirname, `../../words/${this.language}.json`);
-                if (!fs.existsSync(filePath) && this.language.startsWith('en')) {
-                    filePath = path.join(__dirname, `../../words/en.json`);
+                    || path.join(WORDS_PATH, `${this.language}.json`);
+                var isEn = this.language.startsWith('en');
+                if (!fs.existsSync(filePath) && isEn) {
+                    filePath = path.join(WORDS_PATH, `en.json`);
                 }
 
                 json = fs.existsSync(filePath)
@@ -25,7 +27,8 @@
                     : {
                     };
                 json = Object.assign({}, commonJson, json);
-                json.words = Object.assign({}, commonJson.words, json.words);
+                json.words = Object.assign({}, 
+                    commonJson.words, json.words);
             } 
             this.symbols = json.symbols;
             this.words = json.words;
@@ -35,7 +38,8 @@
             this.wordEnd = json.wordEnd;
             this.altMap = null;
             var wordQuotes = "'" + Words.U_RSQUOTE + Words.U_APOSTROPHE;
-            this.alphabet = new RegExp(json.alphabet || `[a-z${wordQuotes}]*`, "iu");
+            this.alphabet = 
+                new RegExp(json.alphabet || `[a-z${wordQuotes}]*`, "iu");
             var symAcc= Object.keys(this.symbols).reduce((acc,sym) => {
                 var symdef = this.symbols[sym];
                 if (sym === '-') {
@@ -249,7 +253,8 @@
                             tok = "";
                         } else {
                             var head = tok.substring(0, matches.index);
-                            var tail = tok.substring(matches.index,matches.index+1);
+                            var tail = tok.substring(matches.index,
+                                matches.index+1);
 
                             acc.push(head);
                             acc.push(tail);

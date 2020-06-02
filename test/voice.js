@@ -370,7 +370,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTAmy phonemes", function() {
+    it("Amy phonemes", function() {
         var amy = Voice.createVoice({
             locale: "en-GB",
             localeIPA: "pli",
@@ -429,7 +429,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("speak(text) can ignore quotes", function(done) {
+    it("TESTTESTspeak(text) can ignore quotes", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var raveena = Voice.createVoice({
@@ -440,7 +440,7 @@
             var text = `“'‘Bhikkhu’'”`;
             var result = await raveena.speak(text, {usage:'recite'});
             should(result.signature.api).equal('aws-polly');
-            should(result.signature.text).not.match(/[“'‘’'”]/);
+            should(result.signature.text).not.match(/[“'‘'”]/);
 
             done();
         } catch(e) {done(e);} })();
