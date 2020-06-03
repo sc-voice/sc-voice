@@ -183,4 +183,15 @@
          `${ph("səŋ v\\ɪʝ.ʝə mɑː nɑː", "saṃvijjamānā")}${brk}`,
         ]);
     });
+    it("TESTTESTtokensSSML(text) handles custom words", function() {
+        var aditi = Voice.createVoice(ADITI_OPTS);
+        var recite = aditi.services['recite'];
+        var ph = (a,b)=>`<phoneme alphabet="ipa" ph="${a}">${b}</phoneme>`;
+        var brk = `<break time="0.001s"/>`;
+
+        var tokens = recite.tokensSSML("nivesetabbā");
+        should.deepEqual(tokens, [
+         `${ph("'nɪ v\\e sẽ t̪əb bɑː", "nivesetabbā")}${brk}`,
+        ]);
+    });
 })
