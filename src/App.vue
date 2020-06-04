@@ -45,24 +45,31 @@
       @focusin="focusMore(true)"
       :aria-hidden="!moreVisible">
       <li class="" role="none" >
-        <details role="menuitem">
+        <details role="menuitem" 
+          @click="clickDetails('lang', $event)"
+          :open="showDetail('lang')"
+        >
           <summary class="scv-settings-title">
-              {{$vuetify.lang.t('$vuetify.scv.uiLanguage')}}
+            {{$vuetify.lang.t('$vuetify.scv.uiLanguage')}}
           </summary>
           <div class="scv-settings">
             <v-radio-group v-model="gscv.locale"
               @change="localeChanged()"
               column>
-             <v-radio v-for="lang in gscv.languages"
-               :disabled="lang.disabled"
-               :label="lang.label" :value="lang.name" :key="`lang${lang.name}`">
-               </v-radio>
+            <v-radio v-for="lang in gscv.languages" 
+              :key="`lang${lang.name}`"
+              :disabled="lang.disabled"
+              :label="lang.label" :value="lang.name" 
+              > </v-radio>
             </v-radio-group>
           </div>
         </details>
       </li>
       <li class="" role="none" >
-        <details role="menuitem">
+        <details role="menuitem" 
+          @click="clickDetails('trans', $event)"
+          :open="showDetail('trans')"
+        >
           <summary class="scv-settings-title">
               {{$vuetify.lang.t('$vuetify.scv.translation')}}
           </summary>
@@ -92,7 +99,10 @@
         </details>
       </li>
       <li class="" role="none" >
-        <details>
+        <details role="menuitem"
+          @click="clickDetails('reader', $event)"
+          :open="showDetail('reader')"
+          >
           <summary class="scv-settings-title">
               {{$vuetify.lang.t('$vuetify.scv.reader')}}
           </summary>
@@ -120,7 +130,10 @@
         </details>
       </li>
       <li class="" role="none" >
-        <details role="menuitem" >
+        <details role="menuitem" 
+          @click="clickDetails('sound', $event)"
+          :open="showDetail('sound')"
+          >
           <summary class="scv-settings-title">
             {{$vuetify.lang.t('$vuetify.scv.bellSound')}}
           </summary>
@@ -137,7 +150,10 @@
         </details>
       </li>
       <li class="" role="none" >
-        <details role="menuitem" >
+        <details role="menuitem" 
+          @click="clickDetails('search', $event)"
+          :open="showDetail('search')"
+          >
           <summary class="scv-settings-title">
             {{$vuetify.lang.t('$vuetify.scv.searchResults')}}
           </summary>
@@ -154,7 +170,10 @@
         </details>
       </li>
       <li class="" role="none" >
-        <details role="menuitem" >
+        <details role="menuitem" 
+          @click="clickDetails('general', $event)"
+          :open="showDetail('general')"
+          >
           <summary class="scv-settings-title">
             {{$vuetify.lang.t('$vuetify.scv.general')}}
           </summary>
@@ -246,6 +265,7 @@ export default {
     },
     data () {
         return {
+            openDetail: null,
             focused: {
                 'settings': false,
             },
@@ -268,99 +288,103 @@ export default {
         }
     },
     methods: {
-        langChanged() {
-            this.gscv.changed('lang');
-            this.gscv.checkVoiceLang();
-        },
-        localeChanged() {
-            this.gscv.changed('locale');
-            this.gscv.reload();
-        },
-        clickHome() {
-            Vue.set(this.gscv, "search", null);
-        },
-        focusMore(focus) {
-            this.moreFocus = focus;
-            setTimeout(()=>{
-                if (!this.moreFocus) {
-                    this.moreVisible = false;
-                }
-            }, 500);
-        },
-        clickBackdrop(){
-            this.focusMore(false);
-        },
-        clickMore() {
-            this.moreVisible = !this.moreVisible;
-            if (this.moreVisible) {
-                this.moreFocus = true;
-                this.$nextTick(() => {
-                    var a1 = this.$refs['ref-more-menu'];
-                    var ali = a1.childNodes;
-                    for (var i = 0; i < ali.length; i++) {
-                        var li = ali[i];
-                        if (li.style.display !== 'none') {
-                            var a = li.childNodes[0];
-                            a.focus();
-                            break;
-                        }
-                    }
-                });
-            }
-        },
-        onfocus(id) {
-            this.focused[id] = true;
-        },
-        onblur(id) {
-            this.focused[id] = false;
-        },
-        closeDialog() {
-            console.log('closeDialog()');
-            this.gscv.reload();
-        },
-        url(path) {
-            return window.location.origin === 'http://localhost:8080'
-                ? `http://localhost/scv/${path}`
-                : `./${path}`;
-        },
-        searchUrl(pat) {
-            var search = encodeURIComponent(pat);
-            return `./?r=${Math.random}/#/?`+
-                `search=${search}&`+
-                `lang=${this.gscv.lang}`;
-        },
-        getAuthors() {
-            var that = this;
-            var {
-                gscv,
-            } = that;
-            var url = this.url(`authors`);
-            this.$http.get(url).then(res => {
-                var authors = res.data;
-                gscv.authors = authors;
-                var langs = Object.keys(authors).map(a => authors[a].lang);
-                var langNames = {
-                    pt: true,
-                    ja: true,
-                };
-                gscv.transLanguages = gscv.languages.filter(l => 
-                    langs.indexOf(l.name) >= 0 || langNames[l.name]);
-                console.log(`authors`, gscv.authors, gscv.transLanguages);
-            }).catch(e => {
-                console.error(e.stack);
-            });
-        },
-        getVoices() {
-            var that = this;
-            var url = this.url(`voices`);
-            this.$http.get(url).then(res => {
-                var voices = res.data;
-                that.gscv.voices = res.data;
-                console.log(`voices`, voices);
-            }).catch(e => {
-                console.error(e.stack);
-            });
-        },
+      clickDetails(id, evt) {
+        Vue.set(this, "openDetail", 
+          id === this.openDetail ? undefined : id);
+        evt.preventDefault();
+      },
+      showDetail(id) {
+        return this.openDetail === id;
+      },
+      langChanged() {
+          this.gscv.changed('lang');
+          this.gscv.checkVoiceLang();
+      },
+      localeChanged() {
+          this.gscv.changed('locale');
+          this.gscv.reload();
+      },
+      clickHome() {
+          Vue.set(this.gscv, "search", null);
+      },
+      focusMore(focus) {
+          this.moreFocus = focus;
+          setTimeout(()=>{
+              if (!this.moreFocus) {
+                  this.moreVisible = false;
+              }
+          }, 500);
+      },
+      clickBackdrop(){
+          this.focusMore(false);
+      },
+      clickMore() {
+          this.moreVisible = !this.moreVisible;
+          if (this.moreVisible) {
+              this.moreFocus = true;
+              this.$nextTick(() => {
+                  var a1 = this.$refs['ref-more-menu'];
+                  var ali = a1.childNodes;
+                  for (var i = 0; i < ali.length; i++) {
+                      var li = ali[i];
+                      if (li.style.display !== 'none') {
+                          var a = li.childNodes[0];
+                          a.focus();
+                          break;
+                      }
+                  }
+              });
+          }
+      },
+      onfocus(id) {
+          this.focused[id] = true;
+      },
+      onblur(id) {
+          this.focused[id] = false;
+      },
+      url(path) {
+          return window.location.origin === 'http://localhost:8080'
+              ? `http://localhost/scv/${path}`
+              : `./${path}`;
+      },
+      searchUrl(pat) {
+          var search = encodeURIComponent(pat);
+          return `./?r=${Math.random}/#/?`+
+              `search=${search}&`+
+              `lang=${this.gscv.lang}`;
+      },
+      getAuthors() {
+          var that = this;
+          var {
+              gscv,
+          } = that;
+          var url = this.url(`authors`);
+          this.$http.get(url).then(res => {
+              var authors = res.data;
+              gscv.authors = authors;
+              var langs = Object.keys(authors).map(a => authors[a].lang);
+              var langNames = {
+                  pt: true,
+                  ja: true,
+              };
+              gscv.transLanguages = gscv.languages.filter(l => 
+                  langs.indexOf(l.name) >= 0 || langNames[l.name]);
+              console.log(`authors`, gscv.authors, gscv.transLanguages);
+          }).catch(e => {
+              console.error(e.stack);
+          });
+      },
+      getVoices() {
+          var that = this;
+          var url = this.url(`voices`);
+          this.$http.get(url).then(res => {
+              var voices = res.data;
+              that.gscv.voices = res.data;
+              console.log(`voices`, voices);
+          }).catch(e => {
+              console.error(e.stack);
+          });
+      },
     },
     computed: {
         showPali: {
