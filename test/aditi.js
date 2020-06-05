@@ -61,6 +61,8 @@
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
 
+        testPhoneme(recite, 'seʈ.ʈʰo', 'seṭṭho');
+
         // apostrophe
         testPhoneme(recite, 'm’ɪɖʱe kəc ce', 'm’idhekacce');
 
