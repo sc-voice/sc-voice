@@ -185,7 +185,7 @@
          `${ph("səŋ v\\ɪʝ.ʝə mɑː nɑː", "saṃvijjamānā")}${brk}`,
         ]);
     });
-    it("TESTTESTtokensSSML(text) handles custom words", function() {
+    it("tokensSSML(text) handles custom words", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
         var ph = (a,b)=>`<phoneme alphabet="ipa" ph="${a}">${b}</phoneme>`;
@@ -195,5 +195,12 @@
         should.deepEqual(tokens, [
          `${ph("'nɪ v\\e sẽ t̪əb bɑː", "nivesetabbā")}${brk}`,
         ]);
+    });
+    it("TESTTESTtokensSSML(text) handles ellipsis", done=>{
+        (async function(){try{
+            var aditi = Voice.createVoice(ADITI_OPTS);
+            var res = await aditi.speak("… ");
+            done();
+        } catch(e) {done(e)}})();
     });
 })

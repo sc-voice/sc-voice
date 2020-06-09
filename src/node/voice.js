@@ -1,7 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const { logger } = require('rest-bundle');
+    const { logger } = require('just-simple').JustSimple;
     const Polly = require('./polly');
     const HumanTts = require('./human-tts');
     const Words = require('./words');
@@ -16,6 +16,7 @@
 
     class Voice { 
         constructor(opts={}) {
+            logger.logInstance(this, opts);
             this.stripNumbers = opts.stripNumbers;
             this.stripQuotes = opts.stripQuotes;
             this.locale = opts.locale || "en-IN";

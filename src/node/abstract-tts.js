@@ -5,7 +5,7 @@
     const { MerkleJson } = require('merkle-json');
     const {
         logger,
-    } = require('rest-bundle');
+    } = require('just-simple').JustSimple;
     const SoundStore = require('./sound-store');
     const Words = require('./words');
     const ABSTRACT_METHOD = "abstract method must be overridden and implemented by base class";
@@ -18,10 +18,12 @@
     const RE_STRIPNUMBER = new RegExp(`\\(?${Words.PAT_NUMBER}\\)?`);
     //const ELLIPSIS_BREAK = '<break time="1.000s"/>';
     const ELLIPSIS_BREAK = '.';
+    const PAUSE_SSML = `<break time="0.5s"/>`;
     const MAX_SEGMENT = 1000;
 
     class AbstractTTS {
         constructor(opts={}) {
+            logger.logInstance(this, opts);
             this.language = opts.language || 'en';
             this.localeIPA = opts.localeIPA || this.language;
             this.hits = 0;
@@ -34,6 +36,7 @@
             this.stripChars = opts.stripChars || /[\u200b]/g;
             this.apiVersion = opts.apiVersion || null;
             this.audioSuffix = opts.audioSuffix || ".ogg";
+            this.pauseSSML = opts.pauseSSML || PAUSE_SSML;
             this.maxConcurrentServiceCalls = 
                 opts.maxConcurrentServiceCalls || 5;
             this.queue = new Queue(this.maxConcurrentServiceCalls, 
@@ -63,7 +66,7 @@
                 words = new Words(words, {
                     language: this.language,
                 });
-                logger.info(`${this.constructor.name}() `+
+                this.log(`${this.constructor.name}() `+
                     `default words:${Object.keys(words.words).length}`);
             }
             Object.defineProperty(this, 'words', {
@@ -395,23 +398,35 @@
         signatureSSML(ssmlFragment) {
             var rate = this.prosody.rate || "0%";
             var pitch = this.prosody.pitch || "0%";
-            return `<prosody rate="${rate}" pitch="${pitch}">${ssmlFragment}</prosody>`;
+            return [
+                `<prosody rate="${rate}" pitch="${pitch}">`,
+                `${ssmlFragment}`,
+                `</prosody>`,
+            ].join('');
         }
 
         synthesizeSSML(ssmlFragment, opts={}) {
             var that = this;
             if (ssmlFragment.length > this.maxSSML) {
                 var oldLen = ssmlFragment.length;
-                ssmlFragment = ssmlFragment.replace(/>[^<]+<\/phoneme/iug, '/');
-                logger.info(`AbstractTts.synthesizeSSML() shrinking large SSML (1) `+
-                    `before:${oldLen} `+
-                    `after:${ssmlFragment.length} `+
-                    `ssml:${ssmlFragment.substring(0, 500)}...`);
+                ssmlFragment = ssmlFragment
+                    .replace(/>[^<]+<\/phoneme/iug, '/');
+                this.log([
+                    `AbstractTts.synthesizeSSML()`,
+                    `shrinking large SSML (1)`,
+                    `before:${oldLen}`,
+                    `after:${ssmlFragment.length}`,
+                    `ssml:${ssmlFragment.substring(0, 500)}...`,
+                ].join(' '));
                 if (ssmlFragment.length > this.maxSSML) {
-                    ssmlFragment = ssmlFragment.replace(/<break[^>]+>/iug, '');
-                    logger.info(`AbstractTts.synthesizeSSML() shrinking large SSML (2) `+
-                        `before:${oldLen} `+
-                        `after:${ssmlFragment.length} `);
+                    ssmlFragment = ssmlFragment
+                        .replace(/<break[^>]+>/iug, '');
+                    this.log([
+                        `AbstractTts.synthesizeSSML()`,
+                        `shrinking large SSML (2)`,
+                        `before:${oldLen}`,
+                        `after:${ssmlFragment.length} `,
+                    ].join(' '));
                 } 
             }
             return new Promise((resolve, reject) => {
@@ -423,14 +438,16 @@
                     opts.volume && (signature.volume = opts.volume);
                     signature.chapter = opts.chapter;
                     opts.guid && (signature.guid = opts.guid);
-                    var outpath = soundStore.signaturePath(signature, this.audioSuffix);
+                    var outpath = soundStore
+                        .signaturePath(signature, this.audioSuffix);
                     var request = {
                         ssml,
                         signature,
                         outpath,
                     };
 
-                    var stats = fs.existsSync(outpath) && fs.statSync(outpath);
+                    var stats = fs.existsSync(outpath) && 
+                        fs.statSync(outpath);
                     if (cache && stats && stats.size > this.ERROR_SIZE) {
                         this.hits++;
                         resolve(this.createResponse(request, true));
@@ -439,21 +456,33 @@
 
                         that.serviceSynthesize(resolve, e => {
                             if (/EAI_AGAIN/.test(e.message)) {
-                                logger.warn(`synthesizeSSML() ${e.message} (retrying...)`);
+                                logger.warn([
+                                    `synthesizeSSML() ${e.message}`,
+                                    `(retrying...)`,
+                                ].join(' '));
                                 that.serviceSynthesize(resolve, e => {
-                                    logger.warn(`synthesizeSSML() ${e.message} `+
-                                        `ssml:${ssmlFragment.length}utf16 ${ssmlFragment}`);
+                                    logger.warn([
+                                        `synthesizeSSML() ${e.message}`,
+                                        `ssml:${ssmlFragment.length}utf16`,
+                                        `${ssmlFragment}`,
+                                    ].join(' '));
                                     reject(e);
                                 }, request);
                             } else {
-                                logger.warn(`synthesizeSSML() ${e.message} `+
-                                    `ssml:${ssmlFragment.length}utf16 ${ssmlFragment}`);
+                                logger.warn([
+                                    `synthesizeSSML() ${e.message}`,
+                                    `ssml:${ssmlFragment.length}utf16`,
+                                    `${ssmlFragment}`,
+                                ].join(' '));
                                 reject(e);
                             }
                         }, request);
                     }
                 } catch (e) {
-                    logger.warn(`synthesizeSSML() ${e.message} ssml:${ssmlFragment}`);
+                    logger.warn([
+                        `synthesizeSSML() ${e.message}`,
+                        `ssml:${ssmlFragment}`,
+                    ].join(' '));
                     reject(e);
                 }
             });
@@ -467,22 +496,25 @@
 
         synthesizeText(text, opts={}) {
             var that = this;
-            return new Promise((resolve, reject) => {
+            var pbody = (resolve, reject) => {
                 var queue = that.queue;
                 (async function() { try {
                     var result = null;
                     //var ssmlAll = []; // useful for debugging
                     var ssmlAll = null;
                     if (typeof text === 'string') {
-                        var segments = that.segmentSSML(that.stripHtml(text));
+                        var segments = that.segmentSSML(
+                            that.stripHtml(text));
                         var promises = segments.map(ssml => {
                             ssmlAll && ssmlAll.push(ssml);
-                            return queue.add(() => that.synthesizeSSML(ssml, opts));
+                            return queue.add(() => 
+                                that.synthesizeSSML(ssml, opts));
                         });
                         result = await Promise.all(promises);
                     } else if (text instanceof Array) {
                         if (text.length === 0) {
-                            throw new Error(`synthesizeText(${text}) no text`);
+                            throw new Error(
+                                `synthesizeText(${text}) no text`);
                         }
                         var textArray = text;
                         var segments = [];
@@ -490,7 +522,8 @@
                             var segs = that.segmentSSML(that.stripHtml(t));
                             segs.forEach(ssml => {
                                 ssmlAll && ssmlAll.push(ssml);
-                                acc.push(queue.add(() => that.synthesizeSSML(ssml, opts)));
+                                acc.push(queue.add(() => 
+                                    that.synthesizeSSML(ssml, opts)));
                             });
                             segments.push(segs);
                             return acc;
@@ -505,17 +538,25 @@
                             var ffmpegOpts = Object.assign({
                                 ssmlAll,
                             }, opts);
-                            result = await that.ffmpegConcat(files, ffmpegOpts);
+                            result = await that.ffmpegConcat(files, 
+                                ffmpegOpts);
                         }
                         resolve(Object.assign({
                             voice: that.voice,
                             segments,
                         }, result));
                     } else {
-                        reject(new Error(`synthesizeText(${text}) expected string or Array`));
+                        that.log([
+                            `synthesizeText("${text}",`,
+                            JSON.stringify(opts),
+                            `)`,
+                        ].join(' '));
+                        text = that.pauseSSML;
+                        return pbody(resolve,reject);
                     }
                 } catch(e) { reject(e);} })();
-            });
+            };
+            return new Promise(pbody);
         }
 
         syllabify(word) {
