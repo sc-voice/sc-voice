@@ -169,7 +169,7 @@
          `${ph("mo həs sə", "mohassa")}${brk("0.001")}`,
         ]);
     });
-    it("tokensSSML(text) handles jj", function() {
+    it("TESTTESTtokensSSML(text) handles jj", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
         var ph = (a,b)=>`<phoneme alphabet="ipa" ph="${a}">${b}</phoneme>`;
@@ -177,7 +177,7 @@
 
         var tokens = recite.tokensSSML("satisambojjhaṅgaṃ");
         should.deepEqual(tokens, [
-         `${ph("sə t̪ɪ səm bodʒ.dʒʱəŋ gəŋ", "satisambojjhaṅgaṃ")}${brk}`,
+         `${ph("sə t̪ɪ səm 'bodʒ.dʒʱəŋ gəŋ", "satisambojjhaṅgaṃ")}${brk}`,
         ]);
 
         var tokens = recite.tokensSSML("saṃvijjamānā");
