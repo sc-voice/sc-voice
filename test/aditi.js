@@ -57,7 +57,7 @@
         var recite = aditi.services['recite'];
         should(recite.syllableVowels).equal('aeiou');
     });
-    it("TESTTESTsegmentSSML(text) returns SSML", function() {
+    it("segmentSSML(text) returns SSML", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
 
@@ -169,7 +169,7 @@
          `${ph("mo həs sə", "mohassa")}${brk("0.001")}`,
         ]);
     });
-    it("TESTTESTtokensSSML(text) handles jj", function() {
+    it("tokensSSML(text) handles jj", function() {
         var aditi = Voice.createVoice(ADITI_OPTS);
         var recite = aditi.services['recite'];
         var ph = (a,b)=>`<phoneme alphabet="ipa" ph="${a}">${b}</phoneme>`;
@@ -196,7 +196,7 @@
          `${ph("'nɪ v\\e sẽ t̪əb bɑː", "nivesetabbā")}${brk}`,
         ]);
     });
-    it("TESTTESTtokensSSML(text) handles ellipsis", done=>{
+    it("tokensSSML(text) handles ellipsis", done=>{
         (async function(){try{
             var aditi = Voice.createVoice(ADITI_OPTS);
             var res = await aditi.speak("… ");

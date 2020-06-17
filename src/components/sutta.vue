@@ -170,20 +170,30 @@ style="width:100%; margin-top:0"/>
             class='title'>
             {{$vuetify.lang.t('$vuetify.dataIterator.noResultsText')}}
         </summary>
-        <div class="scv-playlist ml-3 pt-2 pl-3" v-if="gscv.voices.length" >
-            <v-btn icon
-                @click="playAll()"
-                class="scv-icon-btn" :style="cssVars" small>
-                <v-icon>play_circle_outline</v-icon>
-            </v-btn>
-            <v-btn icon
-                :href="downloadUrl(search)"
-                v-show="playlistDuration.totalSeconds < 3*3600"
-                @click="downloadClick(search)"
-                type="audio/mp3"
-                class="scv-icon-btn" :style="cssVars" small>
-                <v-icon>arrow_downward</v-icon>
-            </v-btn>
+        <div class="scv-playlist ml-3 pt-2 pl-3" 
+          v-if="gscv.voices.length" >
+          <v-btn icon small fab
+              @click="playSearchText()"
+              :title="$vuetify.lang.t('$vuetify.scv.speakSearchText')"
+              :disabled="!playSearch.signature"
+              class="scv-icon-btn" :style="cssVars" >
+              <v-icon>chat_bubble_outline</v-icon>
+          </v-btn>
+          <v-btn icon
+              @click="playAll()"
+              :title="$vuetify.lang.t('$vuetify.scv.playAll')"
+              class="scv-icon-btn" :style="cssVars" small>
+              <v-icon>play_circle_outline</v-icon>
+          </v-btn>
+          <v-btn icon
+              :href="downloadUrl(search)"
+              v-show="playlistDuration.totalSeconds < 3*3600"
+              @click="downloadClick(search)"
+              :title="$vuetify.lang.t('$vuetify.scv.downloadPlaylist')"
+              type="audio/mp3"
+              class="scv-icon-btn" :style="cssVars" small>
+              <v-icon>arrow_downward</v-icon>
+          </v-btn>
         </div>
         <details role="heading" aria-level="2"
             v-for="(result,i) in (searchResults && searchResults.results||[])"
@@ -356,6 +366,7 @@ export default {
         }
         var that = {
             error,
+            playSearch: {},
             examples: null,
             hasAudio: true,
             moreVisible: false,
@@ -459,12 +470,58 @@ export default {
             }
             return this.url(url);
         },
+        updatePlaySearch(search, searchResults) {
+          var that = this;
+          var {
+            results,
+            searchLang,
+          } = searchResults || {};
+          var {
+            quote,
+          } = results && results[0] || {};
+          quote = quote || {};
+          var langQuote = quote[searchLang] || '';
+          var word = langQuote.split(/[<>]/)[2];
+          var urlWord = that.url(`play/word/${searchLang}/Aditi/${word}`);
+          if (word) {
+            that.$http.get(urlWord).then(res => {
+              var playSearch = res.data || {};
+              console.log(`updatePlaySearch ${search}: `, playSearch);
+              Vue.set(this, "playSearch", playSearch);
+            }).catch(e => {
+                console.error(e.stack);
+            });
+          } else {
+            //console.log(`dbg updatePlaySearch ${search}: n/a `);
+          }
+        },
+        playSearchText() {
+          var that = this;
+          var {
+            signature,
+            word,
+            langTrans,
+          } = that.playSearch || {};
+          var urlAudio = this.url([
+            `audio`,
+            `word`,
+            `${langTrans}`,
+            `ms`,
+            `Aditi`,
+            signature.guid,
+          ].join('/'));
+          console.log(`dbg playSearchText ${word}`, urlAudio);
+          window.open(urlAudio, "_blank");
+        },
         downloadClick(search) {
             var elt = this.$refs['refScvDownloader'];
             console.log(`downloading:${this.downloadUrl(search)}`, elt);
-            var downloading = this.$vuetify.lang.t('$vuetify.scv.downloading');
-            var downloadComplete = this.$vuetify.lang.t('$vuetify.scv.downloadComplete');
-            var downloadTimeout = this.$vuetify.lang.t('$vuetify.scv.downloadTimeout');
+            var downloading = this.$vuetify.lang.t(
+              '$vuetify.scv.downloading');
+            var downloadComplete = this.$vuetify.lang.t(
+              '$vuetify.scv.downloadComplete');
+            var downloadTimeout = this.$vuetify.lang.t(
+              '$vuetify.scv.downloadTimeout');
             elt && elt.update(downloading);
             this.startWaiting({
                 cookie: 'download-date',
@@ -776,12 +833,14 @@ export default {
                 console.log('searchResults', data);
                 data.results.sort((a,b) => b.score - a.score);
                 this.searchResults = data;
+                this.updatePlaySearch(search, data);
                 this.stopWaiting(timer);
                 this.$nextTick(() => {
                     if (data.results.length === 1)  {
                         var d = data.results[0];
                         var sutta = d.sutta;
-                        console.log(`searchSuttas(${search}) showSutta`, sutta);
+                        console.log(`searchSuttas(${search}) showSutta`, 
+                          sutta);
                         this.showSutta(sutta, d.stats);
                     } else {
                         this.$refs.refResults.focus();

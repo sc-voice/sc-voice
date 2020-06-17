@@ -209,6 +209,7 @@ export default {
     showPaliTransText: "Hiển thị văn bản Pali và bản dịch",
     showTextSegmentIds: "Hiển thị SuttaCentral segment IDs",
     showTransText: "Hiển thị bản dịch",
+    speakSearchText: "Speak search text",
     storeSettingsInCookies: "Lưu thiết lập với cookies",
     trackOfSection: "A_TRACK trên tổng số A_TRACKS",
     translation: "Translation",
@@ -217,5 +218,7 @@ export default {
     uiLanguage: "Ngôn ngữ giao diên trong web",
     wikiAria: "Home.md",
     noTranslationAvailable: "(no translation available)",
+    playAll: "Play all",
+    downloadPlaylist: "Download playlist",
   }
 }

@@ -210,6 +210,7 @@ export default {
     showTextSegmentIds: "Sýna SuttaCentral auðkenni hlutans",
     showTransText: "Sýna þýðingu",
     storeSettingsInCookies: "Geyma stillingar í vafrakökum",
+    speakSearchText: "Speak search text",
     trackOfSection: "A_TRACK af A_TRACKS",
     translation: "Translation",
     transLanguage: "Þýðingamál",
@@ -217,6 +218,8 @@ export default {
     uiLanguage: "Tungumál vefsíðu",
     wikiAria: "Home.md",
     noTranslationAvailable: "(no translation available)",
+    playAll: "Play all",
+    downloadPlaylist: "Download playlist",
 
   }
 }

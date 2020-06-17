@@ -209,6 +209,7 @@ export default {
     showPaliTransText: "Pokaż tekst w Pali i tłumaczenie",
     showTextSegmentIds: "Pokazuj segmentacje tekstów SuttaCentral",
     showTransText: "Pokaż tłumaczenie",
+    speakSearchText: "Speak search text",
     storeSettingsInCookies: "Zachowaj ustawienia w ciasteczkach internetowej przeglądarki",
     trackOfSection: "A_TRACK z A_TRACKS",
     translation: "Translation",
@@ -217,6 +218,8 @@ export default {
     uiLanguage: "Język strony internetowej",
     wikiAria: "Home.md",
     noTranslationAvailable: "(Brak dostępnego tłumaczenia)",
+    playAll: "Play all",
+    downloadPlaylist: "Download playlist",
 
   }
 }

@@ -209,6 +209,7 @@ export default {
     showPaliTransText: "पालि और अनुवाद दिखाए",
     showTextSegmentIds: "SuttaCentral सेगमेंट आयडी दिखाए",
     showTransText: "अनुवाद ही दिखाए",
+    speakSearchText: "Speak search text",
     storeSettingsInCookies: "वेब ब्राउज़र कुकीज़ में सेटिंग स्टोर करे।",
     trackOfSection: "A_TRACK में से A_TRACKS",
     translation: "Translation",
@@ -217,6 +218,8 @@ export default {
     uiLanguage: "वेब साइट भाषा",
     wikiAria: "Home.md",
     noTranslationAvailable: "(कोई अनुवादक उपलब्ध नही)",
+    playAll: "Play all",
+    downloadPlaylist: "Download playlist",
 
   }
 }

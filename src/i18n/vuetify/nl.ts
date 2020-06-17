@@ -209,6 +209,7 @@ export default {
     showPaliTransText: "Toon tekst in Pali en vertaalde tekst",
     showTextSegmentIds: "Toon SuttaCentral segment-identificatiecodes",
     showTransText: "Toon vertaalde tekst",
+    speakSearchText: "Speak search text",
     storeSettingsInCookies: "Bewaar instellingen in webbrowser-cookies",
     trackOfSection: "A_TRACK van A_TRACKS",
     translation: "Translation",
@@ -217,6 +218,8 @@ export default {
     uiLanguage: "Taal van website",
     wikiAria: "Home.md",
     noTranslationAvailable: "(geen vertaling beschikbaar)",
+    playAll: "Play all",
+    downloadPlaylist: "Download playlist",
 
   }
 }

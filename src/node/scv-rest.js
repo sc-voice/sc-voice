@@ -102,6 +102,8 @@
                 ["get", "review/section/"+
                     ":sutta_uid/:language/:translator/:iSection", 
                     this.getReviewSection],
+                ["get", "play/word/:langTrans/:vname/:word", 
+                    this.getPlayWord],
                 ["get", "play/segment/"+
                     ":sutta_uid/:langTrans/:translator/:scid/:vnameTrans", 
                     this.getPlaySegment],
@@ -197,11 +199,11 @@
                     translator,
                     voice,
                 } = req.params;
-                var soundOpts = {};
-                if (sutta_uid) {
-                    soundOpts.volume = SoundStore.suttaVolumeName(sutta_uid, 
+                var volume = !sutta_uid || sutta_uid === 'word' 
+                    ? 'play-word'
+                    : SoundStore.suttaVolumeName(sutta_uid, 
                         lang, translator, voice);
-                }
+                var soundOpts = { volume };
                 var filePath = this.soundStore.guidPath(guid, soundOpts);
                 var filename = req.params.filename;
                 var data = fs.readFileSync(filePath);
@@ -488,6 +490,66 @@
                     vnameRoot,
                     iSegment,
                     segment,
+                });
+            } catch(e) { reject(e); } })(); }
+            return new Promise(pbody);
+        }
+
+        getPlayWord(req, res, next) {
+            var that = this;
+            var { 
+                langTrans, word, vname,
+            } = this.suttaParms(req);
+            if (/[0-9]+/.test(vname)) {
+                var iVoice = Number(vname);
+            }
+            if (langTrans !== 'pli') {
+                return Promise.resolve(new Error(
+                    `Only Pali words can be spoken individually`));
+            }
+            if (vname !== 'Aditi') {
+                return Promise.resolve(new Error(
+                    `Only Aditi can speak Pali words`));
+            }
+            if (!word) {
+                return Promise.resolve(new Error(
+                    `No word given to speak`));
+            }
+            var scAudio = this.scAudio;
+            var voice = Voice.voiceOfName(vname);
+            var voiceRoot = this.voiceFactory.voiceOfName(vname);
+            logger.info(`GET ${req.url}`);
+            var usage = voice.usage || 'recite';
+            var pbody = (resolve, reject) => {(async function(){ try {
+                var voiceTrans = Voice.createVoice({
+                    name: voice.name,
+                    usage,
+                    soundStore: that.soundStore,
+                    localeIPA: "pli",
+                    audioFormat: that.soundStore.audioFormat,
+                    audioSuffix: that.soundStore.audioSuffix,
+                    scAudio,
+                });
+                var volume = "play-word";
+                var translator = 'ms';
+                var resSpeak = await voiceTrans.speak(word, {
+                    language: langTrans, 
+                    translator,
+                    usage,
+                    volume,
+                });
+                var {
+                    hits,
+                    misses,
+                    signature,
+                } = resSpeak || {};
+                resolve({
+                    word,
+                    langTrans,
+                    voice: voice.name,
+                    hits,
+                    misses,
+                    signature,
                 });
             } catch(e) { reject(e); } })(); }
             return new Promise(pbody);

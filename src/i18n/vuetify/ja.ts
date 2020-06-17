@@ -209,6 +209,7 @@ export default {
     showPaliTransText: "パーリ語テキストと訳文を表示",
     showTextSegmentIds: "SuttaCentral セグメントIDを表示",
     showTransText: "訳文の表示",
+    speakSearchText: "Speak search text",
     storeSettingsInCookies: "ウェブブラウザのクッキーに設定を保存",
     trackOfSection: "A_TRACK / A_TRACKS",
     translation: "翻訳",
@@ -217,6 +218,8 @@ export default {
     uiLanguage: "ウェブサイトの言語",
     wikiAria: "Home-JA.md",
     noTranslationAvailable: "(翻訳はありません)",
+    playAll: "Play all",
+    downloadPlaylist: "Download playlist",
 
   }
 }

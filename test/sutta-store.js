@@ -587,6 +587,21 @@
             done(); 
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTsearch(pattern) finds exact Pali", function(done) {
+        (async function() { try {
+            var store = await new SuttaStore({logLevel}).initialize();
+            var res = await store.search('abhisambuddhā');
+            var {
+                method,
+                results,
+                maxDoc,
+                resultPattern,
+            } = res;
+            should(method).equal('phrase');
+            should(resultPattern).equal('abhisambuddhā');
+            done(); 
+        } catch(e) {done(e);} })();
+    });
     it("sutta_uidSuccessor(sutta_uid) returns following sutta_uid", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();

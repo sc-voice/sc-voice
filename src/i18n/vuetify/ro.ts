@@ -209,6 +209,7 @@ export default {
     showPaliTransText: "Arată textul în Pali și versiunea tradusă",
     showTextSegmentIds: "Arată identificatori de segmente folosiți de SuttaCentral",
     showTransText: "Arată versiunea tradusă",
+    speakSearchText: "Speak search text",
     storeSettingsInCookies: "Salvează setările în browser, folosind cookie-uri",
     trackOfSection: "A_TRACK din A_TRACKS",
     translation: "Traducere",
@@ -217,6 +218,8 @@ export default {
     uiLanguage: "Limba site-ului web",
     wikiAria: "Home.md",
     noTranslationAvailable: "(nici o traducere disponibilă)",
+    playAll: "Play all",
+    downloadPlaylist: "Download playlist",
 
   }
 }

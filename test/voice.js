@@ -429,7 +429,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeak(text) can ignore quotes", function(done) {
+    it("speak(text) can ignore quotes", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var raveena = Voice.createVoice({

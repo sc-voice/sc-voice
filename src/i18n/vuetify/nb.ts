@@ -209,6 +209,7 @@ export default {
     showPaliTransText: "Vis Pali og oversatt tekst",
     showTextSegmentIds: "Vis SuttaCentral segmentidentifikasjon",
     showTransText: "Vis oversatt tekst",
+    speakSearchText: "Speak search text",
     storeSettingsInCookies: "Lagre innstillinger i nettleser informasjonskapsler",
     trackOfSection: "A_TRACK av A_TRACKS",
     translation: "Translation",
@@ -217,6 +218,8 @@ export default {
     uiLanguage: "Nettsidespråk",
     wikiAria: "Home.md",
     noTranslationAvailable: "(ingen tilgjengelig oversettelse)",
+    playAll: "Play all",
+    downloadPlaylist: "Download playlist",
 
   }
 }

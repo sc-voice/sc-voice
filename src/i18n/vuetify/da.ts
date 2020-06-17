@@ -206,6 +206,7 @@ export default {
     showOnlyTransText: "Vis kun oversættelsestekst",
     showPaliText: "Vis Pali tekst",
     showPaliTransText: "Vis både Pali og oversættelsestekst",
+    speakSearchText: "Speak search text",
     showTextSegmentIds: "Vis SuttaCentral segment-IDer",
     showTransText: "Vis oversættelsestekst",
     storeSettingsInCookies: "Gem indstillinger i webbrowser cookies",
@@ -216,6 +217,8 @@ export default {
     uiLanguage: "Webstedssprog",
     wikiAria: "Home.md",
     noTranslationAvailable: "(ingen oversættelse tilgængelig)",
+    playAll: "Play all",
+    downloadPlaylist: "Download playlist",
 
   }
 }
