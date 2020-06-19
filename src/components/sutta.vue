@@ -34,6 +34,13 @@ style="width:100%; margin-top:0"/>
             v-if="waiting<=0 && sutta_uid && !searchResults && gscv.voices.length">
             <div>
                 <v-btn icon small fab
+                    @click="playSearchText()"
+                    :title="$vuetify.lang.t('$vuetify.scv.speakSearchText')"
+                    :disabled="!playSearch.signature"
+                    class="scv-icon-btn" :style="cssVars" >
+                    <v-icon>chat_bubble_outline</v-icon>
+                </v-btn>
+                <v-btn icon small fab
                     :disabled="waiting > 0"
                     @click="launchSuttaPlayer()"
                     ref="refPlaySutta"
