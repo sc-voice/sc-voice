@@ -100,8 +100,8 @@
         testPhoneme(recite, 'səʈ ʈhɪ','saṭṭhi'); // sixty
         testPhoneme(recite, 'sət̪ t̪ʰɪ','satthi'); // the thigh
         testPhoneme(recite, 'd̪əɳ ɖə kə','daṇḍaka');
-        testPhoneme(recite, 'ɖʱəm mə','Dhamma');
-        testPhoneme(recite, 'ɖʱə mə', 'Dhama'); // blowing
+        testPhoneme(recite, 'ɖhəm mə','Dhamma');
+        testPhoneme(recite, 'ɖhə mə', 'Dhama'); // blowing
         testPhoneme(recite, 'si ɾɪ v\\əɖ ɖhə', 'sirivaḍḍha'); // blowing
         testPhoneme(recite, 'bɑː lə kə', 'bālaka'); 
         testPhoneme(recite, 'bʰəl lɪ kə', 'bhallika'); 

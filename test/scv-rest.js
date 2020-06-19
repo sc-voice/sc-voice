@@ -95,7 +95,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /sutta/mn1/en/sujato returns sutta", function(done) {
+    it("TESTTESTGET /sutta/mn1/en/sujato returns sutta", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
