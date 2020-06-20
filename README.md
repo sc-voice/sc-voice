@@ -37,6 +37,10 @@ As part of installation you will need to configure the AWS Polly TTS service ada
 The [Amazon AWS Polly Text-to-Speech](https://aws.amazon.com/polly/) service can be used to convert sutta text to speech.
 To enable AWS Polly, you will need to [configure your credentials](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html#getting-started-nodejs-credentials)
 
+Login to your AWS account and go to the IAM dashboard|Delete your root access keys|Manage Security Credentials|Access Keys...|Create New Access Key
+
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-keys.png"/>
+
 ```
 aws configure
 ```
