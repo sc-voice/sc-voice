@@ -59,14 +59,13 @@ do the following:
 1. ENTER
 1. CTRL-D
 
-##### Service installation
-SC-Voice can be installed as a **systemd** service that will be launched at boot. For example, in Ubuntu 16.04 you can type the following from a console window in the `sc-voice` folder:
-
-```bash
-./scripts/sc-voice-daemon.sh
+##### Launch localhost server
+```
+npm start
 ```
 
-Restart server to launch SC-Voice.
+Open up <kbd>localhost</kbd> in your local browser and you will see Voice.
+When you are done with voice, type <kbd>CTRL-C</kbd>
 
 ### Unit tests
 ```
