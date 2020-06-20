@@ -18,7 +18,16 @@ With a Linux console, install the software:
 ```
 git clone https://github.com/sc-voice/sc-voice.git
 cd sc-voice
+```
+
+Initialization requires super user access for your computer and you will
+be asked to enter your computer superuser password.
+```
 ./scripts/init.sh
+```
+
+Now update the content but do not reboot (i.e., Respond with <kbd>no</kbd> when asked to reboot)
+```
 ./scripts/update-latest
 ```
 As part of installation you will need to configure the AWS Polly TTS service adapter.
