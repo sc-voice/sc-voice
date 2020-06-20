@@ -65,7 +65,7 @@ npm start
 ```
 
 Open up <kbd>localhost</kbd> in your local browser and you will see Voice.
-When you are done with voice, type <kbd>CTRL-C</kbd>
+When you are done with voice, type <kbd>CTRL-C</kbd> in the terminal.
 
 ### Unit tests
 ```
