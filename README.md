@@ -30,6 +30,7 @@ Now update the content but do not reboot (i.e., Respond with <kbd>no</kbd> when 
 ```
 ./scripts/update-latest
 ```
+
 As part of installation you will need to configure the AWS Polly TTS service adapter.
 
 ##### Configure Amazon AWS Polly 

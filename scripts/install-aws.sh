@@ -12,6 +12,7 @@ else
 fi
 pushd ~
 BIN="`pwd`/bin"
+mkdir -p $BIN
 echo $PATH | grep -E "~/bin|$BIN"
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "INIT\t: AWS CLI $BIN will installed in $BIN"
