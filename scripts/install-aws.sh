@@ -23,6 +23,7 @@ RC=$?; if [ "$RC" == "0" ]; then
     ./awscli-bundle/install -b ~/bin/aws
 else
     echo -e "INIT\t: $BIN cannot be used for installing AWS CLI for Polly"
+    echo -e "INIT\t: Make sure ~/bin exists and is in your PATH"
     echo -e "ERROR\t: Install AWS CLI manually and rerun this script"
     exit 0
 fi
