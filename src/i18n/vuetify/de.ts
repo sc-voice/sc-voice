@@ -210,7 +210,7 @@ export default {
     showPaliTransText: "Zeige Palitext und Übersetzung",
     showTextSegmentIds: "SuttaCentral Textsegment-Kennungen zeigen",
     showTransText: "Zeige Übersetzung",
-    speakSearchText: "Speak search text",
+    speakSearchText: "Suchtext vorlesen",
     storeSettingsInCookies: "Einstellungen mittels Webbrowser-Cookies speichern",
     trackOfSection: "A_TRACK von A_TRACKS",
     translation: "Übersetzung",
