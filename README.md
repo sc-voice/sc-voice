@@ -3,28 +3,27 @@
 Javascript implemenation of SuttaCentral Voice Assistance (SC-Voice) for vision-impaired. Includes:
 
 * TTS adapter for [Amazon AWS Polly Text-to-Speech](https://aws.amazon.com/polly/) 
-* TTS adapter for [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
-* utilites for parsing SuttaCentral Pootl translations
 * romanized search for Pali terms (e.g., Mulapariyayasutta vs. Mūlapariyāyasutta)
+* integration with SuttaCentral [bilara-data](https://github.com/suttacentral/bilara-data)
 
 ### Prerequisites
 
 * Linux (tested on Ubuntu 16.04.5 LTS/xenial)
-* AWS Polly account (recommended)
-* IBM Watson Text-to-Speech account (optional)
+* AWS Polly account (required)
+* IBM Watson Text-to-Speech account (deprecated)
 
 ### Installation
 With a Linux console, install the software:
 
 ```
-git clone https://github.com/sc-karl/sc-voice.git
+git clone https://github.com/sc-voice/sc-voice.git
 cd sc-voice
 ./scripts/init.sh
 ./scripts/update-latest
 ```
-As part of installation you will need to configure one TTS service adapter.
+As part of installation you will need to configure the AWS Polly TTS service adapter.
 
-##### Configure Amazon AWS Polly (recommended)
+##### Configure Amazon AWS Polly 
 The [Amazon AWS Polly Text-to-Speech](https://aws.amazon.com/polly/) service can be used to convert sutta text to speech.
 To enable AWS Polly, you will need to [configure your credentials](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html#getting-started-nodejs-credentials)
 
@@ -32,7 +31,10 @@ To enable AWS Polly, you will need to [configure your credentials](https://docs.
 aws configure
 ```
 
-##### Configure Watson (optional)
+##### Configure Watson (deprecated)
+Although Voice is designed to work with different TTS services, the only TTS service
+capable of supporting Pali at this time is AWS Polly Aditi.
+
 The [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
 can be used to convert sutta text to speech. To use Watson, you will need an IBM Cloud Watson account.
 To enable Watson translation, first copy your Watson JSON credentials, then
