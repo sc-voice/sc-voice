@@ -95,7 +95,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /sutta/mn1/en/sujato returns sutta", function(done) {
+    it("GET /sutta/mn1/en/sujato returns sutta", function(done) {
         var async = function* () { try {
             var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato").expect((res) => {
                 res.statusCode.should.equal(200);
@@ -497,7 +497,7 @@
             should(data.segment.audio.en)
                 .match(/4341471c187e12334475901a9599698c/);
             should(data.segment.audio.pli)
-                .match(/13b445ab4c56640bb32aa3a3918476af/);
+                .match(/7bd718c9fbda06ab56b2d09a05776353/);
 
             done();
         } catch(e) {done(e);} })();
@@ -569,7 +569,7 @@
             //should(data.section).equal(1);
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
-            should(data.segment.pli).match(/^Sāvatthinidānaṃ/);
+            should(data.segment.pli).match(/^Sāvatthinidānaṁ/);
             should(data.segment.audio.en)
                 .match(/e5f5e2ec93f9f41908924177d5ee63ca/);
             should(data.segment.audio.pli)
@@ -606,11 +606,11 @@
             should(data.vnameRoot).equal('sujato_pli');
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
-            should(data.segment.pli).match(/samayaṃ bhagavā sāvatthiyaṃ/);
+            should(data.segment.pli).match(/samayaṁ bhagavā sāvatthiyaṁ/);
             should(data.segment.audio.en)
                 .match(/d0a8567a6fca2fbeaa5d14e610304826/);
             should(data.segment.audio.pli)
-                .match(/d4b9b098ec90a84e0b77ebe66e929913/);
+                .match(/a11ebc9a6bbe583d36e375ca163b6351/);
             should(data.segment.audio.vnamePali).equal('Aditi');
 
             done();

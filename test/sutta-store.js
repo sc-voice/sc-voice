@@ -1226,7 +1226,7 @@
                     matched: true,
                     de: 'Verbundene Lehrreden 12',
                     en: 'Linked Discourses 12 ',
-                    pli: 'Saṃyutta Nikāya 12 ',
+                    pli: 'Saṁyutta Nikāya 12 ',
                     scid: 'sn12.3:0.1',
                 });
                 should(results[0].nSegments).equal(19);
@@ -1235,7 +1235,7 @@
                     matched: true,
                     de: 'Verbundene Lehrreden 12',
                     en: 'Linked Discourses 12 ',
-                    pli: 'Saṃyutta Nikāya 12 ',
+                    pli: 'Saṁyutta Nikāya 12 ',
                     scid: 'sn12.3:0.1',
                 });
                 should(sections.length).equal(2);

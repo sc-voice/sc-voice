@@ -12,12 +12,12 @@
   "iSegment": 12,
   "segment": {
     "scid": "mn1:3.1",
-    "pli": "“Idha, bhikkhave, assutavā puthujjano ariyānaṃ adassāvī ariyadhammassa akovido ariyadhamme avinīto, sappurisānaṃ adassāvī sappurisadhammassa akovido sappurisadhamme avinīto—",
+    "pli": "“Idha, bhikkhave, assutavā puthujjano ariyānaṁ adassāvī ariyadhammassa akovido ariyadhamme avinīto, sappurisānaṁ adassāvī sappurisadhammassa akovido sappurisadhamme avinīto—",
     "en": "“Take an uneducated ordinary person who has not seen the noble ones, and is neither skilled nor trained in the teaching of the noble ones. They’ve not seen good persons, and are neither skilled nor trained in the teaching of the good persons. ",
     "matched": true,
     "audio": {
       "en": "f4085cffa218f32f1ee686066fc58e9f",
-      "pli": "cae26c0c2bc5ec7ef01a9e20ab8afebf"
+      "pli": "d84386ed34d9f7ea638d42470e903224"
     }
   }
 }

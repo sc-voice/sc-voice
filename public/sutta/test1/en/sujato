@@ -74,13 +74,13 @@
       "segments": [
         {
           "scid": "mn1:1.1",
-          "pli": "Evaṃ me sutaṃ—",
+          "pli": "Evaṁ me sutaṁ—",
           "en": "So I have heard. ",
           "matched": true
         },
         {
           "scid": "mn1:1.2",
-          "pli": "ekaṃ samayaṃ bhagavā ukkaṭṭhāyaṃ viharati subhagavane sālarājamūle. ",
+          "pli": "ekaṁ samayaṁ bhagavā ukkaṭṭhāyaṁ viharati subhagavane sālarājamūle. ",
           "en": "At one time the Buddha was staying near Ukkaṭṭhā, in the Subhaga Forest at the root of a magnificent sal tree. ",
           "matched": true
         },
@@ -98,7 +98,7 @@
         },
         {
           "scid": "mn1:1.5",
-          "pli": "“Bhadante”ti te bhikkhū bhagavato paccassosuṃ. ",
+          "pli": "“Bhadante”ti te bhikkhū bhagavato paccassosuṁ. ",
           "en": "“Venerable sir,” they replied. ",
           "matched": true
         },
@@ -110,19 +110,19 @@
         },
         {
           "scid": "mn1:2.1",
-          "pli": "“sabbadhammamūlapariyāyaṃ vo, bhikkhave, desessāmi. ",
+          "pli": "“sabbadhammamūlapariyāyaṁ vo, bhikkhave, desessāmi. ",
           "en": "“Mendicants, I will teach you the explanation of the root of all things. ",
           "matched": true
         },
         {
           "scid": "mn1:2.2",
-          "pli": "Taṃ suṇātha, sādhukaṃ manasi karotha, bhāsissāmī”ti. ",
+          "pli": "Taṁ suṇātha, sādhukaṁ manasi karotha, bhāsissāmī”ti. ",
           "en": "Listen and pay close attention, I will speak.” ",
           "matched": true
         },
         {
           "scid": "mn1:2.3",
-          "pli": "“Evaṃ, bhante”ti kho te bhikkhū bhagavato paccassosuṃ. ",
+          "pli": "“Evaṁ, bhante”ti kho te bhikkhū bhagavato paccassosuṁ. ",
           "en": "“Yes, sir,” they replied. ",
           "matched": true
         },
@@ -146,37 +146,37 @@
       "segments": [
         {
           "scid": "mn1:3.1",
-          "pli": "“Idha, bhikkhave, assutavā puthujjano ariyānaṃ adassāvī ariyadhammassa akovido ariyadhamme avinīto, sappurisānaṃ adassāvī sappurisadhammassa akovido sappurisadhamme avinīto—",
+          "pli": "“Idha, bhikkhave, assutavā puthujjano ariyānaṁ adassāvī ariyadhammassa akovido ariyadhamme avinīto, sappurisānaṁ adassāvī sappurisadhammassa akovido sappurisadhamme avinīto—",
           "en": "“Take an uneducated ordinary person who has not seen the noble ones, and is neither skilled nor trained in the teaching of the noble ones. They’ve not seen good persons, and are neither skilled nor trained in the teaching of the good persons. ",
           "matched": true
         },
         {
           "scid": "mn1:3.2",
-          "pli": "pathaviṃ pathavito sañjānāti; ",
+          "pli": "pathaviṁ pathavito sañjānāti; ",
           "en": "They perceive earth as earth. ",
           "matched": true
         },
         {
           "scid": "mn1:3.3",
-          "pli": "pathaviṃ pathavito saññatvā pathaviṃ maññati, pathaviyā maññati, pathavito maññati, pathaviṃ meti maññati, pathaviṃ abhinandati. ",
+          "pli": "pathaviṁ pathavito saññatvā pathaviṁ maññati, pathaviyā maññati, pathavito maññati, pathaviṁ meti maññati, pathaviṁ abhinandati. ",
           "en": "But then they identify with earth, they identify regarding earth, they identify as earth, they identify that ‘earth is mine’, they take pleasure in earth. ",
           "matched": true
         },
         {
           "scid": "mn1:3.4",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:3.5",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (1) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (1) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:4.1",
-          "pli": "Āpaṃ āpato sañjānāti; ",
+          "pli": "Āpaṁ āpato sañjānāti; ",
           "en": "They perceive water as water. ",
           "matched": true
         },
@@ -187,19 +187,19 @@
         },
         {
           "scid": "mn1:4.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:4.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (2) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (2) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:5.1",
-          "pli": "Tejaṃ tejato sañjānāti; ",
+          "pli": "Tejaṁ tejato sañjānāti; ",
           "en": "They perceive fire as fire. ",
           "matched": true
         },
@@ -210,19 +210,19 @@
         },
         {
           "scid": "mn1:5.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:5.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (3) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (3) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:6.1",
-          "pli": "Vāyaṃ vāyato sañjānāti; ",
+          "pli": "Vāyaṁ vāyato sañjānāti; ",
           "en": "They perceive air as air. ",
           "matched": true
         },
@@ -233,13 +233,13 @@
         },
         {
           "scid": "mn1:6.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:6.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (4) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (4) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
@@ -256,13 +256,13 @@
         },
         {
           "scid": "mn1:7.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:7.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (5) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (5) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
@@ -279,19 +279,19 @@
         },
         {
           "scid": "mn1:8.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:8.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (6) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (6) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:9.1",
-          "pli": "Pajāpatiṃ pajāpatito sañjānāti; ",
+          "pli": "Pajāpatiṁ pajāpatito sañjānāti; ",
           "en": "They perceive the Creator as the Creator. ",
           "matched": true
         },
@@ -302,19 +302,19 @@
         },
         {
           "scid": "mn1:9.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:9.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (7) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (7) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:10.1",
-          "pli": "Brahmaṃ brahmato sañjānāti; ",
+          "pli": "Brahmaṁ brahmato sañjānāti; ",
           "en": "They perceive Brahmā as Brahmā. ",
           "matched": true
         },
@@ -325,13 +325,13 @@
         },
         {
           "scid": "mn1:10.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:10.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (8) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (8) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
@@ -348,13 +348,13 @@
         },
         {
           "scid": "mn1:11.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:11.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (9) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (9) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
@@ -371,13 +371,13 @@
         },
         {
           "scid": "mn1:12.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:12.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (10) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (10) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
@@ -394,19 +394,19 @@
         },
         {
           "scid": "mn1:13.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:13.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (11) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (11) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:14.1",
-          "pli": "Abhibhuṃ abhibhuto sañjānāti; ",
+          "pli": "Abhibhuṁ abhibhuto sañjānāti; ",
           "en": "They perceive the Overlord as the Overlord. ",
           "matched": true
         },
@@ -417,19 +417,19 @@
         },
         {
           "scid": "mn1:14.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:14.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (12) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (12) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:15.1",
-          "pli": "Ākāsānañcāyatanaṃ ākāsānañcāyatanato sañjānāti; ",
+          "pli": "Ākāsānañcāyatanaṁ ākāsānañcāyatanato sañjānāti; ",
           "en": "They perceive the dimension of infinite space as the dimension of infinite space. ",
           "matched": true
         },
@@ -440,19 +440,19 @@
         },
         {
           "scid": "mn1:15.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:15.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (13) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (13) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:16.1",
-          "pli": "Viññāṇañcāyatanaṃ viññāṇañcāyatanato sañjānāti; ",
+          "pli": "Viññāṇañcāyatanaṁ viññāṇañcāyatanato sañjānāti; ",
           "en": "They perceive the dimension of infinite consciousness as the dimension of infinite consciousness. ",
           "matched": true
         },
@@ -463,19 +463,19 @@
         },
         {
           "scid": "mn1:16.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:16.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (14) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (14) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:17.1",
-          "pli": "Ākiñcaññāyatanaṃ ākiñcaññāyatanato sañjānāti; ",
+          "pli": "Ākiñcaññāyatanaṁ ākiñcaññāyatanato sañjānāti; ",
           "en": "They perceive the dimension of nothingness as the dimension of nothingness. ",
           "matched": true
         },
@@ -486,19 +486,19 @@
         },
         {
           "scid": "mn1:17.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:17.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (15) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (15) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:18.1",
-          "pli": "Nevasaññānāsaññāyatanaṃ nevasaññānāsaññāyatanato sañjānāti; ",
+          "pli": "Nevasaññānāsaññāyatanaṁ nevasaññānāsaññāyatanato sañjānāti; ",
           "en": "They perceive the dimension of neither perception nor non-perception as the dimension of neither perception nor non-perception. ",
           "matched": true
         },
@@ -509,19 +509,19 @@
         },
         {
           "scid": "mn1:18.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:18.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (16) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (16) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:19.1",
-          "pli": "Diṭṭhaṃ diṭṭhato sañjānāti; ",
+          "pli": "Diṭṭhaṁ diṭṭhato sañjānāti; ",
           "en": "They perceive the seen as the seen. ",
           "matched": true
         },
@@ -532,19 +532,19 @@
         },
         {
           "scid": "mn1:19.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:19.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (17) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (17) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:20.1",
-          "pli": "Sutaṃ sutato sañjānāti; ",
+          "pli": "Sutaṁ sutato sañjānāti; ",
           "en": "They perceive the heard as the heard. ",
           "matched": true
         },
@@ -555,19 +555,19 @@
         },
         {
           "scid": "mn1:20.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:20.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (18) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (18) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:21.1",
-          "pli": "Mutaṃ mutato sañjānāti; ",
+          "pli": "Mutaṁ mutato sañjānāti; ",
           "en": "They perceive the thought as the thought. ",
           "matched": true
         },
@@ -578,19 +578,19 @@
         },
         {
           "scid": "mn1:21.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:21.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (19) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (19) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:22.1",
-          "pli": "Viññātaṃ viññātato sañjānāti; ",
+          "pli": "Viññātaṁ viññātato sañjānāti; ",
           "en": "They perceive the known as the known. ",
           "matched": true
         },
@@ -601,19 +601,19 @@
         },
         {
           "scid": "mn1:22.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:22.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (20) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (20) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:23.1",
-          "pli": "Ekattaṃ ekattato sañjānāti; ",
+          "pli": "Ekattaṁ ekattato sañjānāti; ",
           "en": "They perceive oneness as oneness. ",
           "matched": true
         },
@@ -624,19 +624,19 @@
         },
         {
           "scid": "mn1:23.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:23.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (21) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (21) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:24.1",
-          "pli": "Nānattaṃ nānattato sañjānāti; ",
+          "pli": "Nānattaṁ nānattato sañjānāti; ",
           "en": "They perceive diversity as diversity. ",
           "matched": true
         },
@@ -647,19 +647,19 @@
         },
         {
           "scid": "mn1:24.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:24.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (22) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (22) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:25.1",
-          "pli": "Sabbaṃ sabbato sañjānāti; ",
+          "pli": "Sabbaṁ sabbato sañjānāti; ",
           "en": "They perceive all as all. ",
           "matched": true
         },
@@ -670,37 +670,37 @@
         },
         {
           "scid": "mn1:25.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:25.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (23) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (23) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
         {
           "scid": "mn1:26.1",
-          "pli": "Nibbānaṃ nibbānato sañjānāti; ",
+          "pli": "Nibbānaṁ nibbānato sañjānāti; ",
           "en": "They perceive extinguishment as extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:26.2",
-          "pli": "nibbānaṃ nibbānato saññatvā nibbānaṃ maññati, nibbānasmiṃ maññati, nibbānato maññati, nibbānaṃ meti maññati, nibbānaṃ abhinandati. ",
+          "pli": "nibbānaṁ nibbānato saññatvā nibbānaṁ maññati, nibbānasmiṁ maññati, nibbānato maññati, nibbānaṁ meti maññati, nibbānaṁ abhinandati. ",
           "en": "But then they identify with extinguishment, they identify regarding extinguishment, they identify as extinguishment, they identify that ‘extinguishment is mine’, they take pleasure in extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:26.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:26.4",
-          "pli": "‘Apariññātaṃ tassā’ti vadāmi. (24) ",
+          "pli": "‘Apariññātaṁ tassā’ti vadāmi. (24) ",
           "en": "Because they haven’t completely understood it, I say. ",
           "matched": true
         },
@@ -724,25 +724,25 @@
       "segments": [
         {
           "scid": "mn1:27.1",
-          "pli": "Yopi so, bhikkhave, bhikkhu sekkho appattamānaso anuttaraṃ yogakkhemaṃ patthayamāno viharati, sopi pathaviṃ pathavito abhijānāti; ",
+          "pli": "Yopi so, bhikkhave, bhikkhu sekkho appattamānaso anuttaraṁ yogakkhemaṁ patthayamāno viharati, sopi pathaviṁ pathavito abhijānāti; ",
           "en": "A mendicant who is a trainee, who hasn’t achieved their heart’s desire, but lives aspiring to the supreme sanctuary, directly knows earth as earth. ",
           "matched": true
         },
         {
           "scid": "mn1:27.2",
-          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ mā maññi, pathaviyā mā maññi, pathavito mā maññi, pathaviṃ meti mā maññi, pathaviṃ mābhinandi. ",
+          "pli": "pathaviṁ pathavito abhiññāya pathaviṁ mā maññi, pathaviyā mā maññi, pathavito mā maññi, pathaviṁ meti mā maññi, pathaviṁ mābhinandi. ",
           "en": "But they shouldn’t identify with earth, they shouldn’t identify regarding earth, they shouldn’t identify as earth, they shouldn’t identify that ‘earth is mine’, they shouldn’t take pleasure in earth. ",
           "matched": true
         },
         {
           "scid": "mn1:27.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:27.4",
-          "pli": "‘Pariññeyyaṃ tassā’ti vadāmi. ",
+          "pli": "‘Pariññeyyaṁ tassā’ti vadāmi. ",
           "en": "So that they may completely understand it, I say. ",
           "matched": true
         },
@@ -1188,25 +1188,25 @@
         },
         {
           "scid": "mn1:28-49.23",
-          "pli": "nibbānaṃ nibbānato abhijānāti; ",
+          "pli": "nibbānaṁ nibbānato abhijānāti; ",
           "en": "They directly know extinguishment as extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:50.1",
-          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ mā maññi, nibbānasmiṃ mā maññi, nibbānato mā maññi, nibbānaṃ meti mā maññi, nibbānaṃ mābhinandi. ",
+          "pli": "nibbānaṁ nibbānato abhiññāya nibbānaṁ mā maññi, nibbānasmiṁ mā maññi, nibbānato mā maññi, nibbānaṁ meti mā maññi, nibbānaṁ mābhinandi. ",
           "en": "But they shouldn’t identify with extinguishment, they shouldn’t identify regarding extinguishment, they shouldn’t identify as extinguishment, they shouldn’t identify that ‘extinguishment is mine’, they shouldn’t take pleasure in extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:50.2",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:50.3",
-          "pli": "‘Pariññeyyaṃ tassā’ti vadāmi. ",
+          "pli": "‘Pariññeyyaṁ tassā’ti vadāmi. ",
           "en": "So that they may completely understand it, I say. ",
           "matched": true
         },
@@ -1230,25 +1230,25 @@
       "segments": [
         {
           "scid": "mn1:51.1",
-          "pli": "Yopi so, bhikkhave, bhikkhu arahaṃ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṃyojano sammadaññāvimutto, sopi pathaviṃ pathavito abhijānāti; ",
+          "pli": "Yopi so, bhikkhave, bhikkhu arahaṁ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṁyojano sammadaññāvimutto, sopi pathaviṁ pathavito abhijānāti; ",
           "en": "A mendicant who is perfected—with defilements ended, who has completed the spiritual journey, done what had to be done, laid down the burden, achieved their own true goal, utterly ended the fetters of rebirth, and is rightly freed through enlightenment—directly knows earth as earth. ",
           "matched": true
         },
         {
           "scid": "mn1:51.2",
-          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati. ",
+          "pli": "pathaviṁ pathavito abhiññāya pathaviṁ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṁ meti na maññati, pathaviṁ nābhinandati. ",
           "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth. ",
           "matched": true
         },
         {
           "scid": "mn1:51.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:51.4",
-          "pli": "‘Pariññātaṃ tassā’ti vadāmi. ",
+          "pli": "‘Pariññātaṁ tassā’ti vadāmi. ",
           "en": "Because they have completely understood it, I say. ",
           "matched": true
         },
@@ -1694,25 +1694,25 @@
         },
         {
           "scid": "mn1:52-74.23",
-          "pli": "nibbānaṃ nibbānato abhijānāti; ",
+          "pli": "nibbānaṁ nibbānato abhijānāti; ",
           "en": "They directly know extinguishment as extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:52-74.24",
-          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati. ",
+          "pli": "nibbānaṁ nibbānato abhiññāya nibbānaṁ na maññati, nibbānasmiṁ na maññati, nibbānato na maññati, nibbānaṁ meti na maññati, nibbānaṁ nābhinandati. ",
           "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:52-74.25",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:52-74.26",
-          "pli": "‘Pariññātaṃ tassā’ti vadāmi. ",
+          "pli": "‘Pariññātaṁ tassā’ti vadāmi. ",
           "en": "Because they have completely understood it, I say. ",
           "matched": true
         },
@@ -1736,19 +1736,19 @@
       "segments": [
         {
           "scid": "mn1:75.1",
-          "pli": "Yopi so, bhikkhave, bhikkhu arahaṃ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṃyojano sammadaññā vimutto, sopi pathaviṃ pathavito abhijānāti; ",
+          "pli": "Yopi so, bhikkhave, bhikkhu arahaṁ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṁyojano sammadaññā vimutto, sopi pathaviṁ pathavito abhijānāti; ",
           "en": "A mendicant who is perfected—with defilements ended, who has completed the spiritual journey, done what had to be done, laid down the burden, achieved their own true goal, utterly ended the fetters of rebirth, and is rightly freed through enlightenment—directly knows earth as earth. ",
           "matched": true
         },
         {
           "scid": "mn1:75.2",
-          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati. ",
+          "pli": "pathaviṁ pathavito abhiññāya pathaviṁ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṁ meti na maññati, pathaviṁ nābhinandati. ",
           "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth. ",
           "matched": true
         },
         {
           "scid": "mn1:75.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
@@ -2200,19 +2200,19 @@
         },
         {
           "scid": "mn1:76-98.23",
-          "pli": "nibbānaṃ nibbānato abhijānāti; ",
+          "pli": "nibbānaṁ nibbānato abhijānāti; ",
           "en": "They directly know extinguishment as extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:76-98.24",
-          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati. ",
+          "pli": "nibbānaṁ nibbānato abhiññāya nibbānaṁ na maññati, nibbānasmiṁ na maññati, nibbānato na maññati, nibbānaṁ meti na maññati, nibbānaṁ nābhinandati. ",
           "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:76-98.25",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
@@ -2242,19 +2242,19 @@
       "segments": [
         {
           "scid": "mn1:99.1",
-          "pli": "Yopi so, bhikkhave, bhikkhu arahaṃ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṃyojano sammadaññāvimutto, sopi pathaviṃ pathavito abhijānāti; ",
+          "pli": "Yopi so, bhikkhave, bhikkhu arahaṁ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṁyojano sammadaññāvimutto, sopi pathaviṁ pathavito abhijānāti; ",
           "en": "A mendicant who is perfected—with defilements ended, who has completed the spiritual journey, done what had to be done, laid down the burden, achieved their own true goal, utterly ended the fetters of rebirth, and is rightly freed through enlightenment—directly knows earth as earth. ",
           "matched": true
         },
         {
           "scid": "mn1:99.2",
-          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati. ",
+          "pli": "pathaviṁ pathavito abhiññāya pathaviṁ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṁ meti na maññati, pathaviṁ nābhinandati. ",
           "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth. ",
           "matched": true
         },
         {
           "scid": "mn1:99.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
@@ -2706,19 +2706,19 @@
         },
         {
           "scid": "mn1:100-122.23",
-          "pli": "nibbānaṃ nibbānato abhijānāti; ",
+          "pli": "nibbānaṁ nibbānato abhijānāti; ",
           "en": "They directly know extinguishment as extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:100-122.24",
-          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati. ",
+          "pli": "nibbānaṁ nibbānato abhiññāya nibbānaṁ na maññati, nibbānasmiṁ na maññati, nibbānato na maññati, nibbānaṁ meti na maññati, nibbānaṁ nābhinandati. ",
           "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:100-122.25",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
@@ -2748,19 +2748,19 @@
       "segments": [
         {
           "scid": "mn1:123.1",
-          "pli": "Yopi so, bhikkhave, bhikkhu arahaṃ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṃyojano sammadaññāvimutto, sopi pathaviṃ pathavito abhijānāti; ",
+          "pli": "Yopi so, bhikkhave, bhikkhu arahaṁ khīṇāsavo vusitavā katakaraṇīyo ohitabhāro anuppattasadattho parikkhīṇabhavasaṁyojano sammadaññāvimutto, sopi pathaviṁ pathavito abhijānāti; ",
           "en": "A mendicant who is perfected—with defilements ended, who has completed the spiritual journey, done what had to be done, laid down the burden, achieved their own true goal, utterly ended the fetters of rebirth, and is rightly freed through enlightenment—directly knows earth as earth. ",
           "matched": true
         },
         {
           "scid": "mn1:123.2",
-          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati. ",
+          "pli": "pathaviṁ pathavito abhiññāya pathaviṁ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṁ meti na maññati, pathaviṁ nābhinandati. ",
           "en": "But they don’t identify with earth, they don’t identify regarding earth, they don’t identify as earth, they don’t identify that ‘earth is mine’, they don’t take pleasure in earth. ",
           "matched": true
         },
         {
           "scid": "mn1:123.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
@@ -3212,19 +3212,19 @@
         },
         {
           "scid": "mn1:124-146.23",
-          "pli": "nibbānaṃ nibbānato abhijānāti; ",
+          "pli": "nibbānaṁ nibbānato abhijānāti; ",
           "en": "They directly know extinguishment as extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:124-146.24",
-          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati. ",
+          "pli": "nibbānaṁ nibbānato abhiññāya nibbānaṁ na maññati, nibbānasmiṁ na maññati, nibbānato na maññati, nibbānaṁ meti na maññati, nibbānaṁ nābhinandati. ",
           "en": "But they don’t identify with extinguishment, they don’t identify regarding extinguishment, they don’t identify as extinguishment, they don’t identify that ‘extinguishment is mine’, they don’t take pleasure in extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:124-146.25",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
@@ -3254,25 +3254,25 @@
       "segments": [
         {
           "scid": "mn1:147.1",
-          "pli": "Tathāgatopi, bhikkhave, arahaṃ sammāsambuddho pathaviṃ pathavito abhijānāti; ",
+          "pli": "Tathāgatopi, bhikkhave, arahaṁ sammāsambuddho pathaviṁ pathavito abhijānāti; ",
           "en": "The Realized One, the perfected one, the fully awakened Buddha directly knows earth as earth. ",
           "matched": true
         },
         {
           "scid": "mn1:147.2",
-          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati. ",
+          "pli": "pathaviṁ pathavito abhiññāya pathaviṁ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṁ meti na maññati, pathaviṁ nābhinandati. ",
           "en": "But he doesn’t identify with earth, he doesn’t identify regarding earth, he doesn’t identify as earth, he doesn’t identify that ‘earth is mine’, he doesn’t take pleasure in earth. ",
           "matched": true
         },
         {
           "scid": "mn1:147.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:147.4",
-          "pli": "‘Pariññātantaṃ tathāgatassā’ti vadāmi. ",
+          "pli": "‘Pariññātantaṁ tathāgatassā’ti vadāmi. ",
           "en": "Because the Realized One has completely understood it to the end, I say. ",
           "matched": true
         },
@@ -3718,25 +3718,25 @@
         },
         {
           "scid": "mn1:148-170.23",
-          "pli": "nibbānaṃ nibbānato abhijānāti; ",
+          "pli": "nibbānaṁ nibbānato abhijānāti; ",
           "en": "He directly knows extinguishment as extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:148-170.24",
-          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati. ",
+          "pli": "nibbānaṁ nibbānato abhiññāya nibbānaṁ na maññati, nibbānasmiṁ na maññati, nibbānato na maññati, nibbānaṁ meti na maññati, nibbānaṁ nābhinandati. ",
           "en": "But he doesn’t identify with extinguishment, he doesn’t identify regarding extinguishment, he doesn’t identify as extinguishment, he doesn’t identify that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:148-170.25",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
         {
           "scid": "mn1:148-170.26",
-          "pli": "‘Pariññātantaṃ tathāgatassā’ti vadāmi. ",
+          "pli": "‘Pariññātantaṁ tathāgatassā’ti vadāmi. ",
           "en": "Because the Realized One has completely understood it to the end, I say. ",
           "matched": true
         },
@@ -3760,19 +3760,19 @@
       "segments": [
         {
           "scid": "mn1:171.1",
-          "pli": "Tathāgatopi, bhikkhave, arahaṃ sammāsambuddho pathaviṃ pathavito abhijānāti; ",
+          "pli": "Tathāgatopi, bhikkhave, arahaṁ sammāsambuddho pathaviṁ pathavito abhijānāti; ",
           "en": "The Realized One, the perfected one, the fully awakened Buddha directly knows earth as earth. ",
           "matched": true
         },
         {
           "scid": "mn1:171.2",
-          "pli": "pathaviṃ pathavito abhiññāya pathaviṃ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṃ meti na maññati, pathaviṃ nābhinandati. ",
+          "pli": "pathaviṁ pathavito abhiññāya pathaviṁ na maññati, pathaviyā na maññati, pathavito na maññati, pathaviṁ meti na maññati, pathaviṁ nābhinandati. ",
           "en": "But he doesn’t identify with earth, he doesn’t identify regarding earth, he doesn’t identify as earth, he doesn’t identify that ‘earth is mine’, he doesn’t take pleasure in earth. ",
           "matched": true
         },
         {
           "scid": "mn1:171.3",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
@@ -3790,7 +3790,7 @@
         },
         {
           "scid": "mn1:171.6",
-          "pli": "Tasmātiha, bhikkhave, ‘tathāgato sabbaso taṇhānaṃ khayā virāgā nirodhā cāgā paṭinissaggā anuttaraṃ sammāsambodhiṃ abhisambuddho’ti vadāmi. ",
+          "pli": "Tasmātiha, bhikkhave, ‘tathāgato sabbaso taṇhānaṁ khayā virāgā nirodhā cāgā paṭinissaggā anuttaraṁ sammāsambodhiṁ abhisambuddho’ti vadāmi. ",
           "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say. ",
           "matched": true
         },
@@ -4456,19 +4456,19 @@
         },
         {
           "scid": "mn1:172-194.23",
-          "pli": "nibbānaṃ nibbānato abhijānāti; ",
+          "pli": "nibbānaṁ nibbānato abhijānāti; ",
           "en": "He directly knows extinguishment as extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:172-194.24",
-          "pli": "nibbānaṃ nibbānato abhiññāya nibbānaṃ na maññati, nibbānasmiṃ na maññati, nibbānato na maññati, nibbānaṃ meti na maññati, nibbānaṃ nābhinandati. ",
+          "pli": "nibbānaṁ nibbānato abhiññāya nibbānaṁ na maññati, nibbānasmiṁ na maññati, nibbānato na maññati, nibbānaṁ meti na maññati, nibbānaṁ nābhinandati. ",
           "en": "But he doesn’t identify with extinguishment, he doesn’t identify regarding extinguishment, he doesn’t identify as extinguishment, he doesn’t identify that ‘extinguishment is mine’, he doesn’t take pleasure in extinguishment. ",
           "matched": true
         },
         {
           "scid": "mn1:172-194.25",
-          "pli": "Taṃ kissa hetu? ",
+          "pli": "Taṁ kissa hetu? ",
           "en": "Why is that? ",
           "matched": true
         },
@@ -4486,7 +4486,7 @@
         },
         {
           "scid": "mn1:172-194.28",
-          "pli": "Tasmātiha, bhikkhave, ‘tathāgato sabbaso taṇhānaṃ khayā virāgā nirodhā cāgā paṭinissaggā anuttaraṃ sammāsambodhiṃ abhisambuddho’ti vadāmī”ti. ",
+          "pli": "Tasmātiha, bhikkhave, ‘tathāgato sabbaso taṇhānaṁ khayā virāgā nirodhā cāgā paṭinissaggā anuttaraṁ sammāsambodhiṁ abhisambuddho’ti vadāmī”ti. ",
           "en": "That’s why the Realized One—with the ending, fading away, cessation, giving up, and letting go of all cravings—has awakened to the supreme perfect Awakening, I say.” ",
           "matched": true
         },
@@ -4504,13 +4504,13 @@
         },
         {
           "scid": "mn1:172-194.31",
-          "pli": "Na te bhikkhū bhagavato bhāsitaṃ abhinandunti. ",
+          "pli": "Na te bhikkhū bhagavato bhāsitaṁ abhinandunti. ",
           "en": "But the mendicants were not happy with what the Buddha said. ",
           "matched": true
         },
         {
           "scid": "mn1:172-194.32",
-          "pli": "Mūlapariyāyasuttaṃ niṭṭhitaṃ paṭhamaṃ. ",
+          "pli": "Mūlapariyāyasuttaṁ niṭṭhitaṁ paṭhamaṁ. ",
           "matched": true
         }
       ],
