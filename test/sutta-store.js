@@ -981,7 +981,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("createPlaylist(opts) creates playlist", function(done) {
+    it("TESTTESTcreatePlaylist(opts) creates playlist", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
             var playlist = await store.createPlaylist({ 
@@ -998,7 +998,7 @@
                 tracks: 4,
                 chars: {
                     en: 3124,
-                    pli: 2408,
+                    pli: 2410,
                 },
                 duration: 490,
                 segments: {
@@ -1023,7 +1023,7 @@
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
                 chars: {
-                    pli: 2408,
+                    pli: 2410,
                 },
                 duration: 220,
                 segments: {
@@ -1071,7 +1071,7 @@
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
                 chars: {
-                    pli: 2408,
+                    pli: 2410,
                 },
                 duration: 220,
                 segments: {
