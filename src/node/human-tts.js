@@ -74,7 +74,8 @@
                 VoiceId: that.voice,
                 LanguageCode: that.language,
             }
-            logger.info(`HumanTts.serviceSynthesize(${this.voice}) ${JSON.stringify(request)}`);
+            logger.info(`HumanTts.serviceSynthesize(`+
+                `${this.voice}) ${JSON.stringify(request)}`);
 
             that.synthesizeResponse(resolve, reject, request);
         }
@@ -93,10 +94,12 @@
             } = opts;
             var that = this;
             if (segment == null) {
-                return Promise.reject(new Error(`synthesizeSegment() segment is required`));
+                return Promise.reject(new Error(
+                    `synthesizeSegment() segment is required`));
             }
             if (language == null) {
-                return Promise.reject(new Error(`synthesizeSegment() language is required`));
+                return Promise.reject(new Error(
+                    `synthesizeSegment() language is required`));
             }
             downloadAudio = !(downloadAudio === false);
             altTts = altTts || this.altTts;
@@ -124,14 +127,15 @@
                 language,
                 author,
                 reader: voice,
-                volume,
+                volume, // TODO remove
                 scAudioVersion: SCAudio.VERSION,
             };
             var result = {
                 signature,
             }
             var guid = signature[mj.hashTag] = mj.hash(signature);
-            var audioPath = soundStore.signaturePath(signature, scAudio.extSeg); // .webm
+            var audioPath = soundStore
+                .signaturePath(signature, scAudio.extSeg); // .webm
             var soundPath = soundStore.signaturePath(signature); // .mp3
             var stats = fs.existsSync(soundPath) && fs.statSync(soundPath);
             if (stats && stats.size > this.ERROR_SIZE) {
@@ -140,8 +144,8 @@
             }
             usage = usage || this.usage;
             var text = segment[language.split('-')[0]] || '(no text)';
-            var altVolume = altTts && SoundStore.suttaVolumeName(suttaSegId, language, 
-                    translator, altTts.voice);
+            var altVolume = altTts && SoundStore.suttaVolumeName(
+                suttaSegId, language, translator, altTts.voice);
             var altArgs = {
                 scid,
                 language,
@@ -163,16 +167,18 @@
                             resolve(result);
                         } else {
                             result.file = noAudioPath;
-                            reject(new Error(
-                                `no ${language} audio file:${soundPath} for:${suttaSegId}`
+                            reject(new Error(`no ${language} audio `+
+                                `file:${soundPath} for:${suttaSegId}`
                             ));
                         }
                     } catch(e) {
                         if (altTts == null) {
-                            logger.warn('synthesizeSegment() failed with no altTts');
+                            logger.warn('synthesizeSegment() failed `+
+                                `with no altTts');
                             reject(e);
                         } else {
-                            var resAlt = await altTts.synthesizeText(text, altArgs);
+                            var resAlt = await altTts
+                                .synthesizeText(text, altArgs);
                             resAlt.altTts = altTts.voice;
                             resolve(resAlt);
                         }

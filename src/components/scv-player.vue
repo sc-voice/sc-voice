@@ -528,10 +528,15 @@ export default {
         },
         langText(){
             var lang = this.language;
-            return this.segment && this.segment[lang] ||
-                this.loading && 
-                    this.$vuetify.lang.t('$vuetify.auth.loading') ||
-                this.$vuetify.lang.t('$vuetify.scv.noTranslationAvailable');
+            var {
+              language,
+              segment,
+              loading,
+              $vuetify,
+            } = this;
+            return segment && segment[language] ||
+                loading && $vuetify.lang.t('$vuetify.auth.loading') || 
+                ' ';
         },
         segmentsElapsed(){
             var {
