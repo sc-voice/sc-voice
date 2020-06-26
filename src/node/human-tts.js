@@ -173,8 +173,8 @@
                         }
                     } catch(e) {
                         if (altTts == null) {
-                            logger.warn('synthesizeSegment() failed `+
-                                `with no altTts');
+                            logger.warn(`synthesizeSegment() failed `+
+                                `with no altTts`);
                             reject(e);
                         } else {
                             var resAlt = await altTts
