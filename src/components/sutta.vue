@@ -30,32 +30,31 @@ style="width:100%; margin-top:0"/>
               {{$vuetify.lang.t('$vuetify.scv.inspireMe')}}
             </v-btn>
           </div>
-          <div class="scv-sutta-menubar mb-3"
-            v-if="waiting<=0 && sutta_uid && !searchResults && gscv.voices.length">
+          <div class="scv-sutta-menubar mb-3" v-if="showSuttaMenuBar">
             <div>
-                <v-btn icon small fab
-                    @click="playSearchText()"
-                    :title="$vuetify.lang.t('$vuetify.scv.speakSearchText')"
-                    :disabled="!playSearch.signature"
-                    class="scv-icon-btn" :style="cssVars" >
-                    <v-icon>chat_bubble_outline</v-icon>
-                </v-btn>
-                <v-btn icon small fab
-                    :disabled="waiting > 0"
-                    @click="launchSuttaPlayer()"
-                    ref="refPlaySutta"
-                    :aria-label="ariaPlaySutta(resultId(), stats.seconds)"
-                    class="scv-icon-btn" :style="cssVars" >
-                    <v-icon>play_circle_outline</v-icon>
-                </v-btn>
-                <v-btn icon
-                    :href="downloadUrl()"
-                    @click="downloadClick()"
-                    :aria-label="`${ariaDownload} ${resultId()}`"
-                    type="audio/mp3"
-                    class="scv-icon-btn" :style="cssVars" small>
-                    <v-icon>arrow_downward</v-icon>
-                </v-btn>
+              <v-btn icon small fab
+                @click="playSearchText()"
+                :title="$vuetify.lang.t('$vuetify.scv.speakSearchText')"
+                :disabled="!playSearch.signature"
+                class="scv-icon-btn" :style="cssVars" >
+                <v-icon>chat_bubble_outline</v-icon>
+              </v-btn>
+              <v-btn icon small fab
+                  :disabled="waiting > 0"
+                  @click="launchSuttaPlayer()"
+                  ref="refPlaySutta"
+                  :aria-label="ariaPlaySutta(resultId(), stats.seconds)"
+                  class="scv-icon-btn" :style="cssVars" >
+                  <v-icon>play_circle_outline</v-icon>
+              </v-btn>
+              <v-btn icon
+                  :href="downloadUrl()"
+                  @click="downloadClick()"
+                  :aria-label="`${ariaDownload} ${resultId()}`"
+                  type="audio/mp3"
+                  class="scv-icon-btn" :style="cssVars" small>
+                  <v-icon>arrow_downward</v-icon>
+              </v-btn>
             </div>
             <div class="mt-2" aria-hidden='true'>
                 {{duration(stats.seconds).display}}
@@ -499,7 +498,7 @@ export default {
                 console.error(e.stack);
             });
           } else {
-            //console.log(`dbg updatePlaySearch ${search}: n/a `);
+            console.log(`dbg updatePlaySearch ${search}: n/a `);
           }
         },
         playSearchText() {
@@ -1174,6 +1173,12 @@ export default {
         },
         ariaDownload() {
             return this.$vuetify.lang.t("$vuetify.scv.ariaDownload");
+        },
+        showSuttaMenuBar() {
+            return this.waiting<=0 && 
+              this.sutta_uid && 
+              !this.searchResults && 
+              this.gscv.voices.length;
         },
     },
     mounted() {

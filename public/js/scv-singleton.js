@@ -47,6 +47,9 @@
     };
 
     const WEB_LANGUAGES = [{
+        name: 'cs',
+        label: 'Čeština / CS',
+    }, {
         name: 'da',
         label: 'Dansk / DA',
     }, {
@@ -82,6 +85,9 @@
     }, {
         name: 'ro',
         label: 'Română / RO',
+    }, {
+        name: 'si',
+        label: 'සිංහල / SI',
     }, {
         name: 'vi',
         label: 'Tiếng Việt / VI',

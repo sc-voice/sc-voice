@@ -39,7 +39,7 @@
           :disabled="loading || !paused"
           always-dirty
           class="pl-4 pr-4"
-          :label="`${iSegment+1}/${section && section.segments.length || '--'}`"
+          :label="sliderThumbLabel"
           inverse-label
           height="16"
           :max="section && section.segments.length-1 || 0"
@@ -527,7 +527,6 @@ export default {
                 "(...)";
         },
         langText(){
-            var lang = this.language;
             var {
               language,
               segment,
@@ -578,6 +577,15 @@ export default {
         introAudioUrl() {
             var ips = this.ipsChoices[this.gscv.ips];
             return ips && ips.url;
+        },
+        sliderThumbLabel() {
+          var curSeg = this.iSegment+1;
+          var nSegs = this.section && this.section.segments.length;
+
+          return [
+            `${curSeg}/`,
+            `${nSegs || '--'}`,
+          ].join('');
         },
     },
     beforeUpdate() {
