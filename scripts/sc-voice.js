@@ -42,7 +42,7 @@ app.all('*', function(req, res, next) {
 });
 
 app.get('/scv/auth/*',
-    jwt({secret: ScvRest.JWT_SECRET}),
+    jwt({secret: ScvRest.JWT_SECRET, algorithms:['HS256']}),
     (req, res, next) => {
         logger.debug(`authenticated path:${req.path}`);
         next();
