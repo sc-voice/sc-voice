@@ -109,55 +109,56 @@
             }
             this.isInitialized = true;
             var that = this;
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    await that.suttaFactory.initialize();
-                    if (!fs.existsSync(that.root)) {
-                        fs.mkdirSync(that.root);
-                    }
+            var pbody = (resolve, reject) => {(async function() { try {
+                await that.suttaFactory.initialize();
+                if (!fs.existsSync(that.root)) {
+                    fs.mkdirSync(that.root);
+                }
 
-                    var suttaIds = supportedSuttas[that.root];
-                    if (suttaIds == null) {
-                        var sp = suttaPaths[that.root];
-                        if (sp == null) {
-                            var cmd = `find . -name '*.json'`;
-                            var findOpts = {
-                                cwd: that.root,
-                                shell: '/bin/bash',
-                                maxBuffer,
-                            };
-                            var sp = await new Promise((resolve, reject) => {
-                                exec(cmd, findOpts, (err,stdout,stderr) => {
-                                    if (err) {
-                                        logger.log(stderr);
-                                        reject(err);
-                                    } else {
-                                        resolve(stdout && stdout.trim().split('\n') || []);
-                                    }
-                                });
+                var suttaIds = supportedSuttas[that.root];
+                if (suttaIds == null) {
+                    var sp = suttaPaths[that.root];
+                    if (sp == null) {
+                        var cmd = `find . -name '*.json'`;
+                        var findOpts = {
+                            cwd: that.root,
+                            shell: '/bin/bash',
+                            maxBuffer,
+                        };
+                        var sp = await new Promise((resolve, reject) => {
+                            exec(cmd, findOpts, (err,stdout,stderr) => {
+                                if (err) {
+                                    logger.log(stderr);
+                                    reject(err);
+                                } else {
+                                    resolve(stdout && 
+                                        stdout.trim().split('\n') || []);
+                                }
                             });
-                            if (sp.length === 0) {
-                                throw new Error(`SuttaStore.initialize() `+
-                                    `no sutta files:${that.root}`);
-                            }
-                            suttaPaths[that.root] = sp;
+                        });
+                        if (sp.length === 0) {
+                            throw new Error(`SuttaStore.initialize() `+
+                                `no sutta files:${that.root}`);
                         }
-
-                        // eliminate multi-lingual duplicates
-                        var uids = sp.reduce((acc,sp) => { 
-                            var uid = sp.replace(/.*\//,'').replace('.json','');
-                            acc[uid] = true;
-                            return acc;
-                        },{});
-                        suttaIds = supportedSuttas[that.root] = 
-                            Object.keys(uids).sort(SuttaCentralId.compareLow);
+                        suttaPaths[that.root] = sp;
                     }
-                    that.suttaIds = that.suttaIds || suttaIds;
-                    await that.seeker.initialize();
 
-                    resolve(that);
-                } catch(e) {reject(e);} })();
-            });
+                    // eliminate multi-lingual duplicates
+                    var uids = sp.reduce((acc,sp) => { 
+                        var uid = sp.replace(/.*\//,'')
+                            .replace('.json','');
+                        acc[uid] = true;
+                        return acc;
+                    },{});
+                    suttaIds = supportedSuttas[that.root] = 
+                        Object.keys(uids).sort(SuttaCentralId.compareLow);
+                }
+                that.suttaIds = that.suttaIds || suttaIds;
+                await that.seeker.initialize();
+
+                resolve(that);
+            } catch(e) {reject(e);} })(); };
+            return new Promise(pbody);
         }
 
         suttaFolder(sutta_uid) {
@@ -167,7 +168,8 @@
                 return acc || key===group && c.folder;
             }, null);
             if (!folder) {
-                throw new Error(`unsupported sutta:${sutta_uid} group:${group}`);
+                throw new Error(
+                    `unsupported sutta:${sutta_uid} group:${group}`);
             }
             var fpath = path.join(this.root, folder);
             if (!fs.existsSync(fpath)) {
@@ -189,7 +191,8 @@
                     author_uid: args[2],
                 }
             }
-            var sutta_uid = SuttaCentralId.normalizeSuttaId(opts.sutta_uid);
+            var sutta_uid = SuttaCentralId
+                .normalizeSuttaId(opts.sutta_uid);
             if (!sutta_uid) {
                 throw new Error('sutta_uid is required');
             }
@@ -201,7 +204,8 @@
             }
             var author_uid = opts.author_uid;
             if (!author_uid) {
-                throw new Error(`author_uid is required for: ${sutta_uid}`);
+                throw new Error(
+                    `author_uid is required for: ${sutta_uid}`);
             }
             var authorPath = path.join(langPath, author_uid);
             if (!fs.existsSync(authorPath)) {
@@ -214,7 +218,8 @@
         }
 
         static isUidPattern(pattern) {
-            var commaParts = pattern.toLowerCase().split(',').map(p=>p.trim());
+            var commaParts = pattern.toLowerCase().split(',')
+                .map(p=>p.trim());
             return commaParts.reduce((acc,part) => {
                 return acc && /^[a-z]+ ?[0-9]+[-0-9a-z.:\/]*$/i.test(part);
             }, true);
@@ -227,7 +232,8 @@
             const MAX_PATTERN = 1024;
             var excess = pattern.length - MAX_PATTERN;
             if (excess > 0) {
-                throw new Error(`Search text too long by ${excess} characters.`);
+                throw new Error(
+                    `Search text too long by ${excess} characters.`);
             }
             // replace quotes (code injection on grep argument)
             pattern = pattern.replace(/["']/g,'.'); 
@@ -248,7 +254,6 @@
             return pattern;
         }
 
-        
         static paliPattern(pattern) {
             return /^[a-z]+$/i.test(pattern) 
                 ? pattern

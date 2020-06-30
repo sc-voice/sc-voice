@@ -177,7 +177,7 @@ export default {
     bellRainforest: "Rainforest Ambience (Glory Sunz: Public Domain)",
     bellSimple: "Simple Bell (Public Domain)",
     bellSound: "Bell Sound",
-    bellTibetan: "Tibetan Singin Bowl (Horst: CC0)",
+    bellTibetan: "Tibetan Singing Bowl (Horst: CC0)",
     dedicated: "To the dark bound for light",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "Download completed:",

@@ -986,7 +986,8 @@ export default {
         },
         ariaPlaySutta(resultId, seconds) {
             var search = this.search.toLocaleUpperCase();
-            var suttaId = resultId.replace(PAT_ZWS_ug,'').toLocaleUpperCase();
+            var suttaId = resultId.replace(PAT_ZWS_ug,'')
+              .toLocaleUpperCase();
             var point = this.$vuetify.lang.t('$vuetify.scv.point');
             var duration = this.duration(seconds).aria;
             var tmplt = this.$vuetify.lang.t('$vuetify.scv.ariaPlaySutta');
