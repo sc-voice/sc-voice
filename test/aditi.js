@@ -203,4 +203,12 @@
             done();
         } catch(e) {done(e)}})();
     });
+    it("TESTTESTtokensSSML(text) handles kaya-", done=>{
+        (async function(){try{
+            var aditi = Voice.createVoice(ADITI_OPTS);
+            var res = await aditi.speak("kayavikkayā");
+            should(res.signature.text).match(/"kə \'jə v\\ɪk kə jɑː"/);
+            done();
+        } catch(e) {done(e)}})();
+    });
 })
