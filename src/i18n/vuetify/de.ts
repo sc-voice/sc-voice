@@ -219,9 +219,9 @@ export default {
     uiLanguage: "Webseitensprache",
     wikiAria: "Home@Deutsch.md",
     noTranslationAvailable: "(keine Übersetzung verfügbar)",
-    playAll: "Play all",
-    downloadPlaylist: "Download playlist",
-    showLineByLine: "Show line by line",
+    playAll: "Alle wiedergeben",
+    downloadPlaylist: "Wiedergabeliste herunterladen",
+    showLineByLine: "Zeile für Zeile darstellen",
 
   },
 }
