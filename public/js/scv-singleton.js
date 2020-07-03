@@ -115,6 +115,7 @@
 
             this.scid = null;
             this.showLang = this.SHOWLANG_BOTH;
+            this.fullLine = false;
             this.search = null;
             this.maxResults = 5;
             this.ips = 6;
@@ -316,6 +317,7 @@
                         cookie.set( "lang", this.lang, EXPIRES);
                         cookie.set( "maxResults", this.maxResults, EXPIRES);
                         cookie.set( "showLang", this.showLang, EXPIRES);
+                        cookie.set( "fullLine", this.fullLine, EXPIRES);
                         cookie.set( "locale", this.locale, EXPIRES);
                         cookie.set( "ips", this.ips, EXPIRES);
                         cookie.set( "useCookies", this.useCookies, EXPIRES);
@@ -401,6 +403,8 @@
                         (this.vnameRoot = query.vnameRoot);
                     query.maxResults &&
                         (this.maxResults = Number(query.maxResults));
+                    query.fullLine && 
+                        (this.fullLine = !!query.fullLine);
                     query.showLang && 
                         (this.showLang = Number(query.showLang||0));
                     query.ips != null &&

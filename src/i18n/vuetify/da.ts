@@ -219,6 +219,7 @@ export default {
     noTranslationAvailable: "(ingen oversættelse tilgængelig)",
     playAll: "Play all",
     downloadPlaylist: "Download playlist",
+    showLineByLine: "Show line by line",
 
   }
 }

@@ -111,6 +111,7 @@
             vnameRoot: 'Aditi',
             scid: null,
             showLang: scv.SHOWLANG_BOTH,
+            fullLine: false,
             search: null,
             maxResults: 5,
             ips: 6,
@@ -118,6 +119,7 @@
         });
         scv.mounted(mockVueRoot);
         should.deepEqual(Object.keys(scv).sort(), [
+            "fullLine",
             "showId",
             "vnameTrans",
             "vnameRoot",
@@ -188,6 +190,7 @@
         scv.useCookies = true;
         scv.changed('useCookies');
         should.deepEqual(mockVueRoot.$cookie, {
+            fullLine: "false",
             otherCookie: 'hello',
             ips: "6",
             maxResults: "5",
@@ -203,8 +206,11 @@
         // save one property
         scv.maxResults = 6;
         scv.ips = 5;
+        scv.fullLine = true;
+        scv.changed('fullLine');
         scv.changed('maxResults');
         should.deepEqual(mockVueRoot.$cookie, {
+            fullLine: "true",
             otherCookie: 'hello',
             ips: "6",
             maxResults: "6",
@@ -233,7 +239,8 @@
 
         // default is to use own properties
         should(scv.hash()).equal([
-            "#/?ips=6",
+            "#/?fullLine=false",
+            "ips=6",
             "lang=en",
             "locale=en",
             "maxResults=5",
@@ -247,7 +254,8 @@
         should(scv.hash({
             maxResults: 6,
         })).equal([
-            "#/?ips=6",
+            "#/?fullLine=false",
+            "ips=6",
             "lang=en",
             "locale=en",
             "maxResults=6",
@@ -262,7 +270,8 @@
         should(scv.hash({
             maxResults: 2,
         })).equal([
-            "#/?ips=6",
+            "#/?fullLine=false",
+            "ips=6",
             "lang=en",
             "locale=en",
             "maxResults=2",
@@ -319,7 +328,8 @@
 
         // default
         should(scv.url()).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?fullLine=false",
+            "ips=6",
             "lang=en",
             "locale=en",
             "maxResults=5",
@@ -331,7 +341,8 @@
         should(scv.url({
             maxResults: 6,
         })).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?fullLine=false",
+            "ips=6",
             "lang=en",
             "locale=en",
             "maxResults=6",
@@ -347,7 +358,8 @@
         // default
         scv.reload();
         should(g.window.location.href).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?fullLine=false",
+            "ips=6",
             "lang=en",
             "locale=en",
             "maxResults=5",
@@ -363,7 +375,8 @@
             lang: 'de',
         });
         should(g.window.location.href).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?ips=6",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?fullLine=false",
+            "ips=6",
             "lang=de",
             "locale=en",
             "maxResults=9",

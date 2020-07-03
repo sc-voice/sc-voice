@@ -1038,9 +1038,10 @@ export default {
           var {
             showPali,
             showTrans,
+            fullLine,
           } = this;
           var wide = window.innerWidth > 600;
-          var segTextWidth = wide && showPali && showTrans 
+          var segTextWidth = !fullLine && wide && showPali && showTrans 
             ? "48%" : "100%";
           return segTextWidth;
         },
@@ -1064,6 +1065,9 @@ export default {
         },
         downloadFile() {
             return `${this.sutta_uid}`;
+        },
+        fullLine() {
+            return this.gscv && this.gscv.fullLine;
         },
         showPali( ){
           var showLang = this.gscv && this.gscv.showLang || 0;

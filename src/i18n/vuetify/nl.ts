@@ -220,6 +220,7 @@ export default {
     noTranslationAvailable: "(geen vertaling beschikbaar)",
     playAll: "Play all",
     downloadPlaylist: "Download playlist",
+    showLineByLine: "Show line by line",
 
   }
 }

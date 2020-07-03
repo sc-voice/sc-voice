@@ -219,6 +219,7 @@ export default {
     noTranslationAvailable: "(aucune traduction disponible",
     playAll: "Play all",
     downloadPlaylist: "Download playlist",
+    showLineByLine: "Show line by line",
 
   }
 }

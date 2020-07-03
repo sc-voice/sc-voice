@@ -12,6 +12,7 @@
         SuttaStore,
         Words,
     } = require('../index');
+    this.timeout(10*1000);
 
     var segments = [{ // 0
         scid: 's:0.1',

@@ -84,6 +84,11 @@
               v-on:change="gscv.changed('showLang')"
               :label="$vuetify.lang.t('$vuetify.scv.showTransText')"
               />
+            <v-checkbox v-model="fullLine" role="checkbox"
+              :aria-checked="fullLine"
+              v-on:change="gscv.changed('fullLine')"
+              :label="$vuetify.lang.t('$vuetify.scv.showLineByLine')"
+              />
             <div class="subheading scv-settings-subtitle">
               {{$vuetify.lang.t('$vuetify.scv.transLanguage')}}
             </div>
@@ -414,6 +419,16 @@ export default {
                     break;
                 }
             },
+        },
+        fullLine: {
+          get: function() {
+            let gscv = this.gscv;
+            return gscv.fullLine;
+          },
+          set: function(value) {
+            let gscv = this.gscv;
+            Vue.set(gscv, "fullLine", value);
+          },
         },
         showTrans: {
             get: function() {

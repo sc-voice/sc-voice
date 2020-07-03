@@ -220,6 +220,7 @@ export default {
     noTranslationAvailable: "(nici o traducere disponibilă)",
     playAll: "Play all",
     downloadPlaylist: "Download playlist",
+    showLineByLine: "Show line by line",
 
   }
 }

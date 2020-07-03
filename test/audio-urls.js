@@ -7,7 +7,7 @@
 
     //const TEST_ROOT = 'https://raw.githubusercontent.com/sujato/sc-audio/master/flac';
     const TEST_ROOT = `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`;
-    this.timeout(15*1000);
+    this.timeout(30*1000);
 
     it("AudioUrls(...) creates an audio url map", function() {
         var audio = new AudioUrls();

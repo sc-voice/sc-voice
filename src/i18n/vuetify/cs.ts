@@ -219,6 +219,7 @@ export default {
     noTranslationAvailable: "(žádný překlad k dispozici)",
     playAll: "Přehraj vše",
     downloadPlaylist: "Stáhni seznam zvukových záznamů",
+    showLineByLine: "Show line by line",
 
   }
 }
