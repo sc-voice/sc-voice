@@ -41,7 +41,7 @@ export default {
     accessKeyId: 'පරිශීලක හඳුනාගැනීමේ යන්ත්‍රය',
     addUser: 'පරිශීලකයෙකු එක් කරන්න',
     administrator: 'පරිපාලකයා',
-    applicationName: 'අයදුම්පත් නාමය',
+    applicationName: 'යෙදුමෙහි නම',
     author: 'කර්තෘ',
     bucket: 'බඳුන',
     buildVsm: 'VSM එක තනන්න',
