@@ -106,7 +106,7 @@
             data[2].guid,
         ]);
     });
-    it("clearEphemeral(opts) clears old ephemeral files", ()=>{
+    it("clearEphemeral(opts) removes ephemeral files (MAY FAIL)", ()=>{
         var storePath = tmp.tmpNameSync();
         var store = new SoundStore({
             suffixes: ['.txt'],
