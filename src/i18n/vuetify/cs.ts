@@ -220,6 +220,7 @@ export default {
     playAll: "Přehraj vše",
     downloadPlaylist: "Stáhni seznam zvukových záznamů",
     showLineByLine: "Show line by line",
+    playSection: "Play Section",
 
   }
 }

@@ -303,7 +303,8 @@ style="width:100%; margin-top:0"/>
                 class="scv-text-button mt-3"
                 :style="cssVars"
                 >
-                Play Section {{i+2}} ({{voice.name}})
+                {{playSectionText(i+2)}}
+                ({{voice.name}})
             </button>
         </div>
         <div v-if="error[i+1]" class="scv-error"
@@ -404,6 +405,10 @@ export default {
         return that;
     },
     methods: {
+        playSectionText(section) {
+          var tmplt = this.$vuetify.lang.t("$vuetify.scv.playSection");
+          return tmplt.replace('A_SECTION', section);
+        },
         focusMore(focus) {
             this.moreFocus = focus;
             setTimeout(()=>{
