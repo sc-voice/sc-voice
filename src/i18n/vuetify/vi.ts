@@ -221,6 +221,6 @@ export default {
     playAll: "Play all",
     downloadPlaylist: "Download playlist",
     showLineByLine: "Show line by line",
-    playSection: "Play Section",
+    playSection: "Play Section A_SECTION",
   }
 }
