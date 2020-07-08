@@ -222,7 +222,7 @@ export default {
     playAll: "Alle wiedergeben",
     downloadPlaylist: "Wiedergabeliste herunterladen",
     showLineByLine: "Zeile für Zeile darstellen",
-    playSection: "Abschnitt A_SECTION Spielen",
+    playSection: "Abschnitt A_SECTION wiedergeben",
 
   },
 }
