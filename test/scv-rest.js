@@ -473,7 +473,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles large segment", done=>{
+    it("TESTTESTGET /play/segment/... handles large segment", done=>{
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var scid = "an2.281-309:1.1";
@@ -497,7 +497,7 @@
             should(data.segment.audio.en)
                 .match(/4341471c187e12334475901a9599698c/);
             should(data.segment.audio.pli)
-                .match(/7bd718c9fbda06ab56b2d09a05776353/);
+                .match(/6abd757a1f571ac3ed73eae08484b871/);
 
             done();
         } catch(e) {done(e);} })();
@@ -541,7 +541,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles HumanTts sn1.9", done=>{
+    it("TESTTESTGET /play/segment/... handles HumanTts sn1.9", done=>{
         (async function() { try {
             var scid = "sn1.9:1.1";
             var sutta_uid = scid.split(":")[0];
@@ -569,7 +569,7 @@
             //should(data.section).equal(1);
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
-            should(data.segment.pli).match(/^Sāvatthinidānaṁ/);
+            should(data.segment.pli).match(/Sāvatthi­nidānaṁ./);
             should(data.segment.audio.en)
                 .match(/e5f5e2ec93f9f41908924177d5ee63ca/);
             should(data.segment.audio.pli)
@@ -579,7 +579,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles HumanTts sn12.1", function(done) {
+    it("TESTTESTGET /play/segment/... handles HumanTts sn12.1", function(done) {
         (async function() { try {
             var scid = "sn12.1:1.2";
             var sutta_uid = scid.split(":")[0];
@@ -606,11 +606,12 @@
             should(data.vnameRoot).equal('sujato_pli');
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
-            should(data.segment.pli).match(/samayaṁ bhagavā sāvatthiyaṁ/);
+            should(data.segment.pli)
+                .match(/ekaṁ samayaṁ bhagavā sāvat­thiyaṁ /);
             should(data.segment.audio.en)
                 .match(/d0a8567a6fca2fbeaa5d14e610304826/);
             should(data.segment.audio.pli)
-                .match(/a11ebc9a6bbe583d36e375ca163b6351/);
+                .match(/af3c6650dc1f400443542efda25c848b/);
             should(data.segment.audio.vnamePali).equal('Aditi');
 
             done();
@@ -1102,6 +1103,27 @@
                 summary: 'Update completed',
             });
             should(res.body.elapsed).above(0);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTGET /play/segment/... => hyphenates", done=>{
+        (async function() { try {
+            await new Promise(resolve=>setTimeout(()=>resolve(),1000));
+            var voicename = 'Matthew';
+            var scid = "mn142:4.3";
+            var url = 
+                `/scv/play/segment/mn142/en/sujato/${scid}/${voicename}`;
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer 
+                ? JSON.parse(res.body) : res.body;
+            should.deepEqual(data.segment.pli.split('\u00ad'), [
+                `abhivādanapaccuṭṭhānaañjali`,
+                `kammasāmīcikammacīvarapiṇḍa`,
+                `pātasenāsanagilānappaccayabhe`,
+                `sajjaparikkhārānuppadānena. `,
+            ]);
 
             done();
         } catch(e) {done(e);} })();

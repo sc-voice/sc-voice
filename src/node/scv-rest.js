@@ -8,6 +8,9 @@
     const jwt = require('jsonwebtoken');
     const tmp = require('tmp');
     const {
+        Pali,
+    } = require("scv-bilara");
+    const {
         logger,
         RestBundle,
         UserStore,
@@ -381,10 +384,16 @@
                     }
                     var section = sutta.sections[iSection];
                     var segments = [];
+                    var pali = new Pali();
                     var sectSegs = section.segments;
                     for (var iSeg = 0; iSeg < sectSegs.length; iSeg++) {
                         var segment = Object.assign({}, sectSegs[iSeg]);
                         segment.audio = {};
+                        if (segment.pli) {
+                            segment.pli = segment.pli.split(' ')
+                                .map(w => pali.hyphenate(w))
+                                .join(' ');
+                        }
                         segments.push(segment);
                     }
                     resolve({
@@ -467,6 +476,10 @@
                     segment.audio.vnameTrans = resSpeak.altTts;
                 }
                 if (segment.pli) {
+                    var pali = new Pali();
+                    segment.pli = segment.pli.split(' ')
+                        .map(w => pali.hyphenate(w))
+                        .join(' ');
                     var resSpeak = await voiceRoot.speakSegment({
                         sutta_uid,
                         segment,
@@ -605,13 +618,18 @@
                 pattern,
                 language,
                 maxResults,
+                hyphenate: 'pli',
             });
             promise.then(sr => {
                 var {
                     method,
                     results,
+                    mlDocs,
                 } = sr;
-                logger.info(`GET search(${pattern}) ${method} => ${results.map(r=>r.uid)}`);
+                logger.info([
+                    `GET search(${pattern}) ${method}`,
+                    `=> ${results.map(r=>r.uid)}`,
+                ].join(' '));
             });
             return promise;
         }

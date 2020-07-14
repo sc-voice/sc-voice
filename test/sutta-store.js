@@ -587,7 +587,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) finds exact Pali", function(done) {
+    it("search(pattern) finds exact Pali", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
             var res = await store.search('abhisambuddhā');
@@ -981,7 +981,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTcreatePlaylist(opts) creates playlist", function(done) {
+    it("createPlaylist(opts) creates playlist", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
             var playlist = await store.createPlaylist({ 
@@ -1249,7 +1249,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("loadSutta(...) returns scv-bilara sutta", function(done) {
+    it("TESTTESTloadSutta(...) returns scv-bilara sutta", function(done) {
         (async function() { try {
             var voice = Voice.createVoice('Amy');
             var suttaCentralApi = await new SuttaCentralApi().initialize();

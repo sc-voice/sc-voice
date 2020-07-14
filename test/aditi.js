@@ -203,7 +203,7 @@
             done();
         } catch(e) {done(e)}})();
     });
-    it("TESTTESTtokensSSML(text) handles kaya-", done=>{
+    it("tokensSSML(text) handles kaya-", done=>{
         (async function(){try{
             var aditi = Voice.createVoice(ADITI_OPTS);
             var res = await aditi.speak("kayavikkayā");

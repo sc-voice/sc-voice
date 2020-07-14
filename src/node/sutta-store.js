@@ -286,7 +286,7 @@
                 `|grep -v ':0'`+
                 `|sort -g -r -k 2,2 -k 1,1 -t ':'`;
             maxResults && (cmd += `|head -${maxResults}`);
-            this.log(`search() ${cmd}`);
+            this.log(`grep() ${cmd}`);
             var opts = {
                 cwd: this.root,
                 shell: '/bin/bash',
@@ -947,6 +947,7 @@
                     maxResults: args[1],
                 };
             }
+            var hyphenate = opts.hyphenate;
             var pattern = SuttaStore.sanitizePattern(opts.pattern);
             var lang = opts.language || 'en';
             var maxDoc = opts.maxResults==null 
@@ -973,6 +974,9 @@
                 bdres.results = [];
                 for (var i = 0; i < bdres.mlDocs.length; i++) {
                     var mld = bdres.mlDocs[i];
+                    if (hyphenate === 'pli') {
+                        mld.hyphenate();
+                    }
                     var mldRes = await that.mldResult(mld, lang);
                     bdres.results.push(mldRes);
                 }

@@ -152,6 +152,7 @@ export default {
             promise.then(res => {
                 this.stopProgress();
                 this.section = res.data;
+                console.log("dbg section", res.data);
                 this.$nextTick(() => {
                     var playBtn = this.$refs.refPlay.$el;
                     playBtn.focus();
