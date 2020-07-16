@@ -106,6 +106,7 @@ fi
 echo -e "INIT\t: fetching latest bilara-data..."
 pushd local/bilara-data
 git pull
+git checkout unpublished
 popd
 
 if [ "$REBOOT" == "y" ]; then
