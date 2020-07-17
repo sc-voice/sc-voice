@@ -38,7 +38,7 @@
     const LOCAL = path.join(__dirname, '../../local');
     const PATH_SOUNDS = path.join(LOCAL, 'sounds/');
     const PATH_EXAMPLES = path
-        .join(LOCAL, `bilara-data`, `.voice`, `examples/`);
+        .join(LOCAL, `bilara-data`, `.helpers`, `examples/`);
     const DEFAULT_USER = {
         username: "admin",
         isAdmin: true,
