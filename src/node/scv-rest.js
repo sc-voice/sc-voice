@@ -1379,7 +1379,8 @@
                     that.requireAdmin(req, res, "POST update-content");
                     if (nikayas instanceof Array) {
                         if (suids != null) {
-                            logger.warn(`Ignoring provided suids:${suids}`);
+                            logger.warn(
+                                `Ignoring provided suids:${suids}`);
                         }
                         suids = [];
                         for (var i = 0; i < nikayas.length; i++) {

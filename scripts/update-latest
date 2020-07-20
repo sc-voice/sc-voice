@@ -105,8 +105,16 @@ if [ ! -e local/bilara-data ]; then
 fi
 echo -e "INIT\t: fetching latest bilara-data..."
 pushd local/bilara-data
-git pull
-git checkout unpublished
+BRANCH=unpublished
+if git checkout $BRANCH >& /dev/null; then
+  echo -e "BILARA\t: on $BRANCH branch" 
+else
+  echo -e "BILARA\t: fetching $BRANCH branch" 
+  git track --track origin/$BRANCH $BRANCH
+  git checkout $BRANCH
+fi
+echo -e "BILARA\t: Refreshing $BRANCH fork from Github..." && \
+git pull --rebase 
 popd
 
 if [ "$REBOOT" == "y" ]; then
