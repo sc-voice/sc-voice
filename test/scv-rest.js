@@ -497,7 +497,7 @@
             should(data.segment.audio.en)
                 .match(/4341471c187e12334475901a9599698c/);
             should(data.segment.audio.pli)
-                .match(/6abd757a1f571ac3ed73eae08484b871/);
+                .match(/7bd718c9fbda06ab56b2d09a05776353/);
 
             done();
         } catch(e) {done(e);} })();
@@ -569,7 +569,7 @@
             //should(data.section).equal(1);
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
-            should(data.segment.pli).match(/Sāvatthi­nidānaṁ./);
+            should(data.segment.pli).match(/Sāvatthinidānaṁ.*/);
             should(data.segment.audio.en)
                 .match(/e5f5e2ec93f9f41908924177d5ee63ca/);
             should(data.segment.audio.pli)
@@ -579,7 +579,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles HumanTts sn12.1", function(done) {
+    it("TESTTESTGET /play/segment/... handles HumanTts sn12.1", done=>{
         (async function() { try {
             var scid = "sn12.1:1.2";
             var sutta_uid = scid.split(":")[0];
@@ -607,11 +607,11 @@
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
             should(data.segment.pli)
-                .match(/ekaṁ samayaṁ bhagavā sāvat­thiyaṁ /);
+                .match(/ekaṁ samayaṁ bhagavā sāvatthiyaṁ.*/);
             should(data.segment.audio.en)
                 .match(/d0a8567a6fca2fbeaa5d14e610304826/);
             should(data.segment.audio.pli)
-                .match(/af3c6650dc1f400443542efda25c848b/);
+                .match(/a11ebc9a6bbe583d36e375ca163b6351/);
             should(data.segment.audio.vnamePali).equal('Aditi');
 
             done();
@@ -1119,10 +1119,23 @@
             var data = res.body instanceof Buffer 
                 ? JSON.parse(res.body) : res.body;
             should.deepEqual(data.segment.pli.split('\u00ad'), [
-                `abhivādanapaccuṭṭhānaañjali`,
-                `kammasāmīcikammacīvarapiṇḍa`,
-                `pātasenāsanagilānappaccayabhe`,
-                `sajjaparikkhārānuppadānena. `,
+                `abhivā`,
+                `danapac`,
+                `cuṭṭhā`,
+                `naañjali`,
+                `kamma`,
+                `sāmīci`,
+                `kamma`,
+                `cīvara`,
+                `piṇḍa`,
+                `pātasenā`,
+                `sanagilā`,
+                `nappacca`,
+                `yabhesajja`,
+                `parik`,
+                `khārānup`,
+                `padā`,
+                `nena. `,
             ]);
 
             done();
