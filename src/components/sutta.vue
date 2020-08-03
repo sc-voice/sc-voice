@@ -403,6 +403,7 @@ export default {
             waiting: 0,
             searchButtons: false,
             hyphenator: new PaliHyphenator({
+              //hyphen: "-",
               maxWord: 20,
               minWord: 5,
             }),
@@ -784,9 +785,13 @@ export default {
             this.tracks = sections.map((sect,i) => {
               var segments = sect.segments;
               segments.forEach(seg=> {
-                if (seg.pali) {
-                  seg.pli = seg.pali.split(" ").map(word=>{
-                    return hyphenator.hyphenate(word);
+                if (seg.pli) {
+                  seg.pli = seg.pli.split(" ").map(word=>{
+                    var hword = hyphenator.hyphenate(word);
+                    if (hword !== word) {
+                      console.log(`dbg hword`, hword);
+                    }
+                    return hword;
                   }).join(" ");
                 }
               });
