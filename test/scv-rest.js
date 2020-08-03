@@ -1107,39 +1107,5 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... => hyphenates", done=>{
-        (async function() { try {
-            await new Promise(resolve=>setTimeout(()=>resolve(),1000));
-            var voicename = 'Matthew';
-            var scid = "mn142:4.3";
-            var url = 
-                `/scv/play/segment/mn142/en/sujato/${scid}/${voicename}`;
-            var res = await supertest(app).get(url);
-            res.statusCode.should.equal(200);
-            var data = res.body instanceof Buffer 
-                ? JSON.parse(res.body) : res.body;
-            should.deepEqual(data.segment.pli.split('\u00ad'), [
-                `abhivā`,
-                `danapac`,
-                `cuṭṭhā`,
-                `naañjali`,
-                `kamma`,
-                `sāmīci`,
-                `kamma`,
-                `cīvara`,
-                `piṇḍa`,
-                `pātasenā`,
-                `sanagilā`,
-                `nappacca`,
-                `yabhesajja`,
-                `parik`,
-                `khārānup`,
-                `padā`,
-                `nena. `,
-            ]);
-
-            done();
-        } catch(e) {done(e);} })();
-    });
 });
 

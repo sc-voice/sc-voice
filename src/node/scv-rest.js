@@ -389,11 +389,6 @@
                     for (var iSeg = 0; iSeg < sectSegs.length; iSeg++) {
                         var segment = Object.assign({}, sectSegs[iSeg]);
                         segment.audio = {};
-                        if (segment.pli) {
-                            segment.pli = segment.pli.split(' ')
-                                .map(w => pali.hyphenate(w))
-                                .join(' ');
-                        }
                         segments.push(segment);
                     }
                     resolve({
@@ -477,9 +472,6 @@
                 }
                 if (segment.pli) {
                     var pali = new Pali();
-                    segment.pli = segment.pli.split(' ')
-                        .map(w => pali.hyphenate(w))
-                        .join(' ');
                     var resSpeak = await voiceRoot.speakSegment({
                         sutta_uid,
                         segment,
@@ -618,7 +610,6 @@
                 pattern,
                 language,
                 maxResults,
-                hyphenate: 'pli',
             });
             promise.then(sr => {
                 var {

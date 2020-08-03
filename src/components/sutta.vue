@@ -350,6 +350,7 @@ style="width:100%; margin-top:0"/>
 <script>
 /* eslint no-console: 0*/
 import Vue from "vue";
+const { PaliHyphenator } = require("js-ebt");
 import ScvDownloader from "./scv-downloader";
 import ErrorHelp from "./error-help";
 import ScvPlayer from "./scv-player";
@@ -401,6 +402,10 @@ export default {
             translator: 'sujato',
             waiting: 0,
             searchButtons: false,
+            hyphenator: new PaliHyphenator({
+              maxWord: 20,
+              minWord: 5,
+            }),
         }
         return that;
     },
@@ -747,11 +752,12 @@ export default {
             var that = this;
             this.clear();
             Vue.set(this.stats, 'seconds', stats.seconds);
-            console.log(`showSutta`, this.stats);
+            console.log(`showSutta`, sutta, this.stats);
             var sections = this.sections = sutta.sections;
             Object.assign(this.support, sutta.support);
             this.metaarea = sutta.metaarea;
-            var suttaplex = Object.assign({}, this.suttaplex, sutta.suttaplex);
+            var suttaplex = Object.assign({}, this.suttaplex, 
+              sutta.suttaplex);
             this.suttaplex = suttaplex;
 
             this.author_uid = sutta.author_uid;
@@ -773,16 +779,27 @@ export default {
                 sutta_uid,
                 language,
                 translator,
+                hyphenator,
             } = this;
-            this.tracks = sections.map((sect,i) => ({
+            this.tracks = sections.map((sect,i) => {
+              var segments = sect.segments;
+              segments.forEach(seg=> {
+                if (seg.pali) {
+                  seg.pli = seg.pali.split(" ").map(word=>{
+                    return hyphenator.hyphenate(word);
+                  }).join(" ");
+                }
+              });
+              return {
                 sutta_uid,
                 title: this.sutta.title,
                 language,
                 translator,
                 iSection: i,
                 nSegments: sect.segments.length,
-                segments: sect.segments,
-            }));
+                segments,
+              };
+            });
             ['pli', language].forEach(lang => {
                 var url = that.url(`/audio-urls/${sutta_uid}`);
                 that.$http.get(url).then(res => {
@@ -805,7 +822,7 @@ export default {
             });
         },
         loadSutta(search) {
-            console.log(`search ${search}`);
+            console.log(`loadSutta ${search}`);
             var tokens = search.toLowerCase().split('/');
             (tokens.length < 2) && tokens.push(this.gscv.lang);
             (tokens.length < 3) && tokens.push('sujato'); // TODO remove sujato
