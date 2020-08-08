@@ -16,8 +16,8 @@ Currently Voice is developed by a small core team and a number of other contribu
 #### Core Voice team:
 - **Karl Lew:** Initiator and leading developer
 - **Sabbamitta Anagarika:** Testing, planning, organization and coordination; German translation of web interface and texts for the accompanying German website *Dhammaregen*. Sabbamitta is also working on <a href="https://sc-voice.github.io/sc-voice/en/500-intro-de">a new set of German Sutta translations</a> that are hosted on Voice.
-- **Robbie Robbie Percijn de Jonge:** Voice admin.
-- **Madhuwanthi Buddhadasa:** Voice admin.
+- **Robbie Robbie Percijn de Jonge:** Voice admin; Dutch translation of web interface.
+- **Madhuwanthi Buddhadasa:** Voice admin; Sinhalese translation of web interface & *About Voice* pages.
 
 #### Others (in alphabetical order):
 - **Abhibhu Bhikkhu:** Hindi translation of web interface
@@ -26,10 +26,8 @@ Currently Voice is developed by a small core team and a number of other contribu
 - **Gabriel Laera:** Portuguese translation of web interface & *About Voice* pages
 - **Invo & Jarek:** Polish translation of web interface
 - **Kaz Takehara:** Japanese translation of web interface & *About Voice* pages
-- **Madhuwanthi Buddhadasa:** Sinhalese translation of web interface & *About Voice* pages
 - **Michael H.:** Sound technology for recordings
 - **Phan Tuấn Anh:** Vietnamese translation of web interface
-- **Robbie DeJonge:** Dutch translation of web interface
 - **Sarana Bhikkhu:** Czech translation of web interface
 - **scatterbrain & friend:** Romanien & Danish translation of web interface
 - **Sean Lempérière:** French translation of web interface & *About Voice* pages
