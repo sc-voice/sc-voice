@@ -1,5 +1,5 @@
 ### Acknowledgements
-SuttaCentral Voice has been developed as a “younger sister” of [SuttaCentral](suttacentral.net). It was started in 2018 by Karl Lew who was soon joined by Aminah Borg-Luck. Some time later Anagarika Sabbamitta came as a third person to increase the team.
+SuttaCentral Voice has been developed as a “younger sister” of [SuttaCentral](suttacentral.net). It was started in 2018 by Karl Lew who was soon joined by Aminah Borg-Luck. Some time later Anagarika Sabbamitta came as a third person to increase the team. In summer 2020, Robbie and Madhu joined us.
 
 The Voice application uses content from the SuttaCentral website and produces it in voice output. We'd like to thank [all those who did and do contribute](https://suttacentral.net/acknowledgments) to this extraordinary collection of early Buddhist texts.
 
@@ -16,6 +16,8 @@ Currently Voice is developed by a small core team and a number of other contribu
 #### Core Voice team:
 - **Karl Lew:** Initiator and leading developer
 - **Sabbamitta Anagarika:** Testing, planning, organization and coordination; German translation of web interface and texts for the accompanying German website *Dhammaregen*. Sabbamitta is also working on <a href="https://sc-voice.github.io/sc-voice/en/500-intro-de">a new set of German Sutta translations</a> that are hosted on Voice.
+- **Robbie Robbie Percijn de Jonge:** Voice admin.
+- **Madhuwanthi Buddhadasa:** Voice admin.
 
 #### Others (in alphabetical order):
 - **Abhibhu Bhikkhu:** Hindi translation of web interface
@@ -24,9 +26,11 @@ Currently Voice is developed by a small core team and a number of other contribu
 - **Gabriel Laera:** Portuguese translation of web interface & *About Voice* pages
 - **Invo & Jarek:** Polish translation of web interface
 - **Kaz Takehara:** Japanese translation of web interface & *About Voice* pages
+- **Madhuwanthi Buddhadasa:** Sinhalese translation of web interface & *About Voice* pages
 - **Michael H.:** Sound technology for recordings
 - **Phan Tuấn Anh:** Vietnamese translation of web interface
 - **Robbie DeJonge:** Dutch translation of web interface
+- **Sarana Bhikkhu:** Czech translation of web interface
 - **scatterbrain & friend:** Romanien & Danish translation of web interface
 - **Sean Lempérière:** French translation of web interface & *About Voice* pages
 - **Sujato Bhikkhu:** Audio recordings in Pali and English
