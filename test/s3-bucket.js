@@ -142,7 +142,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("local/vsm-s3.json changes endpoint", function(done) {
+    it("TESTTESTlocal/vsm-s3.json changes endpoint", function(done) {
         this.timeout(20*1000);
         var vsm_s3_path = path.join(__dirname, '..', 'local', 'vsm-s3.json');
         if (!fs.existsSync(vsm_s3_path)) {
@@ -152,13 +152,14 @@
         }
         (async function() { try {
             var vsm_s3 = JSON.parse(fs.readFileSync(vsm_s3_path));
-            vsm_s3.Bucket = 'sc-voice-wasabi-test';
+            vsm_s3.Bucket = 'sc-voice-test';
             var bucket = await new S3Bucket(vsm_s3).initialize();
-            should(bucket.s3.config.endpoint).equal('https://s3.us-west-1.wasabisys.com');
+            should(bucket.s3.config.endpoint)
+                .equal('https://s3.us-west-1.amazonaws.com');
             should(bucket.Bucket).equal(vsm_s3.Bucket);
             should(bucket.initialized).equal(true);
 
-            // we can upload a readStream to Wasabi
+            // we can upload a readStream to S3
             var name = 'kn_en_sujato_amy.tar.gz';
             var dataPath = path.join(__dirname, 'data', name);
             var data = fs.createReadStream(dataPath);
@@ -166,7 +167,7 @@
             should(putResult.Key).equal(name);
             should(putResult.response).properties(['ETag']);
 
-            // we can download object from Wasabi
+            // we can download object from S3
             var outPath = tmp.tmpNameSync();
             should(fs.existsSync(outPath)).equal(false);
             var resDownload = await bucket.downloadObject(name, outPath);

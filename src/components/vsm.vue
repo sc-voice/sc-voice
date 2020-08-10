@@ -24,7 +24,7 @@
             </tr>
             <tr>
               <th>{{$vuetify.lang.t("$vuetify.auth.bucket")}}</th>
-              <td>{{vsmCreds.s3.Bucket}}</td>
+              <td>{{vsmCreds.Bucket}}</td>
             </tr>
             <tr>
               <th>{{$vuetify.lang.t("$vuetify.auth.accessKeyId")}}</th>
@@ -291,10 +291,10 @@ export default {
             vsmCreds: {
             },
             editCreds: {
-                Bucket: '',
+                Bucket: 'sc-voice-vsm',
                 s3: {
-                    endpoint: '',
-                    region: '',
+                    endpoint: 'https://s3.us-west-1.amazonaws.com',
+                    region: 'us-west-1',
                     secretAccessKey: '',
                     accessKeyId: '',
                 },
@@ -305,7 +305,8 @@ export default {
         onVsmCreate() {
             var url = this.url('auth/vsm/create-archive');
             this.vsmCreateError = null;
-            this.$http.post(url, this.vsmCreate, this.authConfig).then(res => {
+            this.$http.post(url, this.vsmCreate, this.authConfig)
+            .then(res => {
                 console.log(`onVsmCreate`, res.data);
                 this.vsmFactoryDialog = false;
                 this.getVsmFactoryTask();
@@ -375,7 +376,8 @@ export default {
                 this.isVsmRestoring = false;
                 that.getCredentials();
             }).catch(e => {
-                console.log('could not restore S3 archives', e.response.data);
+                console.log('could not restore S3 archives', 
+                  e.response.data);
                 this.isVsmRestoring = false;
                 this.vsmRestoreError = e;
             });

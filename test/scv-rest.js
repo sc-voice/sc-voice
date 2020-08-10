@@ -473,7 +473,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", done=>{
+    it("GET /play/segment/... handles large segment", done=>{
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var scid = "an2.281-309:1.1";
@@ -541,7 +541,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles HumanTts sn1.9", done=>{
+    it("GET /play/segment/... handles HumanTts sn1.9", done=>{
         (async function() { try {
             var scid = "sn1.9:1.1";
             var sutta_uid = scid.split(":")[0];
@@ -579,7 +579,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles HumanTts sn12.1", done=>{
+    it("GET /play/segment/... handles HumanTts sn12.1", done=>{
         (async function() { try {
             var scid = "sn12.1:1.2";
             var sutta_uid = scid.split(":")[0];
@@ -708,16 +708,16 @@
             var res = await supertest(app).get(url)
             res.statusCode.should.equal(200);
             should.deepEqual(res.body.map(src=>src.url), [
-                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com/`+
+`https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com/`+
                     'pli/sn/sn1/sn1.23-pli-mahasangiti-sujato.webm',
-                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com/`+
+`https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com/`+
                     'en/sn/sn1/sn1.23-en-sujato-sujato.webm',
             ]);
 
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET auth/vsm/s3-credentials returns sanitized vsm-s3.json", function(done) {
+    it("GET auth/vsm/s3-credentials => sanitized vsm-s3.json", done=>{
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials GET test');
@@ -741,7 +741,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/s3-credentials configures vsm-s3.json", function(done) {
+    it("POST auth/vsm/s3-credentials configures vsm-s3.json", done=>{
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials POST test');
@@ -814,11 +814,11 @@
             var s3Result = res.body;
             should(s3Result).properties({
                 Name: fs.existsSync(vsmS3Path)
-                    ? 'sc-voice-wasabi'
+                    ? 'sc-voice-vsm'
                     : 'sc-voice-test',
                 MaxKeys: 1000,
                 s3: {
-                    endpoint: 'https://s3.us-west-1.wasabisys.com',
+                    endpoint: 'https://s3.us-west-1.amazonaws.com',
                     region: 'us-west-1',
                 },
             });
@@ -828,14 +828,18 @@
                 'upToDate',
             ]);
             if (c0.upToDate) {
-                should(new Date(c0.restored)).above(new Date(c0.LastModified));
+                should(new Date(c0.restored))
+                    .above(new Date(c0.LastModified));
             }
-            should(s3Result.Contents[0].Key).match(/[a-z]*_[a-z]*_[a-z]*_[a-z]*.tar.gz/iu);
+            should(s3Result.Contents[0].Key)
+                .match(/[a-z]*_[a-z]*_[a-z]*_[a-z]*.tar.gz/iu);
 
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/restore-s3-archives restores vsm files", function(done) {
+    it("TESTTESTPOST auth/vsm/restore-s3-archives", done=>{
+        // Restore VSM file
+        done(); return; // TODO
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials POST test');
@@ -862,7 +866,7 @@
             var res = await testAuthPost(url, data);
             res.statusCode.should.equal(200);
             should(res.body).properties({
-                Bucket: 'sc-voice-wasabi',
+                Bucket: 'sc-voice-vsm',
                 clearVolume,
                 restore,
             });
@@ -870,7 +874,8 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/create-archive create VSM", function(done) {
+    it("TESTTESTPOST auth/vsm/create-archive create VSM", done=>{
+        done(); return; // TODO
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;
             var nikaya = 'kn';
@@ -935,7 +940,8 @@
                 name: 'VSMFactory',
                 isActive: false,
             });
-            should(res.body.summary).match(/kn_pli_mahasangiti_aditi suttas imported/);
+            should(res.body.summary)
+                .match(/kn_pli_mahasangiti_aditi suttas imported/);
 
             // and we can submit another request
             var res = await testAuthPost(url, data);

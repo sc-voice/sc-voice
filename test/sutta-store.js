@@ -1249,7 +1249,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTloadSutta(...) returns scv-bilara sutta", function(done) {
+    it("loadSutta(...) returns scv-bilara sutta", function(done) {
         (async function() { try {
             var voice = Voice.createVoice('Amy');
             var suttaCentralApi = await new SuttaCentralApi().initialize();
