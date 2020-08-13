@@ -18,8 +18,8 @@ Use SSML tab.
 Find prosody of the voice you're editing in sc-voice/words/voices.json.  
 `<speak>`  
 `<prosody rate="-20%" pitch="-10%">`  
-`<phoneme>alphabet="ipa" ph="pɐcetɐna">Pacetana</phoneme>.`  
-`<phoneme>alphabet="ipa" ph="pɐcetɐna">Pacetana</phoneme>.`  
+`<phoneme alphabet="ipa" ph="pɐcetɐna">Pacetana</phoneme>.`  
+`<phoneme alphabet="ipa" ph="pɐcetɐna">Pacetana</phoneme>.`  
 `</prosody>`  
 `</speak>`
 
