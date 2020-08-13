@@ -1,0 +1,14 @@
+{
+  "api": "aws-polly",
+  "apiVersion": "v4",
+  "audioFormat": "mp3",
+  "voice": "Matthew",
+  "prosody": {
+    "rate": "+0%",
+    "pitch": "-0%"
+  },
+  "language": "en-US",
+  "text": "<prosody rate=\"+0%\" pitch=\"-0%\">When the night has passed they use their possessions once more, though they’ve not been given back to them.</prosody>",
+  "guid": "a88b540738edd153448baebcfb5c82a8",
+  "volume": "an_en_sujato_matthew"
+}

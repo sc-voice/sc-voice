@@ -643,16 +643,17 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /wiki-aria/:page return Aria for wiki page", function(done) {
+    it("TESTTESTGET /wiki-aria/:page return Aria for wiki page", done=>{
+        var WIKIURL = `https://raw.githubusercontent.com/wiki/`+
+            `sc-voice/sc-voice`;
         (async function() { try {
             var url = `/scv/wiki-aria/Home.md`;
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
             var html = res.body.html;
-            var WIKIURL = 'https://raw.githubusercontent.com/wiki/sc-voice/sc-voice';
             should(res.body.url).equal(`${WIKIURL}/Home.md`);
             var html = res.body.html;
-            should(html).match(/<summary>Navigating the texts<.summary>/);
+            should(html).match(/These wiki pages/ui);
             done();
         } catch(e) {done(e);} })();
     });
@@ -669,7 +670,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/sound-store/clear-volume clears volume cache", function(done) {
+    it("POST auth/sound-store/clear-volume clears volume cache", done=>{
         (async function() { try {
             var scvRest = app.locals.scvRest;
             var soundStore = scvRest.soundStore;
@@ -837,7 +838,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/vsm/restore-s3-archives", done=>{
+    it("POST auth/vsm/restore-s3-archives", done=>{
         // Restore VSM file
         done(); return; // TODO
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
@@ -874,7 +875,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/vsm/create-archive create VSM", done=>{
+    it("POST auth/vsm/create-archive create VSM", done=>{
         done(); return; // TODO
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;
@@ -1109,6 +1110,30 @@
                 summary: 'Update completed',
             });
             should(res.body.elapsed).above(0);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTGET audio info", done=>{
+        (async function() { try {
+            var scvRest = await(testScvRest());
+            var guid = `0a7eda3b4b66e3e005a85ef78c69bb92`;
+            var url = `/scv/auth/audio-info/an_en_sujato_matthew/${guid}`;
+            var res = await testAuthGet(url);
+            var {
+                statusCode,
+                body: infoArray,
+            } = res;
+            statusCode.should.equal(200);
+            should(infoArray).instanceOf(Array);
+            should.deepEqual(infoArray.map(i=>i.api), [
+                "aws-polly", "aws-polly",]);
+            should.deepEqual(infoArray.map(i=>i.voice), [
+                "Matthew", "Matthew",]);
+            should.deepEqual(infoArray.map(i=>i.guid), [
+                "a8215f97f8e0a0b3708eb643c6d2a6b6", 
+                "f1769b95a0843179f14a90afdc5b0d07",
+            ]);
 
             done();
         } catch(e) {done(e);} })();

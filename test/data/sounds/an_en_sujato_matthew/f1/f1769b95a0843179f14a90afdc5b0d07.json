@@ -1,0 +1,14 @@
+{
+  "api": "aws-polly",
+  "apiVersion": "v4",
+  "audioFormat": "mp3",
+  "voice": "Matthew",
+  "prosody": {
+    "rate": "+0%",
+    "pitch": "-0%"
+  },
+  "language": "en-US",
+  "text": "<prosody rate=\"+0%\" pitch=\"-0%\">It’s just like cleaning a dirty head by applying effort.</prosody>",
+  "guid": "f1769b95a0843179f14a90afdc5b0d07",
+  "volume": "an_en_sujato_matthew"
+}

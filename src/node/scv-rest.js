@@ -7,6 +7,7 @@
     const https = require('https');
     const jwt = require('jsonwebtoken');
     const tmp = require('tmp');
+    const { js } = require('just-simple').JustSimple;
     const {
         Pali,
     } = require("scv-bilara");
@@ -139,6 +140,7 @@
                 ["get", "wiki-aria/:page", this.getWikiAria],
                 ["get", "debug/ephemerals", this.getDebugEphemerals],
                 ["post", "login", this.postLogin],
+                ["get", "bilara/:scid", this.getBilara],
 
                 ["get", "auth/logs", this.getLogs],
                 ["get", "auth/log/:ilog", this.getLog, 'text/plain'],
@@ -166,7 +168,7 @@
                     this.getUpdateContentTask],
                 ["post", "auth/reboot", this.postReboot],
                 ["post", "auth/update-release", this.postUpdateRelease],
-                ["get", "bilara/:scid", this.getBilara],
+                ["get", "auth/audio-info/:volume/:guid", this.getAudioInfo],
 
             ].map(h => this.resourceMethod.apply(this, h));
             Object.defineProperty(this, "handlers", {
@@ -217,6 +219,22 @@
 
                 resolve(data);
             } catch (e) { reject(e) } });
+        }
+
+        getAudioInfo(req, res, next) {
+            var pbody = (resolve, reject) => { try {
+                var {   
+                    guid,
+                    volume,
+                } = req.params;
+                logger.info([
+                    `getAudioInfo()`,
+                    js.simpleString(req.params),
+                ].join(' '));
+                var info = this.soundStore.soundInfo({guid, volume});
+                resolve(info);
+            } catch (e) { reject(e) } };
+            return new Promise(pbody);
         }
 
         suttaParms(req) {
@@ -309,10 +327,11 @@
                             `lines:${lines.length} text:${text.length*2}B`);
                     }
                     var result = await voice.speak(text, {
-                        cache: true, // false: use TTS web service for every request
+                        cache: true, // minimize TTS web service use
                         usage,
                     });
-                    logger.info(`synthesizeSutta() ms:${Date.now()-msStart} `+
+                    logger.info(
+                        `synthesizeSutta() ms:${Date.now()-msStart} `+
                         `${text.substring(0,50)}`);
                     resolve({
                         usage,

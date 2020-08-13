@@ -14,6 +14,7 @@
     var mj = new MerkleJson();
     logger.level = 'warn';
     var storePath = tmp.tmpNameSync();
+    var TEST_SOUNDS = path.join(__dirname, 'data', 'sounds');
 
     it("SoundStore() creates default GuidStore for sounds", function() {
         var store = new SoundStore();
@@ -44,14 +45,22 @@
         should(store.audioMIME).equal('audio/ogg');
     });
     it("suttaVolumeName(...) returns SoundStore volume", function() {
-        should(SoundStore.suttaVolumeName('a','b','c','d')).equal('a_b_c_d');
-        should(SoundStore.suttaVolumeName('a1','b','c','d')).equal('a_b_c_d');
-        should(SoundStore.suttaVolumeName('a1.1','b','c','d')).equal('a_b_c_d');
-        should(SoundStore.suttaVolumeName('a1.2-5','b','c','d')).equal('a_b_c_d');
-        should(SoundStore.suttaVolumeName('a1.2-5:3','b','c','d')).equal('a_b_c_d');
-        should(SoundStore.suttaVolumeName('a1.2-5:3.1','b','c','d')).equal('a_b_c_d');
-        should(SoundStore.suttaVolumeName('thig1.2','b','c','d')).equal('kn_b_c_d');
-        should(SoundStore.suttaVolumeName('thag1.2','b','c','d')).equal('kn_b_c_d');
+        should(SoundStore.suttaVolumeName('a','b','c','d'))
+            .equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('a1','b','c','d'))
+            .equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('a1.1','b','c','d'))
+            .equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('a1.2-5','b','c','d'))
+            .equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('a1.2-5:3','b','c','d'))
+            .equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('a1.2-5:3.1','b','c','d'))
+            .equal('a_b_c_d');
+        should(SoundStore.suttaVolumeName('thig1.2','b','c','d'))
+            .equal('kn_b_c_d');
+        should(SoundStore.suttaVolumeName('thag1.2','b','c','d'))
+            .equal('kn_b_c_d');
         should(SoundStore.suttaVolumeName('thag1.2','pli','c','d'))
             .equal('kn_pli_mahasangiti_d');
         should(SoundStore.suttaVolumeName('mn1','pli','c','d'))
@@ -292,5 +301,24 @@
 
             done();
         } catch(e) {done(e);} })();
+    });
+    it("soundInfo(...) => [ info ]", ()=>{
+        var store = new SoundStore({
+            storePath: TEST_SOUNDS,
+        });
+        var guid = "0a7eda3b4b66e3e005a85ef78c69bb92";
+        var volume = "an_en_sujato_matthew";
+        var info = store.soundInfo({guid, volume});
+        should.deepEqual(info.map(i=>i.api), ["aws-polly", "aws-polly"]);
+        should.deepEqual(info.map(i=>i.voice), ["Matthew", "Matthew"]);
+        should(info[0].guid).equal("a8215f97f8e0a0b3708eb643c6d2a6b6");
+        should(info[0].text).match(/As they recollect/);
+        should(info[1].guid).equal("f1769b95a0843179f14a90afdc5b0d07");
+        should(info[1].text).match(/just like cleaning/);
+
+        var guid = "a8215f97f8e0a0b3708eb643c6d2a6b6";
+        var info = store.soundInfo({guid, volume});
+        should(info[0].text).match(/As they recollect/);
+        should(info.length).equal(1);
     });
 })

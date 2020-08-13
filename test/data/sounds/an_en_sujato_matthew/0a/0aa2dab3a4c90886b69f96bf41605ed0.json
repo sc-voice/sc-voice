@@ -1,0 +1,14 @@
+{
+  "api": "aws-polly",
+  "apiVersion": "v4",
+  "audioFormat": "mp3",
+  "voice": "Matthew",
+  "prosody": {
+    "rate": "+0%",
+    "pitch": "-0%"
+  },
+  "language": "en-US",
+  "text": "<prosody rate=\"+0%\" pitch=\"-0%\">This is the eight-factored <phoneme alphabet=\"ipa\" ph=\"sɐbbɐth\">sabbath</phoneme><break time=\"0.001s\"/>, they say,</prosody>",
+  "guid": "0aa2dab3a4c90886b69f96bf41605ed0",
+  "volume": "an_en_sujato_matthew"
+}

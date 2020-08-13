@@ -1,0 +1,14 @@
+{
+  "api": "aws-polly",
+  "apiVersion": "v4",
+  "audioFormat": "mp3",
+  "voice": "Matthew",
+  "prosody": {
+    "rate": "+0%",
+    "pitch": "-0%"
+  },
+  "language": "en-US",
+  "text": "<prosody rate=\"+0%\" pitch=\"-0%\">As they recollect the Realized One, their mind becomes clear, joy arises, and mental corruptions are given up.</prosody>",
+  "guid": "a8215f97f8e0a0b3708eb643c6d2a6b6",
+  "volume": "an_en_sujato_matthew"
+}

@@ -28,7 +28,8 @@
                     ctime,
                 });
             }, that.ephemeralInterval);
-            that.suffixes = opts.suffixes || [that.audioSuffix, '.json', '.txt', '.ssml'];
+            that.suffixes = opts.suffixes || 
+                [that.audioSuffix, '.json', '.txt', '.ssml'];
         }
 
         static suttaVolumeName(sutta_uid, lang, auid, vname) {
@@ -43,16 +44,18 @@
 
 
         static options(opts={}) {
+            var audoFormat = opts.audioFormat;
             if (opts.audioFormat === 'ogg') {
                 var audioSuffix = '.ogg';
                 var audioFormat = 'ogg_vorbis';
                 var audioMIME = 'audio/ogg';
-            } else if (opts.audioFormat == null || opts.audioFormat === 'mp3') {
+            } else if (audioFormat == null || audioFormat === 'mp3') {
                 var audioSuffix = '.mp3';
                 var audioFormat = 'mp3';
                 var audioMIME = 'audio/mp3';
             } else {
-                throw new Error(`unsupported audioFormat:${opts.audioFormat}`);
+                throw new Error(
+                    `unsupported audioFormat:${opts.audioFormat}`);
             }
             return Object.assign({}, {
                 type: 'SoundStore',
@@ -106,6 +109,28 @@
                 };
                 return acc;
             }, {});
+        }
+
+        soundInfo({guid, volume}) {
+            var that = this;
+            var suffix = ".json";
+            if (!guid) { throw new Error('guid is required') };
+            if (!volume) { throw new Error('volume is required') };
+            var guidPath = this.guidPath(guid, {suffix, volume});
+            var info = [];
+            if (fs.existsSync(guidPath)) {
+                var json = JSON.parse(fs.readFileSync(guidPath));
+                if (json.files) {
+                    json.files.forEach(f=>{
+                        let fJSON = f.replace(/\.[^.]*$/, ".json");
+                        let fPath = path.join(that.storePath, fJSON);
+                        info.push(JSON.parse(fs.readFileSync(fPath)));
+                    });
+                } else {
+                    info.push(json);
+                }
+            }
+            return info;
         }
 
         clearVolume(volume) {
