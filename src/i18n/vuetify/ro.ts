@@ -122,6 +122,7 @@ export default {
     started: 'Început:',
     step1Release: 'PAS 1. Repornește serverul (~1.5 minute)',
     step2Release: 'PAS 2. Actualizează versiunea (~1.5 minute)',
+    sounds: 'Sounds',
     submit: 'OK',
     summary: 'Rezumat:',
     timeActive: 'Timp activ:',

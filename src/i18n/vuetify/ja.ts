@@ -122,6 +122,7 @@ export default {
     started: '開始されました:',
     step1Release: 'ステップ 1. サーバー再起動（〜1分半）',
     step2Release: 'ステップ 2. リリース更新（〜1分半）',
+    sounds: 'Sounds',
     submit: 'OK',
     summary: '概要:',
     timeActive: 'アクティブ時間:',

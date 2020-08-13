@@ -122,6 +122,7 @@ export default {
     started: 'Påbegynt:',
     step1Release: 'STEG 1. Omstart server (~1.5 minutter)',
     step2Release: 'STEG 2. Oppdater hovrdversjon (~1.5 minutter)',
+    sounds: 'Sounds',
     submit: 'OK',
     summary: 'Sammendrag:',
     timeActive: 'Aktivitetstid:',

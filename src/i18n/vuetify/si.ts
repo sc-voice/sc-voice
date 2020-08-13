@@ -121,6 +121,7 @@ export default {
     started: 'ආරම්භ කර ඇත:',
     step1Release: 'පියවර 1. සේවාදායකය නැවත ආරම්භ කරන්න (මිනිත්තු ~1.5)',
     step2Release: 'පියවර 2. නිකුතුව යාවත්කාලීන කරන්න (මිනිත්තු ~1.5)',
+    sounds: 'Sounds',
     submit: 'හරි',
     summary: 'සාරාංශය:',
     timeActive: 'සක්‍රිය වේලාව:',

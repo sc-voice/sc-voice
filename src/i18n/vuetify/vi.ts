@@ -122,6 +122,7 @@ export default {
     started: 'Đã bắt đầu:',
     step1Release: 'Bước 1. Khởi động lại server (~1.5 phút)',
     step2Release: 'Bước 2. Cập nhật phiên bản (~1.5 phút)',
+    sounds: 'Sounds',
     submit: 'OK',
     summary: 'Tóm tắt:',
     timeActive: 'Thời gian hoạt động :',

@@ -122,6 +122,7 @@ export default {
     started: 'Gestart:',
     step1Release: 'STAP 1. Herstart server (ca. 1.5 minuut)',
     step2Release: 'STAP 2. Update versie (ca. 1.5 minuut)',
+    sounds: 'Sounds',
     submit: 'Oké',
     summary: 'Samenvatting:',
     timeActive: 'Tijd actief:',

@@ -123,6 +123,7 @@ export default {
     started: 'Gestartet:',
     step1Release: 'SCHRITT 1: Server neu starten (~1.5 Minuten)',
     step2Release: 'SCHRITT 2: Version aktualisieren (~1.5 Minuten)',
+    sounds: 'Sounds',
     submit: 'OK',
     summary: 'Zusammenfassung:',
     timeActive: 'Zeit aktiv:',

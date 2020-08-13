@@ -121,6 +121,7 @@ export default {
     started: 'Started:',
     step1Release: 'STEP 1. Restart server (~1.5 minutes)',
     step2Release: 'STEP 2. Update release (~1.5 minutes)',
+    sounds: 'Sounds',
     submit: 'Save',
     summary: 'Summary:',
     timeActive: 'Time active:',

@@ -121,6 +121,7 @@ export default {
     started: 'Startet:',
     step1Release: 'TRIN 1. Genstart serveren (~1.5 minutter)',
     step2Release: 'TRIN 2. Opdater udgivelse (~1.5 minutter)',
+    sounds: 'Sounds',
     submit: 'OK',
     summary: 'Oversigt:',
     timeActive: 'Aktiv tid:',

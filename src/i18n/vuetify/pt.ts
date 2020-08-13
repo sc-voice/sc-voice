@@ -122,6 +122,7 @@ export default {
     started: 'Iniciado:',
     step1Release: 'PASSO 1. Reiniciar servidor (~1.5 minutos)',
     step2Release: 'PASSO 2. Atualizar release (~1.5 minutos)',
+    sounds: 'Sounds',
     submit: 'OK',
     summary: 'Resumo:',
     timeActive: 'Tempo ativo:',

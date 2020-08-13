@@ -121,6 +121,7 @@ export default {
     started: 'Commencé:',
     step1Release: 'PREMIERE ETAPE 1. Réinitialiser le serveur (~1.5 minutes)',
     step2Release: 'SECONDE ETAPE 2. Mettre à jour publication (~1.5 minutes)',
+    sounds: 'Sounds',
     submit: 'OK',
     summary: 'Résumé:',
     timeActive: 'Temps actif:',

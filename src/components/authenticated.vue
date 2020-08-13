@@ -40,6 +40,12 @@
         <v-tab-item v-if="isAdmin">
             <logs/>
         </v-tab-item>
+        <v-tab v-if="isAdmin"> 
+            {{ $vuetify.lang.t('$vuetify.auth.sounds') }}
+        </v-tab>
+        <v-tab-item v-if="isAdmin">
+            <sounds/>
+        </v-tab-item>
     </v-tabs>
     <login/>
 </div>
@@ -51,6 +57,7 @@ import AdminUsers from "./admin-users";
 import Vsm from "./vsm";
 import ContentUpdater from './content-updater';
 import Logs from "./logs";
+import Sounds from "./sounds";
 import Caches from "./caches";
 import Releases from "./releases";
 import Login from "./login";
@@ -108,6 +115,7 @@ export default {
         Vsm,
         Logs,
         Login,
+        Sounds,
     },
 }
 </script>

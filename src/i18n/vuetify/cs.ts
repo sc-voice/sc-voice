@@ -121,6 +121,7 @@ export default {
     started: 'Započato:',
     step1Release: 'KROK 1. Restartovat server (~1.5 minut)',
     step2Release: 'KROK 2. Obnovit vydání (~1.5 minut)',
+    sounds: 'Sounds',
     submit: 'OK',
     summary: 'Shrnutí:',
     timeActive: 'Čas činnosti:',

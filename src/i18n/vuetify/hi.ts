@@ -122,6 +122,7 @@ export default {
     started: 'शुरू हुआ:',
     step1Release: 'पहला क़दम. सर्वर शुरू करे (लगभग १.५ मिनिट)',
     step2Release: 'दूसरा क़दम. रिलीज़ अपडेट करे (लगभग १.५ मिनिट)',
+    sounds: 'Sounds',
     submit: 'ठीक है',
     summary: 'सारांश:',
     timeActive: 'समय सक्रिय रहा:',

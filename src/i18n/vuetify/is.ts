@@ -122,6 +122,7 @@ export default {
     started: 'Byrjað:',
     step1Release: '1. SKREF. Endurræsa netþjóninn (~1.5 mínútur)',
     step2Release: '2. SKREF. Uppfæra útgáfu (~1.5 mínútur',
+    sounds: 'Sounds',
     submit: 'ÓKEI',
     summary: 'Yfirlit:',
     timeActive: 'Tímalengd virkur:',

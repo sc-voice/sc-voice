@@ -122,6 +122,7 @@ export default {
     started: 'Uruchomiono:',
     step1Release: 'KROK 1. Uruchom ponownie serwer (~1.5 minuty)',
     step2Release: 'KROK 2. Aktualizuj wersję (~1.5 minuty)',
+    sounds: 'Sounds',
     submit: 'OK',
     summary: 'Podsumowanie:',
     timeActive: 'Czas aktywności:',
