@@ -11,7 +11,7 @@ Verify the pronunciation you hear is what you want to fix.
 
 B. Voice "Sounds" admin page  
 Paste the sound URL from step A into the respective field.  
-Copy the phoneme chunk you need, e.g. <phoneme alphabet="ipa" ph="pɐcetɐna">Pacetana</phoneme>, paste in AWS Polly (remove back slashes).
+Copy the phoneme chunk you need, e.g. `<phoneme alphabet="ipa" ph="pɐcetɐna">Pacetana</phoneme>`, paste in AWS Polly.
 
 C. AWS Polly  
 Use SSML tab.  
