@@ -16,12 +16,14 @@ Copy the phoneme chunk you need, e.g. <phoneme alphabet="ipa" ph="pɐcetɐna">Pa
 C. AWS Polly  
 Use SSML tab.  
 Find prosody of the voice you're editing in sc-voice/words/voices.json.  
-`<speak>`  
-`<prosody rate="-20%" pitch="-10%">`  
-`<phoneme alphabet="ipa" ph="pɐcetɐna">Pacetana</phoneme>.`  
-`<phoneme alphabet="ipa" ph="pɐcetɐna">Pacetana</phoneme>.`  
-`</prosody>`  
-`</speak>`
+```
+<speak>
+<prosody rate="-20%" pitch="-10%">
+<phoneme alphabet="ipa" ph="pɐcetɐna">Pacetana</phoneme>.
+<phoneme alphabet="ipa" ph="pɐcetɐna">Pacetana</phoneme>.
+</prosody>
+</speak>
+```
 
 D. Phoneme table  
 https://docs.aws.amazon.com/polly/latest/dg/ph-table-german.html  
