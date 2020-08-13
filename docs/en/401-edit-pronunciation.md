@@ -30,10 +30,10 @@ https://docs.aws.amazon.com/polly/latest/dg/ph-table-german.html
 Use column "IPA".  
 Be creative!
 
-E. SC-Voice/sc-voice on computer (admin)  
+E. (admin) SC-Voice/sc-voice on computer  
 Edit sc-voice/words/voices.json.
 
-F. Update version (admin)  
+F. (admin) Update version  
 git pull  
 Edit verdsion in SC-Voice/sc-voice/package.json on computer  
 git commit -am "pacetana"  
