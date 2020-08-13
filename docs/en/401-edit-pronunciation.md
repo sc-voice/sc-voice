@@ -39,3 +39,8 @@ Edit verdsion in SC-Voice/sc-voice/package.json on computer
 git commit -am "pacetana"  
 git push  
 Update vesion in Voice staging
+
+German voices prosody:
+- Marlene: `<prosody rate="-0%" pitch="-0%">`
+- Vicki: `<prosody rate="-20%" pitch="-10%">`
+- Hans: `<prosody rate="-20%" pitch="0%">`
