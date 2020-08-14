@@ -3,6 +3,7 @@
     const path = require('path');
     const { logger } = require('just-simple').JustSimple;
     const Polly = require('./polly');
+    const JSON5 = require('json5');
     const HumanTts = require('./human-tts');
     const Words = require('./words');
     const SoundStore = require('./sound-store');
@@ -64,7 +65,7 @@
                 return voicesCache;
             }
             voicePath == null && (voicePath = path.join(__dirname, '../../words/voices.json'));
-            var json = JSON.parse(fs.readFileSync(voicePath).toString());
+            var json = JSON5.parse(fs.readFileSync(voicePath).toString());
             voicesCache = json.map(voiceOpts => {
                 var voice = new Voice(voiceOpts);
                 logger.info(`loaded Voice:${voice.name}`);
