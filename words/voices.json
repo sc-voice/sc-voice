@@ -527,6 +527,7 @@
     },
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
+        "jetas": { "ipa": "ˈd͡ʒe:tas" },
     },
     "ipa": {
         "pli": {
@@ -546,7 +547,7 @@
             "unused-h": "h\u0308",
             "i": "\u026a",
             "j": "\u029d",
-            "jeta’s": "ʝeetɐ’s",
+            "jetas": "ˈd͡ʒe:tas",
             "jj": "\u029d.\u029d",
             "jha": "\u0284h\u0251",
             "kh": "k\u02b0",
@@ -609,6 +610,7 @@
     },
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
+        "jetas": { "ipa": "ˈd͡ʒe:tas" },
     },
     "ipa": {
         "pli": {
@@ -628,7 +630,7 @@
             "unused-h": "h\u0308",
             "i": "\u026a",
             "j": "\u029d",
-            "jeta’s": "ʝeetɐ’s",
+            "jetas": "ˈd͡ʒe:tas",
             "jj": "\u029d.\u029d",
             "jha": "\u0284h\u0251",
             "kh": "k\u02b0",
@@ -691,6 +693,7 @@
     },
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
+        "jetas": { "ipa": "ˈd͡ʒe:tas" },
     },
     "ipa": {
         "pli": {
@@ -710,7 +713,7 @@
             "unused-h": "h\u0308",
             "i": "\u026a",
             "j": "\u029d",
-            "jeta’s": "ʝeetɐ’s",
+            "jetas": "ˈd͡ʒe:tas",
             "jj": "\u029d.\u029d",
             "jha": "\u0284h\u0251",
             "kh": "k\u02b0",
