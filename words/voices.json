@@ -528,6 +528,7 @@
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
+        "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən"}
     },
     "ipa": {
         "pli": {
@@ -567,6 +568,7 @@
             "\u1e45k": "\u014bk",
             "sutta": "\u02ccsutta\u0308",
             "r": "\u027a",
+            "s": "s",
             "tt": "t.t",
             "unused-th": "\u0288\u02b0",
             "unused-u": "\u028A",
@@ -612,6 +614,7 @@
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
+        "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən"}
     },
     "ipa": {
         "pli": {
@@ -651,6 +654,7 @@
             "\u1e45k": "\u014bk",
             "sutta": "\u02ccsutta\u0308",
             "r": "\u027a",
+            "s": "s",
             "tt": "t.t",
             "unused-th": "\u0288\u02b0",
             "unused-u": "\u028A",
@@ -697,7 +701,8 @@
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
         "ājīvakas": { "ipa": "a:ʝɪi:vɐkɐs"},
-        "ājīvaka": { "ipa": "a:ʝɪi:vɐkɐ"}
+        "ājīvaka": { "ipa": "a:ʝɪi:vɐkɐ"},
+        "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən"}
     },
     "ipa": {
         "pli": {
@@ -737,6 +742,7 @@
             "\u1e45k": "\u014bk",
             "sutta": "\u02ccsutta\u0308",
             "r": "\u027a",
+            "s": "s",
             "tt": "t.t",
             "unused-th": "\u0288\u02b0",
             "unused-u": "\u028A",
