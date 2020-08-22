@@ -527,8 +527,9 @@
     },
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
-        "jetas": { "ipa": "ˈd͡ʒe:tas" },
         "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən" },
+        "benares": { "ipa": "beˈna:ɺes" },
+        "jetas": { "ipa": "ˈd͡ʒe:tas" },
         "vajjier": { "ips": "vaʝʝier" }
     },
     "ipa": {
@@ -613,8 +614,9 @@
     },
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
+        "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən" },
+        "benares": { "ipa": "bɛˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
-        "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən"},
         "vajjier": { "ips": "vaʝʝier" }
     },
     "ipa": {
@@ -699,10 +701,11 @@
     },
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
+        "ājīvakas": { "ipa": "a:ʝɪi:vɐkɐs" },
+        "ājīvaka": { "ipa": "a:ʝɪi:vɐkɐ" },
+        "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən" },
+        "benares": { "ipa": "beˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
-        "ājīvakas": { "ipa": "a:ʝɪi:vɐkɐs"},
-        "ājīvaka": { "ipa": "a:ʝɪi:vɐkɐ"},
-        "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən"},
         "vajjier": { "ips": "vaʝʝier" }
     },
     "ipa": {
