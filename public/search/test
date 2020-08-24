@@ -1379,7 +1379,7 @@
               {
                 "scid": "mn105:29.5",
                 "pli": "api nu so puriso amuṁ āpānīyakaṁsaṁ piveyya yaṁ jaññā: ",
-                "en": "Would that person drink that beverage knowing that "
+                "en": "Would that person drink that beverage if they knew that "
               },
               {
                 "scid": "mn105:29.6",
@@ -1420,7 +1420,7 @@
               {
                 "scid": "mn105:30.4",
                 "pli": "api nu so puriso amussa āsīvisassa ghoravisassa hatthaṁ vā aṅguṭṭhaṁ vā dajjā yaṁ jaññā: ",
-                "en": "Would that person give that lethal viper their hand or finger knowing that "
+                "en": "Would that person give that lethal viper their hand or finger if they knew that "
               },
               {
                 "scid": "mn105:30.5",
@@ -1477,12 +1477,12 @@
         "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering."
       },
       "stats": {
-        "text": 14442,
+        "text": 14452,
         "lang": "en",
         "nSegments": 188,
         "nEmptySegments": 8,
         "nSections": 2,
-        "seconds": 1246.0042747850705
+        "seconds": 1246.747619249275
       }
     },
     {

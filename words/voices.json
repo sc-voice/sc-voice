@@ -527,7 +527,11 @@
     },
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
+        "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən" },
+        "anāthapiṇḍika": { "ipa": "anɑthɐpɪn'dɪka" },
+        "benares": { "ipa": "beˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
+        "vajjier": { "ips": "vaʝʝier" }
     },
     "ipa": {
         "pli": {
@@ -547,9 +551,9 @@
             "gh": "g\u02b0",
             "unused-h": "h\u0308",
             "i": "\u026a",
-            "j": "\u029d",
+            "j": "ʝ",
             "jetas": "ˈd͡ʒe:tas",
-            "jj": "\u029d.\u029d",
+            "jj": "ʝʝ",
             "jha": "\u0284h\u0251",
             "kh": "k\u02b0",
             "kk": "k.k",
@@ -611,7 +615,11 @@
     },
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
+        "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən" },
+        "anāthapiṇḍika": { "ipa": "anɑthɐpɪn'dɪka" },
+        "benares": { "ipa": "bɛˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
+        "vajjier": { "ips": "vaʝʝier" }
     },
     "ipa": {
         "pli": {
@@ -631,9 +639,9 @@
             "gh": "g\u02b0",
             "unused-h": "h\u0308",
             "i": "\u026a",
-            "j": "\u029d",
+            "j": "ʝ",
             "jetas": "ˈd͡ʒe:tas",
-            "jj": "\u029d.\u029d",
+            "jj": "ʝʝ",
             "jha": "\u0284h\u0251",
             "kh": "k\u02b0",
             "kk": "k.k",
@@ -695,9 +703,13 @@
     },
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
+        "ājīvakas": { "ipa": "a:ʝɪi:vɐkɐs" },
+        "ājīvaka": { "ipa": "a:ʝɪi:vɐkɐ" },
+        "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən" },
+        "anāthapiṇḍika": { "ipa": "anɑthɐpɪn'dɪka" },
+        "benares": { "ipa": "beˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
-        "ājīvakas": { "ipa": "a:ʝɪi:vɐkɐs"},
-        "ājīvaka": { "ipa": "a:ʝɪi:vɐkɐ"}
+        "vajjier": { "ips": "vaʝʝier" }
     },
     "ipa": {
         "pli": {
@@ -717,9 +729,9 @@
             "gh": "g\u02b0",
             "unused-h": "h\u0308",
             "i": "\u026a",
-            "j": "\u029d",
+            "j": "ʝ",
             "jetas": "ˈd͡ʒe:tas",
-            "jj": "\u029d.\u029d",
+            "jj": "ʝʝ",
             "jha": "\u0284h\u0251",
             "kh": "k\u02b0",
             "kk": "k.k",
