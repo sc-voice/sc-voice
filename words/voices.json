@@ -508,7 +508,7 @@
     "pitch": "-10%",
     "rates": {
         "navigate": "-0%", 
-        "recite": "-20%"
+        "recite": "-15%"
     },
     "usages": {
         "navigate": {
@@ -517,7 +517,7 @@
         },
         "recite": {
             "priority": 1,
-            "rate": "-20%",
+            "rate": "-15%",
             "breaks": [0.001,0.1,0.2,0.6,1]
         },
         "review": {
