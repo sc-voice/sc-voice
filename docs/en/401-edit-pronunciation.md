@@ -43,5 +43,5 @@ Update vesion in Voice staging
 ---
 German voices prosody:
 - Marlene: `<prosody rate="-0%" pitch="-0%">`
-- Vicki: `<prosody rate="-20%" pitch="-10%">`
+- Vicki: `<prosody rate="-15%" pitch="-10%">`
 - Hans: `<prosody rate="-20%" pitch="-0%">`
