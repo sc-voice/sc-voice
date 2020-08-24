@@ -528,7 +528,6 @@
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
         "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən" },
-        "anāthapiṇḍika": { "ipa": "anɑthɐpɪn'dɪka" },
         "benares": { "ipa": "beˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
         "vajjier": { "ips": "vaʝʝier" }
@@ -564,6 +563,7 @@
             "ma": "ma",
             "ng": "ŋg",
             "ṃ": "ŋ",
+            "ṁ": "ŋ",
             "nu": "nu",
             "ṅg": "ŋg",
             "ṅgh": "ŋgʰ",
@@ -615,7 +615,6 @@
     "customWords": {
         "abhaya": { "ipa": "ɐbʰaja:ˌ" },
         "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən" },
-        "anāthapiṇḍika": { "ipa": "anɑthɐpɪn'dɪka" },
         "benares": { "ipa": "bɛˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
         "vajjier": { "ips": "vaʝʝier" }
@@ -651,6 +650,7 @@
             "ma": "ma",
             "ng": "ŋg",
             "ṃ": "ŋ",
+            "ṁ": "ŋ",
             "nu": "nu",
             "ṅg": "ŋg",
             "ṅgh": "ŋgʰ",
@@ -704,7 +704,6 @@
         "ājīvakas": { "ipa": "a:ʝɪi:vɐkɐs" },
         "ājīvaka": { "ipa": "a:ʝɪi:vɐkɐ" },
         "ājīvaka-asketen": { "ipa": "a:ʝɪi:vɐkɐ - asketən" },
-        "anāthapiṇḍika": { "ipa": "anɑthɐpɪn'dɪka" },
         "benares": { "ipa": "beˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
         "vajjier": { "ips": "vaʝʝier" }
@@ -740,6 +739,7 @@
             "ma": "ma",
             "ng": "ŋg",
             "ṃ": "ŋ",
+            "ṁ": "ŋ",
             "nu": "nu",
             "ṅg": "ŋg",
             "ṅgh": "ŋgʰ",
