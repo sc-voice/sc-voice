@@ -44,7 +44,6 @@
 
 
         static options(opts={}) {
-            var audoFormat = opts.audioFormat;
             if (opts.audioFormat === 'ogg') {
                 var audioSuffix = '.ogg';
                 var audioFormat = 'ogg_vorbis';

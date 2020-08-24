@@ -23,34 +23,34 @@
             <img src="/img/sound_url.png" height="250px"
           /></a>
         </details>
-        <v-text-field 
+        <v-textarea id="soundUrlText" v-model="soundUrl" 
             label="Paste Sound URL"
-            id="soundUrlText"
-            v-model="soundUrl" 
+            rows="2"
             hint="Paste the sound URL here"
             @change="onChangeUrl()"
-            clearable
             outlined
-        ></v-text-field>
-        <div>
-          <span class="font-weight-black">Volume:</span> 
-          {{volume}} 
-        </div>
-        <div>
-          <span class="font-weight-black">Guid:</span> 
-          <a :href="soundUrl" target="_blank">{{guid}}</a>
-        </div>
-        <v-btn raised dark
-          color="deep-orange darken-2"
-          @click="inspect()"
-          :disabled="!soundUrl"
+            append-outer-icon="close"
+            @click:append-outer="onClear()"
+        ></v-textarea>
+        <v-btn @click="inspect()" :disabled="!soundUrl"
+          raised dark color="deep-orange darken-2"
+          class="mb-5"
           >
           Inspect
         </v-btn>
+        <div v-if="volume">
+          <span class="font-weight-black">Volume:</span> 
+          {{volume}} 
+        </div>
+        <div v-if="guid">
+          <span class="font-weight-black">Guid:</span> 
+          <a :href="soundUrl" target="_blank">{{guid}}</a>
+        </div>
       </v-card-text>
       <v-data-table
         :headers="headers"
         :items="soundInfo"
+        v-if="soundUrl && soundInfo"
         >
         <template v-slot:item.guid="{item}">
           <a :href="soundUrl.replace(/[0-9a-f]*$/ui,item.guid)" 
@@ -72,9 +72,7 @@ export default {
   data: () => {
     return {
       user: {},
-      soundInfo: [{
-        text: "nothing",
-      }],
+      soundInfo: undefined,
       headers: [{
         text: 'GUID',
         value: 'guid',
@@ -82,7 +80,7 @@ export default {
         text: 'SSML',
         value: 'text',
       }],
-      soundUrl: null,
+      soundUrl: undefined,
       volume: "",
       identity: null,
       guid: "",
@@ -94,7 +92,14 @@ export default {
         ? `http://localhost/scv/${path}`
         : `./${path}`;
     },
+    onClear() {
+      this.soundUrl = "";
+      this.volume = "";
+      this.guid = "";
+      this.soundInfo = undefined;
+    },
     parseSoundUrl(url=this.soundUrl) {
+      console.log(`dbg url`, url);
       var urlParts = url && url.split("/") || [];
       var guid = urlParts.pop();
       var voice = urlParts.pop();
@@ -103,7 +108,7 @@ export default {
       var suid = urlParts.pop();
 
       var author = lang === 'pli' ? 'mahasangiti' : translator;
-      var nikaya = suid.substring(0,2);
+      var nikaya = suid && suid.substring(0,2);
       var volume = `${nikaya}_${lang}_${author}_${voice}`.toLowerCase();
       console.log(`dbg parse`, {lang, author});
 
@@ -130,9 +135,11 @@ export default {
       } catch(e) { console.error(e); }})();
     },
     onChangeUrl() {
+      console.log(`dbg onChangeUrl hello`);
       var { volume, guid, } = this.parseSoundUrl();
       this.volume = volume;
       this.guid = guid;
+      console.log(`dbg onChangeUrl`, {volume, guid});
     },
     getIdentity() {
       var urlVol = this.url("identity");
