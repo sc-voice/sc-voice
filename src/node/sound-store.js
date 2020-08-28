@@ -128,6 +128,8 @@
                 } else {
                     info.push(json);
                 }
+            } else {
+                console.log(`dbg soundInfo not found:`, {guidPath});
             }
             return info;
         }

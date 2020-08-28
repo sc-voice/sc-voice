@@ -16,6 +16,7 @@
         stripQuotes: true,
         //syllabifyLength,
     };
+    this.timeout(10*1000);
 
     // Service results are normally cached. To bypass the cache, change
     // the following value to false. You can clear the cache by

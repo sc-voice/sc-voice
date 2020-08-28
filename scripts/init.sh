@@ -120,6 +120,23 @@ if [ ! -e local/sc ]; then
     popd
 fi
 
+//////////////////// DEPRECATED (BEGIN)
+if [ -e local/suttas ]; then
+    if [ -e local/suttas/.git ]; then
+        echo -e "INIT\t: SuttaCentral/translation folder local/suttas exists (OK)"
+    else
+        echo -e "INIT\t: removing legacy SuttaCentral/translation folder "
+        rm -rf local/suttas
+    fi
+fi
+if [ ! -e local/suttas ]; then
+    pushd local
+    echo -e "INIT\t: loading SuttaCentral translation content..."
+    git clone https://github.com/suttacentral/translation suttas
+    popd
+fi
+//////////////////// DEPRECATED (END)
+
 #if [ -e local/awscli-bundle ]; then
     #echo -e "INIT\t: awscli-bundle folder exists (OK)"
 #else

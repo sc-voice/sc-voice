@@ -279,11 +279,17 @@
                 ? pattern
                 : `"(blurb|title|${language}|pli)":.*${pattern}`;
             var root = this.root.replace(ROOT, '');
-            var cmd = `grep -rciE '${grex}' `+
+            var cmdGrep = `grep -rciE '${grex}' `+
                 `--exclude-dir=examples `+
                 `--exclude-dir=.git `+
                 `--exclude='*.md' `+
                 `|grep -v ':0'`+
+                `|sort -g -r -k 2,2 -k 1,1 -t ':'`;
+            var cmd = `rg -c -i -e '${grex}' `+
+                `-g !examples `+
+                `-g !.git `+
+                `-g !'*.md' `+
+                `|rg -v ':0'`+
                 `|sort -g -r -k 2,2 -k 1,1 -t ':'`;
             maxResults && (cmd += `|head -${maxResults}`);
             this.log(`grep() ${cmd}`);
@@ -933,13 +939,13 @@
         }
 
         search(...args) { 
+            var that = this;
             if (SuttaStore.SEARCH_LEGACY) {
                 return this.searchLegacy(...args);
             }
             if (!this.isInitialized) {
                 throw new Error(`initialize() is required`);
             }
-            var that = this;
             var opts = args[0];
             if (typeof opts === 'string') {
                 opts = {
@@ -976,7 +982,7 @@
                     var mldRes = await that.mldResult(mld, lang);
                     bdres.results.push(mldRes);
                 }
-                if (!bdres || bdres.mlDocs.length === 0) {
+                if ((!bdres || bdres.mlDocs.length === 0)) {
                     var resLegacy = await 
                         that.searchLegacy.apply(that, args);
                     resolve(resLegacy);
@@ -1008,12 +1014,12 @@
             var sortLines = opts.sortLines;
             if (isNaN(maxResults)) {
                 throw new Error(
-                    "SuttaStore.search() maxResults must be a number");
+                    "SuttaStore.searchLegacy() maxResults must be a number");
             }
             var pbody = (resolve, reject) => {(async function() { try {
                 if (SuttaStore.isUidPattern(pattern)) {
                     var method = 'sutta_uid';
-                    that.log(`search(${pattern})`+
+                    that.log(`searchLegacy(${pattern})`+
                         `lang:${language} `+
                         `maxResults:${maxResults}`);
                     var uids = that.suttaList(pattern)

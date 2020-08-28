@@ -33,6 +33,12 @@
     this.timeout(15*1000);
 
 
+    function testServerReady(ms=500) {
+        // The testing server takes a while to wakeup
+        // and will report 404 until it's ready
+        return new Promise(resolve=>setTimeout(()=>resolve(),ms)); 
+    }
+
     function testAuthPost(url, data) {
         var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
         return supertest(app).post(url)
@@ -46,6 +52,14 @@
         var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
         return supertest(app).get(url)
             .set("Authorization", `Bearer ${token}`)
+            .set('Content-Type', contentType)
+            .set('Accept', accept)
+            .expect('Content-Type', new RegExp(contentType))
+            ;
+    }
+
+    function testGet(url, contentType='application/json', accept=contentType) {
+        return supertest(app).get(url)
             .set('Content-Type', contentType)
             .set('Accept', accept)
             .expect('Content-Type', new RegExp(contentType))
@@ -97,7 +111,8 @@
     });
     it("GET /sutta/mn1/en/sujato returns sutta", function(done) {
         var async = function* () { try {
-            var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato").expect((res) => {
+            var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato")
+            .expect((res) => {
                 res.statusCode.should.equal(200);
                 var sutta = res.body;
                 should.deepEqual(Object.keys(sutta).sort(), [
@@ -126,7 +141,8 @@
     });
     it("GET /sutta/mn100/en/sujato returns sutta", function(done) {
         var async = function* () { try {
-            var response = yield supertest(app).get("/scv/sutta/mn100/en/sujato").expect((res) => {
+            var response = yield supertest(app).get("/scv/sutta/mn100/en/sujato")
+            .expect((res) => {
                 res.statusCode.should.equal(200);
                 should(res.body).properties([
                     "sections"
@@ -159,48 +175,49 @@
     });
     it("GET /recite/section/mn1/en/sujato/2 returns recitation", function(done) {
         var async = function* () { try {
-            var response = yield supertest(app).get("/scv/recite/section/mn1/en/sujato/2")
-                .expect((res) => {
-                    res.statusCode.should.equal(200);
-                    should(res.body).properties([
-                        'guid', 
-                    ]);
-                    should(res.body).properties({
-                        language: 'en',
-                        name: 'Amy',
-                        section: 2,
-                        sutta_uid: 'mn1',
-                        translator: 'sujato', 
-                        usage: 'recite', 
-                    });
-                }).end((e,r) => e ? async.throw(e) : async.next(r));
+            var response = yield supertest(app)
+            .get("/scv/recite/section/mn1/en/sujato/2")
+            .expect((res) => {
+                res.statusCode.should.equal(200);
+                should(res.body).properties([
+                    'guid', 
+                ]);
+                should(res.body).properties({
+                    language: 'en',
+                    name: 'Amy',
+                    section: 2,
+                    sutta_uid: 'mn1',
+                    translator: 'sujato', 
+                    usage: 'recite', 
+                });
+            }).end((e,r) => e ? async.throw(e) : async.next(r));
             done();
         } catch (e) { done(e); } }();
         async.next();
     });
     it("GET /recite/sutta/mn100/en/sujato/1 returns recitation", function(done) {
         var async = function* () { try {
-            var response = yield supertest(app).get("/scv/recite/section/mn100/en/sujato/1")
-                .expect((res) => {
-                //console.log(res);
-                    res.statusCode.should.equal(200);
-                    should(res.body).properties([
-                        'guid', 
-                    ]);
-                    should(res.body).properties({
-                        language: 'en',
-                        name: 'Amy',
-                        section: 1,
-                        sutta_uid: 'mn100',
-                        translator: 'sujato', 
-                        usage: 'recite', 
-                    });
-                }).end((e,r) => e ? async.throw(e) : async.next(r));
+            var response = yield supertest(app)
+            .get("/scv/recite/section/mn100/en/sujato/1")
+            .expect((res) => {
+                res.statusCode.should.equal(200);
+                should(res.body).properties([
+                    'guid', 
+                ]);
+                should(res.body).properties({
+                    language: 'en',
+                    name: 'Amy',
+                    section: 1,
+                    sutta_uid: 'mn100',
+                    translator: 'sujato', 
+                    usage: 'recite', 
+                });
+            }).end((e,r) => e ? async.throw(e) : async.next(r));
             done();
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET download human audio playlist", function(done) {
+    it("TESTTESTGET download human audio playlist", function(done) {
         done(); return; // TODO
         var scvRest = app.locals.scvRest;
         logger.level = 'info';
@@ -308,47 +325,45 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /search/:pattern returns suttaplexes found", function(done) {
-        var async = function* () { try {
+    it("TESTTESTGET /search/:pattern returns suttaplexes found", function(done) {
+        (async function() { try { await testServerReady();
             var maxResults = 3;
-            var pattern = `root of suffering`;
+            var pattern = `root%20of%20suffering`;
 
             var url = `/scv/search/${pattern}?maxResults=${maxResults}`;
-            var response = yield supertest(app).get(url).expect((res) => {
-                res.statusCode.should.equal(200);
-                var {
-                    method,
-                    results,
-                } = res.body;
-                should(method).equal('phrase');
-                should(results).instanceOf(Array);
-                should(results.length).equal(3);
-                should.deepEqual(results.map(r => r.uid),[
-                    'sn42.11', 'mn105', 'mn1',
-                ]);
-                should.deepEqual(results.map(r => r.count),
-                    [ 5.091, 3.016, 2.006  ]);
-            }).end((e,r) => e ? async.throw(e) : async.next(r));
+            console.log(`dbg url`, url);
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var {
+                method,
+                results,
+            } = res.body;
+            should(method).equal('phrase');
+            should(results).instanceOf(Array);
+            should(results.length).equal(3);
+            should.deepEqual(results.map(r => r.uid),[
+                'sn42.11', 'mn105', 'mn1',
+            ]);
+            should.deepEqual(results.map(r => r.count),
+                [ 5.091, 3.016, 2.006  ]);
 
             // use default maxResults
             var url = `/scv/search/${pattern}`;
-            var response = yield supertest(app).get(url).expect((res) => {
-                res.statusCode.should.equal(200);
-                var {
-                    method,
-                    results,
-                } = res.body;
-                should(method).equal('phrase');
-                should(results).instanceOf(Array);
-                should(results.length).equal(5);
-                should.deepEqual(results[0].audio,undefined);
-                should.deepEqual(results.map(r => r.uid),[
-                    'sn42.11', 'mn105', 'mn1', 'sn56.21', 'mn116',
-                ]);
-            }).end((e,r) => e ? async.throw(e) : async.next(r));
+            var res = await supertest(app).get(url);
+            res.statusCode.should.equal(200);
+            var {
+                method,
+                results,
+            } = res.body;
+            should(method).equal('phrase');
+            should(results).instanceOf(Array);
+            should(results.length).equal(5);
+            should.deepEqual(results[0].audio,undefined);
+            should.deepEqual(results.map(r => r.uid),[
+                'sn42.11', 'mn105', 'mn1', 'sn56.21', 'mn116',
+            ]);
             done();
-        } catch (e) { done(e); } }();
-        async.next();
+        } catch (e) { done(e); } })();
     });
     it("GET /scv/play/section/... => playable section", done=>{
         (async function() { try {
@@ -643,7 +658,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /wiki-aria/:page return Aria for wiki page", done=>{
+    it("GET /wiki-aria/:page return Aria for wiki page", done=>{
         var WIKIURL = `https://raw.githubusercontent.com/wiki/`+
             `sc-voice/sc-voice`;
         (async function() { try {
@@ -1070,32 +1085,29 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /search/:pattern/:lang returns German", function(done) {
-        var async = function* () { try {
+    it("TESTTESTGET /search/:pattern/:lang returns German", function(done) {
+        (async function() { try { await testServerReady();
             var maxResults = 3;
             var pattern = `dn7`;
             var lang = 'de'
 
-            var url = 
-                `/scv/search/${pattern}/${lang}?maxResults=${maxResults}`;
-            var response = yield supertest(app).get(url).expect((res) => {
-                res.statusCode.should.equal(200);
-                var {
-                    method,
-                    results,
-                } = res.body;
-                should(method).equal('sutta_uid-legacy');
-                should(results).instanceOf(Array);
-                should(results.length).equal(1);
-                should.deepEqual(results.map(r => r.uid),[
-                    'dn7', 
-                ]);
-                should(results[0].sutta.author_uid)
-                    .equal('kusalagnana-maitrimurti-traetow');
-            }).end((e,r) => e ? async.throw(e) : async.next(r));
+            var url = `/scv/search/${pattern}/${lang}?maxResults=${maxResults}`;
+            var response = await supertest(app).get(url);
+            response.statusCode.should.equal(200);
+            var {
+                method,
+                results,
+            } = response.body;
+            should(method).equal('sutta_uid-legacy');
+            should(results).instanceOf(Array);
+            should(results.length).equal(1);
+            should.deepEqual(results.map(r => r.uid),[
+                'dn7', 
+            ]);
+            should(results[0].sutta.author_uid)
+                .equal('kusalagnana-maitrimurti-traetow');
             done();
-        } catch (e) { done(e); } }();
-        async.next();
+        } catch (e) { done(e); } })();
     });
     it("POST auth/update-bilara", done=>{
         (async function() { try {
@@ -1117,8 +1129,8 @@
     it("TESTTESTGET audio info", done=>{
         (async function() { try {
             var scvRest = await(testScvRest());
-            var guid = `0a7eda3b4b66e3e005a85ef78c69bb92`;
-            var url = `/scv/auth/audio-info/an_en_sujato_matthew/${guid}`;
+            var guid = `e0bd9aadd84f3f353f17cceced97ff13`;
+            var url = `/scv/auth/audio-info/an_en_sujato_amy/${guid}`;
             var res = await testAuthGet(url);
             var {
                 statusCode,
@@ -1127,12 +1139,11 @@
             statusCode.should.equal(200);
             should(infoArray).instanceOf(Array);
             should.deepEqual(infoArray.map(i=>i.api), [
-                "aws-polly", "aws-polly",]);
+                "aws-polly",]);
             should.deepEqual(infoArray.map(i=>i.voice), [
-                "Matthew", "Matthew",]);
+                "Amy",]);
             should.deepEqual(infoArray.map(i=>i.guid), [
-                "a8215f97f8e0a0b3708eb643c6d2a6b6", 
-                "f1769b95a0843179f14a90afdc5b0d07",
+                "e0bd9aadd84f3f353f17cceced97ff13", 
             ]);
 
             done();

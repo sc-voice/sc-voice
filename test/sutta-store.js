@@ -28,6 +28,7 @@
     const PRODUCTION = {
         apiUrl: 'http://suttacentral.net/api',
     };
+    const TEST_LEGACY = true;// give up on 9/3/2020 if we can't get it to work
     function checkSuttas(data) {
         should(data.suttas.length).equal(data.suttaRefs.length);
         for (var i = 0; i < data.suttaRefs.length; i++) {
@@ -39,7 +40,7 @@
             should(sutta.translation.author_uid).equal(refParts[2]);
         }
     }
-    this.timeout(15*1000);
+    this.timeout(10*1000);
 
     it("default ctor", () => {
         var store = new SuttaStore();
@@ -276,7 +277,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) returns search results", function(done) {
+    it("search(pattern) => multiple results", function(done) {
         (async function() { try {
             var voice = Voice.createVoice({
                 name: 'raveena',
@@ -322,6 +323,24 @@
                 results,
             }, null, 2));
 
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("search(pattern) => regular expression results", function(done) {
+        (async function() { try {
+            var voice = Voice.createVoice({
+                name: 'raveena',
+                localeIPA: 'pli',
+                usage: 'recite',
+            });
+            var suttaCentralApi = await new SuttaCentralApi(PRODUCTION)
+                .initialize();
+            var store = await new SuttaStore({
+                suttaCentralApi,
+                voice,
+                logLevel,
+            }).initialize();
+
             // regular expression
             var {
                 method,
@@ -331,18 +350,23 @@
             should(method).equal('phrase');
             should.deepEqual(results.map(r=>r.uid), [
                 'sn42.11', 'mn105', 'mn1', 'an4.257', 'mn66', ]);
-
-            // multiple spaces
-            var {
-                method,
-                results,
-            } = await store.search('quandary with');
-            should(results).instanceOf(Array);
-            should.deepEqual(results.map(r=>r.uid), [
-                'sn35.245', 
-            ]);
-            should.deepEqual(results.map(r=>r.count), [1, ]);
-            should(results[0].quote.en).match(/simile of the vipers/i);
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("search(pattern) => no results", function(done) {
+        (async function() { try {
+            var voice = Voice.createVoice({
+                name: 'raveena',
+                localeIPA: 'pli',
+                usage: 'recite',
+            });
+            var suttaCentralApi = await new SuttaCentralApi(PRODUCTION)
+                .initialize();
+            var store = await new SuttaStore({
+                suttaCentralApi,
+                voice,
+                logLevel,
+            }).initialize();
 
             // no results
             var {
@@ -558,6 +582,47 @@
             }]);
             should(resultPattern).equal('\\bjh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
             should(results.length).equal(5);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("searchLegacy(pattern) finds legacy romanized Pali", done=>{
+        if (!TEST_LEGACY) { done(); return; }
+        (async function() { try {
+            var store = await new SuttaStore({logLevel}).initialize();
+
+            var {
+                method,
+                results,
+            } = await store.searchLegacy('third jhana');
+            should(method).equal('keywords-legacy');
+            should.deepEqual(results.map(r=> ({
+                uid:r.uid,
+                count:r.count,
+            })), [{
+                count: 15,
+                uid: 'dn33',
+            },{
+                count: 9,
+                uid: 'dn34',
+            },{
+                count: 7,
+                uid: 'mn85',
+            },{
+                count: 7,
+                uid: 'sn40.3',
+            },{
+                count: 5,
+                uid: 'an9.39',
+            }]);
+
+            done(); 
+        } catch(e) {done(e);} })();
+    });
+    it("search(pattern) finds legacy romanized Pali", function(done) {
+        if (!TEST_LEGACY) { done(); return; }
+        (async function() { try {
+            var store = await new SuttaStore({logLevel}).initialize();
 
             var {
                 method,
@@ -931,6 +996,7 @@
         } catch(e) {done(e);} })();
     });
     it("search(pattern) finds legacy suttas", function(done) {
+        if (!TEST_LEGACY) { done(); return; }
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
 

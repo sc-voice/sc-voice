@@ -330,12 +330,13 @@
                 return Promise.reject(new Error(`expected suttaSegId`));
             }
             suttaSegId = suttaSegId.replace(/\.00*/ug,'.');
+            var msgPrefix = `ScAudio.downloadSegmentAudio()`;
             if (audioPath == null) {
                 var filename = `${suttaSegId.replace(/:/g,'_')}${this.extSeg}`;
                 audioPath = path.join(this.downloadDir, filename);
-                logger.info(`ScAudio.downloadSegmentAudio() default audioPath:${audioPath}`);
+                logger.info(`${msgPrefix} default audioPath:${audioPath}`);
             } else {
-                logger.info(`ScAudio.downloadSegmentAudio() given audioPath:${audioPath}`);
+                logger.info(`${msgPrefix} given audioPath:${audioPath}`);
             }
             language = language || this.language;
             author = author || this.author;
