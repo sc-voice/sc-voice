@@ -33,7 +33,7 @@
     this.timeout(15*1000);
 
 
-    function testServerReady(ms=500) {
+    function testServerReady(ms=600) {
         // The testing server takes a while to wakeup
         // and will report 404 until it's ready
         return new Promise(resolve=>setTimeout(()=>resolve(),ms)); 
@@ -217,7 +217,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET download human audio playlist", function(done) {
+    it("GET download human audio playlist", function(done) {
         done(); return; // TODO
         var scvRest = app.locals.scvRest;
         logger.level = 'info';
@@ -325,13 +325,12 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /search/:pattern returns suttaplexes found", function(done) {
+    it("GET /search/:pattern returns suttaplexes found", function(done) {
         (async function() { try { await testServerReady();
             var maxResults = 3;
             var pattern = `root%20of%20suffering`;
 
             var url = `/scv/search/${pattern}?maxResults=${maxResults}`;
-            console.log(`dbg url`, url);
             var res = await supertest(app).get(url);
             res.statusCode.should.equal(200);
             var {
@@ -1085,7 +1084,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /search/:pattern/:lang returns German", function(done) {
+    it("GET /search/:pattern/:lang returns German", function(done) {
         (async function() { try { await testServerReady();
             var maxResults = 3;
             var pattern = `dn7`;
@@ -1126,7 +1125,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET audio info", done=>{
+    it("GET audio info", done=>{
         (async function() { try {
             var scvRest = await(testScvRest());
             var guid = `e0bd9aadd84f3f353f17cceced97ff13`;

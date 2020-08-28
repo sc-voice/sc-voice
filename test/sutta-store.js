@@ -40,7 +40,7 @@
             should(sutta.translation.author_uid).equal(refParts[2]);
         }
     }
-    this.timeout(10*1000);
+    this.timeout(15*1000);
 
     it("default ctor", () => {
         var store = new SuttaStore();
@@ -450,7 +450,7 @@
         testPattern("a.+b", 'a.+b');
         testPattern("sattānaṃ", "sattānaṃ");
     });
-    it("search(pattern) is sanitized", function(done) {
+    it("TESTTESTsearch(pattern) is sanitized", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
             var {
