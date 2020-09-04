@@ -2,9 +2,6 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const {
-        logger,
-    } = require('rest-bundle');
     const AbstractTTS = require('./abstract-tts');
     const AWS = require("aws-sdk");
 
@@ -18,6 +15,7 @@
             this.voice = opts.voice || 'Amy';
             this.api = opts.api || 'aws-polly';
             this.apiVersion = opts.apiVersion || 'v4';
+            this.sayAgain = opts.sayAgain;
             this.region = opts.region || 'us-west-1';
             this.pollyConfig = opts.config || {
                 signatureVersion: this.apiVersion,
@@ -29,46 +27,69 @@
                 this.polly = opts.polly;
             } else {
                 var cfg = this.pollyConfig;
-                logger.debug(`Polly.ctor() new AWS.Polly(${JSON.stringify(cfg)})`);
                 this.polly = new AWS.Polly(cfg);
             }
         }
 
         serviceSynthesize(resolve, reject, request) {
             var that = this;
-            var params = {
-                Text:`<speak>${request.ssml}</speak>`,
-                TextType: 'ssml',
-                OutputFormat: that.audioFormat,
-                VoiceId: that.voice,
-                LanguageCode: that.language,
-            }
-            logger.info(`serviceSynthesize() ${JSON.stringify(params)}`);
-
-            that.polly.synthesizeSpeech(params, (err, data) => {
-
-                if (err) {
-                    logger.error(`serviceSynthesize()`, request, err.stack)
-                    reject(err);
-                } else if (data == null) {
-                    var err = new Error("(no data returned from AWS server)");
-                    logger.error(err.stack)
-                    reject(err);
-                } else if (data.AudioStream instanceof Buffer) {
-                    fs.writeFile(request.outpath, data.AudioStream, function(err) {
+            (async function() { try {
+                var {
+                    polly,
+                    sayAgain,
+                } = that;
+                const USE_SAY_AGAIN = true;
+                if (USE_SAY_AGAIN && sayAgain) { 
+                    var req = Object.assign({}, request.signature);
+                    delete req.volume;
+                    var outpath = request.outpath+".sayagain";
+                    var res = await sayAgain.speak(req);
+                    var { base64, mime } = res.response;
+                    var buf = Buffer.from(base64, "base64");
+                    var resWrite = await fs.promises.writeFile(request.outpath, buf);
+                    that.synthesizeResponse(resolve, reject, request);
+                } else { // DEPRECATED: call AWS Polly directly
+                    var params = {
+                        Text:`<speak>${request.ssml}</speak>`,
+                        TextType: 'ssml',
+                        OutputFormat: that.audioFormat,
+                        VoiceId: that.voice,
+                        LanguageCode: that.language,
+                    }
+                    that.log(`serviceSynthesize() ${JSON.stringify(params)} ${request.outpath}`);
+                    polly.synthesizeSpeech(params, (err, data) => {
                         if (err) {
-                            logger.error(err)
+                            that.error(`serviceSynthesize()`, 
+                                request, err.stack)
                             reject(err);
+                        } else if (data == null) {
+                            var err = new Error(
+                                "(no data returned from AWS server)");
+                            that.error(err.stack)
+                            reject(err);
+                        } else if (data.AudioStream instanceof Buffer) {
+                            fs.writeFile(request.outpath, 
+                                data.AudioStream, function(err) {
+                                if (err) {
+                                    that.error(err)
+                                    reject(err);
+                                } else {
+                                    that.synthesizeResponse(resolve, reject, request);
+                                }
+                            })
                         } else {
-                            that.synthesizeResponse(resolve, reject, request);
+                            var err = new Error([`synthesizeSpeech()`,
+                                `expected:Buffer actual:${typeof data.AudioStream}`,
+                            ].join(' '));
+                            that.error(err.stack)
+                            reject(err);
                         }
                     })
-                } else {
-                    var err = new Error(`synthesizeSpeech() expected:Buffer actual:${typeof data.AudioStream}`);
-                    logger.error(err.stack)
-                    reject(err);
                 }
-            })
+            } catch(e) { 
+                that.error(e.message);
+                reject(e);
+            }})();
         }
     }
 

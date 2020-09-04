@@ -20,7 +20,7 @@
     const ANY_LANGUAGE = '*';
     const ANY_TRANSLATOR = '*';
     const PO_SUFFIX_LENGTH = '.po'.length;
-    const { logger } = require('just-simple').JustSimple;
+    const logger = require('log-instance').LogInstance.singleton;
 
     var singleton;
 

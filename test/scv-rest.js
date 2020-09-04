@@ -502,7 +502,7 @@
             should(data.sutta_uid).equal('an2.281-309');
             should(data.vnameTrans).equal('Brian');
             should(data.vnameRoot).equal('Aditi');
-            should(data.iSegment).equal(8);
+            should(data.iSegment).equal(9);
             should(data.nSections).equal(3);
             should(data.language).equal('en');
             should(data.translator).equal('sujato');
@@ -747,7 +747,8 @@
             var res = await testAuthGet(url);
             res.statusCode.should.equal(200);
             var actualCreds = res.body;
-            should(actualCreds.Bucket).equal(goodCreds.Bucket);
+            should(actualCreds.Bucket)
+                .equal(goodCreds.Bucket||goodCreds.Bucket);
             should(actualCreds.s3.endpoint).equal(goodCreds.s3.endpoint);
             should(actualCreds.s3.region).equal(goodCreds.s3.region);
             should(actualCreds.s3.accessKeyId.substr(0,5)).equal('*****');
@@ -763,15 +764,21 @@
             done();
             return;
         }
-        var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
-        fs.unlinkSync(vsmS3Path);
         (async function() { try {
             var url = `/scv/auth/vsm/s3-credentials`;
 
+            // save good creds and make bad creds
+            var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
+            var badCreds = Object.assign({}, goodCreds);
+            badCreds.s3 = Object.assign({}, goodCreds.s3, {
+                secretAccessKey: "wrong-key",
+            });
+            await fs.promises.writeFile(vsmS3Path, JSON.stringify(badCreds, null, 2));
+
             // Good credentials are saved
             var res = await testAuthPost(url, goodCreds);
-            var actualCreds = JSON.parse(fs.readFileSync(vsmS3Path));
-            fs.writeFileSync(vsmS3Path, JSON.stringify(goodCreds, null, 2));
+            var actualCreds = JSON.parse(await fs.promises.readFile(vsmS3Path));
+            await fs.promises.writeFile(vsmS3Path, JSON.stringify(goodCreds, null, 2));
             res.statusCode.should.equal(200);
             should.deepEqual(actualCreds, goodCreds);
 
@@ -787,6 +794,7 @@
 
             done();
         } catch(e) {
+            logger.info(`TEST: restoring ${vsmS3Path}`);
             fs.writeFileSync(vsmS3Path, JSON.stringify(goodCreds, null, 2));
             done(e);
         } })();

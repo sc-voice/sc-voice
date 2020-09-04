@@ -1,9 +1,7 @@
 (function(exports) {
     const http = require('http');
     const https = require('https');
-    const {
-        logger,
-    } = require('rest-bundle');
+    const { logger, } = require('rest-bundle');
     const {
         exec,
     } = require('child_process');

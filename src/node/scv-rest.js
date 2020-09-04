@@ -12,11 +12,12 @@
         Pali,
     } = require("scv-bilara");
     const {
-        logger,
         RestBundle,
         UserStore,
     } = require('rest-bundle');
+    const { logger } = require('log-instance');
     const srcPkg = require("../../package.json");
+    const S3Creds = require('./s3-creds');
     const Words = require('./words');
     const GuidStore = require('./guid-store');
     const S3Bucket = require('./s3-bucket');
@@ -437,7 +438,7 @@
             var scAudio = this.scAudio;
             var voice = Voice.voiceOfName(vnameTrans);
             var voiceRoot = this.voiceFactory.voiceOfName(vnameRoot);
-            logger.info(`GET ${req.url}`);
+            logger.debug(`GET ${req.url}`);
             var usage = voice.usage || 'recite';
             var pbody = (resolve, reject) => {(async function(){ try {
                 var sutta = await that.suttaStore.loadSutta({
@@ -501,6 +502,11 @@
                     segment.audio.pli = resSpeak.signature.guid;
                     segment.audio.vnamePali = resSpeak.altTts;
                 }
+                var audio = segment.audio;
+                logger.info(`GET ${req.url} =>`, 
+                    audio[langTrans] ? `${langTrans}:${audio[langTrans]}` : ``,
+                    audio.pli ? `pli:${audio.pli}` : ``,
+                );
                 resolve({
                     sutta_uid,
                     scid,
@@ -515,7 +521,10 @@
                     iSegment,
                     segment,
                 });
-            } catch(e) { reject(e); } })(); }
+            } catch(e) { 
+                logger.warn(`GET ${req.url} => `, e.message);
+                reject(e); 
+            } })(); }
             return new Promise(pbody);
         }
 
@@ -1161,24 +1170,8 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     that.requireAdmin(req, res, "GET vsm/s3-credentials");
-                    var credPath = path.join(LOCAL, 'vsm-s3.json');
-                    var creds = {};
-                    if (fs.existsSync(credPath)) {
-                        creds = JSON.parse(fs.readFileSync(credPath));
-                    }
-                    if (creds.s3) {
-                        var obfuscate = s => {
-                            var result = "";
-                            for (var i = 0; i < s.length; i++) {
-                                result = result + (i < s.length-4 ? '*' : s[i]);
-                            }
-                            return result;
-                        };
-                        
-                        creds.s3.secretAccessKey = obfuscate(creds.s3.secretAccessKey);
-                        creds.s3.accessKeyId = obfuscate(creds.s3.accessKeyId);
-                    }
-                    resolve(creds);
+                    var creds = new S3Creds();
+                    resolve(creds.obfuscated());
                 } catch(e) {
                     reject(e);} 
                 })();
@@ -1191,7 +1184,7 @@
                 (async function() { try {
                     that.requireAdmin(req, res, "POST vsm/s3-credentials");
                     var creds = req.body;
-                    var { Bucket, s3 } = creds;
+                    var { Bucket, s3, polly } = creds;
                     var {
                         endpoint,
                         region,
@@ -1200,7 +1193,8 @@
                         `Bucket:${Bucket} endpoint:${endpoint} region:${region}`);
                     var s3Bucket = await new S3Bucket(creds).initialize();
                     var credPath = path.join(LOCAL, 'vsm-s3.json');
-                    fs.writeFileSync(credPath, JSON.stringify(creds, null, 2));
+                    await fs.promises
+                        .writeFile(credPath, JSON.stringify(creds, null, 2));
                     logger.info(`vsm/s3-credentials verified and saved to: ${credPath}`);
                     resolve({
                         Bucket,
@@ -1210,6 +1204,7 @@
                         }
                     });
                 } catch(e) {
+                    logger.error(e.message);
                     reject(e);} 
                 })();
             });

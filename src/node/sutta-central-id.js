@@ -2,9 +2,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const {
-        logger,
-    } = require('rest-bundle');
+    const { logger, } = require('rest-bundle');
     const SRC_PATH = path.join(__dirname, '..', '..', 'src', 'node');
     const UID_EXPANSION_PATH = path.join(SRC_PATH, 'uid_expansion.json');
     const SUTTAIDS_PATH = path.join(SRC_PATH, 'sutta-ids.json');

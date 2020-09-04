@@ -2,7 +2,7 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const { logger } = require('rest-bundle');
+    const { logger, LogInstance } = require('log-instance');
     const {
         Playlist,
         Sutta,
@@ -16,7 +16,6 @@
         BilaraData,
         Seeker,
     } = require("scv-bilara");
-    const logLevel = false;
     const LANG = 'en';
     const LOCAL = path.join(__dirname, '..', 'local');
     const ROOT = path.join(LOCAL, 'suttas');
@@ -41,6 +40,7 @@
         }
     }
     this.timeout(15*1000);
+    logger.level = 'warn';
 
     it("default ctor", () => {
         var store = new SuttaStore();
@@ -48,20 +48,18 @@
         should(store.bilaraData.root).equal(BILARA_DATA);
         should(store.seeker).instanceOf(Seeker);
         should(store.seeker.bilaraData).equal(store.bilaraData);
-        should(store.bilaraData.logLevel).equal('info');
+        should(store.bilaraData.logger).equal(store);
     });
     it("custom ctor", () => {
-        var store = new SuttaStore({
-            logLevel: 'warn',
-        });
-        should(store.bilaraData.logLevel).equal('warn');
-        should(store.seeker.logLevel).equal('warn');
+        var logger = new LogInstance();
+        var store = new SuttaStore({logger});
+        should(store.logger).equal(logger);
+        should(store.bilaraData.logger).equal(store);
+        should(store.seeker.logger).equal(store);
     });
-    it("initialize() initializes SuttaStore", function(done) {
+    it("TESTTESTinitialize() initializes SuttaStore", function(done) {
         (async function() { try {
-            var store = new SuttaStore({
-                logLevel,
-            });
+            var store = new SuttaStore();
             should(store.maxDuration).equal(3*60*60);
             should(store.isInitialized).equal(false);
             should(await store.initialize()).equal(store);
@@ -69,7 +67,7 @@
             should(store.root).equal(ROOT);
             should(store.bilaraData.initialized).equal(true);
             should(store.seeker.initialized).equal(true);
-            should(store.seeker.logLevel).equal(logLevel);
+            should(store.seeker.logger).equal(store);
             done(); 
         } catch(e) {done(e);} })();
     });
@@ -83,7 +81,7 @@
                 fs.writeFileSync(suttaIdsPath, JSON.stringify(json, null, 2));
             }
 
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             var spath = store.suttaPath('mn1','en','test');
             should(spath).equal(path.join(ROOT,'mn/en/test/mn1.json'));
             var dir = path.dirname(spath);
@@ -101,22 +99,21 @@
             ];
             var store = await new SuttaStore({
                 suttaIds,
-                logLevel,
             }).initialize();
             var spath = store.suttaPath('an1.1','en','test');
             should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
 
             // src/node/sutta-ids.json controls suttaPath
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             var spath = store.suttaPath('an1.3','en','test');
             should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
 
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("suttaPath(opts) throws Error", function(done) {
+    it("suttaPath(opts) throws Error", done=>{
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             should.throws(() => store.suttaPath()); 
             should.throws(() => store.suttaPath({
                 // sutta_uid: 'MN 1',
@@ -150,7 +147,6 @@
                 suttaCentralApi,
                 suttaFactory,
                 voice,
-                logLevel,
             }).initialize();
 
             // multiple results
@@ -204,7 +200,6 @@
                 suttaFactory,
                 voice,
                 maxResults: 50,
-                logLevel,
             }).initialize();
 
             // multiple results
@@ -236,7 +231,6 @@
                 suttaCentralApi,
                 suttaFactory,
                 voice,
-                logLevel,
             }).initialize();
 
             // multiple results
@@ -289,7 +283,6 @@
             var store = await new SuttaStore({
                 suttaCentralApi,
                 voice,
-                logLevel,
             }).initialize();
 
             // multiple results
@@ -338,7 +331,6 @@
             var store = await new SuttaStore({
                 suttaCentralApi,
                 voice,
-                logLevel,
             }).initialize();
 
             // regular expression
@@ -365,7 +357,6 @@
             var store = await new SuttaStore({
                 suttaCentralApi,
                 voice,
-                logLevel,
             }).initialize();
 
             // no results
@@ -380,7 +371,7 @@
     });
     it("search(pattern) finds metadata", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
 
             // author
             var {
@@ -450,9 +441,9 @@
         testPattern("a.+b", 'a.+b');
         testPattern("sattānaṃ", "sattānaṃ");
     });
-    it("TESTTESTsearch(pattern) is sanitized", function(done) {
+    it("search(pattern) is sanitized", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             var {
                 method,
                 results,
@@ -479,7 +470,7 @@
     });
     it("search(pattern) handles long text", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             var longstring = new Array(100).fill("abcdefghijklmnopqrstuvwxyz").join(" ");
             await store.search(longstring);
             done(new Error("expected failure"));
@@ -493,7 +484,7 @@
     });
     it("search(pattern) handles invalid regexp", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             await store.search("not[good");
             done(new Error("expected failure"));
         } catch(e) {
@@ -512,7 +503,6 @@
                 usage: 'recite',
             });
             var store = await new SuttaStore({
-                logLevel,
                 voice,
             }).initialize();
 
@@ -529,7 +519,7 @@
     });
     it("search(pattern) sorts by numeric count", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             var {
                 method,
                 results,
@@ -552,7 +542,7 @@
     });
     it("search(pattern) finds romanized Pali keywords ", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             var res = await store.search('jhana');
             var {
                 method,
@@ -589,7 +579,7 @@
     it("searchLegacy(pattern) finds legacy romanized Pali", done=>{
         if (!TEST_LEGACY) { done(); return; }
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
 
             var {
                 method,
@@ -622,7 +612,7 @@
     it("search(pattern) finds legacy romanized Pali", function(done) {
         if (!TEST_LEGACY) { done(); return; }
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
 
             var {
                 method,
@@ -654,7 +644,7 @@
     });
     it("search(pattern) finds exact Pali", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             var res = await store.search('abhisambuddhā');
             var {
                 method,
@@ -669,7 +659,7 @@
     });
     it("sutta_uidSuccessor(sutta_uid) returns following sutta_uid", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
 
             // logical
             should(store.sutta_uidSuccessor('mn33',true)).equal('mn34');
@@ -685,7 +675,7 @@
     });
     it("supportedSutta(pattern) return supported sutta uid", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
 
             var suttas = SuttaCentralId.supportedSuttas;
             should(store.supportedSutta(suttas[0])).equal(suttas[0]);
@@ -755,7 +745,7 @@
     });
     it("expandRange(item) expands range", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             should.deepEqual(store.expandRange('an5.179').length,1);
 
             // no subchapters
@@ -836,7 +826,7 @@
     });
     it("expandRange(item) handles fully sutta refs", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
 
             // dashes in author
             should.deepEqual(store.expandRange(
@@ -918,7 +908,7 @@
     });
     it("suttaList(pattern) finds listed suttas", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
 
             should.deepEqual( store.suttaList(
                 ['sn 45.161']), // spaces
@@ -979,7 +969,7 @@
     });
     it("search(pattern) finds mn1/en/sujato", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
 
             // fully specified
             var data = await store.search({ pattern: 'mn1/en/sujato', });
@@ -998,7 +988,7 @@
     it("search(pattern) finds legacy suttas", function(done) {
         if (!TEST_LEGACY) { done(); return; }
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
 
             var {results} = await store.search({pattern: 'mn1/en/bodhi'});
             should.deepEqual(results.map(r=>r.uid), ['mn1']);
@@ -1013,7 +1003,7 @@
     });
     it("search(pattern) finds suttas in range", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
 
             // spaces
             var data = await store.search({ pattern: 'sn 45.161', });
@@ -1049,7 +1039,7 @@
     });
     it("createPlaylist(opts) creates playlist", function(done) {
         (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
+            var store = await new SuttaStore().initialize();
             var playlist = await store.createPlaylist({ 
                 pattern: 'an3.76-77', });
             should(playlist.tracks.length).equal(4);
@@ -1104,7 +1094,6 @@
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
-                logLevel,
             }).initialize();
             var eCaught;
             var playlist = await store.createPlaylist({ 
@@ -1152,7 +1141,6 @@
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
-                logLevel,
             }).initialize();
             var {
                 method,
@@ -1171,7 +1159,6 @@
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
-                logLevel,
             }).initialize();
             var maxResults = 5;
             var language = 'en';
@@ -1190,7 +1177,6 @@
         (async function() { try {
             var store = await new SuttaStore({
                 maxDuration: 450,
-                logLevel,
             }).initialize();
             var language = 'en';
             const KNSTART = [
@@ -1258,7 +1244,6 @@
                 suttaCentralApi,
                 suttaFactory,
                 voice,
-                logLevel,
             }).initialize();
 
             // multiple results
@@ -1327,7 +1312,6 @@
                 suttaCentralApi,
                 suttaFactory,
                 voice,
-                logLevel,
             }).initialize();
             var sutta = await store.loadSutta({
                 scid: 'an1.2/de/sabbamitta',

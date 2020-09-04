@@ -1,8 +1,6 @@
 (function(exports) {
     const uuidv4 = require('uuid/v4');
-    const {
-        logger,
-    } = require('rest-bundle');
+    const { logger, } = require('rest-bundle');
     class Task {
         constructor(opts={}) {
             var uuid = opts.uuid || uuidv4();

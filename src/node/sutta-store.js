@@ -1,9 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const {
-        logger,
-    } = require('just-simple').JustSimple;
+    const { logger, LogInstance } = require('log-instance');
     const {
         exec,
     } = require('child_process');
@@ -65,6 +63,7 @@
     class SuttaStore {
         constructor(opts={}) {
             var that = this;
+            (opts.logger || logger).logInstance(this, opts);
             this.suttaCentralApi = opts.suttaCentralApi || 
                 new SuttaCentralApi();
             this.suttaFactory = opts.suttaFactory || new SuttaFactory({
@@ -72,13 +71,13 @@
                 autoSection: true,
                 suttaLoader: scid => that.loadBilaraSutta(scid),
             });
-            logger.logInstance(this, opts);
+
             this.bilaraData = opts.BilaraData || new BilaraData({
-                logLevel: this.logLevel,
+                logger: this,
             });
             this.seeker = opts.Seeker || new Seeker({
                 bilaraData: this.bilaraData,
-                logLevel: this.logLevel,
+                logger: this,
                 matchHighlight: false,
             });
             this.suttaIds = opts.suttaIds;

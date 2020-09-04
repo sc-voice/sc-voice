@@ -5,7 +5,8 @@
     const { execSync } = require('child_process');
     const tmp = require('tmp');
     const { MerkleJson } = require("merkle-json");
-    const { logger } = require('rest-bundle');
+    const { logger, LogInstance } = require('log-instance');
+    const { AwsConfig, SayAgain, } = require('say-again');
     const {
         GuidStore,
         SoundStore,
@@ -15,8 +16,9 @@
     logger.level = 'warn';
     var storePath = tmp.tmpNameSync();
     var TEST_SOUNDS = path.join(__dirname, 'data', 'sounds');
+    this.timeout(10*1000);
 
-    it("SoundStore() creates default GuidStore for sounds", function() {
+    it("default ctor", function() {
         var store = new SoundStore();
         should(store).instanceof(SoundStore);
         should(store).instanceof(GuidStore);
@@ -28,21 +30,41 @@
         should(store.audioSuffix).equal('.mp3');
         should(store.audioFormat).equal('mp3');
         should(store.audioMIME).equal('audio/mp3');
+        should(store.sayAgain).instanceOf(SayAgain);
+        should(store.sayAgain.awsConfig.sayAgain.Bucket).equal('say-again.sc-voice');
+        should(store.logger).equal(logger);
     });
-    it("SoundStore(opts) creates custom SoundStore", function() {
-        var store = new SoundStore({
-            audioFormat: 'ogg',
-            storePath,
-        });
-        should(store).instanceof(SoundStore);
-        should(store).instanceof(GuidStore);
-        should(store.storePath).equal(storePath);
-        should(store.type).equal('SoundStore');
-        should(store.storeName).equal('sounds');
-        should(fs.existsSync(store.storePath)).equal(true);
-        should(store.audioSuffix).equal('.ogg');
-        should(store.audioFormat).equal('ogg_vorbis');
-        should(store.audioMIME).equal('audio/ogg');
+    it("custom ctor", done=>{ 
+        (async function() {  try {
+            var logger = new LogInstance();
+            var store = new SoundStore({
+                audioFormat: 'ogg',
+                storePath,
+                logger,
+            });
+            should(store).instanceof(SoundStore);
+            should(store).instanceof(GuidStore);
+            should(store.storePath).equal(storePath);
+            should(store.type).equal('SoundStore');
+            should(store.storeName).equal('sounds');
+            should(fs.existsSync(store.storePath)).equal(true);
+            should(store.audioSuffix).equal('.ogg');
+            should(store.audioFormat).equal('ogg_vorbis');
+            should(store.audioMIME).equal('audio/ogg');
+
+            // custom logger is propagated to children
+            var sayAgain = await store.sayAgain.initialize();
+            should(store.logger).equal(logger);
+            should(store.sayAgain.logger).equal(store);
+            store.info('store custom logger');
+            should(logger.lastLog('info')).match(/store custom logger/);
+            sayAgain.info('sayAgain custom logger');
+            should(logger.lastLog('info')).match(/sayAgain custom logger/);
+            sayAgain.tts.info('tts custom logger');
+            should(logger.lastLog('info')).match(/tts custom logger/);
+
+            done();
+        } catch(e) { done(e); }})();
     });
     it("suttaVolumeName(...) returns SoundStore volume", function() {
         should(SoundStore.suttaVolumeName('a','b','c','d'))
@@ -320,5 +342,38 @@
         var info = store.soundInfo({guid, volume});
         should(info[0].text).match(/As they recollect/);
         should(info.length).equal(1);
+    });
+    it("uploadCaches(...)", done=>{ 
+        if (process.env.TEST_UPLOAD_CACHES !== 'true') {
+            console.log("To test upload caches:");
+            console.log("  export TEST_UPLOAD_CACHES=true");
+            done();
+            return;
+        }
+        (async function() { try {
+            var store = new SoundStore({
+                storePath: TEST_SOUNDS,
+                logLevel: 'info',
+            });
+            var stats = {};
+            store.logLevel = 'info';
+            var voice = "Matthew";
+            var maxUpload = 2;
+            var res = await store.uploadCaches({stats, voice, maxUpload});
+            should(stats).properties({
+                json: 6,
+                mp3: 4,
+                guidFolders: 3,
+                status: "done",
+                volumes: 1,
+                ffmegConcat: 2,
+                'aws-polly': 4,
+                base64: 129392,
+            });
+            should(stats.uploads).above(-1).below(5);
+            should(res.finished - res.started).below(10*1000).above(0);
+            should(res).equal(stats);
+            done();
+        } catch(e) { done(e); }})();
     });
 })

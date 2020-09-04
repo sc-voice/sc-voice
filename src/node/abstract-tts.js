@@ -3,9 +3,7 @@
     const path = require('path');
     const Queue = require('promise-queue');
     const { MerkleJson } = require('merkle-json');
-    const {
-        logger,
-    } = require('just-simple').JustSimple;
+    const { logger } = require('log-instance');
     const SoundStore = require('./sound-store');
     const Words = require('./words');
     const ABSTRACT_METHOD = "abstract method must be overridden and implemented by base class";
@@ -23,7 +21,7 @@
 
     class AbstractTTS {
         constructor(opts={}) {
-            logger.logInstance(this, opts);
+            (opts.logger || logger).logInstance(this, opts);
             this.language = opts.language || 'en';
             this.localeIPA = opts.localeIPA || this.language;
             this.hits = 0;
@@ -374,7 +372,8 @@
                 }
                 resolve(this.createResponse(request, false, true));
             } else {
-                logger.warn(`synthesizeResponse() no audio voice:${this.voice} outpath:${outpath}`);
+                this.warn(`synthesizeResponse()`,
+                    `no audio voice:${this.voice} outpath:${outpath}`);
                 request.outpath = this.noAudioPath;
                 resolve(this.createResponse(request, false, false));
             }
@@ -456,33 +455,25 @@
 
                         that.serviceSynthesize(resolve, e => {
                             if (/EAI_AGAIN/.test(e.message)) {
-                                logger.warn([
-                                    `synthesizeSSML() ${e.message}`,
-                                    `(retrying...)`,
-                                ].join(' '));
+                                that.warn(`synthesizeSSML() ${e.message} (retrying...)`);
                                 that.serviceSynthesize(resolve, e => {
-                                    logger.warn([
-                                        `synthesizeSSML() ${e.message}`,
+                                    that.warn(`synthesizeSSML() ${e.message}`,
                                         `ssml:${ssmlFragment.length}utf16`,
                                         `${ssmlFragment}`,
-                                    ].join(' '));
+                                    );
                                     reject(e);
                                 }, request);
                             } else {
-                                logger.warn([
-                                    `synthesizeSSML() ${e.message}`,
+                                that.warn(`synthesizeSSML() ${e.message}`,
                                     `ssml:${ssmlFragment.length}utf16`,
                                     `${ssmlFragment}`,
-                                ].join(' '));
+                                );
                                 reject(e);
                             }
                         }, request);
                     }
                 } catch (e) {
-                    logger.warn([
-                        `synthesizeSSML() ${e.message}`,
-                        `ssml:${ssmlFragment}`,
-                    ].join(' '));
+                    that.warn(`synthesizeSSML() ${e.message} ssml:${ssmlFragment}`);
                     reject(e);
                 }
             });

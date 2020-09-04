@@ -1,7 +1,8 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const { logger } = require('just-simple').JustSimple;
+    const { logger } = require('log-instance');
+    const { SayAgain } = require('say-again');
     const Polly = require('./polly');
     const JSON5 = require('json5');
     const HumanTts = require('./human-tts');
@@ -17,7 +18,7 @@
 
     class Voice { 
         constructor(opts={}) {
-            logger.logInstance(this, opts);
+            (opts.logger || logger).logInstance(this, opts);
             this.stripNumbers = opts.stripNumbers;
             this.stripQuotes = opts.stripQuotes;
             this.locale = opts.locale || "en-IN";
@@ -34,7 +35,13 @@
             this.scAudio = opts.scAudio;
             this.gender = opts.gender || "female";
             this.noAudioPath = opts.noAudioPath;
-            this.soundStore = opts.soundStore || new SoundStore(opts);
+            var soundStoreOpts = Object.assign({}, opts, {
+                logger: this,
+            })
+            this.soundStore = opts.soundStore || new SoundStore(soundStoreOpts);
+            this.sayAgain = opts.sayAgain instanceof SayAgain
+                ? opts.sayAgain
+                : opts.sayAgain == null && this.soundStore.sayAgain; // default
             this.ipa = opts.ipa || {};
             this.pitch = opts.pitch || "-0%";
             this.usage = opts.usage || 'recite';
@@ -201,27 +208,26 @@
                 Object.keys(this.usages).forEach(key => {
                     let usage = this.usages[key];
                     let props= {
-                        words,
+                        altTts: this.altTts,
+                        breaks: usage.breaks,
+                        customWords: this.customWords,
+                        fullStopComma: this.fullStopComma,
                         language: this.locale,
                         localeIPA: this.localeIPA,
-                        fullStopComma: this.fullStopComma,
+                        logger: this,
+                        maxSegment: this.maxSegment,
+                        prosody: { rate: usage.rate, pitch: this.pitch, },
+                        sayAgain: this.sayAgain,
+                        scAudio: this.scAudio,
+                        soundStore: this.soundStore,
                         stripNumbers: this.stripNumbers,
                         stripQuotes: this.stripQuotes,
-                        voice: this.name,
-                        customWords: this.customWords,
-                        soundStore: this.soundStore,
-                        maxSegment: this.maxSegment,
-                        scAudio: this.scAudio,
-                        altTts: this.altTts,
-                        usage: key,
-                        breaks: usage.breaks,
-                        syllableVowels: this.syllableVowels,
                         syllabifyLength: this.syllabifyLength,
+                        syllableVowels: this.syllableVowels,
                         unknownLang: this.unknownLang,
-                        prosody: {
-                            rate: usage.rate,
-                            pitch: this.pitch,
-                        }
+                        usage: key,
+                        voice: this.name,
+                        words,
                     }
                     this.noAudioPath && (props.noAudioPath = this.noAudioPath);
                     if (this.service === 'aws-polly') {
@@ -246,6 +252,7 @@
         }
 
         speak(text, opts={}) {
+            var that = this;
             var usage = opts.usage || this.usage;
             var service = this.services[usage];
             if (service == null) {
@@ -255,6 +262,7 @@
             }
             return new Promise((resolve, reject) => {
                 (async function() { try {
+                    that.debug('speak()', text);
                     var result = await service.synthesizeText(text, opts);
                     resolve(result);
                 } catch(e) {reject(e);} })();

@@ -2,9 +2,15 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
+    const { logger, LogInstance } = require('log-instance');
+    const { SayAgain, AwsConfig } = require('say-again');
     const {
+        S3Creds,
         Polly,
     } = require("../index");
+    const LOCAL = path.join(__dirname, "../local");
+    const VSMPATH = path.join(LOCAL, 'vsm-s3.json');
+    this.timeout(5*1000);
 
 
     // Service results are normally cached. To bypass the cache, change
@@ -29,6 +35,8 @@
                 rate: "-20%", // Slow Amy
             },
         });
+        should(polly.logger).instanceOf(LogInstance);
+        should(polly.logger).equal(logger);
     });
     it("signature(text) returns TTS synthesis signature", function() {
         var polly = new Polly();
@@ -67,13 +75,17 @@
             [phoneme('mʊːlɐṃ', 'mūlaṃ')]);
     });
     it("synthesizeSSML(ssml) returns sound file", function(done) {
-        this.timeout(3*1000);
-        var polly = new Polly();
+        var s3Creds = new S3Creds({
+            configPath: VSMPATH,
+        });
+        var sayAgain = new SayAgain(s3Creds.awsConfig);
+        var polly = new Polly({sayAgain});
         var segments = [
             `<phoneme alphabet="ipa" ph="səˈpriːm"></phoneme>`,
             `full enlightenment, I say.`,
         ];
         var ssml = segments.join(' ');
+        var cache = false; // force SayAgain
         (async function() {
             var result = await polly.synthesizeSSML(ssml, { cache });
             should(result).properties(['file','signature','hits', 'misses']);
@@ -84,7 +96,6 @@
         })();
     });
     it("synthesizeBreak(...) returns sound file", function(done) {
-        this.timeout(3*1000);
         var polly = new Polly({
             voice: 'Matthew',
             prosody: {},
@@ -106,7 +117,6 @@
         } catch (e) {done(e);} })();
     });
     it("synthesizeText([text]) returns sound file for array of text", function(done) {
-        this.timeout(3*1000);
         (async function() { try {
             var polly = new Polly();
             var text = [

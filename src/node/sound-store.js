@@ -2,21 +2,36 @@
     const fs = require('fs');
     const path = require('path');
     const { execSync } = require('child_process');
-    const {
-        logger,
-    } = require('rest-bundle');
+    const { logger } = require('log-instance');
     const GuidStore = require('./guid-store');
-    const PATH_SOUNDS = path.join(__dirname, '../../local/sounds');
+    const S3Creds = require('./s3-creds');
+    const { AwsConfig, SayAgain } = require('say-again');
+    const LOCAL = path.join(__dirname, '../../local');
+    const PATH_SOUNDS = path.join(LOCAL, 'sounds');
     const MS_MINUTES = 60 * 1000;
+    const VSMPATH = path.join(LOCAL, 'vsm-s3.json');
+
+    var instances = 0;
 
     class SoundStore extends GuidStore { 
         constructor(opts) {
             super((opts = SoundStore.options(opts)));
             var that = this;
-            logger.debug(`SoundStore.ctor(${that.storePath})`);
+            that.name = `${that.constructor.name}_${++instances}`;
+            if (opts.name) {
+                that.name += `.${opts.name}`;
+            }
+            (opts.logger || logger).logInstance(this);
+            that.debug(`SoundStore.ctor(${that.storePath})`);
             that.audioSuffix = opts.audioSuffix;
             that.audioFormat = opts.audioFormat;
             that.audioMIME = opts.audioMIME;
+            var s3Creds = new S3Creds();
+            that.sayAgain = opts.sayAgain || new SayAgain({
+                name: this.name,
+                logger: this,
+                awsConfig: s3Creds.awsConfig,
+            });
 
             // every minute, delete ephemerals older than 5 minutes
             that.ephemerals = {};
@@ -129,7 +144,7 @@
                     info.push(json);
                 }
             } else {
-                console.log(`dbg soundInfo not found:`, {guidPath});
+                logger.error(`soundInfo not found:`, {guidPath});
             }
             return info;
         }
@@ -166,6 +181,92 @@
             });
         }
 
+        uploadPath({jsonPath, stats, voice, maxUpload}) {
+            var that = this;
+            var { sayAgain } = that;
+            var pbody = (resolve, reject) => { (async function() { try {
+                var result = "TBD";
+                var json = JSON.parse(fs.readFileSync(jsonPath));
+                stats.json = (stats.json||0) + 1;
+                stats[json.api] = (stats[json.api] || 0) + 1;
+
+                if (json.api === 'aws-polly') {
+                    var mp3Path = jsonPath.replace(/\.json$/,'.mp3');
+                    var matchesVoice = !voice || voice === json.voice;
+                    if (fs.existsSync(mp3Path) && matchesVoice) {
+                        stats.mp3 = (stats.mp3||0) + 1;
+                        var buf = await fs.promises.readFile(mp3Path);
+                        var base64 = buf.toString('base64');
+                        stats.base64 = (stats.base64||0) + base64.length;
+                        var request = json;
+                        var s3key = sayAgain.s3Key(request);
+                        if (s3key.indexOf(json.guid) >= 0) {
+                            var response = {
+                                mime: "audio/mpeg",
+                                base64,
+                            }
+                            stats.matched = (stats.matched||0) + 1;
+                            if (maxUpload && stats.uploads < maxUpload) {
+                                var res = await sayAgain.preload(request, response);
+                                if (res.updated) {
+                                    stats.uploads = (stats.uploads||0) + 1;
+                                    that.log(`uploaded ${s3key}`);
+                                }
+                            }
+                        } else {
+                            that.logger.error(`Guid mismatch ${guid} vs. ${s3key}`);
+                        }
+                    }
+                }
+                resolve(result);
+            } catch (e) { reject(e); }})()};
+            return new Promise(pbody);
+        }
+
+        uploadCaches({stats, voice, maxUpload=0}) {
+            var that = this;
+            var {
+                storePath,
+            } = that;
+            var pbody = (resolve, reject) => (async function() { try {
+                stats = stats || {};
+                stats.uploads = stats.uploads || 0;
+                stats.started = new Date();
+                stats.status = "in progress";
+                var deVols = fs.readdirSync(storePath, {withFileTypes: true});
+                for (let deVol of deVols.filter(de=>de.isDirectory())) {
+                    var volPath = path.join(storePath, deVol.name);
+                    stats.volumes = (stats.volumes||0) + 1;
+                    var deGuids = fs.readdirSync(volPath, {withFileTypes: true});
+                    for (let deGuid of deGuids.filter(de=>de.isDirectory())) {
+                        if (deGuid.name.length === 2) {
+                            stats.guidFolders = (stats.guidFolders||0) + 1;
+                            var dataPath = path.join(volPath, deGuid.name);
+                            var fnames = await fs.promises.readdir(dataPath);
+                            for (let fname of fnames) {
+                                if (fname.endsWith('.json')) {
+                                    var jsonPath = path.join(dataPath, fname);
+                                    await that.uploadPath({
+                                        jsonPath, 
+                                        stats,
+                                        voice,
+                                        maxUpload,
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                stats.status = "done"
+                resolve(stats);
+            } catch(e) { 
+                stats.stats = e.message;
+                reject(e); 
+            } finally {
+                stats.finished = new Date();
+            }})();
+            return new Promise(pbody);
+        }
     }
 
     module.exports = exports.SoundStore = SoundStore;
