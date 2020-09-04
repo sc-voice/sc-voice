@@ -1,0 +1,9 @@
+{
+  "Bucket": "sc-voice-vsm",
+  "s3": {
+    "endpoint": "https://s3.us-west-1.amazonaws.com",
+    "region": "us-west-1",
+    "secretAccessKey": "test-secretAccessKey",
+    "accessKeyId": "test-accessKeyId"
+  }
+}
