@@ -531,8 +531,11 @@
         "benares": { "ipa": "beˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
         "kaccāna": { "ipa": "kat͡ʃt͡ʃa:na" },
+        "licchaver": { "ipa": "lit͡ʃˈt͡ʃha:vɐ" },
+        "kosala": { "ipa": "ˈkoˌsala" },
         "vacca": { "ipa": "vat͡ʃt͡ʃa" },
-        "vajjier": { "ips": "vaʝʝier" }
+        "vajjier": { "ipa": "vaʝʝier" },
+        "yama": { "ipa": "ja:ma" }
     },
     "ipa": {
         "pli": {
@@ -544,6 +547,7 @@
             "bh": "bʰ",
             "c": "t͡ʃ",
             "cc": "t͡ʃt͡ʃ",
+            "cch": "t͡ʃt͡ʃʰ",
             "ḍ": "d",
             "dh": "dʰ",
             "du": "dʊ",
@@ -573,6 +577,7 @@
             "ṅk": "ŋk",
             "sutta": "ˌsutta\u0308",
             "r": "ɺ",
+            "s": "s",
             "tt": "t.t",
             "unused-th": "ʈʰ",
             "unused-u": "ʊ",
@@ -621,8 +626,11 @@
         "benares": { "ipa": "bɛˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
         "kaccāna": { "ipa": "kat͡ʃt͡ʃa:na" },
+        "licchaver": { "ipa": "lit͡ʃˈt͡ʃha:vɐ" },
+        "kosala": { "ipa": "ˈkoˌsala" },
         "vacca": { "ipa": "vat͡ʃt͡ʃa" },
-        "vajjier": { "ips": "vaʝʝier" }
+        "vajjier": { "ipa": "vaʝʝier" },
+        "yama": { "ipa": "ja:ma" }
     },
     "ipa": {
         "pli": {
@@ -634,6 +642,7 @@
             "bh": "bʰ",
             "c": "t͡ʃ",
             "cc": "t͡ʃt͡ʃ",
+            "cch": "t͡ʃt͡ʃʰ",
             "ḍ": "d",
             "dh": "dʰ",
             "du": "dʊ",
@@ -663,6 +672,7 @@
             "ṅk": "ŋk",
             "sutta": "ˌsutta\u0308",
             "r": "ɺ",
+            "s": "s",
             "tt": "t.t",
             "unused-th": "ʈʰ",
             "unused-u": "ʊ",
@@ -713,8 +723,11 @@
         "benares": { "ipa": "beˈna:ɺes" },
         "jetas": { "ipa": "ˈd͡ʒe:tas" },
         "kaccāna": { "ipa": "kat͡ʃt͡ʃa:na" },
+        "kosala": { "ipa": "ˈkoˌsala" },
+        "licchaver": { "ipa": "lit͡ʃˈt͡ʃha:vɐ" },
         "vacca": { "ipa": "vat͡ʃt͡ʃa" },
-        "vajjier": { "ips": "vaʝʝier" }
+        "vajjier": { "ipa": "vaʝʝier" },
+        "yama": { "ipa": "ja:ma" }
     },
     "ipa": {
         "pli": {
@@ -726,6 +739,7 @@
             "bh": "bʰ",
             "c": "t͡ʃ",
             "cc": "t͡ʃt͡ʃ",
+            "cch": "t͡ʃt͡ʃʰ",
             "ḍ": "d",
             "dh": "dʰ",
             "du": "dʊ",
@@ -755,6 +769,7 @@
             "ṅk": "ŋk",
             "sutta": "ˌsutta\u0308",
             "r": "ɺ",
+            "s": "s",
             "tt": "t.t",
             "unused-th": "ʈʰ",
             "unused-u": "ʊ",
