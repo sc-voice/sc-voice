@@ -20,6 +20,9 @@ USAGE
 OPTIONS
     -v
     Specify AWS voice to upload. Default is "Aditi".
+
+    -mu --maxUpload
+    Maximum upload (default is 10). Enter 0 for all.
 `);
     console.log("-v\tspecify voice");
     process.exit();

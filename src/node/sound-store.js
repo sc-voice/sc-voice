@@ -206,11 +206,13 @@
                                 base64,
                             }
                             stats.matched = (stats.matched||0) + 1;
-                            if (maxUpload && stats.uploads < maxUpload) {
+                            if (!maxUpload || stats.uploads < maxUpload) {
                                 var res = await sayAgain.preload(request, response);
                                 if (res.updated) {
                                     stats.uploads = (stats.uploads||0) + 1;
                                     that.log(`uploaded ${s3key}`);
+                                    stats.uploads === maxUpload && that.log(
+                                        `upload limited by maxUpload:${maxUpload}`);
                                 }
                             }
                         } else {

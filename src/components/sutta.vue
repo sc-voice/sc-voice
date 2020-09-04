@@ -788,9 +788,6 @@ export default {
                 if (seg.pli) {
                   seg.pli = seg.pli.split(" ").map(word=>{
                     var hword = hyphenator.hyphenate(word);
-                    if (hword !== word) {
-                      console.log(`dbg hword`, hword);
-                    }
                     return hword;
                   }).join(" ");
                 }

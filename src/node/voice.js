@@ -19,6 +19,8 @@
     class Voice { 
         constructor(opts={}) {
             (opts.logger || logger).logInstance(this, opts);
+
+            // serializable
             this.stripNumbers = opts.stripNumbers;
             this.stripQuotes = opts.stripQuotes;
             this.locale = opts.locale || "en-IN";
@@ -38,10 +40,8 @@
             var soundStoreOpts = Object.assign({}, opts, {
                 logger: this,
             })
-            this.soundStore = opts.soundStore || new SoundStore(soundStoreOpts);
-            this.sayAgain = opts.sayAgain instanceof SayAgain
-                ? opts.sayAgain
-                : opts.sayAgain == null && this.soundStore.sayAgain; // default
+
+            // non-serializable
             this.ipa = opts.ipa || {};
             this.pitch = opts.pitch || "-0%";
             this.usage = opts.usage || 'recite';
@@ -53,6 +53,17 @@
             this.iVoice = opts.iVoice; // legacy
             this.maxSegment = opts.maxSegment;
             this.unknownLang = opts.unknownLang;
+
+            Object.defineProperty(this, "soundStore", {
+                value: (opts.soundStore || new SoundStore(soundStoreOpts)),
+            });
+            Object.defineProperty(this, "sayAgain", {
+                value: (opts.sayAgain instanceof SayAgain
+                    ? opts.sayAgain
+                    : opts.sayAgain == null && this.soundStore.sayAgain
+                ),
+            });
+
             Object.defineProperty(this, '_services', {
                 writable: true,
                 value: opts.services || null,
