@@ -39,7 +39,7 @@
             should(sutta.translation.author_uid).equal(refParts[2]);
         }
     }
-    this.timeout(15*1000);
+    this.timeout(20*1000);
     logger.level = 'warn';
 
     it("default ctor", () => {
@@ -57,7 +57,7 @@
         should(store.bilaraData.logger).equal(store);
         should(store.seeker.logger).equal(store);
     });
-    it("TESTTESTinitialize() initializes SuttaStore", function(done) {
+    it("initialize() initializes SuttaStore", function(done) {
         (async function() { try {
             var store = new SuttaStore();
             should(store.maxDuration).equal(3*60*60);
@@ -441,7 +441,7 @@
         testPattern("a.+b", 'a.+b');
         testPattern("sattānaṃ", "sattānaṃ");
     });
-    it("search(pattern) is sanitized", function(done) {
+    it("TESTTESTsearch(pattern) is sanitized", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {

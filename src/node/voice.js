@@ -78,14 +78,14 @@
         static get RATE_FAST() { return "+5%"; }
         static get RATE_SLOW() { return "-20%"; }
 
-        static loadVoices(voicePath) {
+        static loadVoices(voicePath, opts={}) {
             if (voicesCache) {
                 return voicesCache;
             }
             voicePath == null && (voicePath = path.join(__dirname, '../../words/voices.json'));
             var json = JSON5.parse(fs.readFileSync(voicePath).toString());
             voicesCache = json.map(voiceOpts => {
-                var voice = new Voice(voiceOpts);
+                var voice = new Voice(Object.assign({},voiceOpts,opts));
                 logger.info(`loaded Voice:${voice.name}`);
                 return voice;
             });

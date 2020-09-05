@@ -14,6 +14,7 @@
     const suttaCentralApi = new SuttaCentralApi();
     const TOLERANCE = 33;
     const logLevel = false;
+    this.timeout(10*1000);
 
     function testTolerance(actual, expected, e = TOLERANCE) {
         should(actual).above(expected-e);
@@ -24,7 +25,7 @@
         var scd = new SuttaDuration();
         should(scd.name).equal('amy');
     });
-    it("measure(sutta, lang) measures thag1.2", function(done) {
+    it("TESTTESTmeasure(sutta, lang) measures thag1.2", function(done) {
         (async function() { try {
             var store = await new SuttaStore({logLevel}).initialize();
             var sutta = await store.loadSutta('thag1.2');

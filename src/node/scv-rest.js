@@ -47,17 +47,18 @@
         credentials: '{"hash":"13YYGuRGjiQad/G1+MOOmxmLC/1znGYBcHWh2vUgkdq7kzTAZ6dk76S3zpP0OwZq1eofgUUJ2kq45+TxOx5tvvag","salt":"Qf1NbN3Jblo8sCL9bo32yFmwiApHSeRkr3QOJZu3KJ0Q8hbWMXAaHdoQLUWceW83tOS0jN4tuUXqWQWCH2lNCx0S","keyLength":66,"hashMethod":"pbkdf2","iterations":748406}',
     };
 
-    const VOICES = Voice.loadVoices();
     const JWT_SECRET = `JWT${Math.random()}`;
+    const APP_NAME = 'scv'; // DO NOT CHANGE THIS
 
     class ScvRest extends RestBundle { 
         constructor(opts = {
             audioFormat: 'mp3',
         }) {
-            super(opts.name || 'scv', Object.assign({
+            super(APP_NAME, Object.assign({
                 srcPkg,
             }, opts));
-            logger.info(`ScvRest.ctor(${this.name})`);
+            (opts.logger || logger).logInstance(this);
+            this.info(`ScvRest.ctor(${this.name})`);
             this.wikiUrl = opts.wikiUrl 
                 || 'https://github.com/sc-voice/sc-voice/wiki';
             this.wikiUrl = opts.wikiUrl 
@@ -179,18 +180,19 @@
 
         initialize() {
             var that = this;
-            logger.info(`ScvRest initialize() BEGIN`);
+            that.info(`ScvRest initialize() BEGIN`);
             var superInit = super.initialize;
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     await that.suttaCentralApi.initialize();
                     await that.suttaFactory.initialize();
                     await that.suttaStore.initialize();
+                    that.voices = Voice.loadVoices();
                     var result = await superInit.call(that);
-                    logger.info(`ScvRest initialize() COMPLETED`);
+                    that.info(`ScvRest initialize() COMPLETED`);
                     resolve(result);
                 } catch(e) {
-                    logger.error(e.stack);
+                    that.error(e.stack);
                     reject(e);
                 }})();
             });
@@ -223,12 +225,13 @@
         }
 
         getAudioInfo(req, res, next) {
+            var that = this;
             var pbody = (resolve, reject) => { try {
                 var {   
                     guid,
                     volume,
                 } = req.params;
-                logger.info([
+                that.info([
                     `getAudioInfo()`,
                     js.simpleString(req.params),
                 ].join(' '));
@@ -324,14 +327,14 @@
                     });
                     var msStart = Date.now();
                     if (lines.length > 750) {
-                        logger.info(`synthesizeSutta()`+
+                        that.info(`synthesizeSutta()`+
                             `lines:${lines.length} text:${text.length*2}B`);
                     }
                     var result = await voice.speak(text, {
                         cache: true, // minimize TTS web service use
                         usage,
                     });
-                    logger.info(
+                    that.info(
                         `synthesizeSutta() ms:${Date.now()-msStart} `+
                         `${text.substring(0,50)}`);
                     resolve({
@@ -363,10 +366,11 @@
         }
 
         getVoices(req, res, next) {
+            var that = this;
             var { 
                 langTrans,
             } = req.params;
-            var voices = VOICES.slice();
+            var voices = that.voices.slice();
             if (!!langTrans) {
                 voices = voices.filter(v => 
                     v.langTrans === 'pli' || v.langTrans===langTrans);
@@ -383,7 +387,7 @@
                 langTrans,
             } = this.suttaParms(req);
             var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
-            logger.info(
+            that.info(
                 `GET play/section/${suttaRef}/${iSection}/${vnameTrans}`);
             var voiceTrans = Voice.voiceOfName(vnameTrans) || 
                 Voice.voiceOfName('Amy');
@@ -438,7 +442,7 @@
             var scAudio = this.scAudio;
             var voice = Voice.voiceOfName(vnameTrans);
             var voiceRoot = this.voiceFactory.voiceOfName(vnameRoot);
-            logger.debug(`GET ${req.url}`);
+            that.debug(`GET ${req.url}`);
             var usage = voice.usage || 'recite';
             var pbody = (resolve, reject) => {(async function(){ try {
                 var sutta = await that.suttaStore.loadSutta({
@@ -503,7 +507,7 @@
                     segment.audio.vnamePali = resSpeak.altTts;
                 }
                 var audio = segment.audio;
-                logger.info(`GET ${req.url} =>`, 
+                that.info(`GET ${req.url} =>`, 
                     audio[langTrans] ? `${langTrans}:${audio[langTrans]}` : ``,
                     audio.pli ? `pli:${audio.pli}` : ``,
                 );
@@ -522,7 +526,7 @@
                     segment,
                 });
             } catch(e) { 
-                logger.warn(`GET ${req.url} => `, e.message);
+                that.warn(`GET ${req.url} => `, e.message);
                 reject(e); 
             } })(); }
             return new Promise(pbody);
@@ -551,7 +555,7 @@
             var scAudio = this.scAudio;
             var voice = Voice.voiceOfName(vname);
             var voiceRoot = this.voiceFactory.voiceOfName(vname);
-            logger.info(`GET ${req.url}`);
+            that.info(`GET ${req.url}`);
             var usage = voice.usage || 'recite';
             var pbody = (resolve, reject) => {(async function(){ try {
                 var voiceTrans = Voice.createVoice({
@@ -617,7 +621,7 @@
                         lang: language,
                     });
                     sutta.blurb = blurb;
-                    logger.info(`GET sutta => ${sutta_uid}/${language}/${translator}`);
+                    that.info(`GET sutta => ${sutta_uid}/${language}/${translator}`);
                     resolve(sutta);
                 } catch(e) { reject(e); } })();
             });
@@ -645,7 +649,7 @@
                     results,
                     mlDocs,
                 } = sr;
-                logger.info([
+                that.info([
                     `GET search(${pattern}) ${method}`,
                     `=> ${results.map(r=>r.uid)}`,
                 ].join(' '));
@@ -654,6 +658,7 @@
         }
 
         getDownloadPlaylist(req, res, next) {
+            var that = this;
             var {
                 initialized,
                 scAudio,
@@ -723,7 +728,7 @@
                     var data = fs.readFileSync(filePath);
                     res.set('Content-disposition', 
                         'attachment; filename=' + filename);
-                    logger.info(`GET download/${langs}/${pattern} => ` +
+                    that.info(`GET download/${langs}/${pattern} => ` +
                         `${filename} size:${data.length} `+
                         `secs:${stats.duration} ${guid}`);
                     res.cookie('download-date',new Date());
@@ -735,13 +740,14 @@
         }
 
         getExamples(req, res, next) {
+            var that = this;
             var lang = req.query.lang || 'en';
             var n = Number(req.params.n);
             n = Math.max(1, isNaN(n) ? 3 : n);
             var fname = `examples-${lang}.txt`;
             var fpath = path.join(PATH_EXAMPLES, fname);
             if (!fs.existsSync(fpath)) {
-                logger.warn(`File not found: ${fpath}`);
+                that.warn(`File not found: ${fpath}`);
                 throw new Error(`File not found: ${fname}`);
             }
             var langExamples = fs.readFileSync(fpath)
@@ -798,7 +804,7 @@
                         }
                         if (error) {
                             wikiRes.resume(); // consume response data to free up memory
-                            logger.error(error.stack);
+                            that.error(error.stack);
                             reject(error);
                             return;
                         }
@@ -815,15 +821,15 @@
                                     html:html,
                                 });
                             } catch (e) {
-                                logger.error(e.stack);
+                                that.error(e.stack);
                                 reject(e);
                             }
                         });
                     }).on('error', (e) => {
-                        logger.error(e.stack);
+                        that.error(e.stack);
                         reject(e);
                     }).on('timeout', (e) => {
-                        logger.error(e);
+                        that.error(e);
                         wikiReq.abort();
                     });
                 } catch(e) { reject(e); } })();
@@ -851,11 +857,11 @@
                     var authuser = await us.authenticate(username, password);
                     if (authuser == null) {
                         res.locals.status = 401;
-                        logger.warn(`POST login ${username} => HTTP401 UNAUTHORIZED`);
+                        that.warn(`POST login ${username} => HTTP401 UNAUTHORIZED`);
                         throw new Error('Invalid username/password');
                     }
                     delete authuser.credentials;
-                    logger.info(`POST login ${username} => ${JSON.stringify(authuser)}`);
+                    that.info(`POST login ${username} => ${JSON.stringify(authuser)}`);
                     var token = jwt.sign(authuser, JWT_SECRET, {
                         expiresIn: that.jwtExpires,
                     });
@@ -959,7 +965,7 @@
                             `of:${username} by:${decoded.username}`);
                     }
                     var result = await that.userStore.deleteUser(username);
-                    logger.info(`POST delete-user `+
+                    that.info(`POST delete-user `+
                         `user:${username} by:${decoded.username} => OK`);
                     resolve(result);
                 } catch(e) {reject(e);} })();
@@ -979,7 +985,7 @@
                     };
                     var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
                     var result = await that.userStore.addUser(user);
-                    logger.info(`POST add-user `+
+                    that.info(`POST add-user `+
                         `user:${user.username} by:${decoded.username} => OK`);
                     resolve(result);
                 } catch(e) {reject(e);} })();
@@ -996,7 +1002,7 @@
                     } = req.body || {};
                     var decoded = jwt.decode(req.headers.authorization.split(' ')[1]);
                     var result = await that.userStore.setPassword(username, password);
-                    logger.info(`POST set-password `+
+                    that.info(`POST set-password `+
                         `for:${username} by:${decoded.username} => OK`);
                     resolve(result);
                 } catch(e) {reject(e);} })();
@@ -1008,16 +1014,17 @@
         }
 
         requireAdmin(req, res, msg){
+            var that = this;
             var authorization = req.headers.authorization || "";
             var decoded = jwt.decode(authorization.split(' ')[1]);
             var {
                 username,
             } = decoded;
             if (decoded.isAdmin) {
-                logger.info(`${msg}:${username} => AUTHORIZED`);
+                that.info(`${msg}:${username} => AUTHORIZED`);
             } else {
                 res.locals.status = 401;
-                logger.warn(`${msg}:${username} => HTTP401 UNAUTHORIZED (ADMIN)`);
+                that.warn(`${msg}:${username} => HTTP401 UNAUTHORIZED (ADMIN)`);
                 throw new Error('Admin privilege required');
             }
             return true;
@@ -1053,13 +1060,13 @@
                 (async function() { try {
                     that.requireAdmin(req, res, "POST reboot");
                     var cmd = `scripts/restart`;
-                    logger.warn(`${cmd}`);
+                    that.warn(`${cmd}`);
                     var cwd = path.join(__dirname, '../..');
                     var error = null;
                     exec(cmd, { cwd }, (e, stdout, stderr) => {
                         if (e) {
-                            logger.error(`POST reboot: ${cwd} => HTTP500`);
-                            logger.error(e.stack);
+                            that.error(`POST reboot: ${cwd} => HTTP500`);
+                            that.error(e.stack);
                             error = e;
                         }
                     });
@@ -1086,25 +1093,25 @@
                     var error = null;
                     exec(cmd, { cwd }, (e, stdout, stderr) => {
                         if (e) {
-                            logger.error(`POST update-release: ${cwd} => HTTP500`);
-                            logger.error(e.stack);
+                            that.error(`POST update-release: ${cwd} => HTTP500`);
+                            that.error(e.stack);
                             error = e;
                         } else {
                             error = false;
                         }
-                        logger.info(`postUpdateRelease-stdout: ${stdout.toString()}`);
-                        logger.info(`postUpdateRelease-stderr: ${stderr.toString()}`);
+                        that.info(`postUpdateRelease-stdout: ${stdout.toString()}`);
+                        that.info(`postUpdateRelease-stderr: ${stderr.toString()}`);
                     });
                     setTimeout(() => {
                         if (error) {
                             reject(error);
                         } else if (error === false) {
-                            logger.info(`POST update-release: ${cwd} => release is current`);
+                            that.info(`POST update-release: ${cwd} => release is current`);
                             resolve({
                                 updateRelease: false,
                             });
                         } else {
-                            logger.info(`POST update-release: ${cwd} => updating...`);
+                            that.info(`POST update-release: ${cwd} => updating...`);
                             resolve({
                                 updateRelease: true,
                             });
@@ -1189,13 +1196,13 @@
                         endpoint,
                         region,
                     } = s3;
-                    logger.info(`POST vsm/s3-credentials `+
+                    that.info(`POST vsm/s3-credentials `+
                         `Bucket:${Bucket} endpoint:${endpoint} region:${region}`);
                     var s3Bucket = await new S3Bucket(creds).initialize();
                     var credPath = path.join(LOCAL, 'vsm-s3.json');
                     await fs.promises
                         .writeFile(credPath, JSON.stringify(creds, null, 2));
-                    logger.info(`vsm/s3-credentials verified and saved to: ${credPath}`);
+                    that.info(`vsm/s3-credentials verified and saved to: ${credPath}`);
                     resolve({
                         Bucket,
                         s3: {
@@ -1204,7 +1211,7 @@
                         }
                     });
                 } catch(e) {
-                    logger.error(e.message);
+                    that.error(e.message);
                     reject(e);} 
                 })();
             });
@@ -1262,7 +1269,7 @@
                                     task,
                                 });
                             }
-                            logger.info(`removing ${tmpDirObj.name}`);
+                            that.info(`removing ${tmpDirObj.name}`);
                             tmpDirObj.removeCallback();
                             task.actionsDone++;
                         } catch(e) {
@@ -1322,7 +1329,7 @@
                         restore,
                         clearVolume,
                     });
-                    logger.info(`POST vsm/restore-s3-archives `+
+                    that.info(`POST vsm/restore-s3-archives `+
                         `Bucket:${Bucket} endpoint:${endpoint} region:${region}`);
                     resolve({
                         restore,
@@ -1384,7 +1391,7 @@
                     that.requireAdmin(req, res, "POST update-content");
                     if (nikayas instanceof Array) {
                         if (suids != null) {
-                            logger.warn(
+                            that.warn(
                                 `Ignoring provided suids:${suids}`);
                         }
                         suids = [];
@@ -1403,15 +1410,15 @@
                         task,
                         suids,
                     }).then(res => {
-                        logger.info(`postUpdateContent()`,
+                        that.info(`postUpdateContent()`,
                             `completed: ${suids.length} suttas`);
                     }).catch(e => {
-                        logger.warn(`postUpdateContent()`,
+                        that.warn(`postUpdateContent()`,
                             `failed: ${e.message}`);
                     });
                     resolve(task);
                 } catch(e) {
-                    logger.warn(`postUpdateContent() failed: ${e.message}`);
+                    that.warn(`postUpdateContent() failed: ${e.message}`);
                     reject(e);
                 } })();
             });
@@ -1442,7 +1449,7 @@
                         error,
                     });
                 } catch(e) {
-                    logger.warn(`postUpdateBilara() failed: ${e.message}`);
+                    that.warn(`postUpdateBilara() failed: ${e.message}`);
                     reject(e);
                 } })();
             });

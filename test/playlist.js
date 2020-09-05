@@ -11,7 +11,7 @@
         SuttaFactory,
         Voice,
     } = require('../index');
-    this.timeout(10*1000);
+    this.timeout(15*1000);
 
     var suttas = [
         new Sutta({

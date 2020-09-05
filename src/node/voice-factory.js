@@ -1,13 +1,14 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const { logger } = require('rest-bundle');
+    const { logger } = require('log-instance');
     const Voice = require('./voice');
     const SoundStore = require('./sound-store');
     const SCAudio = require('./sc-audio');
 
     class VoiceFactory { 
         constructor(opts={}) {
+            (opts.logger || logger).logInstance(this);
             this.voices = {};
             this.scAudio = opts.scAudio || new SCAudio();
             this.soundStore = opts.soundStore || new SoundStore();
@@ -18,10 +19,11 @@
         }
 
         voiceOfName(name="Amy") {
+            var that = this;
             name = name.toLowerCase();
             var voice = this.voices[name];
             if (voice == null) {
-                logger.info(`creating voice:${name}`);
+                that.info(`creating voice:${name}`);
                 var {
                     audioFormat,
                     audioSuffix,
