@@ -208,18 +208,20 @@
         } catch(e) {done(e)}})();
     });
     it("tokensSSML(text) handles kaya-", done=>{
-        console.log("TODO"); done(); return;
         (async function(){try{
             var aditi = Voice.createVoice(ADITI_OPTS);
-            var { tts } = await aditi.sayAgain.initialize();
-            should(tts).instanceOf(TtsPolly);
-            should(tts.logger).instanceOf(LogInstance);
-            aditi.sayAgain.logLevel = 'info';
-            tts.logLevel = 'info';
-            tts.log('hello tts');
-            aditi.logLevel = 'info';
             var res = await aditi.speak("kayavikkayā");
             should(res.signature.text).match(/"kə \'jə v\\ɪk kə jɑː"/);
+            done();
+        } catch(e) {done(e)}})();
+    });
+    it("tokensSSML(text) handles #", done=>{
+        (async function(){try{
+            var aditi = Voice.createVoice(ADITI_OPTS);
+            aditi.logLevel = 'info';
+            var res = await aditi.speak("Ayaṁ eko dhammo bahukāro. #1 ");
+            should(res.signature.text)
+                .match(/<phoneme alphabet="ipa" ph="əjəŋ">Ayaṁ/);
             done();
         } catch(e) {done(e)}})();
     });

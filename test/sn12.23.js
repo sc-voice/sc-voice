@@ -16,7 +16,7 @@
     const SC = path.join(LOCAL, 'sc');
 
     it("expandSutta(sutta) expands sn12.23", function(done) {
-        done();return; //TODO
+        done();return; // Expanding suttas is deprecated for complexity
         this.timeout(10*1000);
         (async function() { try {
             var suttaCentralApi = await new SuttaCentralApi().initialize();

@@ -242,7 +242,7 @@
                 }
                 for (var matches; (matches = this.symbolPat.exec(tok)); ) {
                     var c = matches[0];
-                    if (matches.index) { 
+                    if (matches.index) {  // embedded symbol
                         if (matches.index < tok.length-1 && (
                             c === Words.U_RSQUOTE || c === Words.U_RDQUOTE
                             || c === "'" || c === '"')) {
@@ -260,7 +260,8 @@
                             acc.push(tail);
                             tok = tok.substring(matches.index+1);
                         }
-                    } else {
+                    } else { // leading symbol
+                        let symInfo = this.symbols[tok];
                         if (c === '\n') {
                             if (acc.length && acc[acc.length-1].endsWith('\n')) {
                                 acc[acc.length-1] += '\n';
@@ -272,6 +273,8 @@
                         } else if (Words.RE_ACRONYM.test(tok)) {
                             acc.push(tok); // {...}
                             tok = "";
+                        } else if (symInfo && symInfo.skipToken) {
+                            tok = ""; // discard
                         } else {
                             acc.push(tok.substring(matches.index,matches.index+1));
                             tok = tok.substring(matches.index+1);

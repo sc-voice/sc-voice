@@ -441,7 +441,7 @@
         testPattern("a.+b", 'a.+b');
         testPattern("sattānaṃ", "sattānaṃ");
     });
-    it("TESTTESTsearch(pattern) is sanitized", function(done) {
+    it("search(pattern) is sanitized", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {

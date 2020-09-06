@@ -75,6 +75,7 @@
             "name": "quotation mark"
         },
         "#": {
+            "skipToken": true,
             "name": "number sign"
         },
         "$": {

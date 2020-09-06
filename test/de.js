@@ -290,7 +290,6 @@
         } catch(e) {done(e);} })();
     });
     it("speakSegment(opts) speaks aws-polly", function(done) {
-        done(); return; // dbg TODO
         (async function() { try {
             var aditi = Voice.createVoice({
                 name: 'aditi',
@@ -389,7 +388,6 @@
         } catch(e) {done(e);} })();
     });
     it("speakSegment(opts) downloads human-tts", function(done) {
-        done(); return; // dbg TODO
         (async function() { try {
             var sutta_uid = 'sn1.9';
             var storePath = tmp.tmpNameSync();

@@ -217,8 +217,8 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET download human audio playlist", function(done) {
-        done(); return; // TODO
+    it("TESTTESTGET download human audio playlist", function(done) {
+        console.log(`TODO`, __filename); done(); return; 
         var scvRest = app.locals.scvRest;
         logger.level = 'info';
         var async = function* () { try {
@@ -258,8 +258,8 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET /sutta/an2.1-10/en/sujato returns sutta", function(done) {
-        done(); return; // TODO
+    it("TESTTESTGET /sutta/an2.1-10/en/sujato returns sutta", function(done) {
+        console.log("TODO", __filename); done(); return; 
         var async = function* () { try {
             var response = yield supertest(app)
                 .get("/scv/sutta/an2.1-10/en/sujato").expect((res) => {
@@ -862,7 +862,7 @@
     });
     it("POST auth/vsm/restore-s3-archives", done=>{
         // Restore VSM file
-        done(); return; // TODO
+        console.log(`TODO`,__filename); done(); return; 
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials POST test');
@@ -897,8 +897,8 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/create-archive create VSM", done=>{
-        done(); return; // TODO
+    it("TESTTESTPOST auth/vsm/create-archive create VSM", done=>{
+        console.log(`TODO`,__filename); done(); return; 
         (async function() { try {
             var url = `/scv/auth/vsm/create-archive`;
             var nikaya = 'kn';

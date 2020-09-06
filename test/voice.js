@@ -3,8 +3,10 @@
     const fs = require('fs');
     const path = require('path');
     const { logger, LogInstance } = require('log-instance');
+    const { SayAgain } = require('say-again');
     const {
         Polly,
+        S3Creds,
         SCAudio,
         SoundStore,
         Voice,
@@ -240,7 +242,6 @@
         });
     });
     it("speak(...) => sound file for array of text", done=>{
-        console.log("TODO"); done(); return;
         (async function() { try {
             var raveena = Voice.createVoice({locale:"en-IN"});
             var text = [
@@ -255,13 +256,7 @@
                 volume: 'test',
                 chapter: 'voice',
             };
-            var logLevel = logger.logLevel;
-            logger.logLevel = 'info';
             var result = await raveena.speak(text, opts);
-            logger.logLevel = logLevel;
-
-            // Verify last fragment spoken ("Tomatoes are red")
-            should(logger.lastLog('info')).match(/b6d9f21356f1fc9d2b7d60fea199d081/);
 
             should(result).properties(['file','hits','misses','signature','cached']);
             var storePath = raveena.soundStore.storePath;
