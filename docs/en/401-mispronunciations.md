@@ -30,4 +30,4 @@ problems. Mispronounced homographs can only be fixed by Amazon.
 
 ### Deutsche Aussprachefehler
 #### Kontextbezogen (Vicki)
-- „Erwachens“, wie in „Faktoren des Erwachens“, wenn es das letzte Wort des Satzes ist; [Beispiel](https://54.67.25.233/scv/audio/an10.61/de/sabbamitta/Vicki/2ece35f33a7ef70ece3cfb83e14c3d21), [im Unterschied zu](https://54.67.25.233/scv/audio/an10.61/de/sabbamitta/Vicki/a679eefc27fbbb35c22686ea4e8393b7).
+- „Erwachens“, wie in „Faktoren des Erwachens“, wenn es das letzte Wort des Satzes ist; [Beispiel](https://54.67.25.233/scv/audio/an10.61/de/sabbamitta/Vicki/2ece35f33a7ef70ece3cfb83e14c3d21); [Gegenbeispiel mit korrekter Aussprache](https://54.67.25.233/scv/audio/an10.61/de/sabbamitta/Vicki/a679eefc27fbbb35c22686ea4e8393b7).
