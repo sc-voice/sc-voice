@@ -27,3 +27,7 @@ problems. Mispronounced homographs can only be fixed by Amazon.
 * "Almighty"; ([example](https://voice.suttacentral.net/scv/index.html?r=0.009784745629357494#/sutta?search=dn1%2Fen%2Fbodhi): DN1, Bodhi, 8/21, 7/25).
 * "unsatisfactoriness"; ([example](https://voice.suttacentral.net/scv/index.html?r=0.009784745629357494#/sutta?search=dn1%2Fen%2Fbodhi): DN1, Bodhi, 8/21, 24/25).
 * "rationalist", and "investigations" (I think Raveena, might be keen for us to start non-English support with French ;-) ); ([example](https://voice.suttacentral.net/scv/index.html?r=0.9015558486968711#/sutta?search=dn1%2Fen%2Fbodhi): DN1, Bodhi, 9/21, 12/14).
+
+### Deutsche Aussprachefehler
+#### Kontextbezogen (Vicki)
+- „Erwachens“, wie in „Faktoren des Erwachens“, wenn es das letzte Wort des Satzes ist; [Beispiel](https://54.67.25.233/scv/audio/an10.61/de/sabbamitta/Vicki/2ece35f33a7ef70ece3cfb83e14c3d21), [im Unterschied zu](https://54.67.25.233/scv/audio/an10.61/de/sabbamitta/Vicki/a679eefc27fbbb35c22686ea4e8393b7).
