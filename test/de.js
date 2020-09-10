@@ -44,7 +44,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("createVoice(voiceName) returns a default voice", function() {
+    it("TESTTESTcreateVoice(voiceName) returns a default voice", function() {
         var voice = Voice.createVoice('vicki');
         should(voice).instanceOf(Voice);
         should(voice.locale).equal("de-DE");
@@ -52,7 +52,8 @@
         should(voice.usage).equal("recite");
         should(voice.localeIPA).equal('pli');
         should(voice.stripNumbers).equal(false);
-        should(voice.stripQuotes).equal(false);
+        should(voice.stripQuotes).equal(true);
+        should(voice.trimSegmentSuffix).equal(' \u2013');
         should(voice.altTts).equal(undefined);
     });
     it("wordSSML(word) Vicki SSML text for word", function() {
