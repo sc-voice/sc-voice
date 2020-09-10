@@ -24,6 +24,7 @@
             this.stripNumbers = opts.stripNumbers;
             this.stripQuotes = opts.stripQuotes;
             this.locale = opts.locale || "en-IN";
+            this.trimSegmentSuffix = opts.trimSegmentSuffix;
             this.langTrans = opts.langTrans || 'en';
             this.localeIPA = opts.localeIPA || this.langTrans;
             this.fullStopComma = opts.fullStopComma;
@@ -286,10 +287,19 @@
                 segment,
                 language,
                 translator,
+                trimSegmentSuffix,
                 usage,
                 downloadAudio,
             } = opts;
             usage = usage || this.usage;
+            trimSegmentSuffix = trimSegmentSuffix || this.trimSegmentSuffix;
+            if (trimSegmentSuffix) {
+                var reTrimSuffix = new RegExp(trimSegmentSuffix+"$");
+                var text = segment[language].replace(reTrimSuffix, '');
+                segment = Object.assign({}, segment, {
+                    [language]: text,
+                });
+            }
             var service = this.services[usage];
             if (service == null) {
                 var avail = Object.keys(this.services);

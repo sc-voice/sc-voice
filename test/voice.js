@@ -464,6 +464,37 @@
             done();
         } catch(e) {done(e);} })();
     });
+    it("TESTTESTspeakSegment(opts) trims segment", function(done) {
+        (async function() { try {
+            var aditi = Voice.createVoice({
+                name: 'vicki',
+            });
+            var sutta_uid = 'an3.29';
+            var language = 'de';
+            var translator = 'sujato';
+            var usage = 'recite';
+            var segment = {
+                scid: 'an3.29:6.5',
+                de: 'Von hier geht er zur Hölle –',
+            }
+            var resSpeak = await aditi.speakSegment({
+                sutta_uid,
+                segment,
+                language,
+                translator,
+                usage,
+            });
+            var {
+                api,
+                text,
+            } = resSpeak.signature;
+            should(api).equal('aws-polly');
+            should(text).equal('<prosody rate="-15%" pitch="-10%">'+
+                'Von hier geht er zur Hölle'+
+                '</prosody>');
+            done();
+        } catch(e) {done(e);} })();
+    });
     it("speakSegment(opts) speaks aws-polly", function(done) {
         (async function() { try {
             var aditi = Voice.createVoice({
