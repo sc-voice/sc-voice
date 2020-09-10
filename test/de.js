@@ -53,7 +53,7 @@
         should(voice.localeIPA).equal('pli');
         should(voice.stripNumbers).equal(false);
         should(voice.stripQuotes).equal(true);
-        should(voice.trimSegmentSuffix).equal(' \u2013');
+        should(voice.trimSegmentSuffix).equal(' \u2013 *');
         should(voice.altTts).equal(undefined);
     });
     it("wordSSML(word) Vicki SSML text for word", function() {
@@ -74,7 +74,7 @@
         var vicki = Voice.createVoice('vicki').services.recite;
         should.deepEqual(vicki.wordInfo('Ort'), {language: 'de'} );
     });
-    it("speak([text],opts) returns sound file for array of text", function(done) {
+    it("TESTTESTspeak([text],opts) returns sound file for array of text", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice("de-DE");

@@ -357,6 +357,18 @@
             `<phoneme alphabet="ipa" ph="he\u03b8u">hetu</phoneme>${BREAK}?`,
         ]);
     });
+    it("TESTTESTspeak(text) trim German trailing en-dash", function(done) {
+        (async function() { try {
+            var vicki = Voice.createVoice({
+                name: "Vicki",
+            });
+            var text = 'Von hier geht er zur Hölle –';
+            var result = await vicki.speak(text, {usage:'recite'});
+            should(result.signature.text).match(/>Von hier geht er zur Hölle</);
+
+            done();
+        } catch(e) {done(e);} })();
+    });
     it("speak(text) speaks Pali", function(done) {
         (async function() { try {
             var raveena = Voice.createVoice({
@@ -466,7 +478,7 @@
     });
     it("TESTTESTspeakSegment(opts) trims segment", function(done) {
         (async function() { try {
-            var aditi = Voice.createVoice({
+            var vicki = Voice.createVoice({
                 name: 'vicki',
             });
             var sutta_uid = 'an3.29';
@@ -475,9 +487,9 @@
             var usage = 'recite';
             var segment = {
                 scid: 'an3.29:6.5',
-                de: 'Von hier geht er zur Hölle –',
+                de: 'Von hier geht er zur Hölle – ',
             }
-            var resSpeak = await aditi.speakSegment({
+            var resSpeak = await vicki.speakSegment({
                 sutta_uid,
                 segment,
                 language,
@@ -489,9 +501,7 @@
                 text,
             } = resSpeak.signature;
             should(api).equal('aws-polly');
-            should(text).equal('<prosody rate="-15%" pitch="-10%">'+
-                'Von hier geht er zur Hölle'+
-                '</prosody>');
+            should(text).match(/>Von hier geht er zur Hölle</);
             done();
         } catch(e) {done(e);} })();
     });

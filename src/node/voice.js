@@ -265,16 +265,26 @@
 
         speak(text, opts={}) {
             var that = this;
+            var {
+                services,
+                trimSegmentSuffix,
+            } = that;
             var usage = opts.usage || this.usage;
-            var service = this.services[usage];
+            var service = services[usage];
             if (service == null) {
-                var avail = Object.keys(this.services);
-                return Promise.reject(new Error(
-                    `Voice.speak() unsupported TTS service usage:${usage} available:${avail}`));
+                var avail = Object.keys(services);
+                return Promise.reject(new Error([
+                    `Voice.speak() unsupported TTS service`,
+                    `usage:${usage} available:${avail}`,
+                ].join(' ')));
             }
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    that.debug('speak()', text);
+                    if (typeof text === 'string' && trimSegmentSuffix) {
+                        var reTrimSuffix = new RegExp(trimSegmentSuffix+"$");
+                        text = text.replace(reTrimSuffix, '');
+                    }
+                    that.debug('speak()', text, trimSegmentSuffix);
                     var result = await service.synthesizeText(text, opts);
                     resolve(result);
                 } catch(e) {reject(e);} })();
@@ -282,6 +292,11 @@
         }
 
         speakSegment(opts={}) {
+            var that = this;
+            var {
+                name,
+                services,
+            } = that;
             var {
                 sutta_uid,
                 segment,
@@ -300,15 +315,15 @@
                     [language]: text,
                 });
             }
-            var service = this.services[usage];
+            var service = services[usage];
             if (service == null) {
-                var avail = Object.keys(this.services);
+                var avail = Object.keys(services);
                 return Promise.reject(new Error(
                     `Voice.speakSegment() unsupported TTS service `+
                     `usage:${usage} available:${avail}`));
             }
             var volume = SoundStore.suttaVolumeName(sutta_uid, language, 
-                    translator, this.name);
+                    translator, name);
             return service.synthesizeSegment({
                 segment,
                 translator,
