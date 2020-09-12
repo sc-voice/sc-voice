@@ -195,8 +195,7 @@
         },
         "\u2026": { 
             "name": "ellipsis",
-            "ellipsisBreak": true,
-            "cuddle": "left"
+            "isEllipsis": true
         }
     },
     "words": {

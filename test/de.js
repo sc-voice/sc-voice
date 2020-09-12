@@ -44,7 +44,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTcreateVoice(voiceName) returns a default voice", function() {
+    it("createVoice(voiceName) returns a default voice", function() {
         var voice = Voice.createVoice('vicki');
         should(voice).instanceOf(Voice);
         should(voice.locale).equal("de-DE");
@@ -74,7 +74,7 @@
         var vicki = Voice.createVoice('vicki').services.recite;
         should.deepEqual(vicki.wordInfo('Ort'), {language: 'de'} );
     });
-    it("TESTTESTspeak([text],opts) returns sound file for array of text", function(done) {
+    it("speak([text],opts) returns sound file for array of text", function(done) {
         this.timeout(5*1000);
         (async function() { try {
             var voice = Voice.createVoice("de-DE");

@@ -15,7 +15,7 @@
     var storePath = tmp.tmpNameSync();
 
 
-    it("default ctor", () => {
+    it("TESTTESTdefault ctor", () => {
         var tts = new AbstractTTS();
 
         // options
@@ -146,7 +146,7 @@
         should.deepEqual(tts.wordInfo('bikkhus'), bhikkhus);
         should.deepEqual(tts.wordInfo('bhikkus'), bhikkhus);
     });
-    it("wordSSML(word) returns SSML text for word", function() {
+    it("TESTTESTwordSSML(word) returns SSML text for word", function() {
         var tts = new AbstractTTS({
             localeIPA: 'pli',
         });
@@ -156,7 +156,10 @@
         });
 
         // symbols
-        should(tts.wordSSML(ELLIPSIS)).equal(ELLIPSIS_BREAK);
+
+        // Ellipsis substitution happens during segmenting
+        // because ellipses stand alone
+        // should(tts.wordSSML(ELLIPSIS)).equal(ELLIPSIS_BREAK);
 
         // numbers
         should(tts.wordSSML('281–309')).equal('281–309');

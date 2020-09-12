@@ -396,10 +396,10 @@
         }
         console.log(dict);
     });
-    it("symbols[symbol] returns info about symbol", function() {
+    it("TESTTESTsymbols[symbol] returns info about symbol", function() {
         var words = new Words();
         should(words.symbols[ELLIPSIS]).properties({
-            ellipsisBreak: true,
+            isEllipsis: true,
         });
     });
     

@@ -13,6 +13,7 @@
         Words,
     } = require('../index');
     const BREAK = `<break time="0.001s"/>`;
+    const ELLIPSIS_BREAK = `<break time="0.300s"/>`;
     const tmp = require('tmp');
     this.timeout(5*1000);
 
@@ -357,7 +358,7 @@
             `<phoneme alphabet="ipa" ph="he\u03b8u">hetu</phoneme>${BREAK}?`,
         ]);
     });
-    it("TESTTESTspeak(text) trim German trailing en-dash", function(done) {
+    it("speak(text) trim German trailing en-dash", function(done) {
         (async function() { try {
             var vicki = Voice.createVoice({
                 name: "Vicki",
@@ -413,8 +414,8 @@
         should(recite.wordSSML("self-mortifiers")).equal("self-mortifiers");
         should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
     });
-    it("Raveena phonemes", function() {
-    return;  // TODO
+    it("TESTTESTRaveena phonemes", function() {
+        console.log(`TODO`, __filename); return; 
         var raveena = Voice.createVoice({
             locale: "en-IN",
             localeIPA: "pli",
@@ -422,7 +423,8 @@
         should(raveena.name).equal("Raveena");
         var recite = raveena.services.recite;
         should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
-        should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑməɲcə","Nāmañca"));
+        should(recite.wordSSML(`Nāmañca`))
+            .equal(phoneme("nɑməɲcə","Nāmañca"));
         should(recite.wordSSML(`anottappañca`)).match(/"anoθθəppəɲcə"/);
         should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
@@ -476,7 +478,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTspeakSegment(opts) trims segment", function(done) {
+    it("speakSegment(opts) trims segment", function(done) {
         (async function() { try {
             var vicki = Voice.createVoice({
                 name: 'vicki',
@@ -699,6 +701,58 @@
 
             done();
         } catch (e) {done(e);} })();
+    });
+    it("TESTTESTspeak(text) handles ellipsis in AN2.17:3.1 (pli)", async()=>{ 
+        var deVoices = ["aditi"]; 
+        deVoices.forEach(name => {
+            console.log(`test ellipsis ${name}`);
+            var v = Voice.createVoice({name});
+            var text = [
+                `Abhikkantaṁ, bho gotama …pe… upāsakaṁ maṁ bhavaṁ`,
+                `gotamo dhāretu ajjatagge pāṇupetaṁ saraṇaṁ gatan”ti`,
+            ].join(' ');
+            var tts = v.services.recite;
+            should(tts.ellipsisBreak).equal(ELLIPSIS_BREAK);
+            var segmented = tts.segmentSSML(tts.stripHtml(text));
+            should(segmented[2]).equal(ELLIPSIS_BREAK);
+            should(segmented[4]).equal(ELLIPSIS_BREAK);
+            should(segmented.length).equal(7);
+        });
+    });
+    it("TESTTESTspeak(text) handles ellipsis in AN2.17:3.1 (de)", async()=>{ 
+        var deVoices = ["marlene", "vicki", "hans"];
+        deVoices.forEach(name => {
+            console.log(`test ellipsis ${name}`);
+            var v = Voice.createVoice({name});
+            var text = [
+                `„Vortrefflich, Meister Gotama! … Von diesem Tag an`,
+                `soll Meister Gotama mich als Laienschüler kennen,`,
+                `der für sein ganzes Leben Zuflucht gesucht hat.`,
+            ].join(' ');
+            var tts = v.services.recite;
+            should(tts.ellipsisBreak).equal(ELLIPSIS_BREAK);
+            var segmented = tts.segmentSSML(tts.stripHtml(text));
+            should(segmented[1]).equal(ELLIPSIS_BREAK);
+            should(segmented.length).equal(3);
+        });
+    });
+    it("TESTTESTspeak(text) handles ellipsis in AN2.17:3.1 (en)", async()=>{ 
+        var enVoices = ["amy", "raveena", "matthew", "brian"];
+        enVoices.forEach(name => {
+            console.log(`test ellipsis ${name}`);
+            var v = Voice.createVoice({name});
+            var text = [
+                `Excellent, Master Gotama! … From this day forth,`,
+                `may Master Gotama remember me as a lay follower who`,
+                `has gone for refuge for life.`
+            ].join(' ');
+            var tts = v.services.recite;
+            should(tts.ellipsisBreak).equal(ELLIPSIS_BREAK);
+            var segmented = tts.segmentSSML(tts.stripHtml(text));
+            should(segmented[1]).startWith(ELLIPSIS_BREAK);
+            should(segmented.length).equal(3);
+        });
+
     });
 
 })

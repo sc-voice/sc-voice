@@ -11,7 +11,7 @@
     const { exec } = require('child_process');
     const RE_PARA = new RegExp(`^[${Words.U_RSQUOTE}${Words.U_RDQUOTE}]*\n$`,'u');
     const RE_PARA_EOL = /^\n\n+$/u;
-    const RE_PAUSE3 = /[\u2014;:]/;
+    const RE_PAUSE3 = /[\u2014;:]/;  // \u2014:em-dash
     const RE_NUMBER = new RegExp(Words.PAT_NUMBER);
     const RE_STRIPNUMBER = new RegExp(`\\(?${Words.PAT_NUMBER}\\)?`);
     //const ELLIPSIS_BREAK = '<break time="1.000s"/>';
@@ -217,13 +217,14 @@
                     }
                 } else if (word.endsWith(`’`)) {
                     // ipa = null
-                    con && console.log(`dbg wordSSML2.4`, word, w);
+                    con && console.log(`dbg wordSSML2.4`, word);
                 } else {
                     var symInfo = symbols[word];
-                    con && console.log(`dbg wordSSML2.5`, word, w);
-                    if (symInfo && symInfo.ellipsisBreak) {
+                    if (0 && symInfo && symInfo.isEllipsis) {
+                        con && console.log(`dbg w&ordSSML2.5.1`, word);
                         return this.ellipsisBreak;
                     }
+                    con && console.log(`dbg wordSSML2.5.2`, word);
                 }
             }
             if (ipa) {
@@ -305,6 +306,10 @@
                     acc.cuddle = symbol.cuddle;
                     if (acc.cuddle === 'left') {
                         acc.segment = acc.segment + token;
+                    } else if (symbol.isEllipsis) {
+                        acc.segment && acc.segments.push(acc.segment);
+                        acc.segments.push(this.ellipsisBreak);
+                        acc.segment = '';
                     } else if (symbol.eol) {
                         if (acc.segment) {
                             acc.segments.push(acc.segment + token);
@@ -315,7 +320,7 @@
                     } else {
                         acc.segment = acc.segment ? acc.segment + ' ' + token : token;
                     }
-                    if (symbols[token].endSegment) {
+                    if (acc.segment && symbols[token].endSegment) {
                         acc.segments.push(acc.segment);
                         acc.segment = '';
                     }
@@ -665,10 +670,12 @@
                 volume,
             } = opts;
             if (segment == null) {
-                return Promise.reject(new Error(`synthesizeSegment() segment is required`));
+                return Promise.reject(new Error(
+                    `synthesizeSegment() segment is required`));
             }
             if (language == null) {
-                return Promise.reject(new Error(`synthesizeSegment() language is required`));
+                return Promise.reject(new Error(
+                    `synthesizeSegment() language is required`));
             }
             usage = usage || this.usage;
             var text = segment[language.split('-')[0]] || '(no text)';

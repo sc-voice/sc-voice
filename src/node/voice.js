@@ -25,6 +25,7 @@
             this.stripQuotes = opts.stripQuotes;
             this.locale = opts.locale || "en-IN";
             this.trimSegmentSuffix = opts.trimSegmentSuffix;
+            this.ellipsisBreak = opts.ellipsisBreak;
             this.langTrans = opts.langTrans || 'en';
             this.localeIPA = opts.localeIPA || this.langTrans;
             this.fullStopComma = opts.fullStopComma;
@@ -223,6 +224,7 @@
                         altTts: this.altTts,
                         breaks: usage.breaks,
                         customWords: this.customWords,
+                        ellipsisBreak: this.ellipsisBreak,
                         fullStopComma: this.fullStopComma,
                         language: this.locale,
                         localeIPA: this.localeIPA,

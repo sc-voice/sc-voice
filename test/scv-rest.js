@@ -217,7 +217,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET download human audio playlist", function(done) {
+    it("GET download human audio playlist", function(done) {
         console.log(`TODO`, __filename); done(); return; 
         var scvRest = app.locals.scvRest;
         logger.level = 'info';
@@ -258,7 +258,7 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("TESTTESTGET /sutta/an2.1-10/en/sujato returns sutta", function(done) {
+    it("GET /sutta/an2.1-10/en/sujato returns sutta", function(done) {
         console.log("TODO", __filename); done(); return; 
         var async = function* () { try {
             var response = yield supertest(app)
@@ -487,7 +487,8 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... handles large segment", done=>{
+    it("TESTTESTGET /play/segment/... handles large segment", done=>{
+        console.log(`TODO`, __filename); done(); return; 
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var scid = "an2.281-309:1.1";
