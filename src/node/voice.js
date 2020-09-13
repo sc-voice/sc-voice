@@ -265,11 +265,29 @@
             return words;
         }
 
+        normalizeText(text) {
+            if (typeof text === 'string') {
+                var {
+                    trimSegmentSuffix,
+                } = this;
+                if (trimSegmentSuffix) {
+                    var reTrimSuffix = new RegExp(trimSegmentSuffix+"$");
+                    text = text.replace(reTrimSuffix, '');
+                }
+
+                // The bizarre convention of periods after ellipses
+                // wreaks havoc in the tokenization for Voice.
+                // We expunge the period here.
+                // e.g., SN55.61:1.1
+                text = text.replace(/\u2026\./gu, '\u2026'); 
+            }
+            return text;
+        }
+
         speak(text, opts={}) {
             var that = this;
             var {
                 services,
-                trimSegmentSuffix,
             } = that;
             var usage = opts.usage || this.usage;
             var service = services[usage];
@@ -282,11 +300,8 @@
             }
             return new Promise((resolve, reject) => {
                 (async function() { try {
-                    if (typeof text === 'string' && trimSegmentSuffix) {
-                        var reTrimSuffix = new RegExp(trimSegmentSuffix+"$");
-                        text = text.replace(reTrimSuffix, '');
-                    }
-                    that.debug('speak()', text, trimSegmentSuffix);
+                    text = that.normalizeText(text);
+                    console.log(`dbg speak`, text);
                     var result = await service.synthesizeText(text, opts);
                     resolve(result);
                 } catch(e) {reject(e);} })();
@@ -310,13 +325,10 @@
             } = opts;
             usage = usage || this.usage;
             trimSegmentSuffix = trimSegmentSuffix || this.trimSegmentSuffix;
-            if (trimSegmentSuffix) {
-                var reTrimSuffix = new RegExp(trimSegmentSuffix+"$");
-                var text = segment[language].replace(reTrimSuffix, '');
-                segment = Object.assign({}, segment, {
-                    [language]: text,
-                });
-            }
+            var text = that.normalizeText(segment[language]);
+            segment = Object.assign({}, segment, {
+                [language]: text,
+            });
             var service = services[usage];
             if (service == null) {
                 var avail = Object.keys(services);

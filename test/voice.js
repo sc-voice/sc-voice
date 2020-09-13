@@ -702,7 +702,7 @@
             done();
         } catch (e) {done(e);} })();
     });
-    it("TESTTESTspeak(text) handles ellipsis in AN2.17:3.1 (pli)", async()=>{ 
+    it("speak(text) handles ellipsis in AN2.17:3.1 (pli)", async()=>{ 
         var deVoices = ["aditi"]; 
         deVoices.forEach(name => {
             console.log(`test ellipsis ${name}`);
@@ -719,7 +719,7 @@
             should(segmented.length).equal(7);
         });
     });
-    it("TESTTESTspeak(text) handles ellipsis in AN2.17:3.1 (de)", async()=>{ 
+    it("speak(text) handles ellipsis in AN2.17:3.1 (de)", async()=>{ 
         var deVoices = ["marlene", "vicki", "hans"];
         deVoices.forEach(name => {
             console.log(`test ellipsis ${name}`);
@@ -736,7 +736,7 @@
             should(segmented.length).equal(3);
         });
     });
-    it("TESTTESTspeak(text) handles ellipsis in AN2.17:3.1 (en)", async()=>{ 
+    it("speak(text) handles ellipsis in AN2.17:3.1 (en)", async()=>{ 
         var enVoices = ["amy", "raveena", "matthew", "brian"];
         enVoices.forEach(name => {
             console.log(`test ellipsis ${name}`);
@@ -752,7 +752,17 @@
             should(segmented[1]).startWith(ELLIPSIS_BREAK);
             should(segmented.length).equal(3);
         });
-
+    });
+    it("TESTTESTspeak(text) handles ellipsis with period", async()=>{ 
+        var v = Voice.createVoice({name:"vicki"});
+        var text = `akkosatipi, āpatti thullaccayassa …pe….`;
+        var { segments } = await v.speak(text);
+        should.deepEqual(segments, [
+           'akkosatipi, āpatti thullaccayassa',
+           '<break time="0.300s"/>',
+           'pe',
+           '<break time="0.300s"/>',
+        ]);
     });
 
 })
