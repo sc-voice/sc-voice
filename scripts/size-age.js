@@ -35,13 +35,28 @@ function scanDir(dirPath) {
 
 scanDir(root);
 console.log(`${root}/**/*${suffix} sizes (MB)`);
-console.log(`days\tmod\taccess`);
+console.log(`days\tmod\taccess\tMOD\tACCESS\tMOD%\tACCESS%`);
+var modSum = 0;
+var accessSum = 0;
+var modTotal = 0;
+var accessTotal = 0;
+Object.entries(map).sort((a,b) => a[0]-b[0]).forEach(e=>{
+    var {mod, access} = e[1];
+    modTotal += mod;
+    accessTotal += access;
+});
 Object.entries(map).sort((a,b) => a[0]-b[0]).forEach(e=>{
     var [k,v] = e;
     var {mod, access} = v;
+    modSum += mod;
+    accessSum += access;
     console.log([
         `${k}`,
         mod ? `${mod.toFixed(1)}` : '0',
         access ? `${access.toFixed(1)}` : '0',
+        modSum ? `${modSum.toFixed(1)}` : '0',
+        accessSum ? `${accessSum.toFixed(1)}` : '0',
+        (100*modSum / modTotal).toFixed(1),
+        (100*accessSum / accessTotal).toFixed(1),
     ].join('\t'));
 });
