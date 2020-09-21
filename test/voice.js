@@ -753,7 +753,7 @@
             should(segmented.length).equal(3);
         });
     });
-    it("TESTTESTspeak(text) handles ellipsis with period", async()=>{ 
+    it("speak(text) handles ellipsis with period", async()=>{ 
         var v = Voice.createVoice({name:"vicki"});
         var text = `akkosatipi, āpatti thullaccayassa …pe….`;
         var { segments } = await v.speak(text);

@@ -5,10 +5,12 @@
     const { logger } = require('log-instance');
     const GuidStore = require('./guid-store');
     const S3Creds = require('./s3-creds');
+    const FilePruner = require('./file-pruner');
     const { AwsConfig, SayAgain } = require('say-again');
     const LOCAL = path.join(__dirname, '../../local');
     const PATH_SOUNDS = path.join(LOCAL, 'sounds');
-    const MS_MINUTES = 60 * 1000;
+    const MS_MINUTE = 60 * 1000;
+    const MS_DAY = 24 * 60 * MS_MINUTE;
     const VSMPATH = path.join(LOCAL, 'vsm-s3.json');
 
     var instances = 0;
@@ -26,6 +28,7 @@
             that.audioSuffix = opts.audioSuffix;
             that.audioFormat = opts.audioFormat;
             that.audioMIME = opts.audioMIME;
+            this.filePruner = opts.filePruner || new FilePruner({root:this.storePath});
             var s3Creds = new S3Creds();
             that.sayAgain = opts.sayAgain || new SayAgain({
                 name: this.name,
@@ -35,8 +38,8 @@
 
             // every minute, delete ephemerals older than 5 minutes
             that.ephemerals = {};
-            that.ephemeralAge = opts.ephemeralAge || 15*MS_MINUTES;
-            that.ephemeralInterval = opts.ephemeralInterval || 5*MS_MINUTES;
+            that.ephemeralAge = opts.ephemeralAge || 15*MS_MINUTE;
+            that.ephemeralInterval = opts.ephemeralInterval || 5*MS_MINUTE;
             that.ephemeralInterval && setInterval(() => {
                 var ctime = new Date(Date.now() - that.ephemeralAge);
                 that.clearEphemerals({
@@ -56,7 +59,6 @@
             var vname =  vname.toLowerCase();
             return `${collection}_${lang}_${source}_${vname}`;
         }
-
 
         static options(opts={}) {
             if (opts.audioFormat === 'ogg') {
@@ -269,6 +271,88 @@
             }})();
             return new Promise(pbody);
         }
+
+        pruneOldFiles(opts={}) {
+            var that = this;
+            if (that.prunerStats) {
+                return Promise.reject(new Error(
+                    `pruneOldFiles() ignored (busy)`));
+            }
+            var prune = opts.prune || (oldPath=>{
+                that.info(oldPath);
+                return true;
+            });
+            var prunedStats = that.prunerStats = {
+                prune,
+                started: new Date(),
+                done: undefined,
+                pruned: [],
+            };
+            var pruner = that.entries();
+            var pruneDays = opts.pruneDays || this.pruneDays;
+            var pruneDate = opts.pruneDate || new Date(Date.now()-pruneDays*MS_DAY);
+            var pbody = async (resolve, reject) => { try {
+                let next;
+                while((next=pruner.next()) && !next.done) {
+                    var fpath = next.value;
+                    await new Promise((resolve,reject)=>setTimeout(()=>resolve(true),100));
+                    var stats = await fs.promises.stat(fpath);
+                    if (stats.mtime <= pruneDate) {
+                        if (prune(fpath)) { // qualified delete
+                            prunedStats.pruned.push(fpath);
+                            await fs.promises.unlink(fpath);
+                        }
+                    }
+                }
+                prunedStats.done = new Date();
+                resolve(prunedStats);
+                that.prunerStats = undefined;
+            } catch(e) { reject(e); }};
+            return new Promise(pbody);
+        }
+
+        entries() {
+            var that = this;
+            let stack = [that.storePath];
+            return {
+                stack,
+                calls: 0,
+                found: 0,
+                notFound: 0,
+                started: new Date(),
+                elapsed: 0,
+                [Symbol.iterator]: function() { return this; },
+                next: function() {
+                    this.calls++;
+                    while (stack.length) {
+                        var fpath = stack.pop();
+                        if (fs.existsSync(fpath)) {
+                            this.found++;
+                            var stats = fs.statSync(fpath);
+                            if (stats.isDirectory()) {
+                                fs.readdirSync(fpath).forEach(dirEntry=>{
+                                    stack.push(path.join(fpath,dirEntry));
+                                });
+                            } else if (stats.isFile()) {
+                                this.elapsed = new Date() - this.started;
+                                return {
+                                    done: false,
+                                    value: fpath,
+                                }
+                            }
+                        } else {
+                            this.notFound++;
+                            that.info(`skipping deleted entry`, fpath);
+                        }
+                    }
+                    return {
+                        done: true,
+                        value: undefined,
+                    }
+                } // next()
+            }
+        }
+
     }
 
     module.exports = exports.SoundStore = SoundStore;

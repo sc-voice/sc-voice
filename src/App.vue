@@ -348,9 +348,10 @@ export default {
           this.focused[id] = false;
       },
       url(path) {
-          return window.location.origin === 'http://localhost:8080'
-              ? `http://localhost/scv/${path}`
-              : `./${path}`;
+          var origin = window.location.origin;
+          return origin.endsWith(':8080') 
+            ? `${origin.substring(0, origin.length-5)}/scv/${path}` 
+            : `./${path}`;
       },
       searchUrl(pat) {
           var search = encodeURIComponent(pat);
@@ -382,6 +383,7 @@ export default {
       getVoices() {
           var that = this;
           var url = this.url(`voices`);
+          console.debug(`dbg voices`, url);
           this.$http.get(url).then(res => {
               var voices = res.data;
               that.gscv.voices = res.data;

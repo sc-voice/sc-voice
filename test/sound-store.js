@@ -8,6 +8,7 @@
     const { logger, LogInstance } = require('log-instance');
     const { AwsConfig, SayAgain, } = require('say-again');
     const {
+        FilePruner,
         GuidStore,
         SoundStore,
     } = require("../index");
@@ -25,46 +26,47 @@
         should(fs.existsSync(store.storePath)).equal(true);
         should(store.storePath).equal(path.join(LOCAL, 'sounds'));
         should(store.type).equal('SoundStore');
+        should(store.filePruner).instanceOf(FilePruner);
         should(store.storeName).equal('sounds');
         should(store.volume).equal('common');
         should(store.audioSuffix).equal('.mp3');
         should(store.audioFormat).equal('mp3');
         should(store.audioMIME).equal('audio/mp3');
         should(store.sayAgain).instanceOf(SayAgain);
-        should(store.sayAgain.awsConfig.sayAgain.Bucket).equal('say-again.sc-voice');
+        should(store.sayAgain.awsConfig.sayAgain.Bucket)
+            .equal('say-again.sc-voice');
         should(store.logger).equal(logger);
     });
-    it("custom ctor", done=>{ 
-        (async function() {  try {
-            var logger = new LogInstance();
-            var store = new SoundStore({
-                audioFormat: 'ogg',
-                storePath,
-                logger,
-            });
-            should(store).instanceof(SoundStore);
-            should(store).instanceof(GuidStore);
-            should(store.storePath).equal(storePath);
-            should(store.type).equal('SoundStore');
-            should(store.storeName).equal('sounds');
-            should(fs.existsSync(store.storePath)).equal(true);
-            should(store.audioSuffix).equal('.ogg');
-            should(store.audioFormat).equal('ogg_vorbis');
-            should(store.audioMIME).equal('audio/ogg');
+    it("custom ctor", async()=>{
+        var filePruner = new FilePruner({root: TEST_SOUNDS});
+        var logger = new LogInstance();
+        var store = new SoundStore({
+            audioFormat: 'ogg',
+            storePath,
+            filePruner,
+            logger,
+        });
+        should(store).instanceof(SoundStore);
+        should(store.filePruner).equal(filePruner);
+        should(store).instanceof(GuidStore);
+        should(store.storePath).equal(storePath);
+        should(store.type).equal('SoundStore');
+        should(store.storeName).equal('sounds');
+        should(fs.existsSync(store.storePath)).equal(true);
+        should(store.audioSuffix).equal('.ogg');
+        should(store.audioFormat).equal('ogg_vorbis');
+        should(store.audioMIME).equal('audio/ogg');
 
-            // custom logger is propagated to children
-            var sayAgain = await store.sayAgain.initialize();
-            should(store.logger).equal(logger);
-            should(store.sayAgain.logger).equal(store);
-            store.info('store custom logger');
-            should(logger.lastLog('info')).match(/store custom logger/);
-            sayAgain.info('sayAgain custom logger');
-            should(logger.lastLog('info')).match(/sayAgain custom logger/);
-            sayAgain.tts.info('tts custom logger');
-            should(logger.lastLog('info')).match(/tts custom logger/);
-
-            done();
-        } catch(e) { done(e); }})();
+        // custom logger is propagated to children
+        var sayAgain = await store.sayAgain.initialize();
+        should(store.logger).equal(logger);
+        should(store.sayAgain.logger).equal(store);
+        store.info('store custom logger');
+        should(logger.lastLog('info')).match(/store custom logger/);
+        sayAgain.info('sayAgain custom logger');
+        should(logger.lastLog('info')).match(/sayAgain custom logger/);
+        sayAgain.tts.info('tts custom logger');
+        should(logger.lastLog('info')).match(/tts custom logger/);
     });
     it("suttaVolumeName(...) returns SoundStore volume", function() {
         should(SoundStore.suttaVolumeName('a','b','c','d'))

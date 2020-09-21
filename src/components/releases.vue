@@ -193,9 +193,10 @@ export default {
             });
         },
         url(path) {
-            return window.location.origin === 'http://localhost:8080'
-                ? `http://localhost/scv/${path}`
-                : `./${path}`;
+          var origin = window.location.origin;
+          return origin.endsWith(':8080') 
+            ? `${origin.substring(0, origin.length-5)}/scv/${path}` 
+            : `./${path}`;
         },
     },
     mounted() {

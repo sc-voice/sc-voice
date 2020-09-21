@@ -17,26 +17,29 @@
     } = require('rest-bundle');
     const { logger } = require('log-instance');
     const srcPkg = require("../../package.json");
-    const S3Creds = require('./s3-creds');
-    const Words = require('./words');
-    const GuidStore = require('./guid-store');
-    const S3Bucket = require('./s3-bucket');
+
     const AudioUrls = require('./audio-urls');
-    const Playlist = require('./playlist');
     const ContentUpdater = require('./content-updater');
-    const Section = require('./section');
-    const SCAudio = require('./sc-audio');
-    const SoundStore = require('./sound-store');
-    const VsmStore = require('./vsm-store');
-    const Sutta = require('./sutta');
-    const SuttaFactory = require('./sutta-factory');
-    const SuttaStore = require('./sutta-store');
-    const SuttaCentralApi = require('./sutta-central-api');
+    const FilePruner = require('./file-pruner');
+    const GuidStore = require('./guid-store');
     const MdAria = require('./md-aria');
-    const Task = require('./task');
-    const Voice = require('./voice');
-    const VoiceFactory = require('./voice-factory');
+    const Playlist = require('./playlist');
+    const S3Bucket = require('./s3-bucket');
+    const S3Creds = require('./s3-creds');
+    const SCAudio = require('./sc-audio');
+    const Section = require('./section');
+    const SoundStore = require('./sound-store');
+    const SuttaCentralApi = require('./sutta-central-api');
     const SuttaCentralId = require('./sutta-central-id');
+    const SuttaFactory = require('./sutta-factory');
+    const Sutta = require('./sutta');
+    const SuttaStore = require('./sutta-store');
+    const Task = require('./task');
+    const VoiceFactory = require('./voice-factory');
+    const Voice = require('./voice');
+    const VsmStore = require('./vsm-store');
+    const Words = require('./words');
+
     const LOCAL = path.join(__dirname, '../../local');
     const PATH_SOUNDS = path.join(LOCAL, 'sounds/');
     const PATH_EXAMPLES = path
@@ -149,6 +152,8 @@
                 ["get", "auth/users", this.getUsers],
                 ["get", "auth/sound-store/volume-info", 
                     this.getSoundStoreVolumeInfo],
+                ["get", "auth/sound-store/pruner", this.getSoundPruner],
+                ["post", "auth/sound-store/pruner", this.postSoundPruner],
                 ["post", "auth/sound-store/clear-volume", 
                     this.postSoundStoreClearVolume],
                 ["post", "auth/delete-user", this.postDeleteUser],
@@ -1038,6 +1043,36 @@
                     resolve(that.soundStore.volumeInfo());
                 } catch(e) {reject(e);} })();
             });
+        }
+
+        async getSoundPruner(req, res, next) {
+            this.requireAdmin(req, res, "GET sound-store/pruner");
+            var {
+                done,
+                earliest,
+                pruneDays,
+                pruning,
+                size,
+                started,
+            } = this.soundStore.filePruner;
+            return {
+                done, 
+                earliest,
+                pruneDays, 
+                pruning, 
+                size, 
+                started, 
+            };
+        }
+       
+        postSoundPruner(req, res, next) {
+            var filePruner = this.soundStore.filePruner;
+            this.requireAdmin(req, res, "POST sound-store/prune");
+            filePruner.pruneDays = req.body.pruneDays;
+            filePruner.pruneOldFiles().then(res=>{
+                this.info(`pruneOldFiles():`, JSON.stringify(res));
+            });
+            return this.getSoundPruner(req, res, next);
         }
 
         postSoundStoreClearVolume(req, res, next) {
