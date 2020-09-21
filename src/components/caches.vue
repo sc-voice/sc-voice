@@ -137,6 +137,7 @@ export default {
         try {
           var res = await that.getPruner();
           console.log('monitor ok', res);
+          await that.getCaches();
         } catch(e) {
           console.log('monitor fail', e);
           eCaught = e;
