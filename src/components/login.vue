@@ -81,6 +81,7 @@ export default {
                 that.isWaiting = false;
                 that.gscv.user = res.data;
                 that.user = this.gscv.user;
+                setTimeout(()=>that.autoLogout(window.location.href),60*60*1000);
                 console.log(`onLogin() ${username} ${this.gscv.user}`);
             }).catch(e => {
                 that.isWaiting = false;
@@ -88,6 +89,13 @@ export default {
                     that.$vuetify.lang.t('$vuetify.auth.invalidUsernamePassword');
                 console.error(e.stack);
             });
+        },
+        autoLogout(url) {
+            console.log(`autoLogout()`, window.location);
+            if (window.location.href.indexOf("#/auth") > 0) {
+                window.location = url;
+                window.location.reload(true);
+            }
         },
         url(path) {
           var origin = window.location.origin;
