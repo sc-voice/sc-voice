@@ -748,7 +748,6 @@
             var that = this;
             var lang = req.query.lang || 'en';
             var n = Number(req.params.n);
-            n = Math.max(1, isNaN(n) ? 3 : n);
             var fname = `examples-${lang}.txt`;
             var fpath = path.join(PATH_EXAMPLES, fname);
             if (!fs.existsSync(fpath)) {
@@ -767,7 +766,9 @@
                 langExamples[j] = t;
             }
             
-            return langExamples.slice(0, n);
+            return Number.isInteger(n) && n > 0 
+                ? langExamples.slice(0, n)
+                : langExamples.sort();
         }
 
         getWikiAria(req, res, next) {

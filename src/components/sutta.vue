@@ -13,7 +13,15 @@ style="width:100%; margin-top:0"/>
           {{$vuetify.lang.t("$vuetify.scv.exploreBuddhasTeaching")}}
         </h1>
         <div class="scv-search-field" role="search">
-          <v-text-field ref="refSearch"
+          <v-autocomplete
+            ref="refSearchAuto"
+            v-model="search"
+            :items="searchItems"
+            :search-input.sync="search"
+            clearable
+            @input="onSearchInput($event)"
+          ></v-autocomplete>
+          <v-text-field v-if="false" ref="refSearch"
             :placeholder="searchLabel"
             v-model="search" v-on:keypress="onSearchKey($event)"
             @click:append="onSearchKey()"
@@ -26,6 +34,7 @@ style="width:100%; margin-top:0"/>
             <v-btn @click="clickInspireMe()"
               role="button"
               :aria-label="$vuetify.lang.t('$vuetify.scv.ariaInspireMe')"
+              :disabled="!examples.length"
               class="scv-inspire " :style="cssVars" small>
               {{$vuetify.lang.t('$vuetify.scv.inspireMe')}}
             </v-btn>
@@ -375,7 +384,7 @@ export default {
         var that = {
             error,
             playSearch: {},
-            examples: null,
+            examples: [],
             hasAudio: true,
             moreVisible: false,
             moreFocus: false,
@@ -442,20 +451,21 @@ export default {
                 });
             }
         },
-        clickInspireMe() {
-            var that = this;
-            var lang = this.gscv.lang;
-            var url = this.url(`examples/3?lang=${lang}`);
-            this.$http.get(url).then(res => {
-                var examples = res.data;
-                console.log(`examples`, examples);
-                this.examples = examples;
-                that.clear();
-                that.search = examples[0];
-                that.onSearch();
-            }).catch(e => {
-                console.error(e.stack);
-            });
+        async getExamples(n=3) { try {
+          var lang = this.gscv.lang;
+          var url = this.url(`examples/${n}?lang=${lang}`);
+          var res = await this.$http.get(url);
+          var examples = res.data;
+          return examples;
+        } catch(e) {
+          console.error(e.stack);
+        }},
+        async clickInspireMe() {
+          var { examples } = this;
+          var iExample = Math.trunc(Math.random() * examples.length);
+          this.clear();
+          this.search = examples[iExample];
+          this.onSearch();
         },
         audioIcon(ref) {
             return ref === this.refPlaying ? 'volume_up' : 'volume_down';
@@ -509,7 +519,6 @@ export default {
                 console.error(e.stack);
             });
           } else {
-            console.log(`dbg updatePlaySearch ${search}: n/a `);
           }
         },
         playSearchText() {
@@ -527,7 +536,6 @@ export default {
             `Aditi`,
             signature.guid,
           ].join('/'));
-          console.log(`dbg playSearchText ${word}`, urlAudio);
           window.open(urlAudio, "_blank");
         },
         downloadClick(search) {
@@ -743,11 +751,17 @@ export default {
                 player.launch(iTrack);
             });
         },
+        onSearchInput(value) {
+          console.log(`onSearchInput`, value, this.search);
+          this.onSearchChange();
+        },
+        onSearchChange() {
+          console.log("searching...", this.search);
+          this.clear();
+          this.search && this.onSearch();
+        },
         onSearchKey(event={key:"Enter"}) {
-            if (event.key === "Enter") {
-                this.clear();
-                this.search && this.onSearch();
-            }
+          event.key === "Enter" && this.onSearchChange();
         },
         showSutta(sutta, stats={}) {
             var that = this;
@@ -1010,7 +1024,7 @@ export default {
             return this.gscv.durationDisplay(t);
         },
         ariaPlaySutta(resultId, seconds) {
-            var search = this.search.toLocaleUpperCase();
+            var search = (this.search||'').toLocaleUpperCase();
             var suttaId = resultId.replace(PAT_ZWS_ug,'')
               .toLocaleUpperCase();
             var point = this.$vuetify.lang.t('$vuetify.scv.point');
@@ -1059,6 +1073,14 @@ export default {
         },
     },
     computed: {
+        searchItems() {
+          var examples = this.search
+            ? this.examples.filter(ex=>ex.indexOf(this.search)>=0)
+            : this.examples;
+          return !this.search || examples.includes(this.search) 
+            ? [ ...examples ]
+            : [`${this.search}`, ...examples];
+        },
         segTextWidth() {
           var {
             showPali,
@@ -1245,14 +1267,17 @@ export default {
 
         // TODO: wait for voices to show up
         setTimeout(() => {
-            if (that.gscv.voices && that.gscv.voices.length) {
-                console.log(`sutta.mounted() voices available`);
-                init();
-            } else {
-                console.log(`sutta.mounted() voices not available`);
-                setTimeout(() => init(), 500);
-            }
+          if (that.gscv.voices && that.gscv.voices.length) {
+            console.log(`sutta.mounted() voices available`);
+            init();
+          } else {
+            console.log(`sutta.mounted() voices not available`);
+            setTimeout(() => init(), 500);
+          }
         }, 100);
+        this.getExamples(0).then(examples=>{
+          Vue.set(that, "examples", examples);
+        });
     },
 
     components: {
