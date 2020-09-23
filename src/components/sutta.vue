@@ -13,11 +13,12 @@ style="width:100%; margin-top:0"/>
           {{$vuetify.lang.t("$vuetify.scv.exploreBuddhasTeaching")}}
         </h1>
         <div class="scv-search-field" role="search">
-          <v-autocomplete
+          <v-autocomplete v-if="examples"
             ref="refSearchAuto"
             v-model="search"
             :items="searchItems"
             :search-input.sync="search"
+            :filter="searchFilter"
             clearable
             @input="onSearchInput($event)"
           ></v-autocomplete>
@@ -420,6 +421,12 @@ export default {
         return that;
     },
     methods: {
+        searchFilter(item, queryText, itemText) {
+          let it = itemText.toLowerCase();
+          let qt = queryText.toLowerCase();
+          console.log(`dbg searchFilter`, it, qt);
+          return it.indexOf(qt) >= 0;
+        },
         playSectionText(section) {
           var tmplt = this.$vuetify.lang.t("$vuetify.scv.playSection");
           return tmplt.replace('A_SECTION', section);
@@ -456,7 +463,8 @@ export default {
           var url = this.url(`examples/${n}?lang=${lang}`);
           var res = await this.$http.get(url);
           var examples = res.data;
-          return examples;
+          return examples
+            .sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
         } catch(e) {
           console.error(e.stack);
         }},
@@ -1072,10 +1080,11 @@ export default {
     },
     computed: {
         searchItems() {
-          var examples = this.search
-            ? this.examples.filter(ex=>ex.indexOf(this.search)>=0)
+          var slt = (this.search||'').toLowerCase();
+          var examples = slt
+            ? this.examples.filter(ex=>ex.toLowerCase().indexOf(slt)>=0)
             : this.examples;
-          return !this.search || examples.includes(this.search) 
+          return !slt || examples.includes(this.search) 
             ? [ ...examples ]
             : [`${this.search}`, ...examples];
         },
