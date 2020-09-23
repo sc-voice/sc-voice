@@ -463,6 +463,7 @@ export default {
           var url = this.url(`examples/${n}?lang=${lang}`);
           var res = await this.$http.get(url);
           var examples = res.data;
+          console.log(`loaded examples`, url);
           return examples
             .sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
         } catch(e) {
@@ -1247,29 +1248,32 @@ export default {
             $cookie,
         } = that;
         var init = () => {
-            var search = that.gscv.search;
-            var query = $route.query;
-            if (Object.keys(query).length === 2) {
-                console.log(`sutta.mounted() SC`, $cookie, query);
-            } else {
-                console.log(`sutta.mounted() Voice`, $cookie, query);
-            }
-            that.search = search;
-            if (search) {
-                console.log(`sutta.mounted() searchSuttas(${search})`);
-                that.searchSuttas(search);
-            } else {
-                console.log(`sutta.mounted() no search`);
-            }
-            var FOCUS_SEARCH = false;
-            FOCUS_SEARCH && that.$nextTick( () => {
-                var vSearch = this.$refs.refSearch;
-                var input = vSearch && vSearch.$refs.input;
-                if (input) {
-                    console.log('sutta.mounted() selected search', input);
-                    input.focus();
-                }
-            });
+          var search = that.gscv.search;
+          var query = $route.query;
+          if (Object.keys(query).length === 2) {
+              console.log(`sutta.mounted() SC`, $cookie, query);
+          } else {
+              console.log(`sutta.mounted() Voice`, $cookie, query);
+          }
+          that.search = search;
+          if (search) {
+              console.log(`sutta.mounted() searchSuttas(${search})`);
+              that.searchSuttas(search);
+          } else {
+              console.log(`sutta.mounted() no search`);
+          }
+          var FOCUS_SEARCH = false;
+          FOCUS_SEARCH && that.$nextTick( () => {
+              var vSearch = this.$refs.refSearch;
+              var input = vSearch && vSearch.$refs.input;
+              if (input) {
+                  console.log('sutta.mounted() selected search', input);
+                  input.focus();
+              }
+          });
+          this.getExamples(0).then(examples=>{
+            Vue.set(that, "examples", examples);
+          });
         };
 
         // TODO: wait for voices to show up
@@ -1282,9 +1286,6 @@ export default {
             setTimeout(() => init(), 500);
           }
         }, 100);
-        this.getExamples(0).then(examples=>{
-          Vue.set(that, "examples", examples);
-        });
     },
 
     components: {
