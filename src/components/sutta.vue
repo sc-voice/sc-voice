@@ -518,14 +518,12 @@ export default {
             }).catch(e => {
                 console.error(e.stack);
             });
-          } else {
           }
         },
         playSearchText() {
           var that = this;
           var {
             signature,
-            word,
             langTrans,
           } = that.playSearch || {};
           var urlAudio = this.url([
