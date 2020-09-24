@@ -241,19 +241,15 @@
         should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
     });
-    it("Aditi phonemes", function() {
-        var aditi = Voice.createVoice({
-            name: "aditi",
+    it("TESTTESTMarlene speaks", function() {
+        var marlene = Voice.createVoice({
+            name: "Marlene",
             localeIPA: "pli",
         });
-        should(aditi.name).equal("Aditi");
-        should(aditi.locale).equal('hi-IN');
-        var recite = aditi.services.recite;
-        should(recite.wordSSML(`vasala`)).equal(phoneme("v\\ə sə la","vasala"));
-        should(recite.wordSSML(`Nāmañca`)).equal(phoneme("nɑː məɲ cə","Nāmañca"));
-        should(recite.wordSSML(`anottappañca`)).match(/"ə not̪ t̪əp pəɲ cə"/);
-        should(recite.wordSSML(`Atthi`)).match(/"ət̪.t̪ʰɪ"/);
-        should(recite.wordSSML(`hoti`)).match(/"hot̪ɪ"/);
+        should(marlene.name).equal("Marlene");
+        should(marlene.locale).equal('de-DE');
+        var recite = marlene.services.recite;
+        should(recite.wordSSML(`Kaccāna`)).equal(phoneme("kat͡ʃt͡ʃa:na","Kaccāna"));
     });
     it("speak(text) can ignore numbers", function(done) {
         (async function() { try {

@@ -612,7 +612,8 @@
             var language = req.params.language || 'en';
             var sutta_uid = req.params.sutta_uid || 'mn1';
             var translator = req.params.translator || 'sujato';
-            var iSection = Number(req.params.iSection == null ? 0 : req.params.iSection);
+            var iSection = Number(
+                req.params.iSection == null ? 0 : req.params.iSection);
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     var sutta = await that.suttaFactory.loadSutta({
@@ -626,7 +627,8 @@
                         lang: language,
                     });
                     sutta.blurb = blurb;
-                    that.info(`GET sutta => ${sutta_uid}/${language}/${translator}`);
+                    that.info(`GET sutta`,
+                        `=> ${sutta_uid}/${language}/${translator}`);
                     resolve(sutta);
                 } catch(e) { reject(e); } })();
             });
@@ -637,11 +639,14 @@
             var language = req.params.lang || 'en';
             var pattern = req.params.pattern;
             if (!pattern) {
-                return Promise.reject(new Error('Search pattern is required'));
+                return Promise.reject(new Error(
+                    'Search pattern is required'));
             }
-            var maxResults = Number(req.query.maxResults || that.suttaStore.maxResults);
+            var maxResults = Number(req.query.maxResults || 
+                that.suttaStore.maxResults);
             if (isNaN(maxResults)) {
-                return Promise.reject(new Error('Expected number for maxResults'));
+                return Promise.reject(new Error(
+                    'Expected number for maxResults'));
             }
             var promise = that.suttaStore.search({
                 pattern,
@@ -655,7 +660,7 @@
                     mlDocs,
                 } = sr;
                 that.info([
-                    `GET search(${pattern}) ${method}`,
+                    `GET search(${pattern}) ${language} ${method}`,
                     `=> ${results.map(r=>r.uid)}`,
                 ].join(' '));
             });
