@@ -100,7 +100,6 @@ export default {
       this.soundInfo = undefined;
     },
     parseSoundUrl(url=this.soundUrl) {
-      console.log(`dbg url`, url);
       var urlParts = url && url.split("/") || [];
       var guid = urlParts.pop();
       var voice = urlParts.pop();
@@ -111,7 +110,6 @@ export default {
       var author = lang === 'pli' ? 'mahasangiti' : translator;
       var nikaya = suid && suid.substring(0,2);
       var volume = `${nikaya}_${lang}_${author}_${voice}`.toLowerCase();
-      console.log(`dbg parse`, {lang, author});
 
       return {
         suid,
@@ -131,16 +129,13 @@ export default {
         var url = that.url(`auth/audio-info/${volume}/${guid}`);
         console.log(`inspect ${volume} ${guid} ${url}`, that.authConfig);
         let res = await $http.get(url, that.authConfig);
-        console.log(`dbg res`, res);
         Vue.set(that, "soundInfo", res.data);
       } catch(e) { console.error(e); }})();
     },
     onChangeUrl() {
-      console.log(`dbg onChangeUrl hello`);
       var { volume, guid, } = this.parseSoundUrl();
       this.volume = volume;
       this.guid = guid;
-      console.log(`dbg onChangeUrl`, {volume, guid});
     },
     getIdentity() {
       var urlVol = this.url("identity");

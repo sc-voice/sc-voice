@@ -301,7 +301,6 @@
             return new Promise((resolve, reject) => {
                 (async function() { try {
                     text = that.normalizeText(text);
-                    console.log(`dbg speak`, text);
                     var result = await service.synthesizeText(text, opts);
                     resolve(result);
                 } catch(e) {reject(e);} })();

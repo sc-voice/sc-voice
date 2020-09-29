@@ -6,8 +6,8 @@
     const tmp = require('tmp');
     const { MerkleJson } = require("merkle-json");
     const { logger } = require('rest-bundle');
+    const { GuidStore } = require('memo-again');
     const {
-        GuidStore,
         SoundStore,
         SuttaStore,
         S3Bucket,

@@ -3,9 +3,7 @@
     const fs = require('fs');
     const path = require('path');
     const { MerkleJson } = require("merkle-json");
-    const {
-        GuidStore,
-    } = require("../index");
+    const { GuidStore } = require('memo-again');
     const local = path.join(__dirname, '..', 'local');
     var mj = new MerkleJson();
 

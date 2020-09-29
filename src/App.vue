@@ -383,7 +383,6 @@ export default {
       getVoices() {
           var that = this;
           var url = this.url(`voices`);
-          console.debug(`dbg voices`, url);
           this.$http.get(url).then(res => {
               var voices = res.data;
               that.gscv.voices = res.data;

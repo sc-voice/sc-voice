@@ -7,9 +7,8 @@
     const { MerkleJson } = require("merkle-json");
     const { logger, LogInstance } = require('log-instance');
     const { AwsConfig, SayAgain, } = require('say-again');
+    const { FilePruner, GuidStore, } = require('memo-again');
     const {
-        FilePruner,
-        GuidStore,
         SoundStore,
     } = require("../index");
     const LOCAL = path.join(__dirname, '..', 'local');

@@ -20,8 +20,8 @@
 
     const AudioUrls = require('./audio-urls');
     const ContentUpdater = require('./content-updater');
-    const FilePruner = require('./file-pruner');
-    const GuidStore = require('./guid-store');
+    const { FilePruner } = require('memo-again');
+    const { GuidStore } = require('memo-again');
     const MdAria = require('./md-aria');
     const Playlist = require('./playlist');
     const S3Bucket = require('./s3-bucket');

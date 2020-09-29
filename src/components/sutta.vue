@@ -424,7 +424,6 @@ export default {
         searchFilter(item, queryText, itemText) {
           let it = itemText.toLowerCase();
           let qt = queryText.toLowerCase();
-          console.log(`dbg searchFilter`, it, qt);
           return it.indexOf(qt) >= 0;
         },
         playSectionText(section) {

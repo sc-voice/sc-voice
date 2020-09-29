@@ -2,7 +2,7 @@
     const fs = require('fs');
     const path = require('path');
     const { logger } = require('log-instance');
-    const GuidStore = require('./guid-store');
+    const { GuidStore } = require('memo-again');
     const { AwsConfig, SayAgain } = require('say-again');
     const LOCAL = path.join(__dirname, '../../local');
     const VSMPATH = path.join(LOCAL, 'vsm-s3.json');

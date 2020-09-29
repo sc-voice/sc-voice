@@ -7,7 +7,7 @@
     const Words = require('./words');
     const Sutta = require('./sutta');
     const SuttaCentralId = require('./sutta-central-id');
-    const GuidStore = require('./guid-store');
+    const { GuidStore } = require('memo-again');
     const Definitions = require('./definitions');
     const { MerkleJson } = require('merkle-json');
     const LOCAL = path.join(__dirname, '..', '..', 'local');
@@ -98,7 +98,10 @@
 
                     let error;
                     if (statusCode !== 200) {
-                        error = new Error('Request Failed.\n' +
+                        logger.warn(`Request Failed:`,
+                            `statusCode:${statusCode}`,
+                            url);
+                        error = new Error(`Request Failed.\n` +
                                           `Status Code: ${statusCode}`);
                     } else if (/^application\/json/.test(contentType)) {
                         // OK

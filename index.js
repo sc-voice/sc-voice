@@ -3,8 +3,6 @@ module.exports = {
     AudioUrls: require("./src/node/audio-urls"),
     ContentUpdater: require('./src/node/content-updater'),
     Definitions: require('./src/node/definitions'),
-    FilePruner: require('./src/node/file-pruner'),
-    GuidStore: require("./src/node/guid-store"),
     HumanTts: require("./src/node/human-tts"),
     MdAria: require("./src/node/md-aria"),
     Playlist: require('./src/node/playlist'),
