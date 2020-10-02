@@ -36,18 +36,18 @@ fi
 
 MSG=`type rg`
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INSTALL\t: $MSG (OK)"
+    echo -e "UPDATE\t: $MSG (OK)"
 else
-    echo -e "INSTALL\t: installing ripgrep"
+    echo -e "UPDATE\t: installing ripgrep"
     curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
     sudo dpkg -i ripgrep_11.0.2_amd64.deb
 fi
 
 type rotatelogs
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: rotatelogs detected (OK)"
+    echo -e "UPDATE\t: rotatelogs detected (OK)"
 else
-    echo -e "INIT\t: installing apache2-utils for rotatelogs (requires sudo)"
+    echo -e "UPDATE\t: installing apache2-utils for rotatelogs (requires sudo)"
     sudo apt-get update -y
     sudo apt-get install -y apache2-utils
 fi
@@ -66,56 +66,58 @@ sync
 echo -e "UPDATE\t: Upating offline content..."
 if [ -e local/sc ]; then
     if [ -e local/sc/.git ]; then
-        echo -e "INIT\t: SuttaCentral/translation folder local/sc exists (OK)"
+        echo -e "UPDATE\t: SuttaCentral/translation folder local/sc exists (OK)"
     else
-        echo -e "INIT\t: removing legacy SuttaCentral/translation folder "
+        echo -e "UPDATE\t: removing legacy SuttaCentral/translation folder "
         rm -rf local/sc
     fi
 fi
 if [ -e local/sc ]; then
-    echo -e "INIT\t: updating SuttaCentral translation content..."
+    echo -e "UPDATE\t: updating SuttaCentral translation content..."
     pushd local/sc
     git pull
     popd
 else 
     pushd local
-    echo -e "INIT\t: initializing SuttaCentral translation content..."
+    echo -e "UPDATE\t: initializing SuttaCentral translation content..."
     git clone https://github.com/suttacentral/translation sc
     popd
 fi
 
 if [ -e local/suttas/mn ]; then
-    echo -e "INIT\t: updating scv-suttas..."
+    echo -e "UPDATE\t: updating scv-suttas..."
     pushd local/suttas
     git pull
     popd
 else
     pushd local
     rm -rf suttas
-    echo -e "INIT\t: installing scv-suttas..."
+    echo -e "UPDATE\t: installing scv-suttas..."
     git clone https://github.com/sc-voice/scv-suttas suttas
     popd
 fi
 
 if [ ! -e local/bilara-data ]; then
-    echo -e "INIT\t: installing bilara-data..."
+    echo -e "UPDATE\t: installing bilara-data..."
     pushd local
     git clone https://github.com/sc-voice/bilara-data
     popd
 fi
-echo -e "INIT\t: fetching latest bilara-data..."
+echo -e "UPDATE\t: fetching latest bilara-data..."
 pushd local/bilara-data
 BRANCH=unpublished
 if git checkout $BRANCH >& /dev/null; then
-  echo -e "BILARA\t: on $BRANCH branch" 
+  echo -e "UPDATE\t: on $BRANCH branch" 
 else
-  echo -e "BILARA\t: fetching $BRANCH branch" 
+  echo -e "UPDATE\t: fetching $BRANCH branch" 
   git track --track origin/$BRANCH $BRANCH
   git checkout $BRANCH
 fi
-echo -e "BILARA\t: Refreshing $BRANCH fork from Github..." && \
+echo -e "UPDATE\t: Refreshing $BRANCH fork from Github..." && \
 git pull --rebase 
 popd
+echo -e "UPDATE\t: clearing memoization caches"
+rm -rf local/memo
 
 if [ "$REBOOT" == "y" ]; then
     sudo shutdown -r now
