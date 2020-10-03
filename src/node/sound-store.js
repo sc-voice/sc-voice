@@ -22,7 +22,6 @@
             if (opts.name) {
                 that.name += `.${opts.name}`;
             }
-            (opts.logger || logger).logInstance(this);
             that.debug(`SoundStore.ctor(${that.storePath})`);
             that.audioSuffix = opts.audioSuffix;
             that.audioFormat = opts.audioFormat;
