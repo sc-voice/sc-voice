@@ -1125,7 +1125,6 @@
             var res = await testAuthPost(url, data);
             res.statusCode.should.equal(200);
             should(res.body).properties({
-                repo: 'https://github.com/sc-voice/bilara-data.git',
                 error: null,
                 summary: 'Update completed',
             });

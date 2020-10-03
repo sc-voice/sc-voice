@@ -1479,13 +1479,11 @@
                 (async function() { try {
                     that.requireAdmin(req, res, "POST update-content");
                     var date = new Date();
-                    var res = await suttaStore.bilaraData.sync({purge});
+                    await suttaStore.bilaraData.sync({purge});
                     var error = null;
                     resolve({
                         date,
                         elapsed: ((Date.now() - date)/1000).toFixed(1),
-                        repo: res.repo,
-                        repoDir: res.repoDir,
                         summary: "Update completed",
                         error,
                     });

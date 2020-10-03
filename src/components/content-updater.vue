@@ -26,10 +26,6 @@
                     <td>{{updateBilaraRes.elapsed}}</td></tr>
                 <tr><th>error</th>
                     <td>{{updateBilaraRes.error}}</td></tr>
-                <tr><th>repo</th>
-                    <td>{{updateBilaraRes.repo}}</td></tr>
-                <tr><th>repoDir</th>
-                    <td>{{updateBilaraRes.repoDir}}</td></tr>
             </table>
         </div>
       </v-card-text>
