@@ -66,7 +66,7 @@
                 this.debug(`SuttaCentralApi.loadJson(${url}) => cached:${guid}`);
             } else {
                 var result = await this.loadJsonRest(url);
-                fs.writeFileSync(cachedPath, JSON.stringify(res,null,2));
+                fs.writeFileSync(cachedPath, JSON.stringify(result,null,2));
                 this.log(`loadJson(${url}) => fresh:${guid}`);
             }
             return result;
@@ -75,66 +75,70 @@
             throw e;
         }}
 
-        async loadJsonRest(url) {
-            var httpx = url.startsWith('https') ? https : http;
-            if (++httpMonitor > 2) {
-                // We are overwhelming SuttaCentralApi
-                // implement throttling using Queue 
-                // (see abstract-tts.js)
-                this.warn(`SuttaCentralApi.loadJsonRest() `+
-                    `httpMonitor:${httpMonitor} ${url}`);
-            }
-            var req = httpx.get(url, res => {
-                httpMonitor--;
-                const { statusCode } = res;
-                const contentType = res.headers['content-type'];
-
-                let error;
-                if (statusCode !== 200) {
-                    this.warn(`Request Failed:`,
-                        `statusCode:${statusCode}`,
-                        url);
-                    error = new Error(`Request Failed.\n` +
-                                      `Status Code: ${statusCode}`);
-                } else if (/^application\/json/.test(contentType)) {
-                    // OK
-                } else if (/^text\/plain/.test(contentType)) {
-                    // OK
-                } else {
-                    error = new Error(
-                        `Invalid content-type:${contentType}\n` +
-                        `Expected application/json for url:${url}`);
+        loadJsonRest(url) {
+            var that = this;
+            var pbody = (resolve, reject) => { try {
+                var httpx = url.startsWith('https') ? https : http;
+                if (++httpMonitor > 2) {
+                    // We are overwhelming SuttaCentralApi
+                    // implement throttling using Queue 
+                    // (see abstract-tts.js)
+                    logger.warn(`SuttaCentralApi.loadJsonRest() `+
+                        `httpMonitor:${httpMonitor} ${url}`);
                 }
-                if (error) {
-                    // consume response data to free up memory
-                    res.resume(); 
-                    this.error(error.stack);
-                    reject(error);
-                    return;
-                }
+                var req = httpx.get(url, res => {
+                    httpMonitor--;
+                    const { statusCode } = res;
+                    const contentType = res.headers['content-type'];
 
-                res.setEncoding('utf8');
-                let rawData = '';
-                res.on('data', (chunk) => { rawData += chunk; });
-                res.on('end', () => {
-                    try {
-                        var result = JSON.parse(rawData);
-                        that.log(`loadJsonRest() `+
-                            `${url} => ${rawData.length}C`);
-                        resolve(result);
-                    } catch (e) {
-                        this.error(e.stack);
-                        reject(e);
+                    let error;
+                    if (statusCode !== 200) {
+                        logger.warn(`Request Failed:`,
+                            `statusCode:${statusCode}`,
+                            url);
+                        error = new Error(`Request Failed.\n` +
+                                          `Status Code: ${statusCode}`);
+                    } else if (/^application\/json/.test(contentType)) {
+                        // OK
+                    } else if (/^text\/plain/.test(contentType)) {
+                        // OK
+                    } else {
+                        error = new Error(
+                            `Invalid content-type:${contentType}\n` +
+                            `Expected application/json for url:${url}`);
                     }
+                    if (error) {
+                        // consume response data to free up memory
+                        res.resume(); 
+                        logger.error(error.stack);
+                        reject(error);
+                        return;
+                    }
+
+                    res.setEncoding('utf8');
+                    let rawData = '';
+                    res.on('data', (chunk) => { rawData += chunk; });
+                    res.on('end', () => {
+                        try {
+                            var result = JSON.parse(rawData);
+                            that.log(`loadJsonRest() `+
+                                `${url} => ${rawData.length}C`);
+                            resolve(result);
+                        } catch (e) {
+                            logger.error(e.stack);
+                            reject(e);
+                        }
+                    });
+                }).on('error', (e) => {
+                    httpMonitor--;
+                    logger.error(e.stack);
+                    reject(e);
+                }).on('timeout', (e) => {
+                    logger.error(e.stack);
+                    req.abort();
                 });
-            }).on('error', (e) => {
-                httpMonitor--;
-                this.error(e.stack);
-                reject(e);
-            }).on('timeout', (e) => {
-                this.error(e.stack);
-                req.abort();
-            });
+            } catch(e) {reject(e);} };
+            return new Promise(pbody);
         }
 
         static async loadUidExpansion(url=UID_EXPANSION_URL) { try {
