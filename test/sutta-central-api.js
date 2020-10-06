@@ -127,22 +127,20 @@
     const PRODUCTION = {
         apiUrl: 'http://suttacentral.net/api',
     };
+    this.timeout(10*1000);
 
-    it("loadSutta(opts) returns list of english translations for Snp1.8", function(done) {
-        this.timeout(10*1000);
-        (async function() { try {
-            var scr = await new SuttaCentralApi(PRODUCTION).initialize();
-            var scid = 'snp1.8';
-            var language = 'en';
-            var sutta = await scr.loadSutta('snp1.8','en');
-            should(sutta).instanceOf(Sutta);
-            should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
-            var suttaplex = sutta.suttaplex;
-            should(suttaplex).properties(SUTTAPLEX_SNP1_8);
-            var translations = suttaplex.translations;
-            should(translations).instanceOf(Array);
-            should.deepEqual(translations, TRANSLATIONS_SNP1_8_2019); done();
-        } catch(e) {done(e);} })();
+    it("TESTTESTloadSutta(...) => list of Snp1.8 en translations for Snp1.8", async()=>{
+        var scr = await new SuttaCentralApi(PRODUCTION).initialize();
+        var scid = 'snp1.8';
+        var language = 'en';
+        var sutta = await scr.loadSutta('snp1.8','en');
+        should(sutta).instanceOf(Sutta);
+        should.deepEqual(sutta.support, Definitions.SUPPORT_LEVELS.Legacy);
+        var suttaplex = sutta.suttaplex;
+        should(suttaplex).properties(SUTTAPLEX_SNP1_8);
+        var translations = suttaplex.translations;
+        should(translations).instanceOf(Array);
+        should.deepEqual(translations, TRANSLATIONS_SNP1_8_2019); 
     });
     it("loadSutta(opts) returns english translations for Snp1.8", function(done) {
         (async function() { try {
