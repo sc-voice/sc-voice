@@ -6,9 +6,11 @@
     const Queue = require('promise-queue');
     const Words = require('./words');
     const Sutta = require('./sutta');
-    const { SuttaCentralId } = require('suttacentral-api');
+    const { 
+        SuttaCentralId, 
+        Definitions,
+    } = require('suttacentral-api');
     const { GuidStore } = require('memo-again');
-    const Definitions = require('./definitions');
     const { MerkleJson } = require('merkle-json');
     const LOCAL = path.join(__dirname, '..', '..', 'local');
     const EXPANSION_PATH = path.join(LOCAL, 'expansion.json');

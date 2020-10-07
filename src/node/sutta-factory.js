@@ -1,7 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const Definitions = require('./definitions');
+    const { Definitions } = require('suttacentral-api');
     const Words = require('./words');
     const Sutta = require('./sutta');
     const SuttaCentralApi = require('./sutta-central-api');

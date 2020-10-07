@@ -8,8 +8,8 @@
         logger,
         UserStore,
     } = require('rest-bundle');
+    const { Definitions } = require('suttacentral-api');
     const {
-        Definitions,
         SCAudio,
         ScvRest,
         Section,

@@ -2,7 +2,6 @@ module.exports = {
     AbstractTTS: require("./src/node/abstract-tts"),
     AudioUrls: require("./src/node/audio-urls"),
     ContentUpdater: require('./src/node/content-updater'),
-    Definitions: require('./src/node/definitions'),
     HumanTts: require("./src/node/human-tts"),
     MdAria: require("./src/node/md-aria"),
     Playlist: require('./src/node/playlist'),

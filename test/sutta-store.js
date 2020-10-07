@@ -71,45 +71,33 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("suttaPath(opts) returns sutta filepath", function(done) {
-        (async function() { try {
-            if (1) {
-                var suttaIdsPath = path.join(__dirname, '../src/node/sutta-ids.json');
+    it("suttaPath(opts) returns sutta filepath", async()=>{
+        await new Promise(r=>setTimeout(()=>r(),500)); // test setup
+        var store = await new SuttaStore().initialize();
+        var spath = store.suttaPath('mn1','en','test');
+        should(spath).equal(path.join(ROOT,'mn/en/test/mn1.json'));
+        var dir = path.dirname(spath);
+        should(fs.existsSync(dir)).equal(true);
 
-                var json = JSON.parse(fs.readFileSync(suttaIdsPath));
-                json.sort((a,b) => SuttaCentralId.compareLow(a,b));
-                fs.writeFileSync(suttaIdsPath, JSON.stringify(json, null, 2));
-            }
+        // folder path will be created as required
+        fs.rmdirSync(dir);
+        should(fs.existsSync(dir)).equal(false);
+        var dir = path.dirname(store.suttaPath('mn1','en','test'));
+        should(fs.existsSync(dir)).equal(true);
 
-            var store = await new SuttaStore().initialize();
-            var spath = store.suttaPath('mn1','en','test');
-            should(spath).equal(path.join(ROOT,'mn/en/test/mn1.json'));
-            var dir = path.dirname(spath);
-            should(fs.existsSync(dir)).equal(true);
+        // opts.suttaIds controls suttaPath
+        var suttaIds = [
+            "an1.1-10",
+        ];
+        var store = await new SuttaStore({
+            suttaIds,
+        }).initialize();
+        var spath = store.suttaPath('an1.1','en','test');
+        should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
 
-            // folder path will be created as required
-            fs.rmdirSync(dir);
-            should(fs.existsSync(dir)).equal(false);
-            var dir = path.dirname(store.suttaPath('mn1','en','test'));
-            should(fs.existsSync(dir)).equal(true);
-
-            // opts.suttaIds controls suttaPath
-            var suttaIds = [
-                "an1.1-10",
-            ];
-            var store = await new SuttaStore({
-                suttaIds,
-            }).initialize();
-            var spath = store.suttaPath('an1.1','en','test');
-            should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
-
-            // src/node/sutta-ids.json controls suttaPath
-            var store = await new SuttaStore().initialize();
-            var spath = store.suttaPath('an1.3','en','test');
-            should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
-
-            done(); 
-        } catch(e) {done(e);} })();
+        var store = await new SuttaStore().initialize();
+        var spath = store.suttaPath('an1.3','en','test');
+        should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
     });
     it("suttaPath(opts) throws Error", done=>{
         (async function() { try {

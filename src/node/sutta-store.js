@@ -21,8 +21,6 @@
     const ROOT = path.join(__dirname, '..', '..', 'local', 'suttas');
     const maxBuffer = 10 * 1024 * 1024;
     const MAXRESULTS_LEGACY = 5;
-    const SUTTAIDS_PATH = path
-        .join(__dirname, '..', '..', 'src', 'node', 'sutta-ids.json');
     const COLLECTIONS = {
         an: {
             name: 'an',

@@ -3,8 +3,8 @@
     const fs = require('fs');
     const path = require('path');
     const { logger } = require('rest-bundle');
+    const { Definitions } = require('suttacentral-api');
     const {
-        Definitions,
         Segments,
         Sutta,
         SuttaCentralApi,

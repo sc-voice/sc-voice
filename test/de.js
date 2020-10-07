@@ -241,7 +241,7 @@
         should(recite.wordSSML(`Atthi`)).match(/"aθθhɪ"/);
         should(recite.wordSSML(`hoti`)).match(/"hoθɪ"/);
     });
-    it("TESTTESTMarlene speaks", function() {
+    it("Marlene speaks", function() {
         var marlene = Voice.createVoice({
             name: "Marlene",
             localeIPA: "pli",
