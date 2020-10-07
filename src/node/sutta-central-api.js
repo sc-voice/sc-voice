@@ -6,7 +6,7 @@
     const Queue = require('promise-queue');
     const Words = require('./words');
     const Sutta = require('./sutta');
-    const SuttaCentralId = require('./sutta-central-id');
+    const { SuttaCentralId } = require('suttacentral-api');
     const { GuidStore } = require('memo-again');
     const Definitions = require('./definitions');
     const { MerkleJson } = require('merkle-json');

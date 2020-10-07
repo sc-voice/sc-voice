@@ -4,7 +4,7 @@
     const fs = require('fs');
     const path = require('path');
     const Sutta = require('./sutta');
-    const SuttaCentralId = require('./sutta-central-id');
+    const { SuttaCentralId } = require('suttacentral-api');
     const Section = require('./section');
     const Words = require('./words');
     const RE_ELLIPSIS = new RegExp(` *${Words.U_ELLIPSIS} *$`, 'u');

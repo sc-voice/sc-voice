@@ -15,7 +15,7 @@
     const Task = require('./task');
     const SuttaDuration = require('./sutta-duration');
     const SuttaCentralApi = require('./sutta-central-api');
-    const SuttaCentralId = require('./sutta-central-id');
+    const { SuttaCentralId } = require('suttacentral-api');
     const SuttaFactory = require('./sutta-factory');
     const Words = require('./words');
     const ROOT = path.join(__dirname, '..', '..', 'local', 'suttas');

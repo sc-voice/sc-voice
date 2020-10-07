@@ -14,8 +14,7 @@
     const ELLIPSIS_BREAK = '.';
     var storePath = tmp.tmpNameSync();
 
-
-    it("TESTTESTdefault ctor", () => {
+    it("default ctor", () => {
         var tts = new AbstractTTS();
 
         // options

@@ -7,7 +7,7 @@
     const SuttaCentralApi = require('./sutta-central-api');
     const Section = require('./section');
     const SectionParser = require('./section-parser');
-    const SuttaCentralId = require('./sutta-central-id');
+    const { SuttaCentralId } = require('suttacentral-api');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
     const OPTS_EN = {
         prop: 'en',

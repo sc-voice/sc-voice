@@ -15,7 +15,6 @@ module.exports = {
     Section: require('./src/node/section'),
     SoundStore: require('./src/node/sound-store'),
     SuttaCentralApi: require('./src/node/sutta-central-api'),
-    SuttaCentralId: require("./src/node/sutta-central-id"),
     SuttaDuration: require("./src/node/sutta-duration"),
     SuttaFactory: require("./src/node/sutta-factory"),
     Sutta: require("./src/node/sutta"),

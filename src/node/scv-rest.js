@@ -30,7 +30,7 @@
     const Section = require('./section');
     const SoundStore = require('./sound-store');
     const SuttaCentralApi = require('./sutta-central-api');
-    const SuttaCentralId = require('./sutta-central-id');
+    const { SuttaCentralId } = require('suttacentral-api');
     const SuttaFactory = require('./sutta-factory');
     const Sutta = require('./sutta');
     const SuttaStore = require('./sutta-store');

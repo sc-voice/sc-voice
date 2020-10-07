@@ -9,9 +9,9 @@
         SuttaFactory,
         SuttaStore,
         SuttaCentralApi,
-        SuttaCentralId,
         Voice,
     } = require("../index");
+    const { SuttaCentralId } = require('suttacentral-api');
     const {
         BilaraData,
         Seeker,
@@ -673,37 +673,33 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("supportedSutta(pattern) return supported sutta uid", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
+    it("supportedSutta(pattern) return supported sutta uid", async()=>{
+        var store = await new SuttaStore().initialize();
 
-            var suttas = SuttaCentralId.supportedSuttas;
-            should(store.supportedSutta(suttas[0])).equal(suttas[0]);
-            var last = suttas[suttas.length-1];
-            should(store.supportedSutta(last)).equal(last);
+        var suttas = SuttaCentralId.supportedSuttas;
+        should(store.supportedSutta(suttas[0])).equal(suttas[0]);
+        var last = suttas[suttas.length-1];
+        should(store.supportedSutta(last)).equal(last);
 
-            should(store.supportedSutta("sn29.1")).equal("sn29.1");
-            should(store.supportedSutta("sn29.10")).equal("sn29.10");
-            should(store.supportedSutta("sn29.11")).equal("sn29.11-20");
-            should(store.supportedSutta("sn29.12")).equal("sn29.11-20");
-            should(store.supportedSutta("sn29.19")).equal("sn29.11-20");
-            should(store.supportedSutta("sn29.20")).equal("sn29.11-20");
-            should(store.supportedSutta("sn29.21")).equal("sn29.21-50");
-            should(store.supportedSutta("sn29.49")).equal("sn29.21-50");
-            should(store.supportedSutta("sn29.50")).equal("sn29.21-50");
-            should(store.supportedSutta("mn33")).equal("mn33");
+        should(store.supportedSutta("sn29.1")).equal("sn29.1");
+        should(store.supportedSutta("sn29.10")).equal("sn29.10");
+        should(store.supportedSutta("sn29.11")).equal("sn29.11-20");
+        should(store.supportedSutta("sn29.12")).equal("sn29.11-20");
+        should(store.supportedSutta("sn29.19")).equal("sn29.11-20");
+        should(store.supportedSutta("sn29.20")).equal("sn29.11-20");
+        should(store.supportedSutta("sn29.21")).equal("sn29.21-50");
+        should(store.supportedSutta("sn29.49")).equal("sn29.21-50");
+        should(store.supportedSutta("sn29.50")).equal("sn29.21-50");
+        should(store.supportedSutta("mn33")).equal("mn33");
 
-            // bounds
-            should(store.supportedSutta("sn29.51")).equal(null);
-            should(store.supportedSutta("z999")).equal(null);
-            should(store.supportedSutta("a1")).equal(null);
+        // bounds
+        should(store.supportedSutta("sn29.51")).equal(null);
+        should(store.supportedSutta("z999")).equal(null);
+        should(store.supportedSutta("a1")).equal(null);
 
-            // fully specified suttas
-            should(store.supportedSutta("mn1/en/sujato")).equal("mn1");
-            should(store.supportedSutta("mn1/en/bodhi")).equal("mn1");
-
-            done(); 
-        } catch(e) {done(e);} })();
+        // fully specified suttas
+        should(store.supportedSutta("mn1/en/sujato")).equal("mn1");
+        should(store.supportedSutta("mn1/en/bodhi")).equal("mn1");
     });
     it("isUidPattern(pattern) is true for sutta_uid patterns", function() {
         // unsupported sutta

@@ -3,9 +3,7 @@
     const path = require('path');
     const Words = require('./words');
     const Section = require('./section');
-    const {
-        SuttaCentralId,
-    } = require('scv-bilara');
+    const { SuttaCentralId } = require('scv-bilara');
     const RE_HEADER = new RegExp(`^.*:0\\..*$`, 'u');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
     const RE_PHRASE_END = new RegExp('.*[.?;,]$', 'u');
