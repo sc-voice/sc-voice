@@ -15,17 +15,15 @@
     const {
         MLDoc,
     } = require("scv-bilara");
+    const { logger } = require('log-instance');
     const SC = path.join(__dirname, '../local/sc');
     const TEST_DATA = path.join(__dirname, 'data');
-    const logLevel = false;
+    logger.logLevel = 'warn';
     this.timeout(5*1000);
 
-    var suttaStore = new SuttaStore({
-        logLevel,
-    });
+    var suttaStore = new SuttaStore();
     var suttaFactory = new SuttaFactory({
         suttaLoader: opts => suttaStore.loadBilaraSutta(opts),
-        logLevel,
     });
 
     function testSutta(suid='an1.3') {

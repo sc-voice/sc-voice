@@ -15,6 +15,7 @@
     const BREAK = `<break time="0.001s"/>`;
     const ELLIPSIS_BREAK = `<break time="0.300s"/>`;
     const tmp = require('tmp');
+    logger.logLevel = 'warn';
     this.timeout(5*1000);
 
     function phoneme(ph,word) {
@@ -35,7 +36,7 @@
             done();
         } catch(e) { done(e); }})();
     });
-    it("loadVoices(voicePath) should return voices", function() {
+    it("loadVoices(voicePath) should return voices", ()=>{
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
         should(voices.length).greaterThan(0);
@@ -242,33 +243,30 @@
             usage: "navigate",
         });
     });
-    it("speak(...) => sound file for array of text", done=>{
-        (async function() { try {
-            var raveena = Voice.createVoice({locale:"en-IN"});
-            var text = [
-                "Tomatoes are",
-                "red.",
-                "Tomatoes are red.",
-            ];
-            var cache = true;
-            var opts = {
-                cache,
-                usage: "navigate",
-                volume: 'test',
-                chapter: 'voice',
-            };
-            var result = await raveena.speak(text, opts);
+    it("speak(...) => sound file for array of text", async()=>{
+        var raveena = Voice.createVoice({locale:"en-IN"});
+        var text = [
+            "Tomatoes are",
+            "red.",
+            "Tomatoes are red.",
+        ];
+        var cache = true;
+        var opts = {
+            cache,
+            usage: "navigate",
+            volume: 'test',
+            chapter: 'voice',
+        };
+        var result = await raveena.speak(text, opts);
 
-            should(result).properties(['file','hits','misses','signature','cached']);
-            var storePath = raveena.soundStore.storePath;
-            var files = result.signature.files.map(f => path.join(storePath, f));
-            should(files.length).equal(3);
-            should(fs.statSync(files[0]).size).greaterThan(1000); // Tomatoes are
-            should(fs.statSync(files[1]).size).greaterThan(1000); // red.
-            should(fs.statSync(files[2]).size).greaterThan(1000); // Tomatoes are red.
-            should(fs.statSync(result.file).size).greaterThan(5000);
-            done();
-        } catch(e) {done(e);} })();
+        should(result).properties(['file','hits','misses','signature','cached']);
+        var storePath = raveena.soundStore.storePath;
+        var files = result.signature.files.map(f => path.join(storePath, f));
+        should(files.length).equal(3);
+        should(fs.statSync(files[0]).size).greaterThan(1000); // Tomatoes are
+        should(fs.statSync(files[1]).size).greaterThan(1000); // red.
+        should(fs.statSync(files[2]).size).greaterThan(1000); // Tomatoes are red.
+        should(fs.statSync(result.file).size).greaterThan(5000);
     });
     it("placeholder words are expanded with voice ipa", function() {
         /*
