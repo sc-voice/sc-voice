@@ -1,7 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const { logger, } = require('rest-bundle');
+    const { logger, } = require('log-instance');
     const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
     const AbstractTTS = require('./abstract-tts');
 

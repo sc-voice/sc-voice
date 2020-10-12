@@ -3,6 +3,7 @@
     const path = require('path');
     const Words = require('./words');
     const Section = require('./section');
+    const { Definitions } = require('suttacentral-api');
     const { SuttaCentralId } = require('scv-bilara');
     const RE_HEADER = new RegExp(`^.*:0\\..*$`, 'u');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
@@ -18,7 +19,14 @@
                 throw new Error('sutta_uid is required');
             }
             opts.author_uid && (this.author_uid = opts.author_uid);
-            opts.support && (this.support = opts.support);
+            if (opts.segmented == null) {
+                opts.support && (this.support = opts.support);
+            } else {
+                this.support = opts.segmented
+                    ? Definitions.SUPPORT_LEVELS.Supported
+                    : Definitions.SUPPORT_LEVELS.Legacy;
+            }
+
             opts.suttaplex && (this.suttaplex = opts.suttaplex);
             this.translation = Object.assign({}, opts.translation);
             delete this.translation.text;

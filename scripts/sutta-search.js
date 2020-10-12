@@ -6,7 +6,7 @@ const {
     SuttaStore,
     Words,
 } = require('../index');
-const { logger } = require('rest-bundle');
+const { logger, } = require('log-instance');
 
 var words = new Words();
 /*

@@ -1,7 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const { logger, } = require('rest-bundle');
+    const { logger, } = require('log-instance');
     const {
         exec,
     } = require('child_process');
@@ -92,8 +92,8 @@
                         }
                         if (error) {
                             res.resume(); // consume response data to free up memory
-                            logger.error(`url:${url}`);
-                            logger.error(error.stack);
+                            logger.warn(`url:${url}`);
+                            logger.warn(error.stack);
                             reject(error);
                             return;
                         }
@@ -106,14 +106,14 @@
                                 var result = JSON.parse(rawData);
                                 resolve(result);
                             } catch (e) {
-                                logger.error(e.stack);
+                                logger.warn(e.stack);
                                 reject(e);
                             }
                         });
                     }).on('error', (e) => {
                         reject(e);
                     }).on('timeout', (e) => {
-                        logger.error(e.stack);
+                        logger.warn(e.stack);
                         req.abort();
                     });
                 } catch(e) {reject(e);} })();
@@ -148,7 +148,7 @@
                         }
                         if (error) {
                             res.resume(); // consume response data to free up memory
-                            logger.error(error.stack);
+                            logger.warn(error.stack);
                             reject(error);
                             return;
                         }
@@ -189,14 +189,14 @@
                             try {
                                 resolve(result);
                             } catch (e) {
-                                logger.error(e.stack);
+                                logger.warn(e.stack);
                                 reject(e);
                             }
                         });
                     }).on('error', (e) => {
                         reject(e);
                     }).on('timeout', (e) => {
-                        logger.error(e.stack);
+                        logger.warn(e.stack);
                         req.abort();
                     });
                 } catch(e) {reject(e);} })();
@@ -373,10 +373,10 @@
                             var resCvt = that.convertResponse(response, resolve, reject);
                         });
                     }).on('error', (e) => {
-                        logger.error(e.stack);
+                        logger.warn(e.stack);
                         reject(e);
                     }).on('timeout', (e) => {
-                        logger.error(e.stack);
+                        logger.warn(e.stack);
                         req.abort();
                     });
                 } catch(e) {reject(e);} })();

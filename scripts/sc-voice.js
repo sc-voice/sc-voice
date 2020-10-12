@@ -10,13 +10,17 @@ const app = module.exports = express();
 const jwt = require('express-jwt');
 
 const {
-    logger,
     RestBundle,
     RbServer,
 } = require('rest-bundle');
 const {
+    logger,
+} = require('log-instance');
+const {
+    ScApi,
+} = require('suttacentral-api');
+const {
     ScvRest,
-    SuttaCentralApi,
 } = require('../index');
 
 global.__appdir = path.dirname(__dirname);
@@ -74,7 +78,7 @@ app.get(["/","/scv"], function(req,res,next) {
         var apiUrl = argv.some((a) => a === '--staging')
             ? 'http://staging.suttacentral.net/api'
             : 'http://suttacentral.net/api';
-        var suttaCentralApi = await new SuttaCentralApi({
+        var scApi = await new ScApi({
             apiUrl,
         }).initialize();
         var rbServer =  app.locals.rbServer = new RbServer();
@@ -82,7 +86,7 @@ app.get(["/","/scv"], function(req,res,next) {
         // create RestBundles
         var restBundles = app.locals.restBundles = [];
         var opts = {
-            suttaCentralApi,
+            scApi,
         };
         //opts = undefined;
         var scvRest = new ScvRest(opts);

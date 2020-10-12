@@ -1,5 +1,7 @@
 (typeof describe === 'function') && describe("audio-urls", function() {
     const should = require("should");
+    const { logger } = require('log-instance');
+    logger.logLevel = 'error';
     const {
         AudioUrls,
         SCAudio,

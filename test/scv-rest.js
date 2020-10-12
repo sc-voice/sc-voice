@@ -4,19 +4,20 @@
     const path = require('path');
     const supertest = require('supertest');
     const jwt = require('jsonwebtoken');
+    const { logger } = require('log-instance');
+    logger.logLevel = 'error';
     const {
-        logger,
         UserStore,
     } = require('rest-bundle');
-    const { Definitions } = require('suttacentral-api');
+    const { 
+        Definitions,
+    } = require('suttacentral-api');
     const {
         SCAudio,
         ScvRest,
         Section,
         SoundStore,
         Sutta,
-        SuttaCentralApi,
-        SuttaCentralId,
         SuttaFactory,
         VoiceFactory,
         Words,
@@ -33,10 +34,10 @@
     this.timeout(15*1000);
 
 
-    function testServerReady(ms=600) {
+    function sleep(ms=600) {
         // The testing server takes a while to wakeup
         // and will report 404 until it's ready
-        return new Promise(resolve=>setTimeout(()=>resolve(),ms)); 
+        return new Promise(r=>setTimeout(()=>r(),ms)); 
     }
 
     function testAuthPost(url, data) {
@@ -48,8 +49,9 @@
             .send(data);
     }
 
-    function testAuthGet(url, contentType='application/json', accept=contentType) {
+    async function testAuthGet(url, contentType='application/json', accept=contentType) {
         var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
+        await sleep(400);
         return supertest(app).get(url)
             .set("Authorization", `Bearer ${token}`)
             .set('Content-Type', contentType)
@@ -66,14 +68,11 @@
             ;
     }
 
-    function testScvRest() {
+    async function testScvRest() {
         // Wait for server to start
-        return new Promise(resolve=>(async function(){
-            await app.locals.scvRest.initialize();
-            setTimeout(()=>{
-                resolve(app.locals.scvRest);
-            },200);
-        })());
+        await sleep(400);
+        await app.locals.scvRest.initialize();
+        await sleep(500);
     }
 
     it("ScvRest must be initialized", function(done) {
@@ -217,27 +216,20 @@
         } catch (e) { done(e); } }();
         async.next();
     });
-    it("GET download human audio playlist", function(done) {
-        console.log(`TODO`, __filename); done(); return; 
+    it("GET download human audio playlist", async()=>{
+        console.log(`TODO`, __filename); return; 
         var scvRest = app.locals.scvRest;
-        logger.level = 'info';
-        var async = function* () { try {
-            var apiModel = yield  scvRest.initialize()
-                .then(r=>async.next(r)).catch(e=>async.throw(e));
-            var url = `/scv/download/playlist/en/sujato_en/sn2.3%2Fen%2Fsujato`;
-            var res = yield supertest(app)
-                .get(url)
-                .expect('Content-Type', /audio\/mp3/)
-                .expect('Content-Disposition', 
-                    'attachment; filename=sn2.3-en-sujato_en_sujato_en.mp3')
-                .end((e,r) => e ? async.throw(e) : async.next(r));
-            var contentLength = Number(res.headers['content-length']);
-            should(contentLength).above(3400000);
-            should(contentLength).below(4600000);
-            should(res.statusCode).equal(200);
-            done();
-        } catch (e) { done(e); } }();
-        async.next();
+        var apiModel = await scvRest.initialize();
+        var url = `/scv/download/playlist/en/sujato_en/sn2.3%2Fen%2Fsujato`;
+        var res = await supertest(app)
+            .get(url)
+            .expect('Content-Type', /audio\/mp3/)
+            .expect('Content-Disposition', 
+                'attachment; filename=sn2.3-en-sujato_en_sujato_en.mp3');
+        var contentLength = Number(res.headers['content-length']);
+        should(contentLength).above(3400000);
+        should(contentLength).below(4600000);
+        should(res.statusCode).equal(200);
     });
     it("GET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
         var scvRest = app.locals.scvRest;
@@ -326,7 +318,7 @@
         } catch(e) {done(e);} })();
     });
     it("GET /search/:pattern returns suttaplexes found", function(done) {
-        (async function() { try { await testServerReady();
+        (async function() { try { await sleep();
             var maxResults = 3;
             var pattern = `root%20of%20suffering`;
 
@@ -487,74 +479,66 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles large segment", done=>{
-        console.log(`TODO`, __filename); done(); return; 
-        (async function() { try {
-            await new Promise(resolve=>setTimeout(()=>resolve(),1000));
-            var scid = "an2.281-309:1.1";
-            var sutta_uid = scid.split(":")[0];
-            var vnameTrans = "1"; // Matthew
-            var url = `/scv/play/segment/${sutta_uid}/`+
-                `en/sujato/${scid}/${vnameTrans}`;
-            var res = await supertest(app).get(url);
-            res.statusCode.should.equal(200);
-            var data = res.body instanceof Buffer 
-                ? JSON.parse(res.body) : res.body;
-            should(data.sutta_uid).equal('an2.281-309');
-            should(data.vnameTrans).equal('Brian');
-            should(data.vnameRoot).equal('Aditi');
-            should(data.iSegment).equal(9);
-            should(data.nSections).equal(3);
-            should(data.language).equal('en');
-            should(data.translator).equal('sujato');
-            should(data.segment.en)
-                .match(/^.For two reasons the Realized One/);
-            should(data.segment.audio.en)
-                .match(/4341471c187e12334475901a9599698c/);
-            should(data.segment.audio.pli)
-                .match(/7bd718c9fbda06ab56b2d09a05776353/);
-
-            done();
-        } catch(e) {done(e);} })();
+    it("GET /play/segment/... handles large segment", async()=>{
+        console.log(`TODO`, __filename); return; 
+        await new Promise(resolve=>setTimeout(()=>resolve(),1000));
+        var scid = "an2.281-309:1.1";
+        var sutta_uid = scid.split(":")[0];
+        var vnameTrans = "1"; // Matthew
+        var url = `/scv/play/segment/${sutta_uid}/`+
+            `en/sujato/${scid}/${vnameTrans}`;
+        var res = await supertest(app).get(url);
+        res.statusCode.should.equal(200);
+        var data = res.body instanceof Buffer 
+            ? JSON.parse(res.body) : res.body;
+        should(data.sutta_uid).equal('an2.281-309');
+        should(data.vnameTrans).equal('Brian');
+        should(data.vnameRoot).equal('Aditi');
+        should(data.iSegment).equal(9);
+        should(data.nSections).equal(3);
+        should(data.language).equal('en');
+        should(data.translator).equal('sujato');
+        should(data.segment.en)
+            .match(/^.For two reasons the Realized One/);
+        should(data.segment.audio.en)
+            .match(/4341471c187e12334475901a9599698c/);
+        should(data.segment.audio.pli)
+            .match(/7bd718c9fbda06ab56b2d09a05776353/);
     });
-    it("GET /play/segment/... handles HumanTts dn33", done=>{
-        (async function() { try {
-            var scid = "dn33:0.1";
-            var sutta_uid = scid.split(":")[0];
-            var langTrans = 'en';
-            var vnameTrans = "sujato_en";
-            var vnameRoot = "sujato_pli";
-            var url = [
-                `/scv/play/segment`,
-                sutta_uid,
-                langTrans,
-                'sujato',
-                scid,
-                vnameTrans,
-                vnameRoot,
-            ].join('/');
-            var res = await supertest(app).get(url);
-            res.statusCode.should.equal(200);
-            var data = res.body instanceof Buffer 
-                ? JSON.parse(res.body) : res.body;
-            should(data.sutta_uid).equal(scid.split(':')[0]);
-            should(data.vnameTrans).equal(vnameTrans);
-            should(data.vnameRoot).equal(vnameRoot);
-            should(data.iSegment).equal(0);
-            should(data.section).equal(0);
-            should(data.nSections).equal(12);
-            should(data.language).equal('en');
-            should(data.translator).equal('sujato');
-            should(data.segment.pli).match(/^Dīgha Nikāya 33/);
-            should(data.segment.audio.vnamePali).equal('Aditi');
-            should(data.segment.audio.vnameTrans).equal('Amy');
-            should(data.segment.audio.en)
-                .match(/b06d3e95cd46714448903fa8bcb12004/);
-            should(data.segment.audio.pli)
-                .match(/899e4cd12b700b01200f295631b1576b/);
-
-            done();
-        } catch(e) {done(e);} })();
+    it("GET /play/segment/... handles HumanTts dn33", async()=>{
+        var scid = "dn33:0.1";
+        var sutta_uid = scid.split(":")[0];
+        var langTrans = 'en';
+        var vnameTrans = "sujato_en";
+        var vnameRoot = "sujato_pli";
+        var url = [
+            `/scv/play/segment`,
+            sutta_uid,
+            langTrans,
+            'sujato',
+            scid,
+            vnameTrans,
+            vnameRoot,
+        ].join('/');
+        var res = await supertest(app).get(url);
+        res.statusCode.should.equal(200);
+        var data = res.body instanceof Buffer 
+            ? JSON.parse(res.body) : res.body;
+        should(data.sutta_uid).equal(scid.split(':')[0]);
+        should(data.vnameTrans).equal(vnameTrans);
+        should(data.vnameRoot).equal(vnameRoot);
+        should(data.iSegment).equal(0);
+        should(data.section).equal(0);
+        should(data.nSections).equal(12);
+        should(data.language).equal('en');
+        should(data.translator).equal('sujato');
+        should(data.segment.pli).match(/^Dīgha Nikāya 33/);
+        should(data.segment.audio.vnamePali).equal('Aditi');
+        should(data.segment.audio.vnameTrans).equal('Amy');
+        should(data.segment.audio.en)
+            .match(/b06d3e95cd46714448903fa8bcb12004/);
+        should(data.segment.audio.pli)
+            .match(/899e4cd12b700b01200f295631b1576b/);
     });
     it("GET /play/segment/... handles HumanTts sn1.9", done=>{
         (async function() { try {
@@ -610,9 +594,9 @@
                 vnameTrans,
                 vnameRoot,
             ].join('/');
-            logger.warn("EXPECTED ERROR BEGIN");
+            logger.warn("EXPECTED WARN BEGIN");
             var res = await supertest(app).get(url);
-            logger.warn("EXPECTED ERROR END");
+            logger.warn("EXPECTED WARN END");
             res.statusCode.should.equal(200);
             var data = res.body instanceof Buffer 
                 ? JSON.parse(res.body) : res.body;
@@ -709,10 +693,10 @@
             should(fs.existsSync(fpath)).equal(false);
 
             var data = { volume:'invalid-volume', };
-            logger.error(`EXPECTED ERROR BEGIN`);
+            logger.warn(`EXPECTED WARN BEGIN`);
             var res = await testAuthPost(url, data);
             res.statusCode.should.equal(500);
-            logger.error(`EXPECTED ERROR END`);
+            logger.warn(`EXPECTED WARN END`);
 
             done();
         } catch(e) {done(e);} })();
@@ -861,118 +845,109 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/restore-s3-archives", done=>{
-        // Restore VSM file
-        console.log(`TODO`,__filename); done(); return; 
+    it("POST auth/vsm/restore-s3-archives", async()=>{
+        console.log(`TODO`,__filename); return; // Restore VSM file
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials POST test');
             done();
             return;
         }
-        (async function() { try {
-            var url = `/scv/auth/vsm/list-objects`;
-            var resList = await testAuthGet(url);
-            var {
-                Contents,
-            } = resList.body;
+        var url = `/scv/auth/vsm/list-objects`;
+        var resList = await testAuthGet(url);
+        var {
+            Contents,
+        } = resList.body;
 
-            var url = `/scv/auth/vsm/restore-s3-archives`;
-            var restore = [{
-                Key: 'kn_en_sujato_amy.tar.gz',
-                ETag: '"e2141be1eddffebe4bded17b83aaa5ee"',
-            }];
-            var clearVolume = false;
-            var data = {
-                restore,
-                clearVolume,
-            };
-            var res = await testAuthPost(url, data);
-            res.statusCode.should.equal(200);
-            should(res.body).properties({
-                Bucket: 'sc-voice-vsm',
-                clearVolume,
-                restore,
-            });
-
-            done();
-        } catch(e) {done(e);} })();
+        var url = `/scv/auth/vsm/restore-s3-archives`;
+        var restore = [{
+            Key: 'kn_en_sujato_amy.tar.gz',
+            ETag: '"e2141be1eddffebe4bded17b83aaa5ee"',
+        }];
+        var clearVolume = false;
+        var data = {
+            restore,
+            clearVolume,
+        };
+        var res = await testAuthPost(url, data);
+        res.statusCode.should.equal(200);
+        should(res.body).properties({
+            Bucket: 'sc-voice-vsm',
+            clearVolume,
+            restore,
+        });
     });
-    it("TESTTESTPOST auth/vsm/create-archive create VSM", done=>{
-        console.log(`TODO`,__filename); done(); return; 
-        (async function() { try {
-            var url = `/scv/auth/vsm/create-archive`;
-            var nikaya = 'kn';
-            var author = 'sujato';
-            var lang = 'pli';
-            var voice = 'aditi';
-            var maxSuttas = 1;
-            var postArchive = false;
-            var data = {
-                nikaya,
-                voice,
-                lang,
-                author,
-                maxSuttas,
-                postArchive,
-            };
+    it("POST auth/vsm/create-archive create VSM", async()=>{
+        console.log(`TODO`,__filename); return; 
+        var url = `/scv/auth/vsm/create-archive`;
+        var nikaya = 'kn';
+        var author = 'sujato';
+        var lang = 'pli';
+        var voice = 'aditi';
+        var maxSuttas = 1;
+        var postArchive = false;
+        var data = {
+            nikaya,
+            voice,
+            lang,
+            author,
+            maxSuttas,
+            postArchive,
+        };
 
-            // the response is immediate since processing is in the background
-            var res = await testAuthPost(url, data);
-            res.statusCode.should.equal(200);
-            should(res.body).properties({
-                postArchive,
-                author,
-                lang,
-                nikaya,
-                maxSuttas,
-                voice,
-            });
-            var summary = 'Building VSM for nikaya:kn language:pli voice:aditi';
-            should(res.body.task).properties({
-                actionsTotal: 2,
-                actionsDone: 0,
-                summary,
-                error: null,
-                name: 'VSMFactory',
-            });
+        // the response is immediate since processing is in the background
+        var res = await testAuthPost(url, data);
+        res.statusCode.should.equal(200);
+        should(res.body).properties({
+            postArchive,
+            author,
+            lang,
+            nikaya,
+            maxSuttas,
+            voice,
+        });
+        var summary = 'Building VSM for nikaya:kn language:pli voice:aditi';
+        should(res.body.task).properties({
+            actionsTotal: 2,
+            actionsDone: 0,
+            summary,
+            error: null,
+            name: 'VSMFactory',
+        });
 
-            // an immediately following request should be busy 
-            logger.warn("EXPECTED WARNING BEGIN");
-            var res = await testAuthPost(url, data);
-            logger.warn("EXPECTED WARNING END");
-            res.statusCode.should.equal(500);
-            should(res.body.error).match(/VSM Factory is busy/);
-            var taskUrl = `/scv/auth/vsm/factory-task`;
-            var res = await testAuthGet(taskUrl);
-            res.statusCode.should.equal(200);
-            should(res.body).properties({
-                error: null,
-                summary,
-                name: 'VSMFactory',
-                isActive: true,
-            });
+        // an immediately following request should be busy 
+        logger.warn("EXPECTED WARNING BEGIN");
+        var res = await testAuthPost(url, data);
+        logger.warn("EXPECTED WARNING END");
+        res.statusCode.should.equal(500);
+        should(res.body.error).match(/VSM Factory is busy/);
+        var taskUrl = `/scv/auth/vsm/factory-task`;
+        var res = await testAuthGet(taskUrl);
+        res.statusCode.should.equal(200);
+        should(res.body).properties({
+            error: null,
+            summary,
+            name: 'VSMFactory',
+            isActive: true,
+        });
 
-            // and after a while it should be done
-            await new Promise((resolve, reject) => {
-                setTimeout(() => resolve(true), 5000);
-            });
-            var res = await testAuthGet(taskUrl);
-            res.statusCode.should.equal(200);
-            should(res.body).properties({
-                error: null,
-                name: 'VSMFactory',
-                isActive: false,
-            });
-            should(res.body.summary)
-                .match(/kn_pli_mahasangiti_aditi suttas imported/);
+        // and after a while it should be done
+        await new Promise((resolve, reject) => {
+            setTimeout(() => resolve(true), 5000);
+        });
+        var res = await testAuthGet(taskUrl);
+        res.statusCode.should.equal(200);
+        should(res.body).properties({
+            error: null,
+            name: 'VSMFactory',
+            isActive: false,
+        });
+        should(res.body.summary)
+            .match(/kn_pli_mahasangiti_aditi suttas imported/);
 
-            // and we can submit another request
-            var res = await testAuthPost(url, data);
-            res.statusCode.should.equal(200);
-
-            done();
-        } catch(e) {done(e);} })();
+        // and we can submit another request
+        var res = await testAuthPost(url, data);
+        res.statusCode.should.equal(200);
     });
     it("GET voices returns voices", function(done) {
         (async function() { try {
@@ -1055,106 +1030,94 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET auth/log/:ilog returns logfile", function(done) {
-        (async function() { try {
-            var logDir = path.join(LOCAL, 'logs');
-            if (!fs.existsSync(logDir)) {
-                fs.mkdirSync(logDir);
-                fs.writeFileSync(path.join(logDir, 'test3'), 'test-log3');
-                fs.writeFileSync(path.join(logDir, 'test2'), 'test-log2');
-                fs.writeFileSync(path.join(logDir, 'test1'), 'test-log1');
-            }
-            var files = fs.readdirSync(logDir).sort((a,b) => -a.localeCompare(b));
-            var index = 0;
-            if (files.length > index) {
-                var url = `/scv/auth/log/${index}`;
-                var res = await testAuthGet(url, 'text/plain');
-                should(res.statusCode).equal(200);
-                var log = fs.readFileSync(path.join(logDir, files[index])).toString();
-                should(res.text).equal(log);
-            }
-            index++;
-            if (files.length > index) {
-                var url = `/scv/auth/log/${index}`;
-                var res = await testAuthGet(url, 'text/plain');
-                should(res.statusCode).equal(200);
-                var log = fs.readFileSync(path.join(logDir, files[index])).toString();
-                should(res.text).equal(log);
-            }
-
-            // error
-            var url = `/scv/auth/log/asdf`;
-            logger.warn('EXPECTED ERROR: BEGIN');
+    it("GET auth/log/:ilog returns logfile", async()=>{
+        var logDir = path.join(LOCAL, 'logs');
+        if (!fs.existsSync(logDir)) {
+            fs.mkdirSync(logDir);
+            fs.writeFileSync(path.join(logDir, 'test3'), 'test-log3');
+            fs.writeFileSync(path.join(logDir, 'test2'), 'test-log2');
+            fs.writeFileSync(path.join(logDir, 'test1'), 'test-log1');
+        }
+        var files = fs.readdirSync(logDir).sort((a,b) => -a.localeCompare(b));
+        var index = 0;
+        if (files.length > index) {
+            var url = `/scv/auth/log/${index}`;
             var res = await testAuthGet(url, 'text/plain');
-            logger.warn('EXPECTED ERROR: END');
-            should(res.statusCode).equal(500);
-            should(res.text).match(/Log file not found:asdf/);
+            should(res.statusCode).equal(200);
+            var log = fs.readFileSync(path.join(logDir, files[index])).toString();
+            should(res.text).equal(log);
+        }
+        index++;
+        if (files.length > index) {
+            var url = `/scv/auth/log/${index}`;
+            var res = await testAuthGet(url, 'text/plain');
+            should(res.statusCode).equal(200);
+            var log = fs.readFileSync(path.join(logDir, files[index])).toString();
+            should(res.text).equal(log);
+        }
 
-            done();
-        } catch(e) {done(e);} })();
+        // error
+        var url = `/scv/auth/log/asdf`;
+        logger.warn('EXPECTED WARN: BEGIN');
+        var res = await testAuthGet(url, 'text/plain');
+        logger.warn('EXPECTED WARN: END');
+        should(res.statusCode).equal(500);
+        should(res.text).match(/Log file not found:asdf/);
     });
-    it("GET /search/:pattern/:lang returns German", function(done) {
-        (async function() { try { await testServerReady();
-            var maxResults = 3;
-            var pattern = `dn7`;
-            var lang = 'de'
+    it("TESTTESTGET /search/:pattern/:lang returns German", async()=>{
+        logger.logLevel = 'info';
+        await sleep(1000); // initialize
+        var maxResults = 3;
+        var pattern = `dn7`;
+        var lang = 'de'
 
-            var url = `/scv/search/${pattern}/${lang}?maxResults=${maxResults}`;
-            var response = await supertest(app).get(url);
-            response.statusCode.should.equal(200);
-            var {
-                method,
-                results,
-            } = response.body;
-            should(method).equal('sutta_uid-legacy');
-            should(results).instanceOf(Array);
-            should(results.length).equal(1);
-            should.deepEqual(results.map(r => r.uid),[
-                'dn7', 
-            ]);
-            should(results[0].sutta.author_uid)
-                .equal('kusalagnana-maitrimurti-traetow');
-            done();
-        } catch (e) { done(e); } })();
+        var url = 
+            `/scv/search/${pattern}/${lang}?maxResults=${maxResults}`;
+        var response = await supertest(app).get(url);
+        response.statusCode.should.equal(200);
+        var {
+            method,
+            results,
+        } = response.body;
+        should(results).instanceOf(Array);
+        should(results.length).equal(1);
+        should.deepEqual(results.map(r => r.uid),[
+            'dn7', 
+        ]);
+        should(results[0].sutta.author_uid)
+            .equal('kusalagnana-maitrimurti-traetow');
+        should(method).equal('sutta_uid');
     });
-    it("POST auth/update-bilara", done=>{
-        (async function() { try {
-            var scvRest = await(testScvRest());
-            var url = `/scv/auth/update-bilara`;
-            var data = { };
-            var res = await testAuthPost(url, data);
-            res.statusCode.should.equal(200);
-            should(res.body).properties({
-                error: null,
-                summary: 'Update completed',
-            });
-            should(res.body.elapsed).above(0);
-
-            done();
-        } catch(e) {done(e);} })();
+    it("POST auth/update-bilara", async()=>{
+        var scvRest = await(testScvRest());
+        var url = `/scv/auth/update-bilara`;
+        var data = { };
+        var res = await testAuthPost(url, data);
+        res.statusCode.should.equal(200);
+        should(res.body).properties({
+            error: null,
+            summary: 'Update completed',
+        });
+        should(res.body.elapsed).above(0);
     });
-    it("GET audio info", done=>{
-        (async function() { try {
-            var scvRest = await(testScvRest());
-            var guid = `e0bd9aadd84f3f353f17cceced97ff13`;
-            var url = `/scv/auth/audio-info/an_en_sujato_amy/${guid}`;
-            var res = await testAuthGet(url);
-            var {
-                statusCode,
-                body: infoArray,
-            } = res;
-            statusCode.should.equal(200);
-            should(infoArray).instanceOf(Array);
-            should.deepEqual(infoArray.map(i=>i.api), [
-                "aws-polly",]);
-            should.deepEqual(infoArray.map(i=>i.voice), [
-                "Amy",]);
-            should.deepEqual(infoArray.map(i=>i.guid), [
-                "e0bd9aadd84f3f353f17cceced97ff13", 
-            ]);
-
-            done();
-        } catch(e) {done(e);} })();
+    it("GET audio info", async()=>{
+        var scvRest = await testScvRest();
+        var guid = `e0bd9aadd84f3f353f17cceced97ff13`;
+        var url = `/scv/auth/audio-info/an_en_sujato_amy/${guid}`;
+        var res = await testAuthGet(url);
+        var {
+            statusCode,
+            body: infoArray,
+        } = res;
+        statusCode.should.equal(200);
+        should(infoArray).instanceOf(Array);
+        should.deepEqual(infoArray.map(i=>i.api), [
+            "aws-polly",]);
+        should.deepEqual(infoArray.map(i=>i.voice), [
+            "Amy",]);
+        should.deepEqual(infoArray.map(i=>i.guid), [
+            "e0bd9aadd84f3f353f17cceced97ff13", 
+        ]);
     });
 });
 

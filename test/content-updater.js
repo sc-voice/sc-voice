@@ -2,7 +2,7 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const { logger } = require('rest-bundle');
+    const { logger, } = require('log-instance');
     const {
         ContentUpdater,
         SuttaStore,

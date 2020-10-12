@@ -1,7 +1,7 @@
 (function(exports) {
     const fs = require('fs');
     const path = require('path');
-    const { logger, } = require('rest-bundle');
+    const { logger, } = require('log-instance');
     const {
         exec,
     } = require('child_process');
@@ -200,7 +200,7 @@
                     var msgContext = `S3Bucket.downloadObject() `+
                         `${Bucket}/${oname} => ${dstPath}`;
                     ostream.on('error', err => {
-                        logger.warn(`${msgContext} ERROR`);
+                        logger.warn(`${msgContext} WARNING`);
                         logger.warn(err.stack);
                         reject(err);
                     });

@@ -144,7 +144,7 @@
                     info.push(json);
                 }
             } else {
-                logger.error(`soundInfo not found:`, {guidPath});
+                logger.warn(`soundInfo not found:`, {guidPath});
             }
             return info;
         }
@@ -216,7 +216,7 @@
                                 }
                             }
                         } else {
-                            that.logger.error(`Guid mismatch ${guid} vs. ${s3key}`);
+                            that.warn(`Guid mismatch ${guid} vs. ${s3key}`);
                         }
                     }
                 }

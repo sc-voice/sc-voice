@@ -3,15 +3,18 @@
     const fs = require('fs');
     const path = require('path');
     const { logger, LogInstance } = require('log-instance');
+    logger.logLevel = 'warn';
     const {
         Playlist,
         Sutta,
         SuttaFactory,
         SuttaStore,
-        SuttaCentralApi,
         Voice,
     } = require("../index");
-    const { SuttaCentralId } = require('suttacentral-api');
+    const { 
+        ScApi,
+        SuttaCentralId,
+    } = require('suttacentral-api');
     const {
         BilaraData,
         Seeker,
@@ -40,7 +43,6 @@
         }
     }
     this.timeout(20*1000);
-    logger.level = 'warn';
 
     it("default ctor", () => {
         var store = new SuttaStore();
@@ -52,24 +54,22 @@
     });
     it("custom ctor", () => {
         var logger = new LogInstance();
+        logger.logLevel = 'warn';
         var store = new SuttaStore({logger});
         should(store.logger).equal(logger);
         should(store.bilaraData.logger).equal(store);
         should(store.seeker.logger).equal(store);
     });
-    it("initialize() initializes SuttaStore", function(done) {
-        (async function() { try {
-            var store = new SuttaStore();
-            should(store.maxDuration).equal(3*60*60);
-            should(store.isInitialized).equal(false);
-            should(await store.initialize()).equal(store);
-            should(store.suttaCentralApi).instanceOf(SuttaCentralApi);
-            should(store.root).equal(ROOT);
-            should(store.bilaraData.initialized).equal(true);
-            should(store.seeker.initialized).equal(true);
-            should(store.seeker.logger).equal(store);
-            done(); 
-        } catch(e) {done(e);} })();
+    it("initialize() initializes SuttaStore", async()=>{
+        var store = new SuttaStore();
+        should(store.maxDuration).equal(3*60*60);
+        should(store.isInitialized).equal(false);
+        should(await store.initialize()).equal(store);
+        should(store.scApi).instanceOf(ScApi);
+        should(store.root).equal(ROOT);
+        should(store.bilaraData.initialized).equal(true);
+        should(store.seeker.initialized).equal(true);
+        should(store.seeker.logger).equal(store);
     });
     it("suttaPath(opts) returns sutta filepath", async()=>{
         await new Promise(r=>setTimeout(()=>r(),500)); // test setup
@@ -119,243 +119,243 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search('thig16.1') returns segmented sutta", done=>{
-        (async function() { try {
-            var voice = Voice.createVoice({
-                name: 'raveena',
-                localeIPA: 'pli',
-                usage: 'recite',
-            });
-            var suttaCentralApi = await new SuttaCentralApi().initialize();
-            this.suttaFactory = new SuttaFactory({
-                suttaCentralApi,
-                autoSection: true,
-            });
-            var store = await new SuttaStore({
-                suttaCentralApi,
-                suttaFactory,
-                voice,
-            }).initialize();
+    it("search('thig16.1') returns segmented sutta", async()=>{
+        var voice = Voice.createVoice({
+            name: 'raveena',
+            localeIPA: 'pli',
+            usage: 'recite',
+        });
+        var scApi = await new ScApi().initialize();
+        var suttaFactory = new SuttaFactory({
+            scApi,
+            autoSection: true,
+        });
+        var store = await new SuttaStore({
+            scApi,
+            suttaFactory,
+            voice,
+        }).initialize();
 
-            // multiple results
-            var {
-                method,
-                results,
-            } = await store.search('thig16.1');
-            should(results).instanceOf(Array);
-            should(method).equal('sutta_uid');
-            should.deepEqual(results.map(r=>r.count), [0]);
-            should.deepEqual(results.map(r=>r.uid), ['thig16.1']);
-            should.deepEqual(results.map(r=>r.author_uid), [
-                'sujato']);
-            should.deepEqual(results.map(r=>r.suttaplex.acronym), [
-                'Thig 16.1']);
-            should(results[0].quote.en).match(/16.1. Sumedhā/);
-            should(results[0].nSegments).equal(311);
-            var sutta = results[0].sutta;
-            should(sutta.sutta_uid).equal('thig16.1');
-            should(sutta.author_uid).equal('sujato');
-            should.deepEqual(sutta.segments[0],{
-                matched: true,
-                en: 'Verses of the Senior Nuns',
-                pli: 'Therīgāthā',
-                scid: 'thig16.1:0.1',
-            });
-            var sections = sutta.sections;
-            should.deepEqual(sections[0].segments[0],{
-                en: 'Verses of the Senior Nuns',
-                matched: true,
-                pli: 'Therīgāthā',
-                scid: 'thig16.1:0.1',
-            });
-            should(sections.length).equal(2);
-            should.deepEqual(sections.map(s => s.segments.length), 
-                [3,308,]);
-
-            done(); 
-        } catch(e) {done(e);} })();
+        // multiple results
+        var {
+            method,
+            results,
+        } = await store.search('thig16.1');
+        should(results).instanceOf(Array);
+        should(method).equal('sutta_uid');
+        should.deepEqual(results.map(r=>r.count), [0]);
+        should.deepEqual(results.map(r=>r.uid), ['thig16.1']);
+        should.deepEqual(results.map(r=>r.author_uid), [
+            'sujato']);
+        should.deepEqual(results.map(r=>r.suttaplex.acronym), [
+            'Thig 16.1']);
+        should(results[0].quote.en).match(/16.1. Sumedhā/);
+        should(results[0].nSegments).equal(311);
+        var sutta = results[0].sutta;
+        should(sutta.sutta_uid).equal('thig16.1');
+        should(sutta.author_uid).equal('sujato');
+        should.deepEqual(sutta.segments[0],{
+            matched: true,
+            en: 'Verses of the Senior Nuns',
+            pli: 'Therīgāthā',
+            scid: 'thig16.1:0.1',
+        });
+        var sections = sutta.sections;
+        should.deepEqual(sections[0].segments[0],{
+            en: 'Verses of the Senior Nuns',
+            matched: true,
+            pli: 'Therīgāthā',
+            scid: 'thig16.1:0.1',
+        });
+        should(sections.length).equal(2);
+        should.deepEqual(sections.map(s => s.segments.length), 
+            [3,308,]);
     });
-    it("search('sona') finds 'Soṇa'", function(done) {
-        (async function() { try {
-            var voice = Voice.createVoice("raveena");
-            var suttaCentralApi = await new SuttaCentralApi().initialize();
-            this.suttaFactory = new SuttaFactory({
-                suttaCentralApi,
-                autoSection: true,
-            });
-            var store = await new SuttaStore({
-                suttaCentralApi,
-                suttaFactory,
-                voice,
-                maxResults: 50,
-            }).initialize();
+    it("search('sona') finds 'Soṇa'", async()=>{
+        var voice = Voice.createVoice("raveena");
+        var scApi = await new ScApi().initialize();
+        var suttaFactory = new SuttaFactory({
+            scApi,
+            autoSection: true,
+        });
+        var store = await new SuttaStore({
+            scApi,
+            suttaFactory,
+            voice,
+            maxResults: 50,
+        }).initialize();
 
-            // multiple results
-            var {
-                method,
-                results,
-            } = await store.search('sona');
-            should(results).instanceOf(Array);
-            should(method).equal('phrase');
-            should(results.length).equal(19);
-
-            done(); 
-        } catch(e) {done(e);} })();
+        // multiple results
+        var {
+            method,
+            results,
+        } = await store.search('sona');
+        should(results).instanceOf(Array);
+        should(method).equal('phrase');
+        should(results.length).equal(19);
     });
-    it("search('thig1.1') returns segmented sutta", done=>{
-        (async function() { try {
-            var voice = Voice.createVoice({
-                name: 'raveena',
-                localeIPA: 'pli',
-                usage: 'recite',
-            });
-            var suttaCentralApi = await new SuttaCentralApi(PRODUCTION)
-                .initialize();
-            this.suttaFactory = new SuttaFactory({
-                suttaCentralApi,
-                autoSection: true,
-            });
-            var store = await new SuttaStore({
-                suttaCentralApi,
-                suttaFactory,
-                voice,
-            }).initialize();
+    it("search('thig1.1') returns segmented sutta", async()=>{
+        var voice = Voice.createVoice({
+            name: 'raveena',
+            localeIPA: 'pli',
+            usage: 'recite',
+        });
+        var scApi = await new ScApi(PRODUCTION)
+            .initialize();
+        var suttaFactory = new SuttaFactory({
+            scApi,
+            autoSection: true,
+        });
+        var store = await new SuttaStore({
+            scApi,
+            suttaFactory,
+            voice,
+        }).initialize();
 
-            // multiple results
-            var {
-                method,
-                results,
-            } = await store.search('thig1.1');
-            should(results).instanceOf(Array);
-            should(method).equal('sutta_uid');
-            should.deepEqual(results.map(r=>r.count), [0]);
-            should.deepEqual(results.map(r=>r.uid), ['thig1.1']);
-            should.deepEqual(results.map(r=>r.author_uid), [
-                'sujato']);
-            should.deepEqual(results.map(r=>r.suttaplex.acronym), [
-                'Thig 1.1']);
-            should(results[0].quote.en)
-                .match(/1.1. An Unnamed Nun \(1st\)/);
-            should(results[0].nSegments).equal(9);
-            var sutta = results[0].sutta;
-            should(sutta.sutta_uid).equal('thig1.1');
-            should(sutta.author_uid).equal('sujato');
-            should.deepEqual(sutta.segments[0],{
-                matched: true,
-                en: 'Verses of the Senior Nuns',
-                pli: 'Therīgāthā',
-                scid: 'thig1.1:0.1',
-            });
-            var sections = sutta.sections;
-            should.deepEqual(sections[0].segments[0],{
-                matched: true,
-                en: 'Verses of the Senior Nuns',
-                pli: 'Therīgāthā',
-                scid: 'thig1.1:0.1',
-            });
-            should.deepEqual(sections.map(s => s.segments.length), 
-                [3,6,]);
-
-            done(); 
-        } catch(e) {done(e);} })();
+        // multiple results
+        var {
+            method,
+            results,
+        } = await store.search('thig1.1');
+        should(results).instanceOf(Array);
+        should(method).equal('sutta_uid');
+        should.deepEqual(results.map(r=>r.count), [0]);
+        should.deepEqual(results.map(r=>r.uid), ['thig1.1']);
+        should.deepEqual(results.map(r=>r.author_uid), [
+            'sujato']);
+        should.deepEqual(results.map(r=>r.suttaplex.acronym), [
+            'Thig 1.1']);
+        should(results[0].quote.en)
+            .match(/1.1. An Unnamed Nun \(1st\)/);
+        should(results[0].nSegments).equal(9);
+        var sutta = results[0].sutta;
+        should(sutta.sutta_uid).equal('thig1.1');
+        should(sutta.author_uid).equal('sujato');
+        should.deepEqual(sutta.segments[0],{
+            matched: true,
+            en: 'Verses of the Senior Nuns',
+            pli: 'Therīgāthā',
+            scid: 'thig1.1:0.1',
+        });
+        var sections = sutta.sections;
+        should.deepEqual(sections[0].segments[0],{
+            matched: true,
+            en: 'Verses of the Senior Nuns',
+            pli: 'Therīgāthā',
+            scid: 'thig1.1:0.1',
+        });
+        should.deepEqual(sections.map(s => s.segments.length), 
+            [3,6,]);
     });
-    it("search(pattern) => multiple results", function(done) {
-        (async function() { try {
-            var voice = Voice.createVoice({
-                name: 'raveena',
-                localeIPA: 'pli',
-                usage: 'recite',
-            });
-            var suttaCentralApi = await new SuttaCentralApi(PRODUCTION)
-                .initialize();
-            var store = await new SuttaStore({
-                suttaCentralApi,
-                voice,
-            }).initialize();
+    it("search(pattern) => multiple results", async()=>{
+        var voice = Voice.createVoice({
+            name: 'raveena',
+            localeIPA: 'pli',
+            usage: 'recite',
+        });
+        var scApi = await new ScApi(PRODUCTION)
+            .initialize();
+        var store = await new SuttaStore({
+            scApi,
+            voice,
+        }).initialize();
 
-            // multiple results
-            var {
-                method,
-                results,
-            } = await store.search('is the root of suffering');
-            should(results).instanceOf(Array);
-            should.deepEqual(Object.keys(results[0]).sort(), [
-                'count', 'uid', 'author', 'author_short', 'author_uid',
-                'author_blurb', 'lang', 'nSegments', 'title', 
-                'collection_id',
-                'suttaplex', 'quote', 'sutta', 'stats', 
-            ].sort());
-            should(method).equal('phrase');
-            should.deepEqual(results.map(r=>r.count), 
-                [5.091, 3.016, 2.006, 1.005]);
-            should.deepEqual(results.map(r=>r.uid), [
-                'sn42.11', 'mn105', 'mn1', 'mn66']);
-            should.deepEqual(results.map(r=>r.author_uid), [
-                'sujato', 'sujato', 'sujato', 'sujato', ]);
-            should.deepEqual(results.map(r=>r.suttaplex.acronym), [
-                'SN 42.11', 'MN 105', 'MN 1', 'MN 66', ]);
-            should(results[0].quote.en).match(/is the root of suffering/);
-            should(results[1].quote.en).match(/is the root of suffering/);
-            should(results[2].quote.en).match(/is the root of suffering/);
-            should(results[3].quote.en).match(/is the root of suffering/);
-            var jsonPath = path.join(__dirname, '../public/search/test');
-            fs.writeFileSync(jsonPath, JSON.stringify({
-                method,
-                results,
-            }, null, 2));
-
-            done(); 
-        } catch(e) {done(e);} })();
+        // multiple results
+        var {
+            method,
+            results,
+        } = await store.search('is the root of suffering');
+        should(results).instanceOf(Array);
+        should.deepEqual(Object.keys(results[0]).sort(), [
+            'count', 'uid', 'author', 'author_short', 'author_uid',
+            'author_blurb', 'lang', 'nSegments', 'title', 
+            'collection_id',
+            'suttaplex', 'quote', 'sutta', 'stats', 
+        ].sort());
+        should(method).equal('phrase');
+        should.deepEqual(results.map(r=>r.count), 
+            [5.091, 3.016, 2.006, 1.005]);
+        should.deepEqual(results.map(r=>r.uid), [
+            'sn42.11', 'mn105', 'mn1', 'mn66']);
+        should.deepEqual(results.map(r=>r.author_uid), [
+            'sujato', 'sujato', 'sujato', 'sujato', ]);
+        should.deepEqual(results.map(r=>r.suttaplex.acronym), [
+            'SN 42.11', 'MN 105', 'MN 1', 'MN 66', ]);
+        should(results[0].quote.en).match(/is the root of suffering/);
+        should(results[1].quote.en).match(/is the root of suffering/);
+        should(results[2].quote.en).match(/is the root of suffering/);
+        should(results[3].quote.en).match(/is the root of suffering/);
+        var jsonPath = path.join(__dirname, '../public/search/test');
+        fs.writeFileSync(jsonPath, JSON.stringify({
+            method,
+            results,
+        }, null, 2));
     });
-    it("search(pattern) => regular expression results", function(done) {
-        (async function() { try {
-            var voice = Voice.createVoice({
-                name: 'raveena',
-                localeIPA: 'pli',
-                usage: 'recite',
-            });
-            var suttaCentralApi = await new SuttaCentralApi(PRODUCTION)
-                .initialize();
-            var store = await new SuttaStore({
-                suttaCentralApi,
-                voice,
-            }).initialize();
+    it("search(pattern) => dn7/de", async()=>{
+        var voice = Voice.createVoice({
+            name: 'raveena',
+            localeIPA: 'pli',
+            usage: 'recite',
+        });
+        var scApi = await new ScApi(PRODUCTION).initialize();
+        var store = await new SuttaStore({
+            scApi,
+            voice,
+        }).initialize();
 
-            // regular expression
-            var {
-                method,
-                results,
-            } = await store.search('is.*root.*suffering');
-            should(results).instanceOf(Array);
-            should(method).equal('phrase');
-            should.deepEqual(results.map(r=>r.uid), [
-                'sn42.11', 'mn105', 'mn1', 'an4.257', 'mn66', ]);
-            done(); 
-        } catch(e) {done(e);} })();
+        var opts = {
+            pattern: 'dn7',
+            language: 'de',
+            maxResuts: 3,
+        };
+        var {
+            method,
+            results,
+        } = await store.search(opts);
+        should(results).instanceOf(Array);
+        should(method).equal('sutta_uid');
+        should.deepEqual(results.map(r=>r.uid), ['dn7']);
     });
-    it("search(pattern) => no results", function(done) {
-        (async function() { try {
-            var voice = Voice.createVoice({
-                name: 'raveena',
-                localeIPA: 'pli',
-                usage: 'recite',
-            });
-            var suttaCentralApi = await new SuttaCentralApi(PRODUCTION)
-                .initialize();
-            var store = await new SuttaStore({
-                suttaCentralApi,
-                voice,
-            }).initialize();
+    it("search(pattern) => regular expression results", async()=>{
+        var voice = Voice.createVoice({
+            name: 'raveena',
+            localeIPA: 'pli',
+            usage: 'recite',
+        });
+        var scApi = await new ScApi(PRODUCTION).initialize();
+        var store = await new SuttaStore({
+            scApi,
+            voice,
+        }).initialize();
 
-            // no results
-            var {
-                method,
-                results,
-            } = await store.search('not-in-suttas');
-            should(results.length).equal(0);
+        // regular expression
+        var {
+            method,
+            results,
+        } = await store.search('is.*root.*suffering');
+        should(results).instanceOf(Array);
+        should(method).equal('phrase');
+        should.deepEqual(results.map(r=>r.uid), [
+            'sn42.11', 'mn105', 'mn1', 'an4.257', 'mn66', ]);
+    });
+    it("search(pattern) => no results", async()=>{
+        var voice = Voice.createVoice({
+            name: 'raveena',
+            localeIPA: 'pli',
+            usage: 'recite',
+        });
+        var scApi = await new ScApi(PRODUCTION).initialize();
+        var store = await new SuttaStore({
+            scApi,
+            voice,
+        }).initialize();
 
-            done(); 
-        } catch(e) {done(e);} })();
+        // no results
+        var {
+            method,
+            results,
+        } = await store.search('not-in-suttas');
+        should(results.length).equal(0);
     });
     it("search(pattern) finds metadata", function(done) {
         (async function() { try {
@@ -1216,97 +1216,90 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search('sn12.3') returns Deutsch", function(done) {
-        (async function() { try {
-            var voice = Voice.createVoice('Amy');
-            var suttaCentralApi = await new SuttaCentralApi().initialize();
-            this.suttaFactory = new SuttaFactory({
-                suttaCentralApi,
-                autoSection: true,
+    it("search('sn12.3') returns Deutsch", async()=>{
+        var voice = Voice.createVoice('Amy');
+        var scApi = await new ScApi().initialize();
+        var suttaFactory = new SuttaFactory({
+            scApi,
+            autoSection: true,
+        });
+        var store = await new SuttaStore({
+            scApi,
+            suttaFactory,
+            voice,
+        }).initialize();
+
+        // multiple results
+        var pattern = 'sn12.3';
+        var language = 'de';
+        var maxResults = 5;
+        var res = await store.search({
+            pattern,
+            language,
+            maxResults,
+        });
+        var {
+            method,
+            results,
+        } = res;
+
+        should(results).instanceOf(Array);
+        should(method).equal('sutta_uid');
+        should.deepEqual(results.map(r=>r.count), [0]);
+        should.deepEqual(results.map(r=>r.uid), ['sn12.3']);
+        var sutta = results[0].sutta;
+        should(sutta.sutta_uid).equal('sn12.3');
+        if (sutta.author_uid === 'sabbamitta') {
+            should.deepEqual(results.map(r=>r.author_uid), [
+                'sabbamitta']);
+            should.deepEqual(results.map(r=>r.suttaplex.acronym), [
+                'SN 12.3']);
+            should(results[0].quote.de).match(/3. Übung /);
+            should(sutta.author_uid).equal('sabbamitta');
+            should.deepEqual(sutta.segments[0],{
+                matched: true,
+                de: 'Verbundene Lehrreden 12',
+                en: 'Linked Discourses 12 ',
+                pli: 'Saṁyutta Nikāya 12 ',
+                scid: 'sn12.3:0.1',
             });
-            var store = await new SuttaStore({
-                suttaCentralApi,
-                suttaFactory,
-                voice,
-            }).initialize();
-
-            // multiple results
-            var pattern = 'sn12.3';
-            var language = 'de';
-            var maxResults = 5;
-            var res = await store.search({
-                pattern,
-                language,
-                maxResults,
+            should(results[0].nSegments).equal(19);
+            var sections = sutta.sections;
+            should.deepEqual(sections[0].segments[0],{
+                matched: true,
+                de: 'Verbundene Lehrreden 12',
+                en: 'Linked Discourses 12 ',
+                pli: 'Saṁyutta Nikāya 12 ',
+                scid: 'sn12.3:0.1',
             });
-            var {
-                method,
-                results,
-            } = res;
-
-            should(results).instanceOf(Array);
-            should(method).equal('sutta_uid');
-            should.deepEqual(results.map(r=>r.count), [0]);
-            should.deepEqual(results.map(r=>r.uid), ['sn12.3']);
-            var sutta = results[0].sutta;
-            should(sutta.sutta_uid).equal('sn12.3');
-            if (sutta.author_uid === 'sabbamitta') {
-                should.deepEqual(results.map(r=>r.author_uid), [
-                    'sabbamitta']);
-                should.deepEqual(results.map(r=>r.suttaplex.acronym), [
-                    'SN 12.3']);
-                should(results[0].quote.de).match(/3. Übung /);
-                should(sutta.author_uid).equal('sabbamitta');
-                should.deepEqual(sutta.segments[0],{
-                    matched: true,
-                    de: 'Verbundene Lehrreden 12',
-                    en: 'Linked Discourses 12 ',
-                    pli: 'Saṁyutta Nikāya 12 ',
-                    scid: 'sn12.3:0.1',
-                });
-                should(results[0].nSegments).equal(19);
-                var sections = sutta.sections;
-                should.deepEqual(sections[0].segments[0],{
-                    matched: true,
-                    de: 'Verbundene Lehrreden 12',
-                    en: 'Linked Discourses 12 ',
-                    pli: 'Saṁyutta Nikāya 12 ',
-                    scid: 'sn12.3:0.1',
-                });
-                should(sections.length).equal(2);
-                should.deepEqual(sections.map(s => s.segments.length), 
-                    [3, 16,]);
-            } else { // legacy
-                should(sutta.author_uid).equal('geiger');
-                should(results[0].nSegments).equal(9);
-            }
-
-            done(); 
-        } catch(e) {done(e);} })();
+            should(sections.length).equal(2);
+            should.deepEqual(sections.map(s => s.segments.length), 
+                [3, 16,]);
+        } else { // legacy
+            should(sutta.author_uid).equal('geiger');
+            should(results[0].nSegments).equal(9);
+        }
     });
-    it("loadSutta(...) returns scv-bilara sutta", function(done) {
-        (async function() { try {
-            var voice = Voice.createVoice('Amy');
-            var suttaCentralApi = await new SuttaCentralApi().initialize();
-            this.suttaFactory = new SuttaFactory({
-                suttaCentralApi,
-                autoSection: true,
-            });
-            var store = await new SuttaStore({
-                suttaCentralApi,
-                suttaFactory,
-                voice,
-            }).initialize();
-            var sutta = await store.loadSutta({
-                scid: 'an1.2/de/sabbamitta',
-            });
-            should(sutta).properties({
-                author: 'Anagarika Sabbamitta',
-                sutta_uid: 'an1.1-10',
-                lang: 'de',
-            });
-            done(); 
-        } catch(e) {done(e);} })();
+    it("loadSutta(...) returns scv-bilara sutta", async()=>{
+        var voice = Voice.createVoice('Amy');
+        var scApi = await new ScApi().initialize();
+        var suttaFactory = new SuttaFactory({
+            scApi,
+            autoSection: true,
+        });
+        var store = await new SuttaStore({
+            scApi,
+            suttaFactory,
+            voice,
+        }).initialize();
+        var sutta = await store.loadSutta({
+            scid: 'an1.2/de/sabbamitta',
+        });
+        should(sutta).properties({
+            author: 'Anagarika Sabbamitta',
+            sutta_uid: 'an1.1-10',
+            lang: 'de',
+        });
     });
 
 })

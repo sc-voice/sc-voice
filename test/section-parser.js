@@ -12,6 +12,7 @@
         SuttaStore,
         Words,
     } = require('../index');
+    const { logger } = require('log-instance');
     this.timeout(10*1000);
 
     var segments = [{ // 0
@@ -258,25 +259,21 @@
         } catch(e) { done(e); } })();
     });
 
-    it("parseExpandableSection(segments) parses mn3 (1)", done=>{
-        (async function() { try {
-            await suttaStore.initialize();
-            var sutta = await suttaStore.loadSutta('mn2');
-            var parser = new SectionParser();
-            var section = parser
-                .parseExpandableSection(sutta.segments.slice(0));
+    it("parseExpandableSection(segments) parses mn3 (1)", async()=>{
+        await suttaStore.initialize();
+        var sutta = await suttaStore.loadSutta('mn2');
+        var parser = new SectionParser();
+        var section = parser
+            .parseExpandableSection(sutta.segments.slice(0));
 
-            should.deepEqual(section.values.slice(15,20), 
-                MN2_VALUES.slice(15,20));
-            should(section.segments.length).equal(12);
-            should(section.segments[0].scid).equal('mn2:12.0');
-            should(section.segments[section.segments.length-1].scid)
-                .equal('mn2:12.11');
-            should(section.prefix).match(/Reflecting properly, /);
-            should.deepEqual(section.template.map(seg => seg.scid), 
-                [ 'mn2:12.2', 'mn2:12.3']);
-
-            done();
-        } catch(e) { done(e); } })();
+        should.deepEqual(section.values.slice(15,20), 
+            MN2_VALUES.slice(15,20));
+        should(section.segments.length).equal(12);
+        should(section.segments[0].scid).equal('mn2:12.0');
+        should(section.segments[section.segments.length-1].scid)
+            .equal('mn2:12.11');
+        should(section.prefix).match(/Reflecting properly, /);
+        should.deepEqual(section.template.map(seg => seg.scid), 
+            [ 'mn2:12.2', 'mn2:12.3']);
     });
 })

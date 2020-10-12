@@ -3,15 +3,13 @@
     const fs = require('fs');
     const path = require('path');
     const tmp = require('tmp');
-    const { logger } = require('rest-bundle');
+    const { logger } = require('log-instance');
     const {
         Playlist,
         SCAudio,
         Section,
         SoundStore,
         Sutta,
-        SuttaCentralApi,
-        SuttaCentralId,
         SuttaFactory,
         SuttaStore,
         Voice,
@@ -30,9 +28,11 @@
             reader: 'sujato',
             author: 'sujato',
             language: 'en',
-            urlRaw: `https://raw.githubusercontent.com/sujato/sc-audio/master/flac`,
+            urlRaw: 
+                `https://raw.githubusercontent.com/sujato/sc-audio/master/flac`,
             urlMap: `https://${SCAudio.SC_OPUS_STORE}.sgp1.digitaloceanspaces.com`,
-            urlSegments: `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
+            urlSegments: 
+                `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`,
             extSeg: '.webm',
             extRaw: '.flac',
             downloadDir: path.join(LOCAL, 'sc-audio'),
@@ -331,22 +331,20 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("cacheSuttaAudio(opts) populates cache with segment audio", function(done) {
-        (async function() { try {
-            var sca = SCA;
-            var suid = 'sn1.09';
-            var opts = {
-                suid,
-                suttaStore: SuttaStore.suttaStore,
-                soundStore,
-            };
-            await SuttaStore.suttaStore.initialize();
-            var res = await sca.cacheSuttaAudio(opts);
-            should(res).properties({
-                suid,
-            });
-            done();
-        } catch(e) {done(e);} })();
+    it("cacheSuttaAudio(opts) populates cache with segment audio", async()=>{
+        var sca = SCA;
+        var suid = 'sn1.09';
+        var opts = {
+            suid,
+            suttaStore: SuttaStore.suttaStore,
+            soundStore,
+        };
+        await new Promise(r=>setTimeout(()=>r(),500)); // test initialize
+        await SuttaStore.suttaStore.initialize();
+        var res = await sca.cacheSuttaAudio(opts);
+        should(res).properties({
+            suid,
+        });
     });
 });
 

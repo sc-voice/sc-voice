@@ -3,7 +3,8 @@
     const fs = require('fs');
     const path = require('path');
     const tmp = require('tmp');
-    const { logger } = require('rest-bundle');
+    const { logger, } = require('log-instance');
+    logger.logLevel = 'error';
     const {
         S3Bucket,
     } = require("../index");

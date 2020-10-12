@@ -14,8 +14,10 @@
     const Sutta = require('./sutta');
     const Task = require('./task');
     const SuttaDuration = require('./sutta-duration');
-    const SuttaCentralApi = require('./sutta-central-api');
-    const { SuttaCentralId } = require('suttacentral-api');
+    const { 
+        ScApi,
+        SuttaCentralId,
+    } = require('suttacentral-api');
     const SuttaFactory = require('./sutta-factory');
     const Words = require('./words');
     const ROOT = path.join(__dirname, '..', '..', 'local', 'suttas');
@@ -62,10 +64,9 @@
         constructor(opts={}) {
             var that = this;
             (opts.logger || logger).logInstance(this, opts);
-            this.suttaCentralApi = opts.suttaCentralApi || 
-                new SuttaCentralApi();
+            this.scApi = opts.scApi || new ScApi();
             this.suttaFactory = opts.suttaFactory || new SuttaFactory({
-                suttaCentralApi: this.suttaCentralApi,
+                scApi: this.scApi,
                 autoSection: true,
                 suttaLoader: scid => that.loadBilaraSutta(scid),
             });
@@ -299,7 +300,7 @@
             return new Promise((resolve,reject) => {
                 exec(cmd, opts, (err,stdout,stderr) => {
                     if (err) {
-                        logger.error(stderr);
+                        logger.warn(stderr);
                         reject(err);
                     } else {
                         resolve(stdout && stdout.trim().split('\n') || []);
@@ -629,63 +630,63 @@
             }) || [];
         }
 
-        suttaSearchResults(args) {
+        async suttaSearchResults(args) { try {
             var {
                 suttaRefs,
                 lang,
                 maxResults,
             } = args;
-            var that = this;
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var results = [];
-                    var iEnd = Math.min(maxResults,suttaRefs.length);
-                    for (var i = 0; i < iEnd; i++) {
-                        var ref = suttaRefs[i];
-                        var refParts = ref.split('/');
-                        var uid = refParts[0];
-                        var refLang = refParts[1] || lang;
-                        var refTranslator = refParts[2];
-                        if (refTranslator == null) {
-                            var localPath = suttaPaths[that.root]
-                                .filter(sp => sp.indexOf(uid) >= 0)[0];
-                            var suttaPath = path.join(that.root, localPath);
-                            var spParts = suttaPath.split('/');
-                            refTranslator = spParts[spParts.length-2];
-                        }
-                        var collection_id = uid.replace(/[-0-9.:]*$/,'');
-                        var sutta = await that.suttaFactory.loadSutta({
-                            scid: uid,
-                            translator: refTranslator,
-                            language: refLang,
-                            expand: true,
-                        });
-                        var stats = that.suttaDuration.measure(sutta);
-                        var suttaplex = sutta.suttaplex;
-                        var nSegments = sutta.segments.length;
-                        var translation = sutta.translation;
-                        var quote = sutta.segments[1];
-                        results.push({
-                            count: 1,
-                            uid: translation.uid,
-                            author: translation.author,
-                            author_short: translation.author_short,
-                            author_uid: translation.author_uid,
-                            author_blurb: translation.author_blurb,
-                            lang,
-                            stats,
-                            nSegments,
-                            title: translation.title,
-                            collection_id,
-                            suttaplex,
-                            quote: sutta.segments[1],
-                            sutta,
-                        });
-                    }
-                    resolve(results);
-                } catch(e) { reject(e); } })();
-            });
-        }
+            var results = [];
+            var iEnd = Math.min(maxResults,suttaRefs.length);
+            for (var i = 0; i < iEnd; i++) {
+                var ref = suttaRefs[i];
+                var refParts = ref.split('/');
+                var uid = refParts[0];
+                var refLang = refParts[1] || lang;
+                var refTranslator = refParts[2];
+                if (refTranslator == null && refLang === 'en') {
+                    var localPath = suttaPaths[this.root]
+                        .filter(sp => sp.indexOf(uid) >= 0)[0];
+                    var suttaPath = path.join(this.root, localPath);
+                    var spParts = suttaPath.split('/');
+                    refTranslator = spParts[spParts.length-2];
+                    console.log(`dbg refTranslator`, localPath, refTranslator);
+                }
+                var collection_id = uid.replace(/[-0-9.:]*$/,'');
+                var sutta = await this.suttaFactory.loadSutta({
+                    scid: uid,
+                    translator: refTranslator,
+                    language: refLang,
+                    expand: true,
+                });
+                var stats = this.suttaDuration.measure(sutta);
+                var suttaplex = sutta.suttaplex;
+                var nSegments = sutta.segments.length;
+                var translation = sutta.translation;
+                var quote = sutta.segments[1];
+                results.push({
+                    count: 1,
+                    uid: translation.uid,
+                    author: translation.author,
+                    author_short: translation.author_short,
+                    author_uid: translation.author_uid,
+                    author_blurb: translation.author_blurb,
+                    lang,
+                    stats,
+                    nSegments,
+                    title: translation.title,
+                    collection_id,
+                    suttaplex,
+                    quote: sutta.segments[1],
+                    sutta,
+                });
+            }
+            return results;
+        } catch(e) { 
+            this.warn(`suttaSearchResults()`, JSON.stringify(args), 
+                e.message);
+            throw e;
+        }}
 
         voiceResults(grepSearchResults, lang) {
             var voice = this.voice;
@@ -763,7 +764,7 @@
                     }
                     resolve(playlist);
                 } catch(e) {
-                    logger.error(e.stack);
+                    logger.warn(e.stack);
                     reject(e);
                 } })();
             });
@@ -805,7 +806,7 @@
             return new Promise(pbody);
         }
 
-        loadBilaraSutta(opts) {
+        async loadBilaraSutta(opts) { try {
             if (typeof opts === 'string') {
                 opts = {
                     scid: opts,
@@ -819,125 +820,124 @@
                 expand,
                 matchHighlight,
             } = opts;
-            var that = this;
             var lang = langTrans || language || scid.split('/')[1] || 'en';
-            var pbody = (resolve, reject)=>{(async function(){try{
-                var pattern = `${scid}/${language}/${translator}`;
-                var findOpts = {
-                    pattern,
-                    lang,
-                    showMatchesOnly: false,
+            var pattern = translator
+                ? `${scid}/${lang}/${translator}`
+                : `${scid}/${lang}`;
+            var findOpts = {
+                pattern,
+                lang,
+                showMatchesOnly: false,
+                matchHighlight,
+            }
+            var bdres = await this.seeker.find(findOpts);
+            var mld = bdres.mlDocs[0];
+            if (mld == null) {
+                return null;
+            }
+            var mldRes = await this.mldResult(mld, lang);
+            return mldRes.sutta;
+        } catch(e) {
+            this.warn(`loadBilaraSutta(${JSON.stringify(opts)})`,
+                e.message);
+            throw e;
+        }}
+
+        async loadSutta(opts) { try {
+            var sutta = await this.loadBilaraSutta(opts);
+            if (!sutta) {
+                var {
+                    scid,
+                    language,
+                    langTrans,
+                    translator,
+                    expand,
                     matchHighlight,
-                }
-                var bdres = await that.seeker.find(findOpts);
-                var mld = bdres.mlDocs[0];
-                if (mld == null) {
-                    resolve(null);
-                }
-                var mldRes = await that.mldResult(mld, lang);
-                resolve(mldRes.sutta);
-            }catch(e){reject(e);}})()};
-            return new Promise(pbody);
-        }
+                } = opts;
+                var suttaRef = `${scid}/${language}/${translator}`;
+                this.log(`loadSutta(${suttaRef}) legacy `);
+                sutta = await this.suttaFactory.loadSutta({
+                    scid,
+                    translator,
+                    language,
+                });
+            }
+            return sutta;
+        } catch(e) {
+            this.warn(e);
+            throw e;
+        }}
 
-        loadSutta(opts) {
-            var that = this;
-            var pbody = (resolve, reject) => (async function(){try{
-                var sutta = await that.loadBilaraSutta(opts);
-                if (!sutta) {
-                    var {
-                        scid,
-                        language,
-                        langTrans,
-                        translator,
-                        expand,
-                        matchHighlight,
-                    } = opts;
-                    var suttaRef = `${scid}/${language}/${translator}`;
-                    that.log(`loadSutta(${suttaRef}) legacy `);
-                    sutta = await that.suttaFactory.loadSutta({
-                        scid,
-                        translator,
-                        language,
-                    });
-                }
-                resolve(sutta);
-            } catch(e) {reject(e);}})();
-            return new Promise(pbody);
-        }
-
-        mldResult(mld, lang) {
+        async mldResult(mld, lang) { try {
             if (mld == null) {
                 throw new Error(`Expected MLDoc`);
             }
             var {
-                suttaCentralApi,
+                scApi,
                 suttaFactory,
                 bilaraData: bd,
             } = this;
-            var that = this;
-            var pbody = (resolve, reject) => {(async function() { try {
-                var {
-                    suid: sutta_uid,
-                    translations,
-                } = mld;
-                lang = lang || mld.lang || 'en';
-                var trans = translations.filter(t => t.lang === lang)[0] ||
-                    translations[0];
-                var author_uid = trans.author_uid;
-                var suttaplex = await suttaCentralApi
-                    .loadSuttaplexJson(sutta_uid, lang, author_uid);
-                var authorInfo = bd.authorInfo(author_uid);
-                var author = authorInfo.name;
-                var segments = mld.segments();
-                var titles = mld.titles();
-                var translation = {
-                    author_uid,
-                    lang,
-                };
-                var sutta = new Sutta({
-                    sutta_uid,
-                    author,
-                    author_uid,
-                    lang,
-                    titles,
-                    support: true,
-                    suttaplex,
-                    segments,
-                    translation,
-                });
-                var sectSutta = suttaFactory.sectionSutta(sutta);
-                var quote = // prefer non-title quotes
-                    segments.filter((s,i)=>s.matched && i > 1)[0] ||
-                    segments[0];
-                var blurb = await that.bilaraData.readBlurb({
-                    suid: sutta_uid,
-                    lang,
-                });
-                sectSutta.blurb = blurb;
-                resolve({
-                    count: mld.score,
-                    uid: sutta_uid,
-                    lang,
-                    author,
-                    author_short: author_uid.charAt(0).toUpperCase() 
-                        + author_uid.slice(1),
-                    author_uid: author_uid,
-                    author_blurb: authorInfo.blurb,
-                    nSegments: segments.length,
-                    title: titles.slice(1).join(' \u2022 '),
-                    collection_id: trans.collection,
-                    quote,
-                    suttaplex,
-                    sutta: sectSutta,
-                    stats: that.suttaDuration.measure(sutta),
-                });
-            } catch(e) {reject(e);}})()};
-            return new Promise(pbody);
-        }
+            var {
+                suid: sutta_uid,
+                translations,
+            } = mld;
+            lang = lang || mld.lang || 'en';
+            var trans = translations.filter(t => t.lang === lang)[0] ||
+                translations[0];
+            var author_uid = trans.author_uid;
+            var suttaplex = await scApi
+                .loadSuttaplexJson(sutta_uid, lang, author_uid);
+            var authorInfo = bd.authorInfo(author_uid);
+            var author = authorInfo && authorInfo.name || author_uid;
+            var segments = mld.segments();
+            var titles = mld.titles();
+            var translation = {
+                author_uid,
+                lang,
+            };
+            var sutta = new Sutta({
+                sutta_uid,
+                author,
+                author_uid,
+                lang,
+                titles,
+                support: true,
+                suttaplex,
+                segments,
+                translation,
+            });
+            var sectSutta = suttaFactory.sectionSutta(sutta);
+            var quote = // prefer non-title quotes
+                segments.filter((s,i)=>s.matched && i > 1)[0] ||
+                segments[0];
+            var blurb = await this.bilaraData.readBlurb({
+                suid: sutta_uid,
+                lang,
+            });
+            sectSutta.blurb = blurb;
+            return {
+                count: mld.score,
+                uid: sutta_uid,
+                lang,
+                author,
+                author_short: author_uid.charAt(0).toUpperCase() 
+                    + author_uid.slice(1),
+                author_uid: author_uid,
+                author_blurb: authorInfo && authorInfo.blurb,
+                nSegments: segments.length,
+                title: titles.slice(1).join(' \u2022 '),
+                collection_id: trans.collection,
+                quote,
+                suttaplex,
+                sutta: sectSutta,
+                stats: this.suttaDuration.measure(sutta),
+            };
+        } catch(e) {
+            this.warn(e);
+            throw e;
+        }}
 
-        search(...args) { 
-            var that = this;
+        async search(...args) { try {
             if (SuttaStore.SEARCH_LEGACY) {
                 return this.searchLegacy(...args);
             }
@@ -954,46 +954,45 @@
             var pattern = SuttaStore.sanitizePattern(opts.pattern);
             var lang = opts.language || 'en';
             var maxDoc = opts.maxResults==null 
-                ? that.maxResults : opts.maxResults;
+                ? this.maxResults : opts.maxResults;
             var maxDoc = Number(maxDoc);
             if (isNaN(maxDoc)) {
                 throw new Error("search() maxResults must be a number");
             }
-            var pbody = (resolve, reject) => {(async function() { try {
-                var bdres;
-                var matchHighlight = SuttaStore.isUidPattern(pattern)
-                    ? false
-                    : '<span class="scv-matched">$&</span>';
-                var maxGrepResults = Math.max(50, maxDoc*3);
-                var findOpts = {
-                    pattern,
-                    lang,
-                    maxDoc, // user max documents
-                    maxResults: maxGrepResults,
-                    showMatchesOnly: false,
-                    matchHighlight,
-                }
-                bdres = await that.seeker.find(findOpts);
-                bdres.results = [];
-                for (var i = 0; i < bdres.mlDocs.length; i++) {
-                    var mld = bdres.mlDocs[i];
-                    var mldRes = await that.mldResult(mld, lang);
-                    bdres.results.push(mldRes);
-                }
-                if ((!bdres || bdres.mlDocs.length === 0)) {
-                    var resLegacy = await 
-                        that.searchLegacy.apply(that, args);
-                    resolve(resLegacy);
-                    return;
-                }
-                resolve(bdres);
-            } catch(e) {reject(e);}})()};
-            return new Promise(pbody);
-        }
+            var bdres;
+            var matchHighlight = SuttaStore.isUidPattern(pattern)
+                ? false
+                : '<span class="scv-matched">$&</span>';
+            var maxGrepResults = Math.max(50, maxDoc*3);
+            var findOpts = {
+                pattern,
+                lang,
+                maxDoc, // user max documents
+                maxResults: maxGrepResults,
+                showMatchesOnly: false,
+                matchHighlight,
+            }
+            console.log(`dbg findOpts`, findOpts);
+            bdres = await this.seeker.find(findOpts);
+            bdres.results = [];
+            for (var i = 0; i < bdres.mlDocs.length; i++) {
+                var mld = bdres.mlDocs[i];
+                var mldRes = await this.mldResult(mld, lang);
+                bdres.results.push(mldRes);
+            }
+            if ((!bdres || bdres.mlDocs.length === 0)) {
+                var resLegacy = await 
+                    this.searchLegacy.apply(this, args);
+                return resLegacy;
+            }
+            return bdres;
+        } catch(e) {
+            this.warn(`search()`, JSON.stringify(args), e.message);
+            throw e;
+        }}
 
-        searchLegacy(...args) { 
+        async searchLegacy(...args) { try { 
             // implementation deprecated. should use findSuttas
-            var that = this;
             var opts = args[0];
             if (typeof opts === 'string') {
                 opts = {
@@ -1004,66 +1003,66 @@
             var searchMetadata = opts.searchMetadata == null 
                 ? false : opts.searchMetadata+'' == 'true';
             var pattern = SuttaStore.sanitizePattern(opts.pattern);
-            that.log(`searchLegacy ${pattern}`);
+            this.log(`searchLegacy ${pattern}`);
             var language = opts.language || opts.lang || 'en';
             var maxResults = opts.maxResults==null 
-                ? that.maxResults : opts.maxResults;
+                ? this.maxResults : opts.maxResults;
             var maxResults = Number(maxResults);
             var sortLines = opts.sortLines;
             if (isNaN(maxResults)) {
                 throw new Error(
-                    "SuttaStore.searchLegacy() maxResults must be a number");
+                    "searchLegacy() maxResults must be a number");
             }
-            var pbody = (resolve, reject) => {(async function() { try {
-                if (SuttaStore.isUidPattern(pattern)) {
-                    var method = 'sutta_uid';
-                    that.log(`searchLegacy(${pattern})`+
-                        `lang:${language} `+
-                        `maxResults:${maxResults}`);
-                    var uids = that.suttaList(pattern)
-                        .slice(0, maxResults);
-                    var results = await that.suttaSearchResults({
-                        suttaRefs: uids, 
-                        lang: language,
-                        maxResults,
-                    });
-                } else {
-                    var method = 'phrase';
-                    var lines = [];
-                    pattern = SuttaStore.normalizePattern(pattern);
-                    var searchOpts = {
-                        pattern, 
-                        maxResults, 
-                        language, 
-                        searchMetadata
-                    };
-
-                    if (!lines.length && !/^[a-z]+$/iu.test(pattern)) {
-                        lines = await that.phraseSearch(searchOpts);
-                    }
-                    var resultPattern = pattern;
-                    if (!lines.length) {
-                        var method = 'keywords';
-                        var data = await that.keywordSearch(searchOpts);
-                        lines = data.lines;
-                        resultPattern = data.resultPattern;
-                    }
-                    var grepSearchResults = that.grepSearchResults({
-                        lines,
-                        sortLines,
-                        pattern: resultPattern,
-                    });
-                    var results = await that
-                        .voiceResults(grepSearchResults, language);
-                }
-                resolve({
-                    method: `${method}-legacy`,
-                    results,
-                    resultPattern,
+            if (SuttaStore.isUidPattern(pattern)) {
+                var method = 'sutta_uid';
+                this.log(`searchLegacy(${pattern})`+
+                    `lang:${language} `+
+                    `maxResults:${maxResults}`);
+                var uids = this.suttaList(pattern)
+                    .slice(0, maxResults);
+                var results = await this.suttaSearchResults({
+                    suttaRefs: uids, 
+                    lang: language,
+                    maxResults,
                 });
-            } catch(e) {reject(e);} })()};
-            return new Promise(pbody);
-        }
+            } else {
+                var method = 'phrase';
+                var lines = [];
+                pattern = SuttaStore.normalizePattern(pattern);
+                var searchOpts = {
+                    pattern, 
+                    maxResults, 
+                    language, 
+                    searchMetadata
+                };
+
+                if (!lines.length && !/^[a-z]+$/iu.test(pattern)) {
+                    lines = await this.phraseSearch(searchOpts);
+                }
+                var resultPattern = pattern;
+                if (!lines.length) {
+                    var method = 'keywords';
+                    var data = await this.keywordSearch(searchOpts);
+                    lines = data.lines;
+                    resultPattern = data.resultPattern;
+                }
+                var grepSearchResults = this.grepSearchResults({
+                    lines,
+                    sortLines,
+                    pattern: resultPattern,
+                });
+                var results = await this
+                    .voiceResults(grepSearchResults, language);
+            }
+            return {
+                method: `${method}-legacy`,
+                results,
+                resultPattern,
+            };
+        } catch(e) {
+            this.warn(`searchLegacy()`, JSON.stringify(args), e.message);
+            throw e;
+        }}
 
         nikayaSuttaIds(nikaya, language='en', author='sujato') {
             var that = this;

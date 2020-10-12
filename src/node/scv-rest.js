@@ -29,8 +29,10 @@
     const SCAudio = require('./sc-audio');
     const Section = require('./section');
     const SoundStore = require('./sound-store');
-    const SuttaCentralApi = require('./sutta-central-api');
-    const { SuttaCentralId } = require('suttacentral-api');
+    const { 
+        ScApi,
+        SuttaCentralId,
+    } = require('suttacentral-api');
     const SuttaFactory = require('./sutta-factory');
     const Sutta = require('./sutta');
     const SuttaStore = require('./sutta-store');
@@ -77,9 +79,11 @@
                 scAudio,
                 soundStore,
             });
-            this.suttaCentralApi = opts.suttaCentralApi || new SuttaCentralApi();
+            this.scApi = opts.scApi || new ScApi({
+                logger: this,
+            });
             this.suttaFactory = new SuttaFactory({
-                suttaCentralApi: this.suttaCentralApi,
+                scApi: this.scApi,
                 autoSection: true,
             });
             this.vsmFactoryTask = new Task({
@@ -94,7 +98,7 @@
             this.mdAria = opts.mdAria || new MdAria();
             this.jwtExpires = opts.jwtExpires || '1h';
             this.suttaStore = new SuttaStore({
-                suttaCentralApi: this.suttaCentralApi,
+                scApi: this.scApi,
                 suttaFactory: this.suttaFactory,
                 voice: null,
             });
@@ -183,68 +187,63 @@
             });
         }
 
-        initialize() {
-            var that = this;
-            that.info(`ScvRest initialize() BEGIN`);
+        async initialize() { try {
+            this.info(`ScvRest initialize() BEGIN`);
             var superInit = super.initialize;
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    await that.suttaCentralApi.initialize();
-                    await that.suttaFactory.initialize();
-                    await that.suttaStore.initialize();
-                    that.voices = Voice.loadVoices();
-                    var result = await superInit.call(that);
-                    that.info(`ScvRest initialize() COMPLETED`);
-                    resolve(result);
-                } catch(e) {
-                    that.error(e.stack);
-                    reject(e);
-                }})();
-            });
-        }
+            await this.scApi.initialize();
+            await this.suttaFactory.initialize();
+            await this.suttaStore.initialize();
+            this.voices = Voice.loadVoices();
+            var result = await superInit.call(this);
+            this.info(`ScvRest initialize() COMPLETED`);
+            return result;
+        } catch(e) {
+            this.warn(e);
+            throw e;
+        }}
 
-        getAudio(req, res, next) {
-            return new Promise((resolve, reject) => { try {
-                var guid = req.params.guid;
-                var {   
-                    sutta_uid,
-                    lang,
-                    translator,
-                    voice,
-                } = req.params;
-                var volume = !sutta_uid || sutta_uid === 'word' 
-                    ? 'play-word'
-                    : SoundStore.suttaVolumeName(sutta_uid, 
-                        lang, translator, voice);
-                var soundOpts = { volume };
-                var filePath = this.soundStore.guidPath(guid, soundOpts);
-                var filename = req.params.filename;
-                var data = fs.readFileSync(filePath);
-                res.set('accept-ranges', 'bytes');
-                res.set('do_stream', 'true');
-                filename && res.set('Content-disposition', 
-                    'attachment; filename=' + filename);
+        async getAudio(req, res, next) { try {
+            var guid = req.params.guid;
+            var {   
+                sutta_uid,
+                lang,
+                translator,
+                voice,
+            } = req.params;
+            var volume = !sutta_uid || sutta_uid === 'word' 
+                ? 'play-word'
+                : SoundStore.suttaVolumeName(sutta_uid, 
+                    lang, translator, voice);
+            var soundOpts = { volume };
+            var filePath = this.soundStore.guidPath(guid, soundOpts);
+            var filename = req.params.filename;
+            var data = fs.readFileSync(filePath);
+            res.set('accept-ranges', 'bytes');
+            res.set('do_stream', 'true');
+            filename && res.set('Content-disposition', 
+                'attachment; filename=' + filename);
 
-                resolve(data);
-            } catch (e) { reject(e) } });
-        }
+            return data;
+        } catch (e) { 
+            this.warn(e);
+            throw e;
+        }}
 
-        getAudioInfo(req, res, next) {
-            var that = this;
-            var pbody = (resolve, reject) => { try {
-                var {   
-                    guid,
-                    volume,
-                } = req.params;
-                that.info([
-                    `getAudioInfo()`,
-                    js.simpleString(req.params),
-                ].join(' '));
-                var info = this.soundStore.soundInfo({guid, volume});
-                resolve(info);
-            } catch (e) { reject(e) } };
-            return new Promise(pbody);
-        }
+        async getAudioInfo(req, res, next) { try {
+            var {   
+                guid,
+                volume,
+            } = req.params;
+            this.info([
+                `getAudioInfo()`,
+                js.simpleString(req.params),
+            ].join(' '));
+            var info = this.soundStore.soundInfo({guid, volume});
+            return info;
+        } catch (e) {
+            this.warn(e);
+            throw e;
+        }}
 
         suttaParms(req) {
             var parms = Object.assign({
@@ -264,95 +263,91 @@
             return parms;
         }
 
-        reciteSection(req, res, next, usage) {
-            var that = this;
-            var { sutta_uid, language, translator, iSection } = that.suttaParms(req);
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var sutta = await that.suttaFactory.loadSutta({
-                        scid: sutta_uid,
-                        translator,
-                        language,
-                        expand: true,
-                    });
-                    if (iSection < 0 || sutta.sections.length <= iSection) {
-                        var suttaRef = `${sutta_uid}/${language}/${translator}`;
-                        throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
-                    }
-                    var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
-                    var text = `${lines.join('\n')}\n`;
-                    var voice = Voice.createVoice({
-                        language,
-                        usage,
-                        soundStore: that.soundStore,
-                        localeIPA: "pli",
-                        audioFormat: that.soundStore.audioFormat,
-                        audioSuffix: that.soundStore.audioSuffix,
-                    });
-                    var result = await voice.speak(text, {
-                        cache: true, // false: use TTS web service for every request
-                        usage,
-                    });
-                    resolve({
-                        usage,
-                        name: voice.name,
-                        sutta_uid,
-                        language,
-                        translator,
-                        section:iSection,
-                        guid: result.signature.guid,
-                    });
-                } catch(e) { reject(e); } })();
+        async reciteSection(req, res, next, usage) { try {
+            var { sutta_uid, language, translator, iSection } = this.suttaParms(req);
+            var sutta = await this.suttaFactory.loadSutta({
+                scid: sutta_uid,
+                translator,
+                language,
+                expand: true,
             });
-        }
+            if (iSection < 0 || sutta.sections.length <= iSection) {
+                var suttaRef = `${sutta_uid}/${language}/${translator}`;
+                throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
+            }
+            var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
+            var text = `${lines.join('\n')}\n`;
+            var voice = Voice.createVoice({
+                language,
+                usage,
+                soundStore: this.soundStore,
+                localeIPA: "pli",
+                audioFormat: this.soundStore.audioFormat,
+                audioSuffix: this.soundStore.audioSuffix,
+            });
+            var result = await voice.speak(text, {
+                cache: true, // false: use TTS web service for every request
+                usage,
+            });
+            return {
+                usage,
+                name: voice.name,
+                sutta_uid,
+                language,
+                translator,
+                section:iSection,
+                guid: result.signature.guid,
+            }
+        } catch(e) { 
+            this.warn(e);
+            throw e;
+        }}
 
-        synthesizeSutta(sutta_uid, language, translator, usage) {
-            var that = this;
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var sutta = await that.suttaFactory.loadSutta({
-                        scid: sutta_uid,
-                        translator,
-                        language,
-                        expand: true,
-                    });
-                    var preamble = [
-                        `suttacentral voice recording\n`,
-                        `{${sutta.suttaCode}}\n`,
-                    ].join('');
-                    var lines = Sutta.textOfSegments(sutta.segments);
-                    var text = `${preamble}\n${lines.join('\n')}\n`;
-                    var voice = Voice.createVoice({
-                        language,
-                        usage,
-                        soundStore: that.soundStore,
-                        localeIPA: "pli",
-                        audioFormat: that.soundStore.audioFormat,
-                        audioSuffix: that.soundStore.audioSuffix,
-                    });
-                    var msStart = Date.now();
-                    if (lines.length > 750) {
-                        that.info(`synthesizeSutta()`+
-                            `lines:${lines.length} text:${text.length*2}B`);
-                    }
-                    var result = await voice.speak(text, {
-                        cache: true, // minimize TTS web service use
-                        usage,
-                    });
-                    that.info(
-                        `synthesizeSutta() ms:${Date.now()-msStart} `+
-                        `${text.substring(0,50)}`);
-                    resolve({
-                        usage,
-                        name: voice.name,
-                        sutta_uid,
-                        language,
-                        translator,
-                        guid: result.signature.guid,
-                    });
-                } catch(e) { reject(e); } })();
+        async synthesizeSutta(sutta_uid, language, translator, usage) { try {
+            var sutta = await this.suttaFactory.loadSutta({
+                scid: sutta_uid,
+                translator,
+                language,
+                expand: true,
             });
-        }
+            var preamble = [
+                `suttacentral voice recording\n`,
+                `{${sutta.suttaCode}}\n`,
+            ].join('');
+            var lines = Sutta.textOfSegments(sutta.segments);
+            var text = `${preamble}\n${lines.join('\n')}\n`;
+            var voice = Voice.createVoice({
+                language,
+                usage,
+                soundStore: this.soundStore,
+                localeIPA: "pli",
+                audioFormat: this.soundStore.audioFormat,
+                audioSuffix: this.soundStore.audioSuffix,
+            });
+            var msStart = Date.now();
+            if (lines.length > 750) {
+                this.info(`synthesizeSutta()`+
+                    `lines:${lines.length} text:${text.length*2}B`);
+            }
+            var result = await voice.speak(text, {
+                cache: true, // minimize TTS web service use
+                usage,
+            });
+            this.info(
+                `synthesizeSutta() ms:${Date.now()-msStart} `+
+                `${text.substring(0,50)}`);
+            return {
+                usage,
+                name: voice.name,
+                sutta_uid,
+                language,
+                translator,
+                guid: result.signature.guid,
+            };
+        } catch(e) { 
+            this.warn(e);
+            throw e;
+        }}
 
         getReciteSection(req, res, next) {
             var promise =  this.reciteSection(req, res, next, 'recite');
@@ -370,70 +365,70 @@
             return Promise.resolve(this.bilaraData.authors);
         }
 
-        getVoices(req, res, next) {
-            var that = this;
+        async getVoices(req, res, next) { try {
             var { 
                 langTrans,
             } = req.params;
-            var voices = that.voices.slice();
+            var voices = this.voices.slice();
             if (!!langTrans) {
                 voices = voices.filter(v => 
                     v.langTrans === 'pli' || v.langTrans===langTrans);
             }
             voices.sort(Voice.compare);
-            return Promise.resolve(voices);
-        }
+            return voices;
+        } catch (e) {
+            this.warn(e);
+            throw e;
+        }}
 
-        getPlaySection(req, res, next) {
-            var that = this;
+        async getPlaySection(req, res, next) { try {
             var { 
                 sutta_uid, translator, iSection, 
                 vnameRoot, vnameTrans,
                 langTrans,
             } = this.suttaParms(req);
             var suttaRef = `${sutta_uid}/${langTrans}/${translator}`;
-            that.info(
+            this.info(
                 `GET play/section/${suttaRef}/${iSection}/${vnameTrans}`);
             var voiceTrans = Voice.voiceOfName(vnameTrans) || 
                 Voice.voiceOfName('Amy');
             var usage = voiceTrans.usage;
             var voiceRoot = this.voiceFactory.voiceOfName('Aditi');
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var sutta = await that.suttaStore.loadSutta({
-                        scid: sutta_uid,
-                        translator,
-                        language: langTrans,
-                        expand: true,
-                    });
-                    var nSects = sutta && sutta.sections.length || 0;
-                    if (iSection < 0 || nSects <= iSection) {
-                        throw new Error(`Sutta ${suttaRef} `+
-                            `has no section:${iSection}`);
-                    }
-                    var section = sutta.sections[iSection];
-                    var segments = [];
-                    var pali = new Pali();
-                    var sectSegs = section.segments;
-                    for (var iSeg = 0; iSeg < sectSegs.length; iSeg++) {
-                        var segment = Object.assign({}, sectSegs[iSeg]);
-                        segment.audio = {};
-                        segments.push(segment);
-                    }
-                    resolve({
-                        sutta_uid,
-                        language: langTrans,
-                        translator,
-                        title: section.title,
-                        section:iSection,
-                        nSections: sutta.sections.length,
-                        segments,
-                        vnameTrans: voiceTrans.name,
-                        vnameRoot: voiceRoot.name,
-                    });
-                } catch(e) { reject(e); } })();
+            var sutta = await this.suttaStore.loadSutta({
+                scid: sutta_uid,
+                translator,
+                language: langTrans,
+                expand: true,
             });
-        }
+            var nSects = sutta && sutta.sections.length || 0;
+            if (iSection < 0 || nSects <= iSection) {
+                throw new Error(`Sutta ${suttaRef} `+
+                    `has no section:${iSection}`);
+            }
+            var section = sutta.sections[iSection];
+            var segments = [];
+            var pali = new Pali();
+            var sectSegs = section.segments;
+            for (var iSeg = 0; iSeg < sectSegs.length; iSeg++) {
+                var segment = Object.assign({}, sectSegs[iSeg]);
+                segment.audio = {};
+                segments.push(segment);
+            }
+            return {
+                sutta_uid,
+                language: langTrans,
+                translator,
+                title: section.title,
+                section:iSection,
+                nSections: sutta.sections.length,
+                segments,
+                vnameTrans: voiceTrans.name,
+                vnameRoot: voiceRoot.name,
+            };
+        } catch(e) { 
+            this.warn(e);
+            throw e;
+        }}
 
         getPlaySegment(req, res, next) {
             var that = this;
@@ -634,38 +629,35 @@
             });
         }
 
-        getSearch(req, res, next) {
-            var that = this;
+        async getSearch(req, res, next) { try {
             var language = req.params.lang || 'en';
             var pattern = req.params.pattern;
             if (!pattern) {
-                return Promise.reject(new Error(
-                    'Search pattern is required'));
+                throw new Error('Search pattern is required');
             }
             var maxResults = Number(req.query.maxResults || 
-                that.suttaStore.maxResults);
+                this.suttaStore.maxResults);
             if (isNaN(maxResults)) {
-                return Promise.reject(new Error(
-                    'Expected number for maxResults'));
+                throw new Error('Expected number for maxResults');
             }
-            var promise = that.suttaStore.search({
+            var srOpts = {
                 pattern,
                 language,
                 maxResults,
-            });
-            promise.then(sr => {
-                var {
-                    method,
-                    results,
-                    mlDocs,
-                } = sr;
-                that.info([
-                    `GET search(${pattern}) ${language} ${method}`,
-                    `=> ${results.map(r=>r.uid)}`,
-                ].join(' '));
-            });
-            return promise;
-        }
+            };
+            var sr = await this.suttaStore.search(srOpts);
+            var {
+                method,
+                results,
+                mlDocs,
+            } = sr;
+            this.info( `GET search(${pattern}) ${language} ${method}`,
+                `=> ${results.map(r=>r.uid)}`,);
+            return sr;
+        } catch(e) {
+            this.warn(`getSearch(${JSON.stringify(srOpts)})`, e.message);
+            throw e;
+        }}
 
         getDownloadPlaylist(req, res, next) {
             var that = this;
@@ -815,7 +807,7 @@
                         }
                         if (error) {
                             wikiRes.resume(); // consume response data to free up memory
-                            that.error(error.stack);
+                            that.warn(error.stack);
                             reject(error);
                             return;
                         }
@@ -832,15 +824,15 @@
                                     html:html,
                                 });
                             } catch (e) {
-                                that.error(e.stack);
+                                that.warn(e.stack);
                                 reject(e);
                             }
                         });
                     }).on('error', (e) => {
-                        that.error(e.stack);
+                        that.warn(e.stack);
                         reject(e);
                     }).on('timeout', (e) => {
-                        that.error(e);
+                        that.warn(e);
                         wikiReq.abort();
                     });
                 } catch(e) { reject(e); } })();
@@ -1106,8 +1098,8 @@
                     var error = null;
                     exec(cmd, { cwd }, (e, stdout, stderr) => {
                         if (e) {
-                            that.error(`POST reboot: ${cwd} => HTTP500`);
-                            that.error(e.stack);
+                            that.warn(`POST reboot: ${cwd} => HTTP500`);
+                            that.warn(e.stack);
                             error = e;
                         }
                     });
@@ -1134,8 +1126,8 @@
                     var error = null;
                     exec(cmd, { cwd }, (e, stdout, stderr) => {
                         if (e) {
-                            that.error(`POST update-release: ${cwd} => HTTP500`);
-                            that.error(e.stack);
+                            that.warn(`POST update-release: ${cwd} => HTTP500`);
+                            that.warn(e.stack);
                             error = e;
                         } else {
                             error = false;
@@ -1252,7 +1244,7 @@
                         }
                     });
                 } catch(e) {
-                    that.error(e.message);
+                    that.warn(e.message);
                     reject(e);} 
                 })();
             });
@@ -1465,49 +1457,40 @@
             });
         }
 
-        postUpdateBilara(req, res, next) {
-            var that = this;
+        async postUpdateBilara(req, res, next) { try {
             var {
                 token,
                 purge,
             } = req.body || {};
             var {
                 suttaStore,
-            } = that;
+            } = this;
 
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    that.requireAdmin(req, res, "POST update-content");
-                    var date = new Date();
-                    await suttaStore.bilaraData.sync({purge});
-                    var error = null;
-                    resolve({
-                        date,
-                        elapsed: ((Date.now() - date)/1000).toFixed(1),
-                        summary: "Update completed",
-                        error,
-                    });
-                } catch(e) {
-                    that.warn(`postUpdateBilara() failed: ${e.message}`);
-                    reject(e);
-                } })();
-            });
-        }
+            this.requireAdmin(req, res, "POST update-content");
+            var date = new Date();
+            await suttaStore.bilaraData.sync({purge});
+            var error = null;
+            return {
+                date,
+                elapsed: ((Date.now() - date)/1000).toFixed(1),
+                summary: "Update completed",
+                error,
+            };
+        } catch(e) {
+            this.warn(`postUpdateBilara() failed: ${e.message}`);
+            throw e;
+        }}
 
-        getBilara(req, res, next) {
-            var that = this;
+        async getBilara(req, res, next) { try {
             var scid = req.params.scid ;
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    resolve({
-                        message: `Hello World, this is Bilara!`,
-                        scid,
-                    });
-                } catch(e) {
-                    reject(e);} 
-                })();
-            });
-        }
+            return {
+                message: `Hello World, this is Bilara!`,
+                scid,
+            };
+        } catch(e) {
+            this.warn(e);
+            throw e;
+        }}
 
     }
 

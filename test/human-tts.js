@@ -3,7 +3,7 @@
     const fs = require('fs');
     const path = require('path');
     const tmp = require('tmp');
-    const { logger } = require('rest-bundle');
+    const { logger, } = require('log-instance');
     const {
         HumanTts,
         SCAudio,

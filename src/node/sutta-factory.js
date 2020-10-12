@@ -2,12 +2,15 @@
     const fs = require('fs');
     const path = require('path');
     const { Definitions } = require('suttacentral-api');
+    const { logger } = require('log-instance');
     const Words = require('./words');
     const Sutta = require('./sutta');
-    const SuttaCentralApi = require('./sutta-central-api');
     const Section = require('./section');
     const SectionParser = require('./section-parser');
-    const { SuttaCentralId } = require('suttacentral-api');
+    const { 
+        ScApi,
+        SuttaCentralId,
+    } = require('suttacentral-api');
     const RE_ELLIPSIS = new RegExp(`${Words.U_ELLIPSIS}$`);
     const OPTS_EN = {
         prop: 'en',
@@ -92,38 +95,36 @@
 
     class SuttaFactory { 
         constructor(opts={}) {
+            (opts.logger || logger).logInstance(this);
             this.type = this.constructor.name;
             this.lang = opts.lang || 'en';
             this.prop = opts.prop || this.lang;
             this.autoSection = !!opts.autoSection;
             this.reHeader = opts.reHeader || Sutta.RE_HEADER;
-            this.suttaCentralApi = opts.suttaCentralApi;
+            this.scApi = opts.scApi;
             this.suttaLoader = opts.suttaLoader;
             this.plainText = opts.plainText === true || 
                 opts.plainText == null;
         }
 
-        static loadSutta(opts={}) {
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var sf = await new SuttaFactory(opts).initialize();
-                    var sutta = await sf.loadSutta(opts);
-                    resolve(sutta);
-                } catch(e) {reject(e);} })();
-            });
-        }
+        static async loadSutta(opts={}) { try {
+            var sf = await new SuttaFactory(opts).initialize();
+            var sutta = await sf.loadSutta(opts);
+            return sutta;
+        } catch(e) {
+            logger.warn(e);
+            throw e;
+        }}
 
-        initialize() {
-            var that = this;
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    if (that.suttaCentralApi && that.suttaCentralApi.initialized == null) {
-                        await that.suttaCentralApi.initialize();
-                    }
-                    resolve(that);
-                } catch(e) {reject(e);} })();
-            });
-        }
+        async initialize() { try {
+            if (this.scApi && this.scApi.initialized == null) {
+                await this.scApi.initialize();
+            }
+            return this;
+        } catch(e) {
+            logger.warn(e);
+            throw e;
+        }}
 
         stripHtml(sutta, opts = {}) {
             var {
@@ -140,29 +141,27 @@
             return sutta;
         }
 
-        supportedSuttas(){
-            var that = this;
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var files = [];
-                    var suttas = {};
-                    files.forEach(f => {
-                        var flocal = f.split('/sc/')[1];
-                        var ftokens = flocal.split('/');
-                        var collection = ftokens[0];
-                        suttas[collection] = suttas[collection] || [];
-                        var fname = ftokens[ftokens.length - 1];
-                        if (fname !== 'info.po') {
-                            var sutta_uid = fname
-                                .replace('.po','')
-                                .replace(/([^0-9])0+/gum,'$1');
-                            suttas[collection].push(sutta_uid);
-                        }
-                    });
-                    resolve(suttas);
-                } catch(e) {reject(e);} })();
+        async supportedSuttas(){ try {
+            var files = [];
+            var suttas = {};
+            files.forEach(f => {
+                var flocal = f.split('/sc/')[1];
+                var ftokens = flocal.split('/');
+                var collection = ftokens[0];
+                suttas[collection] = suttas[collection] || [];
+                var fname = ftokens[ftokens.length - 1];
+                if (fname !== 'info.po') {
+                    var sutta_uid = fname
+                        .replace('.po','')
+                        .replace(/([^0-9])0+/gum,'$1');
+                    suttas[collection].push(sutta_uid);
+                }
             });
-        }
+            return suttas;
+        } catch(e) {
+            this.warn(e);
+            throw e;
+        }}
 
         sectionSutta(sutta) {
             var lang = sutta.lang || this.lang;
@@ -211,60 +210,70 @@
             return translators;
         }
 
-        loadSutta(opts={}) {
+        async loadSutta(opts={}) { try {
             if (typeof opts === 'string') {
                 opts = {
                     scid: opts,
                 }
             }
-            var that = this;
+            if (opts === null) {
+                throw new Error(`attempt to loadSutta(null)`);
+            }
             var language = opts.language || 'en';
             var autoSection = opts.autoSection == null 
                 ? this.autoSection : opts.autoSection;
             var plainText = opts.plainText == null 
                 ? this.plainText : opts.plainText;
             if (SUPPORTED_LANGUAGES[language] !== true) {
-                return Promise.reject(
-                    new Error(
-                        `Voice does not support language: ${language}`));
+                throw new Error(
+                    `Voice does not support language: ${language}`);
             }
             var translators = this.translators(opts);
             var o = Object.assign({}, opts);
             o.id = o.id || o.scid; // for pootl
  
-            var pbody = (resolve, reject) => (async function() { try {
-                var sutta = null;
-                for (var i = 0; !sutta && i <= translators.length; i++) {
-                    var translator = translators[i];
-                    if (translator == null) {
-                        throw new Error(
-                            `Sutta not found:${JSON.stringify(opts)}`);
-                    }
-                    o.translator = translator;
-                    if (that.suttaLoader) {
-                        sutta = await that.suttaLoader(o);
-                    } 
-                    if (!sutta) {
-                        if (that.suttaCentralApi) {
-                            sutta = await that.suttaCentralApi.loadSutta(o);
-                        } else {
-                            throw new Error(`I miss Pootl`);
+            var sutta = null;
+            for (var i = 0; !sutta && i <= translators.length; i++) {
+                var translator = translators[i];
+                if (translator == null) {
+                    throw new Error(
+                        `Sutta not found:${JSON.stringify(opts)}`);
+                }
+                o.translator = translator;
+                if (this.suttaLoader) {
+                    sutta = await this.suttaLoader(o);
+                } 
+                if (!sutta) {
+                    if (this.scApi) {
+                        let suttaJson = await this.scApi.loadSutta(o);
+                        if (suttaJson){ 
+                            sutta = new Sutta(suttaJson);
                         }
+                        let ref = `${o.id}/${language}/${translator}`;
+                        let msg = `sutta ${ref}} not found`;
+                        let ojson = JSON.stringify(o);
+                        this.warn(`scApi.loadSutta`, ojson, msg);
+                        //throw new Error(msg);
+                    } else {
+                        throw new Error(`I miss Pootl`);
                     }
                 }
-                if (plainText) {
-                    sutta = that.stripHtml(sutta);
-                }
-                if (o.expand && EXPANDABLE_SUTTAS[sutta.sutta_uid]) {
-                    sutta = that.expandSutta(that.parseSutta(sutta))
-                }
-                if (autoSection) {
-                    sutta = that.sectionSutta(sutta);
-                }
-                resolve(sutta);
-            } catch(e) {reject(e);} })();
-            return new Promise(pbody);
-        }
+            }
+            if (plainText) {
+                sutta = this.stripHtml(sutta);
+            }
+            if (o.expand && EXPANDABLE_SUTTAS[sutta.sutta_uid]) {
+                sutta = this.expandSutta(this.parseSutta(sutta))
+            }
+            if (autoSection) {
+                sutta = this.sectionSutta(sutta);
+            }
+            return sutta;
+        } catch(e) {
+            this.warn(`SuttaFactory: loadSutta()`, JSON.stringify(opts), 
+                e.message);
+            throw e;
+        }}
 
         parseSutta(sutta) {
             if (sutta.support && sutta.support.value === 'Legacy') {

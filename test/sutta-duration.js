@@ -3,15 +3,15 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const { logger } = require('rest-bundle');
+    const { logger } = require('log-instance');
+    const { ScApi } = require('suttacentral-api');
     const {
         SuttaDuration,
         Sutta,
-        SuttaCentralApi,
         SuttaFactory,
         SuttaStore,
     } = require("../index");
-    const suttaCentralApi = new SuttaCentralApi();
+    const scApi = new ScApi();
     const TOLERANCE = 33;
     const logLevel = false;
     this.timeout(10*1000);
@@ -48,7 +48,7 @@
     it("measure(sutta, lang) measures thig1.1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -70,7 +70,7 @@
     it("measure(sutta, lang) measures sn2.2", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -92,7 +92,7 @@
     it("measure(sutta, lang) measures thig5.1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -114,7 +114,7 @@
     it("measure(sutta, lang) measures sn1.1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -136,7 +136,7 @@
     it("measure(sutta, lang) measures sn56.21", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -158,7 +158,7 @@
     it("measure(sutta, lang) measures thag9.1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -180,7 +180,7 @@
     it("measure(sutta, lang) measures sn36.11", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -202,7 +202,7 @@
     it("measure(sutta, lang) measures sn42.11", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -224,7 +224,7 @@
     it("measure(sutta, lang) measures an2.1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -246,7 +246,7 @@
     it("measure(sutta, lang) measures sn12.51", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -268,7 +268,7 @@
     it("measure(sutta, lang) measures dn33", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 
@@ -290,7 +290,7 @@
     it("measure(sutta, lang) measures mn1", function(done) {
         (async function() { try {
             var factory = await new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             }).initialize();
             var scd = new SuttaDuration();
 

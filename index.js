@@ -13,7 +13,6 @@ module.exports = {
     SectionParser: require('./src/node/section-parser'),
     Section: require('./src/node/section'),
     SoundStore: require('./src/node/sound-store'),
-    SuttaCentralApi: require('./src/node/sutta-central-api'),
     SuttaDuration: require("./src/node/sutta-duration"),
     SuttaFactory: require("./src/node/sutta-factory"),
     Sutta: require("./src/node/sutta"),

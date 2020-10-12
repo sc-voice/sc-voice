@@ -2,13 +2,15 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const { logger } = require('rest-bundle');
+    const { logger } = require('log-instance');
+    const {
+        ScApi,
+    } = require('suttacentral-api');
     const {
         AbstractTTS,
         Polly,
         SCAudio,
         SoundStore,
-        SuttaCentralApi,
         SuttaFactory,
         Voice,
         VoiceFactory,
@@ -25,23 +27,20 @@
         return ph;
     }
 
-    it("loadSutta() loads an10.2/pt/beisert", function(done) {
-        (async function() { try {
-            var suttaCentralApi = await new SuttaCentralApi().initialize();
-            var factory = await new SuttaFactory({
-                suttaCentralApi,
-            }).initialize();
-            var sutta = await factory.loadSutta({
-                scid: 'an10.2',
-                language: 'pt',
-            });
-            var sections = sutta.sections;
-            should.deepEqual(sections[1].segments[1], {
-                scid: 'an10.2:1.0.2',
-                pt: 'Cetanakaraniya Sutta',
-            });
-            done();
-        } catch(e) { done(e); } })();
+    it("loadSutta() loads an10.2/pt/beisert", async()=>{
+        var scApi = await new ScApi().initialize();
+        var factory = await new SuttaFactory({
+            scApi,
+        }).initialize();
+        var sutta = await factory.loadSutta({
+            scid: 'an10.2',
+            language: 'pt',
+        });
+        var sections = sutta.sections;
+        should.deepEqual(sections[1].segments[1], {
+            scid: 'an10.2:1.0.2',
+            pt: 'Cetanakaraniya Sutta',
+        });
     });
     it("createVoice(voiceName) returns a default voice", function() {
         var voice = Voice.createVoice('ricardo');

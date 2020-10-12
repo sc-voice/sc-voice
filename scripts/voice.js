@@ -12,7 +12,7 @@ const {
 const {
     Voice,
 } = require('../index');
-const { logger } = require('rest-bundle');
+const { logger, } = require('log-instance');
 
 logger.level = 'warn';
 var argv = process.argv;

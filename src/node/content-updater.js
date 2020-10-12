@@ -6,7 +6,6 @@
     } = require('child_process');
     const logger = require('log-instance').LogInstance.singleton;
     const Words = require('./words');
-    const SuttaCentralApi = require('./sutta-central-api');
     const SuttaFactory = require('./sutta-factory');
     const SuttaStore = require('./sutta-store');
     const Task = require('./task');

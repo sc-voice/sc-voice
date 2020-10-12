@@ -2,13 +2,15 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const { logger } = require('rest-bundle');
+    const { logger } = require('log-instance');
+    const {
+        ScApi,
+    } = require('suttacentral-api');
     const {
         AbstractTTS,
         Polly,
         SCAudio,
         SoundStore,
-        SuttaCentralApi,
         SuttaFactory,
         Voice,
         VoiceFactory,
@@ -25,24 +27,21 @@
         return ph;
     }
 
-    it("loadSutta() loads sn12.3/de/geiger", function(done) {
-        (async function() { try {
-            var suttaCentralApi = await new SuttaCentralApi().initialize();
-            var factory = await new SuttaFactory({
-                suttaCentralApi,
-            }).initialize();
-            var sutta = await factory.loadSutta({
-                scid: 'sn12.3',
-                language: 'de',
-                translator: 'geiger',
-            });
-            var sections = sutta.sections;
-            should.deepEqual(sections[1].segments[1], {
-                scid: 'sn12.3:1.0.2',
-                de: 'Von den Ursachen',
-            });
-            done();
-        } catch(e) { done(e); } })();
+    it("loadSutta() loads sn12.3/de/geiger", async()=>{
+        var scApi = await new ScApi().initialize();
+        var factory = await new SuttaFactory({
+            scApi,
+        }).initialize();
+        var sutta = await factory.loadSutta({
+            scid: 'sn12.3',
+            language: 'de',
+            translator: 'geiger',
+        });
+        var sections = sutta.sections;
+        should.deepEqual(sections[1].segments[1], {
+            scid: 'sn12.3:1.0.2',
+            de: 'Von den Ursachen',
+        });
     });
     it("createVoice(voiceName) returns a default voice", function() {
         var voice = Voice.createVoice('vicki');

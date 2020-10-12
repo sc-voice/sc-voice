@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const logger = require('rest-bundle').logger;
+const { logger, } = require('log-instance');
 const fs = require('fs');
 const path = require('path');
 const {

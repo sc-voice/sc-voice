@@ -1,7 +1,7 @@
 (function(exports) {
     const http = require('http');
     const https = require('https');
-    const { logger, } = require('rest-bundle');
+    const { logger, } = require('log-instance');
     const {
         exec,
     } = require('child_process');
@@ -138,7 +138,7 @@
                         req.abort();
                     });
                 } catch(e) {
-                    logger.error(e.stack);
+                    logger.warn(`audioUrl`, JSON.stringify(opts), e);
                     reject(e);
                 } })();
             });

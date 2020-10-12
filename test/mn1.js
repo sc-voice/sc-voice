@@ -2,15 +2,17 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const { logger } = require('rest-bundle');
+    const { logger } = require('log-instance');
+    const {
+        ScApi,
+        SuttaCentralId,
+    } = require('suttacentral-api');
     const {
         Playlist,
         Section,
         Sutta,
         SuttaStore,
         SuttaFactory,
-        SuttaCentralId,
-        SuttaCentralApi,
         Voice,
         Words,
     } = require("../index");
@@ -22,9 +24,9 @@
 
     it("loadSutta(scid) parses mn1/bodhi", function(done) {
         (async function() { try {
-            var scapi = await new SuttaCentralApi().initialize();
+            var scApi = await new ScApi().initialize();
             var factory = new SuttaFactory({
-                suttaCentralApi: scapi,
+                scApi,
                 logLevel,
             });
             var sutta = await factory.loadSutta({
@@ -97,8 +99,8 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTspeak() generates mn1 sounds", function(done) {
-        console.log(`TODO`,__filename); done(); return;
+    it("speak() generates mn1 sounds", async()=>{
+        console.log(`TODO`,__filename); return;
         // rewrite this to just test playlist with cached audio
         console.log("mn1.speak()  may take 1-2 minutes...");
         this.timeout(120*1000); 
@@ -110,37 +112,34 @@
          * 4. The local sound cache
          * 5. >5MB of local disk for sound storage
          */
-        (async function() { try {
-            var msStart = Date.now();
-            var suttaCentralApi = await new SuttaCentralApi().initialize();
-            this.suttaFactory = new SuttaFactory({
-                suttaCentralApi,
-                autoSection: true,
-            });
-            var voice = Voice.createVoice({
-                name: "amy",
-                localeIPA: "pli",
-            });
-            var store = await new SuttaStore({
-                suttaCentralApi,
-                suttaFactory,
-                voice,
-            }).initialize();
-            var pl = await store.createPlaylist({
-                pattern: 'mn1',
-                languages: ['en'], // speaking order 
-            });
-            var result = await pl.speak({
-                voices: {
-                    en: voice,
-                },
-                volume: 'test-mn1',
-            });
-            should(result.signature.guid)
-                .match(/162fe0ead1e4e3ea4476dd42b1f80134/);
-            console.log(`mn1.speak() done`, ((Date.now() - msStart)/1000).toFixed(1));
-            done();
-        } catch(e) { done(e); } })();
+        var msStart = Date.now();
+        var scApi = await new ScApi().initialize();
+        this.suttaFactory = new SuttaFactory({
+            scApi,
+            autoSection: true,
+        });
+        var voice = Voice.createVoice({
+            name: "amy",
+            localeIPA: "pli",
+        });
+        var store = await new SuttaStore({
+            scApi,
+            suttaFactory,
+            voice,
+        }).initialize();
+        var pl = await store.createPlaylist({
+            pattern: 'mn1',
+            languages: ['en'], // speaking order 
+        });
+        var result = await pl.speak({
+            voices: {
+                en: voice,
+            },
+            volume: 'test-mn1',
+        });
+        should(result.signature.guid)
+            .match(/162fe0ead1e4e3ea4476dd42b1f80134/);
+        console.log(`mn1.speak() done`, ((Date.now() - msStart)/1000).toFixed(1));
     });
 });
 

@@ -2,13 +2,15 @@
     const should = require("should");
     const fs = require('fs');
     const path = require('path');
-    const { logger } = require('rest-bundle');
+    const { logger } = require('log-instance');
+    const {
+        ScApi,
+    } = require('suttacentral-api');
     const {
         Section,
         Sutta,
         SuttaFactory,
         SuttaCentralId,
-        SuttaCentralApi,
         Voice,
         Words,
     } = require("../index");
@@ -19,9 +21,9 @@
         done();return; // Expanding suttas is deprecated for complexity
         this.timeout(10*1000);
         (async function() { try {
-            var suttaCentralApi = await new SuttaCentralApi().initialize();
+            var scApi = await new ScApi().initialize();
             var factory = new SuttaFactory({
-                suttaCentralApi,
+                scApi,
             });
             var sutta = await factory.loadSutta('sn12.23');
             should.deepEqual(Object.keys(sutta).sort(), [

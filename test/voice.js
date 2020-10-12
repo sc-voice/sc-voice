@@ -412,7 +412,7 @@
         should(recite.wordSSML("self-mortifiers")).equal("self-mortifiers");
         should(recite.wordSSML(`bow`)).equal(phoneme("baʊ","bow"));
     });
-    it("TESTTESTRaveena phonemes", function() {
+    it("Raveena phonemes", function() {
         console.log(`TODO`, __filename); return; 
         var raveena = Voice.createVoice({
             locale: "en-IN",

@@ -59,35 +59,35 @@
                     that.log(`serviceSynthesize() ${JSON.stringify(params)} ${request.outpath}`);
                     polly.synthesizeSpeech(params, (err, data) => {
                         if (err) {
-                            that.error(`serviceSynthesize()`, 
+                            that.warn(`serviceSynthesize()`, 
                                 request, err.stack)
                             reject(err);
                         } else if (data == null) {
                             var err = new Error(
                                 "(no data returned from AWS server)");
-                            that.error(err.stack)
+                            that.warn(err.stack)
                             reject(err);
                         } else if (data.AudioStream instanceof Buffer) {
                             fs.writeFile(request.outpath, 
                                 data.AudioStream, function(err) {
                                 if (err) {
-                                    that.error(err)
+                                    that.warn(err)
                                     reject(err);
                                 } else {
                                     that.synthesizeResponse(resolve, reject, request);
                                 }
                             })
                         } else {
-                            var err = new Error([`synthesizeSpeech()`,
+                            var err = new warn([`synthesizeSpeech()`,
                                 `expected:Buffer actual:${typeof data.AudioStream}`,
                             ].join(' '));
-                            that.error(err.stack)
+                            that.warn(err.stack)
                             reject(err);
                         }
                     })
                 }
             } catch(e) { 
-                that.error(e.message);
+                that.warn(e.message);
                 reject(e);
             }})();
         }

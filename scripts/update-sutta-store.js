@@ -2,22 +2,22 @@
 
 const fs = require("fs");
 const path = require("path");
+const { logger, } = require('log-instance');
 const {
-    logger,
-} = require('rest-bundle');
+    ScApi,
+} = require('suttacentral-api');
 const {
     Sutta,
-    SuttaCentralApi,
     SuttaStore,
 } = require('../index');
 
 
 (async function() { try {
-    var suttaCentralApi = await new SuttaCentralApi({
+    var scApi = await new ScApi({
         apiUrl: 'http://staging.suttacentral.net/api',
     }).initialize();
     var store = await new SuttaStore({
-        suttaCentralApi,
+        scApi,
     }).initialize();
     var msStart = Date.now();
     var maxAge = 24*60*60;
