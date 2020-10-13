@@ -885,7 +885,7 @@
             var trans = translations.filter(t => t.lang === lang)[0] ||
                 translations[0];
             var author_uid = trans.author_uid;
-            var suttaplex = await scApi
+            var suttaplex = await bd
                 .loadSuttaplexJson(sutta_uid, lang, author_uid);
             var authorInfo = bd.authorInfo(author_uid);
             var author = authorInfo && authorInfo.name || author_uid;
