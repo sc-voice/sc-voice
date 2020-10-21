@@ -171,7 +171,7 @@
         should.deepEqual(sections.map(s => s.segments.length), 
             [3,308,]);
     });
-    it("search('sona') finds 'Soṇa'", async()=>{
+    it("TESTTESTsearch('sona') finds 'Soṇa'", async()=>{
         var voice = Voice.createVoice("raveena");
         var scApi = await new ScApi().initialize();
         var suttaFactory = new SuttaFactory({
@@ -969,21 +969,16 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) finds legacy suttas", function(done) {
-        if (!TEST_LEGACY) { done(); return; }
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-
-            var {results} = await store.search({pattern: 'mn1/en/bodhi'});
-            should.deepEqual(results.map(r=>r.uid), ['mn1']);
-            should.deepEqual(results.map(r=>r.lang), ['en']);
-            should.deepEqual(results.map(r=>r.author_uid), ['bodhi']);
-            should.deepEqual(results.map(r=>r.sutta.segments.length), 
-                [55]);
-            should(results.length).equal(1);
-
-            done(); 
-        } catch(e) {done(e);} })();
+    it("search(pattern) finds legacy suttas", async()=>{
+    logger.logLevel = 'info';
+        var store = await new SuttaStore().initialize();
+        var {results} = await store.search({pattern: 'mn1/en/bodhi'});
+        should.deepEqual(results.map(r=>r.uid), ['mn1']);
+        should.deepEqual(results.map(r=>r.lang), ['en']);
+        should.deepEqual(results.map(r=>r.author_uid), ['bodhi']);
+        should.deepEqual(results.map(r=>r.sutta.segments.length), 
+            [55]);
+        should(results.length).equal(1);
     });
     it("search(pattern) finds suttas in range", function(done) {
         (async function() { try {

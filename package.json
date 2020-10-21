@@ -1,6 +1,6 @@
 {
   "name": "sc-voice",
-  "version": "2.5.9",
+  "version": "2.5.10",
   "description": "SuttaCentral Voice",
   "main": "index.js",
   "directories": {
@@ -28,7 +28,7 @@
     "promise-queue": "^2.2.5",
     "rest-bundle": "^0.40.18",
     "say-again": "^0.2.7",
-    "scv-bilara": "^1.4.16",
+    "scv-bilara": "^1.4.25",
     "serve-favicon": "^2.5.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",

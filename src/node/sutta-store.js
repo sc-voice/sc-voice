@@ -933,7 +933,13 @@
                 stats: this.suttaDuration.measure(sutta),
             };
         } catch(e) {
-            this.warn(e);
+            this.warn(`mldResult()`, {
+                mld: {
+                    suid: mld.suid,
+                    author_uid: mld.author_uid,
+                },
+                e,
+            }); 
             throw e;
         }}
 
@@ -972,7 +978,6 @@
                 showMatchesOnly: false,
                 matchHighlight,
             }
-            console.log(`dbg findOpts`, findOpts);
             bdres = await this.seeker.find(findOpts);
             bdres.results = [];
             for (var i = 0; i < bdres.mlDocs.length; i++) {

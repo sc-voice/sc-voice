@@ -1064,8 +1064,7 @@
         should(res.statusCode).equal(500);
         should(res.text).match(/Log file not found:asdf/);
     });
-    it("TESTTESTGET /search/:pattern/:lang returns German", async()=>{
-        logger.logLevel = 'info';
+    it("GET /search/:pattern/:lang returns German", async()=>{
         await sleep(1000); // initialize
         var maxResults = 3;
         var pattern = `dn7`;

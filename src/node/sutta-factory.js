@@ -243,17 +243,18 @@
                 if (this.suttaLoader) {
                     sutta = await this.suttaLoader(o);
                 } 
-                if (!sutta) {
+                if (!sutta) { // possible legacy sutta
                     if (this.scApi) {
                         let suttaJson = await this.scApi.loadSutta(o);
                         if (suttaJson){ 
                             sutta = new Sutta(suttaJson);
+                        } else {
+                            let ref = `${o.id}/${language}/${translator}`;
+                            let msg = `sutta ${ref} not found`;
+                            let ojson = JSON.stringify(o);
+                            this.warn(`scApi.loadSutta`, ojson, msg);
+                            throw new Error(msg);
                         }
-                        let ref = `${o.id}/${language}/${translator}`;
-                        let msg = `sutta ${ref}} not found`;
-                        let ojson = JSON.stringify(o);
-                        this.warn(`scApi.loadSutta`, ojson, msg);
-                        //throw new Error(msg);
                     } else {
                         throw new Error(`I miss Pootl`);
                     }
