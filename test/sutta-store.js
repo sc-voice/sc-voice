@@ -970,7 +970,6 @@
         } catch(e) {done(e);} })();
     });
     it("search(pattern) finds legacy suttas", async()=>{
-    logger.logLevel = 'info';
         var store = await new SuttaStore().initialize();
         var {results} = await store.search({pattern: 'mn1/en/bodhi'});
         should.deepEqual(results.map(r=>r.uid), ['mn1']);

@@ -969,7 +969,7 @@
             var matchHighlight = SuttaStore.isUidPattern(pattern)
                 ? false
                 : '<span class="scv-matched">$&</span>';
-            var maxGrepResults = Math.max(50, maxDoc*3);
+            var maxGrepResults = Math.max(500, maxDoc*3);
             var findOpts = {
                 pattern,
                 lang,

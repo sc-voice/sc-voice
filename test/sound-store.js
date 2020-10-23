@@ -354,7 +354,6 @@
         (async function() { try {
             var store = new SoundStore({
                 storePath: TEST_SOUNDS,
-                logLevel: 'info',
             });
             var stats = {};
             store.logLevel = 'info';

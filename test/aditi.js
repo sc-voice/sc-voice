@@ -201,14 +201,10 @@
             done();
         } catch(e) {done(e)}})();
     });
-    it("tokensSSML(text) handles #", done=>{
-        (async function(){try{
-            var aditi = Voice.createVoice(ADITI_OPTS);
-            aditi.logLevel = 'info';
-            var res = await aditi.speak("Ayaṁ eko dhammo bahukāro. #1 ");
-            should(res.signature.text)
-                .match(/<phoneme alphabet="ipa" ph="əjəŋ">Ayaṁ/);
-            done();
-        } catch(e) {done(e)}})();
+    it("tokensSSML(text) handles #", async()=>{
+        var aditi = Voice.createVoice(ADITI_OPTS);
+        var res = await aditi.speak("Ayaṁ eko dhammo bahukāro. #1 ");
+        should(res.signature.text)
+            .match(/<phoneme alphabet="ipa" ph="əjəŋ">Ayaṁ/);
     });
 })
