@@ -1,6 +1,7 @@
 (function(exports) {
     const Sutta = require('./sutta');
     const SoundStore = require('./sound-store');
+    const { logger } = require('log-instance');
     const Voice = require('./voice');
     const DN33_EN_SECONDS = 2*3600 + 0*60 + 27;
     const DN33_EN_SECONDS_PER_SEGMENT = DN33_EN_SECONDS/(1158);
@@ -9,6 +10,7 @@
 
     class Playlist { 
         constructor(opts={}) {
+            (opts.logger || logger).logInstance(this);
             this.tracks = opts.tracks || [];
             this.languages = opts.languages || ['pli', 'en'];
             this.maxSeconds = opts.maxSeconds || 0;
@@ -47,83 +49,91 @@
             return result;
         }
 
-        speak(opts) {
-            var that = this;
-            var voices = opts.voices || that.voices;
-            var nLang = that.languages.length;
-            that.languages.forEach(lang => {
+        async speak(opts) { try {
+            var voices = opts.voices || this.voices;
+            let audioSuffix = opts.audioSuffix || '.mp3';
+            var nLang = this.languages.length;
+            this.languages.forEach(lang => {
                 if (voices[lang] == null) {
                     throw new Error( `no voice for lang:${lang}`);
                 }
             });
-            var pbody = (resolve, reject) => {(async function() { try {
-                var tts = that.languages.reduce((acc,lang) => {
-                    return acc || voices[lang];
-                }, null).services.recite;
-                var trackAudioFiles = [];
-                var sectionBreak = await tts
-                    .synthesizeBreak(tts.SECTION_BREAK);
-                var prevSuid;
-                for (var iTrk = 0; iTrk < that.tracks.length; iTrk++) {
-                    var track = that.tracks[iTrk];
-                    var sutta_uid = track.sutta_uid.toLowerCase();
-                    var auid = track.author_uid || 'no-author';
-                    var lang = track.lang || 'en';
-                    var segmentAudioFiles = [];
-                    var trkSegs = track.segments;
-                    for (var iSeg = 0; iSeg < trkSegs.length; iSeg++) {
-                        var segment = trkSegs[iSeg];
-                        for (var iLang = 0; iLang < nLang; iLang++) {
-                            var lang = that.languages[iLang];
-                            var voice = voices[lang];
-                            var vname = voice.name.toLowerCase();
-                            var volume = opts.volume || 
-                                SoundStore.suttaVolumeName(sutta_uid, 
-                                    lang, auid, voice.name);
-                            var text = segment[lang];
-                            if (voice && text) {
-                                var segOpts = {
-                                    volume,
-                                    chapter: opts.chapter,
-                                };
-                                segOpts = Object.assign(segOpts, opts);
-                                delete segOpts.voices; // not used 
+            var tts = this.languages.reduce((acc,lang) => {
+                return acc || voices[lang];
+            }, null).services.recite;
+            var trackAudioFiles = [];
+            let comment = `languages: ${this.languages.join(',')}`;
+            var sectionBreak = await tts
+                .synthesizeBreak(tts.SECTION_BREAK);
+            var prevSuid;
+            for (var iTrk = 0; iTrk < this.tracks.length; iTrk++) {
+                var track = this.tracks[iTrk];
+                var sutta_uid = track.sutta_uid.toLowerCase();
+                var auid = track.author_uid || 'no-author';
+                var lang = track.lang || 'en';
+                var segmentAudioFiles = [];
+                var trkSegs = track.segments;
+                for (var iSeg = 0; iSeg < trkSegs.length; iSeg++) {
+                    var segment = trkSegs[iSeg];
+                    for (var iLang = 0; iLang < nLang; iLang++) {
+                        var lang = this.languages[iLang];
+                        var voice = voices[lang];
+                        var vname = voice.name.toLowerCase();
+                        var volume = opts.volume || 
+                            SoundStore.suttaVolumeName(sutta_uid, 
+                                lang, auid, voice.name);
+                        var text = segment[lang];
+                        if (voice && text) {
+                            var segOpts = {
+                                volume,
+                                chapter: opts.chapter,
+                            };
+                            segOpts = Object.assign(segOpts, opts);
+                            delete segOpts.voices; // not used 
 
-                                var sutta_uid = segment.scid.split(':')[0];
-                                if (prevSuid !== sutta_uid) {
-                                    if (prevSuid) {
-                                        segmentAudioFiles.push(
-                                            sectionBreak.file);
-                                    }
-                                    prevSuid = sutta_uid;
+                            var sutta_uid = segment.scid.split(':')[0];
+                            if (prevSuid !== sutta_uid) {
+                                if (prevSuid) {
+                                    segmentAudioFiles.push(
+                                        sectionBreak.file);
                                 }
-                                var speakOpts = {
-                                    sutta_uid,
-                                    segment,
-                                    language: lang,
-                                    usage: voice.usage, 
-                                    translator: auid,
-                                };
-
-                                var vdata = await voice
-                                    .speakSegment(speakOpts);
-                                segmentAudioFiles.push(vdata.file);
-                                segment.audio = segment.audio || {};
-                                segment.audio[lang] = vdata.signature.guid;
+                                prevSuid = sutta_uid;
                             }
+                            var speakOpts = {
+                                sutta_uid,
+                                segment,
+                                language: lang,
+                                usage: voice.usage, 
+                                translator: auid,
+                            };
+
+                            var vdata = await voice
+                                .speakSegment(speakOpts);
+                            segmentAudioFiles.push(vdata.file);
+                            segment.audio = segment.audio || {};
+                            segment.audio[lang] = vdata.signature.guid;
                         }
                     }
-                    segmentAudioFiles.push(sectionBreak.file);
-                    var audio = await tts.ffmpegConcat(segmentAudioFiles);
-                    track.audio = audio;
-                    trackAudioFiles.push(audio.file);
                 }
-                that.audio = await tts.ffmpegConcat(trackAudioFiles);
-                resolve(that.audio);
-            } catch(e) {reject(e);} })(); }
-            
-            return new Promise(pbody);
-        }
+                segmentAudioFiles.push(sectionBreak.file);
+                var audio = await tts.concatAudio(segmentAudioFiles);
+                track.audio = audio;
+                trackAudioFiles.push(audio.file);
+            }
+            this.audio = await tts.concatAudio(trackAudioFiles, {
+                album: opts.album,
+                artist: opts.artist,
+                audioSuffix,
+                copyright: opts.copyright,
+                publisher: opts.publisher,
+                title: opts.title,
+                comment,
+            });
+            return this.audio;
+        } catch(e) {
+            this.warn(`speak()`, e.message);
+            throw e;
+        }}
 
         addTrack(metadata, segmentsOrMessage) {
             if (metadata === Object(metadata)) {
@@ -164,6 +174,13 @@
                     author_uid: sutta.author_uid,
                 }, segments);
             });
+        }
+
+        author_uids() {
+            return Object.keys(this.tracks.reduce((a,t) => {
+                a[t.author_uid] = true;
+                return a;
+            },{}));
         }
 
     }

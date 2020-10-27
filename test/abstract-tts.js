@@ -8,6 +8,9 @@
         SoundStore,
         Words,
     } = require("../index");
+    const { exec } = require('child_process');
+    const util = require('util');
+    const execPromise = util.promisify(exec);
     const BREAK = `<break time="0.001s"/>`;
     const PARA_BREAK = `<break time="1.5s"/>`;
     const ELLIPSIS = "\u2026";
@@ -388,7 +391,50 @@
             'Why', 'is', 'that', '?',
         ]);
     });
-    it("ffmpegConcat(files) returns sound file", function(done) {
+    it("TESTTESTconcatAudio(files) returns Opus file", async()=>{
+        var abstractTTS = new AbstractTTS();
+        var files = [
+            path.join(__dirname, 'data/1d4e09ef9cd91470da56c84c2da481b0.ogg'),
+            path.join(__dirname, 'data/0e4a11bcb634a4eb72d2004a74f39728.ogg'),
+        ];
+        should(fs.existsSync(files[0])).equal(true);
+        should(fs.existsSync(files[1])).equal(true);
+        var cache = false;
+        var title = "test_concat";
+        var artist = "test_artist";
+        var comment = "test_comment";
+        var album = "test_album";
+        var date = new Date().toLocaleDateString();
+        var audioSuffix = '.opus';
+        var result = await abstractTTS.concatAudio(files, { 
+            cache,
+            title,
+            date,
+            album,
+            artist,
+            comment,
+            audioSuffix,
+        });
+        let cmd = `ffprobe -hide_banner ${result.file}`;
+        var {stdout,stderr} = await execPromise(cmd);
+        stderr = stderr.split('\n').join('\n');
+        should(stderr).match(/title\s*:\s*test_concat/msiu);
+        should(stderr).match(/\bartist\s*:\s*test_artist/msiu);
+        should(stderr).match(/album\s*:\s*test_album/msiu);
+        should(stderr).match(/album_artist\s*:\s*test_artist/msiu);
+        should(stderr).match(/comment\s*:\s*test_comment/msiu);
+        should(stderr).match(/comment\s*:\s*version/msiu);
+        should(stderr).match(new RegExp(`date\\s*:\\s*${date}`, `msiu`));
+
+        // Verify defaults
+        should(stderr).match(/genre\s*:\s*Dhamma/msiu);
+
+        should(result).properties(['file','cached','hits','misses','signature']);
+        should(fs.existsSync(result.file)).equal(true); // output file guid
+        should(result.file).match(
+            new RegExp(`.*${result.signature.guid}.opus`));  // output guid
+    });
+    it("concatAudio(files) returns sound file", function(done) {
         var abstractTTS = new AbstractTTS();
         var files = [
             path.join(__dirname, 'data/1d4e09ef9cd91470da56c84c2da481b0.ogg'),
@@ -398,7 +444,7 @@
             should(fs.existsSync(files[0])).equal(true);
             should(fs.existsSync(files[1])).equal(true);
             var cache = true;
-            var result = await abstractTTS.ffmpegConcat(files, { cache });
+            var result = await abstractTTS.concatAudio(files, { cache });
             should(result).properties(['file','cached','hits','misses','signature']);
             should(fs.existsSync(result.file)).equal(true); // output file guid
             should(result.file).match(
@@ -407,14 +453,14 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("ffmpegConcat(files) returns sound file", function(done) {
+    it("TESTTESTconcatAudio(files) returns sound file", async()=>{
         var soundStore = new SoundStore({
             storePath,
         });
         var abstractTTS = new AbstractTTS({
             soundStore,
         });
-        var volume = 'test-ffmpegConcat';
+        var volume = 'test-concatAudio';
         var files = [
             soundStore.guidPath({
                 volume,
@@ -429,20 +475,17 @@
         var data2 = path.join(__dirname, 'data/0e4a11bcb634a4eb72d2004a74f39728.ogg');
         fs.writeFileSync(files[0], fs.readFileSync(data1));
         fs.writeFileSync(files[1], fs.readFileSync(data2));
-        //console.log('ffmpegConcat TEST', storePath);
-        (async function() { try {
-            should(fs.existsSync(files[0])).equal(true);
-            should(fs.existsSync(files[1])).equal(true);
-            var cache = true;
-            var result = await abstractTTS.ffmpegConcat(files, { cache });
-            should(result).properties(['file','cached','hits','misses','signature']);
-            should(fs.existsSync(result.file)).equal(true); // output file guid
-            should(result.file).match(
-                new RegExp(`.*${result.signature.guid}.*`));  // output guid
-            should(result.signature.guid).match(/f6b55e7/);
-
-            done();
-        } catch(e) {done(e);} })();
+        //console.log('concatAudio TEST', storePath);
+        should(fs.existsSync(files[0])).equal(true);
+        should(fs.existsSync(files[1])).equal(true);
+        var cache = true;
+        var result = await abstractTTS.concatAudio(files, { cache });
+        should(result).properties(['file','cached','hits','misses','signature']);
+        should(fs.existsSync(result.file)).equal(true); // output file guid
+        should(result.file).match(
+            new RegExp(`.*${result.signature.guid}.*`));  // output guid
+        console.log(`dbg sig`, result.signature.guid, result.file);
+        should(result.signature.guid).match(/5a38166405fb1a9884220d0a2bd6d97a/);
     });
     it("syllabify(word) spaces word by syllable", function() {
         var tts = new AbstractTTS({

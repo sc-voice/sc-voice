@@ -20,7 +20,7 @@
     var suttas = [
         new Sutta({
             sutta_uid: 'test1',
-            author_uid: 'test',
+            author_uid: 'test-author1',
             sections: [{
                 segments: [{
                     scid: 'test1:1.1',
@@ -36,7 +36,7 @@
         }),
         new Sutta({
             sutta_uid: 'test2',
-            author_uid: 'test',
+            author_uid: 'test-author2',
             sections: [{
                 segments: [{
                     scid: 'test2:1.1',
@@ -51,7 +51,7 @@
         }),
         new Sutta({
             sutta_uid: 'test3',
-            author_uid: 'test-author',
+            author_uid: 'test-author3',
             sections: [{
                 segments: [{
                     scid: 'test3:1.1',
@@ -87,7 +87,7 @@
         should.deepEqual(pl.tracks, []);
         should(pl.maxSeconds).equal(0); // unlimited
     });
-    it("addSutta(sutta) adds a sutta", function() {
+    it("TESTTESTaddSutta(sutta) adds a sutta", function() {
         var pl = new Playlist();
 
         pl.addSutta(suttas[0]);
@@ -95,6 +95,7 @@
         should.deepEqual(pl.tracks.map(s=>(s.sutta_uid)), [
              'test1',
         ]);
+        should.deepEqual(pl.author_uids(),['test-author1']);
 
         pl.addSutta(suttas[1]);
         should(pl.tracks.length).equal(2);
@@ -102,6 +103,7 @@
              'test1',
              'test2',
         ]);
+        should.deepEqual(pl.author_uids(),['test-author1', 'test-author2']);
     });
     it("stats() adds a sutta", function() {
         var pl = new Playlist({
@@ -248,39 +250,20 @@
         should(result.signature.guid)
             .match(/5ed32b94d5a03f03d3fd19ec8a34b642/);
     });
-    it("speak(opts) creates human voice audio file", async()=>{
+    it("speak(opts) creates opus audio file", async()=>{
         var scApi = await new ScApi().initialize();
-        var factory = new SuttaFactory({
-            scApi,
-        });
+        var factory = new SuttaFactory({ scApi, });
         var sutta = await factory.loadSutta('sn2.3');
-        var soundStore = new SoundStore();
-        var scAudio = new SCAudio();
-        var voiceTrans = Voice.createVoice({
-            name: 'sujato_en',
-            usage: 'recite',
-            soundStore,
-            localeIPA: "pli",
-            audioFormat: soundStore.audioFormat,
-            audioSuffix: soundStore.audioSuffix,
-            scAudio,
-        });
-        var voiceRoot = Voice.createVoice({
-            name: 'sujato_pli',
-            scAudio,
-        });
-        var voices = {
-            pli: voiceRoot,
-            en: voiceTrans,
-        };
+        var voiceTrans = Voice.createVoice({ name: 'matthew', });
+        var voices = { en: voiceTrans, };
         var pl = new Playlist({
-            languages: ['pli', 'en'], // speaking order 
+            languages: ['en'], // speaking order 
         });
         pl.addSutta(sutta);
         var result = await pl.speak({
             voices,
             volume: 'test-playlist',
         });
-        should(result.signature.guid).match(/8b2e0526d50af759fe45f76f63580e48/);
+        should(result.signature.guid).match(/46c11e7f9cb21cbf941b28845f373bae/);
     });
 })

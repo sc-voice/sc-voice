@@ -137,6 +137,8 @@
                 ["get", "review/sutta/:sutta_uid/:language/:translator", 
                     this.getReviewSutta],
                 ["get", "audio-urls/:sutta_uid", this.getAudioUrls],
+                ["get", "download/opus/:langs/:voice/:pattern",
+                    this.getDownloadPlaylist, 'audio/opus'],
                 ["get", "download/playlist/:langs/:voice/:pattern",
                     this.getDownloadPlaylist, this.audioMIME],
                 ["get", "download/playlist/:langs/:voice/:pattern/:vroot",
@@ -659,19 +661,21 @@
             throw e;
         }}
 
-        getDownloadPlaylist(req, res, next) {
-            var that = this;
+        async getDownloadPlaylist(req, res, next) { try {
             var {
                 initialized,
                 scAudio,
                 soundStore,
                 suttaStore,
                 voiceFactory,
+                bilaraData,
             } = this;
             if (!initialized) {
-                return Promise.reject(new Error(
-                    `${this.constructor.name} is not initialized`));
+                throw new Error(`${this.constructor.name} is not initialized`);
             }
+            let route = req.route.path.split('/');
+            let opus = route[2] === 'opus';
+            let audioSuffix = opus ? '.opus' : soundStore.audioSuffix;
             var vroot = req.params.vroot || 'Aditi';
             var langs = (req.params.langs || 'pli+en')
                 .toLowerCase().split('+');
@@ -680,66 +684,79 @@
             var vname = (req.params.voice || 'Amy').toLowerCase();
             var pattern = req.params.pattern;
             if (!pattern) {
-                return Promise.reject(new Error(
-                    'Search pattern is required'));
+                throw new Error('Search pattern is required');
             }
             var usage = req.query.usage || 'recite';
             var maxResults = 
                 Number(req.query.maxResults || suttaStore.maxResults);
             if (isNaN(maxResults)) {
-                return Promise.reject(new Error(
-                    'Expected number for maxResults'));
+                throw new Error('Expected number for maxResults');
             }
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    try {
-                    var playlist = await suttaStore.createPlaylist({
-                        pattern,
-                        languages: langs,
-                        language,
-                        maxResults,
-                    });
-                    } catch(e) {
-                        console.log(`oopsie`, e.stack);
-                        resolve(e.stack.toString());
-                        return;
-                    }
-                    var stats = playlist.stats();
-                    var voiceLang = voiceFactory.voiceOfName(vname);
-                    var voiceRoot = voiceFactory.voiceOfName(vroot);
-                    var audio = await playlist.speak({
-                        voices: {
-                            pli: voiceRoot,
-                            [language]: voiceLang,
-                        }
-                    });
-                    var result = {
-                        audio,
-                    }
-                    var guid = audio.signature.guid;
-                    var filePath = soundStore.guidPath(guid);
-                    var audioSuffix = soundStore.audioSuffix;
-                    var uriPattern = encodeURIComponent(
-                        decodeURIComponent(pattern)
-                            .replace(/[ ,\t]/g,'_')
-                            .replace(/[\/]/g, '-')
-                    );
-                    var filename = 
-                        `${uriPattern}_${langs.join('+')}_${vname}`+
-                        `${audioSuffix}`;
-                    var data = fs.readFileSync(filePath);
-                    res.set('Content-disposition', 
-                        'attachment; filename=' + filename);
-                    that.info(`GET download/${langs}/${pattern} => ` +
-                        `${filename} size:${data.length} `+
-                        `secs:${stats.duration} ${guid}`);
-                    res.cookie('download-date',new Date());
-                    resolve(data);
-                } catch(e) {
-                    reject(e);
-                } })();
+            try {
+                var playlist = await suttaStore.createPlaylist({
+                    pattern,
+                    languages: langs,
+                    language,
+                    maxResults,
+                    audioSuffix,
+                });
+            } catch(e) {
+                console.log(`oopsie`, e.stack);
+                return e.stack.toString();
+            }
+            let artist = playlist.author_uids()
+                .map(a=> {
+                    let ai = bilaraData.authorInfo(a);
+                    return ai ? ai.name : a;
+                })
+                .join(',');
+            var stats = playlist.stats();
+            var voiceLang = voiceFactory.voiceOfName(vname);
+            var voiceRoot = voiceFactory.voiceOfName(vroot);
+            let album = langs.map(l=>{
+                return l==='pli'
+                    ? voiceRoot.name
+                    : voiceLang.name;
+            }).join(',') + `: voice.suttacentral.net`;
+            var audio = await playlist.speak({
+                voices: {
+                    pli: voiceRoot,
+                    [language]: voiceLang,
+                },
+
+                album,
+                artist,
+                language: langs.join(','),
+                audioSuffix,
+                copyright: 'https://suttacentral.net/licensing',
+                publisher: 'voice.suttacentral.net',
+                title: pattern,
             });
-        }
+            var result = {
+                audio,
+            }
+            var guid = audio.signature.guid;
+            var filePath = soundStore.guidPath(guid, audioSuffix);
+            var uriPattern = encodeURIComponent(
+                decodeURIComponent(pattern)
+                    .replace(/[ ,\t]/g,'_')
+                    .replace(/[\/]/g, '-')
+            );
+            var filename = 
+                `${uriPattern}_${langs.join('+')}_${vname}`+
+                `${audioSuffix}`;
+            var data = fs.readFileSync(filePath);
+            res.set('Content-disposition', 'attachment; filename=' + filename);
+            this.info(`GET download/${langs}/${pattern} => ` +
+                `${filename} size:${data.length} `+
+                `secs:${stats.duration} ${guid}`);
+            res.cookie('download-date',new Date());
+            return (data);
+        } catch(e) {
+            this.warn(`getDownloadPlaylist`, JSON.stringify({}),
+                e.message);
+            throw e;
+        }}
 
         getExamples(req, res, next) {
             var that = this;

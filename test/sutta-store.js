@@ -171,7 +171,7 @@
         should.deepEqual(sections.map(s => s.segments.length), 
             [3,308,]);
     });
-    it("TESTTESTsearch('sona') finds 'Soṇa'", async()=>{
+    it("search('sona') finds 'Soṇa'", async()=>{
         var voice = Voice.createVoice("raveena");
         var scApi = await new ScApi().initialize();
         var suttaFactory = new SuttaFactory({

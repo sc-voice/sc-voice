@@ -40,6 +40,8 @@
         return new Promise(r=>setTimeout(()=>r(),ms)); 
     }
 
+    var testInitialize = sleep(2000);
+
     function testAuthPost(url, data) {
         var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
         return supertest(app).post(url)
@@ -51,7 +53,7 @@
 
     async function testAuthGet(url, contentType='application/json', accept=contentType) {
         var token = jwt.sign(TEST_ADMIN, ScvRest.JWT_SECRET);
-        await sleep(400);
+        await testInitialize;
         return supertest(app).get(url)
             .set("Authorization", `Bearer ${token}`)
             .set('Content-Type', contentType)
@@ -70,7 +72,7 @@
 
     async function testScvRest() {
         // Wait for server to start
-        await sleep(400);
+        await testInitialize;
         await app.locals.scvRest.initialize();
         await sleep(500);
     }
@@ -231,24 +233,33 @@
         should(contentLength).below(4600000);
         should(res.statusCode).equal(200);
     });
-    it("GET /download/playlist/pli+en/amy/an3.76-77 returns mp3", function(done) {
+    it("GET /download/playlist/pli+en/amy/an3.76-77 => mp3", async()=>{
+        await testInitialize;
         var scvRest = app.locals.scvRest;
-        var async = function* () { try {
-            var apiModel = yield  scvRest.initialize()
-                .then(r=>async.next(r)).catch(e=>async.throw(e));
-            var res = yield supertest(app)
-                .get("/scv/download/playlist/pli+en/amy/an3.76-77")
-                .expect('Content-Type', /audio\/mp3/)
-                .expect('Content-Disposition', 
-                    'attachment; filename=an3.76-77_pli+en_amy.mp3')
-                .end((e,r) => e ? async.throw(e) : async.next(r));
-            var contentLength = Number(res.headers['content-length']);
-            should(contentLength).above(3400000);
-            should(contentLength).below(4600000);
-            should(res.statusCode).equal(200);
-            done();
-        } catch (e) { done(e); } }();
-        async.next();
+        var apiModel = await scvRest.initialize()
+        var res = await supertest(app)
+            .get("/scv/download/playlist/pli+en/amy/an3.76-77");
+        should(res.headers).properties({
+            'content-type': 'audio/mp3',
+            'content-disposition': 'attachment; filename=an3.76-77_pli+en_amy.mp3',
+        });
+        var contentLength = Number(res.headers['content-length']);
+        should(contentLength).above(3400000).below(4600000);
+        should(res.statusCode).equal(200);
+    });
+    it("TESTTESTGET /download/playlist/pli+de/vicki/thig1.10 => opus", async()=>{
+        await testInitialize;
+        var scvRest = app.locals.scvRest;
+        var apiModel = await scvRest.initialize()
+        var res = await supertest(app)
+            .get("/scv/download/opus/pli+de/vicki/thig1.10");
+        should(res.headers).properties({
+            'content-type': 'audio/opus',
+            'content-disposition': 'attachment; filename=thig1.10_pli+de_vicki.opus',
+        });
+        var contentLength = Number(res.headers['content-length']);
+        should(res.statusCode).equal(200);
+        should(contentLength).above(90000).below(100000);
     });
     it("GET /sutta/an2.1-10/en/sujato returns sutta", function(done) {
         console.log("TODO", __filename); done(); return; 
@@ -317,44 +328,42 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /search/:pattern returns suttaplexes found", function(done) {
-        (async function() { try { await sleep();
-            var maxResults = 3;
-            var pattern = `root%20of%20suffering`;
+    it("GET /search/:pattern returns suttaplexes found", async()=>{
+        await testInitialize;
+        var maxResults = 3;
+        var pattern = `root%20of%20suffering`;
 
-            var url = `/scv/search/${pattern}?maxResults=${maxResults}`;
-            var res = await supertest(app).get(url);
-            res.statusCode.should.equal(200);
-            var {
-                method,
-                results,
-            } = res.body;
-            should(method).equal('phrase');
-            should(results).instanceOf(Array);
-            should(results.length).equal(3);
-            should.deepEqual(results.map(r => r.uid),[
-                'sn42.11', 'mn105', 'mn1',
-            ]);
-            should.deepEqual(results.map(r => r.count),
-                [ 5.091, 3.016, 2.006  ]);
+        var url = `/scv/search/${pattern}?maxResults=${maxResults}`;
+        var res = await supertest(app).get(url);
+        res.statusCode.should.equal(200);
+        var {
+            method,
+            results,
+        } = res.body;
+        should(method).equal('phrase');
+        should(results).instanceOf(Array);
+        should(results.length).equal(3);
+        should.deepEqual(results.map(r => r.uid),[
+            'sn42.11', 'mn105', 'mn1',
+        ]);
+        should.deepEqual(results.map(r => r.count),
+            [ 5.091, 3.016, 2.006  ]);
 
-            // use default maxResults
-            var url = `/scv/search/${pattern}`;
-            var res = await supertest(app).get(url);
-            res.statusCode.should.equal(200);
-            var {
-                method,
-                results,
-            } = res.body;
-            should(method).equal('phrase');
-            should(results).instanceOf(Array);
-            should(results.length).equal(5);
-            should.deepEqual(results[0].audio,undefined);
-            should.deepEqual(results.map(r => r.uid),[
-                'sn42.11', 'mn105', 'mn1', 'sn56.21', 'mn116',
-            ]);
-            done();
-        } catch (e) { done(e); } })();
+        // use default maxResults
+        var url = `/scv/search/${pattern}`;
+        var res = await supertest(app).get(url);
+        res.statusCode.should.equal(200);
+        var {
+            method,
+            results,
+        } = res.body;
+        should(method).equal('phrase');
+        should(results).instanceOf(Array);
+        should(results.length).equal(5);
+        should.deepEqual(results[0].audio,undefined);
+        should.deepEqual(results.map(r => r.uid),[
+            'sn42.11', 'mn105', 'mn1', 'sn56.21', 'mn116',
+        ]);
     });
     it("GET /scv/play/section/... => playable section", done=>{
         (async function() { try {
@@ -1065,7 +1074,7 @@
         should(res.text).match(/Log file not found:asdf/);
     });
     it("GET /search/:pattern/:lang returns German", async()=>{
-        await sleep(1000); // initialize
+        await testInitialize;
         var maxResults = 3;
         var pattern = `dn7`;
         var lang = 'de'

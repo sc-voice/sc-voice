@@ -356,7 +356,6 @@
                 storePath: TEST_SOUNDS,
             });
             var stats = {};
-            store.logLevel = 'info';
             var voice = "Matthew";
             var maxUpload = 2;
             var res = await store.uploadCaches({stats, voice, maxUpload});

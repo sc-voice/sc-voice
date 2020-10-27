@@ -728,8 +728,7 @@
             }));
         }
 
-        createPlaylist(...args) {
-            var that = this;
+        async createPlaylist(...args) { try {
             var opts = args[0];
             if (typeof opts === 'string') {
                 opts = {
@@ -737,38 +736,34 @@
                     maxResults: args[1],
                 };
             }
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var {
-                        lang,
-                        language,
-                        method,
-                        suttaRefs,
-                        suttas,
-                        resultPattern,
-                    } = await that.findSuttas(opts);
-                    lang = lang || language;
-                    var maxDuration = opts.maxDuration || that.maxDuration;
-                    var languages = opts.languages || ['pli', lang];
-                    var playlist = new Playlist({ languages, });
-                    suttas.forEach(sutta => playlist.addSutta(sutta));
-                    var duration = playlist.stats().duration;
-                    if (duration > that.maxDuration) {
-                        languages = opts.languages || [lang];
-                        playlist = new Playlist({ languages, });
-                        var minutes = (that.maxDuration / 60).toFixed(0);
-                        playlist.addTrack("createPlaylist_error1", 
-                            `Play list is too long to be played. `+
-                            `All play lists must be less than `+
-                            `${minutes} minutes long`);
-                    }
-                    resolve(playlist);
-                } catch(e) {
-                    logger.warn(e.stack);
-                    reject(e);
-                } })();
-            });
-        }
+            var {
+                lang,
+                language,
+                method,
+                suttaRefs,
+                suttas,
+                resultPattern,
+            } = await this.findSuttas(opts);
+            lang = lang || language;
+            var maxDuration = opts.maxDuration || this.maxDuration;
+            var languages = opts.languages || ['pli', lang];
+            var playlist = new Playlist({ languages, });
+            suttas.forEach(sutta => playlist.addSutta(sutta));
+            var duration = playlist.stats().duration;
+            if (duration > this.maxDuration) {
+                languages = opts.languages || [lang];
+                playlist = new Playlist({ languages, });
+                var minutes = (this.maxDuration / 60).toFixed(0);
+                playlist.addTrack("createPlaylist_error1", 
+                    `Play list is too long to be played. `+
+                    `All play lists must be less than `+
+                    `${minutes} minutes long`);
+            }
+            return playlist;
+        } catch(e) {
+            this.warn(`createPlaylist()`, JSON.stringify(args), e.message);
+            throw e;
+        }}
 
         sutta_uidSearch(pattern, maxResults=MAXRESULTS_LEGACY, 
             language='en') {
