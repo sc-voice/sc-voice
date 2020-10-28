@@ -400,7 +400,7 @@
         should(fs.existsSync(files[0])).equal(true);
         should(fs.existsSync(files[1])).equal(true);
         var cache = false;
-        var title = "test_concat";
+        var title = "test_title";
         var artist = "test_artist";
         var comment = "test_comment";
         var album = "test_album";
@@ -418,7 +418,7 @@
         let cmd = `ffprobe -hide_banner ${result.file}`;
         var {stdout,stderr} = await execPromise(cmd);
         stderr = stderr.split('\n').join('\n');
-        should(stderr).match(/title\s*:\s*test_concat/msiu);
+        should(stderr).match(/title\s*:\s*test_title/msiu);
         should(stderr).match(/\bartist\s*:\s*test_artist/msiu);
         should(stderr).match(/album\s*:\s*test_album/msiu);
         should(stderr).match(/album_artist\s*:\s*test_artist/msiu);
@@ -434,7 +434,7 @@
         should(result.file).match(
             new RegExp(`.*${result.signature.guid}.opus`));  // output guid
     });
-    it("concatAudio(files) returns sound file", function(done) {
+    it("TESTTESTconcatAudio(files) returns sound file", function(done) {
         var abstractTTS = new AbstractTTS();
         var files = [
             path.join(__dirname, 'data/1d4e09ef9cd91470da56c84c2da481b0.ogg'),
@@ -484,7 +484,6 @@
         should(fs.existsSync(result.file)).equal(true); // output file guid
         should(result.file).match(
             new RegExp(`.*${result.signature.guid}.*`));  // output guid
-        console.log(`dbg sig`, result.signature.guid, result.file);
         should(result.signature.guid).match(/5a38166405fb1a9884220d0a2bd6d97a/);
     });
     it("syllabify(word) spaces word by syllable", function() {

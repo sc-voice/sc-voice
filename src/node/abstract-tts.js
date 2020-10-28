@@ -6,6 +6,7 @@
     const { logger } = require('log-instance');
     const SoundStore = require('./sound-store');
     const Words = require('./words');
+    const AudioTrans = require('./audio-trans');
     const ABSTRACT_METHOD = 
         "abstract method must be overridden and implemented by base class";
     const maxBuffer = 4 * 1024 * 1024;
@@ -57,6 +58,13 @@
                 hashTag: 'guid',
             });
             this.soundStore = opts.soundStore || new SoundStore(opts);
+            this.audioTrans = opts.audioTrans || new AudioTrans({
+                genre: 'Dhamma',
+                audioSuffix: this.audioSuffix,
+                publisher: 'voice.suttacentral.net',
+                album: 'voice.suttacentral.net',
+                cwd: this.soundStore.storePath,
+            });
             Object.defineProperty(this, 'credentials', {
                 writable: true,
             });
@@ -596,46 +604,6 @@
             reject (new Error(ABSTRACT_METHOD));
         }
 
-        async ffmpegConcat(files, opts = {}) { try {
-            if (opts.ssmlAll) {
-                var ssmlPath = soundStore.signaturePath(signature, ".ssml");
-                fs.writeFileSync(ssmlPath, JSON.stringify(opts.ssmlAll, null, 2));
-            }
-            var inpath = soundStore.signaturePath(signature, ".txt");
-            fs.writeFileSync(inpath, inputs);
-            var cmd = [
-                `bash -c`,
-                `"ffmpeg -y -safe 0`,
-                `-f concat`,
-                `-i ${inpath}`,
-            ];
-            cmd.push(`-c copy ${outpath}"`);
-            var execOpts = {
-                cwd: storePath,
-                maxBuffer,
-            };
-            exec(cmd.join(' '), execOpts, (err, stdout, stderr) => {
-                if (err) {
-                    console.error(err.stack);
-                    reject(err);
-                    return;
-                }
-
-                var stats = fs.existsSync(outpath) && fs.statSync(outpath);
-                if (stats && stats.size <= this.ERROR_SIZE) {
-                    var err = fs.readFileSync(outpath).toString();
-                    this.warn(`ffmpegConcat() failed ${outpath}`, stats.size, err);
-                    throw new Error(err);
-                } else {
-                    soundStore.addEphemeral(signature.guid);
-                    return this.createResponse(request, false);
-                }
-            });
-        } catch (e) {
-            this.warn(`ffmpegConcat()`, e.message);
-            throw e;
-        }}
-
         async concatAudio(files, opts = {}) { try {
             var soundStore = this.soundStore;
             var storePath = soundStore.storePath;
@@ -651,7 +619,7 @@
 
             var inputs = `file '${ffmpegfiles.join("'\nfile '")}'\n`;
             var signature = {
-                api: "ffmegConcat",
+                api: "ffmegConcat", // don't change misspelling--it's cached
                 files:sigfiles,
             }
             opts.volume && (signature.volume = opts.volume);
@@ -676,56 +644,12 @@
                 }
                 var inpath = soundStore.signaturePath(signature, ".txt");
                 await fs.promises.writeFile(inpath, inputs);
-                var ffmpegCmd = [
-                    `ffmpeg -y`,
-                    `-f concat -safe 0`,
-                    `-i ${inpath}`,
-                ];
-                let {
-                    album = "voice.suttacentral.net",
-                    artist,
-                    comment,
-                    composer,
-                    copyright,
-                    date = new Date().toISOString().replace(/T.*/,''),
-                    genre = 'Dhamma',
-                    language,
-                    publisher,
-                    title,
-                } = opts;
-                album && ffmpegCmd.push(`-metadata album="${album}"`);
-                if (artist) {
-                    ffmpegCmd.push( `-metadata album_artist="${artist}"`);
-                    ffmpegCmd.push( `-metadata artist="${artist}"`);
-                }
-                comment = (comment ? `${comment}\n` : '') + `version: ${signature.guid}`;
-                comment && ffmpegCmd.push(`-metadata comment="${comment}"`);
-                composer && ffmpegCmd.push(`-metadata composer="${composer}"`);
-                copyright && ffmpegCmd.push(`-metadata copyright="${copyright}"`);
-                date && ffmpegCmd.push(`-metadata date="${date}"`);
-                genre && ffmpegCmd.push(`-metadata genre="${genre}"`);
-                publisher && ffmpegCmd.push(`-metadata publisher="${publisher}"`);
-                title && ffmpegCmd.push(`-metadata title="${title}"`);
-
-                if (audioSuffix === '.opus') {
-                    let bitRate = opts.bitRate || '16k';
-                    ffmpegCmd.push(`-b:a ${bitRate} ${outpath}`);
-                } else {
-                    ffmpegCmd.push(`-c copy ${outpath}`);
-                }
-                var cmd = `bash -c '${ffmpegCmd.join(' ')}'`;
-                console.log(`dbg cmd`, cmd);
-                var execOpts = {
+                await this.audioTrans.concat(Object.assign({
+                    inpath,
+                    outpath,
+                    version: signature.guid,
                     cwd: storePath,
-                    maxBuffer,
-                };
-                var {stdout,stderr} = await execPromise(cmd, execOpts);
-                var stats = fs.existsSync(outpath) && await fs.promises.stat(outpath);
-                if (stats && stats.size <= this.ERROR_SIZE) {
-                    var err = await fs.readFile(outpath).toString();
-                    this.warn(`concatAudio() failed ${outpath}`, stats.size, err);
-                    throw new Error(err);
-                } 
+                }, opts));
                 soundStore.addEphemeral(signature.guid);
                 return this.createResponse(request, false);
             }
