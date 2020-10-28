@@ -107,7 +107,6 @@ Advanced settings are prefixed with a minus sign, "-":
 | -tc:pd | Pātidesanīya |
 | -tc:pj | Pārājika |
 | -tc:pvr | Parivāra | 
-| -tc:prv | Parivāra | 
 | -tc:sk | Sekhiya |
 | -tc:sn | Saṃyutta Nikāya |
 | -tc:ss | Saṅghādisesa |
