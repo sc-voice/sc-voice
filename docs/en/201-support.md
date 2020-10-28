@@ -12,7 +12,7 @@ next_aria: 'Using Voice'
 SuttaCentral Voice provides the following levels of support:
 
 ### Supported
-Supported content is actively maintained by SuttaCentral, and any change that is made to the texts will be transferred to SuttaCentral Voice. Text supported by SuttaCentral is everything that is available in segmented form (see [Segmentation Technology](/sc-voice/en/201-support)). On top of what is maintained by SuttaCentral, SuttaCentral Voice can still adapt phonetic errors for the different reading voices; this is however sometimes limited by the way the voices are programmed by the original provider.
+Supported content is actively maintained by SuttaCentral, and any change that is made to the texts will be transferred to SuttaCentral Voice. Text supported by SuttaCentral is everything that is available in segmented form (see [Segmentation Technology](/sc-voice/en/201-segmentation)). On top of what is maintained by SuttaCentral, SuttaCentral Voice can still adapt phonetic errors for the different reading voices; this is however sometimes limited by the way the voices are programmed by the original provider.
 
 * Supported texts will be displayed segment by segment in SuttaCentral Voice.
 * If desired they can be matched with the respective Pali segments and read out line by line as a bilingual text (Settings > Languages > Show Pali and translation text).
