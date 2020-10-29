@@ -247,6 +247,21 @@
         should(contentLength).above(3400000).below(4600000);
         should(res.statusCode).equal(200);
     });
+    it("TESTTESTGET /download/playlist/de/vicki/thig1.10 => ogg", async()=>{
+        await testInitialize;
+        var scvRest = app.locals.scvRest;
+        var apiModel = await scvRest.initialize()
+        logger.logLevel = 'info';
+        var res = await supertest(app)
+            .get("/scv/download/ogg/de/vicki/thig1.10");
+        should(res.headers).properties({
+            'content-type': 'audio/ogg',
+            'content-disposition': 'attachment; filename=thig1.10_de_vicki.ogg',
+        });
+        var contentLength = Number(res.headers['content-length']);
+        should(res.statusCode).equal(200);
+        should(contentLength).above(50000).below(110000);
+    });
     it("TESTTESTGET /download/playlist/pli+de/vicki/thig1.10 => ogg", async()=>{
         await testInitialize;
         var scvRest = app.locals.scvRest;
@@ -261,6 +276,21 @@
         var contentLength = Number(res.headers['content-length']);
         should(res.statusCode).equal(200);
         should(contentLength).above(90000).below(110000);
+    });
+    it("TESTTESTGET /download/playlist/de/vicki/thig1.10 => opus", async()=>{
+        await testInitialize;
+        var scvRest = app.locals.scvRest;
+        var apiModel = await scvRest.initialize()
+        logger.logLevel = 'info';
+        var res = await supertest(app)
+            .get("/scv/download/opus/de/vicki/thig1.10");
+        should(res.headers).properties({
+            'content-type': 'audio/opus',
+            'content-disposition': 'attachment; filename=thig1.10_de_vicki.opus',
+        });
+        var contentLength = Number(res.headers['content-length']);
+        should(res.statusCode).equal(200);
+        should(contentLength).above(50000).below(60000);
     });
     it("TESTTESTGET /download/playlist/pli+de/vicki/thig1.10 => opus", async()=>{
         await testInitialize;
