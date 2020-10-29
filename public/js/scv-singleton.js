@@ -174,6 +174,10 @@
             return 'mp3';
         }
 
+        get AUDIO_OGG() {
+            return 'ogg';
+        }
+
         get AUDIO_OPUS() {
             return 'opus';
         }

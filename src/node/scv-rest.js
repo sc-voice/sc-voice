@@ -137,8 +137,10 @@
                 ["get", "review/sutta/:sutta_uid/:language/:translator", 
                     this.getReviewSutta],
                 ["get", "audio-urls/:sutta_uid", this.getAudioUrls],
-                ["get", "download/opus/:langs/:voice/:pattern/:vroot",
+                ["get", "download/ogg/:langs/:voice/:pattern/:vroot",
                     this.getDownloadPlaylist, 'audio/ogg'],
+                ["get", "download/opus/:langs/:voice/:pattern/:vroot",
+                    this.getDownloadPlaylist, 'audio/opus'],
                 ["get", "download/playlist/:langs/:voice/:pattern",
                     this.getDownloadPlaylist, this.audioMIME],
                 ["get", "download/playlist/:langs/:voice/:pattern/:vroot",
@@ -674,8 +676,9 @@
                 throw new Error(`${this.constructor.name} is not initialized`);
             }
             let route = req.route.path.split('/');
-            let opus = route[2] === 'opus';
-            let audioSuffix = opus ? '.ogg' : soundStore.audioSuffix;
+            let audioSuffix = soundStore.audioSuffix;
+            audioSuffix = route[2]==='opus' ? '.opus' : audioSuffix;
+            audioSuffix = route[2]==='ogg' ? '.ogg' : audioSuffix;
             var vroot = req.params.vroot || 'Aditi';
             var langs = (req.params.langs || 'pli+en')
                 .toLowerCase().split('+');

@@ -33,7 +33,7 @@
             var args = Object.assign({}, this, opts);
             var audioSuffix = args.audioSuffix;
             args.date = args.date || new Date().toISOString().split('T')[0];
-            return audioSuffix === '.ogg'
+            return audioSuffix === '.ogg' || audioSuffix === '.opus'
                 ? this.concatOpus(args)
                 : this.concatMP3(args);
         } catch (e) {

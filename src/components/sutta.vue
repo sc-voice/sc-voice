@@ -496,9 +496,14 @@ export default {
             this.showPali && langs.push('pli');
             this.showTrans && langs.push(this.gscv.lang);
             var vnameTrans = this.voice.name;
-            var urlPath = this.gscv.audio === this.gscv.AUDIO_MP3
-              ?  `download/playlist/${langs.join('+')}`
-              :  `download/opus/${langs.join('+')}`;
+            var urlPath;
+            if (this.gscv.audio === this.gscv.AUDIO_MP3) {
+              urlPath = `download/playlist/${langs.join('+')}`
+            } else if (this.gscv.audio === this.gscv.AUDIO_OGG) {
+              urlPath = `download/ogg/${langs.join('+')}`;
+            } else {
+              urlPath = `download/opus/${langs.join('+')}`;
+            }
             search = encodeURIComponent(search || this.suttaRef());
             var url = `${urlPath}/${vnameTrans}/${search}`;
             if (this.showPali) {
@@ -1235,7 +1240,8 @@ export default {
         audioType() {
           let gscv = this.gscv;
           return {
-            [gscv.AUDIO_OPUS]: 'audio/ogg',
+            [gscv.AUDIO_OPUS]: 'audio/opus',
+            [gscv.AUDIO_OGG]: 'audio/ogg',
             [gscv.AUDIO_MP3]: 'audio/mp3',
           }[gscv.audio] || gscv.AUDIO_OPUS;
         },

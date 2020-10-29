@@ -247,6 +247,21 @@
         should(contentLength).above(3400000).below(4600000);
         should(res.statusCode).equal(200);
     });
+    it("TESTTESTGET /download/playlist/pli+de/vicki/thig1.10 => ogg", async()=>{
+        await testInitialize;
+        var scvRest = app.locals.scvRest;
+        var apiModel = await scvRest.initialize()
+        logger.logLevel = 'info';
+        var res = await supertest(app)
+            .get("/scv/download/ogg/pli+de/vicki/thig1.10/Aditi");
+        should(res.headers).properties({
+            'content-type': 'audio/ogg',
+            'content-disposition': 'attachment; filename=thig1.10_pli+de_vicki.ogg',
+        });
+        var contentLength = Number(res.headers['content-length']);
+        should(res.statusCode).equal(200);
+        should(contentLength).above(90000).below(110000);
+    });
     it("TESTTESTGET /download/playlist/pli+de/vicki/thig1.10 => opus", async()=>{
         await testInitialize;
         var scvRest = app.locals.scvRest;
@@ -255,8 +270,8 @@
         var res = await supertest(app)
             .get("/scv/download/opus/pli+de/vicki/thig1.10/Aditi");
         should(res.headers).properties({
-            'content-type': 'audio/ogg',
-            'content-disposition': 'attachment; filename=thig1.10_pli+de_vicki.ogg',
+            'content-type': 'audio/opus',
+            'content-disposition': 'attachment; filename=thig1.10_pli+de_vicki.opus',
         });
         var contentLength = Number(res.headers['content-length']);
         should(res.statusCode).equal(200);

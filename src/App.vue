@@ -186,7 +186,8 @@
             <v-radio-group v-model="gscv.audio"
               v-on:change="gscv.changed('audio')"
               row>
-              <v-radio label="Opus/ogg" :value="gscv.AUDIO_OPUS" > </v-radio>
+              <v-radio label="Opus" :value="gscv.AUDIO_OPUS" > </v-radio>
+              <v-radio label="Ogg" :value="gscv.AUDIO_OGG" > </v-radio>
               <v-radio label="MP3" :value="gscv.AUDIO_MP3" > </v-radio>
             </v-radio-group>
           </div>
