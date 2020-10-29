@@ -139,7 +139,7 @@
         should(probeOut).match(new RegExp(`languages\\s*:\\s*${languages}`, `msiu`));
         should(probeOut).match(/genre\s*:\s*Dhamma/msiu);
     });
-    it("concatAudio(files) returns Opus file", async()=>{
+    it("TESTTESTconcatAudio(files) returns Opus file", async()=>{
         let tmpPath = tmp.tmpNameSync();
         let guid = path.basename(tmpPath);
         let version = guid;
@@ -181,7 +181,7 @@
         should(probeOut).match(/title\s*:\s*test_title/msiu);
         should(probeOut).match(/\bartist\s*:\s*test_artist/msiu);
         should(probeOut).match(/album\s*:\s*test_album/msiu);
-        should(probeOut).match(/album_artist\s*:\s*test_artist/msiu);
+        should(probeOut).match(/album_artist\s*:\s*test_album_artist/msiu);
         should(probeOut).match(/comment\s*:\s*test_comment/msiu);
         should(probeOut).match(new RegExp(`version\\s*:\\s*${version}`,'msiu'));
         should(probeOut).match(new RegExp(`publisher\\s*:\\s*${publisher}`,'msiu'));

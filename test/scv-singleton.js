@@ -193,6 +193,7 @@
         scv.useCookies = true;
         scv.changed('useCookies');
         should.deepEqual(mockVueRoot.$cookie, {
+            audio: 'opus',
             fullLine: "false",
             otherCookie: 'hello',
             ips: "6",
@@ -213,6 +214,7 @@
         scv.changed('fullLine');
         scv.changed('maxResults');
         should.deepEqual(mockVueRoot.$cookie, {
+            audio: "opus",
             fullLine: "true",
             otherCookie: 'hello',
             ips: "6",
@@ -233,7 +235,7 @@
             otherCookie: 'hello',
         });
     });
-    it("hash(opts) returns URL hash path", function() {
+    it("TESTTESThash(opts) returns URL hash path", function() {
         var scv = new ScvSingleton(g);
         scv.mounted(mockVueRoot);
         Object.keys(scv).forEach(key => {
@@ -242,7 +244,8 @@
 
         // default is to use own properties
         should(scv.hash()).equal([
-            "#/?fullLine=false",
+            "#/?audio=opus",
+            "fullLine=false",
             "ips=6",
             "lang=en",
             "locale=en",
@@ -257,7 +260,8 @@
         should(scv.hash({
             maxResults: 6,
         })).equal([
-            "#/?fullLine=false",
+            "#/?audio=opus",
+            "fullLine=false",
             "ips=6",
             "lang=en",
             "locale=en",
@@ -273,7 +277,8 @@
         should(scv.hash({
             maxResults: 2,
         })).equal([
-            "#/?fullLine=false",
+            "#/?audio=opus",
+            "fullLine=false",
             "ips=6",
             "lang=en",
             "locale=en",
@@ -326,12 +331,13 @@
             lang: 'en',
         });
     });
-    it("url(opts) returns url", function() {
+    it("TESTTESTurl(opts) returns url", function() {
         var scv = new ScvSingleton(g);
 
         // default
         should(scv.url()).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?fullLine=false",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?audio=opus",
+            "fullLine=false",
             "ips=6",
             "lang=en",
             "locale=en",
@@ -344,7 +350,8 @@
         should(scv.url({
             maxResults: 6,
         })).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?fullLine=false",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?audio=opus",
+            "fullLine=false",
             "ips=6",
             "lang=en",
             "locale=en",
@@ -353,7 +360,7 @@
             "showLang=0",
         ].join('&')));
     });
-    it("reload(opts) sets window location", function() {
+    it("TESTTESTreload(opts) sets window location", function() {
         var scv = new ScvSingleton(g);
 
         g.window.location.href = null;
@@ -361,7 +368,8 @@
         // default
         scv.reload();
         should(g.window.location.href).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?fullLine=false",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?audio=opus",
+            "fullLine=false",
             "ips=6",
             "lang=en",
             "locale=en",
@@ -378,7 +386,8 @@
             lang: 'de',
         });
         should(g.window.location.href).match(new RegExp([
-            "test-origin/test-path\\?r=[0-9.]*#/\\?fullLine=false",
+            "test-origin/test-path\\?r=[0-9.]*#/\\?audio=opus",
+            "fullLine=false",
             "ips=6",
             "lang=de",
             "locale=en",
@@ -487,7 +496,7 @@
         should(scv.showPali).equal(false);
         should(scv.showTrans).equal(true);
     });
-    it("mounted() loads properties from cookies", function() {
+    it("TESTTESTmounted() loads properties from cookies", function() {
         var scv = new ScvSingleton(g);
         Object.assign(mockVueRoot.$cookie, {
             showId: "true",
