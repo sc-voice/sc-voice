@@ -12,10 +12,14 @@
             (opts.logger || logger).logInstance(this, opts);
 
             this.album = opts.album;
-            this.audioSuffix = opts.audioSuffix || '.opus';
+            this.album_artist = opts.album_artist;
+            this.audioSuffix = opts.audioSuffix || '.ogg';
             this.artist = opts.artist;
+            this.bitrate = opts.bitrate;
             this.comment = opts.comment || '';
             this.copyright = opts.copyright;
+            this.composer = opts.composer;
+            this.coverPath = opts.coverPath;
             this.date = opts.date;
             this.cwd = opts.cwd;
             this.genre = opts.genre;
@@ -23,14 +27,13 @@
             this.publisher = opts.publisher;
             this.title = opts.title;
             this.version = opts.version;
-            this.picturePath = opts.picturePath ||
-                path.join(__dirname, '..', '..', 'public', 'img', 'favicon.png');
         }
 
         async concat(opts = {}) { try {
             var args = Object.assign({}, this, opts);
             var audioSuffix = args.audioSuffix;
-            return audioSuffix === '.opus'
+            args.date = args.date || new Date().toISOString().split('T')[0];
+            return audioSuffix === '.ogg'
                 ? this.concatOpus(args)
                 : this.concatMP3(args);
         } catch (e) {
@@ -41,6 +44,7 @@
         async concatMP3(opts={}) { try {
             let {
                 album,
+                album_artist,
                 artist,
                 comment,
                 composer,
@@ -54,6 +58,7 @@
                 publisher,
                 title,
                 version,
+                coverPath, // TODO
             } = opts;
 
             var bashCmd = [
@@ -62,17 +67,16 @@
                 `-i ${inpath}`,
             ];
             album && bashCmd.push(`-metadata album="${album}"`);
-            if (artist) {
-                bashCmd.push( `-metadata album_artist="${artist}"`);
-                bashCmd.push( `-metadata artist="${artist}"`);
-            }
-            comment = (comment ? `${comment}\n` : '') + `version: ${version}`;
+            album_artist && bashCmd.push( `-metadata album_artist="${album_artist}"`);
+            artist && bashCmd.push( `-metadata artist="${artist}"`);
             comment && bashCmd.push(`-metadata comment="${comment}"`);
             composer && bashCmd.push(`-metadata composer="${composer}"`);
             copyright && bashCmd.push(`-metadata copyright="${copyright}"`);
             date && bashCmd.push(`-metadata date="${date}"`);
             genre && bashCmd.push(`-metadata genre="${genre}"`);
             publisher && bashCmd.push(`-metadata publisher="${publisher}"`);
+            version && bashCmd.push(`-metadata version="${version}"`);
+            languages && bashCmd.push(`-metadata languages="${languages}"`);
             title && bashCmd.push(`-metadata title="${title}"`);
 
             bashCmd.push(`-c copy ${outpath}`);
@@ -97,11 +101,14 @@
         async concatOpus(opts = {}) { try {
             let {
                 album,
+                album_artist,
                 artist,
+                bitrate = 16,
                 cwd,
                 comment,
                 composer,
                 copyright,
+                coverPath,
                 date,
                 genre,
                 inpath,
@@ -116,23 +123,26 @@
                 `ffmpeg -y`,
                 `-f concat -safe 0`,
                 `-i ${inpath}`,
+                '-f wav',
+                '-',
+                '|',
+                'opusenc -',
             ];
-            album && bashCmd.push(`-metadata album="${album}"`);
-            if (artist) {
-                bashCmd.push( `-metadata album_artist="${artist}"`);
-                bashCmd.push( `-metadata artist="${artist}"`);
-            }
-            comment = (comment ? `${comment}\n` : '') + `version: ${version}`;
-            comment && bashCmd.push(`-metadata comment="${comment}"`);
-            composer && bashCmd.push(`-metadata composer="${composer}"`);
-            copyright && bashCmd.push(`-metadata copyright="${copyright}"`);
-            date && bashCmd.push(`-metadata date="${date}"`);
-            genre && bashCmd.push(`-metadata genre="${genre}"`);
-            publisher && bashCmd.push(`-metadata publisher="${publisher}"`);
-            title && bashCmd.push(`-metadata title="${title}"`);
+            album && bashCmd.push(`--album "${album}"`);
+            artist && bashCmd.push( `--artist "${artist}"`);
+            album_artist && bashCmd.push( `--comment album_artist="${album_artist}"`);
+            version && bashCmd.push(`--comment version=${version}`);
+            comment && bashCmd.push(`--comment comment="${comment}"`);
+            composer && bashCmd.push(`--comment composer="${composer}"`);
+            copyright && bashCmd.push(`--comment copyright="${copyright}"`);
+            date && bashCmd.push(`--date "${date}"`);
+            genre && bashCmd.push(`--genre "${genre}"`);
+            publisher && bashCmd.push(`--comment publisher="${publisher}"`);
+            languages && bashCmd.push(`--comment languages="${languages}"`);
+            title && bashCmd.push(`--title "${title}"`);
+            coverPath && bashCmd.push(`--picture ${coverPath}`);
+            bashCmd.push(`--bitrate ${bitrate} ${outpath}`);
 
-            let bitRate = opts.bitRate || '16k';
-            bashCmd.push(`-b:a ${bitRate} ${outpath}`);
             var cmd = `bash -c '${bashCmd.join(' ')}'`;
             this.debug(`concatOpus()`, cmd);
             var execOpts = {

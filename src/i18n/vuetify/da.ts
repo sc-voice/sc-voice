@@ -153,6 +153,7 @@ export default {
 
   },
   scv: {
+    audio: "Audio",
     aboutTitle: "Om Voice",
     and: "og",
     ariaAbout: "Om Voice",

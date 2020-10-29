@@ -154,6 +154,7 @@ export default {
 
   },
   scv: {
+    audio: "Audio",
     aboutTitle: "आवाज़ के बारे में",
     and: "और",
     ariaAbout: "आवाज़ के बारे में",

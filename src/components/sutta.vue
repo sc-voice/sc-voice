@@ -61,7 +61,7 @@ style="width:100%; margin-top:0"/>
                   :href="downloadUrl()"
                   @click="downloadClick()"
                   :aria-label="`${ariaDownload} ${resultId()}`"
-                  type="audio/mp3"
+                  :type="audioType"
                   class="scv-icon-btn" :style="cssVars" small>
                   <v-icon>arrow_downward</v-icon>
               </v-btn>
@@ -496,7 +496,9 @@ export default {
             this.showPali && langs.push('pli');
             this.showTrans && langs.push(this.gscv.lang);
             var vnameTrans = this.voice.name;
-            var urlPath = `download/playlist/${langs.join('+')}`;
+            var urlPath = this.gscv.audio === this.gscv.AUDIO_MP3
+              ?  `download/playlist/${langs.join('+')}`
+              :  `download/opus/${langs.join('+')}`;
             search = encodeURIComponent(search || this.suttaRef());
             var url = `${urlPath}/${vnameTrans}/${search}`;
             if (this.showPali) {
@@ -1229,6 +1231,13 @@ export default {
             } else {
                 return 0;
             }
+        },
+        audioType() {
+          let gscv = this.gscv;
+          return {
+            [gscv.AUDIO_OPUS]: 'audio/ogg',
+            [gscv.AUDIO_MP3]: 'audio/mp3',
+          }[gscv.audio] || gscv.AUDIO_OPUS;
         },
         ariaDownload() {
             return this.$vuetify.lang.t("$vuetify.scv.ariaDownload");

@@ -118,6 +118,7 @@
             this.fullLine = false;
             this.search = null;
             this.maxResults = 5;
+            this.audio = this.AUDIO_OPUS;
             this.ips = 6;
             if (g == null) {
                 throw new Error(`g is required`);
@@ -167,6 +168,14 @@
 
         get SHOWLANG_TRANS() {
             return 2;
+        }
+
+        get AUDIO_MP3() {
+            return 'mp3';
+        }
+
+        get AUDIO_OPUS() {
+            return 'opus';
         }
 
         get languages() {
@@ -316,6 +325,7 @@
                         cookie.set( "vnameRoot", this.vnameRoot, EXPIRES);
                         cookie.set( "lang", this.lang, EXPIRES);
                         cookie.set( "maxResults", this.maxResults, EXPIRES);
+                        cookie.set( "audio", this.audio, EXPIRES);
                         cookie.set( "showLang", this.showLang, EXPIRES);
                         cookie.set( "fullLine", this.fullLine, EXPIRES);
                         cookie.set( "locale", this.locale, EXPIRES);
@@ -401,6 +411,8 @@
                         (this.vnameTrans = query.vnameTrans);
                     query.vnameRoot &&
                         (this.vnameRoot = query.vnameRoot);
+                    query.audio &&
+                        (this.audio = query.audio);
                     query.maxResults &&
                         (this.maxResults = Number(query.maxResults));
                     query.fullLine && 

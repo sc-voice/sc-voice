@@ -62,7 +62,6 @@
                 return acc || voices[lang];
             }, null).services.recite;
             var trackAudioFiles = [];
-            let comment = `languages: ${this.languages.join(',')}`;
             var sectionBreak = await tts
                 .synthesizeBreak(tts.SECTION_BREAK);
             var prevSuid;
@@ -123,11 +122,13 @@
             this.audio = await tts.concatAudio(trackAudioFiles, {
                 album: opts.album,
                 artist: opts.artist,
+                album_artist: opts.album_artist || opts.artist,
                 audioSuffix,
                 copyright: opts.copyright,
                 publisher: opts.publisher,
+                languages: this.languages.join(', '),
                 title: opts.title,
-                comment,
+                comment: opts.comment,
             });
             return this.audio;
         } catch(e) {

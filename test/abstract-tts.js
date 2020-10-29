@@ -4,6 +4,7 @@
     const path = require('path');
     const tmp = require('tmp');
     const {
+        AudioTrans,
         AbstractTTS,
         SoundStore,
         Words,
@@ -51,6 +52,15 @@
         });
         should(tts.soundStore).instanceOf(SoundStore);
         should(tts.words).instanceOf(Words);
+        should(tts.audioTrans).instanceOf(AudioTrans);
+        should(fs.existsSync(tts.audioTrans.coverPath)).equal(true);
+        should(tts.audioTrans).properties({
+            publisher: 'voice.suttacentral.net',
+            genre: 'Dhamma',
+            cwd: tts.soundStore.storePath,
+            album: 'voice.suttacentral.net',
+            audioSuffix: tts.audioSuffix,
+        });
     });
     it("custom ctor", function() {
         var words = new Words();
@@ -402,28 +412,31 @@
         var cache = false;
         var title = "test_title";
         var artist = "test_artist";
+        var album_artist = "test_album_artist";
         var comment = "test_comment";
         var album = "test_album";
         var date = new Date().toLocaleDateString();
-        var audioSuffix = '.opus';
+        var audioSuffix = '.ogg';
         var result = await abstractTTS.concatAudio(files, { 
             cache,
             title,
             date,
+            album_artist,
             album,
             artist,
             comment,
             audioSuffix,
         });
+        let guid = path.basename(result.file).split('.')[0];
         let cmd = `ffprobe -hide_banner ${result.file}`;
         var {stdout,stderr} = await execPromise(cmd);
         stderr = stderr.split('\n').join('\n');
         should(stderr).match(/title\s*:\s*test_title/msiu);
         should(stderr).match(/\bartist\s*:\s*test_artist/msiu);
         should(stderr).match(/album\s*:\s*test_album/msiu);
-        should(stderr).match(/album_artist\s*:\s*test_artist/msiu);
-        should(stderr).match(/comment\s*:\s*test_comment/msiu);
-        should(stderr).match(/comment\s*:\s*version/msiu);
+        should(stderr).match(/album_artist\s*:\s*test_album_artist/msiu);
+        should(stderr).match(/comment\s*:\s*Cover/msiu);
+        should(stderr).match(new RegExp(`version\\s*:\\s*${guid}`, `msiu`));
         should(stderr).match(new RegExp(`date\\s*:\\s*${date}`, `msiu`));
 
         // Verify defaults
@@ -432,7 +445,7 @@
         should(result).properties(['file','cached','hits','misses','signature']);
         should(fs.existsSync(result.file)).equal(true); // output file guid
         should(result.file).match(
-            new RegExp(`.*${result.signature.guid}.opus`));  // output guid
+            new RegExp(`.*${result.signature.guid}.ogg`));  // output guid
     });
     it("TESTTESTconcatAudio(files) returns sound file", function(done) {
         var abstractTTS = new AbstractTTS();
@@ -453,7 +466,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTconcatAudio(files) returns sound file", async()=>{
+    it("concatAudio(files) returns sound file", async()=>{
         var soundStore = new SoundStore({
             storePath,
         });

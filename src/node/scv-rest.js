@@ -137,8 +137,8 @@
                 ["get", "review/sutta/:sutta_uid/:language/:translator", 
                     this.getReviewSutta],
                 ["get", "audio-urls/:sutta_uid", this.getAudioUrls],
-                ["get", "download/opus/:langs/:voice/:pattern",
-                    this.getDownloadPlaylist, 'audio/opus'],
+                ["get", "download/opus/:langs/:voice/:pattern/:vroot",
+                    this.getDownloadPlaylist, 'audio/ogg'],
                 ["get", "download/playlist/:langs/:voice/:pattern",
                     this.getDownloadPlaylist, this.audioMIME],
                 ["get", "download/playlist/:langs/:voice/:pattern/:vroot",
@@ -675,7 +675,7 @@
             }
             let route = req.route.path.split('/');
             let opus = route[2] === 'opus';
-            let audioSuffix = opus ? '.opus' : soundStore.audioSuffix;
+            let audioSuffix = opus ? '.ogg' : soundStore.audioSuffix;
             var vroot = req.params.vroot || 'Aditi';
             var langs = (req.params.langs || 'pli+en')
                 .toLowerCase().split('+');
@@ -726,7 +726,8 @@
 
                 album,
                 artist,
-                language: langs.join(','),
+                album_artist: artist,
+                languages: langs.join(','),
                 audioSuffix,
                 copyright: 'https://suttacentral.net/licensing',
                 publisher: 'voice.suttacentral.net',

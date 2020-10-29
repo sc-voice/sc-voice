@@ -154,6 +154,7 @@ export default {
 
   },
   scv: {
+    audio: "Audio",
     aboutTitle: "Lời giới thiệu",
     and: "và",
     ariaAbout: "Giới thiệu về Voice",

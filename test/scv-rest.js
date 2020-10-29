@@ -251,15 +251,16 @@
         await testInitialize;
         var scvRest = app.locals.scvRest;
         var apiModel = await scvRest.initialize()
+        logger.logLevel = 'info';
         var res = await supertest(app)
-            .get("/scv/download/opus/pli+de/vicki/thig1.10");
+            .get("/scv/download/opus/pli+de/vicki/thig1.10/Aditi");
         should(res.headers).properties({
-            'content-type': 'audio/opus',
-            'content-disposition': 'attachment; filename=thig1.10_pli+de_vicki.opus',
+            'content-type': 'audio/ogg',
+            'content-disposition': 'attachment; filename=thig1.10_pli+de_vicki.ogg',
         });
         var contentLength = Number(res.headers['content-length']);
         should(res.statusCode).equal(200);
-        should(contentLength).above(90000).below(100000);
+        should(contentLength).above(90000).below(110000);
     });
     it("GET /sutta/an2.1-10/en/sujato returns sutta", function(done) {
         console.log("TODO", __filename); done(); return; 

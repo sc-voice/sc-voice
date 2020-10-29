@@ -22,6 +22,7 @@
     const ELLIPSIS_BREAK = '.';
     const PAUSE_SSML = `<break time="0.5s"/>`;
     const MAX_SEGMENT = 1000;
+    const APP_DIR = path.join(__dirname, '..', '..');
 
     class AbstractTTS {
         constructor(opts={}) {
@@ -64,6 +65,8 @@
                 publisher: 'voice.suttacentral.net',
                 album: 'voice.suttacentral.net',
                 cwd: this.soundStore.storePath,
+                coverPath: opts.coverPath ||
+                    path.join(APP_DIR, 'public', 'img', 'wheel100.png'),
             });
             Object.defineProperty(this, 'credentials', {
                 writable: true,

@@ -176,6 +176,24 @@
       </li>
       <li class="" role="none" >
         <details role="menuitem" 
+          @click="clickDetails('audio', $event)"
+          :open="showDetail('audio')"
+          >
+          <summary class="scv-settings-title">
+            {{$vuetify.lang.t('$vuetify.scv.audio')}}
+          </summary>
+          <div class="scv-settings" v-if="gscv">
+            <v-radio-group v-model="gscv.audio"
+              v-on:change="gscv.changed('audio')"
+              row>
+              <v-radio label="Opus/ogg" :value="gscv.AUDIO_OPUS" > </v-radio>
+              <v-radio label="MP3" :value="gscv.AUDIO_MP3" > </v-radio>
+            </v-radio-group>
+          </div>
+        </details> <!-- General -->
+      </li>
+      <li class="" role="none" >
+        <details role="menuitem" 
           @click="clickDetails('general', $event)"
           :open="showDetail('general')"
           >

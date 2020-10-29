@@ -153,6 +153,7 @@ export default {
 
   },
   scv: {
+    audio: "Audio",
     aboutTitle: "Voice පිළිබඳව",
     and: "සහ",
     ariaAbout: "Voice පිළිබඳව",

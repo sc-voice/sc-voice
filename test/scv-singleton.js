@@ -109,6 +109,7 @@
             showId: false,
             vnameTrans: 'Amy',
             vnameRoot: 'Aditi',
+            audio: scv.AUDIO_OPUS,
             scid: null,
             showLang: scv.SHOWLANG_BOTH,
             fullLine: false,
@@ -119,6 +120,7 @@
         });
         scv.mounted(mockVueRoot);
         should.deepEqual(Object.keys(scv).sort(), [
+            'audio',
             "fullLine",
             "showId",
             "vnameTrans",
@@ -143,6 +145,7 @@
         var voices = [testVoice];
         scv.voices = voices;
         should(scv.voices).equal(voices);
+        should(scv.audio).equal(scv.AUDIO_OPUS);
     });
     it("deleteCookies() deletes ScvSingleton cookies", function() {
         mockVueRoot.$cookie.otherCookie = 'hello';

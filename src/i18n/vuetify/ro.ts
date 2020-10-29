@@ -154,6 +154,7 @@ export default {
 
   },
   scv: {
+    audio: "Audio",
     aboutTitle: "Despre Voice",
     and: "și",
     ariaAbout: "Despre Voice",
