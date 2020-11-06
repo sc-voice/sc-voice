@@ -145,8 +145,8 @@ using the EC2 Console.
 #### Using the EC2 Console, select your new server and click
 <kbd>Attach/Replace IAM Role</kbd>:
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ec2-iam.png?raw=true">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ec2-iam.png?raw=true">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/iam-role.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/iam-role.png?raw=true">
 </a>
 
 ##### Look for the `Voice-Server` IAM role in the dropdown
