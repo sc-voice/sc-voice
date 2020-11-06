@@ -143,7 +143,7 @@ new server. In the following we will create the Voice-Server IAM role
 using the EC2 Console.
 
 #### Using the EC2 Console, select your new server and click
-<kbd>Attach/Replace IAM Role</kbd>:
+<kbd>Actions|Security|Modify IAM Role</kbd>
 
 <a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/docs/assets/img/iam-role.png?raw=true">
 <img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/docs/assets/img/iam-role.png?raw=true">
