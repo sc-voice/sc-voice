@@ -181,6 +181,7 @@ export default {
     bellSimple: "Enkel bjelle (Åpen lisens)",
     bellSound: "Bjellelyd",
     bellTibetan: "Tibetansk syngende skål (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "Dedikert til mørket på vei mot lyset",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "Nedlasting ferdig:",

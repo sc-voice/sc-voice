@@ -181,6 +181,7 @@ export default {
     bellSimple: "Clopot Simplu (Public Domain)",
     bellSound: "Sunet Clopot",
     bellTibetan: "Bol de Cântat Tibetan (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "Pentru cei din întuneric, ce se îndreaptă spre lumină",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "Descărcare completă:",

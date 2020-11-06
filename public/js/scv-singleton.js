@@ -42,8 +42,9 @@
         value: 6,
     }];
 
-    const EXPIRES = {
+    const COOKIE_SETTINGS = {
         expires: "100Y",
+        SameSite: "Strict",
     };
 
     const WEB_LANGUAGES = [{
@@ -231,7 +232,7 @@
 
         set useCookies(value) {
             if (value) {
-                this.vueRoot.$cookie.set("useCookies", value, EXPIRES);
+                this.vueRoot.$cookie.set("useCookies", value, COOKIE_SETTINGS);
             } else {
                 this.vueRoot.$cookie.delete("useCookies");
             }
@@ -317,24 +318,24 @@
             var v = this[prop];
             if (v != null && this.vueRoot) {
                 if (this.useCookies) {
-                    cookie.set(prop, v, EXPIRES);
+                    cookie.set(prop, v, COOKIE_SETTINGS);
                     console.log(`setting cookie (${prop}):${v}`,
                         `${this.vueRoot.$cookie.get(prop)}`, 
                         typeof this.vueRoot.$cookie.get(prop));
                 }
                 if (prop === 'useCookies') {
                     if (v) {
-                        cookie.set( "showId", this.showId, EXPIRES);
-                        cookie.set( "vnameTrans", this.vnameTrans, EXPIRES);
-                        cookie.set( "vnameRoot", this.vnameRoot, EXPIRES);
-                        cookie.set( "lang", this.lang, EXPIRES);
-                        cookie.set( "maxResults", this.maxResults, EXPIRES);
-                        cookie.set( "audio", this.audio, EXPIRES);
-                        cookie.set( "showLang", this.showLang, EXPIRES);
-                        cookie.set( "fullLine", this.fullLine, EXPIRES);
-                        cookie.set( "locale", this.locale, EXPIRES);
-                        cookie.set( "ips", this.ips, EXPIRES);
-                        cookie.set( "useCookies", this.useCookies, EXPIRES);
+                        cookie.set( "showId", this.showId, COOKIE_SETTINGS);
+                        cookie.set( "vnameTrans", this.vnameTrans, COOKIE_SETTINGS);
+                        cookie.set( "vnameRoot", this.vnameRoot, COOKIE_SETTINGS);
+                        cookie.set( "lang", this.lang, COOKIE_SETTINGS);
+                        cookie.set( "maxResults", this.maxResults, COOKIE_SETTINGS);
+                        cookie.set( "audio", this.audio, COOKIE_SETTINGS);
+                        cookie.set( "showLang", this.showLang, COOKIE_SETTINGS);
+                        cookie.set( "fullLine", this.fullLine, COOKIE_SETTINGS);
+                        cookie.set( "locale", this.locale, COOKIE_SETTINGS);
+                        cookie.set( "ips", this.ips, COOKIE_SETTINGS);
+                        cookie.set( "useCookies", this.useCookies, COOKIE_SETTINGS);
                         console.log(`saved settings to cookies`, cookie);
                     } else {
                         Object.keys(this).forEach(key => {

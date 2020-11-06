@@ -153,7 +153,8 @@
                 if (indexes.length < 1) {
                     throw new Error(`Segment not found for segid:${segid}`);
                 } else if (indexes.length > 1) {
-                    throw new Error(`Ambiguous match for segid:${segid} matches:${indexes.length}`);
+                    throw new Error(
+                        `Ambiguous match for segid:${segid} matches:${indexes.length}`);
                 }
                 return indexes[0];
             } else {

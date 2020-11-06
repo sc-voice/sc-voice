@@ -180,6 +180,7 @@ export default {
     bellSimple: "Enkel Klokke (Public Domain)",
     bellSound: "Klokke Lyd",
     bellTibetan: "Tibetansk sangskål (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "Til dem som lever i mørket, men er på vej mod lyset",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "Overførslen fuldført:",

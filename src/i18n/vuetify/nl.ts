@@ -181,6 +181,7 @@ export default {
     bellSimple: "Eenvoudige bel (Publiek domein)",
     bellSound: "Belgeluid",
     bellTibetan: "Tibetaanse klankschaal (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "Aan hen in donkerte op weg naar licht",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "Download voltooid:",

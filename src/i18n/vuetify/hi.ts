@@ -181,6 +181,7 @@ export default {
     bellSimple: "साधारण घंटी (Public Domain)",
     bellSound: "घंटी की आवाज़",
     bellTibetan: "तिब्बती गाता-कटोरा (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "उजाले के लिए अँधेरी सीमा की ओर",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "डाउनलोड पूर्ण हुआ:",

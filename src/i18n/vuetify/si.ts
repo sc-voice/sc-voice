@@ -180,6 +180,7 @@ export default {
     bellSimple: "සරල සීනුව (Public Domain)",
     bellSound: "සීනු ශබ්දය",
     bellTibetan: "ටිබෙට් ගායන පාත්‍රය (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "අඳුරෙන් ආලෝකය කරා පිවිසුමට",
     dedicatedSearch: "අඳුරෙන් ආලෝකය කරා",
     downloadComplete: "බාගත කිරීම අවසන්:",

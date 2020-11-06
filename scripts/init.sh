@@ -120,7 +120,7 @@ if [ ! -e local/sc ]; then
     popd
 fi
 
-//////////////////// DEPRECATED (BEGIN)
+#//////////////////// DEPRECATED (BEGIN)
 if [ -e local/suttas ]; then
     if [ -e local/suttas/.git ]; then
         echo -e "INIT\t: SuttaCentral/translation folder local/suttas exists (OK)"
@@ -135,7 +135,7 @@ if [ ! -e local/suttas ]; then
     git clone https://github.com/suttacentral/translation suttas
     popd
 fi
-//////////////////// DEPRECATED (END)
+#//////////////////// DEPRECATED (END)
 
 #if [ -e local/awscli-bundle ]; then
     #echo -e "INIT\t: awscli-bundle folder exists (OK)"

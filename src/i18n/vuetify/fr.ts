@@ -180,6 +180,7 @@ export default {
     bellSimple: "Simple cloche(Domaine publique)",
     bellSound: "Son de cloche",
     bellTibetan: "Son de bol tibétain (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "A ceux dans l’obscurité destinés à la lumière",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "Téléchargement terminé:",

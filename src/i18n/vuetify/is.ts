@@ -181,6 +181,7 @@ export default {
     bellSimple: "Einföld bjalla (Public Domain)",
     bellSound: "Bjölluhljóð",
     bellTibetan: "Tíbesk söngskál (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "Tileinkað þeim í myrkri, sem stefna á ljósið",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "Niðurhal lokið:",

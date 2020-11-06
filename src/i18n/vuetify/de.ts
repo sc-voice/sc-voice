@@ -182,6 +182,7 @@ export default {
     bellSimple: "Einfacher Gong (Public Domain)",
     bellSound: "Gong",
     bellTibetan: "Tibetische Klangschale (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "Den Dunklen auf dem Weg zum Licht",
     dedicatedSearch: "dunklen auf dem weg zum licht",
     downloadComplete: "Herunterladen abgeschlossen:",

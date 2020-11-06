@@ -58,10 +58,8 @@ style="width:100%; margin-top:0"/>
                   <v-icon>play_circle_outline</v-icon>
               </v-btn>
               <v-btn icon
-                  :href="downloadUrl()"
-                  @click="downloadClick()"
+                  @click="downloadBuild()"
                   :aria-label="`${ariaDownload} ${resultId()}`"
-                  :type="audioType"
                   class="scv-icon-btn" :style="cssVars" small>
                   <v-icon>arrow_downward</v-icon>
               </v-btn>
@@ -149,8 +147,10 @@ style="width:100%; margin-top:0"/>
           </div>
         </div>
       </div>
-      <scv-downloader
+      <scv-downloader v-if="this.gscv.voices.length"
         ref="refScvDownloader"
+        :urlBuild="urlBuild"
+        :urlDownload="urlDownload"
         :filename="downloadFile"
         :focusElement="postDownloadFocus"
         />
@@ -202,11 +202,8 @@ style="width:100%; margin-top:0"/>
               <v-icon>play_circle_outline</v-icon>
           </v-btn>
           <v-btn icon
-              :href="downloadUrl(search)"
-              v-show="playlistDuration.totalSeconds < 3*3600"
-              @click="downloadClick(search)"
-              :title="$vuetify.lang.t('$vuetify.scv.downloadPlaylist')"
-              type="audio/mp3"
+              @click="downloadBuild()"
+              :aria-label="`${ariaDownload} ${resultId()}`"
               class="scv-icon-btn" :style="cssVars" small>
               <v-icon>arrow_downward</v-icon>
           </v-btn>
@@ -248,27 +245,27 @@ style="width:100%; margin-top:0"/>
             <div class="ml-3 pt-2" 
                 style="display:flex; justify-content: space-between">
                 <div>
-                <v-btn icon v-if="result.quote"
-                    @click="playQuotes(i, result)"
-                    :class="btnPlayQuotesClass(i)" :style="cssVars" small>
-                    <v-icon>chat_bubble_outline</v-icon>
-                </v-btn>
-                <v-btn icon v-if="result.quote"
-                    @click="playOne(result)"
-                    class="scv-icon-btn" :style="cssVars" small>
-                    <v-icon>play_circle_outline</v-icon>
-                </v-btn>
-                <v-btn icon v-if="result.quote"
-                    :href="resultLink(result)"
-                    class="scv-icon-btn" :style="cssVars" small>
-                    <v-icon>open_in_new</v-icon>
-                </v-btn>
-                <v-btn icon v-if="result.quote && gscv.voices.length"
-                    :href="downloadUrl(resultRef(result))"
-                    @click="downloadClick(resultRef(result))"
-                    class="scv-icon-btn" :style="cssVars" small>
-                    <v-icon>arrow_downward</v-icon>
-                </v-btn>
+                    <v-btn icon v-if="result.quote"
+                        @click="playQuotes(i, result)"
+                        :class="btnPlayQuotesClass(i)" :style="cssVars" small>
+                        <v-icon>chat_bubble_outline</v-icon>
+                    </v-btn>
+                    <v-btn icon v-if="result.quote"
+                        @click="playOne(result)"
+                        class="scv-icon-btn" :style="cssVars" small>
+                        <v-icon>play_circle_outline</v-icon>
+                    </v-btn>
+                    <v-btn icon v-if="result.quote"
+                        :href="resultLink(result)"
+                        class="scv-icon-btn" :style="cssVars" small>
+                        <v-icon>open_in_new</v-icon>
+                    </v-btn>
+                    <v-btn icon
+                        @click="downloadBuild(resultRef(result))"
+                        :aria-label="`${ariaDownload} ${resultId()}`"
+                        class="scv-icon-btn" :style="cssVars" small>
+                        <v-icon>arrow_downward</v-icon>
+                    </v-btn>
                 </div>
                 <div class="scv-score">
                     {{$vuetify.lang.t('$vuetify.scv.relevance')}}
@@ -306,7 +303,7 @@ style="width:100%; margin-top:0"/>
                 </div>
             </div>
         </summary>
-        <div class="scv-play-controls" v-if="gscv.voices">
+        <div class="scv-play-controls" v-if="gscv.voices.length">
             <button
                 :disabled="waiting > 0"
                 @click="launchSuttaPlayer(i+1)"
@@ -345,7 +342,7 @@ style="width:100%; margin-top:0"/>
             </div>
         </div>
       </details> <!-- section i -->
-      <scv-player v-if="tracks && gscv.voices"
+      <scv-player v-if="tracks && gscv.voices.length"
         :ref="`refScvPlayer`" 
         :tracks="tracks" 
         :voice="voice"
@@ -403,6 +400,8 @@ export default {
             supportedAudio: [],
             unsupportedAudio: [],
             language: 'en',
+            urlBuild: '',
+            urlDownload: '',
             sutta: {},
             suttaplex: {},
             suttaCode: '',
@@ -488,7 +487,7 @@ export default {
                 ? 'scv-icon-btn scv-btn-playing'
                 : 'scv-icon-btn ';
         },
-        downloadUrl(search) {
+        downloadUrl(search, build) {
             if (this.gscv.voices == null) {
                 return "downloadUrl-unavailable";
             }
@@ -496,14 +495,8 @@ export default {
             this.showPali && langs.push('pli');
             this.showTrans && langs.push(this.gscv.lang);
             var vnameTrans = this.voice.name;
-            var urlPath;
-            if (this.gscv.audio === this.gscv.AUDIO_MP3) {
-              urlPath = `download/playlist/${langs.join('+')}`
-            } else if (this.gscv.audio === this.gscv.AUDIO_OGG) {
-              urlPath = `download/ogg/${langs.join('+')}`;
-            } else {
-              urlPath = `download/opus/${langs.join('+')}`;
-            }
+            var prefix = build ? 'build-download' : 'download';
+            var urlPath = `${prefix}/${this.gscv.audio}/${langs.join('+')}`
             search = encodeURIComponent(search || this.suttaRef());
             var url = `${urlPath}/${vnameTrans}/${search}`;
             if (this.showPali) {
@@ -551,22 +544,13 @@ export default {
           ].join('/'));
           window.open(urlAudio, "_blank");
         },
-        downloadClick(search) {
+        downloadBuild(search=this.search) {
             var elt = this.$refs['refScvDownloader'];
-            console.log(`downloading:${this.downloadUrl(search)}`, elt);
-            var downloading = this.$vuetify.lang.t(
-              '$vuetify.scv.downloading');
-            var downloadComplete = this.$vuetify.lang.t(
-              '$vuetify.scv.downloadComplete');
-            var downloadTimeout = this.$vuetify.lang.t(
-              '$vuetify.scv.downloadTimeout');
-            elt && elt.update(downloading);
-            this.startWaiting({
-                cookie: 'download-date',
-                onCookieChange: () => elt && elt.update(downloadComplete),
-                timeoutSec: 60,
-                onTimeout: () => elt && elt.update(downloadTimeout),
-            });
+            var downloading = this.$vuetify.lang.t('$vuetify.scv.buildingAudio');
+            console.log(`downloadBuild()`, downloading, search);
+            Vue.set(this, "urlBuild", this.downloadUrl(search, true));
+            Vue.set(this, "urlDownload", this.downloadUrl(search, false));
+            elt && this.$nextTick(()=>elt.update(downloading));
         },
         clear() {
             this.error.search = null;

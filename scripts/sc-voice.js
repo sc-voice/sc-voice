@@ -85,8 +85,10 @@ app.get(["/","/scv"], function(req,res,next) {
 
         // create RestBundles
         var restBundles = app.locals.restBundles = [];
+        let MS_MINUTE = 60*1000;
         var opts = {
             scApi,
+            ephemeralAge: 60*MS_MINUTE,
         };
         //opts = undefined;
         var scvRest = new ScvRest(opts);

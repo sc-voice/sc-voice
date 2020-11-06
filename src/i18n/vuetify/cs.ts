@@ -180,6 +180,7 @@ export default {
     bellSimple: "Jednoduchý Zvon (Public Domain)",
     bellSound: "Zvuk Zvonu",
     bellTibetan: "Tibetská Zpěvná Mísa (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "Temné náklonnosti k světlu",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "Stahování dokončeno:",

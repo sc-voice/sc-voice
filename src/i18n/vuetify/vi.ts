@@ -181,6 +181,7 @@ export default {
     bellSimple: "Simple Bell (Public Domain)",
     bellSound: "Bell Sound",
     bellTibetan: "Tibetan Singing Bowl (Horst: CC0)",
+    buildingAudio: "Building audio file...",
     dedicated: "Sống trong bóng tối, hướng đến ánh sáng",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "Download xong:",

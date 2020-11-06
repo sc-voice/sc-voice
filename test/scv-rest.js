@@ -1138,8 +1138,7 @@
         should.deepEqual(results.map(r => r.uid),[
             'dn7', 
         ]);
-        should(results[0].sutta.author_uid)
-            .equal('kusalagnana-maitrimurti-traetow');
+        should(results[0].sutta.author_uid).equal('sabbamitta');
         should(method).equal('sutta_uid');
     });
     it("POST auth/update-bilara", async()=>{

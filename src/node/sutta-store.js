@@ -127,7 +127,7 @@
                         var sp = await new Promise((resolve, reject) => {
                             exec(cmd, findOpts, (err,stdout,stderr) => {
                                 if (err) {
-                                    logger.log(stderr);
+                                    logger.log(`initialize() failed`, stderr);
                                     reject(err);
                                 } else {
                                     resolve(stdout && 
