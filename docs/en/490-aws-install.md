@@ -28,10 +28,10 @@ T2 servers are the bread-and-butter starter servers. Modest in size, they are st
 
 ##### Choose instance type
 You'll see a long list of servers. To shorten the list, select **Free tier only** and type <kbd>ubuntu</kbd> into the search box.
-You want a Free-Tier Ubuntu 16.4 server:
+You want a Free-Tier Ubuntu 20.4 server:
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ubuntu16.png?raw=true">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-ubuntu16.png?raw=true">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/doc/assets/img/ubuntu20.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/doc/assets/img/ubuntu20.png?raw=true">
 </a>
 
 Confirm selection and click the <kbd>Next: Configure Instance Details</kbd> button (!!!)
