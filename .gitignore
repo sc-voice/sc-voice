@@ -1,3 +1,4 @@
+*.deb
 ssl/
 *.wiki
 local/
