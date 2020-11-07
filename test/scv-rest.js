@@ -247,7 +247,7 @@
         should(contentLength).above(3400000).below(4600000);
         should(res.statusCode).equal(200);
     });
-    it("TESTTESTGET /download/playlist/de/vicki/thig1.10 => ogg", async()=>{
+    it("GET /download/playlist/de/vicki/thig1.10 => ogg", async()=>{
         await testInitialize;
         var scvRest = app.locals.scvRest;
         var apiModel = await scvRest.initialize()
@@ -262,7 +262,7 @@
         should(res.statusCode).equal(200);
         should(contentLength).above(50000).below(110000);
     });
-    it("TESTTESTGET /download/playlist/pli+de/vicki/thig1.10 => ogg", async()=>{
+    it("GET /download/playlist/pli+de/vicki/thig1.10 => ogg", async()=>{
         await testInitialize;
         var scvRest = app.locals.scvRest;
         var apiModel = await scvRest.initialize()
@@ -277,7 +277,7 @@
         should(res.statusCode).equal(200);
         should(contentLength).above(90000).below(110000);
     });
-    it("TESTTESTGET /download/playlist/de/vicki/thig1.10 => opus", async()=>{
+    it("GET /download/playlist/de/vicki/thig1.10 => opus", async()=>{
         await testInitialize;
         var scvRest = app.locals.scvRest;
         var apiModel = await scvRest.initialize()
@@ -292,7 +292,7 @@
         should(res.statusCode).equal(200);
         should(contentLength).above(50000).below(60000);
     });
-    it("TESTTESTGET /download/playlist/pli+de/vicki/thig1.10 => opus", async()=>{
+    it("GET /download/playlist/pli+de/vicki/thig1.10 => opus", async()=>{
         await testInitialize;
         var scvRest = app.locals.scvRest;
         var apiModel = await scvRest.initialize()

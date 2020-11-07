@@ -235,7 +235,7 @@
             otherCookie: 'hello',
         });
     });
-    it("TESTTESThash(opts) returns URL hash path", function() {
+    it("hash(opts) returns URL hash path", function() {
         var scv = new ScvSingleton(g);
         scv.mounted(mockVueRoot);
         Object.keys(scv).forEach(key => {
@@ -331,7 +331,7 @@
             lang: 'en',
         });
     });
-    it("TESTTESTurl(opts) returns url", function() {
+    it("url(opts) returns url", function() {
         var scv = new ScvSingleton(g);
 
         // default
@@ -360,7 +360,7 @@
             "showLang=0",
         ].join('&')));
     });
-    it("TESTTESTreload(opts) sets window location", function() {
+    it("reload(opts) sets window location", function() {
         var scv = new ScvSingleton(g);
 
         g.window.location.href = null;
@@ -496,7 +496,7 @@
         should(scv.showPali).equal(false);
         should(scv.showTrans).equal(true);
     });
-    it("TESTTESTmounted() loads properties from cookies", function() {
+    it("mounted() loads properties from cookies", function() {
         var scv = new ScvSingleton(g);
         Object.assign(mockVueRoot.$cookie, {
             showId: "true",

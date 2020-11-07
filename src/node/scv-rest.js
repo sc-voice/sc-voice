@@ -1227,7 +1227,13 @@
             this.requireAdmin(req, res, "POST sound-store/prune");
             filePruner.pruneDays = req.body.pruneDays;
             filePruner.pruneOldFiles().then(res=>{
-                this.info(`pruneOldFiles():`, JSON.stringify(res));
+                let {
+                    started,
+                    earliest,
+                    size,
+                    pruned,
+                } = res;
+                this.info(`pruneOldFiles():`, {started, earliest, size, pruned});
             });
             return this.getSoundPruner(req, res, next);
         }

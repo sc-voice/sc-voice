@@ -139,7 +139,7 @@
         should(probeOut).match(new RegExp(`languages\\s*:\\s*${languages}`, `msiu`));
         should(probeOut).match(/genre\s*:\s*Dhamma/msiu);
     });
-    it("TESTTESTconcatAudio(files) returns Opus file", async()=>{
+    it("concatAudio(files) returns Opus file", async()=>{
         let tmpPath = tmp.tmpNameSync();
         let guid = path.basename(tmpPath);
         let version = guid;

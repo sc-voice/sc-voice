@@ -87,7 +87,7 @@
         should.deepEqual(pl.tracks, []);
         should(pl.maxSeconds).equal(0); // unlimited
     });
-    it("TESTTESTaddSutta(sutta) adds a sutta", function() {
+    it("addSutta(sutta) adds a sutta", function() {
         var pl = new Playlist();
 
         pl.addSutta(suttas[0]);

@@ -401,7 +401,7 @@
             'Why', 'is', 'that', '?',
         ]);
     });
-    it("TESTTESTconcatAudio(files) returns Opus file", async()=>{
+    it("concatAudio(files) returns Opus file", async()=>{
         var abstractTTS = new AbstractTTS();
         var files = [
             path.join(__dirname, 'data/1d4e09ef9cd91470da56c84c2da481b0.ogg'),
@@ -447,7 +447,7 @@
         should(result.file).match(
             new RegExp(`.*${result.signature.guid}.ogg`));  // output guid
     });
-    it("TESTTESTconcatAudio(files) returns sound file", function(done) {
+    it("concatAudio(files) returns sound file", function(done) {
         var abstractTTS = new AbstractTTS();
         var files = [
             path.join(__dirname, 'data/1d4e09ef9cd91470da56c84c2da481b0.ogg'),

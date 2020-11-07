@@ -21,7 +21,6 @@
     } = require("scv-bilara");
     const LANG = 'en';
     const LOCAL = path.join(__dirname, '..', 'local');
-    const ROOT = path.join(LOCAL, 'suttas');
     const BILARA_DATA = path.join(LOCAL, 'bilara-data');
     const MAXRESULTS = 5;
     const STAGING = {
@@ -60,64 +59,15 @@
         should(store.bilaraData.logger).equal(store);
         should(store.seeker.logger).equal(store);
     });
-    it("initialize() initializes SuttaStore", async()=>{
+    it("TESTTESTinitialize() initializes SuttaStore", async()=>{
         var store = new SuttaStore();
         should(store.maxDuration).equal(3*60*60);
         should(store.isInitialized).equal(false);
         should(await store.initialize()).equal(store);
         should(store.scApi).instanceOf(ScApi);
-        should(store.root).equal(ROOT);
         should(store.bilaraData.initialized).equal(true);
         should(store.seeker.initialized).equal(true);
         should(store.seeker.logger).equal(store);
-    });
-    it("suttaPath(opts) returns sutta filepath", async()=>{
-        await new Promise(r=>setTimeout(()=>r(),500)); // test setup
-        var store = await new SuttaStore().initialize();
-        var spath = store.suttaPath('mn1','en','test');
-        should(spath).equal(path.join(ROOT,'mn/en/test/mn1.json'));
-        var dir = path.dirname(spath);
-        should(fs.existsSync(dir)).equal(true);
-
-        // folder path will be created as required
-        fs.rmdirSync(dir);
-        should(fs.existsSync(dir)).equal(false);
-        var dir = path.dirname(store.suttaPath('mn1','en','test'));
-        should(fs.existsSync(dir)).equal(true);
-
-        // opts.suttaIds controls suttaPath
-        var suttaIds = [
-            "an1.1-10",
-        ];
-        var store = await new SuttaStore({
-            suttaIds,
-        }).initialize();
-        var spath = store.suttaPath('an1.1','en','test');
-        should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
-
-        var store = await new SuttaStore().initialize();
-        var spath = store.suttaPath('an1.3','en','test');
-        should(spath).equal(path.join(ROOT,'an/en/test/an1.1-10.json'));
-    });
-    it("suttaPath(opts) throws Error", done=>{
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-            should.throws(() => store.suttaPath()); 
-            should.throws(() => store.suttaPath({
-                // sutta_uid: 'MN 1',
-                language: 'en',
-                author_id: 'sujato',
-            })); 
-            should.throws(() => store.suttaPath('mn1')); 
-            should.throws(() => store.suttaPath('mn1', 'en')); 
-            should.throws(() => store.suttaPath('abcdef','en','sujato')); 
-            should.throws(() => store.suttaPath({
-                sutta_uid: 'MN 1',
-                language: 'en',
-                // author_id: 'sujato',
-            })); 
-            done(); 
-        } catch(e) {done(e);} })();
     });
     it("search('thig16.1') returns segmented sutta", async()=>{
         var voice = Voice.createVoice({
@@ -357,49 +307,6 @@
         } = await store.search('not-in-suttas');
         should(results.length).equal(0);
     });
-    it("search(pattern) finds metadata", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-
-            // author
-            var {
-                method,
-                results,
-            } = await store.search('jessica walton',3);
-            should(results).instanceOf(Array);
-            should.deepEqual(results.map(r=>r.uid), [
-                'thig9.1', 'thig8.1', 'thig7.3']);
-            should.deepEqual(results.map(r=>r.count), [1, 1, 1]);
-            should.deepEqual(results.map(r=>r.author_uid), [
-                'sujato', 'sujato', 'sujato']);
-
-            // no metadata
-            var {
-                method,
-                results,
-            } = await store.search({
-                pattern: 'jessica walton',
-                searchMetadata: false,
-            });
-            should(results).instanceOf(Array);
-            should.deepEqual(results.map(r=>r.uid), [
-                'thig9.1', 'thig8.1', 'thig7.3', 'thig7.2', 'thig7.1',
-                ]);
-            should.deepEqual(results.map(r=>r.count), [1,1,1,1,1]);
-            var {
-                method,
-                results,
-            } = await store.search({
-                pattern: 'root of suffering',
-                searchMetadata: false,
-            });
-            should(results).instanceOf(Array);
-            should.deepEqual(results.map(r=>r.count), 
-                [5.091, 3.016, 2.006, 1.043, 1.01]);
-
-            done(); 
-        } catch(e) {done(e);} })();
-    });
     it("sanitizePattern(pattern) prevents code injection attacks", function() {
         var testPattern = (pattern,expected) => {
             should(SuttaStore.sanitizePattern(pattern)).equal(expected);
@@ -564,72 +471,6 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("searchLegacy(pattern) finds legacy romanized Pali", done=>{
-        if (!TEST_LEGACY) { done(); return; }
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-
-            var {
-                method,
-                results,
-            } = await store.searchLegacy('third jhana');
-            should(method).equal('keywords-legacy');
-            should.deepEqual(results.map(r=> ({
-                uid:r.uid,
-                count:r.count,
-            })), [{
-                count: 15,
-                uid: 'dn33',
-            },{
-                count: 9,
-                uid: 'dn34',
-            },{
-                count: 7,
-                uid: 'mn85',
-            },{
-                count: 7,
-                uid: 'sn40.3',
-            },{
-                count: 5,
-                uid: 'an9.39',
-            }]);
-
-            done(); 
-        } catch(e) {done(e);} })();
-    });
-    it("search(pattern) finds legacy romanized Pali", function(done) {
-        if (!TEST_LEGACY) { done(); return; }
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-
-            var {
-                method,
-                results,
-            } = await store.search('third jhana');
-            should(method).equal('keywords-legacy');
-            should.deepEqual(results.map(r=> ({
-                uid:r.uid,
-                count:r.count,
-            })), [{
-                count: 15,
-                uid: 'dn33',
-            },{
-                count: 9,
-                uid: 'dn34',
-            },{
-                count: 7,
-                uid: 'mn85',
-            },{
-                count: 7,
-                uid: 'sn40.3',
-            },{
-                count: 5,
-                uid: 'an9.39',
-            }]);
-
-            done(); 
-        } catch(e) {done(e);} })();
-    });
     it("search(pattern) finds exact Pali", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
@@ -644,50 +485,6 @@
             should(resultPattern).equal('abhisambuddhā');
             done(); 
         } catch(e) {done(e);} })();
-    });
-    it("sutta_uidSuccessor(sutta_uid) returns following sutta_uid", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-
-            // logical
-            should(store.sutta_uidSuccessor('mn33',true)).equal('mn34');
-            should(store.sutta_uidSuccessor('sn29.10-21',true)).equal('sn29.22');
-            should(store.sutta_uidSuccessor('sn29.10-21')).equal('sn30.1');
-
-            should(store.sutta_uidSuccessor('mn33',false)).equal('mn34');
-            should(store.sutta_uidSuccessor('sn29.10-21',false)).equal('sn30.1');
-            should(store.sutta_uidSuccessor('thag16.1')).equal('thag16.2');
-            should(store.sutta_uidSuccessor('thag16.1-10')).equal('thag17.1');
-            done(); 
-        } catch(e) {done(e);} })();
-    });
-    it("supportedSutta(pattern) return supported sutta uid", async()=>{
-        var store = await new SuttaStore().initialize();
-
-        var suttas = SuttaCentralId.supportedSuttas;
-        should(store.supportedSutta(suttas[0])).equal(suttas[0]);
-        var last = suttas[suttas.length-1];
-        should(store.supportedSutta(last)).equal(last);
-
-        should(store.supportedSutta("sn29.1")).equal("sn29.1");
-        should(store.supportedSutta("sn29.10")).equal("sn29.10");
-        should(store.supportedSutta("sn29.11")).equal("sn29.11-20");
-        should(store.supportedSutta("sn29.12")).equal("sn29.11-20");
-        should(store.supportedSutta("sn29.19")).equal("sn29.11-20");
-        should(store.supportedSutta("sn29.20")).equal("sn29.11-20");
-        should(store.supportedSutta("sn29.21")).equal("sn29.21-50");
-        should(store.supportedSutta("sn29.49")).equal("sn29.21-50");
-        should(store.supportedSutta("sn29.50")).equal("sn29.21-50");
-        should(store.supportedSutta("mn33")).equal("mn33");
-
-        // bounds
-        should(store.supportedSutta("sn29.51")).equal(null);
-        should(store.supportedSutta("z999")).equal(null);
-        should(store.supportedSutta("a1")).equal(null);
-
-        // fully specified suttas
-        should(store.supportedSutta("mn1/en/sujato")).equal("mn1");
-        should(store.supportedSutta("mn1/en/bodhi")).equal("mn1");
     });
     it("isUidPattern(pattern) is true for sutta_uid patterns", function() {
         // unsupported sutta
@@ -726,230 +523,6 @@
         should(SuttaStore.isUidPattern('red,sn22.1-20,mn1')).equal(false);
         should(SuttaStore.isUidPattern('sn22.1-20    ,   red')).equal(false);
         should(SuttaStore.isUidPattern('red,sn22.1-20')).equal(false);
-    });
-    it("expandRange(item) expands range", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-            should.deepEqual(store.expandRange('an5.179').length,1);
-
-            // no subchapters
-            should.deepEqual(store.expandRange('mn50'), [
-                'mn50' ]);
-            should.deepEqual(store.expandRange('mn1-3'), [
-                'mn1', 'mn2', 'mn3', ]);
-
-            // subchapters
-            should.deepEqual(store.expandRange('sn50'), [
-                'sn50.1-12',
-                'sn50.13-22',
-                'sn50.23-34',
-                'sn50.35-44',
-                'sn50.45-54',
-                'sn50.55-66',
-                //'sn50.67-76',
-                'sn50.77-88',
-                'sn50.89-98',
-                'sn50.99-108',
-            ]);
-            should.deepEqual(store.expandRange('sn50.2-11'), [
-                'sn50.1-12']);
-            should.deepEqual(store.expandRange('sn50.2-21'), [
-                'sn50.1-12', 
-                'sn50.13-22']);
-            should.deepEqual(store.expandRange('an5.179'), [
-                'an5.179']);
-            should.deepEqual(store.expandRange('an1.2-5'), [
-                'an1.1-10']);
-            should.deepEqual(store.expandRange('an10.2-5'), [
-                'an10.2',
-                'an10.3',
-                'an10.4',
-                'an10.5',
-            ]);
-            should.deepEqual(store.expandRange('an10.155-158'), [
-                'an10.155',
-                'an10.156-166',
-            ]);
-
-            // subchapters KN
-            should.deepEqual(store.expandRange('thig1.13'), [
-                'thig1.13',
-            ]);
-            should.deepEqual(store.expandRange('thig4'), [
-                'thig4.1',
-            ]);
-            should.deepEqual(store.expandRange('thag8'), [
-                'thag8.1',
-                'thag8.2',
-                'thag8.3',
-            ]);
-            should.deepEqual(store.expandRange('thig1.1-3'), [
-                'thig1.1',
-                'thig1.2',
-                'thig1.3',
-            ]);
-
-            // out of range
-            should.deepEqual(store.expandRange('mn666'), ['mn152']);
-            should.deepEqual(store.expandRange('an666'), ['an11.992-1151']);
-            should.deepEqual(store.expandRange('an2.9999'), ['an2.310-479']);
-
-            // errors
-            should.throws(() => {
-                store.expandRange('da21'); // no collection
-            });
-            should.throws(() => {
-                store.expandRange('snp1.8'); // no collection
-            });
-            should.throws(() => {
-                store.expandRange('kn9'); // no collection
-            });
-
-            done(); 
-        } catch(e) {done(e);} })();
-    });
-    it("expandRange(item) handles fully sutta refs", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-
-            // dashes in author
-            should.deepEqual(store.expandRange(
-                'dn7/de/kusalagnana-maitrimurti-traetow'), [
-                'dn7/de/kusalagnana-maitrimurti-traetow' ]);
-
-            should.deepEqual(store.expandRange('an5.179').length,1);
-
-            // no subchapters
-            should.deepEqual(store.expandRange('mn50/en/sujato'), [
-                'mn50/en/sujato' ]);
-            should.deepEqual(store.expandRange('mn1-3/en/sujato'), [
-                'mn1/en/sujato', 'mn2/en/sujato', 'mn3/en/sujato', ]);
-
-            // subchapters
-            should.deepEqual(store.expandRange('sn50/en/sujato'), [
-                'sn50.1-12/en/sujato',
-                'sn50.13-22/en/sujato',
-                'sn50.23-34/en/sujato',
-                'sn50.35-44/en/sujato',
-                'sn50.45-54/en/sujato',
-                'sn50.55-66/en/sujato',
-                //'sn50.67-76/en/sujato',
-                'sn50.77-88/en/sujato',
-                'sn50.89-98/en/sujato',
-                'sn50.99-108/en/sujato',
-            ]);
-            should.deepEqual(store.expandRange('sn50.2-11/en/sujato'), [
-                'sn50.1-12/en/sujato']);
-            should.deepEqual(store.expandRange('sn50.2-21/en/sujato'), [
-                'sn50.1-12/en/sujato', 
-                'sn50.13-22/en/sujato']);
-            should.deepEqual(store.expandRange('an5.179/en/sujato'), [
-                'an5.179/en/sujato']);
-            should.deepEqual(store.expandRange('an1.2-5/en/sujato'), [
-                'an1.1-10/en/sujato']);
-            should.deepEqual(store.expandRange('an10.2-5/en/sujato'), [
-                'an10.2/en/sujato',
-                'an10.3/en/sujato',
-                'an10.4/en/sujato',
-                'an10.5/en/sujato',
-            ]);
-            should.deepEqual(store.expandRange('an10.155-158/en/sujato'), [
-                'an10.155/en/sujato',
-                'an10.156-166/en/sujato',
-            ]);
-
-            // subchapters KN
-            should.deepEqual(store.expandRange('thig1.13/en/sujato'), [
-                'thig1.13/en/sujato',
-            ]);
-            should.deepEqual(store.expandRange('thig4/en/sujato'), [
-                'thig4.1/en/sujato',
-            ]);
-            should.deepEqual(store.expandRange('thag8/en/sujato'), [
-                'thag8.1/en/sujato',
-                'thag8.2/en/sujato',
-                'thag8.3/en/sujato',
-            ]);
-            should.deepEqual(store.expandRange('thig1.1-3/en/sujato'), [
-                'thig1.1/en/sujato',
-                'thig1.2/en/sujato',
-                'thig1.3/en/sujato',
-            ]);
-
-            // no collection
-            should.throws(() => {
-                store.expandRange('da21/en/sujato');
-            });
-            should.throws(() => {
-                store.expandRange('snp1.8/en/sujato');
-            });
-            should.throws(() => {
-                store.expandRange('kn9/en/sujato');
-            });
-
-            done(); 
-        } catch(e) {done(e);} })();
-    });
-    it("suttaList(pattern) finds listed suttas", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-
-            should.deepEqual( store.suttaList(
-                ['sn 45.161']), // spaces
-                ['sn45.161']);
-            should.deepEqual( store.suttaList(
-                ['MN 1-3/en/sujato']), // spaces
-                ['mn1/en/sujato', 'mn2/en/sujato', 'mn3/en/sujato']);
-            should.deepEqual( store.suttaList(
-                ['AN 5.179', 'sn29.1']), // spaces
-                ['an5.179', 'sn29.1']);
-
-            should.deepEqual(store.suttaList( 
-                ['an10.1-3']),
-                ['an10.1', 'an10.2', 'an10.3']);
-
-            should.deepEqual( store.suttaList(
-                ['an2.3']), // sub-chapter embedded 
-                ['an2.1-10']);
-            should.deepEqual( store.suttaList(
-                ['sn29']), // implied sub-chapters
-                ['sn29.1', 'sn29.2', 'sn29.3', 'sn29.4', 'sn29.5',
-                    'sn29.6', 'sn29.7', 'sn29.8', 'sn29.9', 'sn29.10',
-                    'sn29.11-20', 'sn29.21-50', ]);
-            should.deepEqual( store.suttaList(
-                ['SN28.8-10']), // sub-chapter range (exact)
-                ['sn28.8', 'sn28.9', 'sn28.10']);
-            should.deepEqual( store.suttaList(
-                ['sn28.8-999']), // sub-chapter range (right over)
-                ['sn28.8', 'sn28.9', 'sn28.10']);
-            should.deepEqual( store.suttaList(
-                ['sn29.1', 'mn33', 'SN29.2']), // order as entered
-                ['sn29.1', 'mn33', 'sn29.2']);
-            should.deepEqual( store.suttaList(
-                ['sn29.1', 'sn29.12', 'sn29.2']), // within range
-                ['sn29.1', 'sn29.11-20', 'sn29.2']);
-            should.deepEqual( store.suttaList(
-                'sn29.1, sn29.12, sn29.2'), // String
-                ['sn29.1', 'sn29.11-20', 'sn29.2']);
-            should.deepEqual( store.suttaList(
-                ['sn29.9-11']), // expand sub-chapter range
-                ['sn29.9', 'sn29.10', 'sn29.11-20']);
-            should.deepEqual( store.suttaList(
-                ['sn29.1', 'sn29.1', 'sn29.2']), // duplicates
-                ['sn29.1', 'sn29.1', 'sn29.2']);
-            should.deepEqual( store.suttaList(
-                ['AN5.179', 'sn29.1']), // spaces
-                ['an5.179', 'sn29.1']);
-
-            should.deepEqual(store.suttaList(
-                ['MN9-11']), // major number range
-                ['mn9','mn10','mn11']); 
-            should.deepEqual(store.suttaList(
-                ['mn9-11', 'mn10-12']), // major number range
-                ['mn9','mn10','mn11','mn10','mn11','mn12']); 
-
-            done(); 
-        } catch(e) {done(e);} })();
     });
     it("search(pattern) finds mn1/en/sujato", function(done) {
         (async function() { try {
@@ -1133,82 +706,60 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("sutta_uidSearch(...) finds suttas by sutta_uid", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore({
-                maxDuration: 450,
-            }).initialize();
-            var maxResults = 5;
-            var language = 'en';
+    it("TESTTESTnikayaSuttaIds(...) returns sutta_uids", async()=>{
+        var store = await new SuttaStore({
+            maxDuration: 450,
+        }).initialize();
+        var language = 'en';
+        const KNSTART = [
+            'thag1.1', 'thag1.2', 'thag1.3',
+        ];
+        const KNEND = [
+            'thig14.1', 'thig15.1', 'thig16.1',
+        ];
 
-            should.deepEqual(store.sutta_uidSearch("an10.1-10").uids, [
-                "an10.1", "an10.2", "an10.3", "an10.4", "an10.5"]);
-            should.deepEqual(store.sutta_uidSearch("mn2-11").uids, [
-                "mn2", "mn3", "mn4", "mn5", "mn6" ]);
-            should.deepEqual(store.sutta_uidSearch("an1.2-11").uids, [
-                "an1.1-10", "an1.11-20"]);
+        // nikaya, language, author/translator
+        var ids = await store.nikayaSuttaIds('kn', 'en', 'sujato');
+        should(ids).instanceOf(Array);
+        should.deepEqual(ids.slice(0,3), KNSTART);
+        should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
 
-            done(); 
-        } catch(e) {done(e);} })();
-    });
-    it("nikayaSuttaIds(...) returns sutta_uids", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore({
-                maxDuration: 450,
-            }).initialize();
-            var language = 'en';
-            const KNSTART = [
-                'thag1.1', 'thag1.2', 'thag1.3',
-            ];
-            const KNEND = [
-                'thig14.1', 'thig15.1', 'thig16.1',
-            ];
+        // nikaya
+        var ids = await store.nikayaSuttaIds('kn');
+        should(ids).instanceOf(Array);
+        should(ids.length).equal(337);
+        should.deepEqual(ids.slice(0,3), KNSTART);
+        should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
 
-            // nikaya, language, author/translator
-            var ids = await store.nikayaSuttaIds('kn', 'en', 'sujato');
-            should(ids).instanceOf(Array);
-            should.deepEqual(ids.slice(0,3), KNSTART);
-            should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
+        // nikaya an
+        var ids = await store.nikayaSuttaIds('an');
+        should(ids).instanceOf(Array);
+        should(ids.length).equal(1407);
 
-            // Pali is in English folder
-            var ids = await store.nikayaSuttaIds('kn', 'pli', 'sujato');
-            should(ids).instanceOf(Array);
-            should.deepEqual(ids.slice(0,3), KNSTART);
-            should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
+        // nikaya sn
+        var ids = await store.nikayaSuttaIds('sn');
+        should(ids).instanceOf(Array);
+        should(ids.length).equal(1819);
 
-            // nikaya
-            var ids = await store.nikayaSuttaIds('kn');
-            should(ids).instanceOf(Array);
-            should(ids.length).equal(337);
-            should.deepEqual(ids.slice(0,3), KNSTART);
-            should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
+        // nikaya dn
+        var ids = await store.nikayaSuttaIds('dn');
+        should(ids).instanceOf(Array);
+        should(ids.length).equal(34);
 
-            // nikaya an
-            var ids = await store.nikayaSuttaIds('an');
-            should(ids).instanceOf(Array);
-            should(ids.length).equal(1401);
+        // nikaya mn
+        var ids = await store.nikayaSuttaIds('mn');
+        should(ids).instanceOf(Array);
+        should(ids.length).equal(152);
 
-            // nikaya sn
-            var ids = await store.nikayaSuttaIds('sn');
-            should(ids).instanceOf(Array);
-            should(ids.length).equal(1815);
+        // Bad input
+        var ids = await store.nikayaSuttaIds('nonikaya', 'yiddish', 'nobody');
+        should.deepEqual(ids, []);
 
-            // nikaya dn
-            var ids = await store.nikayaSuttaIds('dn');
-            should(ids).instanceOf(Array);
-            should(ids.length).equal(34);
-
-            // nikaya mn
-            var ids = await store.nikayaSuttaIds('mn');
-            should(ids).instanceOf(Array);
-            should(ids.length).equal(152);
-
-            // Bad input
-            var ids = await store.nikayaSuttaIds('nonikaya', 'yiddish', 'nobody');
-            should.deepEqual(ids, []);
-
-            done(); 
-        } catch(e) {done(e);} })();
+        // LEGACY TEST: Pali is in English folder
+        //var ids = await store.nikayaSuttaIds('kn', 'pli', 'sujato');
+        //should(ids).instanceOf(Array);
+        //should.deepEqual(ids.slice(0,3), KNSTART);
+        //should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
     });
     it("search('sn12.3') returns Deutsch", async()=>{
         var voice = Voice.createVoice('Amy');
