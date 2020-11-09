@@ -9,12 +9,12 @@ else
 fi
 
 NODE_CURVER=`node --version`
-NODE_VER=10.17
+NODE_VER=14.15
 echo -e "INIT\t: node version: ${NODE_CURVER}"
 if [ "$NODE_CURVER" == "$NODE_VER" ]; then
     echo -e "INIT\t: node version $NODE_CURVER (ok)"
 else 
     echo -e "INIT\t: installing node version $NODE_VER... "
-    nvm install 10.17
+    nvm install $NODE_VER
 fi
 
