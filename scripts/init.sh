@@ -45,9 +45,9 @@ installApp krb5-config
 installApp pcre-config libpcre3-dev
 
 NODE_VER=14.15
-nodejs --version |& grep $NODE_VER >& /dev/null
+node --version |& grep $NODE_VER >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
-  echo -e "INIT\t: nodejs" `nodejs --version`
+  echo -e "INIT\t: nodejs" `node --version`
 else
   echo -e "INIT\t: installing nodejs $NODE_VER (sudo)"
   curl -sL https://deb.nodesource.com/setup_14.x | tee node_setup_14.x | sudo bash -
