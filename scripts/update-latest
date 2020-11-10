@@ -34,10 +34,11 @@ fi
 
 ./scripts/install-nvm.sh
 
-type opusenc
+type opusenc >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t: opus-tools installed"
+    echo -e "INIT\t:"  `type opusenc`
 else
+    echo -e "INIT\t: installing opusenc (sudo)"
     sudo apt-get install -y opus-tools
 fi
 
@@ -50,16 +51,16 @@ else
     sudo dpkg -i ripgrep_11.0.2_amd64.deb
 fi
 
-type rotatelogs
+MSG=`type rotatelogs`
 RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "UPDATE\t: rotatelogs detected (OK)"
+    echo -e "UPDATE\t: $MSG (OK)"
 else
-    echo -e "UPDATE\t: installing apache2-utils for rotatelogs (requires sudo)"
+    echo -e "UPDATE\t: installing apache2-utils for rotatelogs (sudo)"
     sudo apt-get update -y
     sudo apt-get install -y apache2-utils
 fi
 
-echo -e "UPDATE\t: Installing dependencies..."
+echo -e "UPDATE\t: npm install..."
 npm install
 sync
 

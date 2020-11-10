@@ -6,10 +6,10 @@
         <v-card role="alertdialog" class="scv-alert-dialog"
             :style="cssProps">
             <div class="text-center mt-3" aria-hidden=true>
-              <img src="/img/wait1.png" :class="waitClass(1)"/>
-              <img src="/img/wait2.png" :class="waitClass(2)"/>
-              <img src="/img/wait3.png" :class="waitClass(3)"/>
-              <img src="/img/wait4.png" :class="waitClass(0)"/>
+              <img :src="waitPng(1)" :class="waitClass(1)"/>
+              <img :src="waitPng(2)" :class="waitClass(2)"/>
+              <img :src="waitPng(3)" :class="waitClass(3)"/>
+              <img :src="waitPng(4)" :class="waitClass(0)"/>
             </div>
             <v-card-actions>
               <div tabindex=0 ref="refAlert" class="pl-1 pr-1">
@@ -101,6 +101,12 @@ export default {
             console.error(e);
         });
       },
+      url(path) {
+        var origin = window.location.origin;
+        return origin.endsWith(':8080') 
+          ? `${origin.substring(0, origin.length-5)}/scv/${path}` 
+          : `./${path}`;
+      },
       setFocus(elt) {
           if (elt instanceof Vue) {
               elt = elt.$el;
@@ -140,6 +146,9 @@ export default {
       },
       waitClass(n) {
         return this.waitState === n ? "opacity100" : "opacity0";
+      },
+      waitPng(n) {
+        return this.url(`/img/wait${n}.png`);
       },
     },
     computed: {

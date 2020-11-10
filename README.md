@@ -8,9 +8,9 @@ Javascript implemenation of SuttaCentral Voice Assistance (SC-Voice) for vision-
 
 ### Prerequisites
 
-* Linux (tested on Ubuntu 16.04.5 LTS/xenial)
+* Linux Debian 10 or Ubuntu 20.04
+* Nodejs 14.x
 * AWS Polly account (required)
-* IBM Watson Text-to-Speech account (deprecated)
 
 ### Installation
 With a Linux console, install the software:

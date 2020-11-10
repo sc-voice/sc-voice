@@ -191,7 +191,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("speak(opts) adds voice audio", async()=>{
+    it("TESTTESTspeak(opts) adds voice audio", async()=>{
         var scApi = await new ScApi().initialize();
         var factory = new SuttaFactory({
             scApi,

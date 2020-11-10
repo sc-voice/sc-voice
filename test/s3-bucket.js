@@ -143,7 +143,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("local/vsm-s3.json changes endpoint", function(done) {
+    it("TESTTESTlocal/vsm-s3.json changes endpoint", function(done) {
         this.timeout(20*1000);
         var vsm_s3_path = path.join(__dirname, '..', 'local', 'vsm-s3.json');
         if (!fs.existsSync(vsm_s3_path)) {

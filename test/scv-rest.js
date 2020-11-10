@@ -772,7 +772,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET auth/vsm/s3-credentials => sanitized vsm-s3.json", done=>{
+    it("TESTTESTGET auth/vsm/s3-credentials => sanitized vsm-s3.json", done=>{
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials GET test');
@@ -797,7 +797,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("POST auth/vsm/s3-credentials configures vsm-s3.json", done=>{
+    it("TESTTESTPOST auth/vsm/s3-credentials configures vsm-s3.json", done=>{
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials POST test');
@@ -861,7 +861,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET auth/vsm/list-objects lists bucket objects", function(done) {
+    it("TESTTESTGET auth/vsm/list-objects lists bucket objects", function(done) {
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn("skipping auth/vsm/list-objects test");
