@@ -148,7 +148,7 @@ export default {
         return this.waitState === n ? "opacity100" : "opacity0";
       },
       waitPng(n) {
-        return this.url(`/img/wait${n}.png`);
+        return this.url(`img/wait${n}.png`);
       },
     },
     computed: {

@@ -17,7 +17,6 @@
         ScApi,
     } = require('suttacentral-api');
     const { logger } = require('log-instance');
-    const SC = path.join(__dirname, '../local/sc');
     const TEST_DATA = path.join(__dirname, 'data');
     logger.logLevel = 'warn';
     this.timeout(5*1000);
@@ -145,17 +144,6 @@
                 .match(/Linked Discourses 22/);
             should(sutta.sections[0].segments[1].en)
                 .match(/1. Nakula/);
-            done();
-        } catch(e) { done(e); } })();
-    });
-    it("supportedSuttas() returns hierarchy of supported suttas", function(done) { 
-        (async function() { try {
-            await suttaStore.initialize();
-            await suttaFactory.initialize();
-            var suttas = await suttaFactory.supportedSuttas();
-            Object.keys(suttas).forEach(coll => {
-                console.log(`supported Suttas ${coll}`, suttas[coll].length);
-            });
             done();
         } catch(e) { done(e); } })();
     });

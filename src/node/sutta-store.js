@@ -57,7 +57,6 @@
     }
 
     var suttaPaths = {};
-    var supportedSuttas = {}; // from https://github.com/sc-voice/scv-suttas
     var _suttaStore;
 
     class SuttaStore {

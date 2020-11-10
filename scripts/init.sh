@@ -50,7 +50,8 @@ RC=$?; if [ "$RC" == "0" ]; then
   echo -e "INIT\t: nodejs" `node --version`
 else
   echo -e "INIT\t: installing nodejs $NODE_VER (sudo)"
-  curl -sL https://deb.nodesource.com/setup_14.x | tee node_setup_14.x | sudo bash -
+  mkdir -p local
+  curl -sL https://deb.nodesource.com/setup_14.x | tee local/node_setup_14.x | sudo bash -
   sudo apt -y install nodejs
   #nvm install $NODE_VER
   #nvm use $NODE_VER
@@ -85,28 +86,6 @@ if [ -e node_modules ]; then
 else
     echo -e "INIT\t: npm install..."
     npm install
-fi
-
-#if [ -e local/watson ]; then
-    #echo -e "INIT\t: watson folder exists (OK)"
-#else
-    #echo -e "INIT\t: creating local/watson"
-    #mkdir -p local/watson
-#fi
-
-if [ -e local/sc ]; then
-    if [ -e local/sc/.git ]; then
-        echo -e "INIT\t: SuttaCentral/translation folder local/sc exists (OK)"
-    else
-        echo -e "INIT\t: removing legacy SuttaCentral/translation folder "
-        rm -rf local/sc
-    fi
-fi
-if [ ! -e local/sc ]; then
-    pushd local
-    echo -e "INIT\t: loading SuttaCentral translation content..."
-    git clone https://github.com/suttacentral/translation sc
-    popd
 fi
 
 echo -e "INIT\t: $0 END: `date`"

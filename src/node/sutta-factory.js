@@ -141,28 +141,6 @@
             return sutta;
         }
 
-        async supportedSuttas(){ try {
-            var files = [];
-            var suttas = {};
-            files.forEach(f => {
-                var flocal = f.split('/sc/')[1];
-                var ftokens = flocal.split('/');
-                var collection = ftokens[0];
-                suttas[collection] = suttas[collection] || [];
-                var fname = ftokens[ftokens.length - 1];
-                if (fname !== 'info.po') {
-                    var sutta_uid = fname
-                        .replace('.po','')
-                        .replace(/([^0-9])0+/gum,'$1');
-                    suttas[collection].push(sutta_uid);
-                }
-            });
-            return suttas;
-        } catch(e) {
-            this.warn(e);
-            throw e;
-        }}
-
         sectionSutta(sutta) {
             var lang = sutta.lang || this.lang;
             var segStart = 0;

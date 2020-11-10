@@ -32,15 +32,6 @@ if [ "$REBOOT" == "0" ]; then
     done
 fi
 
-./scripts/install-nvm.sh
-
-type opusenc >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t:"  `type opusenc`
-else
-    echo -e "INIT\t: installing opusenc (sudo)"
-    sudo apt-get install -y opus-tools
-fi
 
 MSG=`type rg`
 RC=$?; if [ "$RC" == "0" ]; then
@@ -72,39 +63,6 @@ npm run build
 sync
 
 echo -e "UPDATE\t: Upating offline content..."
-if [ -e local/sc ]; then
-    if [ -e local/sc/.git ]; then
-        echo -e "UPDATE\t: SuttaCentral/translation folder local/sc exists (OK)"
-    else
-        echo -e "UPDATE\t: removing legacy SuttaCentral/translation folder "
-        rm -rf local/sc
-    fi
-fi
-if [ -e local/sc ]; then
-    echo -e "UPDATE\t: updating SuttaCentral translation content..."
-    pushd local/sc
-    git pull
-    popd
-else 
-    pushd local
-    echo -e "UPDATE\t: initializing SuttaCentral translation content..."
-    git clone https://github.com/suttacentral/translation sc
-    popd
-fi
-
-if [ -e local/suttas/mn ]; then
-    echo -e "UPDATE\t: updating scv-suttas..."
-    pushd local/suttas
-    git pull
-    popd
-else
-    pushd local
-    rm -rf suttas
-    echo -e "UPDATE\t: installing scv-suttas..."
-    git clone https://github.com/sc-voice/scv-suttas suttas
-    popd
-fi
-
 if [ ! -e local/bilara-data ]; then
     echo -e "UPDATE\t: installing bilara-data..."
     pushd local

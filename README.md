@@ -45,20 +45,6 @@ Login to your AWS account and go to the IAM dashboard|Delete your root access ke
 aws configure
 ```
 
-##### Configure Watson (deprecated)
-Although Voice is designed to work with different TTS services, the only TTS service
-capable of supporting Pali at this time is AWS Polly Aditi.
-
-The [IBM Watson Text-to-Speech API](https://www.ibm.com/watson/services/text-to-speech/)
-can be used to convert sutta text to speech. To use Watson, you will need an IBM Cloud Watson account.
-To enable Watson translation, first copy your Watson JSON credentials, then
-do the following:
-
-1. `cat > local/watson-credentials.json`
-1. _paste credentials_
-1. ENTER
-1. CTRL-D
-
 ##### Launch localhost server
 ```
 npm start
@@ -73,7 +59,6 @@ npm run test
 ```
 Unit tests take about 2 minutes.
 The unit tests require AWS Polly. 
-Tests for IBM Watson are disabled by default (see `test/watson.js`). 
 
 To execute a single unit/test, simply insert the text `TESTTEST`
 into the `it("...")` title argument. Then run `npm run test:test`, 
