@@ -8,6 +8,8 @@ echo -e "INIT\t: updating apt"
 sudo apt update -y
 sudo apt upgrade -y
 
+export DEBIAN_FRONTEND=noninteractive`
+
 function installApp() {
   APP=$1
   INST=$2
@@ -28,7 +30,7 @@ function installLibDev() {
     echo -e "INIT\t: $MSG (OK)"
   else
     echo -e "INIT\t: installing $LIB-dev"
-    #sudo apt-get install $LIB-dev
+    sudo apt-get install -y $LIB-dev
   fi
 }
 
