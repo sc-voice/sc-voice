@@ -8,7 +8,7 @@ echo -e "INIT\t: updating apt"
 sudo apt update -y
 sudo apt upgrade -y
 
-export DEBIAN_FRONTEND=noninteractive`
+export DEBIAN_FRONTEND=noninteractive
 
 function installApp() {
   APP=$1
