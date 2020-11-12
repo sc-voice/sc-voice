@@ -34,17 +34,19 @@ function installLibDev() {
   fi
 }
 
-installLibDev libssl
-installLibDev libpcre
-installLibDev libpcreposix
-installLibDev libkrb5
-installLibDev libk5crypto
-installLibDev libcom_err
 
 installApp unzip
 installApp make build-essential
-installApp krb5-config
-installApp pcre-config libpcre3-dev
+
+# TODO: Ubuntu 20.04 nodegit pre-requisites?
+#installLibDev libssl
+#installLibDev libpcre
+#installLibDev libpcreposix
+#installLibDev libkrb5
+#installLibDev libk5crypto
+#installLibDev libcom_err
+#installApp krb5-config
+#installApp pcre-config libpcre3-dev
 
 NODE_VER=14.15
 node --version |& grep $NODE_VER >& /dev/null
@@ -71,7 +73,6 @@ fi
 installApp opusenc opus-tools
 installApp vue @vue/cli
 installApp mocha
-installApp aspell
 installApp ffmpeg
 installApp python
 
