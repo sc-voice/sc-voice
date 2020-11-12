@@ -70,19 +70,18 @@ else
     sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
 fi
 
+npm install -g @vue/cli
 installApp opusenc opus-tools
-installApp vue @vue/cli
-installApp mocha
 installApp ffmpeg
-installApp python
 
-type aws >& /dev/null
-RC=$?; if [ "$RC" == "0" ]; then
-    echo -e "INIT\t:" `type aws`
-else
-    echo -e "INIT\t: installing aws cli ..."
-    $SCRIPT_DIR/install-aws.sh
-fi
+#installApp python
+#type aws >& /dev/null
+#RC=$?; if [ "$RC" == "0" ]; then
+    #echo -e "INIT\t:" `type aws`
+#else
+    #echo -e "INIT\t: installing aws cli ..."
+    #$SCRIPT_DIR/install-aws.sh
+#fi
 
 if [ -e node_modules ]; then
     echo -e "INIT\t: node_modules exist (OK)"
