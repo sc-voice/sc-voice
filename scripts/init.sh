@@ -70,7 +70,14 @@ else
     sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
 fi
 
-npm install -g @vue/cli
+MSG=`vue --version 2>&1`; RC=$?
+if [ "$RC" == "0" ]; then 
+  echo -e "INIT\t: vue $MSG (OK)"
+else
+  echo -e "INIT\t: installing @vue/cli"
+  npm install -g @vue/cli
+fi
+
 installApp opusenc opus-tools
 installApp ffmpeg
 
