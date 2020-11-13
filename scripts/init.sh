@@ -38,16 +38,6 @@ function installLibDev() {
 installApp unzip
 installApp make build-essential
 
-# TODO: Ubuntu 20.04 nodegit pre-requisites?
-#installLibDev libssl
-#installLibDev libpcre
-#installLibDev libpcreposix
-#installLibDev libkrb5
-#installLibDev libk5crypto
-#installLibDev libcom_err
-#installApp krb5-config
-#installApp pcre-config libpcre3-dev
-
 NODE_VER=14.15
 node --version |& grep $NODE_VER >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
@@ -75,20 +65,11 @@ if [ "$RC" == "0" ]; then
   echo -e "INIT\t: vue $MSG (OK)"
 else
   echo -e "INIT\t: installing @vue/cli"
-  npm install -g @vue/cli
+  sudo npm install -g @vue/cli
 fi
 
 installApp opusenc opus-tools
 installApp ffmpeg
-
-#installApp python
-#type aws >& /dev/null
-#RC=$?; if [ "$RC" == "0" ]; then
-    #echo -e "INIT\t:" `type aws`
-#else
-    #echo -e "INIT\t: installing aws cli ..."
-    #$SCRIPT_DIR/install-aws.sh
-#fi
 
 if [ -e node_modules ]; then
     echo -e "INIT\t: node_modules exist (OK)"

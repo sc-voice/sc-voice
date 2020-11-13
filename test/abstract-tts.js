@@ -17,6 +17,7 @@
     const ELLIPSIS = "\u2026";
     const ELLIPSIS_BREAK = '.';
     var storePath = tmp.tmpNameSync();
+    this.timeout(5*1000);
 
     it("default ctor", () => {
         var tts = new AbstractTTS();
