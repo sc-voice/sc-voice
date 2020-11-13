@@ -32,7 +32,6 @@ if [ "$REBOOT" == "0" ]; then
     done
 fi
 
-
 MSG=`type rg`
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "UPDATE\t: $MSG (OK)"
@@ -63,6 +62,7 @@ npm run build
 sync
 
 echo -e "UPDATE\t: Upating offline content..."
+mkdir -p local
 if [ ! -e local/bilara-data ]; then
     echo -e "UPDATE\t: installing bilara-data..."
     pushd local
