@@ -32,6 +32,9 @@ if [ "$REBOOT" == "0" ]; then
     done
 fi
 
+echo -e "UPDATE\t: chown " `whoami`
+sudo chown -R $(whoami):$(whoami) * .*
+
 MSG=`type rg`
 RC=$?; if [ "$RC" == "0" ]; then
     echo -e "UPDATE\t: $MSG (OK)"
@@ -82,9 +85,6 @@ fi
 echo -e "UPDATE\t: Refreshing $BRANCH fork from Github..." && \
 git pull --rebase 
 popd
-
-echo -e "UPDATE\t: chown " `whoami`
-sudo chown -R $(whoami):$(whoami) * .*
 
 echo -e "UPDATE\t: clearing memoization caches"
 rm -rf local/memo
