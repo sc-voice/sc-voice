@@ -237,9 +237,9 @@ sudo npm start
 ```
 
 Verify that Voice is running by using a browser to view the public IP of the
-AWS server. The HTTP port 80 Voice server is temporary. 
-We are just using it to verify
-that Voice can run on the AWS server. 
+AWS server. Don't press any buttons (e.g., audio won't work)
+The HTTP port 80 Voice server is temporary. 
+We are just using it to verify that Voice can run on the AWS server. 
 
 After verifying that Voice functions as expected on HTTP port 80,
 we will need to shut down the HTTP port 80 server 
@@ -285,6 +285,7 @@ sudo shutdown -r now
 ```
 
 ##### Add AWS credentials
+Voice uses AWS services which require authentication.
 Once the Voice server has rebooted, you will need to 
 add AWS credentials by logging in as <kbd>admin</kbd>.
 
