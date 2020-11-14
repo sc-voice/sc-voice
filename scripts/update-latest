@@ -82,6 +82,10 @@ fi
 echo -e "UPDATE\t: Refreshing $BRANCH fork from Github..." && \
 git pull --rebase 
 popd
+
+echo -e "UPDATE\t: chown " `whoami`
+sudo chown -R $(whoami):$(whoami) * .*
+
 echo -e "UPDATE\t: clearing memoization caches"
 rm -rf local/memo
 
