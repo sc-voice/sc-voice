@@ -1383,37 +1383,36 @@
             });
         }
 
-        postVsmS3Credentials(req, res, next) {
-            var that = this;
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    that.requireAdmin(req, res, "POST vsm/s3-credentials");
-                    var creds = req.body;
-                    var { Bucket, s3, polly } = creds;
-                    var {
-                        endpoint,
-                        region,
-                    } = s3;
-                    that.info(`POST vsm/s3-credentials `+
-                        `Bucket:${Bucket} endpoint:${endpoint} region:${region}`);
-                    var s3Bucket = await new S3Bucket(creds).initialize();
-                    var credPath = path.join(LOCAL, 'vsm-s3.json');
-                    await fs.promises
-                        .writeFile(credPath, JSON.stringify(creds, null, 2));
-                    that.info(`vsm/s3-credentials verified and saved to: ${credPath}`);
-                    resolve({
-                        Bucket,
-                        s3: {
-                            endpoint,
-                            region,
-                        }
-                    });
-                } catch(e) {
-                    that.warn(e.message);
-                    reject(e);} 
-                })();
-            });
-        }
+        async postVsmS3Credentials(req, res, next) { try {
+            this.requireAdmin(req, res, "POST vsm/s3-credentials");
+            var creds = req.body;
+            var { Bucket, s3, polly } = creds;
+            var {
+                endpoint,
+                region,
+            } = s3;
+
+            // validate S3 creds
+            this.info(`POST vsm/s3-credentials `+
+                `Bucket:${Bucket} endpoint:${endpoint} region:${region}`);
+            var s3Bucket = await new S3Bucket(creds).initialize();
+
+            var credPath = path.join(LOCAL, 'vsm-s3.json');
+            var s3Creds = new S3Creds({awsConfig:creds});
+            var json = JSON.stringify(s3Creds.awsConfig, null, 2);
+            await fs.promises.writeFile(credPath, json);
+            this.info(`vsm/s3-credentials verified and saved to: ${credPath}`);
+            return {
+                Bucket,
+                s3: {
+                    endpoint,
+                    region,
+                }
+            };
+        } catch(e) {
+            this.warn(`postVsmS3Credentials()`, e.message);
+            throw e;
+        }}
 
         postVsmCreateArchive(req, res, next) {
             var that = this;

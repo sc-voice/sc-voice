@@ -19,6 +19,11 @@
     });
     it("custom ctor", function() {
         var creds = new S3Creds({configPath:TESTCONFIG});
+        should(creds.awsConfig).properties({
+            "region": "us-west-1",
+            "secretAccessKey": "test-secretAccessKey",
+            "accessKeyId": "test-accessKeyId",
+        });
         should(creds.awsConfig.polly).properties({
             "region": "us-west-1",
             "secretAccessKey": "test-secretAccessKey",

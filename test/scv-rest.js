@@ -772,7 +772,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET auth/vsm/s3-credentials => sanitized vsm-s3.json", done=>{
+    it("GET auth/vsm/s3-credentials => sanitized vsm-s3.json", done=>{
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials GET test');
@@ -797,48 +797,58 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTPOST auth/vsm/s3-credentials configures vsm-s3.json", done=>{
+    it("POST auth/vsm/s3-credentials good creds", async()=>{try{
+        await testInitialize;
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn('skipping vsm/s3-credentials POST test');
-            done();
             return;
         }
-        (async function() { try {
-            var url = `/scv/auth/vsm/s3-credentials`;
+        var url = `/scv/auth/vsm/s3-credentials`;
+        //logger.logLevel = 'info';
 
-            // save good creds and make bad creds
-            var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
-            var badCreds = Object.assign({}, goodCreds);
-            badCreds.s3 = Object.assign({}, goodCreds.s3, {
-                secretAccessKey: "wrong-key",
-            });
-            await fs.promises.writeFile(vsmS3Path, JSON.stringify(badCreds, null, 2));
+        // save good creds and make bad creds
+        var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
+        var badCreds = JSON.parse(JSON.stringify(goodCreds));
+        badCreds.s3.secretAccessKey = "wrong-key";
+        await fs.promises.writeFile(vsmS3Path, JSON.stringify(badCreds, null, 2));
 
-            // Good credentials are saved
-            var res = await testAuthPost(url, goodCreds);
-            var actualCreds = JSON.parse(await fs.promises.readFile(vsmS3Path));
-            await fs.promises.writeFile(vsmS3Path, JSON.stringify(goodCreds, null, 2));
-            res.statusCode.should.equal(200);
-            should.deepEqual(actualCreds, goodCreds);
+        // Good credentials are saved
+        var res = await testAuthPost(url, goodCreds);
 
-            // Bad credentials are not saved
-            logger.warn("EXPECTED WARNING BEGIN");
-            var badCreds = JSON.parse(JSON.stringify(goodCreds));
-            badCreds.s3.secretAccessKey = 'bad-secretAccessKey';
-            var res = await testAuthPost(url, badCreds);
-            logger.warn("EXPECTED WARNING END");
-            res.statusCode.should.equal(500);
-            var actualCreds = JSON.parse(fs.readFileSync(vsmS3Path));
-            should.deepEqual(actualCreds, goodCreds);
+        var actualCreds = JSON.parse(await fs.promises.readFile(vsmS3Path));
+        await fs.promises.writeFile(vsmS3Path, JSON.stringify(goodCreds, null, 2));
+        res.statusCode.should.equal(200);
+        should.deepEqual(actualCreds, goodCreds);
+    } catch(e) {
+        logger.info(`TEST: restoring ${vsmS3Path}`);
+        fs.writeFileSync(vsmS3Path, JSON.stringify(goodCreds, null, 2));
+        throw e;
+    }});
+    it("TESTTESTPOST auth/vsm/s3-credentials bad creds", async()=>{try{
+        await testInitialize;
+        var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
+        if (!fs.existsSync(vsmS3Path)) {
+            logger.warn('skipping vsm/s3-credentials POST test');
+            return;
+        }
 
-            done();
-        } catch(e) {
-            logger.info(`TEST: restoring ${vsmS3Path}`);
-            fs.writeFileSync(vsmS3Path, JSON.stringify(goodCreds, null, 2));
-            done(e);
-        } })();
-    });
+        // Bad credentials are not saved
+        var url = `/scv/auth/vsm/s3-credentials`;
+        var logLevel = logger.logLevel;
+        logger.logLevel = 'error';
+        var goodCreds = JSON.parse(fs.readFileSync(vsmS3Path));
+        logger.warn("EXPECTED WARNING BEGIN");
+        var badCreds = JSON.parse(JSON.stringify(goodCreds));
+        badCreds.s3.secretAccessKey = 'bad-secretAccessKey';
+        var res = await testAuthPost(url, badCreds);
+        logger.warn("EXPECTED WARNING END");
+        res.statusCode.should.equal(500);
+        var actualCreds = JSON.parse(fs.readFileSync(vsmS3Path));
+        should.deepEqual(actualCreds, goodCreds);
+    } finally {
+        logger.logLevel = logLevel;
+    }});
     it("GET auth/vsm/factory-task returns factory status", function(done) {
         (async function() { try {
 
@@ -861,7 +871,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET auth/vsm/list-objects lists bucket objects", function(done) {
+    it("GET auth/vsm/list-objects lists bucket objects", function(done) {
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {
             logger.warn("skipping auth/vsm/list-objects test");

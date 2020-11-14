@@ -230,16 +230,6 @@ Update Voice but *do not reboot*:
 ./scripts/update-latest
 ```
 
-Configure your AWS SDK CLI with:
-
-```bash
-aws configure
-```
-
-* Leave id and key blank (the Voice-Server IAM role provides required access)
-* [region](https://docs.aws.amazon.com/general/latest/gr/rande.html) (e.g., `us-west-1`)
-* output format (`json`)
-
 Launch Voice in HTTP mode for port 80
 
 ```bash
@@ -293,6 +283,16 @@ cd ../
 ./scripts/sc-voice-daemon.sh
 sudo shutdown -r now
 ```
+
+##### Add AWS credentials
+Once the Voice server has rebooted, you will need to 
+add AWS credentials by logging in as <kbd>admin</kbd>.
+
+* Click on the VSM tab 
+* Click <kbd>Edit Credentials</kbd>
+* Enter your Access Key Identifier
+* Enter your Secret Access Key
+* Click <kbd>Save</kbd>
 
 ### Public Static IP
 Every time an AWS EC2 server is restarted, it will be given a new public IP.

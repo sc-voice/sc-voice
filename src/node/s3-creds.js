@@ -15,16 +15,27 @@
                 : {};
 
             var config = this.awsConfig = opts.awsConfig || new AwsConfig(vsmCreds);
-            config.polly.region = config.polly.region || config.s3.region;
-            config.polly.secretAccessKey = config.polly.secretAccessKey || 
-                config.s3.secretAccessKey;
-            config.polly.accessKeyId = config.polly.accessKeyId || 
-                config.s3.accessKeyId;
+            let s3 = config.s3 = config.s3 || {};
+            let polly = config.polly = config.polly || {};
+
+            config.region = config.region || polly.region || s3.region || 'us-west-1';
+            polly.region = polly.region || config.region;
+
+            config.secretAccessKey = polly.secretAccessKey || s3.secretAccessKey;
+            polly.secretAccessKey = polly.secretAccessKey || config.secretAccessKey;
+
+            config.accessKeyId = config.accessKeyId ||
+                polly.accessKeyId || s3.accessKeyId;
+            polly.accessKeyId = polly.accessKeyId || config.accessKeyId;
+
             config.Bucket = config.Bucket || vsmCreds.Bucket || 'sc-voice-vsm';
             config.sayAgain.Bucket = "say-again.sc-voice";
         }
 
         obfuscate(s) {
+            if (s == null) {
+                return "(n/a)";
+            }
             var result = "";
             for (var i = 0; i < s.length; i++) {
                 result = result + (i < s.length-4 ? '*' : s[i]);

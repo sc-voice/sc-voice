@@ -59,7 +59,7 @@
         should(store.bilaraData.logger).equal(store);
         should(store.seeker.logger).equal(store);
     });
-    it("TESTTESTinitialize() initializes SuttaStore", async()=>{
+    it("initialize() initializes SuttaStore", async()=>{
         var store = new SuttaStore();
         should(store.maxDuration).equal(3*60*60);
         should(store.isInitialized).equal(false);
@@ -706,7 +706,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTnikayaSuttaIds(...) returns sutta_uids", async()=>{
+    it("nikayaSuttaIds(...) returns sutta_uids", async()=>{
         var store = await new SuttaStore({
             maxDuration: 450,
         }).initialize();
