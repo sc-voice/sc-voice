@@ -17,6 +17,7 @@
             var config = this.awsConfig = opts.awsConfig || new AwsConfig(vsmCreds);
             let s3 = config.s3 = config.s3 || {};
             let polly = config.polly = config.polly || {};
+            let sayAgain = config.sayAgain = config.sayAgain || {};
 
             config.region = config.region || polly.region || s3.region || 'us-west-1';
             polly.region = polly.region || config.region;
@@ -29,7 +30,7 @@
             polly.accessKeyId = polly.accessKeyId || config.accessKeyId;
 
             config.Bucket = config.Bucket || vsmCreds.Bucket || 'sc-voice-vsm';
-            config.sayAgain.Bucket = "say-again.sc-voice";
+            sayAgain.Bucket = "say-again.sc-voice";
         }
 
         obfuscate(s) {
