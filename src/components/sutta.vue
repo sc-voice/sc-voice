@@ -42,14 +42,14 @@ style="width:100%; margin-top:0"/>
           </div>
           <div class="scv-sutta-menubar mb-3" v-if="showSuttaMenuBar">
             <div>
-              <v-btn icon small fab
+              <v-btn icon small fab v-if="playable"
                 @click="playSearchText()"
                 :title="$vuetify.lang.t('$vuetify.scv.speakSearchText')"
                 :disabled="!playSearch.signature"
                 class="scv-icon-btn" :style="cssVars" >
                 <v-icon>chat_bubble_outline</v-icon>
               </v-btn>
-              <v-btn icon small fab
+              <v-btn icon small fab v-if="playable"
                   :disabled="waiting > 0"
                   @click="launchSuttaPlayer()"
                   ref="refPlaySutta"
@@ -57,7 +57,7 @@ style="width:100%; margin-top:0"/>
                   class="scv-icon-btn" :style="cssVars" >
                   <v-icon>play_circle_outline</v-icon>
               </v-btn>
-              <v-btn icon
+              <v-btn icon v-if="playable"
                   @click="downloadBuild()"
                   :aria-label="`${ariaDownload} ${resultId()}`"
                   class="scv-icon-btn" :style="cssVars" small>
@@ -147,7 +147,7 @@ style="width:100%; margin-top:0"/>
           </div>
         </div>
       </div>
-      <scv-downloader v-if="this.gscv.voices.length"
+      <scv-downloader v-if="playable"
         ref="refScvDownloader"
         :urlBuild="urlBuild"
         :urlDownload="urlDownload"
@@ -188,20 +188,20 @@ style="width:100%; margin-top:0"/>
         </summary>
         <div class="scv-playlist ml-3 pt-2 pl-3" 
           v-if="gscv.voices.length" >
-          <v-btn icon small fab
+          <v-btn icon small fab v-if="playable"
               @click="playSearchText()"
               :title="$vuetify.lang.t('$vuetify.scv.speakSearchText')"
               :disabled="!playSearch.signature"
               class="scv-icon-btn" :style="cssVars" >
               <v-icon>chat_bubble_outline</v-icon>
           </v-btn>
-          <v-btn icon
+          <v-btn icon v-if="playable"
               @click="playAll()"
               :title="$vuetify.lang.t('$vuetify.scv.playAll')"
               class="scv-icon-btn" :style="cssVars" small>
               <v-icon>play_circle_outline</v-icon>
           </v-btn>
-          <v-btn icon
+          <v-btn icon v-if="playable"
               @click="downloadBuild()"
               :aria-label="`${ariaDownload} ${resultId()}`"
               class="scv-icon-btn" :style="cssVars" small>
@@ -245,12 +245,12 @@ style="width:100%; margin-top:0"/>
             <div class="ml-3 pt-2" 
                 style="display:flex; justify-content: space-between">
                 <div>
-                    <v-btn icon v-if="result.quote"
+                    <v-btn icon v-if="result.quote && playable"
                         @click="playQuotes(i, result)"
                         :class="btnPlayQuotesClass(i)" :style="cssVars" small>
                         <v-icon>chat_bubble_outline</v-icon>
                     </v-btn>
-                    <v-btn icon v-if="result.quote"
+                    <v-btn icon v-if="result.quote && playable"
                         @click="playOne(result)"
                         class="scv-icon-btn" :style="cssVars" small>
                         <v-icon>play_circle_outline</v-icon>
@@ -260,7 +260,7 @@ style="width:100%; margin-top:0"/>
                         class="scv-icon-btn" :style="cssVars" small>
                         <v-icon>open_in_new</v-icon>
                     </v-btn>
-                    <v-btn icon
+                    <v-btn icon v-if="playable"
                         @click="downloadBuild(resultRef(result))"
                         :aria-label="`${ariaDownload} ${resultId()}`"
                         class="scv-icon-btn" :style="cssVars" small>
@@ -304,7 +304,7 @@ style="width:100%; margin-top:0"/>
             </div>
         </summary>
         <div class="scv-play-controls" v-if="gscv.voices.length">
-            <button
+            <button v-if="playable"
                 :disabled="waiting > 0"
                 @click="launchSuttaPlayer(i+1)"
                 class="scv-text-button mt-3"
@@ -342,7 +342,7 @@ style="width:100%; margin-top:0"/>
             </div>
         </div>
       </details> <!-- section i -->
-      <scv-player v-if="tracks && gscv.voices.length"
+      <scv-player v-if="tracks && playable"
         :ref="`refScvPlayer`" 
         :tracks="tracks" 
         :voice="voice"
@@ -1237,6 +1237,10 @@ export default {
               this.sutta_uid && 
               !this.searchResults && 
               this.gscv.voices.length;
+        },
+        playable() {
+          let { voices=[] } = this.gscv || {};
+          return voices.some(v=>v.langTrans === this.gscv.lang);
         },
     },
     mounted() {
