@@ -723,7 +723,7 @@
                     let ai = bilaraData.authorInfo(a);
                     return ai ? ai.name : a;
                 }).concat(voices);
-            let artist = artists.join(',');
+            let artist = artists.join(', ');
             var stats = playlist.stats();
             let buildDate = new Date();
             let yyyy = buildDate.toLocaleString(undefined, {
@@ -1209,7 +1209,9 @@
                 earliest,
                 pruneDays,
                 pruning,
-                size,
+                bytesScanned,
+                bytesPruned,
+                filesPruned,
                 started,
             } = this.soundStore.filePruner;
             return {
@@ -1217,7 +1219,9 @@
                 earliest,
                 pruneDays, 
                 pruning, 
-                size, 
+                bytesScanned,
+                bytesPruned,
+                filesPruned,
                 started, 
             };
         }
@@ -1230,10 +1234,11 @@
                 let {
                     started,
                     earliest,
-                    size,
-                    pruned,
+                    bytesScanned,
+                    bytesPruned,
+                    filesPruned,
                 } = res;
-                this.info(`pruneOldFiles():`, {started, earliest, size, pruned});
+                this.info(`pruneOldFiles()`, res);
             });
             return this.getSoundPruner(req, res, next);
         }

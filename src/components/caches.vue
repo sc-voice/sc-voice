@@ -39,10 +39,12 @@
               <table class="pruner-stats">
                 <tr> <th>started:</th>
                   <td>{{localeDateTime(pruner.started)}} </td> </tr>
-                <tr><th>entries scanned:</th>
-                  <td>{{(pruner.size.total/1000000).toFixed(1)}}MB</td></tr>
-                <tr><th>entries pruned:</th>
-                  <td>{{(pruner.size.pruned/1000000).toFixed(1)}}MB</td></tr>
+                <tr><th>files pruned:</th>
+                  <td>{{pruner.filesPruned}}</td></tr>
+                <tr><th>bytes scanned:</th>
+                  <td>{{(pruner.bytesScanned/1000000).toFixed(1)}}MB</td></tr>
+                <tr><th>bytes pruned:</th>
+                  <td>{{(pruner.bytesPruned/1000000).toFixed(1)}}MB</td></tr>
                 <tr><th>earliest entry:</th>
                   <td>{{localeDateTime(pruner.earliest)}} </td> </tr>
                 <tr><th>pending:</th><td>{{pruner.pruning}}</td> </tr>
@@ -110,10 +112,11 @@ export default {
         cleared: {},
         identity: null,
         isWaiting: false,
-        pruner: { size:{
-          total: 0,
-          pruned: 0,
-        }},
+        pruner: { 
+          bytesScanned:0,
+          bytesPruned:0,
+          filesPruned:0,
+        },
     }
   },
   methods: {
