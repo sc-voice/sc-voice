@@ -23,5 +23,6 @@ next_aria: 'go to voice website'
 * [AWS-Staging-911](/sc-voice/en/490-aws-staging-911)
 * [Notes-on-using-the-Voice-ZenHub-board](/sc-voice/en/490-zenhub)
 * [Edit-Pronunciation](/sc-voice/en/401-edit-pronunciation)
+* [Release instructions](/sc-voice/en/490-release)
 
 
