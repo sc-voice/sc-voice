@@ -1,11 +1,12 @@
 <template>
 <div>
 <v-progress-linear v-model="waiting" height="4"
-v-if="waiting > 0"
-aria-hidden="true"
-background-color="#000"
-style="width:100%; margin-top:0"/>
-<v-container fluid class="scv-sutta">
+  v-if="waiting > 0"
+  aria-hidden="true"
+  background-color="#000"
+  style="width:100%; margin-top:0"
+/>
+<v-container fluid class="scv-sutta" v-if="examples.length">
   <v-layout column align-left >
     <div class="scv-search-row">
       <div class="scv-search-col">
@@ -1239,8 +1240,12 @@ export default {
               this.gscv.voices.length;
         },
         playable() {
-          let { voices=[] } = this.gscv || {};
-          return voices.some(v=>v.langTrans === this.gscv.lang);
+        console.warn(`dbg playable`, this.gscv.voices.length);
+          let { gscv, } = this;
+          if (gscv.voices.length === 0) {
+            return false;
+          }
+          return gscv.voices.some(v=>v.langTrans === this.gscv.lang);
         },
     },
     mounted() {
