@@ -1240,7 +1240,6 @@ export default {
               this.gscv.voices.length;
         },
         playable() {
-        console.warn(`dbg playable`, this.gscv.voices.length);
           let { gscv, } = this;
           if (gscv.voices.length === 0) {
             return false;
