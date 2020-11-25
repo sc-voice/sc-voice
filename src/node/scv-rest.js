@@ -908,6 +908,11 @@
             var fpath = path.join(PATH_EXAMPLES, fname);
             if (!fs.existsSync(fpath)) {
                 that.warn(`File not found: ${fpath}`);
+                fname = `examples-en.txt`;
+                fpath = path.join(PATH_EXAMPLES, fname);
+            }
+            if (!fs.existsSync(fpath)) {
+                that.warn(`File not found: ${fpath}`);
                 throw new Error(`File not found: ${fname}`);
             }
             var langExamples = fs.readFileSync(fpath)
