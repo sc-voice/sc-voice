@@ -756,21 +756,17 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET audio-url/... returns supported audio url", function(done) {
-        (async function() { try {
-            // short url
-            var url = '/scv/audio-urls/sn1.23';
-            var res = await supertest(app).get(url)
-            res.statusCode.should.equal(200);
-            should.deepEqual(res.body.map(src=>src.url), [
-`https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com/`+
-                    'pli/sn/sn1/sn1.23-pli-mahasangiti-sujato.webm',
-`https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com/`+
-                    'en/sn/sn1/sn1.23-en-sujato-sujato.webm',
-            ]);
-
-            done();
-        } catch(e) {done(e);} })();
+    it("TESTTESTGET audio-url/... returns supported audio url", async()=>{
+        // short url
+        var url = '/scv/audio-urls/sn1.23';
+        var res = await supertest(app).get(url)
+        let urlBase = 
+            `https://${SCAudio.SC_OPUS_STORE}.sgp1.cdn.digitaloceanspaces.com`;
+        res.statusCode.should.equal(200);
+        should.deepEqual(res.body.map(src=>src.url), [
+            `${urlBase}/pli/sn/sn1/sn1.23-pli-mahasangiti-sujato.webm`,
+            `${urlBase}/en/sn/sn1/sn1.23-en-sujato-sujato.webm`,
+        ]);
     });
     it("GET auth/vsm/s3-credentials => sanitized vsm-s3.json", done=>{
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');

@@ -110,19 +110,20 @@
                         case 200:
                             resolve(result);
                             break;
-                        case 301:
+                        case 301: // permanent redirect
                             result.url = res.headers.location;
                             logger.info(`audioUrl(${url}) redirect:${result.url}`);
                             resolve(result);
                             break;
-                        case 404:
-                            logger.info(`audioUrl(${url}) not found`);
+                        case 302: // temporary redirect (e.g., non-existent github wiki)
+                        case 404: // not found
+                            logger.info(`audioUrl(${url}) not found HTTP${statusCode}`);
                             result.urlUnavailable = url;
                             result.url = null;
                             resolve(result);
                             break;
                         default:
-                            logger.warn(`audioUrl(${url}) statusCode:${statusCode}`);
+                            logger.warn(`audioUrl(${url}) HTTP${statusCode}`);
                             result.urlUnavailable = url;
                             result.url = null;
                             resolve(result);

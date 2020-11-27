@@ -138,30 +138,27 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("sourceUrls(...) returns verified audio urls", function(done) {
-        (async function() { try {
-            var audio = new AudioUrls();
+    it("TESTTESTsourceUrls(...) returns verified audio urls", async()=>{
+        var audio = new AudioUrls();
 
-            // Bhante has recorded SN1.23 but nobody else has
-            var result = await audio.sourceUrls('sn1.23');
-            should.deepEqual(result.map(r => r.source), [
-                'Bhikkhu Sujato (Pali)',
-                'Bhikkhu Sujato (English)',
-            ]);
-            should.deepEqual(result.map(r => r.supported), [
-                true, true,
-            ]);
+        // Bhante has recorded SN1.23 but nobody else has
+        var result = await audio.sourceUrls('sn1.23');
+        should.deepEqual(result.map(r => r.source), [
+            'Bhikkhu Sujato (Pali)',
+            'Bhikkhu Sujato (English)',
+        ]);
+        should.deepEqual(result.map(r => r.supported), [
+            true, true,
+        ]);
 
-            // Bhante has not recorded MN1, but other recordings exist
-            var result = await audio.sourceUrls('MN1');
-            should.deepEqual(result.map(r => r.source), [
-                'Other audio sources',
-            ]);
-            should.deepEqual(result.map(r => r.supported), [
-                false,
-            ]);
-            done(); 
-        } catch(e) {done(e);} })();
+        // Bhante has not recorded MN1, but other recordings exist
+        var result = await audio.sourceUrls('MN1');
+        should.deepEqual(result.map(r => r.source), [
+            'Other audio sources',
+        ]);
+        should.deepEqual(result.map(r => r.supported), [
+            false,
+        ]);
     });
 
 })
