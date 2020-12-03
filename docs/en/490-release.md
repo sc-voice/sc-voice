@@ -15,5 +15,5 @@ When releasing a new version of Voice, the following steps have to be followed:
 ### Release day
 1. Press release button.
 1. Remove "pre-release" tag from <a href="https://github.com/sc-voice/sc-voice/releases" target="_blank">release notes</a>.
-1. Publish release information.
+1. Publish D&D release information.
 1. Create new discussion thread on D&D.
