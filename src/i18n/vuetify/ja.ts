@@ -182,7 +182,7 @@ export default {
     bellSimple: "シンプルなお鈴 (Public Domain)",
     bellSound: "鈴の音",
     bellTibetan: "チベットの鐘 (Horst: CC0)",
-    buildingAudio: "Building audio file...",
+    buildingAudio: "音声ファイルを作成中...",
     dedicated: "暗闇から光へ向かう人達に",
     dedicatedSearch: "the dark bound for light",
     downloadComplete: "ダウンロード完了:",
