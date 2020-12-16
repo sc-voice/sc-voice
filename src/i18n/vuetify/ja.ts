@@ -199,7 +199,7 @@ export default {
     noHTML5: "このブラウザはHTML5オーディオをサポートしていません。ChromeまたはFirefoxを試して下さい。",
     point: "Punkt",
     publicDomain: "パブリックドメイン",
-    reader: "声",
+    reader: "語り手",
     relevance: "関連性:",
     returnSearchResults: "検索結果： A_COUNT 件",
     rootLanguage: "ルート言語",
