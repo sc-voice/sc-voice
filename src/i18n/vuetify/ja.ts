@@ -155,7 +155,7 @@ export default {
 
   },
   scv: {
-    audio: "Audio",
+    audio: "音声ファイル",
     aboutTitle: "ボイスについて",
     and: "と",
     ariaAbout: "ボイスについて",
@@ -184,7 +184,7 @@ export default {
     bellTibetan: "チベットの鐘 (Horst: CC0)",
     buildingAudio: "音声ファイルを作成中...",
     dedicated: "暗闇から光へ向かう人達に",
-    dedicatedSearch: "the dark bound for light",
+    dedicatedSearch: "暗闇から光へ向かう人達に",
     downloadComplete: "ダウンロード完了:",
     downloading: "ダウンロード中...:",
     downloadTimeout: "ダウンロード　タイムアウト:",
@@ -199,7 +199,7 @@ export default {
     noHTML5: "このブラウザはHTML5オーディオをサポートしていません。ChromeまたはFirefoxを試して下さい。",
     point: "Punkt",
     publicDomain: "パブリックドメイン",
-    reader: "ボイス",
+    reader: "声",
     relevance: "関連性:",
     returnSearchResults: "検索結果： A_COUNT 件",
     rootLanguage: "ルート言語",
