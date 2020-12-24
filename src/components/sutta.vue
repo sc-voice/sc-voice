@@ -297,7 +297,10 @@
             :aria-label="sectionAriaLabel(sect)"><div 
                 style="display:inline-block; width:94%;">
                 <div style="display:flex; justify-content: space-between">
-                    <div style="display:inline"><i>{{sect.title}}</i></div>
+                    <div v-html="sect.title"
+                        class="section-title" 
+                        style="display:inline" 
+                    />
                     <div v-if="gscv.showId" class='scv-scid'>
                         {{section_scid(sect)}}
                     </div>
@@ -1574,5 +1577,8 @@ export default {
   vertical-align: top;
 }
 
+.section-title {
+ font-style: italic;
+}
 
 </style>
