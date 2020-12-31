@@ -706,13 +706,14 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("nikayaSuttaIds(...) returns sutta_uids", async()=>{
+    it("TESTTESTnikayaSuttaIds(...) returns sutta_uids", async()=>{
         var store = await new SuttaStore({
             maxDuration: 450,
         }).initialize();
         var language = 'en';
         const KNSTART = [
-            'thag1.1', 'thag1.2', 'thag1.3',
+            'kp1', 'kp2', 'kp3',
+            //'thag1.1', 'thag1.2', 'thag1.3',
         ];
         const KNEND = [
             'thig14.1', 'thig15.1', 'thig16.1',
@@ -727,7 +728,7 @@
         // nikaya
         var ids = await store.nikayaSuttaIds('kn');
         should(ids).instanceOf(Array);
-        should(ids.length).equal(337);
+        should(ids.length).equal(346);
         should.deepEqual(ids.slice(0,3), KNSTART);
         should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
 

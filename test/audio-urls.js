@@ -138,7 +138,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsourceUrls(...) returns verified audio urls", async()=>{
+    it("sourceUrls(...) returns verified audio urls", async()=>{
         var audio = new AudioUrls();
 
         // Bhante has recorded SN1.23 but nobody else has

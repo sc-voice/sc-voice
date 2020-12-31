@@ -253,7 +253,7 @@
 
         tmpDirObj.removeCallback();
     });
-    it("importNikaya(...) imports nikaya", async()=>{
+    it("TESTTESTimportNikaya(...) imports nikaya", async()=>{
         var tmpDirObj = tmp.dirSync({
             unsafeCleanup: true,
         });
@@ -276,18 +276,19 @@
         should(task).properties([
             'msActive', 'started', 'summary',
         ]);
-        should(task.summary).match(/kn_pli_mahasangiti_aditi suttas imported: 2/);
+        //should(task.summary).match(/kn_pli_mahasangiti_aditi suttas imported: 2/);
+        should(task.summary).match(/kp_pli_mahasangiti_aditi suttas imported: 2/);
         should(resImport).properties({
             nikaya: 'kn',
             lang: 'pli',
             searchLang: 'en',
             author: 'sujato',
             maxSuttas,
-            sutta_ids: [ 'thag1.1', 'thag1.2' ],
+            sutta_ids: [ 'kp1', 'kp2' ],
             task,
         });
-        should(resImport.guids.length).equal(24+9);
-        var volumePath = path.join(tmpDirObj.name, 'kn_pli_mahasangiti_aditi');
+        should(resImport.guids.length).equal(24+2);
+        var volumePath = path.join(tmpDirObj.name, 'kp_pli_mahasangiti_aditi');
         should(fs.existsSync(volumePath)).equal(true);
         var guid = resImport.guids[0];
         var guidPath = path.join(volumePath, guid.substring(0,2), `${guid}.json`);
@@ -323,7 +324,7 @@
 
         tmpDirObj.removeCallback();
     });
-    it("archiveNikaya(...) archives nikaya", async()=>{
+    it("TESTTESTarchiveNikaya(...) archives nikaya", async()=>{
         const Bucket = TEST_BUCKET;
         const s3Bucket = await new S3Bucket({ 
             Bucket, 
@@ -359,14 +360,14 @@
             actionsTotal: 12,
             actionsDone: 12,
         });
-        should(task.summary).match(/Archived kn_pli_mahasangiti_aditi/);
+        should(task.summary).match(/Archived kp_pli_mahasangiti_aditi/);
 
         should.deepEqual(archiveResult.s3Bucket, {
             Bucket,
             s3: TEST_S3,
         });
         should(archiveResult).properties({
-            Key: 'kn_pli_mahasangiti_aditi.tar.gz',
+            Key: 'kp_pli_mahasangiti_aditi.tar.gz',
         });
         should(archiveResult.response).properties(['ETag']);
 

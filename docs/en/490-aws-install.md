@@ -44,6 +44,7 @@ Confirm selection and click the <kbd>Next: Configure Instance Details</kbd> butt
 
 Leave the settings on the "Configure Instance Details" page as they are. 
 
+NOTE: If you have a pre-defined `Voice-Server` IAM Role, you can choose it here.
 
 ##### Add Storage
 

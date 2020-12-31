@@ -9,6 +9,7 @@
     const tmp = require('tmp');
     const { js } = require('just-simple').JustSimple;
     const {
+        English,
         Pali,
     } = require("scv-bilara");
     const {
@@ -55,6 +56,8 @@
 
     const JWT_SECRET = `JWT${Math.random()}`;
     const APP_NAME = 'scv'; // DO NOT CHANGE THIS
+
+    var fwsEn;
 
     class ScvRest extends RestBundle { 
         constructor(opts = {
@@ -104,6 +107,7 @@
                 voice: null,
             });
             this.downloadMap = {};
+            English.wordSet().then(fws=>(fwsEn = fws));
             this.mj = new MerkleJson();
             this.bilaraData = this.suttaStore.bilaraData;
             var handlers = [
@@ -585,6 +589,7 @@
                     audioFormat: that.soundStore.audioFormat,
                     audioSuffix: that.soundStore.audioSuffix,
                     scAudio,
+                    fwsEn,
                 });
                 var volume = "play-word";
                 var translator = 'ms';

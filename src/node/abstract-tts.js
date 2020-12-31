@@ -77,6 +77,7 @@
             } else {
                 words = new Words(words, {
                     language: this.language,
+                    fwsEn: opts.fwsEn,
                 });
                 this.log(`${this.constructor.name}() `+
                     `default words:${Object.keys(words.words).length}`);
@@ -193,31 +194,30 @@
             var wi = this.wordInfo(word, lang);
             var symbols = this.words.symbols;
             var ipa = null;
-            var con = 0;
             if (wi) {
                 if (wi.ipa) { // use custom IPA
-                    con && console.log(`wordSSML1.1`, word);
+                    this.debug(`wordSSML1.1`, word);
                     ipa = wi.ipa;
                 } else if (lang === 'en' && wi.language !== lang) {
                     // use IPA for non-English words in English
-                    con && console.log(`wordSSML1.3`, word, lang, wi);
+                    this.debug(`wordSSML1.3`, word, lang, wi);
                     ipa = this.wordIPA(word, wi.language);
                 } else if (lang === 'pli' || wi.language === 'pli') { // generate IPA
                     // use IPA for root text
-                    con && console.log(`wordSSML1.4`, word);
+                    this.debug(`wordSSML1.4`, word);
                     ipa = this.wordIPA(word, wi.language);
                 } else {
-                    con && console.log(`wordSSML1.5`, word, lang, wi);
+                    this.debug(`wordSSML1.5`, word, lang, wi);
                 }
             } else { // unknown word or punctuation
                 if (Words.RE_ACRONYM.test(word)) {
-                    con && console.log(`wordSSML2.1`, word);
+                    this.debug(`wordSSML2.1`, word);
                     return word
                         .replace('{', '<say-as interpret-as="spell">')
                         .replace('}', '</say-as>');
                 } else if (word.trim() === '') {
                     // ipa = null
-                    con && console.log(`wordSSML2.2`, word);
+                    this.debug(`wordSSML2.2`, word);
                 } else if (this.words.isWord(word)) {
                     var w = word.endsWith(`’`) 
                         ? word.substring(0,word.length-1) 
@@ -225,24 +225,24 @@
                     if (this.localeIPA !== this.language && 
                         this.words.isForeignWord(w)) { 
                         var ipa = this.wordIPA(word, this.localeIPA);
-                        con && console.log(`wordSSML2.3.1`, word, w, wi);
+                        this.debug(`wordSSML2.3.1`, word, w, wi);
                     } else {
-                        con && console.log(`wordSSML2.3.2`, word, w);
+                        this.debug(`wordSSML2.3.2`, word, w);
                     }
                 } else if (word.endsWith(`’`)) {
                     // ipa = null
-                    con && console.log(`wordSSML2.4`, word);
+                    this.debug(`wordSSML2.4`, word);
                 } else {
                     var symInfo = symbols[word];
                     if (0 && symInfo && symInfo.isEllipsis) {
-                        con && console.log(`w&ordSSML2.5.1`, word);
+                        this.debug(`w&ordSSML2.5.1`, word);
                         return this.ellipsisBreak;
                     }
-                    con && console.log(`wordSSML2.5.2`, word);
+                    this.debug(`wordSSML2.5.2`, word);
                 }
             }
             if (ipa) {
-                con && console.log(`wordSSML3`, word, ipa);
+                this.debug(`wordSSML3`, word, ipa);
                 if (ipa.endsWith('(.)')) {
                     var pauses = ipa.split('(.)');
                     ipa = pauses.map(x => {

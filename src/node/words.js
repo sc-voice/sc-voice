@@ -5,19 +5,26 @@
     const RE_ISNUMBER = new RegExp(`^${PAT_NUMBER}$`);
     const RE_NUMBER = new RegExp(PAT_NUMBER);
     const WORDS_PATH = path.join(__dirname, `..`, `..`, `words`);
+    const { English } = require('scv-bilara');
+    const { logger } = require('log-instance');
+    var fwsEn;
+
+    var instances = 0;
 
     class Words { 
         constructor(json, opts={}) {
+            (opts.logger || logger).logInstance(this);
             this.language = opts.language || 'en';
+            this.info(`dbg language`, this.language);
             var commonJson = {};
             var commonPath = path.join(WORDS_PATH, `common.json`);
             if (fs.existsSync(commonPath)) {
                 commonJson  = JSON.parse(fs.readFileSync(commonPath));
             }
+            var isEn = this.language.startsWith('en');
             if (json == null) {
                 var filePath = opts.filePath 
                     || path.join(WORDS_PATH, `${this.language}.json`);
-                var isEn = this.language.startsWith('en');
                 if (!fs.existsSync(filePath) && isEn) {
                     filePath = path.join(WORDS_PATH, `en.json`);
                 }
@@ -30,6 +37,11 @@
                 json.words = Object.assign({}, 
                     commonJson.words, json.words);
             } 
+            if (isEn && !fwsEn) {
+                English.wordSet().then(fws => {
+                    fwsEn = fws;
+                });
+            }
             this.symbols = json.symbols;
             this.words = json.words;
             this._ipa = opts.ipa || json.ipa || {};
@@ -195,6 +207,11 @@
         }
 
         isForeignWord(token) {
+            if (this.language.startsWith('en') && fwsEn) {
+                let isForeign = !fwsEn.contains(token);
+                this.debug(`isForeignWord() ${token}:${isForeign}`);
+                return isForeign;
+            }
             if (token.indexOf('-') > 0) {
                 return token.split('-').reduce((acc,w) => {
                     return acc || this.isForeignWord(w);

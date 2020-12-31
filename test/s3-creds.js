@@ -13,7 +13,7 @@
     const TESTCONFIG = path.join(__dirname, 'data', 'vsm-s3.json');
     this.timeout(10*1000);
 
-    it("TESTTESTdefault ctor", function() {
+    it("default ctor", function() {
         var creds = new S3Creds();
         should(creds.awsConfig).instanceOf(AwsConfig);
         should(creds.awsConfig.sayAgain.Bucket).equal('say-again.sc-voice');

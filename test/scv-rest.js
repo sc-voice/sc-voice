@@ -756,7 +756,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET audio-url/... returns supported audio url", async()=>{
+    it("GET audio-url/... returns supported audio url", async()=>{
         // short url
         var url = '/scv/audio-urls/sn1.23';
         var res = await supertest(app).get(url)
@@ -821,7 +821,7 @@
         fs.writeFileSync(vsmS3Path, JSON.stringify(goodCreds, null, 2));
         throw e;
     }});
-    it("TESTTESTPOST auth/vsm/s3-credentials bad creds", async()=>{try{
+    it("POST auth/vsm/s3-credentials bad creds", async()=>{try{
         await testInitialize;
         var vsmS3Path = path.join(LOCAL, 'vsm-s3.json');
         if (!fs.existsSync(vsmS3Path)) {

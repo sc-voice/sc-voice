@@ -3649,7 +3649,7 @@
               {
                 "scid": "mn66:8.1",
                 "pli": "seyyathāpi, udāyi, laṭukikā sakuṇikā pūtilatāya bandhanena baddhā tattheva vadhaṁ vā bandhaṁ vā maraṇaṁ vā āgameti. ",
-                "en": "Suppose a quail was tied with a rotten creeper, and was waiting there to be injured, caged, or killed. "
+                "en": "Suppose a quail was tied with a vine, and was waiting there to be injured, caged, or killed. "
               },
               {
                 "scid": "mn66:8.2",
@@ -3659,7 +3659,7 @@
               {
                 "scid": "mn66:8.3",
                 "pli": "‘yena sā laṭukikā sakuṇikā pūtilatāya bandhanena baddhā tattheva vadhaṁ vā bandhaṁ vā maraṇaṁ vā āgameti, tañhi tassā abalaṁ bandhanaṁ, dubbalaṁ bandhanaṁ, pūtikaṁ bandhanaṁ, asārakaṁ bandhanan’ti; ",
-                "en": "for that quail, that rotten creeper is weak, feeble, rotten, and insubstantial?” "
+                "en": "for that quail, that vine is weak, feeble, rotten, and insubstantial?” "
               },
               {
                 "scid": "mn66:8.4",
@@ -3674,7 +3674,7 @@
               {
                 "scid": "mn66:8.6",
                 "pli": "Yena sā, bhante, laṭukikā sakuṇikā pūtilatāya bandhanena baddhā tattheva vadhaṁ vā bandhaṁ vā maraṇaṁ vā āgameti, tañhi tassā balavaṁ bandhanaṁ, daḷhaṁ bandhanaṁ, thiraṁ bandhanaṁ apūtikaṁ bandhanaṁ, thūlo, kaliṅgaro”ti. ",
-                "en": "For that quail, that rotten creeper is a strong, firm, stout bond, a tie that has not rotted, and a heavy yoke.” "
+                "en": "For that quail, that vine is a strong, firm, stout bond, a tie that has not rotted, and a heavy yoke.” "
               },
               {
                 "scid": "mn66:8.7",
@@ -4426,12 +4426,12 @@
         "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous."
       },
       "stats": {
-        "text": 15816,
+        "text": 15786,
         "lang": "en",
         "nSegments": 202,
         "nEmptySegments": 5,
         "nSections": 2,
-        "seconds": 1706.6462225593868
+        "seconds": 1703.1249102604652
       }
     }
   ]
