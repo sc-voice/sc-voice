@@ -226,6 +226,7 @@ export default {
     downloadPlaylist: "再生リストをダウンロード",
     showLineByLine: "ライン毎に表示",
     playSection: " A_SECTION セクションを再生",
+    textLayout: "Text Layout",
 
   }
 }

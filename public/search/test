@@ -1592,7 +1592,7 @@
               {
                 "scid": "mn1:0.2",
                 "pli": "Mūlapariyāyasutta ",
-                "en": "The Root of All Things "
+                "en": "The Root of All Things"
               }
             ],
             "type": "Section",
@@ -3282,12 +3282,12 @@
         "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment."
       },
       "stats": {
-        "text": 14304,
+        "text": 14303,
         "lang": "en",
         "nSegments": 334,
         "nEmptySegments": 9,
         "nSections": 2,
-        "seconds": 1255.3477467693156
+        "seconds": 1255.2717914185075
       }
     },
     {

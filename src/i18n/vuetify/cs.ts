@@ -224,6 +224,7 @@ export default {
     downloadPlaylist: "Stáhni seznam zvukových záznamů",
     showLineByLine: "Show line by line",
     playSection: "Play Section A_SECTION",
+    textLayout: "Text Layout",
 
   }
 }

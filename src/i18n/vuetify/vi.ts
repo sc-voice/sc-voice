@@ -225,5 +225,6 @@ export default {
     downloadPlaylist: "Download playlist",
     showLineByLine: "Show line by line",
     playSection: "Play Section A_SECTION",
+    textLayout: "Text Layout",
   }
 }

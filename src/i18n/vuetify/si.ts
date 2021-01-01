@@ -224,6 +224,7 @@ export default {
     downloadPlaylist: "වාදන ලැයිස්තුව බාගන්න",
     showLineByLine: "පේළියෙන් පේළිය පෙන්වන්න",
     playSection: "A_SECTION කොටස වාදනය කරන්න",
+    textLayout: "Text Layout",
 
   }
 }
