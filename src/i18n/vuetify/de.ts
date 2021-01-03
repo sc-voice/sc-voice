@@ -226,7 +226,7 @@ export default {
     downloadPlaylist: "Wiedergabeliste herunterladen",
     showLineByLine: "Zeile für Zeile darstellen",
     playSection: "Abschnitt A_SECTION wiedergeben",
-    textLayout: "Text Layout",
+    textLayout: "Textgestaltung",
 
   },
 }
