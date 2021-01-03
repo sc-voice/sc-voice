@@ -4,13 +4,11 @@ next_href: '200-using-voice'
 next_aria: 'using voice'
 ---
 ## සාදරයෙන් පිළිගනිමු! 
-Search for and hear the words of the Buddha with Voice.
-Voice is a companion website for 
+බුදුරජාණන් වහන්සේ දේශනා කර ධර්මය සෙවීමටත් ඇසීමටත්, Voice හරහා ඔබට හැකිය. 
+Voice යනු, මුල් බෞද්ධ ග්‍රන්ථ විශාල ප්‍රමාණයක් මෙන්ම ඒවාහි සමකාලීන භාෂාවලට පරිවර්තනය කිරීම් නොමිලේ සපයන 
 <a href="https://suttacentral.net" aria-label="sootacentral.net">
-  SuttaCentral</a>,
-which hosts the vast ocean of Early Buddhist Texts (aka. "EBTs") 
-along with their translations into contemporary languages, making them
-freely available to all.
+  SuttaCentral</a>
+හි අතිරේක වෙබ් අඩවියකි.
 Voice is designed to be 
 audio accessible
 and extends the SuttaCentral texts with full support for 
