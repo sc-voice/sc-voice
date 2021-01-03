@@ -3,7 +3,7 @@ next: 'Using Voice'
 next_href: '200-using-voice'
 next_aria: 'using voice'
 ---
-## Welcome! 
+## සාදරයෙන් පිළිගනිමු! 
 Search for and hear the words of the Buddha with Voice.
 Voice is a companion website for 
 <a href="https://suttacentral.net" aria-label="sootacentral.net">
