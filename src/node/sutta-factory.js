@@ -58,7 +58,7 @@
         'is': [
         ],
         'ja': [
-            'kaz',
+            'kaz', // supported
             'taikan',
         ],
         'vi': [

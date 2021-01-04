@@ -394,7 +394,8 @@
             } = opts;
             var that = this;
             if (suid == null) {
-                return Promise.reject(new Error('suid is required'));
+                return Promise.reject(new Error(
+                    'ScAudio.cacheSuttaAudio() suid is required'));
             }
             suttaStore = suttaStore || this.suttaStore;
             if (suttaStore == null) {

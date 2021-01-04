@@ -76,32 +76,28 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("importSpeakResult(sr) imports simple guid", function(done) {
-        (async function() { try {
-            var storePath = tmp.tmpNameSync();;
-            var vsm = new VsmStore({
-                storePath,
-            });
-            var voice = vsm.voice;
+    it("TESTTESTimportSpeakResult(sr) imports simple guid", async()=>{
+        var storePath = tmp.tmpNameSync();;
+        var vsm = new VsmStore({
+            storePath,
+        });
+        var voice = vsm.voice;
 
-            // Vsm.speak() returns similar result as voice.speak()
-            var speakResult = await voice.speak('So I have heard', VOICE_OPTS);
-            var guid = speakResult.signature.guid;
-            var importResult = await vsm.importSpeakResult(speakResult);
-            should(importResult).properties({
-                segments: speakResult.segments,
-                signature: speakResult.signature,
-            });
-            var reFile = new RegExp(`${vsm.storePath}`,'u');
-            should(importResult.file).match(reFile);
-            should(fs.existsSync(importResult.file)).equal(true);
+        // Vsm.speak() returns similar result as voice.speak()
+        var speakResult = await voice.speak('So I have heard', VOICE_OPTS);
+        var guid = speakResult.signature.guid;
+        var importResult = await vsm.importSpeakResult(speakResult);
+        should(importResult).properties({
+            segments: speakResult.segments,
+            signature: speakResult.signature,
+        });
+        var reFile = new RegExp(`${vsm.storePath}`,'u');
+        should(importResult.file).match(reFile);
+        should(fs.existsSync(importResult.file)).equal(true);
 
-            // the importMap has all imported guids
-            var guid = importResult.signature.guid;
-            should(vsm.importMap[guid]).equal(importResult);
-
-            done();
-        } catch(e) {done(e);} })();
+        // the importMap has all imported guids
+        var guid = importResult.signature.guid;
+        should(vsm.importMap[guid]).equal(importResult);
     });
     it("importSpeakResult(sr) imports compound guid", done=>{
         (async function() { try {
@@ -277,18 +273,20 @@
             'msActive', 'started', 'summary',
         ]);
         //should(task.summary).match(/kn_pli_mahasangiti_aditi suttas imported: 2/);
-        should(task.summary).match(/kp_pli_mahasangiti_aditi suttas imported: 2/);
+        //should(task.summary).match(/kp_pli_mahasangiti_aditi suttas imported: 2/);
+        should(task.summary).match(/dhp_pli_mahasangiti_aditi suttas imported: 2/);
         should(resImport).properties({
             nikaya: 'kn',
             lang: 'pli',
             searchLang: 'en',
             author: 'sujato',
             maxSuttas,
-            sutta_ids: [ 'kp1', 'kp2' ],
+            //sutta_ids: [ 'kp1', 'kp2' ],
+            sutta_ids: [ 'dhp1-20', 'dhp21-32' ],
             task,
         });
-        should(resImport.guids.length).equal(24+2);
-        var volumePath = path.join(tmpDirObj.name, 'kp_pli_mahasangiti_aditi');
+        should(resImport.guids.length).equal(171);
+        var volumePath = path.join(tmpDirObj.name, 'dhp_pli_mahasangiti_aditi');
         should(fs.existsSync(volumePath)).equal(true);
         var guid = resImport.guids[0];
         var guidPath = path.join(volumePath, guid.substring(0,2), `${guid}.json`);
@@ -360,20 +358,20 @@
             actionsTotal: 12,
             actionsDone: 12,
         });
-        should(task.summary).match(/Archived kp_pli_mahasangiti_aditi/);
+        should(task.summary).match(/Archived dhp_pli_mahasangiti_aditi/);
 
         should.deepEqual(archiveResult.s3Bucket, {
             Bucket,
             s3: TEST_S3,
         });
         should(archiveResult).properties({
-            Key: 'kp_pli_mahasangiti_aditi.tar.gz',
+            Key: 'dhp_pli_mahasangiti_aditi.tar.gz',
         });
         should(archiveResult.response).properties(['ETag']);
 
         tmpDirObj.removeCallback();
     });
-    it("restoreS3Archives(opts) restores from S3 Bucket", async()=>{
+    it("TESTTESTrestoreS3Archives(opts) restores from S3 Bucket", async()=>{
         const Bucket = TEST_BUCKET;
         const s3BucketOpts = { 
             Bucket, 
@@ -395,18 +393,17 @@
             Name,
         } = await s3Bucket.listObjects();
         should(Contents.length).above(0); // nothing to test
+        let { Key, ETag } = Contents[0];
         var params = {
             s3Bucket,
-            restore: [{
-                Key: Contents[0].Key,
-                ETag: Contents[0].ETag,
-            }],
+            restore: [{ Key, ETag }],
             soundStore,
             //clearVolume,
         };
         var resRestore = await vsm.restoreS3Archives(params);
+        let guid = '477b514e821e18d746b26831ce4b193a';
         var restoredFile = path.join(tmpDirObj.name, 
-            'kn_en_sujato_amy/52/528d6018f6e9325e258122ede2ece84b.txt');
+            `${Key.split('.')[0]}/${guid.substring(0,2)}/${guid}.mp3`);
         should(fs.existsSync(restoredFile)).equal(true);
         should(resRestore).properties({
             s3Bucket: s3BucketOpts,

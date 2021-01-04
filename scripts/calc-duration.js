@@ -17,11 +17,15 @@ const {
 const scApi = new ScApi();
 
 (async function() { try {
-    var bd = await new BilaraData().initialize();
+    let sync = true;
+    var bd = await new BilaraData().initialize(sync);
+    logger.logLevel = 'warn';
     let suttaIds = bd.suttaIds;
-    console.log(`dbg suttaIds`, suttaIds.length, suttaIds.slice(-10));
+    var suttaStore = await new SuttaStore({bilaraData:bd}).initialize();
     var factory = await new SuttaFactory({
+        bilaraData:bd,
         scApi,
+        suttaLoader: opts => suttaStore.loadBilaraSutta(opts),
     }).initialize();
     var scd = new SuttaDuration();
     var duration = {
@@ -33,9 +37,12 @@ const scApi = new ScApi();
     for (const suid of suttaIds) {
         try {
             let sutta = await factory.loadSutta(suid);
-            sutta = factory.sectionSutta(sutta);
-            let resMeasure = scd.measure(sutta);
-            duration.en.amy[suid] = resMeasure.seconds;
+            if (bd.isBilaraDoc({suid, lang:'en'})) {
+                sutta = factory.sectionSutta(sutta);
+                let resMeasure = scd.measure(sutta);
+                duration.en.amy[suid] = resMeasure.seconds;
+                console.log(suid, resMeasure.seconds);
+            }
         } catch(e) {
             console.log(e.message);
         }

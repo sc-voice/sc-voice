@@ -127,7 +127,7 @@
         should(words.isForeignAlphabet('thirty-three')).equal(false);
         should(words.isForeignAlphabet('well-to-do')).equal(false);
     });
-    it("TESTTESTisForeignWord(token) => true if foreign word", async()=>{
+    it("isForeignWord(token) => true if foreign word", async()=>{
         var words = new Words(undefined, {language:'en-GB'});
 
         // native word

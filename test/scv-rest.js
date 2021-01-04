@@ -5,7 +5,7 @@
     const supertest = require('supertest');
     const jwt = require('jsonwebtoken');
     const { logger } = require('log-instance');
-    logger.logLevel = 'error';
+    logger.logLevel = 'warn';
     const {
         UserStore,
     } = require('rest-bundle');
@@ -251,7 +251,7 @@
         await testInitialize;
         var scvRest = app.locals.scvRest;
         var apiModel = await scvRest.initialize()
-        logger.logLevel = 'info';
+        //logger.logLevel = 'info';
         var res = await supertest(app)
             .get("/scv/download/ogg/de/vicki/thig1.10");
         should(res.headers).properties({
@@ -266,7 +266,7 @@
         await testInitialize;
         var scvRest = app.locals.scvRest;
         var apiModel = await scvRest.initialize()
-        logger.logLevel = 'info';
+        //logger.logLevel = 'info';
         var res = await supertest(app)
             .get("/scv/download/ogg/pli+de/vicki/thig1.10/Aditi");
         should(res.headers).properties({
@@ -281,7 +281,7 @@
         await testInitialize;
         var scvRest = app.locals.scvRest;
         var apiModel = await scvRest.initialize()
-        logger.logLevel = 'info';
+        //logger.logLevel = 'info';
         var res = await supertest(app)
             .get("/scv/download/opus/de/vicki/thig1.10");
         should(res.headers).properties({
@@ -296,7 +296,7 @@
         await testInitialize;
         var scvRest = app.locals.scvRest;
         var apiModel = await scvRest.initialize()
-        logger.logLevel = 'info';
+        //logger.logLevel = 'info';
         var res = await supertest(app)
             .get("/scv/download/opus/pli+de/vicki/thig1.10/Aditi");
         should(res.headers).properties({

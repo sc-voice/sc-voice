@@ -121,7 +121,7 @@
         should.deepEqual(sections.map(s => s.segments.length), 
             [3,308,]);
     });
-    it("search('sona') finds 'Soṇa'", async()=>{
+    it("TESTTESTsearch('sona') finds 'Soṇa'", async()=>{
         var voice = Voice.createVoice("raveena");
         var scApi = await new ScApi().initialize();
         var suttaFactory = new SuttaFactory({
@@ -142,7 +142,7 @@
         } = await store.search('sona');
         should(results).instanceOf(Array);
         should(method).equal('phrase');
-        should(results.length).equal(19);
+        should(results.length).equal(20);
     });
     it("search('thig1.1') returns segmented sutta", async()=>{
         var voice = Voice.createVoice({
@@ -712,7 +712,8 @@
         }).initialize();
         var language = 'en';
         const KNSTART = [
-            'kp1', 'kp2', 'kp3',
+            'dhp1-20', 'dhp21-32', 'dhp33-43',
+            //'kp1', 'kp2', 'kp3',
             //'thag1.1', 'thag1.2', 'thag1.3',
         ];
         const KNEND = [
@@ -728,7 +729,7 @@
         // nikaya
         var ids = await store.nikayaSuttaIds('kn');
         should(ids).instanceOf(Array);
-        should(ids.length).equal(346);
+        should(ids.length).equal(484);
         should.deepEqual(ids.slice(0,3), KNSTART);
         should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
 
