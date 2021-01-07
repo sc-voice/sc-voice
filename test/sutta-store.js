@@ -142,7 +142,7 @@
         } = await store.search('sona');
         should(results).instanceOf(Array);
         should(method).equal('phrase');
-        should(results.length).equal(20);
+        should(results.length).equal(22);
     });
     it("search('thig1.1') returns segmented sutta", async()=>{
         var voice = Voice.createVoice({
@@ -717,7 +717,8 @@
             //'thag1.1', 'thag1.2', 'thag1.3',
         ];
         const KNEND = [
-            'thig14.1', 'thig15.1', 'thig16.1',
+            'ud8.8', 'ud8.9', 'ud8.10',
+            //'thig14.1', 'thig15.1', 'thig16.1',
         ];
 
         // nikaya, language, author/translator
@@ -729,7 +730,7 @@
         // nikaya
         var ids = await store.nikayaSuttaIds('kn');
         should(ids).instanceOf(Array);
-        should(ids.length).equal(484);
+        should(ids.length).equal(564);
         should.deepEqual(ids.slice(0,3), KNSTART);
         should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
 

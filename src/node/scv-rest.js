@@ -46,8 +46,6 @@
 
     const LOCAL = path.join(__dirname, '../../local');
     const PATH_SOUNDS = path.join(LOCAL, 'sounds/');
-    const PATH_EXAMPLES = path
-        .join(LOCAL, `bilara-data`, `.helpers`, `examples/`);
     const DEFAULT_USER = {
         username: "admin",
         isAdmin: true,
@@ -907,23 +905,10 @@
 
         getExamples(req, res, next) {
             var that = this;
+            let { bilaraData } = this;
             var lang = req.query.lang || 'en';
             var n = Number(req.params.n);
-            var fname = `examples-${lang}.txt`;
-            var fpath = path.join(PATH_EXAMPLES, fname);
-            if (!fs.existsSync(fpath)) {
-                that.warn(`File not found: ${fpath}`);
-                fname = `examples-en.txt`;
-                fpath = path.join(PATH_EXAMPLES, fname);
-            }
-            if (!fs.existsSync(fpath)) {
-                that.warn(`File not found: ${fpath}`);
-                throw new Error(`File not found: ${fname}`);
-            }
-            var langExamples = fs.readFileSync(fpath)
-                .toString()
-                .trim()
-                .split('\n');
+            let langExamples = bilaraData.examples[lang] || bilaraData.examples.en;
             var nShuffle = langExamples.length;
             for (var i = 0; i < nShuffle; i++) {
                 var j = Math.trunc(Math.random() * langExamples.length);
