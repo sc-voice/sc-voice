@@ -3,18 +3,13 @@ next: 'Using Voice'
 next_href: '200-using-voice'
 next_aria: 'using voice'
 ---
-## සාදරයෙන් පිළිගනිමු! 
+## SuttaCentral Voice වෙත සාදරයෙන් පිළිගනිමු! 
 බුදුරජාණන් වහන්සේ දේශනා කර ධර්මය සෙවීමටත් ඇසීමටත්, Voice හරහා ඔබට හැකිය. 
 Voice යනු, මුල් බෞද්ධ ග්‍රන්ථ විශාල ප්‍රමාණයක් මෙන්ම ඒවාහි සමකාලීන භාෂාවලට පරිවර්තනය කිරීම් නොමිලේ සපයන 
 <a href="https://suttacentral.net" aria-label="sootacentral.net">
   SuttaCentral</a>
 හි අතිරේක වෙබ් අඩවියකි.
-Voice is designed to be 
-audio accessible
-and extends the SuttaCentral texts with full support for 
-TTS readers such as JAWS, NVDA, and ChromeVox. 
-However, sighted users will also find it a helpful way 
-to explore and study the teachings of the Buddha. 
+එය Jaws, NVDA සහ ChromeVox වැනි තිර පාඨකවල පරිශීලකයන් සඳහා නිර්මාණය කළ යෙදුමක් වුවද, දෘශ්‍ය ආධාර අවශ්‍ය නොවන අයටත් බුදුරජාණන් වහන්සේගේ ධර්මය පිරික්සීමට සහ අධ්‍යයනය කිරීමට Voice උපකාරී වේ.          
 
 In the time of the Buddha, the Dhamma was heard, 
 memorized and spoken for others. 
