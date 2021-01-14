@@ -24,5 +24,6 @@ next_aria: 'go to voice website'
 * [Notes-on-using-the-Voice-ZenHub-board](/sc-voice/en/490-zenhub)
 * [Edit-Pronunciation](/sc-voice/en/401-edit-pronunciation)
 * [Release instructions](/sc-voice/en/490-release)
+* [Manage examples and word exceptions](/sc-voice/en/490-examples-exceptions)
 
 
