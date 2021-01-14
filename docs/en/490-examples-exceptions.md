@@ -5,7 +5,7 @@
 ### Manage word exceptions
 - Add new exception, i.e. "stamm", on GitHub https://github.com/sc-voice/scv-bilara/blob/master/src/assets/words-en-exceptions.txt
 - Pull changes to your computer
-- Run scripts/train in scv-bilara
+- Run `scripts/train` in scv-bilara
 - Commit back to GitHub
 - Reboot Voice server
 - Both scv-bilara and Voice recognize "stamm" as a German word now.
