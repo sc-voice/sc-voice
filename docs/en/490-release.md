@@ -8,7 +8,7 @@ When releasing a new version of Voice, the following steps have to be followed:
 1. Activate staging server one or two days before intended release date for testing.
 1. Prepare release notes.
 1. Prepare release information for D&D.
-1. Make sure to increase the version number a last time after the latest content change.
+1. Make sure to increment the version number a last time after the latest content change.
 
 ### Day before release
 1. Announce release on D&D.
