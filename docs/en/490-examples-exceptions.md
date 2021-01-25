@@ -3,6 +3,13 @@
 - Add example in https://github.com/sc-voice/scv-static/tree/main/src/examples in your selected language.
 - At pre-scheduled times, scv-static will run a new build and deploy any changes to https://sc-voice.github.io/scv-static. No action is required by the manager.
 - Post new examples in the current Voice development thread on D&D to inform other devs.
+- In case you want to run a new build manually, make sure you run `git pull` and `npm install` first.
+
+In order to bring new examples to Voice:
+- After they are properly added to scv-static, update content in Voice.
+- Reboot server.
+- Examples are also updated on version update.
+
 ### Manage word exceptions
 - Add new exception, i.e. "stamm", on GitHub https://github.com/sc-voice/scv-bilara/blob/master/src/assets/words-en-exceptions.txt
 - Pull changes to your computer
