@@ -25,25 +25,21 @@
         var scd = new SuttaDuration();
         should(scd.name).equal('amy');
     });
-    it("measure(sutta, lang) measures thag1.2", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore({logLevel}).initialize();
-            var sutta = await store.loadSutta('thag1.2');
-            var factory = new SuttaFactory({logLevel});
-            sutta = factory.sectionSutta(sutta);
-            var scd = new SuttaDuration();
-            var resMeasure = scd.measure(sutta);
-            should(resMeasure).properties({
-                text: 264,
-                lang: 'en',
-                nSegments: 9,
-                nSections: 2,
-                nEmptySegments: 0,
-            });
-            testTolerance(resMeasure.seconds, 24);
-
-            done();
-        } catch(e) { done(e); } })();
+    it("TESTTESTmeasure(sutta, lang) measures thag1.2", async()=>{
+        var store = await new SuttaStore({logLevel}).initialize();
+        var sutta = await store.loadSutta('thag1.2');
+        var factory = new SuttaFactory({logLevel});
+        sutta = factory.sectionSutta(sutta);
+        var scd = new SuttaDuration();
+        var resMeasure = scd.measure(sutta);
+        should(resMeasure).properties({
+            text: 259,
+            lang: 'en',
+            nSegments: 9,
+            nSections: 2,
+            nEmptySegments: 0,
+        });
+        testTolerance(resMeasure.seconds, 24);
     });
     it("measure(sutta, lang) measures thig1.1", function(done) {
         (async function() { try {

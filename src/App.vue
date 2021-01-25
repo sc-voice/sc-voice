@@ -11,8 +11,9 @@
   </a>
   <v-toolbar-title style="margin-left:8px">
       <div style="position: relative; margin-top:-2px;">
-          <div class="scv-logo-small" aria-hidden="true">
-              SuttaCentral</div>
+          <a href="https://suttacentral.net"  
+            class="scv-logo-small" aria-hidden="true" target="_blank"
+            >SuttaCentral</a>
           <div class="scv-logo-large" aria-hidden="true">
               VOICE</div>
       </div>
@@ -656,16 +657,17 @@ button {
 }
 .scv-logo-large {
     //cursor: default;
-    margin-top: -8px;
+    margin-top: -12px;
     font-size: 22px;
     letter-spacing: 1px;
 }
-.scv-logo-small {
-    //cursor: pointer;
+a.scv-logo-small {
     margin-top: 2px;
+    margin-left: -2px;
+    margin-bottom: -5px;
     font-size: .6em;
     //font-variant: small-caps;
-    color: #ce8400;
+    color: #ce8400 !important;
 }
 .scv-a {
     color: #ffffff !important;

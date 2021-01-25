@@ -412,7 +412,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("search(pattern) sorts by numeric count", function(done) {
+    it("TESTTESTsearch(pattern) sorts by numeric count", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {
@@ -422,7 +422,7 @@
             // numerical sort has 174 greater than 90
             // standard sort has 90 greater than 174
             should.deepEqual(results.map(r=>r.count), 
-                [167.469, 82.752, 73.315, 69.185, 47.348]);
+                [167.449, 82.752, 73.315, 69.185, 47.348]);
             done(); 
         } catch(e) {done(e);} })();
     });
@@ -435,41 +435,37 @@
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });
-    it("search(pattern) finds romanized Pali keywords ", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
-            var res = await store.search('jhana');
-            var {
-                method,
-                results,
-                maxDoc,
-                resultPattern,
-            } = res;
-            should(method).equal('phrase');
-            should.deepEqual(results.map(r=> ({
-                uid:r.uid,
-                count:r.count,
-            })), [{
-                count: 16.186,
-                uid: 'an9.36',
-            },{
-                count: 16.163,
-                uid: 'an6.60',
-            },{
-                count: 16.111,
-                uid: 'mn108',
-            },{
-                count: 15.013,
-                uid: 'dn33',
-            },{
-                count: 12.152,
-                uid: 'an9.35',
-            }]);
-            should(resultPattern).equal('\\bjh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
-            should(results.length).equal(5);
-
-            done(); 
-        } catch(e) {done(e);} })();
+    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", async()=>{
+        var store = await new SuttaStore().initialize();
+        var res = await store.search('jhana');
+        var {
+            method,
+            results,
+            maxDoc,
+            resultPattern,
+        } = res;
+        should(method).equal('phrase');
+        should.deepEqual(results.map(r=> ({
+            uid:r.uid,
+            count:r.count,
+        })), [{
+            count: 16.186,
+            uid: 'an9.36',
+        },{
+            count: 16.163,
+            uid: 'an6.60',
+        },{
+            count: 16.1,
+            uid: 'mn108',
+        },{
+            count: 15.013,
+            uid: 'dn33',
+        },{
+            count: 12.126,
+            uid: 'an9.35',
+        }]);
+        should(resultPattern).equal('\\bjh(a|ā)(n|ṅ|ñ|ṇ)(a|ā)');
+        should(results.length).equal(5);
     });
     it("search(pattern) finds exact Pali", function(done) {
         (async function() { try {
