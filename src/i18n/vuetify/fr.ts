@@ -213,6 +213,7 @@ export default {
     showTransText: "Montrer les textes traduits",
     speakSearchText: "Speak search text",
     storeSettingsInCookies: "Enregistrer les paramètres dans les cookies du moteur de recherche",
+    storeSettingsExamples: "Store settings and examples in web browser cookies",
     trackOfSection: "A_TRACK de A_TRACKS",
     translation: "Traduction",
     transLanguage: "Langue de traduction",

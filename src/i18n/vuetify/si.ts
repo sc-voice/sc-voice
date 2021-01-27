@@ -213,6 +213,7 @@ export default {
     showTransText: "පරිවර්තන පෙළ පෙන්වන්න",
     speakSearchText: "සෙවුම් පෙළ පවසන්න",
     storeSettingsInCookies: "වෙබ් බ්‍රව්සර් කුකී තුළ සැකසුම් ගබඩා කරන්න",
+    storeSettingsExamples: "Store settings and examples in web browser cookies",
     trackOfSection: "A_TRACKS න් A_TRACK",
     translation: "පරිවර්තනය",
     transLanguage: "පරිවර්තන භාෂාව",

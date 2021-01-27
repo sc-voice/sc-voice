@@ -214,6 +214,7 @@ export default {
     showTransText: "Toon vertaalde tekst",
     speakSearchText: "Speak search text",
     storeSettingsInCookies: "Bewaar instellingen in webbrowser-cookies",
+    storeSettingsExamples: "Store settings and examples in web browser cookies",
     trackOfSection: "A_TRACK van A_TRACKS",
     translation: "Translation",
     transLanguage: "Taal van vertaling",

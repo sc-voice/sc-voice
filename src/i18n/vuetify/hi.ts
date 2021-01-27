@@ -214,6 +214,7 @@ export default {
     showTransText: "अनुवाद ही दिखाए",
     speakSearchText: "Speak search text",
     storeSettingsInCookies: "वेब ब्राउज़र कुकीज़ में सेटिंग स्टोर करे।",
+    storeSettingsExamples: "Store settings and examples in web browser cookies",
     trackOfSection: "A_TRACK में से A_TRACKS",
     translation: "Translation",
     transLanguage: "अनुवाद की भाषा",

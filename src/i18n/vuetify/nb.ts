@@ -214,6 +214,7 @@ export default {
     showTransText: "Vis oversatt tekst",
     speakSearchText: "Speak search text",
     storeSettingsInCookies: "Lagre innstillinger i nettleser informasjonskapsler",
+    storeSettingsExamples: "Store settings and examples in web browser cookies",
     trackOfSection: "A_TRACK av A_TRACKS",
     translation: "Translation",
     transLanguage: "Oversettelsesspråk",

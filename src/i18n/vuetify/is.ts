@@ -213,6 +213,7 @@ export default {
     showTextSegmentIds: "Sýna SuttaCentral auðkenni hlutans",
     showTransText: "Sýna þýðingu",
     storeSettingsInCookies: "Geyma stillingar í vafrakökum",
+    storeSettingsExamples: "Store settings and examples in web browser cookies",
     speakSearchText: "Speak search text",
     trackOfSection: "A_TRACK af A_TRACKS",
     translation: "Translation",

@@ -214,6 +214,7 @@ export default {
     showTransText: "Hiển thị bản dịch",
     speakSearchText: "Speak search text",
     storeSettingsInCookies: "Lưu thiết lập với cookies",
+    storeSettingsExamples: "Store settings and examples in web browser cookies",
     trackOfSection: "A_TRACK trên tổng số A_TRACKS",
     translation: "Translation",
     transLanguage: "Ngôn ngữ bản dịch",

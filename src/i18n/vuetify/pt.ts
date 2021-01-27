@@ -214,6 +214,7 @@ export default {
     showTransText: "Mostar tradução",
     speakSearchText: "Speak search text",
     storeSettingsInCookies: "Armazenar configurações em cookies do navegador da web",
+    storeSettingsExamples: "Store settings and examples in web browser cookies",
     trackOfSection: "A_TRACK of A_TRACKS",
     translation: "Translation",
     transLanguage: "Idioma da tradução",

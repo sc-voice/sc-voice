@@ -213,6 +213,7 @@ export default {
     showTransText: "Zobraz překlad",
     speakSearchText: "Řekni hledaný text",
     storeSettingsInCookies: "Uchovej nastavení v cookies webového prohlížeče",
+    storeSettingsExamples: "Store settings and examples in web browser cookies",
     trackOfSection: "A_TRACK z A_TRACKS",
     translation: "Překlad",
     transLanguage: "Jazyk překladu",
