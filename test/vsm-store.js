@@ -76,7 +76,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTimportSpeakResult(sr) imports simple guid", async()=>{
+    it("importSpeakResult(sr) imports simple guid", async()=>{
         var storePath = tmp.tmpNameSync();;
         var vsm = new VsmStore({
             storePath,
@@ -249,7 +249,7 @@
 
         tmpDirObj.removeCallback();
     });
-    it("TESTTESTimportNikaya(...) imports nikaya", async()=>{
+    it("importNikaya(...) imports nikaya", async()=>{
         var tmpDirObj = tmp.dirSync({
             unsafeCleanup: true,
         });
@@ -322,7 +322,7 @@
 
         tmpDirObj.removeCallback();
     });
-    it("TESTTESTarchiveNikaya(...) archives nikaya", async()=>{
+    it("archiveNikaya(...) archives nikaya", async()=>{
         const Bucket = TEST_BUCKET;
         const s3Bucket = await new S3Bucket({ 
             Bucket, 
@@ -371,7 +371,7 @@
 
         tmpDirObj.removeCallback();
     });
-    it("TESTTESTrestoreS3Archives(opts) restores from S3 Bucket", async()=>{
+    it("restoreS3Archives(opts) restores from S3 Bucket", async()=>{
         const Bucket = TEST_BUCKET;
         const s3BucketOpts = { 
             Bucket, 

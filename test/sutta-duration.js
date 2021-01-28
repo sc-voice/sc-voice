@@ -25,7 +25,7 @@
         var scd = new SuttaDuration();
         should(scd.name).equal('amy');
     });
-    it("TESTTESTmeasure(sutta, lang) measures thag1.2", async()=>{
+    it("measure(sutta, lang) measures thag1.2", async()=>{
         var store = await new SuttaStore({logLevel}).initialize();
         var sutta = await store.loadSutta('thag1.2');
         var factory = new SuttaFactory({logLevel});

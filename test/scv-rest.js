@@ -1178,5 +1178,27 @@
             "e0bd9aadd84f3f353f17cceced97ff13", 
         ]);
     });
+    it("TESTTESTGET /search/an4.182/ja returns Kaz sutta", async()=>{
+        await testInitialize;
+        var maxResults = 3;
+        var pattern = `an4.182`;
+        var lang = 'ja'
+
+        var url = 
+            `/scv/search/${pattern}/${lang}?maxResults=${maxResults}`;
+        var response = await supertest(app).get(url);
+        response.statusCode.should.equal(200);
+        var {
+            method,
+            results,
+        } = response.body;
+        should(results).instanceOf(Array);
+        should(results.length).equal(1);
+        should.deepEqual(results.map(r => r.uid),[
+            'an4.182', 
+        ]);
+        should(results[0].sutta.author_uid).equal('kaz');
+        should(method).equal('sutta_uid');
+    });
 });
 

@@ -652,7 +652,12 @@
         }
 
         async getSearch(req, res, next) { try {
+            const LANG_MAP = {
+                ja: 'jpn',
+            };
             var language = req.params.lang || 'en';
+            LANG_MAP[language] && (language = LANG_MAP[language]);
+
             var pattern = req.params.pattern;
             if (!pattern) {
                 throw new Error('Search pattern is required');

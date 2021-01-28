@@ -121,7 +121,7 @@
         should.deepEqual(sections.map(s => s.segments.length), 
             [3,308,]);
     });
-    it("TESTTESTsearch('sona') finds 'Soṇa'", async()=>{
+    it("search('sona') finds 'Soṇa'", async()=>{
         var voice = Voice.createVoice("raveena");
         var scApi = await new ScApi().initialize();
         var suttaFactory = new SuttaFactory({
@@ -412,7 +412,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTsearch(pattern) sorts by numeric count", function(done) {
+    it("search(pattern) sorts by numeric count", function(done) {
         (async function() { try {
             var store = await new SuttaStore().initialize();
             var {
@@ -435,7 +435,7 @@
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });
-    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", async()=>{
+    it("search(pattern) finds romanized Pali keywords ", async()=>{
         var store = await new SuttaStore().initialize();
         var res = await store.search('jhana');
         var {
@@ -702,7 +702,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTnikayaSuttaIds(...) returns sutta_uids", async()=>{
+    it("nikayaSuttaIds(...) returns sutta_uids", async()=>{
         var store = await new SuttaStore({
             maxDuration: 450,
         }).initialize();
