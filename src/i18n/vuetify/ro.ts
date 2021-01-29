@@ -214,7 +214,7 @@ export default {
     showTransText: "Arată versiunea tradusă",
     speakSearchText: "Speak search text",
     storeSettingsInCookies: "Salvează setările în browser, folosind cookie-uri",
-    storeSettingsExamples: "Store settings and examples in web browser cookies",
+    storeSettingsHistory: "Store settings and history in web browser cookies",
     trackOfSection: "A_TRACK din A_TRACKS",
     translation: "Traducere",
     transLanguage: "Limba de traducere",

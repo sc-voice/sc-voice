@@ -213,7 +213,7 @@ export default {
     showTextSegmentIds: "Vis SuttaCentral segment-IDer",
     showTransText: "Vis oversættelsestekst",
     storeSettingsInCookies: "Gem indstillinger i webbrowser cookies",
-    storeSettingsExamples: "Store settings and examples in web browser cookies",
+    storeSettingsHistory: "Store settings and history in web browser cookies",
     trackOfSection: "A_TRACK af A_TRACKS",
     translation: "Oversættelse",
     transLanguage: "Oversættelsessprog",

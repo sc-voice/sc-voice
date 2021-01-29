@@ -215,7 +215,7 @@ export default {
     showTransText: "訳文の表示",
     speakSearchText: "検索テキストを音声化",
     storeSettingsInCookies: "ウェブブラウザのクッキーに設定を保存",
-    storeSettingsExamples: "Store settings and examples in web browser cookies",
+    storeSettingsHistory: "Store settings and history in web browser cookies",
     trackOfSection: "A_TRACK / A_TRACKS",
     translation: "翻訳",
     transLanguage: "訳文の言語",
