@@ -958,7 +958,7 @@
     "service": "aws-polly",
     "name": "Takumi",
     "label": "\ud83e\udd16 Takumi",
-    "langTrans": "jpn",
+    "langTrans": "ja",
     "locale": "ja-JP",
     "localeIPA": "pli",
     "iVoice": 20,
