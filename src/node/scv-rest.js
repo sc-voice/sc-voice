@@ -44,6 +44,9 @@
     const VsmStore = require('./vsm-store');
     const Words = require('./words');
 
+    const LANG_MAP = {
+        ja: 'jpn',
+    };
     const LOCAL = path.join(__dirname, '../../local');
     const PATH_SOUNDS = path.join(LOCAL, 'sounds/');
     const DEFAULT_USER = {
@@ -652,9 +655,6 @@
         }
 
         async getSearch(req, res, next) { try {
-            const LANG_MAP = {
-                ja: 'jpn',
-            };
             var language = req.params.lang || 'en';
             LANG_MAP[language] && (language = LANG_MAP[language]);
 
@@ -911,7 +911,7 @@
         getExamples(req, res, next) {
             var that = this;
             let { bilaraData } = this;
-            var lang = req.query.lang || 'en';
+            var lang = LANG_MAP[req.query.lang] || 'en';
             var n = Number(req.params.n);
             let langExamples = bilaraData.examples[lang] || bilaraData.examples.en;
             var nShuffle = langExamples.length;

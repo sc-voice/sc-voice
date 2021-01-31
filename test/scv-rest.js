@@ -1200,5 +1200,18 @@
         should(results[0].sutta.author_uid).equal('kaz');
         should(method).equal('sutta_uid');
     });
+    it("TESTTESTGET /examples/:n => ja examples", async()=>{
+        var n = 1000;
+        var lang = 'ja';
+        var url = `/scv/examples/${n}?lang=${lang}`;
+        var res = await supertest(app).get(url);
+        res.statusCode.should.equal(200);
+        var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
+        should.deepEqual(data.sort().slice(0,3), [
+            "全ての活動が静まり",
+            "愛情による心の解放",
+            "美しさを贈り",
+        ]);
+    });
 });
 
