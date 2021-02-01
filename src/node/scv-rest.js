@@ -911,7 +911,8 @@
         getExamples(req, res, next) {
             var that = this;
             let { bilaraData } = this;
-            var lang = LANG_MAP[req.query.lang] || 'en';
+            let lang = req.query.lang;
+            lang = LANG_MAP[lang] || lang || 'en';
             var n = Number(req.params.n);
             let langExamples = bilaraData.examples[lang] || bilaraData.examples.en;
             var nShuffle = langExamples.length;
