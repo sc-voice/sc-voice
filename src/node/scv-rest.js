@@ -798,9 +798,12 @@
             audioSuffix = type==='mp3' ? '.mp3' : audioSuffix;
             var vroot = req.params.vroot || 'Aditi';
             var langs = (req.params.langs || 'pli+en')
-                .toLowerCase().split('+');
+                .toLowerCase().split('+')
+                .map(l => LANG_MAP[l] || l);
             var language = langs.filter(l=>l!=='pli')[0];
-            var language = language || req.query.lang || 'en';
+            var language = language || 
+                LANG_MAP[req.query.lang] || reg.query.lang || 
+                'en';
             var vname = (req.params.voice || 'Amy').toLowerCase();
             var pattern = req.params.pattern;
             if (!pattern) {
@@ -863,9 +866,12 @@
             audioSuffix = route[2]==='ogg' ? '.ogg' : audioSuffix;
             var vroot = req.params.vroot || 'Aditi';
             var langs = (req.params.langs || 'pli+en')
-                .toLowerCase().split('+');
+                .toLowerCase().split('+')
+                .map(l => LANG_MAP[l] || l);
             var language = langs.filter(l=>l!=='pli')[0];
-            var language = language || req.query.lang || 'en';
+            var language = language || 
+                LANG_MAP[req.query.lang] || reg.query.lang || 
+                'en';
             var vname = (req.params.voice || 'Amy').toLowerCase();
             var pattern = req.params.pattern;
             if (!pattern) {

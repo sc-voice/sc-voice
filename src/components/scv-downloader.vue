@@ -91,7 +91,7 @@ export default {
             let downloadDate = new Date().toLocaleTimeString();
             var downloadComplete = this.$vuetify.lang.t('$vuetify.scv.downloadComplete');
             Vue.set(that, "downloadDate", downloadDate);
-            Vue.set(that, "downloadFile", filename);
+            Vue.set(that, "downloadFile", decodeURIComponent(filename));
             that.update(downloadComplete, false);
             console.log(`scv-downloader.poll() downloading guid:${guid}`, urlDownload);
             let link = that.$refs['download-link'];
