@@ -36,7 +36,7 @@
             done();
         } catch(e) { done(e); }})();
     });
-    it("loadVoices(voicePath) should return voices", ()=>{
+    it("TESTTESTloadVoices(voicePath) should return voices", ()=>{
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
         should(voices.length).greaterThan(0);
@@ -47,6 +47,7 @@
             'Hans',
             'Marlene',
             'Matthew',
+            'Mizuki',
             'Raveena', 
             'Ricardo',
             'Takumi',

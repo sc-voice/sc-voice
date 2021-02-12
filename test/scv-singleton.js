@@ -729,9 +729,9 @@
 
         // ja vs. jpn
         var voices = scv.langVoices('ja');
-        should.deepEqual(voices.map(v => v.name), [ 'Takumi', ]);
+        should.deepEqual(voices.map(v => v.name), [ 'Takumi', 'Mizuki']);
         //var voices = scv.langVoices('jpn');
-        //should.deepEqual(voices.map(v => v.name), [ 'Takumi', ]);
+        //should.deepEqual(voices.map(v => v.name), [ 'Takumi', 'Mizuki']);
 
         // default
         var voices = scv.langVoices();

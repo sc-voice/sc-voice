@@ -1208,9 +1208,10 @@
         res.statusCode.should.equal(200);
         var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
         should.deepEqual(data.sort().slice(0,3), [
-            "全ての活動が静まり",
+            //"全ての活動が静まり",
             "愛情による心の解放",
             "美しさを贈り",
+            "老いる定め",
         ]);
     });
 });

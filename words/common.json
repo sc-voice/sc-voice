@@ -61,10 +61,6 @@
         "\u016b": "u"
     },
     "symbols": {
-        "\n": {
-            "name": "end of line",
-            "eol": true
-        },
         "!": {
             "name": "exclamation mark",
             "isWordTrim": true,
@@ -196,6 +192,37 @@
         "\u2026": { 
             "name": "ellipsis",
             "isEllipsis": true
+        },
+        "\u3001": {
+            "name": "、comma (JA)",
+            "isWordTrim": true,
+            "cuddle": "left"
+        },
+        "\u3002": {
+            "name": "。full stop {JA)",
+            "isWordTrim": true,
+            "endSegment": true,
+            "cuddle": "left"
+        },
+        "\u300c": {
+            "name": "「 left quote (JA)",
+            "cuddle": "right"
+        },
+        "\u300d": {
+            "name": "」right quote (JA)",
+            "cuddle": "left"
+        },
+        "\u300e": {
+            "name": "『left double quote (JA)",
+            "cuddle": "right"
+        },
+        "\u300f": {
+            "name": "』 right double quote (JA)",
+            "cuddle": "left"
+        },
+        "\n": {
+            "name": "end of line",
+            "eol": true
         }
     },
     "words": {
