@@ -1,6 +1,6 @@
 {
   "name": "sc-voice",
-  "version": "2.7.11",
+  "version": "2.7.12",
   "description": "SuttaCentral Voice",
   "main": "index.js",
   "private": false,
@@ -60,6 +60,7 @@
   },
   "scripts": {
     "build": "vue-cli-service build",
+    "build:schedule": "scripts/build",
     "clear:sounds": "rimraf local/sounds",
     "dev": "npm run build; echo 'UI-only service'; npm run serve",
     "lint": "vue-cli-service lint",
