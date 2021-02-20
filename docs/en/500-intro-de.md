@@ -39,13 +39,7 @@ This allows for a translation with a high degree of consistency, and it is even 
 
 In addition, <a href="https://www.npmjs.com/package/scv-bilara" target="_blank">scv-bilara</a>, developed by Karl Lew and used in Voice, provides a trilingual search function which is very useful.
 
-I started my translation project in about mid-2019. I intend to translate the four main Nikāyas of the Pali canon and the early parts of the Khuddaka Nikāya. So far the following Suttas have been translated:
-- **AN**: book of the Ones, Twos, and Threes; book of the Fours in progress; AN 5.57; AN 5.155; AN 7.36; AN 10.48, 10.60-61
-- **SN**: SN 1.1; SN 3.21; SN 5.2; SN 10.8; SN 12.1-33; SN 22.59; SN 35.28; SN 42.11; SN 45.8; SN 56.11
-- **MN**: MN 2, MN 7, MN 23, MN 33
-- **DN**: DN 33
-
-New texts are continually being added, and existing texts are regularly updated.
+I started my translation project in about mid-2019. I intend to translate the four main Nikāyas of the Pali canon and the early parts of the Khuddaka Nikāya. A list of what has already been translated can be found <a href="https://dhammaregen.github.io/dhammaregen/de/500-intro-de" target="_blank">here</a>. New texts are continually being added, and existing texts are regularly updated.
 
 You can listen to or read all Suttas in Voice, with or without the corresponding Pali text as desired. If you enter an ID into the search box for a Sutta that I haven't yet translated a legacy text will be shown. For all search terms other than a Sutta ID, or when using the <kbd>Inspire me!</kbd> button, only segmented texts will be searched for technical reasons.
 
