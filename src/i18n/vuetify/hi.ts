@@ -168,6 +168,8 @@ export default {
     ariaMMSS: "A_MINUTES मिनिट और A_SECONDS सेकंड",
     ariaMore: "अधिक",
     ariaOpensInNewTab: "A_SOURCE नए टैब में खुलता है",
+    ariaPageBottom: "view page bottom",
+    ariaPageTop: "view page top",
     ariaPlay: "चलाए",
     ariaPlaySutta: "A_SEARCH A_SUTTAID. A_DURATION",
     ariaSeconds: "A_SECONDS सेकंड",

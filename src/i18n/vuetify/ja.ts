@@ -169,6 +169,8 @@ export default {
     ariaMMSS: "A_MINUTES 分 A_SECONDS 秒",
     ariaMore: "以上",
     ariaOpensInNewTab: "A_SOURCE を新しいタブで開く",
+    ariaPageBottom: "view page bottom",
+    ariaPageTop: "view page top",
     ariaPlaySutta: "A_SEARCH A_SUTTAID. A_DURATION",
     ariaPlay: "再生",
     ariaSeconds: "A_SECONDS 秒",

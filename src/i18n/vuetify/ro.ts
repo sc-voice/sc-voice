@@ -168,6 +168,8 @@ export default {
     ariaMMSS: "A_MINUTES minute și A_SECONDS secunde",
     ariaMore: "mai multe",
     ariaOpensInNewTab: "A_SOURCE se deschide într-o filă nouă",
+    ariaPageBottom: "view page bottom",
+    ariaPageTop: "view page top",
     ariaPlay: "Redă",
     ariaPlaySutta: "A_SEARCH A_SUTTAID. A_DURATION",
     ariaSeconds: "A_SECONDS secunde",

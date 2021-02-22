@@ -168,6 +168,8 @@ export default {
     ariaMMSS: "A_MINUTES phút A_SECONDS giây",
     ariaMore: "còn tiếp",
     ariaOpensInNewTab: "đã mở A_SOURCE trong tab mới",
+    ariaPageBottom: "view page bottom",
+    ariaPageTop: "view page top",
     ariaPlay: "Play",
     ariaPlaySutta: "A_SEARCH A_SUTTAID. A_DURATION",
     ariaSeconds: "A_SECONDS giây",

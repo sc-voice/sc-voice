@@ -167,6 +167,8 @@ export default {
     ariaMMSS: "A_MINUTES minut a A_SECONDS vteřin",
     ariaMore: "více",
     ariaOpensInNewTab: "A_SOURCE se otevře v nové záložce",
+    ariaPageBottom: "view page bottom",
+    ariaPageTop: "view page top",
     ariaPlay: "Hrát",
     ariaPlaySutta: "A_SEARCH A_SUTTAID. A_DURATION",
     ariaSeconds: "A_SECONDS vteřin",

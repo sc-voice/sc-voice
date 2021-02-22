@@ -168,6 +168,8 @@ export default {
     ariaMMSS: "A_MINUTES minutter og A_SECONDS sekunder",
     ariaMore: "mer",
     ariaOpensInNewTab: "A_SOURCE åpnes i ny fane",
+    ariaPageBottom: "view page bottom",
+    ariaPageTop: "view page top",
     ariaPlay: "Spill av",
     ariaPlaySutta: "A_SEARCH A_SUTTAID. A_DURATION",
     ariaSeconds: "A_SECONDS sekunder",

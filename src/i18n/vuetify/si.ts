@@ -167,6 +167,8 @@ export default {
     ariaMMSS: "මිනිත්තු A_MINUTES සහ තත්පර A_SECONDS",
     ariaMore: "තවත්",
     ariaOpensInNewTab: "A_SOURCE එක නව පටිත්තකින් විවෘත වේ",
+    ariaPageBottom: "view page bottom",
+    ariaPageTop: "view page top",
     ariaPlay: "වාදනය කරන්න",
     ariaPlaySutta: "A_SEARCH A_SUTTAID. A_DURATION",
     ariaSeconds: "තත්පර A_SECONDS",

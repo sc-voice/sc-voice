@@ -168,6 +168,8 @@ export default {
     ariaMMSS: "A_MINUTES minuten en A_SECONDS seconden",
     ariaMore: "meer",
     ariaOpensInNewTab: "A_SOURCE opent in een nieuw tabblad",
+    ariaPageBottom: "view page bottom",
+    ariaPageTop: "view page top",
     ariaPlay: "Afspelen",
     ariaPlaySutta: "A_SEARCH A_SUTTAID. A_DURATION",
     ariaSeconds: "A_SECONDS seconden",
