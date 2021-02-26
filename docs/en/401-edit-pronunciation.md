@@ -1,7 +1,8 @@
 ## Editing Pronunciation
 With the example of a Pali word for a German voice.
 
-#### A. In Voice (Chrome): Ctrl + Shift + i  
+#### A. In Voice (Chrome):
+- Ctrl + Shift + i  
 - Network  
 - Clear all  
 - Play sutta, stop as soon as you come to the segment you want to work on.  
