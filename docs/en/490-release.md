@@ -19,3 +19,4 @@ When releasing a new version of Voice, the following steps have to be followed:
 1. Publish D&D release information.
 1. Close release in ZenHub Release reports.
 1. Create new discussion thread on D&D.
+1. Change version number for next release.
