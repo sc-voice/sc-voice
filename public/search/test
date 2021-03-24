@@ -19,33 +19,32 @@
       },
       "suttaplex": {
         "acronym": "SN 42.11",
-        "volpages": "SN iv 327",
-        "uid": "sn42.11",
+        "biblio": null,
         "blurb": "The chief Bhadraka asks the Buddha about the origin and ending of suffering, and the Buddha points out that a loss among Bhadraka’s own community would cause him suffering, due to his attachment.",
         "difficulty": null,
-        "original_title": "Bhadraka Sutta",
+        "original_title": "Bhadrakasutta",
+        "parallel_count": 2,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
-        "type": "text",
-        "translated_title": "With Bhadraka ",
+        "translated_title": null,
         "translations": [
           {
-            "lang": "en",
-            "lang_name": "English",
-            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "Sujato",
             "author_uid": "sujato",
+            "id": "sn42.11_translation-en-sujato",
+            "is_root": false,
+            "lang": "en",
+            "lang_name": "English",
             "publication_date": null,
-            "id": "en_sn42.11_sujato",
             "segmented": true,
-            "title": "With Bhadraka ",
+            "title": null,
             "volpage": null
           }
         ],
-        "parallel_count": 2,
-        "biblio": null,
-        "num": 11
+        "type": "leaf",
+        "uid": "sn42.11",
+        "volpages": "SN iv 327"
       },
       "sutta": {
         "sutta_uid": "sn42.11",
@@ -53,33 +52,32 @@
         "support": true,
         "suttaplex": {
           "acronym": "SN 42.11",
-          "volpages": "SN iv 327",
-          "uid": "sn42.11",
+          "biblio": null,
           "blurb": "The chief Bhadraka asks the Buddha about the origin and ending of suffering, and the Buddha points out that a loss among Bhadraka’s own community would cause him suffering, due to his attachment.",
           "difficulty": null,
-          "original_title": "Bhadraka Sutta",
+          "original_title": "Bhadrakasutta",
+          "parallel_count": 2,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
-          "type": "text",
-          "translated_title": "With Bhadraka ",
+          "translated_title": null,
           "translations": [
             {
-              "lang": "en",
-              "lang_name": "English",
-              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "Sujato",
               "author_uid": "sujato",
+              "id": "sn42.11_translation-en-sujato",
+              "is_root": false,
+              "lang": "en",
+              "lang_name": "English",
               "publication_date": null,
-              "id": "en_sn42.11_sujato",
               "segmented": true,
-              "title": "With Bhadraka ",
+              "title": null,
               "volpage": null
             }
           ],
-          "parallel_count": 2,
-          "biblio": null,
-          "num": 11
+          "type": "leaf",
+          "uid": "sn42.11",
+          "volpages": "SN iv 327"
         },
         "translation": {
           "author_uid": "sujato",
@@ -427,36 +425,35 @@
       },
       "suttaplex": {
         "acronym": "MN 105",
-        "volpages": "MN ii 252",
-        "uid": "mn105",
+        "biblio": null,
         "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering.",
         "difficulty": {
-          "name": "intermediate",
-          "level": 2
+          "level": 2,
+          "name": "intermediate"
         },
-        "original_title": "Sunakkhatta Sutta",
+        "original_title": "Sunakkhattasutta",
+        "parallel_count": 1,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
-        "type": "text",
-        "translated_title": "With Sunakkhatta ",
+        "translated_title": null,
         "translations": [
           {
-            "lang": "en",
-            "lang_name": "English",
-            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "Sujato",
             "author_uid": "sujato",
+            "id": "mn105_translation-en-sujato",
+            "is_root": false,
+            "lang": "en",
+            "lang_name": "English",
             "publication_date": null,
-            "id": "en_mn105_sujato",
             "segmented": true,
-            "title": "With Sunakkhatta ",
+            "title": null,
             "volpage": null
           }
         ],
-        "parallel_count": 1,
-        "biblio": null,
-        "num": 5
+        "type": "leaf",
+        "uid": "mn105",
+        "volpages": "MN ii 252"
       },
       "sutta": {
         "sutta_uid": "mn105",
@@ -464,36 +461,35 @@
         "support": true,
         "suttaplex": {
           "acronym": "MN 105",
-          "volpages": "MN ii 252",
-          "uid": "mn105",
+          "biblio": null,
           "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering.",
           "difficulty": {
-            "name": "intermediate",
-            "level": 2
+            "level": 2,
+            "name": "intermediate"
           },
-          "original_title": "Sunakkhatta Sutta",
+          "original_title": "Sunakkhattasutta",
+          "parallel_count": 1,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
-          "type": "text",
-          "translated_title": "With Sunakkhatta ",
+          "translated_title": null,
           "translations": [
             {
-              "lang": "en",
-              "lang_name": "English",
-              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "Sujato",
               "author_uid": "sujato",
+              "id": "mn105_translation-en-sujato",
+              "is_root": false,
+              "lang": "en",
+              "lang_name": "English",
               "publication_date": null,
-              "id": "en_mn105_sujato",
               "segmented": true,
-              "title": "With Sunakkhatta ",
+              "title": null,
               "volpage": null
             }
           ],
-          "parallel_count": 1,
-          "biblio": null,
-          "num": 5
+          "type": "leaf",
+          "uid": "mn105",
+          "volpages": "MN ii 252"
         },
         "translation": {
           "author_uid": "sujato",
@@ -1133,7 +1129,7 @@
               {
                 "scid": "mn105:22.1",
                 "pli": "Maraṇañhetaṁ, sunakkhatta, ariyassa vinaye yo sikkhaṁ paccakkhāya hīnāyāvattati; ",
-                "en": "For it is death in the training of the noble one to resign the training and return to a lesser life. "
+                "en": "For it is death in the training of the Noble One to resign the training and return to a lesser life. "
               },
               {
                 "scid": "mn105:22.2",
@@ -1503,36 +1499,35 @@
       },
       "suttaplex": {
         "acronym": "MN 1",
-        "volpages": "MN i 1",
-        "uid": "mn1",
+        "biblio": null,
         "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
         "difficulty": {
-          "name": "advanced",
-          "level": 3
+          "level": 3,
+          "name": "advanced"
         },
-        "original_title": "Mūlapariyāya Sutta",
+        "original_title": "Mūlapariyāyasutta",
+        "parallel_count": 4,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
-        "type": "text",
         "translated_title": "The Root of All Things ",
         "translations": [
           {
-            "lang": "en",
-            "lang_name": "English",
-            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "Sujato",
             "author_uid": "sujato",
+            "id": "mn1_translation-en-sujato",
+            "is_root": false,
+            "lang": "en",
+            "lang_name": "English",
             "publication_date": null,
-            "id": "en_mn1_sujato",
             "segmented": true,
             "title": "The Root of All Things ",
             "volpage": null
           }
         ],
-        "parallel_count": 4,
-        "biblio": null,
-        "num": 1
+        "type": "leaf",
+        "uid": "mn1",
+        "volpages": "MN i 1"
       },
       "sutta": {
         "sutta_uid": "mn1",
@@ -1540,36 +1535,35 @@
         "support": true,
         "suttaplex": {
           "acronym": "MN 1",
-          "volpages": "MN i 1",
-          "uid": "mn1",
+          "biblio": null,
           "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
           "difficulty": {
-            "name": "advanced",
-            "level": 3
+            "level": 3,
+            "name": "advanced"
           },
-          "original_title": "Mūlapariyāya Sutta",
+          "original_title": "Mūlapariyāyasutta",
+          "parallel_count": 4,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
-          "type": "text",
           "translated_title": "The Root of All Things ",
           "translations": [
             {
-              "lang": "en",
-              "lang_name": "English",
-              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "Sujato",
               "author_uid": "sujato",
+              "id": "mn1_translation-en-sujato",
+              "is_root": false,
+              "lang": "en",
+              "lang_name": "English",
               "publication_date": null,
-              "id": "en_mn1_sujato",
               "segmented": true,
               "title": "The Root of All Things ",
               "volpage": null
             }
           ],
-          "parallel_count": 4,
-          "biblio": null,
-          "num": 1
+          "type": "leaf",
+          "uid": "mn1",
+          "volpages": "MN i 1"
         },
         "translation": {
           "author_uid": "sujato",
@@ -1678,7 +1672,7 @@
               },
               {
                 "scid": "mn1:3.5",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #1",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1698,7 +1692,7 @@
               },
               {
                 "scid": "mn1:4.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #2",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1718,7 +1712,7 @@
               },
               {
                 "scid": "mn1:5.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #3",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1738,7 +1732,7 @@
               },
               {
                 "scid": "mn1:6.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #4",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1758,7 +1752,7 @@
               },
               {
                 "scid": "mn1:7.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #5",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1778,7 +1772,7 @@
               },
               {
                 "scid": "mn1:8.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #6",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1798,7 +1792,7 @@
               },
               {
                 "scid": "mn1:9.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #7",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1818,7 +1812,7 @@
               },
               {
                 "scid": "mn1:10.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #8",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1838,7 +1832,7 @@
               },
               {
                 "scid": "mn1:11.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #9",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1858,7 +1852,7 @@
               },
               {
                 "scid": "mn1:12.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #10",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1878,7 +1872,7 @@
               },
               {
                 "scid": "mn1:13.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #11",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1898,7 +1892,7 @@
               },
               {
                 "scid": "mn1:14.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #12",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1918,7 +1912,7 @@
               },
               {
                 "scid": "mn1:15.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #13",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1938,7 +1932,7 @@
               },
               {
                 "scid": "mn1:16.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #14",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1958,7 +1952,7 @@
               },
               {
                 "scid": "mn1:17.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #15",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1978,7 +1972,7 @@
               },
               {
                 "scid": "mn1:18.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #16",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -1998,7 +1992,7 @@
               },
               {
                 "scid": "mn1:19.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #17",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -2018,7 +2012,7 @@
               },
               {
                 "scid": "mn1:20.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #18",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -2038,7 +2032,7 @@
               },
               {
                 "scid": "mn1:21.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #19",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -2058,7 +2052,7 @@
               },
               {
                 "scid": "mn1:22.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #20",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -2078,7 +2072,7 @@
               },
               {
                 "scid": "mn1:23.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #21",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -2098,7 +2092,7 @@
               },
               {
                 "scid": "mn1:24.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #22",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -2118,7 +2112,7 @@
               },
               {
                 "scid": "mn1:25.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #23",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -2138,7 +2132,7 @@
               },
               {
                 "scid": "mn1:26.4",
-                "pli": "‘Apariññātaṁ tassā’ti vadāmi. #24",
+                "pli": "‘Apariññātaṁ tassā’ti vadāmi. ",
                 "en": "Because they haven’t completely understood it, I say. "
               },
               {
@@ -3308,36 +3302,35 @@
       },
       "suttaplex": {
         "acronym": "MN 66",
-        "volpages": "MN i 447",
-        "uid": "mn66",
+        "biblio": null,
         "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous.",
         "difficulty": {
-          "name": "intermediate",
-          "level": 2
+          "level": 2,
+          "name": "intermediate"
         },
-        "original_title": "Laṭukikopama Sutta",
+        "original_title": "Laṭukikopamasutta",
+        "parallel_count": 5,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
-        "type": "text",
-        "translated_title": "The Simile of the Quail ",
+        "translated_title": "Discourse on the Simile of the Quail",
         "translations": [
           {
-            "lang": "en",
-            "lang_name": "English",
-            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "Sujato",
             "author_uid": "sujato",
+            "id": "mn66_translation-en-sujato",
+            "is_root": false,
+            "lang": "en",
+            "lang_name": "English",
             "publication_date": null,
-            "id": "en_mn66_sujato",
             "segmented": true,
-            "title": "The Simile of the Quail ",
+            "title": null,
             "volpage": null
           }
         ],
-        "parallel_count": 5,
-        "biblio": null,
-        "num": 6
+        "type": "leaf",
+        "uid": "mn66",
+        "volpages": "MN i 447"
       },
       "sutta": {
         "sutta_uid": "mn66",
@@ -3345,36 +3338,35 @@
         "support": true,
         "suttaplex": {
           "acronym": "MN 66",
-          "volpages": "MN i 447",
-          "uid": "mn66",
+          "biblio": null,
           "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous.",
           "difficulty": {
-            "name": "intermediate",
-            "level": 2
+            "level": 2,
+            "name": "intermediate"
           },
-          "original_title": "Laṭukikopama Sutta",
+          "original_title": "Laṭukikopamasutta",
+          "parallel_count": 5,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
-          "type": "text",
-          "translated_title": "The Simile of the Quail ",
+          "translated_title": "Discourse on the Simile of the Quail",
           "translations": [
             {
-              "lang": "en",
-              "lang_name": "English",
-              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "Sujato",
               "author_uid": "sujato",
+              "id": "mn66_translation-en-sujato",
+              "is_root": false,
+              "lang": "en",
+              "lang_name": "English",
               "publication_date": null,
-              "id": "en_mn66_sujato",
               "segmented": true,
-              "title": "The Simile of the Quail ",
+              "title": null,
               "volpage": null
             }
           ],
-          "parallel_count": 5,
-          "biblio": null,
-          "num": 6
+          "type": "leaf",
+          "uid": "mn66",
+          "volpages": "MN i 447"
         },
         "translation": {
           "author_uid": "sujato",

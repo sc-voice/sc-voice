@@ -27,7 +27,7 @@
         return ph;
     }
 
-    it("loadSutta() loads sn12.3/de/geiger", async()=>{
+    it("TESTTESTloadSutta() loads sn12.3/de/geiger", async()=>{
         var scApi = await new ScApi().initialize();
         var factory = await new SuttaFactory({
             scApi,

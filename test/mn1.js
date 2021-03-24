@@ -22,7 +22,7 @@
 
     var suttaStore = new SuttaStore({logLevel});
 
-    it("loadSutta(scid) parses mn1/bodhi", function(done) {
+    it("TESTTESTloadSutta(scid) parses mn1/bodhi", function(done) {
         (async function() { try {
             var scApi = await new ScApi().initialize();
             var factory = new SuttaFactory({
