@@ -599,7 +599,6 @@ summary {
     padding-right: 0.2em;
 }
 button {
-    background-color: #82B1FF;
 }
 .scv-content {
     position: relative;
