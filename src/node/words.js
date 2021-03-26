@@ -210,8 +210,9 @@
         isForeignWord(token) {
             if (this.language.startsWith('en') && fwsEn) {
                 let isForeign = !fwsEn.contains(token);
-                this.debug(`isForeignWord() ${token}:${isForeign}`);
-                return isForeign;
+                let symdef = this.symbols[token];
+                this.debug(`isForeignWord() ${token}:${isForeign, symdef}`);
+                return !symdef && isForeign;
             }
             if (token.indexOf('-') > 0) {
                 return token.split('-').reduce((acc,w) => {

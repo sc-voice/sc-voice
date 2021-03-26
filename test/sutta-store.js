@@ -545,44 +545,40 @@
         should.deepEqual(results.map(r=>r.lang), ['en']);
         should.deepEqual(results.map(r=>r.author_uid), ['bodhi']);
         should.deepEqual(results.map(r=>r.sutta.segments.length), 
-            [55]);
+            [57]);
         should(results.length).equal(1);
     });
-    it("search(pattern) finds suttas in range", function(done) {
-        (async function() { try {
-            var store = await new SuttaStore().initialize();
+    it("search(pattern) finds suttas in range", async()=>{
+        var store = await new SuttaStore().initialize();
 
-            // spaces
-            var data = await store.search({ pattern: 'sn 45.161', });
-            should.deepEqual(data.results.map(r=>r.uid), ['sn45.161']);
+        // spaces
+        var data = await store.search({ pattern: 'sn 45.161', });
+        should.deepEqual(data.results.map(r=>r.uid), ['sn45.161']);
 
-            var data = await store.search({ pattern: 'sn29.9-999', });
-            should.deepEqual(data.results.map(r=>r.uid),
-                ['sn29.9', 'sn29.10', 'sn29.11-20', 'sn29.21-50']);
-            should(data.results.length).equal(4);
-            should(data.method).equal('sutta_uid');
+        var data = await store.search({ pattern: 'sn29.9-999', });
+        should.deepEqual(data.results.map(r=>r.uid),
+            ['sn29.9', 'sn29.10', 'sn29.11-20', 'sn29.21-50']);
+        should(data.results.length).equal(4);
+        should(data.method).equal('sutta_uid');
 
-            // maxResults
-            var data = await store.search({ pattern: 'sn29.1-5', });
-            should.deepEqual(data.results.map(r=>r.uid),
-                ['sn29.1', 'sn29.2', 'sn29.3', 'sn29.4', 'sn29.5']);
-            should(data.results.length).equal(MAXRESULTS);
-            should(data.method).equal('sutta_uid');
-            var result0 = data.results[0];
-            should(result0.author).match(/Sujato/);
-            should(result0.author_short).equal('Sujato');
-            should(result0.author_uid).equal('sujato');
-            should(result0.lang).equal('en');
-            should(result0.nSegments).equal(9);
-            should(result0.title).match(/Plain Version/);
-            should(result0.collection_id).equal('sn');
-            should(result0.suttaplex.acronym).equal('SN 29.1');
-            should(result0.suttaplex.uid).equal('sn29.1');
-            should(result0.suttaplex.original_title).equal('Suddhika Sutta');
-            should(result0.suttaplex.root_lang).equal('pli');
-
-            done(); 
-        } catch(e) {done(e);} })();
+        // maxResults
+        var data = await store.search({ pattern: 'sn29.1-5', });
+        should.deepEqual(data.results.map(r=>r.uid),
+            ['sn29.1', 'sn29.2', 'sn29.3', 'sn29.4', 'sn29.5']);
+        should(data.results.length).equal(MAXRESULTS);
+        should(data.method).equal('sutta_uid');
+        var result0 = data.results[0];
+        should(result0.author).match(/Sujato/);
+        should(result0.author_short).equal('Sujato');
+        should(result0.author_uid).equal('sujato');
+        should(result0.lang).equal('en');
+        should(result0.nSegments).equal(9);
+        should(result0.title).match(/Plain Version/);
+        should(result0.collection_id).equal('sn');
+        should(result0.suttaplex.acronym).equal('SN 29.1');
+        should(result0.suttaplex.uid).equal('sn29.1');
+        should(result0.suttaplex.original_title).equal('Suddhikasutta');
+        should(result0.suttaplex.root_lang).equal('pli');
     });
     it("createPlaylist(opts) creates playlist", function(done) {
         (async function() { try {

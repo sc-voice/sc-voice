@@ -722,7 +722,7 @@
             },
         });
     });
-    it("TESTTESTlangVoices(lang) returns voices for language", function() {
+    it("langVoices(lang) returns voices for language", function() {
         var scv = new ScvSingleton(g);
         scv.voices = VOICES;
         should(scv.voices).equal(VOICES);

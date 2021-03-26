@@ -13,9 +13,23 @@
         SoundStore,
         Sutta,
         SuttaFactory,
+        SuttaStore,
         Voice,
     } = require('../index');
     this.timeout(15*1000);
+
+    var suttaFactory;
+    async function testSuttaFactory() {
+        if (!suttaFactory) {
+            let suttaStore = await new SuttaStore().initialize();
+            let scApi = await new ScApi().initialize();
+            suttaFactory = await new SuttaFactory({
+                suttaLoader: opts => suttaStore.loadBilaraSutta(opts),
+                scApi,
+            }).initialize();
+        }
+        return suttaFactory;
+    }
 
     var suttas = [
         new Sutta({
@@ -151,25 +165,22 @@
             },
         });
     });
-    it("TESTTESTaddSutta(sutta) adds dn33", async()=>{
-        var scApi = await new ScApi().initialize();
-        var factory = new SuttaFactory({
-            scApi,
-        });
+    it("addSutta(sutta) adds dn33", async()=>{
+        var factory = await testSuttaFactory();
         var sutta = await factory.loadSutta('dn33');
         var pl = new Playlist();
         pl.addSutta(sutta);
         should.deepEqual(pl.stats(), {
-            tracks: 2,
+            tracks: 12,
             chars: {
-                en: 84701,
-                pli: 80393,
+                en: 84676,
+                pli: 78920,
             }, 
             segments: {
-                en: 1157,
-                pli: 1158,
+                en: 1166,
+                pli: 1167,
             },
-            duration: 14640,
+            duration: 14504,
         });
     });
     it("addTrack(sutta_uid, segmentsOrMessage) adds a track", function(done) {
@@ -191,11 +202,8 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTspeak(opts) adds voice audio", async()=>{
-        var scApi = await new ScApi().initialize();
-        var factory = new SuttaFactory({
-            scApi,
-        });
+    it("speak(opts) adds voice audio", async()=>{
+        var factory = await testSuttaFactory();
         var sutta = await factory.loadSutta('an1.31-40');
         var voices = {
             pli: Voice.createVoice({
@@ -217,13 +225,10 @@
             volume: 'test-playlist',
         });
         should(result.signature.guid)
-            .match(/20446b264163820392a0b4cb06bbf538/);
+            .match(/fd046083ceb4a9df5bc505e59adc8ffa/);
     });
     it("speak(opts) adds break between suttas", async()=>{
-        var scApi = await new ScApi().initialize();
-        var factory = new SuttaFactory({
-            scApi,
-        });
+        var factory = await testSuttaFactory();
         var suttas = [
             await factory.loadSutta('thig2.6'),
             await factory.loadSutta('thig2.7'),
@@ -248,11 +253,10 @@
             volume: 'test-playlist',
         });
         should(result.signature.guid)
-            .match(/5ed32b94d5a03f03d3fd19ec8a34b642/);
+            .match(/7cbbc0202fad1427064bdf8fd0c54443/);
     });
     it("speak(opts) creates opus audio file", async()=>{
-        var scApi = await new ScApi().initialize();
-        var factory = new SuttaFactory({ scApi, });
+        var factory = await testSuttaFactory();
         var sutta = await factory.loadSutta('sn2.3');
         var voiceTrans = Voice.createVoice({ name: 'matthew', });
         var voices = { en: voiceTrans, };
@@ -264,6 +268,6 @@
             voices,
             volume: 'test-playlist',
         });
-        should(result.signature.guid).match(/46c11e7f9cb21cbf941b28845f373bae/);
+        should(result.signature.guid).match(/c3a6c019b948d328331ba532bcc886f7/);
     });
 })

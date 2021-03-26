@@ -68,6 +68,7 @@
                 srcPkg,
             }, opts));
             (opts.logger || logger).logInstance(this);
+            var that = this;
             this.info(`ScvRest.ctor(${this.name})`);
             this.wikiUrl = opts.wikiUrl 
                 || 'https://github.com/sc-voice/sc-voice/wiki';
@@ -89,6 +90,7 @@
             });
             this.suttaFactory = new SuttaFactory({
                 scApi: this.scApi,
+                suttaLoader: opts => that.suttaStore.loadBilaraSutta(opts),
                 autoSection: true,
             });
             this.vsmFactoryTask = new Task({
@@ -117,12 +119,6 @@
                     this.audioMIME],
                 ["get", "audio/:sutta_uid/:lang/:translator/:voice/:guid", 
                     this.getAudio, this.audioMIME],
-                ["get", "recite/section/"+
-                    ":sutta_uid/:language/:translator/:iSection", 
-                    this.getReciteSection],
-                ["get", "review/section/"+
-                    ":sutta_uid/:language/:translator/:iSection", 
-                    this.getReviewSection],
                 ["get", "play/word/:langTrans/:vname/:word", 
                     this.getPlayWord],
                 ["get", "play/segment/"+
@@ -140,10 +136,6 @@
                 ["get", "authors", this.getAuthors],
                 ["get", "voices", this.getVoices],
                 ["get", "voices/:langTrans", this.getVoices],
-                ["get", "recite/sutta/:sutta_uid/:language/:translator", 
-                    this.getReciteSutta],
-                ["get", "review/sutta/:sutta_uid/:language/:translator", 
-                    this.getReviewSutta],
                 ["get", "audio-urls/:sutta_uid", this.getAudioUrls],
                 ["get", "build-download/:type/:langs/:voice/:pattern",
                     this.getBuildDownload],
@@ -165,8 +157,6 @@
                     this.getDownloadPlaylist, this.audioMIME],
                 ["get", "download/playlist/:langs/:voice/:pattern/:vroot",
                     this.getDownloadPlaylist, this.audioMIME],
-                ["get", "sutta/:sutta_uid/:language/:translator", 
-                    this.getSutta],
                 ["get", "search/:pattern", this.getSearch],
                 ["get", "search/:pattern/:lang", this.getSearch],
                 ["get", "examples/:n", this.getExamples],
@@ -287,46 +277,6 @@
             return parms;
         }
 
-        async reciteSection(req, res, next, usage) { try {
-            var { sutta_uid, language, translator, iSection } = this.suttaParms(req);
-            var sutta = await this.suttaFactory.loadSutta({
-                scid: sutta_uid,
-                translator,
-                language,
-                expand: true,
-            });
-            if (iSection < 0 || sutta.sections.length <= iSection) {
-                var suttaRef = `${sutta_uid}/${language}/${translator}`;
-                throw new Error(`Sutta ${suttaRef} has no section:${iSection}`);
-            }
-            var lines = Sutta.textOfSegments(sutta.sections[iSection].segments);
-            var text = `${lines.join('\n')}\n`;
-            var voice = Voice.createVoice({
-                language,
-                usage,
-                soundStore: this.soundStore,
-                localeIPA: "pli",
-                audioFormat: this.soundStore.audioFormat,
-                audioSuffix: this.soundStore.audioSuffix,
-            });
-            var result = await voice.speak(text, {
-                cache: true, // false: use TTS web service for every request
-                usage,
-            });
-            return {
-                usage,
-                name: voice.name,
-                sutta_uid,
-                language,
-                translator,
-                section:iSection,
-                guid: result.signature.guid,
-            }
-        } catch(e) { 
-            this.warn(e);
-            throw e;
-        }}
-
         async synthesizeSutta(sutta_uid, language, translator, usage) { try {
             var sutta = await this.suttaFactory.loadSutta({
                 scid: sutta_uid,
@@ -372,18 +322,6 @@
             this.warn(e);
             throw e;
         }}
-
-        getReciteSection(req, res, next) {
-            var promise =  this.reciteSection(req, res, next, 'recite');
-            promise.catch(e => {
-                console.error(e.stack);
-            });
-            return promise;
-        }
-
-        getReviewSection(req, res, next) {
-            return this.reciteSection(req, res, next, 'review');
-        }
 
         getAuthors(req, res, next) {
             return Promise.resolve(this.bilaraData.authors);
@@ -615,43 +553,6 @@
                 });
             } catch(e) { reject(e); } })(); }
             return new Promise(pbody);
-        }
-
-        getReciteSutta(req, res, next) {
-            var { sutta_uid, language, translator } = this.suttaParms(req);
-            return this.synthesizeSutta(sutta_uid, language, translator, 'recite');
-        }
-
-        getReviewSutta(req, res, next) {
-            var { sutta_uid, language, translator } = this.suttaParms(req);
-            return this.synthesizeSutta(sutta_uid, language, translator, 'review');
-        }
-
-        getSutta(req, res, next) {
-            var that = this;
-            var language = req.params.language || 'en';
-            var sutta_uid = req.params.sutta_uid || 'mn1';
-            var translator = req.params.translator || 'sujato';
-            var iSection = Number(
-                req.params.iSection == null ? 0 : req.params.iSection);
-            return new Promise((resolve, reject) => {
-                (async function() { try {
-                    var sutta = await that.suttaFactory.loadSutta({
-                        scid: sutta_uid,
-                        translator,
-                        language,
-                        expand: true,
-                    });
-                    var blurb = await that.bilaraData.readBlurb({
-                        suid: sutta_uid,
-                        lang: language,
-                    });
-                    sutta.blurb = blurb;
-                    that.info(`GET sutta`,
-                        `=> ${sutta_uid}/${language}/${translator}`);
-                    resolve(sutta);
-                } catch(e) { reject(e); } })();
-            });
         }
 
         async getSearch(req, res, next) { try {

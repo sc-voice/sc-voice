@@ -101,20 +101,6 @@
                         </span>
                     </a>
                 </li>
-                <li v-for="translation in suttaplex.translations"
-                    :key="translation.id"
-                    role="none"
-                    v-show="author_uid !== translation.author_uid">
-                    <a class="scv-a" :href="translationLink(translation)"
-                        role="menuitem"
-                        v-on:click="clickTranslation(translation,$event)">
-                        <v-icon class="ml-2" 
-                            style="color: #888"
-                            small>headset</v-icon>
-                        {{translation.author}}
-                        ({{translation.lang_name}})
-                    </a>
-                </li>
                 <li class="" 
                     v-for="(audio,i) in unsupportedAudio" 
                     role="none"
@@ -838,29 +824,6 @@ export default {
                 }
             });
         },
-        loadSutta(search) {
-            console.log(`loadSutta ${search}`);
-            var tokens = search.toLowerCase().split('/');
-            (tokens.length < 2) && tokens.push(this.gscv.lang);
-            (tokens.length < 3) && tokens.push('sujato'); // TODO remove sujato
-            var url = this.url(`sutta/${tokens.join('/')}`);
-            var timer = this.startWaiting();
-            this.$http.get(url).then(res => {
-                this.stopWaiting(timer);
-                this.showSutta(res.data);
-            }).catch(e => {
-                var data = e.response && e.response.data;
-                var dataError = data && data.error || `Not found.`;
-                this.error.search = {
-                    http: e.message,
-                    dataError,
-                };
-                console.error(e.stack, data);
-                this.stopWaiting(timer);
-                this.$nextTick(() => this.$refs.refErrorHelp.setFocus());
-            });
-
-        },
         url(path) {
           var origin = window.location.origin;
           return origin.endsWith(':8080') 
@@ -915,11 +878,6 @@ export default {
             seg.expanded && (cls += "scv-para-expanded ");
             seg.matched && (cls += "scv-para-matched ");
             return cls;
-        },
-        clickTranslation(trans,event) {
-            var search = this.suttaRef(this.sutta_uid, trans.lang, trans.author_uid);
-            console.log(`clickTranslation(${search})`,event);
-            this.loadSutta(search);
         },
         resultRef(result) {
             return this.suttaRef(result.uid, result.lang, result.author_uid);

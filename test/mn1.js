@@ -22,33 +22,29 @@
 
     var suttaStore = new SuttaStore({logLevel});
 
-    it("TESTTESTloadSutta(scid) parses mn1/bodhi", function(done) {
-        (async function() { try {
-            var scApi = await new ScApi().initialize();
-            var factory = new SuttaFactory({
-                scApi,
-                logLevel,
-            });
-            var sutta = await factory.loadSutta({
-                scid: 'mn1',
-                translator: 'bodhi',
-                language: 'en',
-            });
-            should.deepEqual(Object.keys(sutta).sort(), [
-                'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
-                'metaarea', 'sections', 'support', 'suttaplex','lang',
-                'author', 'titles',
-            ].sort());
-            should(sutta.suttaCode).equal('mn1/en/bodhi');
-            should(sutta.support.value).equal('Legacy');
-            should(sutta.metaarea).match(/.*Bhikkhu Bodhi,[^]*Blake Walsh.*/);
-            should(sutta.suttaplex).properties({
-                type:'text',
-                root_lang: 'pli',
-            });
-            should(sutta.suttaplex.translated_title).match(/The Root of All Things/);
-            done();
-        } catch(e) { done(e); } })();
+    it("loadSutta(scid) parses mn1/bodhi", async()=>{
+        var scApi = await new ScApi().initialize();
+        var factory = new SuttaFactory({
+            scApi,
+            logLevel,
+        });
+        var sutta = await factory.loadSutta({
+            scid: 'mn1',
+            translator: 'bodhi',
+            language: 'en',
+        });
+        should.deepEqual(Object.keys(sutta).sort(), [
+            'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
+            'sections', 'support', 'suttaplex','lang',
+            'author', 'titles',
+        ].sort());
+        should(sutta.suttaCode).equal('mn1/en/bodhi');
+        should(sutta.support.value).equal('Legacy');
+        should(sutta.suttaplex).properties({
+            type:'leaf',
+            root_lang: 'pli',
+        });
+        should(sutta.suttaplex.translated_title).match(/The Root of All Things/);
     });
     it("expandSutta(sutta) expands mn1", function(done) {
         this.timeout(10*1000);

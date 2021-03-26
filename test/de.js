@@ -27,7 +27,7 @@
         return ph;
     }
 
-    it("TESTTESTloadSutta() loads sn12.3/de/geiger", async()=>{
+    it("loadSutta() loads sn12.3/de/geiger", async()=>{
         var scApi = await new ScApi().initialize();
         var factory = await new SuttaFactory({
             scApi,
@@ -38,9 +38,10 @@
             translator: 'geiger',
         });
         var sections = sutta.sections;
-        should.deepEqual(sections[1].segments[1], {
-            scid: 'sn12.3:1.0.2',
-            de: 'Von den Ursachen',
+        should.deepEqual(sections[0].segments[1], {
+            scid: 'sn12.3:0.2',
+            de: 'Der Weg',
+            pli: 'Paṭipadāsutta',
         });
     });
     it("createVoice(voiceName) returns a default voice", function() {

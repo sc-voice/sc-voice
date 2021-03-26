@@ -77,7 +77,7 @@
         await sleep(500);
     }
 
-    it("ScvRest must be initialized", function(done) {
+    it("TESTTESTScvRest must be initialized", function(done) {
         (async function() { try {
             var scvRest = app.locals.scvRest;
             await(scvRest.initialize());
@@ -105,114 +105,6 @@
                     'freemem', 'hostname', 'loadavg', 'name', 
                     'package', 'totalmem', 'uptime', 'version'
                 ]);
-            }).end((e,r) => e ? async.throw(e) : async.next(r));
-            done();
-        } catch (e) { done(e); } }();
-        async.next();
-    });
-    it("GET /sutta/mn1/en/sujato returns sutta", function(done) {
-        var async = function* () { try {
-            var response = yield supertest(app).get("/scv/sutta/mn1/en/sujato")
-            .expect((res) => {
-                res.statusCode.should.equal(200);
-                var sutta = res.body;
-                should.deepEqual(Object.keys(sutta).sort(), [
-                    'translation', 'suttaCode', 'sutta_uid', 
-                    'author', 'author_uid', 'titles', 'blurb',
-                    "sections", "suttaplex", "support", 'lang',
-                ].sort());
-                should.deepEqual(sutta.support, 
-                    Definitions.SUPPORT_LEVELS.Supported);
-                var sections = sutta.sections;
-                should(sections.length).equal(10);
-                should(sections[2].expandable).equal(false);
-                should(sections[2].expanded).equal(true);
-                should(sections[2].prefix).equal("");
-                should(sections[2].prop).equal("en");
-                should.deepEqual(sections[2].template, []);
-                should(sections[2].title).match(/.Take an uneducated.*/u);
-                should(sections[2].type).equal("Section");
-                should.deepEqual(sections[2].values, []);
-                should(sutta.blurb).match(
-                    /Buddha examines how the notion of a permanent/);
-            }).end((e,r) => e ? async.throw(e) : async.next(r));
-            done();
-        } catch (e) { done(e); } }();
-        async.next();
-    });
-    it("GET /sutta/mn100/en/sujato returns sutta", function(done) {
-        var async = function* () { try {
-            var response = yield supertest(app).get("/scv/sutta/mn100/en/sujato")
-            .expect((res) => {
-                res.statusCode.should.equal(200);
-                should(res.body).properties([
-                    "sections"
-                ]);
-                var sections = res.body.sections;
-                should(sections.length).equal(2);
-                should.deepEqual(sections[0], {
-                    expandable: false,
-                    expanded: false,
-                    prefix: "",
-                    prop: 'en',
-                    template: [],
-                    title: `Middle Discourses 100 `,
-                    type: 'Section',
-                    values: [],
-                    segments: [{
-                        en: 'Middle Discourses 100 ',
-                        pli: 'Majjhima Nikāya 100 ',
-                        scid: 'mn100:0.1',
-                    },{
-                        en: 'With Saṅgārava ',
-                        pli: 'Saṅgāravasutta ',
-                        scid: 'mn100:0.2',
-                    }],
-                });
-            }).end((e,r) => e ? async.throw(e) : async.next(r));
-            done();
-        } catch (e) { done(e); } }();
-        async.next();
-    });
-    it("GET /recite/section/mn1/en/sujato/2 returns recitation", function(done) {
-        var async = function* () { try {
-            var response = yield supertest(app)
-            .get("/scv/recite/section/mn1/en/sujato/2")
-            .expect((res) => {
-                res.statusCode.should.equal(200);
-                should(res.body).properties([
-                    'guid', 
-                ]);
-                should(res.body).properties({
-                    language: 'en',
-                    name: 'Amy',
-                    section: 2,
-                    sutta_uid: 'mn1',
-                    translator: 'sujato', 
-                    usage: 'recite', 
-                });
-            }).end((e,r) => e ? async.throw(e) : async.next(r));
-            done();
-        } catch (e) { done(e); } }();
-        async.next();
-    });
-    it("GET /recite/sutta/mn100/en/sujato/1 returns recitation", function(done) {
-        var async = function* () { try {
-            var response = yield supertest(app)
-            .get("/scv/recite/section/mn100/en/sujato/1")
-            .expect((res) => {
-                res.statusCode.should.equal(200);
-                should(res.body).properties([
-                    'guid', 
-                ]);
-                should(res.body).properties({
-                    language: 'en',
-                    name: 'Amy',
-                    section: 1,
-                    sutta_uid: 'mn100',
-                    translator: 'sujato', 
-                    usage: 'recite', 
-                });
             }).end((e,r) => e ? async.throw(e) : async.next(r));
             done();
         } catch (e) { done(e); } }();
@@ -306,40 +198,6 @@
         var contentLength = Number(res.headers['content-length']);
         should(res.statusCode).equal(200);
         should(contentLength).above(90000).below(110000);
-    });
-    it("GET /sutta/an2.1-10/en/sujato returns sutta", function(done) {
-        console.log("TODO", __filename); done(); return; 
-        var async = function* () { try {
-            var response = yield supertest(app)
-                .get("/scv/sutta/an2.1-10/en/sujato").expect((res) => {
-                res.statusCode.should.equal(200);
-                should(res.body).properties([
-                    "sections"
-                ]);
-                var sections = res.body.sections;
-                should(sections.length).equal(2);
-                should.deepEqual(sections[0], {
-                    expandable: false,
-                    prefix: "",
-                    prop: 'en',
-                    template: [],
-                    title: `Middle Discourses 100${Words.U_ELLIPSIS}`,
-                    type: 'Section',
-                    values: [],
-                    segments: [{
-                        en: 'Middle Discourses 100',
-                        pli: 'Majjhima Nikāya 100',
-                        scid: 'mn100:0.1',
-                    },{
-                        en: 'With Saṅgārava',
-                        pli: 'Saṅgāravasutta',
-                        scid: 'mn100:0.2',
-                    }],
-                });
-            }).end((e,r) => e ? async.throw(e) : async.next(r));
-            done();
-        } catch (e) { done(e); } }();
-        async.next();
     });
     it("Queue handles promises", function(done) {
         (async function() { try {
@@ -1178,7 +1036,7 @@
             "e0bd9aadd84f3f353f17cceced97ff13", 
         ]);
     });
-    it("TESTTESTGET /search/an4.182/ja returns Kaz sutta", async()=>{
+    it("GET /search/an4.182/ja returns Kaz sutta", async()=>{
         await testInitialize;
         var maxResults = 3;
         var pattern = `an4.182`;
@@ -1200,7 +1058,7 @@
         should(results[0].sutta.author_uid).equal('kaz');
         should(method).equal('sutta_uid');
     });
-    it("TESTTESTGET /examples/:n => ja examples", async()=>{
+    it("GET /examples/:n => ja examples", async()=>{
         var n = 1000;
         var lang = 'ja';
         var url = `/scv/examples/${n}?lang=${lang}`;

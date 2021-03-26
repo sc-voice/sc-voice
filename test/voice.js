@@ -36,7 +36,7 @@
             done();
         } catch(e) { done(e); }})();
     });
-    it("TESTTESTloadVoices(voicePath) should return voices", ()=>{
+    it("loadVoices(voicePath) should return voices", ()=>{
         var voices = Voice.loadVoices();
         should(voices).instanceOf(Array);
         should(voices.length).greaterThan(0);
@@ -704,7 +704,6 @@
     it("speak(text) handles ellipsis in AN2.17:3.1 (pli)", async()=>{ 
         var deVoices = ["aditi"]; 
         deVoices.forEach(name => {
-            console.log(`test ellipsis ${name}`);
             var v = Voice.createVoice({name});
             var text = [
                 `Abhikkantaṁ, bho gotama …pe… upāsakaṁ maṁ bhavaṁ`,

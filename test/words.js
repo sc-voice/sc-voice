@@ -106,7 +106,7 @@
         should(words.isNumber('123.45')).equal(true);
         should(words.isNumber('-0.45')).equal(true);
     });
-    it("isForeignAlphabet(token) return true if token is a word in foreign alphabet", function() {
+    it("isForeignAlphabet(token) return true if token is a word in foreign alphabet", async()=>{
         var words = new Words();
         // punctuation
         should(words.isForeignAlphabet('!')).equal(false);
@@ -127,8 +127,14 @@
         should(words.isForeignAlphabet('thirty-three')).equal(false);
         should(words.isForeignAlphabet('well-to-do')).equal(false);
     });
-    it("TESTTESTisForeignWord(token) => true if foreign word", async()=>{
+    it("isForeignWord(token) => true if foreign word", async()=>{
         var words = new Words(undefined, {language:'en-GB'});
+
+        // TODO: This is really a bug. Words should have an async initialize
+        await new Promise(r=>setTimeout(()=>r(),1000)); 
+
+        // punctuation
+        should(words.isForeignWord('!')).equal(false);
 
         // native word
         should(words.isForeignWord('unburdensome')).equal(false);
@@ -147,8 +153,6 @@
         should(words.isForeignWord('thirty-three')).equal(false);
         should(words.isForeignWord('well-to-do')).equal(false);
 
-        // punctuation
-        should(words.isForeignWord('!')).equal(false);
     });
     it("alternates(word) returns array of alternate spellings", function() {
         var words = new Words();
@@ -397,7 +401,7 @@
                 }
             }
         }
-        console.log(dict);
+        console.log(`dbg dict`, dict);
     });
     it("symbols[symbol] returns info about symbol", function() {
         var words = new Words();

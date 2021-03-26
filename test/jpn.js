@@ -28,7 +28,7 @@
         return ph;
     }
 
-    it("TESTTESTTakumi speaks", async()=>{
+    it("Takumi speaks", async()=>{
         var voice = Voice.createVoice({
             name: "Takumi",
         });

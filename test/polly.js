@@ -56,7 +56,7 @@
             guid,
         });
     });
-    it("TESTTESTsegmentSSML(text) returns SSML", function() {
+    it("segmentSSML(text) returns SSML", function() {
         var polly = new Polly({
             localeIPA: 'pli',
             stripQuotes: true,

@@ -37,9 +37,10 @@
             language: 'pt',
         });
         var sections = sutta.sections;
-        should.deepEqual(sections[1].segments[1], {
-            scid: 'an10.2:1.0.2',
-            pt: 'Cetanakaraniya Sutta',
+        should.deepEqual(sections[0].segments[1], {
+            scid: 'an10.2:0.2',
+            pli: 'Cetanākaraṇīyasutta',
+            pt: 'Intenção Correta',
         });
     });
     it("createVoice(voiceName) returns a default voice", function() {
