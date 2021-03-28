@@ -239,9 +239,12 @@
         }
 
         deleteCookies() {
-            this.vueRoot.$cookie.delete('useCookies');
+            this.vueRoot.$cookie.set('useCookies', false, COOKIE_SETTINGS);
             Object.keys(this).forEach(key => {
-                this.vueRoot.$cookie.delete(key);
+                if (key !== 'useCookies') {
+                    this.vueRoot.$cookie.delete(key);
+                    console.log('deleting cookie', key);
+                }
             });
             console.log('cookies deleted');
         }
@@ -339,7 +342,12 @@
                         console.log(`saved settings to cookies`, cookie);
                     } else {
                         Object.keys(this).forEach(key => {
-                            cookie.delete(key);
+                            if (key === 'useCookies') {
+                                cookie.set(key, false, COOKIE_SETTINGS);
+                            } else {
+                                cookie.delete(key);
+                                console.log(`deleting cookie:`, key);
+                            }
                         });
                     }
                 }

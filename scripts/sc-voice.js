@@ -31,6 +31,7 @@ app.use(compression());
 // ensure argv is actually for script instead of mocha
 var argv = process.argv[1].match(__filename) && process.argv || [];
 argv.filter(a => a==='--log-debug').length && (logger.level = 'debug');
+var port = argv.reduce((a,v)=>(v==='-3000' ? 3000 : a), 80);
 
 // set up application
 app.all('*', function(req, res, next) {
@@ -100,7 +101,7 @@ app.get(["/","/scv"], function(req,res,next) {
         if (argv.some((a) => a === '--ssl')) {
             rbServer.listenSSL(app, restBundles); 
         } else {
-            var ports = [80, 8081].concat(new Array(100).fill(3000).map((p,i)=>p+i));
+            var ports = [port, 3000].concat(new Array(100).fill(3000).map((p,i)=>p+i));
             rbServer.listen(app, restBundles, ports); 
         }
         await rbServer.initialize();

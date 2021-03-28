@@ -27,7 +27,7 @@
     >
       <v-icon aria-hidden="true">info</v-icon>
   </v-btn>
-  <div class="scv-more" >
+  <div class="scv-more" v-if="gscv">
     <v-btn icon
         id="more-menu-btn"
         @click="clickMore()"
@@ -45,6 +45,25 @@
       v-if="moreVisible"
       @focusin="focusMore(true)"
       :aria-hidden="!moreVisible">
+      <li class="" role="none" >
+        <details role="menuitem" 
+          @click="clickDetails('general', $event)"
+          :open="true || showDetail('general')"
+          >
+          <summary class="scv-settings-title">
+            <span>
+                &nbsp;
+                <!--{{$vuetify.lang.t('$vuetify.scv.general')}}-->
+            </span>
+            <span class="scv-version">v{{version}}</span>
+          </summary>
+          <v-checkbox v-model="gscv.useCookies" role="checkbox"
+            v-on:change="gscv.changed('useCookies')"
+            :aria-checked="gscv.useCookies"
+            :label="$vuetify.lang.t('$vuetify.scv.storeSettingsInCookies')"
+            />
+        </details> <!-- General -->
+      </li>
       <li class="" role="none" >
         <details role="menuitem" 
           @click="clickDetails('lang', $event)"
@@ -89,6 +108,11 @@
               :aria-checked="fullLine"
               v-on:change="gscv.changed('fullLine')"
               :label="$vuetify.lang.t('$vuetify.scv.showLineByLine')"
+              />
+            <v-checkbox v-model="gscv.showId" role="checkbox"
+              :aria-checked="gscv.showId"
+              v-on:change="gscv.changed('showId')"
+              :label="$vuetify.lang.t('$vuetify.scv.showTextSegmentIds')"
               />
             <div class="subheading scv-settings-subtitle">
               {{$vuetify.lang.t('$vuetify.scv.transLanguage')}}
@@ -175,48 +199,6 @@
           </div>
         </details>
       </li>
-      <li class="" role="none" >
-        <details role="menuitem" 
-          @click="clickDetails('audio', $event)"
-          :open="showDetail('audio')"
-          >
-          <summary class="scv-settings-title">
-            {{$vuetify.lang.t('$vuetify.scv.audio')}}
-          </summary>
-          <div class="scv-settings" v-if="gscv">
-            <v-radio-group v-model="gscv.audio"
-              v-on:change="gscv.changed('audio')"
-              row>
-              <v-radio label="Opus" :value="gscv.AUDIO_OPUS" > </v-radio>
-              <v-radio label="Ogg" :value="gscv.AUDIO_OGG" > </v-radio>
-              <v-radio label="MP3" :value="gscv.AUDIO_MP3" > </v-radio>
-            </v-radio-group>
-          </div>
-        </details> <!-- General -->
-      </li>
-      <li class="" role="none" >
-        <details role="menuitem" 
-          @click="clickDetails('general', $event)"
-          :open="showDetail('general')"
-          >
-          <summary class="scv-settings-title">
-            {{$vuetify.lang.t('$vuetify.scv.general')}}
-          </summary>
-          <div class="scv-settings" v-if="gscv">
-            <v-checkbox v-model="gscv.showId" role="checkbox"
-              :aria-checked="gscv.showId"
-              v-on:change="gscv.changed('showId')"
-              :label="$vuetify.lang.t('$vuetify.scv.showTextSegmentIds')"
-              />
-            <v-checkbox v-model="gscv.useCookies" role="checkbox"
-              v-on:change="gscv.changed('useCookies')"
-              :aria-checked="gscv.useCookies"
-              :label="$vuetify.lang.t('$vuetify.scv.storeSettingsInCookies')"
-              />
-            <span class="scv-version">v{{version}}</span>
-          </div>
-        </details> <!-- General -->
-      </li>
       <li class="text-center settings-close" role="none">
         <v-btn id="btnSettings" 
           small
@@ -237,9 +219,9 @@
         <div v-if="bgShow" class="scv-background">
         </div>
     </transition>
-    <v-content class="" >
+    <v-main class="" >
         <router-view></router-view>
-    </v-content>
+    </v-main>
     <div class="scv-more-backdrop" v-if="moreVisible"
       @click="clickBackdrop()"
       >
@@ -319,7 +301,9 @@ export default {
         evt.preventDefault();
       },
       showDetail(id) {
-        return this.openDetail === id;
+        let useCookies = this.gscv.useCookies;
+        //console.log(`useCookies`, useCookies, typeof useCookies);
+        return this.openDetail === id && useCookies;
       },
       langChanged() {
           this.gscv.changed('lang');
@@ -354,6 +338,7 @@ export default {
                       var li = ali[i];
                       if (li.style.display !== 'none') {
                           var a = li.childNodes[0];
+                          console.log(`dbg clickMore`, {li, a});
                           a.focus();
                           break;
                       }
@@ -370,7 +355,7 @@ export default {
       url(path) {
           var origin = window.location.origin;
           return origin.endsWith(':8080') 
-            ? `${origin.substring(0, origin.length-5)}/scv/${path}` 
+            ? `${origin.substring(0, origin.length-5)}:3000/scv/${path}` 
             : `./${path}`;
       },
       searchUrl(pat) {
@@ -608,6 +593,7 @@ button {
 .scv-version {
     padding-top: 0.6em;
     font-size: small;
+    aria-hidden: true;
 }
 .scv-background {
     position: absolute;
@@ -691,7 +677,11 @@ nav ul {
 }
 
 .scv-settings-title {
+    display: flex;
+    flex-wrap: row nowrap;
+    justify-content: space-between;
     margin-top: 0.1em;
+    margin-right: 0.5em;
     font-size: 120%;
     font-weight: 500;
 }

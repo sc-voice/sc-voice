@@ -182,7 +182,7 @@ export default {
         url(path) {
           var origin = window.location.origin;
           return origin.endsWith(':8080') 
-            ? `${origin.substring(0, origin.length-5)}/scv/${path}` 
+            ? `${origin.substring(0, origin.length-5)}:3000/scv/${path}` 
             : `./${path}`;
         },
         stopProgress() {
