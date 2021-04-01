@@ -74,7 +74,7 @@ if [ ! -e local/bilara-data ]; then
 fi
 echo -e "UPDATE\t: fetching latest bilara-data..."
 pushd local/bilara-data
-BRANCH=unpublished
+BRANCH=published
 if git checkout $BRANCH >& /dev/null; then
   echo -e "UPDATE\t: on $BRANCH branch" 
 else
