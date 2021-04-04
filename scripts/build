@@ -1,12 +1,15 @@
 #!/bin/bash
-echo -e "BUILD\t: BEGIN `date`"
 DIR=`dirname $0`
+SCRIPT=`basename $0 | tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+echo -e "$SCRIPT\t: BEGIN `date`"
 
 npm install --save scv-bilara@latest
 git status | grep 'nothing to commit' > /dev/null; RC=$?
 if [ "$RC" == "0" ]; then
-  echo -e "BUILD\t:nothing to commit"
+  echo -e "BUILD\t: nothing to commit"
 else
+  echo -e "BUILD\t: Updating git..."
+  git status
   SCV_VER=`json version < node_modules/scv-bilara/package.json`
   MSG="build with scv-bilara v$SCV_VER"
   echo -e "BUILD\t: $MSG"
@@ -18,4 +21,4 @@ else
   git push
 fi
 
-echo -e "BUILD\t: END `date`"
+echo -e "$SCRIPT\t: END `date`"

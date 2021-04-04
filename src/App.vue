@@ -199,7 +199,26 @@
           </div>
         </details>
       </li>
-      <li class="text-center settings-close" role="none">
+      <li class="" role="none" > <!-- Audio -->
+        <details role="menuitem" 
+          @click="clickDetails('audio', $event)"
+          :open="showDetail('audio')"
+          >
+          <summary class="scv-settings-title">
+            {{$vuetify.lang.t('$vuetify.scv.audio')}}
+          </summary>
+          <div class="scv-settings" v-if="gscv">
+            <v-radio-group v-model="gscv.audio"
+              v-on:change="gscv.changed('audio')"
+              row>
+              <v-radio label="Opus" :value="gscv.AUDIO_OPUS" > </v-radio>
+              <v-radio label="Ogg" :value="gscv.AUDIO_OGG" > </v-radio>
+              <v-radio label="MP3" :value="gscv.AUDIO_MP3" > </v-radio>
+            </v-radio-group>
+          </div>
+        </details> 
+      </li> <!-- Audio -->
+      <li class="text-center settings-close" role="none"><!-- Close -->
         <v-btn id="btnSettings" 
           small
           class="scv-text-button"
@@ -209,7 +228,7 @@
           >
           {{$vuetify.lang.t('$vuetify.close')}}
         </v-btn>
-      </li>
+      </li> <!-- Close -->
     </ul> <!-- scv-more-menu -->
   </div> <!-- scv-more -->
 </v-app-bar>

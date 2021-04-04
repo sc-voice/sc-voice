@@ -72,7 +72,7 @@
 
             this.bilaraData = opts.BilaraData || new BilaraData({
                 logger: this,
-                branch: "unpublished",
+                branch: "published",
             });
             this.seeker = opts.Seeker || new Seeker({
                 bilaraData: this.bilaraData,
