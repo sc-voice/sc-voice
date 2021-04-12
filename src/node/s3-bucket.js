@@ -8,25 +8,34 @@
     const {
         version,
     } = require('../../package');
+    const S3Creds = require("./s3-creds");
     const AWS = require("aws-sdk");
     const tmp = require('tmp');
     const REGION = 'us-west-1';
     const BUCKET = 'sc-voice-bucket';
     const LOCAL = path.join(__dirname, '..', '..', 'local');
+    const S3_CREDS = new S3Creds();
     const DEFAULT_OPTS = {
         s3: {
             apiVersion: '2006-03-01',
             endpoint: 's3.us-west-1.amazonaws.com',
             region: 'us-west-1',
+            secretAccessKey: S3_CREDS.awsConfig.secretAccessKey,
+            accessKeyId: S3_CREDS.awsConfig.accessKeyId,
         }
     }
 
     class S3Bucket {
-        constructor(opts = DEFAULT_OPTS) {
+        constructor(opts={}) {
             this.Bucket = opts.Bucket || BUCKET;
-            var s3 = this.s3 = opts.s3 instanceof AWS.S3 
-                ? opts.s3
-                : new AWS.S3(opts.s3);
+            if (opts.s3 instanceof AWS.S3) {
+                this.s3 = opts.s3;
+            } else {
+                let s3Opts = Object.assign({}, 
+                    DEFAULT_OPTS.s3,
+                    opts.s3);
+                this.s3 = new AWS.S3(s3Opts);
+            }
 
             this.initialized = false;
             this.LocationConstraint = opts.LocationConstraint || REGION;

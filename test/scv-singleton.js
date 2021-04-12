@@ -158,6 +158,7 @@
         scv.deleteCookies();
         should.deepEqual(mockVueRoot.$cookie, {
             otherCookie: 'hello',
+            useCookies: 'false',
         });
     });
     it("loadCookie(prop) loads cookie value", function() {

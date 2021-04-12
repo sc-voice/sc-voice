@@ -7,17 +7,23 @@
     logger.logLevel = 'error';
     const {
         S3Bucket,
+        S3Creds,
     } = require("../index");
     const AWS = require("aws-sdk");
     const TEST_BUCKET = 'sc-voice-test';
     const AWS_ENDPOINT = 's3.us-west-1.amazonaws.com';
     const AWS_APIVERSION = '2006-03-01';
     const AWS_REGION = 'us-west-1';
-    var s3 = new AWS.S3({
+    const S3_CREDS = new S3Creds();
+    const S3_OPTS = {
         apiVersion: AWS_APIVERSION,
         endpoint: AWS_ENDPOINT,
         region: AWS_REGION,
-    });
+        secretAccessKey: S3_CREDS.awsConfig.secretAccessKey,
+        accessKeyId: S3_CREDS.awsConfig.accessKeyId,
+    };
+    var s3 = new AWS.S3(S3_OPTS);
+    this.timeout(10*1000);
 
     const BUCKET_OPTS = {
         s3,
@@ -45,18 +51,14 @@
         });
         should(bucket.initialized).equal(false);
     });
-    it("initialize() must be called", function(done) {
-        this.timeout(4*1000);
-        (async function() { try {
-            var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
-            should(bucket.initialized).equal(true);
+    it("initialize() must be called", async()=>{
+        var bucket = new S3Bucket(BUCKET_OPTS);
+        should(await bucket.initialize()).equal(bucket);
+        should(bucket.initialized).equal(true);
 
-            var init2 = await bucket.initialize();
-            should(init2).equal(bucket);
-            should(bucket.initialized).equal(true);
-
-            done();
-        } catch(e) {done(e);} })();
+        var init2 = await bucket.initialize();
+        should(init2).equal(bucket);
+        should(bucket.initialized).equal(true);
     });
     it("upload(oname,stream) uploads stream", function(done) {
         this.timeout(12*1000);

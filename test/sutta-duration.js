@@ -91,7 +91,7 @@
         });
         testTolerance(resMeasure.seconds, 31);
     });
-    it("TESTTESTmeasure(sutta, lang) measures thig5.1", async()=>{
+    it("measure(sutta, lang) measures thig5.1", async()=>{
         var factory = await testSuttaFactory();
         var scd = new SuttaDuration();
         var sutta = await factory.loadSutta('thig5.1');

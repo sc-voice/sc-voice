@@ -77,7 +77,7 @@
         await sleep(500);
     }
 
-    it("TESTTESTScvRest must be initialized", function(done) {
+    it("ScvRest must be initialized", function(done) {
         (async function() { try {
             var scvRest = app.locals.scvRest;
             await(scvRest.initialize());
@@ -1067,9 +1067,9 @@
         var data = res.body instanceof Buffer ? JSON.parse(res.body) : res.body;
         should.deepEqual(data.sort().slice(0,3), [
             //"全ての活動が静まり",
-            "愛情による心の解放",
-            "美しさを贈り",
-            "老いる定め",
+            "カラス貝",
+            "ゾンビ",
+            "不機嫌さ、憎しみ、恨み",
         ]);
     });
 });
