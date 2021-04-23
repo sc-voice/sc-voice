@@ -132,7 +132,7 @@ export default {
     updateSeconds: 'Vteřin od poslední obnovy:',
     updatingContent: 'Obnovuji obsah',
     updatingServer: 'Obnovuji server',
-    updateBilaraIntro: 'Klikněte na Obnovit Obsah abyste obnovili bilara-data',
+    updateBilaraIntro: 'Klikněte na Obnovit Obsah abyste obnovili ebt-data',
     uptime: 'Čas od doby začátku',
     userAdded: 'Uživatel přidán',
     username: 'Uživatelské Jméno',

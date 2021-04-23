@@ -66,14 +66,14 @@ sync
 
 echo -e "UPDATE\t: Upating offline content..."
 mkdir -p local
-if [ ! -e local/bilara-data ]; then
-    echo -e "UPDATE\t: installing bilara-data..."
+if [ ! -e local/ebt-data ]; then
+    echo -e "UPDATE\t: installing ebt-data..."
     pushd local
-    git clone https://github.com/sc-voice/bilara-data
+    git clone https://github.com/sc-voice/ebt-data
     popd
 fi
-echo -e "UPDATE\t: fetching latest bilara-data..."
-pushd local/bilara-data
+echo -e "UPDATE\t: fetching latest ebt-data..."
+pushd local/ebt-data
 BRANCH=published
 if git checkout $BRANCH >& /dev/null; then
   echo -e "UPDATE\t: on $BRANCH branch" 

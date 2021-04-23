@@ -21,7 +21,7 @@
     } = require("scv-bilara");
     const LANG = 'en';
     const LOCAL = path.join(__dirname, '..', 'local');
-    const BILARA_DATA = path.join(LOCAL, 'bilara-data');
+    const EBT_DATA = path.join(LOCAL, 'ebt-data');
     const MAXRESULTS = 5;
     const STAGING = {
         apiUrl: 'http://staging.suttacentral.net/api',
@@ -41,12 +41,12 @@
             should(sutta.translation.author_uid).equal(refParts[2]);
         }
     }
-    this.timeout(20*1000);
+    this.timeout(30*1000);
 
     it("default ctor", () => {
         var store = new SuttaStore();
         should(store.bilaraData).instanceOf(BilaraData);
-        should(store.bilaraData.root).equal(BILARA_DATA);
+        should(store.bilaraData.root).equal(EBT_DATA);
         should(store.seeker).instanceOf(Seeker);
         should(store.seeker.bilaraData).equal(store.bilaraData);
         should(store.bilaraData.logger).equal(store);
@@ -435,7 +435,7 @@
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });
-    it("search(pattern) finds romanized Pali keywords ", async()=>{
+    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", async()=>{
         var store = await new SuttaStore().initialize();
         var res = await store.search('jhana');
         var {
@@ -698,13 +698,14 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("nikayaSuttaIds(...) returns sutta_uids", async()=>{
+    it("TESTTESTnikayaSuttaIds(...) returns sutta_uids", async()=>{
         var store = await new SuttaStore({
             maxDuration: 450,
         }).initialize();
         var language = 'en';
         const KNSTART = [
-            'dhp1-20', 'dhp21-32', 'dhp33-43',
+            'iti1', 'iti2', 'iti3',
+            //'dhp1-20', 'dhp21-32', 'dhp33-43',
             //'kp1', 'kp2', 'kp3',
             //'thag1.1', 'thag1.2', 'thag1.3',
         ];
@@ -722,7 +723,7 @@
         // nikaya
         var ids = await store.nikayaSuttaIds('kn');
         should(ids).instanceOf(Array);
-        should(ids.length).equal(564);
+        should(ids.length).equal(538);
         should.deepEqual(ids.slice(0,3), KNSTART);
         should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
 

@@ -8,6 +8,7 @@
     const {
         BilaraData,
         BilaraPath,
+        ExecGit,
         Seeker,
     } = require('scv-bilara');
     const Playlist = require('./playlist');
@@ -20,7 +21,7 @@
     } = require('suttacentral-api');
     const SuttaFactory = require('./sutta-factory');
     const Words = require('./words');
-    const ROOT = path.join(__dirname, '..', '..', 'local', 'suttas');
+    const LOCAL_DIR = path.join(__dirname, '..', '..', 'local');
     const maxBuffer = 10 * 1024 * 1024;
     const MAXRESULTS_LEGACY = 5;
     const COLLECTIONS = {
@@ -70,12 +71,20 @@
                 suttaLoader: scid => that.loadBilaraSutta(scid),
             });
 
-            this.bilaraData = opts.BilaraData || new BilaraData({
+            let execGit = new ExecGit({
+                repo: 'https://github.com/ebt-site/ebt-data.git',
                 logger: this,
-                branch: "published",
             });
+            this.bilaraData = opts.BilaraData || new BilaraData({
+                name: 'ebt-data',
+                branch: "published",
+                execGit,
+                logger: this,
+            });
+            let root = opts.root || path.join(LOCAL_DIR, this.bilaraData.name);
             this.seeker = opts.Seeker || new Seeker({
                 bilaraData: this.bilaraData,
+                root,
                 logger: this,
                 matchHighlight: false,
             });

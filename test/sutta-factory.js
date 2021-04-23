@@ -19,7 +19,7 @@
     const { logger } = require('log-instance');
     const TEST_DATA = path.join(__dirname, 'data');
     logger.logLevel = 'warn';
-    this.timeout(5*1000);
+    this.timeout(10*1000);
 
     var suttaStore = new SuttaStore();
     var suttaFactory = new SuttaFactory({
@@ -54,7 +54,7 @@
             prop: 'de',
         });
     });
-    it("loadSutta(...) => a sutta from SuttaCentral api", async()=>{
+    it("TESTTESTloadSutta(...) => a sutta from SuttaCentral api", async()=>{
         await new Promise(r=>setTimeout(()=>r(),200));
         await suttaStore.initialize();
         await suttaFactory.initialize();
@@ -81,35 +81,32 @@
         should(sutta.sections).instanceOf(Array);
         should(sutta.sections[0]).instanceOf(Section);
     });
-    it("loadSutta(...) returns mn1", function(done) {
-        (async function() { try {
-            await suttaStore.initialize();
-            await suttaFactory.initialize();
-            var sutta = await suttaFactory.loadSutta('mn1');
-            var end = 21;
-            var header = sutta.excerpt({
-                start: 0,
-                end: 2,
-                prop: 'pli',
-            });
-            var excerpt = sutta.excerpt({
-                start: 0,
-                end,
-                prop: 'en',
-            });
-            var i = 0;
-            should(excerpt[i++])
-                .match(/Middle Discourses 1/); // autoterminate segment
-            should(excerpt[i++])
-                .match(/The Root of All Things/); // end group
-            should(excerpt[i++])
-                .match(/So I have heard./);
-            should(excerpt[end-2])
-                .match(/Why is that?/);
-            should(sutta.sections).instanceOf(Array);
-            should(sutta.sections[0]).instanceOf(Section);
-            done();
-        } catch(e) { done(e); } })();
+    it("TESTTESTloadSutta(...) returns mn1", async()=>{
+        await suttaStore.initialize();
+        await suttaFactory.initialize();
+        var sutta = await suttaFactory.loadSutta('mn1');
+        var end = 21;
+        var header = sutta.excerpt({
+            start: 0,
+            end: 2,
+            prop: 'pli',
+        });
+        var excerpt = sutta.excerpt({
+            start: 0,
+            end,
+            prop: 'en',
+        });
+        var i = 0;
+        should(excerpt[i++])
+            .match(/Middle Discourses 1/); // autoterminate segment
+        should(excerpt[i++])
+            .match(/The Root of All Things/); // end group
+        should(excerpt[i++])
+            .match(/So I have heard./);
+        should(excerpt[end-2])
+            .match(/Why is that?/);
+        should(sutta.sections).instanceOf(Array);
+        should(sutta.sections[0]).instanceOf(Section);
     });
     it("loadSutta(...) loads an3.163-182", function(done) {
         (async function() { try {

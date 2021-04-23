@@ -31,10 +31,11 @@
         usage: "recite",
         volume: TEST_VOLUME,
     };
+    const DEPRECATED = true;
     var mj = new MerkleJson();
     logger.level = 'warn';
     var storePath = tmp.tmpNameSync();
-    this.timeout(15*1000);
+    this.timeout(20*1000);
 
     it("VsmStore() creates VSM", function() {
         var vsm = new VsmStore();
@@ -54,7 +55,7 @@
         should(vsm.s3Bucket).instanceOf(S3Bucket);
         should(vsm.s3Bucket.initialized).equal(false);
     });
-    it("TESTTESTVsmStore() creates custom VSM", function(done) {
+    it("VsmStore() creates custom VSM", function(done) {
         (async function() { try {
             var aditi = Voice.createVoice({
                 name: "aditi",
@@ -249,7 +250,10 @@
 
         tmpDirObj.removeCallback();
     });
-    it("importNikaya(...) imports nikaya", async()=>{
+    it("TESTTESTimportNikaya(...) imports nikaya", async()=>{
+        if (DEPRECATED) {
+            return;
+        }
         var tmpDirObj = tmp.dirSync({
             unsafeCleanup: true,
         });
@@ -274,7 +278,7 @@
         ]);
         //should(task.summary).match(/kn_pli_mahasangiti_aditi suttas imported: 2/);
         //should(task.summary).match(/kp_pli_mahasangiti_aditi suttas imported: 2/);
-        should(task.summary).match(/dhp_pli_mahasangiti_aditi suttas imported: 2/);
+        should(task.summary).match(/iti_pli_mahasangiti_aditi suttas imported: 2/);
         should(resImport).properties({
             nikaya: 'kn',
             lang: 'pli',
@@ -282,11 +286,12 @@
             author: 'sujato',
             maxSuttas,
             //sutta_ids: [ 'kp1', 'kp2' ],
-            sutta_ids: [ 'dhp1-20', 'dhp21-32' ],
+            //sutta_ids: [ 'dhp1-20', 'dhp21-32' ],
+            sutta_ids: [ 'iti1', 'iti2' ],
             task,
         });
-        should(resImport.guids.length).equal(171);
-        var volumePath = path.join(tmpDirObj.name, 'dhp_pli_mahasangiti_aditi');
+        should(resImport.guids.length).equal(40);
+        var volumePath = path.join(tmpDirObj.name, 'iti_pli_mahasangiti_aditi');
         should(fs.existsSync(volumePath)).equal(true);
         var guid = resImport.guids[0];
         var guidPath = path.join(volumePath, guid.substring(0,2), `${guid}.json`);
@@ -322,7 +327,10 @@
 
         tmpDirObj.removeCallback();
     });
-    it("archiveNikaya(...) archives nikaya", async()=>{
+    it("TESTTESTarchiveNikaya(...) archives nikaya", async()=>{
+        if (DEPRECATED) {
+            return;
+        }
         const Bucket = TEST_BUCKET;
         const s3Bucket = await new S3Bucket({ 
             Bucket, 
@@ -358,14 +366,14 @@
             actionsTotal: 12,
             actionsDone: 12,
         });
-        should(task.summary).match(/Archived dhp_pli_mahasangiti_aditi/);
+        should(task.summary).match(/Archived iti_pli_mahasangiti_aditi/);
 
         should.deepEqual(archiveResult.s3Bucket, {
             Bucket,
             s3: TEST_S3,
         });
         should(archiveResult).properties({
-            Key: 'dhp_pli_mahasangiti_aditi.tar.gz',
+            Key: 'iti_pli_mahasangiti_aditi.tar.gz',
         });
         should(archiveResult.response).properties(['ETag']);
 

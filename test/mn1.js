@@ -19,6 +19,7 @@
     const LOCAL = path.join(__dirname, '../local');
     const SC = path.join(LOCAL, 'sc');
     const logLevel = false;
+    this.timeout(20*1000);
 
     var suttaStore = new SuttaStore({logLevel});
 
@@ -46,54 +47,49 @@
         });
         should(sutta.suttaplex.translated_title).match(/The Root of All Things/);
     });
-    it("expandSutta(sutta) expands mn1", function(done) {
-        this.timeout(10*1000);
-        (async function() { try {
-            await suttaStore.initialize();
-            var sutta = await suttaStore.loadSutta('mn1');
-            should(sutta.lang).equal('en');
-            var factory = new SuttaFactory({logLevel});
-            should.deepEqual(Object.keys(sutta).sort(), [
-                'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
-                'titles', 'blurb',
-                'sections', 'support', 'suttaplex', 'lang', 'author',
-            ].sort());
-            var sutta2 = factory.expandSutta(sutta);
-            should(sutta2).instanceOf(Sutta);
-            should.deepEqual(Object.keys(sutta2).sort(), [
-                'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
-                'sections', 'support', 'suttaplex', 'lang', 'author',
-                'titles',
-            ].sort());
-            should(sutta2.suttaplex.blurb)
-                .match(/^The Buddha[^]*without attachment.$/um);
-            should(sutta2.author_uid).match('sujato');
-            should(sutta2.lang).equal('en');
-            var sections = sutta2.sections;
-            should(sections.length).equal(10);
-            should.deepEqual(sections.map(section => section.expandable), [
-                false, false, false, false, false, false, 
-                false, false, false, false,
-            ]);
-            should.deepEqual(sections.map(s => s.segments.length), [
-                2, 10, 98, 97, 97, 97, 97, 97, 97, 148,
-            ]);
-            should.deepEqual(sections.map(section => section.expanded), [
-                false, false, 
-                true, true, true, true, true, true, true, true,
-            ]);
-            var sectSegs = sections.reduce((acc,section) => {
-                section.segments.forEach(seg => acc.push(seg));
-                return acc;
-            }, []);
-            should.deepEqual(sectSegs, sutta2.segments);
+    it("TESTTESTexpandSutta(sutta) expands mn1", async()=>{
+        await suttaStore.initialize();
+        var sutta = await suttaStore.loadSutta('mn1');
+        should(sutta.lang).equal('en');
+        var factory = new SuttaFactory({logLevel});
+        should.deepEqual(Object.keys(sutta).sort(), [
+            'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
+            'titles', 'blurb',
+            'sections', 'support', 'suttaplex', 'lang', 'author',
+        ].sort());
+        var sutta2 = factory.expandSutta(sutta);
+        should(sutta2).instanceOf(Sutta);
+        should.deepEqual(Object.keys(sutta2).sort(), [
+            'translation', 'suttaCode', 'sutta_uid', 'author_uid', 
+            'sections', 'support', 'suttaplex', 'lang', 'author',
+            'titles',
+        ].sort());
+        should(sutta2.suttaplex.blurb)
+            .match(/^The Buddha[^]*without attachment.$/um);
+        should(sutta2.author_uid).match('sujato');
+        should(sutta2.lang).equal('en');
+        var sections = sutta2.sections;
+        should(sections.length).equal(10);
+        should.deepEqual(sections.map(section => section.expandable), [
+            false, false, false, false, false, false, 
+            false, false, false, false,
+        ]);
+        should.deepEqual(sections.map(s => s.segments.length), [
+            2, 10, 98, 97, 97, 97, 97, 97, 97, 148,
+        ]);
+        should.deepEqual(sections.map(section => section.expanded), [
+            false, false, 
+            true, true, true, true, true, true, true, true,
+        ]);
+        var sectSegs = sections.reduce((acc,section) => {
+            section.segments.forEach(seg => acc.push(seg));
+            return acc;
+        }, []);
+        should.deepEqual(sectSegs, sutta2.segments);
 
-            var jsonPath = path.join(__dirname, 
-                '../public/sutta/test1/en/sujato');
-            fs.writeFileSync(jsonPath, JSON.stringify(sutta2, null, 2));
-
-            done();
-        } catch(e) { done(e); } })();
+        var jsonPath = path.join(__dirname, 
+            '../public/sutta/test1/en/sujato');
+        fs.writeFileSync(jsonPath, JSON.stringify(sutta2, null, 2));
     });
     it("speak() generates mn1 sounds", async()=>{
         console.log(`TODO`,__filename); return;

@@ -133,7 +133,7 @@ export default {
     updateSeconds: 'Giây từ lần cập nhật cuối :',
     updatingContent: 'Đang cập nhật nội dung',
     updatingServer: 'Đang cập nhật server',
-    updateBilaraIntro: 'Click Update Content to update bilara-data',
+    updateBilaraIntro: 'Click Update Content to update ebt-data',
     uptime: 'Thời gian từ lúc khởi động',
     userAdded: 'Người dùng được thêm',
     username: 'Tên người dùng',

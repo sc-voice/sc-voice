@@ -133,7 +133,7 @@ export default {
     updateSeconds: 'Sekúndur frá síðustu uppfærslu:',
     updatingContent: 'Að uppfæra efni...',
     updatingServer: 'Að uppfæra netþjóninn ',
-    updateBilaraIntro: 'Click Update Content to update bilara-data',
+    updateBilaraIntro: 'Click Update Content to update ebt-data',
     uptime: 'Tímalengd frá ræsingu',
     userAdded: 'Notandi bættur við',
     username: 'Notandanafn',

@@ -106,30 +106,27 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("getObject(oname) downloads object", function(done) {
-        this.timeout(6*1000);
-        (async function() { try {
-            var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
-            var name = 'kn_en_sujato_amy.tar.gz';
-            var dataPath = path.join(__dirname, 'data', name);
-            var data = fs.readFileSync(dataPath);
-            var getResult = await bucket.getObject(name);
-            should(getResult).properties([
-                'Body', 
-                'AcceptRanges',
-                'LastModified',
-                'ContentLength',
-                'ETag',
-                'ContentType',
-                'Metadata',
-            ]);
-            should(getResult.AcceptRanges).equal('bytes');
-            should(getResult.ContentLength).equal(data.length);
-            should(getResult.ContentType).equal('application/octet-stream');
-            should(getResult.Body.length).equal(data.length);
-            should.deepEqual(getResult.Body, data);
-            done();
-        } catch(e) {done(e);} })();
+    it("TESTTESTgetObject(oname) downloads object", async()=>{
+        this.timeout(10*1000);
+        var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
+        var name = 'kn_en_sujato_amy.tar.gz';
+        var dataPath = path.join(__dirname, 'data', name);
+        var data = fs.readFileSync(dataPath);
+        var getResult = await bucket.getObject(name);
+        should(getResult).properties([
+            'Body', 
+            'AcceptRanges',
+            'LastModified',
+            'ContentLength',
+            'ETag',
+            'ContentType',
+            'Metadata',
+        ]);
+        should(getResult.AcceptRanges).equal('bytes');
+        should(getResult.ContentLength).equal(data.length);
+        should(getResult.ContentType).equal('application/octet-stream');
+        should(getResult.Body.length).equal(data.length);
+        should.deepEqual(getResult.Body, data);
     });
     it("downloadObject(oname,dstPath) downloads object as file", function(done) {
         this.timeout(10*1000);

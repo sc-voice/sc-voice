@@ -14,7 +14,7 @@
     const scApi = new ScApi();
     const TOLERANCE = 33;
     const logLevel = false;
-    this.timeout(10*1000);
+    this.timeout(20*1000);
 
     function testTolerance(actual, expected, e = TOLERANCE) {
         should(actual).above(expected-e);

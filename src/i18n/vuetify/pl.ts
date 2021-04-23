@@ -133,7 +133,7 @@ export default {
     updateSeconds: 'Ilość sekund od ostatniej aktualizacji:',
     updatingContent: 'Aktualizuję zawartość...',
     updatingServer: 'Aktualizuję serwer ',
-    updateBilaraIntro: 'Click Update Content to update bilara-data',
+    updateBilaraIntro: 'Click Update Content to update ebt-data',
     uptime: 'Czas od uruchomienia',
     userAdded: 'Użytkownik dodany',
     username: 'Nazwa użytkownika',

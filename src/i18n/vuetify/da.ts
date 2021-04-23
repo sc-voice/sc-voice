@@ -132,7 +132,7 @@ export default {
     updateSeconds: 'Sekunder siden seneste opdatering:',
     updatingContent: 'Opdatering indhold...',
     updatingServer: 'Opdatering server ',
-    updateBilaraIntro: 'Klik Opdater indhold for at opdatere bilara-data',
+    updateBilaraIntro: 'Klik Opdater indhold for at opdatere ebt-data',
     uptime: 'Tid siden opstart',
     userAdded: 'Bruger tilføjet',
     username: 'Brugernavn',
