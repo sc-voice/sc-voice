@@ -213,7 +213,7 @@ export default {
     showOnlyPaliText: "Zeige nur Palitext",
     showPaliText: "Zeige Palitext",
     showPaliTransText: "Zeige Palitext und Übersetzung",
-    showTextSegmentIds: "SuttaCentral Textsegment-Kennungen zeigen",
+    showTextSegmentIds: "SuttaCentral-Textsegmentkennungen zeigen",
     showTransText: "Zeige Übersetzung",
     speakSearchText: "Suchtext vorlesen",
     storeSettingsInCookies: "Einstellungen mittels Webbrowser-Cookies speichern",
