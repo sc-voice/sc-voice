@@ -18,10 +18,10 @@ const scApi = new ScApi();
 
 (async function() { try {
     let sync = true;
-    var bd = await new BilaraData().initialize(sync);
     logger.logLevel = 'warn';
+    var suttaStore = await new SuttaStore().initialize();
+    var bd = suttaStore.bilaraData;
     let suttaIds = bd.suttaIds;
-    var suttaStore = await new SuttaStore({bilaraData:bd}).initialize();
     var factory = await new SuttaFactory({
         bilaraData:bd,
         scApi,

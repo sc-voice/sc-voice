@@ -1,0 +1,47 @@
+#!/bin/bash
+
+DIR=`dirname $0`
+SCRIPT=`basename $0 | tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+cd $DIR/..
+
+echo -e "$SCRIPT\t: BEGIN `date`"
+
+$DIR/install-ripgrep
+
+mkdir -p local
+pushd local > /dev/null
+if [ -e ebt-data ]; then
+  echo "$SCRIPT: git pull ebt-data"
+  cd ebt-data
+  git pull; RC=$? || exit $RC
+else 
+  echo "$SCRIPT: git clone ebt-data"
+  git clone https://git@github.com/ebt-site/ebt-data; RC=$? || exit $RC
+fi
+popd > /dev/null
+
+echo "$SCRIPT: git pull"
+git pull
+
+echo "$SCRIPT: update scv-bilara"
+npm install --save scv-bilara@latest
+
+git status | grep 'nothing to commit' > /dev/null; RC=$?
+if [ "$RC" == "0" ]; then
+  echo "$SCRIPT: nothing to commit"
+else
+  echo "$SCRIPT: Updating git..."
+  git status
+  SCV_VER=`json version < node_modules/scv-bilara/package.json`
+  MSG="update to scv-bilara v$SCV_VER"
+  echo "$SCRIPT: $MSG"
+
+  git commit -am "$MSG"
+  npm version patch
+  VERSION=`json version < package.json`
+  git reset --soft HEAD~1
+  git commit --amend -m "$SCRIPT: v$VERSION"
+  git push
+fi
+
+echo "$SCRIPT: END `date`"
