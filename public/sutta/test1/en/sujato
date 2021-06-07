@@ -4,6 +4,7 @@
   "support": true,
   "suttaplex": {
     "acronym": "MN 1",
+    "alt_volpages": null,
     "biblio": null,
     "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
     "difficulty": {
@@ -18,7 +19,7 @@
     "translations": [
       {
         "author": "Bhikkhu Sujato",
-        "author_short": "Sujato",
+        "author_short": "sujato",
         "author_uid": "sujato",
         "id": "mn1_translation-en-sujato",
         "is_root": false,
@@ -32,7 +33,7 @@
     ],
     "type": "leaf",
     "uid": "mn1",
-    "volpages": "MN i 1"
+    "volpages": "PTS MN i 1"
   },
   "translation": {
     "author_uid": "sujato",

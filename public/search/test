@@ -19,6 +19,7 @@
       },
       "suttaplex": {
         "acronym": "SN 42.11",
+        "alt_volpages": null,
         "biblio": null,
         "blurb": "The chief Bhadraka asks the Buddha about the origin and ending of suffering, and the Buddha points out that a loss among Bhadraka’s own community would cause him suffering, due to his attachment.",
         "difficulty": null,
@@ -30,7 +31,7 @@
         "translations": [
           {
             "author": "Bhikkhu Sujato",
-            "author_short": "Sujato",
+            "author_short": "sujato",
             "author_uid": "sujato",
             "id": "sn42.11_translation-en-sujato",
             "is_root": false,
@@ -44,7 +45,7 @@
         ],
         "type": "leaf",
         "uid": "sn42.11",
-        "volpages": "SN iv 327"
+        "volpages": "PTS SN iv 327"
       },
       "sutta": {
         "sutta_uid": "sn42.11",
@@ -52,6 +53,7 @@
         "support": true,
         "suttaplex": {
           "acronym": "SN 42.11",
+          "alt_volpages": null,
           "biblio": null,
           "blurb": "The chief Bhadraka asks the Buddha about the origin and ending of suffering, and the Buddha points out that a loss among Bhadraka’s own community would cause him suffering, due to his attachment.",
           "difficulty": null,
@@ -63,7 +65,7 @@
           "translations": [
             {
               "author": "Bhikkhu Sujato",
-              "author_short": "Sujato",
+              "author_short": "sujato",
               "author_uid": "sujato",
               "id": "sn42.11_translation-en-sujato",
               "is_root": false,
@@ -77,7 +79,7 @@
           ],
           "type": "leaf",
           "uid": "sn42.11",
-          "volpages": "SN iv 327"
+          "volpages": "PTS SN iv 327"
         },
         "translation": {
           "author_uid": "sujato",
@@ -425,6 +427,7 @@
       },
       "suttaplex": {
         "acronym": "MN 105",
+        "alt_volpages": null,
         "biblio": null,
         "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering.",
         "difficulty": {
@@ -439,7 +442,7 @@
         "translations": [
           {
             "author": "Bhikkhu Sujato",
-            "author_short": "Sujato",
+            "author_short": "sujato",
             "author_uid": "sujato",
             "id": "mn105_translation-en-sujato",
             "is_root": false,
@@ -453,7 +456,7 @@
         ],
         "type": "leaf",
         "uid": "mn105",
-        "volpages": "MN ii 252"
+        "volpages": "PTS MN ii 252"
       },
       "sutta": {
         "sutta_uid": "mn105",
@@ -461,6 +464,7 @@
         "support": true,
         "suttaplex": {
           "acronym": "MN 105",
+          "alt_volpages": null,
           "biblio": null,
           "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering.",
           "difficulty": {
@@ -475,7 +479,7 @@
           "translations": [
             {
               "author": "Bhikkhu Sujato",
-              "author_short": "Sujato",
+              "author_short": "sujato",
               "author_uid": "sujato",
               "id": "mn105_translation-en-sujato",
               "is_root": false,
@@ -489,7 +493,7 @@
           ],
           "type": "leaf",
           "uid": "mn105",
-          "volpages": "MN ii 252"
+          "volpages": "PTS MN ii 252"
         },
         "translation": {
           "author_uid": "sujato",
@@ -1499,6 +1503,7 @@
       },
       "suttaplex": {
         "acronym": "MN 1",
+        "alt_volpages": null,
         "biblio": null,
         "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
         "difficulty": {
@@ -1513,7 +1518,7 @@
         "translations": [
           {
             "author": "Bhikkhu Sujato",
-            "author_short": "Sujato",
+            "author_short": "sujato",
             "author_uid": "sujato",
             "id": "mn1_translation-en-sujato",
             "is_root": false,
@@ -1527,7 +1532,7 @@
         ],
         "type": "leaf",
         "uid": "mn1",
-        "volpages": "MN i 1"
+        "volpages": "PTS MN i 1"
       },
       "sutta": {
         "sutta_uid": "mn1",
@@ -1535,6 +1540,7 @@
         "support": true,
         "suttaplex": {
           "acronym": "MN 1",
+          "alt_volpages": null,
           "biblio": null,
           "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
           "difficulty": {
@@ -1549,7 +1555,7 @@
           "translations": [
             {
               "author": "Bhikkhu Sujato",
-              "author_short": "Sujato",
+              "author_short": "sujato",
               "author_uid": "sujato",
               "id": "mn1_translation-en-sujato",
               "is_root": false,
@@ -1563,7 +1569,7 @@
           ],
           "type": "leaf",
           "uid": "mn1",
-          "volpages": "MN i 1"
+          "volpages": "PTS MN i 1"
         },
         "translation": {
           "author_uid": "sujato",
@@ -3302,6 +3308,7 @@
       },
       "suttaplex": {
         "acronym": "MN 66",
+        "alt_volpages": null,
         "biblio": null,
         "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous.",
         "difficulty": {
@@ -3316,7 +3323,7 @@
         "translations": [
           {
             "author": "Bhikkhu Sujato",
-            "author_short": "Sujato",
+            "author_short": "sujato",
             "author_uid": "sujato",
             "id": "mn66_translation-en-sujato",
             "is_root": false,
@@ -3330,7 +3337,7 @@
         ],
         "type": "leaf",
         "uid": "mn66",
-        "volpages": "MN i 447"
+        "volpages": "PTS MN i 447"
       },
       "sutta": {
         "sutta_uid": "mn66",
@@ -3338,6 +3345,7 @@
         "support": true,
         "suttaplex": {
           "acronym": "MN 66",
+          "alt_volpages": null,
           "biblio": null,
           "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous.",
           "difficulty": {
@@ -3352,7 +3360,7 @@
           "translations": [
             {
               "author": "Bhikkhu Sujato",
-              "author_short": "Sujato",
+              "author_short": "sujato",
               "author_uid": "sujato",
               "id": "mn66_translation-en-sujato",
               "is_root": false,
@@ -3366,7 +3374,7 @@
           ],
           "type": "leaf",
           "uid": "mn66",
-          "volpages": "MN i 447"
+          "volpages": "PTS MN i 447"
         },
         "translation": {
           "author_uid": "sujato",

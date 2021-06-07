@@ -16,7 +16,7 @@
         SuttaStore,
         Voice,
     } = require('../index');
-    this.timeout(15*1000);
+    this.timeout(20*1000);
 
     var suttaFactory;
     async function testSuttaFactory() {
@@ -202,7 +202,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("speak(opts) adds voice audio", async()=>{
+    it("TESTTESTspeak(opts) adds voice audio", async()=>{
         var factory = await testSuttaFactory();
         var sutta = await factory.loadSutta('an1.31-40');
         var voices = {
@@ -227,7 +227,7 @@
         should(result.signature.guid)
             .match(/fd046083ceb4a9df5bc505e59adc8ffa/);
     });
-    it("speak(opts) adds break between suttas", async()=>{
+    it("TESTTESTspeak(opts) adds break between suttas", async()=>{
         var factory = await testSuttaFactory();
         var suttas = [
             await factory.loadSutta('thig2.6'),
@@ -253,7 +253,7 @@
             volume: 'test-playlist',
         });
         should(result.signature.guid)
-            .match(/7cbbc0202fad1427064bdf8fd0c54443/);
+            .match(/42b96c8ae.*/);
     });
     it("speak(opts) creates opus audio file", async()=>{
         var factory = await testSuttaFactory();
