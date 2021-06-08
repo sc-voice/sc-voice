@@ -106,7 +106,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTgetObject(oname) downloads object", async()=>{
+    it("getObject(oname) downloads object", async()=>{
         this.timeout(10*1000);
         var bucket = await new S3Bucket(BUCKET_OPTS).initialize();
         var name = 'kn_en_sujato_amy.tar.gz';

@@ -54,7 +54,7 @@
             prop: 'de',
         });
     });
-    it("TESTTESTloadSutta(...) => a sutta from SuttaCentral api", async()=>{
+    it("loadSutta(...) => a sutta from SuttaCentral api", async()=>{
         await new Promise(r=>setTimeout(()=>r(),200));
         await suttaStore.initialize();
         await suttaFactory.initialize();
@@ -81,7 +81,7 @@
         should(sutta.sections).instanceOf(Array);
         should(sutta.sections[0]).instanceOf(Section);
     });
-    it("TESTTESTloadSutta(...) returns mn1", async()=>{
+    it("loadSutta(...) returns mn1", async()=>{
         await suttaStore.initialize();
         await suttaFactory.initialize();
         var sutta = await suttaFactory.loadSutta('mn1');

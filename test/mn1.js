@@ -47,7 +47,7 @@
         });
         should(sutta.suttaplex.translated_title).match(/The Root of All Things/);
     });
-    it("TESTTESTexpandSutta(sutta) expands mn1", async()=>{
+    it("expandSutta(sutta) expands mn1", async()=>{
         await suttaStore.initialize();
         var sutta = await suttaStore.loadSutta('mn1');
         should(sutta.lang).equal('en');

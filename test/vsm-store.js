@@ -250,7 +250,7 @@
 
         tmpDirObj.removeCallback();
     });
-    it("TESTTESTimportNikaya(...) imports nikaya", async()=>{
+    it("importNikaya(...) imports nikaya", async()=>{
         if (DEPRECATED) {
             return;
         }
@@ -327,7 +327,7 @@
 
         tmpDirObj.removeCallback();
     });
-    it("TESTTESTarchiveNikaya(...) archives nikaya", async()=>{
+    it("archiveNikaya(...) archives nikaya", async()=>{
         if (DEPRECATED) {
             return;
         }

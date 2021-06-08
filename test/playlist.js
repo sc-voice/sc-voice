@@ -202,7 +202,7 @@
             done();
         } catch(e) { done(e); } })();
     });
-    it("TESTTESTspeak(opts) adds voice audio", async()=>{
+    it("speak(opts) adds voice audio", async()=>{
         var factory = await testSuttaFactory();
         var sutta = await factory.loadSutta('an1.31-40');
         var voices = {
@@ -227,7 +227,7 @@
         should(result.signature.guid)
             .match(/fd046083ceb4a9df5bc505e59adc8ffa/);
     });
-    it("TESTTESTspeak(opts) adds break between suttas", async()=>{
+    it("speak(opts) adds break between suttas", async()=>{
         var factory = await testSuttaFactory();
         var suttas = [
             await factory.loadSutta('thig2.6'),
@@ -255,7 +255,7 @@
         should(result.signature.guid)
             .match(/42b96c8ae.*/);
     });
-    it("speak(opts) creates opus audio file", async()=>{
+    it("TESTTESTspeak(opts) creates opus audio file", async()=>{
         var factory = await testSuttaFactory();
         var sutta = await factory.loadSutta('sn2.3');
         var voiceTrans = Voice.createVoice({ name: 'matthew', });
@@ -268,6 +268,6 @@
             voices,
             volume: 'test-playlist',
         });
-        should(result.signature.guid).match(/c3a6c019b948d328331ba532bcc886f7/);
+        should(result.signature.guid).match(/c9647b72bfe7b3103a2a6d0bec1a5b46/);
     });
 })

@@ -435,7 +435,7 @@
         should(SuttaStore.paliPattern("[abcdefghijklmnopqrstuvwxyz]"))
         .equal('[abcdefghijklmnopqrstuvwxyz]');
     });
-    it("TESTTESTsearch(pattern) finds romanized Pali keywords ", async()=>{
+    it("search(pattern) finds romanized Pali keywords ", async()=>{
         var store = await new SuttaStore().initialize();
         var res = await store.search('jhana');
         var {
@@ -698,7 +698,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTnikayaSuttaIds(...) returns sutta_uids", async()=>{
+    it("nikayaSuttaIds(...) returns sutta_uids", async()=>{
         var store = await new SuttaStore({
             maxDuration: 450,
         }).initialize();

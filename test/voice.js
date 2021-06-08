@@ -762,5 +762,26 @@
            '<break time="0.300s"/>',
         ]);
     });
+    it("TESTTESTspeakSegment() => kp6:5.2", async()=>{
+        var v = Voice.createVoice({name:"amy"});
+        v.logLevel = 'debug';
+        let sutta_uid = 'kp6';
+        let segment = {
+            scid: 'kp6:5.2',
+            en: 'is said to be the “immersion with immediate fruit”;',
+        }
+        let language = 'en';
+        let translator = 'sujato';
+        let usage = 'recite';
+
+        var res = await v.speakSegment({
+            sutta_uid,
+            segment,
+            language,
+            translator,
+            usage,
+        });
+        console.log(`dbg res`, res);
+    });
 
 })

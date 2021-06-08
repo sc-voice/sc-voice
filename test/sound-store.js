@@ -189,7 +189,7 @@
         should(fs.existsSync(data[2].fpath)).equal(false);
         should.deepEqual(Object.keys(store.ephemerals), []);
     });
-    it("TESTTESTautomatically clears old ephemerals", async()=>{
+    it("automatically clears old ephemerals", async()=>{
         var storePath = tmp.tmpNameSync();
         var ephemeralInterval = 100;
         var store = new SoundStore({

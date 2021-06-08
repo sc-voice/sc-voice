@@ -15,7 +15,7 @@
     const execPromise = util.promisify(exec);  
     const RE_PARA = new RegExp(`^[${Words.U_RSQUOTE}${Words.U_RDQUOTE}]*\n$`,'u');
     const RE_PARA_EOL = /^\n\n+$/u;
-    const RE_PAUSE3 = /[\u2014;:]/;  // \u2014:em-dash
+    const RE_PAUSE3 = /[\u2014;:]./;  // \u2014:em-dash
     const RE_NUMBER = new RegExp(Words.PAT_NUMBER);
     const RE_STRIPNUMBER = new RegExp(`\\(?${Words.PAT_NUMBER}\\)?`);
     //const ELLIPSIS_BREAK = '<break time="1.000s"/>';
@@ -196,28 +196,28 @@
             var ipa = null;
             if (wi) {
                 if (wi.ipa) { // use custom IPA
-                    this.debug(`wordSSML1.1`, word);
+                    this.debug(`wordSSML1.1`, {word}, wi);
                     ipa = wi.ipa;
                 } else if (lang === 'en' && wi.language !== lang) {
                     // use IPA for non-English words in English
-                    this.debug(`wordSSML1.3`, word, lang, wi);
+                    this.debug(`wordSSML1.3`, {word, lang}, wi);
                     ipa = this.wordIPA(word, wi.language);
                 } else if (lang === 'pli' || wi.language === 'pli') { // generate IPA
                     // use IPA for root text
-                    this.debug(`wordSSML1.4`, word);
+                    this.debug(`wordSSML1.4`, {word}, wi);
                     ipa = this.wordIPA(word, wi.language);
                 } else {
-                    this.debug(`wordSSML1.5`, word, lang, wi);
+                    this.debug(`wordSSML1.5`, {word, lang}, wi);
                 }
             } else { // unknown word or punctuation
                 if (Words.RE_ACRONYM.test(word)) {
-                    this.debug(`wordSSML2.1`, word);
+                    this.debug(`wordSSML2.1`, {word}, wi);
                     return word
                         .replace('{', '<say-as interpret-as="spell">')
                         .replace('}', '</say-as>');
                 } else if (word.trim() === '') {
                     // ipa = null
-                    this.debug(`wordSSML2.2`, word);
+                    this.debug(`wordSSML2.2`, {word}, wi);
                 } else if (this.words.isWord(word)) {
                     var w = word.endsWith(`’`) 
                         ? word.substring(0,word.length-1) 
@@ -225,20 +225,20 @@
                     if (this.localeIPA !== this.language && 
                         this.words.isForeignWord(w)) { 
                         var ipa = this.wordIPA(word, this.localeIPA);
-                        this.debug(`wordSSML2.3.1`, word, w, wi);
+                        this.debug(`wordSSML2.3.1`, {word, w}, wi);
                     } else {
-                        this.debug(`wordSSML2.3.2`, word, w);
+                        this.debug(`wordSSML2.3.2`, {word, w}, wi);
                     }
                 } else if (word.endsWith(`’`)) {
                     // ipa = null
-                    this.debug(`wordSSML2.4`, word);
+                    this.debug(`wordSSML2.4`, {word}, wi);
                 } else {
                     var symInfo = symbols[word];
                     if (0 && symInfo && symInfo.isEllipsis) {
                         this.debug(`w&ordSSML2.5.1`, word);
                         return this.ellipsisBreak;
                     }
-                    this.debug(`wordSSML2.5.2`, word);
+                    this.debug(`wordSSML2.5.2`, {word}, wi);
                 }
             }
             if (ipa) {
@@ -257,7 +257,8 @@
         }
 
         tokenize(text) {
-            return this.words.tokenize(text);
+            let tokens = this.words.tokenize(text);
+            return tokens;
         }
 
         tokensSSML(text) {
@@ -280,13 +281,18 @@
                     acc.length && acc.push('\n');
                     acc.push(`${this.break(4)}`);
                     acc.push('\n');
+                    this.debug(`tokensSSML() RE_PARA_EOL`, {token});
                 } else if (RE_PAUSE3.test(token)) {
                     acc.length && acc.push(' ');
                     acc.push(`${this.break(3)} `);
+                    this.debug(`tokensSSML() RE_PAUSE3`, {token});
                 } else if (token === '&') {
+                    this.debug(`tokensSSML() ampersand`, {token});
                     acc.push('&amp;');
                 } else {
-                    acc.push(this.wordSSML(token) || token);
+                    let wordSSML = this.wordSSML(token) || token;
+                    this.debug(`tokensSSML() wordSSML`, {token, wordSSML});
+                    acc.push(wordSSML);
                 }
                 return acc;
             }, []);
