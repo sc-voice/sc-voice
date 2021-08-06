@@ -247,7 +247,7 @@
             'vri',
         ])
     });
-    it("loadSutta() loads dn22/de/vri", async()=>{
+    it("TESTTESTloadSutta() loads dn22/de/vri", async()=>{
         await suttaStore.initialize();
         var scApi = await new ScApi().initialize();
         var factory = await new SuttaFactory({

@@ -698,14 +698,14 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("nikayaSuttaIds(...) returns sutta_uids", async()=>{
+    it("TESTTESTnikayaSuttaIds(...) returns sutta_uids", async()=>{
         var store = await new SuttaStore({
             maxDuration: 450,
         }).initialize();
         var language = 'en';
         const KNSTART = [
-            'iti1', 'iti2', 'iti3',
-            //'dhp1-20', 'dhp21-32', 'dhp33-43',
+            //'iti1', 'iti2', 'iti3',
+            'dhp1-20', 'dhp21-32', 'dhp33-43',
             //'kp1', 'kp2', 'kp3',
             //'thag1.1', 'thag1.2', 'thag1.3',
         ];
@@ -723,7 +723,7 @@
         // nikaya
         var ids = await store.nikayaSuttaIds('kn');
         should(ids).instanceOf(Array);
-        should(ids.length).equal(538);
+        should(ids.length).equal(564);
         should.deepEqual(ids.slice(0,3), KNSTART);
         should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
 
@@ -757,7 +757,7 @@
         //should.deepEqual(ids.slice(0,3), KNSTART);
         //should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
     });
-    it("search('sn12.3') returns Deutsch", async()=>{
+    it("TESTTESTsearch('sn12.3') returns Deutsch", async()=>{
         var voice = Voice.createVoice('Amy');
         var scApi = await new ScApi().initialize();
         var suttaFactory = new SuttaFactory({

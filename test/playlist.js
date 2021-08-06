@@ -173,7 +173,7 @@
         should.deepEqual(pl.stats(), {
             tracks: 12,
             chars: {
-                en: 84676,
+                en: 84681,
                 pli: 78920,
             }, 
             segments: {

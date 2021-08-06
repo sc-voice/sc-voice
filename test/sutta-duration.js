@@ -220,7 +220,7 @@
         sutta = factory.sectionSutta(sutta);
         var resMeasure = scd.measure(sutta);
         should(resMeasure).properties({
-            text: 84639,
+            text: 84644,
             lang: 'en',
             nSegments: 1167,
             nEmptySegments: 38,
