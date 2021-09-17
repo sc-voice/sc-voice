@@ -27,7 +27,7 @@
         "parallel_count": 2,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
-        "translated_title": null,
+        "translated_title": "With Bhadraka",
         "translations": [
           {
             "author": "Bhikkhu Sujato",
@@ -39,13 +39,13 @@
             "lang_name": "English",
             "publication_date": null,
             "segmented": true,
-            "title": null,
+            "title": "With Bhadraka",
             "volpage": null
           }
         ],
         "type": "leaf",
         "uid": "sn42.11",
-        "volpages": "PTS SN iv 327"
+        "volpages": " PTS 4.328, PTS 4.330"
       },
       "sutta": {
         "sutta_uid": "sn42.11",
@@ -61,7 +61,7 @@
           "parallel_count": 2,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
-          "translated_title": null,
+          "translated_title": "With Bhadraka",
           "translations": [
             {
               "author": "Bhikkhu Sujato",
@@ -73,13 +73,13 @@
               "lang_name": "English",
               "publication_date": null,
               "segmented": true,
-              "title": null,
+              "title": "With Bhadraka",
               "volpage": null
             }
           ],
           "type": "leaf",
           "uid": "sn42.11",
-          "volpages": "PTS SN iv 327"
+          "volpages": " PTS 4.328, PTS 4.330"
         },
         "translation": {
           "author_uid": "sujato",
@@ -438,7 +438,7 @@
         "parallel_count": 1,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
-        "translated_title": null,
+        "translated_title": "With Sunakkhatta ",
         "translations": [
           {
             "author": "Bhikkhu Sujato",
@@ -450,13 +450,13 @@
             "lang_name": "English",
             "publication_date": null,
             "segmented": true,
-            "title": null,
+            "title": "With Sunakkhatta ",
             "volpage": null
           }
         ],
         "type": "leaf",
         "uid": "mn105",
-        "volpages": "PTS MN ii 252"
+        "volpages": " PTS 2.252, PTS 2.253, PTS 2.254, PTS 2.255, PTS 2.256, PTS 2.257, PTS 2.258, PTS 2.259, PTS 2.260, PTS 2.261"
       },
       "sutta": {
         "sutta_uid": "mn105",
@@ -475,7 +475,7 @@
           "parallel_count": 1,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
-          "translated_title": null,
+          "translated_title": "With Sunakkhatta ",
           "translations": [
             {
               "author": "Bhikkhu Sujato",
@@ -487,13 +487,13 @@
               "lang_name": "English",
               "publication_date": null,
               "segmented": true,
-              "title": null,
+              "title": "With Sunakkhatta ",
               "volpage": null
             }
           ],
           "type": "leaf",
           "uid": "mn105",
-          "volpages": "PTS MN ii 252"
+          "volpages": " PTS 2.252, PTS 2.253, PTS 2.254, PTS 2.255, PTS 2.256, PTS 2.257, PTS 2.258, PTS 2.259, PTS 2.260, PTS 2.261"
         },
         "translation": {
           "author_uid": "sujato",
@@ -1532,7 +1532,7 @@
         ],
         "type": "leaf",
         "uid": "mn1",
-        "volpages": "PTS MN i 1"
+        "volpages": " PTS 1.1, PTS 1.2, PTS 1.3, PTS 1.4, PTS 1.5, PTS 1.6"
       },
       "sutta": {
         "sutta_uid": "mn1",
@@ -1569,7 +1569,7 @@
           ],
           "type": "leaf",
           "uid": "mn1",
-          "volpages": "PTS MN i 1"
+          "volpages": " PTS 1.1, PTS 1.2, PTS 1.3, PTS 1.4, PTS 1.5, PTS 1.6"
         },
         "translation": {
           "author_uid": "sujato",
@@ -3319,7 +3319,7 @@
         "parallel_count": 5,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
-        "translated_title": "Discourse on the Simile of the Quail",
+        "translated_title": "The Simile of the Quail ",
         "translations": [
           {
             "author": "Bhikkhu Sujato",
@@ -3331,13 +3331,13 @@
             "lang_name": "English",
             "publication_date": null,
             "segmented": true,
-            "title": null,
+            "title": "The Simile of the Quail ",
             "volpage": null
           }
         ],
         "type": "leaf",
         "uid": "mn66",
-        "volpages": "PTS MN i 447"
+        "volpages": " PTS 1.448, PTS 1.449, PTS 1.450, PTS 1.451, PTS 1.452, PTS 1.453, PTS 1.454, PTS 1.455, PTS 1.456"
       },
       "sutta": {
         "sutta_uid": "mn66",
@@ -3356,7 +3356,7 @@
           "parallel_count": 5,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
-          "translated_title": "Discourse on the Simile of the Quail",
+          "translated_title": "The Simile of the Quail ",
           "translations": [
             {
               "author": "Bhikkhu Sujato",
@@ -3368,13 +3368,13 @@
               "lang_name": "English",
               "publication_date": null,
               "segmented": true,
-              "title": null,
+              "title": "The Simile of the Quail ",
               "volpage": null
             }
           ],
           "type": "leaf",
           "uid": "mn66",
-          "volpages": "PTS MN i 447"
+          "volpages": " PTS 1.448, PTS 1.449, PTS 1.450, PTS 1.451, PTS 1.452, PTS 1.453, PTS 1.454, PTS 1.455, PTS 1.456"
         },
         "translation": {
           "author_uid": "sujato",
