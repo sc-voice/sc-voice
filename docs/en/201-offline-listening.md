@@ -36,5 +36,5 @@ Offline listening with a cloud service phone application uses minimal battery po
 
 | Cloud Service | Offline Option | Example |
 | ----- | ---- | ---- |
-| DropBox |Make Available Offline | <img src=/sc-voice/assets/img/offline-dropbox.jpg?raw=true width="200px"/> |
+| DropBox |Make Available Offline | <img src=https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/offline-dropbox.jpg?raw=true width=200px/> |
 
