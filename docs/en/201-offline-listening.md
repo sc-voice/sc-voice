@@ -16,8 +16,7 @@ For offline listening with a phone, it is best to download an audio file from Su
 ### Downloading Audio Files
 On a desktop computer, browse to the SuttaCentral Voice web page and search for one or more sutta(s). Next to the Play button you see an arrow for download. Click it to download the selected sutta(s).
 
-![[https://github.com/sc-voice/sc-voice/blob/master/src/assets/download-en.png?raw=true]]
-
+![download link](https://github.com/sc-voice/sc-voice/blob/master/src/assets/download-en.png?raw=true)
 Copy the audio file to your phone or other audio device (see below for iPhone instructions).
 
 ### Listen to Suttas on iPhone
