@@ -99,7 +99,7 @@
             'sujato']);
         should.deepEqual(results.map(r=>r.suttaplex.acronym), [
             'Thig 16.1']);
-        should(results[0].quote.en).match(/16.1. Sumedhā/);
+        should(results[0].quote.en).match(/Sumedhā/);
         should(results[0].nSegments).equal(311);
         var sutta = results[0].sutta;
         should(sutta.sutta_uid).equal('thig16.1');
@@ -142,7 +142,7 @@
         } = await store.search('sona');
         should(results).instanceOf(Array);
         should(method).equal('phrase');
-        should(results.length).equal(22);
+        should(results.length).equal(23);
     });
     it("search('thig1.1') returns segmented sutta", async()=>{
         var voice = Voice.createVoice({
@@ -176,7 +176,7 @@
         should.deepEqual(results.map(r=>r.suttaplex.acronym), [
             'Thig 1.1']);
         should(results[0].quote.en)
-            .match(/1.1. An Unnamed Nun \(1st\)/);
+            .match(/An Unnamed Nun \(1st\)/);
         should(results[0].nSegments).equal(9);
         var sutta = results[0].sutta;
         should(sutta.sutta_uid).equal('thig1.1');
@@ -698,7 +698,7 @@
             done(); 
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTnikayaSuttaIds(...) returns sutta_uids", async()=>{
+    it("nikayaSuttaIds(...) returns sutta_uids", async()=>{
         var store = await new SuttaStore({
             maxDuration: 450,
         }).initialize();
@@ -723,7 +723,7 @@
         // nikaya
         var ids = await store.nikayaSuttaIds('kn');
         should(ids).instanceOf(Array);
-        should(ids.length).equal(564);
+        should(ids.length).equal(637);
         should.deepEqual(ids.slice(0,3), KNSTART);
         should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
 
@@ -757,7 +757,7 @@
         //should.deepEqual(ids.slice(0,3), KNSTART);
         //should.deepEqual(ids.slice(ids.length-3,ids.length), KNEND);
     });
-    it("TESTTESTsearch('sn12.3') returns Deutsch", async()=>{
+    it("search('sn12.3') returns Deutsch", async()=>{
         var voice = Voice.createVoice('Amy');
         var scApi = await new ScApi().initialize();
         var suttaFactory = new SuttaFactory({

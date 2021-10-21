@@ -173,14 +173,14 @@
         should.deepEqual(pl.stats(), {
             tracks: 12,
             chars: {
-                en: 84681,
+                en: 84692,
                 pli: 78920,
             }, 
             segments: {
                 en: 1166,
                 pli: 1167,
             },
-            duration: 14504,
+            duration: 14505,
         });
     });
     it("addTrack(sutta_uid, segmentsOrMessage) adds a track", function(done) {
@@ -252,10 +252,9 @@
             voices,
             volume: 'test-playlist',
         });
-        should(result.signature.guid)
-            .match(/42b96c8ae.*/);
+        should(result.signature.guid).match(/a3d25ab06df706c2cb7aff2b83ec3e77/);
     });
-    it("TESTTESTspeak(opts) creates opus audio file", async()=>{
+    it("speak(opts) creates opus audio file", async()=>{
         var factory = await testSuttaFactory();
         var sutta = await factory.loadSutta('sn2.3');
         var voiceTrans = Voice.createVoice({ name: 'matthew', });

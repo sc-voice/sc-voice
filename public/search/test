@@ -3429,7 +3429,7 @@
               {
                 "scid": "mn66:2.2",
                 "pli": "Āpaṇe piṇḍāya caritvā pacchābhattaṁ piṇḍapātapaṭikkanto yenaññataro vanasaṇḍo tenupasaṅkami divāvihārāya. ",
-                "en": "He wandered for alms in Āpaṇa. After the meal, on his return from alms-round, he went to a certain forest grove for the day’s meditation. "
+                "en": "He wandered for alms in Āpaṇa. After the meal, on his return from almsround, he went to a certain forest grove for the day’s meditation. "
               },
               {
                 "scid": "mn66:2.3",
@@ -3444,7 +3444,7 @@
               {
                 "scid": "mn66:3.2",
                 "pli": "Āpaṇe piṇḍāya caritvā pacchābhattaṁ piṇḍapātapaṭikkanto yena so vanasaṇḍo tenupasaṅkami divāvihārāya. ",
-                "en": "He wandered for alms in Āpaṇa. After the meal, on his return from alms-round, he went to a certain forest grove for the day’s meditation. "
+                "en": "He wandered for alms in Āpaṇa. After the meal, on his return from almsround, he went to a certain forest grove for the day’s meditation. "
               },
               {
                 "scid": "mn66:3.3",
@@ -4426,12 +4426,12 @@
         "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous."
       },
       "stats": {
-        "text": 15786,
+        "text": 15784,
         "lang": "en",
         "nSegments": 202,
         "nEmptySegments": 5,
         "nSections": 2,
-        "seconds": 1703.1249102604652
+        "seconds": 1702.8901945038192
       }
     }
   ]

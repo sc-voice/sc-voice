@@ -762,7 +762,7 @@
            '<break time="0.300s"/>',
         ]);
     });
-    it("TESTTESTspeakSegment() => kp6:5.2", async()=>{
+    it("speakSegment() => kp6:5.2", async()=>{
         var v = Voice.createVoice({name:"amy"});
         v.logLevel = 'debug';
         let sutta_uid = 'kp6';

@@ -53,7 +53,7 @@
         var scd = new SuttaDuration();
         var resMeasure = scd.measure(sutta);
         should(resMeasure).properties({
-            text: 259,
+            text: 254,
             lang: 'en',
             nSegments: 9,
             nSections: 2,
@@ -68,7 +68,7 @@
         sutta = factory.sectionSutta(sutta);
         var resMeasure = scd.measure(sutta);
         should(resMeasure).properties({
-            text: 337,
+            text: 332,
             lang: 'en',
             nSegments: 9,
             nEmptySegments: 0,
@@ -98,7 +98,7 @@
         sutta = factory.sectionSutta(sutta);
         var resMeasure = scd.measure(sutta);
         should(resMeasure).properties({
-            text: 722,
+            text: 717,
             lang: 'en',
             nSegments: 26,
             nEmptySegments: 1,
@@ -113,7 +113,7 @@
         sutta = factory.sectionSutta(sutta);
         var resMeasure = scd.measure(sutta);
         should(resMeasure).properties({
-            text: 937,
+            text: 938,
             lang: 'en',
             nSegments: 20,
             nEmptySegments: 1,
@@ -190,7 +190,7 @@
         sutta = factory.sectionSutta(sutta);
         var resMeasure = scd.measure(sutta);
         should(resMeasure).properties({
-            text: 6571,
+            text: 6570,
             lang: 'en',
             nSegments: 126,
             nEmptySegments: 26,
@@ -220,7 +220,7 @@
         sutta = factory.sectionSutta(sutta);
         var resMeasure = scd.measure(sutta);
         should(resMeasure).properties({
-            text: 84644,
+            text: 84655,
             lang: 'en',
             nSegments: 1167,
             nEmptySegments: 38,
