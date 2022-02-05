@@ -144,7 +144,7 @@
         should(method).equal('phrase');
         should(results.length).equal(23);
     });
-    it("search('thig1.1') returns segmented sutta", async()=>{
+    it("TESTTESTsearch('thig1.1') returns segmented sutta", async()=>{
         var voice = Voice.createVoice({
             name: 'raveena',
             localeIPA: 'pli',
@@ -821,7 +821,7 @@
             should(results[0].nSegments).equal(9);
         }
     });
-    it("loadSutta(...) returns scv-bilara sutta", async()=>{
+    it("TESTTESTloadSutta(...) returns scv-bilara sutta", async()=>{
         var voice = Voice.createVoice('Amy');
         var scApi = await new ScApi().initialize();
         var suttaFactory = new SuttaFactory({
@@ -837,7 +837,7 @@
             scid: 'an1.2/de/sabbamitta',
         });
         should(sutta).properties({
-            author: 'Anagarika Sabbamitta',
+            author: 'Sabbamitta',
             sutta_uid: 'an1.1-10',
             lang: 'de',
         });
