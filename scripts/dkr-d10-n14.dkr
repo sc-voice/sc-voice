@@ -1,0 +1,27 @@
+FROM debian:buster-slim as builder
+WORKDIR .
+RUN apt-get update && apt-get upgrade -y
+ENV INSTALL="apt-get install -y"
+RUN $INSTALL ripgrep
+RUN $INSTALL sudo
+RUN $INSTALL curl
+RUN $INSTALL git
+RUN $INSTALL libcap2-bin
+RUN $INSTALL vim
+RUN $INSTALL unzip
+RUN $INSTALL make build-essential
+RUN $INSTALL ffmpeg
+RUN $INSTALL opus-tools
+
+# Set up an unroot user to do all normal activities
+RUN echo "unroot    ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN useradd unroot -s /bin/bash -m 
+RUN usermod -aG sudo unroot
+LABEL maintainer="karl@oyamist.com"
+RUN curl -sL https://deb.nodesource.com/setup_14.x -o /home/unroot/nodesource_setup.sh
+RUN bash /home/unroot/nodesource_setup.sh
+RUN $INSTALL nodejs
+
+# Finalize
+RUN chown -R unroot:unroot /home/unroot
+CMD [ "bash", "-c", "su -l unroot" ]

@@ -1,0 +1,26 @@
+FROM sc-voice/dkr-d10-n14 as builder
+WORKDIR .
+ENV INSTALL="apt-get install -y"
+
+# Application setup
+COPY package.json /home/unroot/
+COPY src /home/unroot/src
+COPY scripts /home/unroot/scripts
+COPY index.js /home/unroot/index.js
+COPY node_modules/log-instance /home/unroot/node_modules/log-instance
+COPY node_modules/json5 /home/unroot/node_modules/json5
+COPY node_modules/js-ebt /home/unroot/node_modules/js-ebt
+COPY node_modules/memo-again /home/unroot/node_modules/memo-again
+COPY node_modules/merkle-json /home/unroot/node_modules/merkle-json
+COPY node_modules/suttacentral-api /home/unroot/node_modules/suttacentral-api
+
+# TODO: trim node_modules 433MB
+RUN npm install
+#RUN npm install -g @vue/cli
+
+# Caches
+COPY local /home/unroot/local
+
+# Finalize
+RUN chown -R unroot:unroot /home/unroot
+CMD [ "bash", "-c", "su -l unroot" ]
