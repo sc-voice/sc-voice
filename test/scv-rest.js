@@ -921,7 +921,8 @@
             should(res.statusCode).equal(200);
             var authors = res.body;
             should.deepEqual(authors.sabbamitta, {
-                name: 'Anagarika Sabbamitta',
+                exampleVersion: 1,
+                name: 'Sabbamitta',
                 lang: 'de',
                 type: 'translator',
             })

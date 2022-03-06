@@ -821,7 +821,7 @@
             should(results[0].nSegments).equal(9);
         }
     });
-    it("TESTTESTloadSutta(...) returns scv-bilara sutta", async()=>{
+    it("loadSutta(...) returns scv-bilara sutta", async()=>{
         var voice = Voice.createVoice('Amy');
         var scApi = await new ScApi().initialize();
         var suttaFactory = new SuttaFactory({

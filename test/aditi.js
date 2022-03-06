@@ -207,7 +207,7 @@
         should(res.signature.text)
             .match(/<phoneme alphabet="ipa" ph="əjəŋ">Ayaṁ/);
     });
-    it("TESTTESTKatame pañca?#", async()=>{
+    it("Katame pañca?#", async()=>{
         var aditi = Voice.createVoice(ADITI_OPTS);
         var res = await aditi.speak('Katame pañca?');
         should(res.signature.text).match(/kə t̪ə me"/);

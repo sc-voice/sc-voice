@@ -227,7 +227,7 @@
         should(result.signature.guid)
             .match(/fd046083ceb4a9df5bc505e59adc8ffa/);
     });
-    it("TESTTESTspeak(opts) adds break between suttas", async()=>{
+    it("speak(opts) adds break between suttas", async()=>{
         var factory = await testSuttaFactory();
         var suttas = [
             await factory.loadSutta('thig2.6'),

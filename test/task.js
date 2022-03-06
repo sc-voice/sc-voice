@@ -116,7 +116,7 @@
             try {
                 task.actionsTotal++;
                 should(task.msActive).above(8);
-                should(task.msActive).below(20);
+                should(task.msActive).below(25);
                 done();
             } catch(e) { done(e); }
         }, 10);
