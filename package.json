@@ -23,6 +23,7 @@
     "express-jwt": "^6.0.0",
     "just-simple": "^0.1.11",
     "memo-again": "^0.4.0",
+    "npm": "^6.14.16",
     "oya-ann": "^0.2.1",
     "promise-queue": "^2.2.5",
     "rest-bundle": "^0.40.21",
