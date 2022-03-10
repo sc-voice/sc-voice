@@ -20,6 +20,7 @@ next_aria: 'go to voice website'
 * [Architecture:-Storage](/sc-voice/en/490-arch-storage)
 * [SuttaCentral-Voice-Administration](/sc-voice/en/490-scv-admin)
 * [AWS-Installation](/sc-voice/en/490-aws-install)
+* [Linode-Installation](/sc-voice/en/490-linode-install)
 * [AWS-Staging-911](/sc-voice/en/490-aws-staging-911)
 * [Notes-on-using-the-Voice-ZenHub-board](/sc-voice/en/490-zenhub)
 * [Edit-Pronunciation](/sc-voice/en/401-edit-pronunciation)
