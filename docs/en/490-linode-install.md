@@ -9,16 +9,21 @@ Monitor your usage constantly and set up appropriate notifications
 so that you can curtail or adjust use before incurring unwanted charges.
 
 ### Create Linode Server (Staging)
-These instructions were tested in the Linode *Newark* data center.
+Linode servers are billed whether they are online or not.
+By creating a Linode server, you are subscribing and will 
+pay for your new Linoder server.
 
 | Parameter | Value |
 | :---- | :---- |
 | Distribution | Debian 10 |
 | Region | Newark |
 | Linode Plan | Shared CPU; Nanode 1GB |
-| Linode Label | scv-staging-1 |
+| Linode Label | scv-s1 |
+| Tags | Staging |
 | Root password | _a-password_ |
 | SSH key | _a-public-key_ |
+
+Verify cost (5USD/month) and push </kbd>Create Linode</kbd>
 
 ##### UNDER CONSTRUCTION
 
