@@ -1,7 +1,7 @@
 This document describes how to set up Voice on a new Linode server.
 
-### Prerequisites
-You will need an Linode account,
+### Set up a Linode account
+You will need a Linode account,
 which will require a credit card for any expenses that you incur.
 Be very aware of what you do with Linode. It is the candy store of temptation.
 Your credit card will be charged. 
@@ -12,7 +12,7 @@ so that you can curtail or adjust use before incurring unwanted charges.
 These instructions were tested in the Linode *Newark* data center.
 
 | Parameter | Value |
-| :==== | :==== |
+| :---- | :---- |
 | Distribution | Debian 10 |
 | Region | Newark |
 | Linode Plan | Shared CPU; Nanode 1GB |
