@@ -144,7 +144,7 @@
         should(method).equal('phrase');
         should(results.length).equal(23);
     });
-    it("TESTTESTsearch('thig1.1') returns segmented sutta", async()=>{
+    it("search('thig1.1') returns segmented sutta", async()=>{
         var voice = Voice.createVoice({
             name: 'raveena',
             localeIPA: 'pli',

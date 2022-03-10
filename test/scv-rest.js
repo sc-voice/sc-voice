@@ -77,7 +77,7 @@
         await sleep(500);
     }
 
-    it("ScvRest must be initialized", function(done) {
+    it("TESTTESTScvRest must be initialized", function(done) {
         (async function() { try {
             var scvRest = app.locals.scvRest;
             await(scvRest.initialize());
@@ -296,7 +296,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("GET /play/segment/... => playable segment", done=>{
+    it("TESTTESTGET /play/segment/... => playable segment", done=>{
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var voicename = 'Matthew';
@@ -525,6 +525,43 @@
             should(data.segment.audio.pli)
                 .match(/a11ebc9a6bbe583d36e375ca163b6351/);
             should(data.segment.audio.vnamePali).equal('Aditi');
+
+            done();
+        } catch(e) {done(e);} })();
+    });
+    it("TESTTESTGET /play/segment/... handles thig1.1/en/soma", done=>{
+        (async function() { try {
+            // scv/play/segment/thig1.1/en/soma/thig1.1:1.1/Amy/Aditi
+            var sutta_uid = 'thig1.1';
+            var langTrans = 'en';
+            var translator = 1 ? 'soma' : 'sujato';
+            var vnameTrans = "Amy";
+            var vnameRoot = "Aditi";
+            var segnum = "1.1";
+            var scid = `${sutta_uid}:${segnum}`;
+            var url = [
+                `/scv/play/segment`,
+                sutta_uid,
+                langTrans,
+                translator,
+                scid,
+                vnameTrans,
+                vnameRoot,
+            ].join('/');
+            console.log('url', url);
+            logger.warn("EXPECTED WARN BEGIN");
+            var res = await supertest(app).get(url);
+            logger.warn("EXPECTED WARN END");
+            res.statusCode.should.equal(200);
+            var data = res.body instanceof Buffer 
+                ? JSON.parse(res.body) : res.body;
+            should(data.sutta_uid).equal(scid.split(':')[0]);
+            should(data.vnameTrans).equal(vnameTrans);
+            should(data.vnameRoot).equal(vnameRoot);
+            should(data.language).equal(langTrans);
+            should(data.translator).equal(translator);
+            should(data.segment.audio.en).match(/37cedc61727373870e197793e653330d/);
+            should(data.segment.en).match(/sleep with ease, elder/i);
 
             done();
         } catch(e) {done(e);} })();
