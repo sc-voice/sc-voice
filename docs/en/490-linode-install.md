@@ -27,7 +27,7 @@ Verify cost (5USD/month) and push </kbd>Create Linode</kbd>.
 
 | Image |
 | ----- |
-| <a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/linode-staging.png?raw=true"><img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/linode-staging.png?raw=true" width=400px></a>
+| <a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/docs/assets/img/linode-staging.png?raw=true"><img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/docs/assets/img/linode-staging.png?raw=true" width=400px></a>
 
 
 ##### UNDER CONSTRUCTION
