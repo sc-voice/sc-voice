@@ -138,8 +138,8 @@ to an AWS EC2 **running instance**. Note that "running" is critical here.
 You will be charged for having a static IP that is not in use.
 
 
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-static-ip.png?raw=true">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/src/assets/aws-static-ip.png?raw=true">
+<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/docs/assets/img/aws-static-ip.png?raw=true">
+<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/docs/assets/img/aws-static-ip.png?raw=true">
 </a>
 
 To practice Elastic IP setup, do the following:
