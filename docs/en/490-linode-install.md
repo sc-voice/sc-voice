@@ -11,7 +11,7 @@ so that you can curtail or adjust use before incurring unwanted charges.
 ### Create Linode Server (Staging)
 Linode servers are billed whether they are online or not.
 By creating a Linode server, you are subscribing and will 
-pay for your new Linoder server.
+pay for your new Linode server.
 
 | Parameter | Value |
 | :---- | :---- |
@@ -28,6 +28,25 @@ Verify cost (5USD/month) and push </kbd>Create Linode</kbd>.
 | Screenshot: New Server |
 | :----- |
 | <a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/docs/assets/img/linode-staging.png?raw=true"><img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/docs/assets/img/linode-staging.png?raw=true" width=400px></a>
+
+You will now be able to login to your new Linode server.
+
+### Set up and Secure Linode Server
+
+Login to your Linode server via SSH as _root_ and
+follow the instructions to 
+[set up and secure](https://www.linode.com/docs/guides/set-up-and-secure/)
+
+| Parameter | Context | Value | Notes |
+| :---- | | :---- | :---- | :---- |
+| Linux | all | Debian | Same as dev computer
+| hostname | staging | scv-sN | E.g.: scv-s1 
+| hostname | production | scv-pN | E.g.: scv-p1
+| timezone | all | America/Los_Angeles | Only for dev logs
+| non-root user | all | unroot | id_pub secured dev username needed to disable root SSH login
+| firewall | all | scv-firewall | Linode Cloud firewall allow: SSH, HTTP, HTTPS
+
+
 
 
 ##### UNDER CONSTRUCTION
