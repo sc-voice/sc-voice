@@ -38,7 +38,7 @@ follow the instructions to
 [set up and secure](https://www.linode.com/docs/guides/set-up-and-secure/)
 
 | Parameter | Context | Value | Notes |
-| :---- | | :---- | :---- | :---- |
+| :---- | :---- | :---- | :---- |
 | Linux | all | Debian | Same as dev computer |
 | hostname | staging | scv-sN | E.g.: scv-s1  |
 | hostname | production | scv-pN | E.g.: scv-p1 |
