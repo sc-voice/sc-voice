@@ -33,11 +33,11 @@ You will now be able to login to your new Linode server.
 
 ### Set up and Secure Linode Server
 
-Login to your Linode server via SSH as _root_ and
-follow the instructions to 
+Follow the instructions to 
 [set up and secure](https://www.linode.com/docs/guides/set-up-and-secure/)
+your new Linode server with the following customizations
 
-| Parameter | Context | Value | Notes |
+| Customization | Context | Value | Notes |
 | :---- | :---- | :---- | :---- |
 | Linux | all | Debian | Same as dev computer |
 | hostname | staging | scv-sN | E.g.: scv-s1  |
@@ -46,26 +46,7 @@ follow the instructions to
 | non-root user | all | unroot | id_pub secured dev username needed to disable root SSH login |
 | firewall | all | scv-firewall | Linode Cloud firewall allow: SSH, HTTP, HTTPS |
 
-
-
-
-##### UNDER CONSTRUCTION
-
-
-### Install Voice Server
-
-Connect to your instance using your previously downloaded ssh certificate:
-
-```bash
-ssh -i ~/.aws/sabbamitta-ssh2.pem ubuntu@MY_NEW_AWS_SERVER_IP
-```
-
-This should open up an ssh connection to your new AWS server.
-
-
-### Install Voice on Server
-
-Connect to AWS server using `ssh` and install Voice.
+### Install Voice On Linode Server
 
 ```bash
 sudo chown -R $(whoami):$(whoami) ~
@@ -75,6 +56,8 @@ sudo chown -R $(whoami):$(whoami) .
 ./scripts/init.sh
 sudo chown -R $(whoami):$(whoami) .
 ```
+
+##### UNDER CONSTRUCTION
 
 Update Voice but *do not reboot*:
 ```bash
