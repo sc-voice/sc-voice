@@ -39,12 +39,12 @@ follow the instructions to
 
 | Parameter | Context | Value | Notes |
 | :---- | | :---- | :---- | :---- |
-| Linux | all | Debian | Same as dev computer
-| hostname | staging | scv-sN | E.g.: scv-s1 
-| hostname | production | scv-pN | E.g.: scv-p1
-| timezone | all | America/Los_Angeles | Only for dev logs
-| non-root user | all | unroot | id_pub secured dev username needed to disable root SSH login
-| firewall | all | scv-firewall | Linode Cloud firewall allow: SSH, HTTP, HTTPS
+| Linux | all | Debian | Same as dev computer |
+| hostname | staging | scv-sN | E.g.: scv-s1  |
+| hostname | production | scv-pN | E.g.: scv-p1 |
+| timezone | all | America/Los_Angeles | Only for dev logs |
+| non-root user | all | unroot | id_pub secured dev username needed to disable root SSH login |
+| firewall | all | scv-firewall | Linode Cloud firewall allow: SSH, HTTP, HTTPS |
 
 
 
