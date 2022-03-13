@@ -47,8 +47,13 @@ your new Linode server with the following customizations
 | firewall | all | scv-firewall | Linode Cloud firewall allow: SSH, HTTP, HTTPS |
 
 ### Install Voice On Linode Server
+NOTE: Since the following uses <kbd>sudo<sudo>, 
+you may wish to 
+[disable sudo password entry](https://phpraxis.wordpress.com/2016/09/27/enable-sudo-without-password-in-ubuntudebian/)
+for _unroot_.
 
 ```bash
+suda apt install git
 sudo chown -R $(whoami):$(whoami) ~
 git clone https://github.com/sc-voice/sc-voice.git
 cd sc-voice
@@ -57,12 +62,12 @@ sudo chown -R $(whoami):$(whoami) .
 sudo chown -R $(whoami):$(whoami) .
 ```
 
-##### UNDER CONSTRUCTION
-
 Update Voice but *do not reboot*:
 ```bash
 ./scripts/update-latest
 ```
+
+##### UNDER CONSTRUCTION
 
 Launch Voice in HTTP mode for port 80
 
