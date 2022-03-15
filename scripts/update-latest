@@ -69,7 +69,7 @@ mkdir -p local
 if [ ! -e local/ebt-data ]; then
     echo -e "UPDATE\t: installing ebt-data..."
     pushd local
-    git clone https://github.com/sc-voice/ebt-data
+    git clone https://github.com/ebt-site/ebt-data
     popd
 fi
 echo -e "UPDATE\t: fetching latest ebt-data..."
