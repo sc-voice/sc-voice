@@ -97,28 +97,11 @@ in _~/sc-voice/local/ssl:
 
 ##### Add AWS Credentials
 
-Voice authentication for AWS S3 and Polly services is stored in <kbd>~/sc-voice/local/vsm-s3.json</kbd>
+The AWS credentials are stored in _local/vsm-s3.json_. 
+Enter the AWS credentials:
 
 ```
-{
-  "Bucket": "sc-voice-vsm",
-  "s3": {
-    "apiVersion": "2006-03-01",
-    "endpoint": "https://s3.us-west-1.amazonaws.com",
-    "region": "us-west-1"
-  },
-  "polly": {
-    "region": "us-west-1",
-    "signatureVersion": "v4",
-    "apiVersion": "2016-06-10"
-  },
-  "sayAgain": {
-    "Bucket": "say-again.sc-voice"
-  },
-  "region": "us-west-1",
-  "secretAccessKey": "YOUR_AWS_SECRET_ACCESS_KEY",
-  "accessKeyId": "YOUR_AWS_ACCESS_KEY_ID"
-}
+scripts/aws-creds
 ```
 
 ##### Install and Launch Voice Daemon 
