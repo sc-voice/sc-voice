@@ -1,0 +1,46 @@
+#!/bin/bash
+
+SCRIPT_DIR=`realpath \`dirname $0\``
+
+echo 
+echo Enter your Amazon Web Services Access Key Id for AWS Polly:
+read -p 'Access Key Id: ' ID
+
+echo 
+echo Enter your Amazon Web Services Secret Key for AWS Polly:
+read -p 'Secret Access Key: ' SECRET
+
+OUTFILE=$SCRIPT_DIR/../local/vsm-s3.json
+OUTFILE=`realpath $OUTFILE`
+
+echo
+if [ -e $OUTFILE ]; then 
+  SAVEDFILE=$OUTFILE-`date +%F`
+  cp $OUTFILE $SAVEDFILE
+  echo Saved existing credentials to $SAVEDFILE
+fi
+
+cat > $OUTFILE << HEREIS
+{
+  "Bucket": "sc-voice-vsm",
+  "s3": {
+    "apiVersion": "2006-03-01",
+    "endpoint": "https://s3.us-west-1.amazonaws.com",
+    "region": "us-west-1"
+  },
+  "polly": {
+    "region": "us-west-1",
+    "signatureVersion": "v4",
+    "apiVersion": "2016-06-10"
+  },
+  "sayAgain": {
+    "Bucket": "say-again.sc-voice"
+  },
+  "region": "us-west-1",
+  "secretAccessKey": "${SECRET}"
+  "accessKeyId": "${ID}"
+}
+HEREIS
+chmod 600 $OUTFILE
+
+echo -e "Saved new AWS credentials to $OUTFILE"

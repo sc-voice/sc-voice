@@ -67,8 +67,6 @@ Update Voice but *do not reboot*:
 ./scripts/update-latest
 ```
 
-##### UNDER CONSTRUCTION
-
 Launch Voice in HTTP mode for port 80
 
 ```bash
@@ -76,9 +74,10 @@ sudo npm start
 ```
 
 Verify that Voice is running by using a browser to view the public IP of the
-AWS server. Don't press any buttons (e.g., audio won't work)
+Linode server. Don't press any buttons (e.g., audio won't work)
 The HTTP port 80 Voice server is temporary. 
-We are just using it to verify that Voice can run on the AWS server. 
+We are just using it to verify that Voice can run on the Linode server. 
+
 
 After verifying that Voice functions as expected on HTTP port 80,
 we will need to shut down the HTTP port 80 server 
@@ -88,40 +87,54 @@ CTRL-C
 sudo chown -R $(whoami):$(whoami) * .*
 ```
 
-We'll now return to your own machine to upload ssl certifate...
+### Install SSL Credentials
+
+Install the SSL credentials for _voice.suttacentral.net_ 
+in _~/sc-voice/local/ssl:
+
+* <kbd>server.crt</kbd> => ~/sc-voice/local/ssl/server.crt (CERTIFICATE)
+* <kbd>server.key</kbd> => ~/sc-voice/local/ssl/server.key (PRIVATE_KEY)
+
+##### Add AWS Credentials
+
+Voice authentication for AWS S3 and Polly services is stored in <kbd>~/sc-voice/local/vsm-s3.json</kbd>
 
 ```
-exit
+{
+  "Bucket": "sc-voice-vsm",
+  "s3": {
+    "apiVersion": "2006-03-01",
+    "endpoint": "https://s3.us-west-1.amazonaws.com",
+    "region": "us-west-1"
+  },
+  "polly": {
+    "region": "us-west-1",
+    "signatureVersion": "v4",
+    "apiVersion": "2016-06-10"
+  },
+  "sayAgain": {
+    "Bucket": "say-again.sc-voice"
+  },
+  "region": "us-west-1",
+  "secretAccessKey": "YOUR_AWS_SECRET_ACCESS_KEY",
+  "accessKeyId": "YOUR_AWS_ACCESS_KEY_ID"
+}
 ```
 
-### Install SSL Certificate
+##### Install and Launch Voice Daemon 
 
-Open up SuttaCentral Discuss&Discover to get the SSL Certificate:
-
-1. Click the Search icon
-1. Select the `search messages` checkbox
-1. Enter `Voice Admin` and press Enter
-
-```
-scp -i ~/.aws/sabbamitta-ssh2.pem voice-ssl.tar.gz ubuntu@MY_NEW_AWS_SERVER_IP:sc-voice/local
-```
-
-##### Connect to your AWS server to install the SSL certificate
-
-```
-ssh -i ~/.aws/sabbamitta-ssh2.pem ubuntu@MY_NEW_AWS_SERVER_IP
-cd sc-voice/local
-gunzip voice-ssl.tar.gz
-tar -xvf voice-ssl.tar
-```
-
-##### Now install daemon and reboot.
+Install the Voice daemon to start up when the system is rebooted.
 
 ```bash
-cd ../
+cd ~sc-voice
 ./scripts/sc-voice-daemon.sh
 sudo shutdown -r now
 ```
+
+When the server reboots, allow several minutes for Voice to start up.
+
+
+##### UNDER CONSTRUCTION
 
 ##### Add AWS credentials
 Voice uses AWS services which require authentication.
