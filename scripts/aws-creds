@@ -37,7 +37,7 @@ cat > $OUTFILE << HEREIS
     "Bucket": "say-again.sc-voice"
   },
   "region": "us-west-1",
-  "secretAccessKey": "${SECRET}"
+  "secretAccessKey": "${SECRET}",
   "accessKeyId": "${ID}"
 }
 HEREIS
