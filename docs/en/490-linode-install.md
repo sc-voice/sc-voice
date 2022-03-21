@@ -116,40 +116,10 @@ sudo shutdown -r now
 
 When the server reboots, allow several minutes for Voice to start up.
 
-
-##### UNDER CONSTRUCTION
-
-##### Add AWS credentials
-Voice uses AWS services which require authentication.
-Once the Voice server has rebooted, you will need to 
-add AWS credentials by logging in as <kbd>admin</kbd>.
-
-* Click on the VSM tab 
-* Click <kbd>Edit Credentials</kbd>
-* Enter your Access Key Identifier
-* Enter your Secret Access Key
-* Click <kbd>Save</kbd>
-
 ### Public Static IP
-Every time an AWS EC2 server is restarted, it will be given a new public IP.
-Generally speaking, it is important to have a public static IP available at all times.
-DNS mapping requires that SuttaCentral be able to map a
-fully qualified name such as `staging.voice.suttacentral.net` to a specific static IP.
 
-Every AWS account is allowed one free Elastic IP (i.e., static public IP) that is mapped
-to an AWS EC2 **running instance**. Note that "running" is critical here.
-You will be charged for having a static IP that is not in use.
-
-
-<a href="https://raw.githubusercontent.com/sc-voice/sc-voice/master/docs/assets/img/aws-static-ip.png?raw=true">
-<img src="https://raw.githubusercontent.com/sc-voice/sc-voice/master/docs/assets/img/aws-static-ip.png?raw=true">
-</a>
-
-To practice Elastic IP setup, do the following:
-
-* Allocate New Address (under Network & Security > Elastic IPs)
-* Associate that address with your running EC2 instance
-* Verify that Voice is available on the new static IP
-* Delete your Elastic IP ("Release address") when you shut down your running EC2 instance unless it is referenced by SuttaCentral itself.
-
+Linode server IPs are static. If you need to create a new Voice Linode server,
+it will have a new IP. Since the IP will change, all dependent servers
+(e.g., SuttaCentral.net) will need to be redirected to the new Linode server IP).
+See [Linux Static IP Configuration](https://www.linode.com/docs/guides/linux-static-ip-configuration/).
 
