@@ -18,25 +18,25 @@
         should(creds.awsConfig).instanceOf(AwsConfig);
         should(creds.awsConfig.sayAgain.Bucket).equal('say-again.sc-voice');
     });
-    it("custom ctor", function() {
+    it("TESTTESTcustom ctor", function() {
         var creds = new S3Creds({configPath:TESTCONFIG});
         should(creds.awsConfig).properties({
             "region": "us-west-1",
-            "secretAccessKey": "test-secretAccessKey",
-            "accessKeyId": "test-accessKeyId",
+            "secretAccessKey": "test-shared-secretAccessKey",
+            "accessKeyId": "test-shared-accessKeyId",
         });
         should(creds.awsConfig.polly).properties({
             "region": "us-west-1",
-            "secretAccessKey": "test-secretAccessKey",
-            "accessKeyId": "test-accessKeyId",
+            "secretAccessKey": "test-polly-secretAccessKey",
+            "accessKeyId": "test-polly-accessKeyId",
             "signatureVersion": "v4",
             "apiVersion": '2016-06-10',
         });
         should(creds.awsConfig.s3).properties({
             "endpoint": "https://s3.us-west-1.amazonaws.com",
             "region": "us-west-1",
-            "secretAccessKey": "test-secretAccessKey",
-            "accessKeyId": "test-accessKeyId"
+            "secretAccessKey": "test-s3-secretAccessKey",
+            "accessKeyId": "test-s3-accessKeyId"
         });
         should(creds.awsConfig.Bucket).equal("sc-voice-vsm");
         should.deepEqual(creds.awsConfig.sayAgain, {
@@ -48,16 +48,16 @@
         var obfuscated = creds.obfuscated();
         should(obfuscated.polly).properties({
             "region": "us-west-1",
-            "secretAccessKey": "****************sKey",
-            "accessKeyId": "************eyId",
+            "secretAccessKey": "**********************sKey",
+            "accessKeyId": "******************eyId",
             "signatureVersion": "v4",
             "apiVersion": '2016-06-10',
         });
         should(obfuscated.s3).properties({
             "endpoint": "https://s3.us-west-1.amazonaws.com",
             "region": "us-west-1",
-            "secretAccessKey": "****************sKey",
-            "accessKeyId": "************eyId"
+            "secretAccessKey": "*******************sKey",
+            "accessKeyId": "***************eyId"
         });
         should(obfuscated.Bucket).equal("sc-voice-vsm");
     });

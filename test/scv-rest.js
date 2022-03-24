@@ -77,7 +77,7 @@
         await sleep(500);
     }
 
-    it("TESTTESTScvRest must be initialized", function(done) {
+    it("ScvRest must be initialized", function(done) {
         (async function() { try {
             var scvRest = app.locals.scvRest;
             await(scvRest.initialize());
@@ -296,7 +296,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... => playable segment", done=>{
+    it("GET /play/segment/... => playable segment", done=>{
         (async function() { try {
             await new Promise(resolve=>setTimeout(()=>resolve(),1000));
             var voicename = 'Matthew';
@@ -529,7 +529,7 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("TESTTESTGET /play/segment/... handles thig1.1/en/soma", done=>{
+    it("GET /play/segment/... handles thig1.1/en/soma", done=>{
         (async function() { try {
             // scv/play/segment/thig1.1/en/soma/thig1.1:1.1/Amy/Aditi
             var sutta_uid = 'thig1.1';

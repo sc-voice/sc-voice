@@ -1,9 +1,18 @@
 {
   "Bucket": "sc-voice-vsm",
+  "secretAccessKey": "test-shared-secretAccessKey",
+  "accessKeyId": "test-shared-accessKeyId",
   "s3": {
     "endpoint": "https://s3.us-west-1.amazonaws.com",
     "region": "us-west-1",
-    "secretAccessKey": "test-secretAccessKey",
-    "accessKeyId": "test-accessKeyId"
+    "secretAccessKey": "test-s3-secretAccessKey",
+    "accessKeyId": "test-s3-accessKeyId"
+  },
+  "polly": {
+    "region": "us-west-1",
+    "signatureVersion": "v4", 
+    "apiVersion": "2016-06-10",
+    "secretAccessKey": "test-polly-secretAccessKey",
+    "accessKeyId": "test-polly-accessKeyId"
   }
 }
