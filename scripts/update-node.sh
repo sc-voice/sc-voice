@@ -34,7 +34,7 @@ function installLibDev() {
 }
 
 
-NODE_VER=16.14
+NODE_VER=14.15
 node --version |& grep $NODE_VER >& /dev/null
 RC=$?; if [ "$RC" == "0" ]; then
   echo -e "[$SCRIPT] nodejs" `node --version`
