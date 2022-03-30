@@ -153,32 +153,34 @@
             done();
         } catch(e) {done(e);} })();
     });
-    it("importSutta(sutta) imports sutta segments", async()=>{
-        return; // TODO I HAVE NO IDEA WHY THIS BREAKS
-        var tmpDirObj = tmp.dirSync({
-            unsafeCleanup: true,
-        });
-        var vsm = new VsmStore({
-            storePath: tmpDirObj.name,
-        });
-        var results = await SuttaStore.suttaStore.search("thig1.2");
-        var {
-            sutta,
-            author_uid,
-            lang,
-            signature,
-        } = results.results[0];
-        var volume = "kn_pli_mahasangiti_aditi";
-        vsm.clearVolume(volume);
-        var sutta_uid = sutta.sutta_uid;
-        var guidsOld = Object.assign({},vsm.importMap);
-        var importResult = await vsm.importSutta(sutta);
-        var guids = Object.keys(vsm.importMap).filter(guid => !guidsOld[guid]);
-        should.deepEqual(importResult, {
-            sutta_uid,
-            volume,
-            guids, // newly added guids
-        });
+    it("importSutta(sutta) imports sutta segments", function(done) {
+        (async function() { try {
+            var tmpDirObj = tmp.dirSync({
+                unsafeCleanup: true,
+            });
+            var vsm = new VsmStore({
+                storePath: tmpDirObj.name,
+            });
+            var results = await SuttaStore.suttaStore.search("thig1.2");
+            var {
+                sutta,
+                author_uid,
+                lang,
+                signature,
+            } = results.results[0];
+            var volume = "kn_pli_mahasangiti_aditi";
+            vsm.clearVolume(volume);
+            var sutta_uid = sutta.sutta_uid;
+            var guidsOld = Object.assign({},vsm.importMap);
+            var importResult = await vsm.importSutta(sutta);
+            var guids = Object.keys(vsm.importMap).filter(guid => !guidsOld[guid]);
+            should.deepEqual(importResult, {
+                sutta_uid,
+                volume,
+                guids, // newly added guids
+            });
+            done();
+        } catch(e) {done(e);} })();
     });
     it("serializeVolume(volume) serializes volume", async()=>{
         console.log(`TODO`,__filename); return; 

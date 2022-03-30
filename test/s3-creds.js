@@ -18,7 +18,7 @@
         should(creds.awsConfig).instanceOf(AwsConfig);
         should(creds.awsConfig.sayAgain.Bucket).equal('say-again.sc-voice');
     });
-    it("custom ctor", function() {
+    it("TESTTESTcustom ctor", function() {
         var creds = new S3Creds({configPath:TESTCONFIG});
         should(creds.awsConfig).properties({
             "region": "us-west-1",

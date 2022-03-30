@@ -38,7 +38,27 @@ function installLibDev() {
 installApp unzip
 installApp make build-essential
 
-$SCRIPT_DIR/update-node.sh
+NODE_VER=14.15
+node --version |& grep $NODE_VER >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+  echo -e "INIT\t: nodejs" `node --version`
+else
+  echo -e "INIT\t: installing nodejs $NODE_VER (sudo)"
+  mkdir -p local
+  curl -sL https://deb.nodesource.com/setup_14.x | tee local/node_setup_14.x | sudo bash -
+  sudo apt -y install nodejs
+  #nvm install $NODE_VER
+  #nvm use $NODE_VER
+  #sudo nvm use $NODE_VER
+fi
+
+sudo getcap -v `which node` | grep net_bind_service >& /dev/null
+RC=$?; if [ "$RC" == "0" ]; then
+    echo -e "INIT\t: node can run on port 80 (OK)"
+else
+    echo -e "INIT\t: changing capability of node to run on port 80"
+    sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
+fi
 
 MSG=`vue --version 2>&1`; RC=$?
 if [ "$RC" == "0" ]; then 
