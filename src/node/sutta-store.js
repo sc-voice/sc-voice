@@ -387,7 +387,11 @@
                 showMatchesOnly: false,
                 matchHighlight,
             }
-            bdres = await this.seeker.find(findOpts);
+            try {
+              bdres = await this.seeker.find(findOpts);
+            } catch (e) {
+              bdres = {error:e, mlDocs:[]};
+            }
             bdres.results = [];
             for (var i = 0; i < bdres.mlDocs.length; i++) {
                 var mld = bdres.mlDocs[i];

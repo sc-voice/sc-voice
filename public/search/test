@@ -9,7 +9,7 @@
       "author_short": "Sujato",
       "author_uid": "sujato",
       "nSegments": 55,
-      "title": "1. Chiefs • 11. With Bhadraka",
+      "title": "1. Chiefs • With Bhadraka",
       "collection_id": "sn",
       "quote": {
         "scid": "sn42.11:2.11",
@@ -19,33 +19,33 @@
       },
       "suttaplex": {
         "acronym": "SN 42.11",
+        "volpages": " PTS 4.328, PTS 4.330",
         "alt_volpages": null,
-        "biblio": null,
+        "uid": "sn42.11",
         "blurb": "The chief Bhadraka asks the Buddha about the origin and ending of suffering, and the Buddha points out that a loss among Bhadraka’s own community would cause him suffering, due to his attachment.",
         "difficulty": null,
         "original_title": "Bhadrakasutta",
-        "parallel_count": 2,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
+        "type": "leaf",
         "translated_title": "With Bhadraka",
         "translations": [
           {
+            "lang": "en",
+            "lang_name": "English",
+            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "sujato",
             "author_uid": "sujato",
-            "id": "sn42.11_translation-en-sujato",
-            "is_root": false,
-            "lang": "en",
-            "lang_name": "English",
             "publication_date": null,
+            "id": "sn42.11_translation-en-sujato",
             "segmented": true,
             "title": "With Bhadraka",
             "volpage": null
           }
         ],
-        "type": "leaf",
-        "uid": "sn42.11",
-        "volpages": " PTS 4.328, PTS 4.330"
+        "parallel_count": 2,
+        "biblio": null
       },
       "sutta": {
         "sutta_uid": "sn42.11",
@@ -53,42 +53,42 @@
         "support": true,
         "suttaplex": {
           "acronym": "SN 42.11",
+          "volpages": " PTS 4.328, PTS 4.330",
           "alt_volpages": null,
-          "biblio": null,
+          "uid": "sn42.11",
           "blurb": "The chief Bhadraka asks the Buddha about the origin and ending of suffering, and the Buddha points out that a loss among Bhadraka’s own community would cause him suffering, due to his attachment.",
           "difficulty": null,
           "original_title": "Bhadrakasutta",
-          "parallel_count": 2,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
+          "type": "leaf",
           "translated_title": "With Bhadraka",
           "translations": [
             {
+              "lang": "en",
+              "lang_name": "English",
+              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "sujato",
               "author_uid": "sujato",
-              "id": "sn42.11_translation-en-sujato",
-              "is_root": false,
-              "lang": "en",
-              "lang_name": "English",
               "publication_date": null,
+              "id": "sn42.11_translation-en-sujato",
               "segmented": true,
               "title": "With Bhadraka",
               "volpage": null
             }
           ],
-          "type": "leaf",
-          "uid": "sn42.11",
-          "volpages": " PTS 4.328, PTS 4.330"
+          "parallel_count": 2,
+          "biblio": null
         },
         "translation": {
           "author_uid": "sujato",
           "lang": "en"
         },
         "titles": [
-          "Linked Discourses 42",
+          "Linked Discourses 42.11",
           "1. Chiefs",
-          "11. With Bhadraka"
+          "With Bhadraka"
         ],
         "author": "Bhikkhu Sujato",
         "lang": "en",
@@ -98,7 +98,7 @@
               {
                 "scid": "sn42.11:0.1",
                 "pli": "Saṁyutta Nikāya 42 ",
-                "en": "Linked Discourses 42 "
+                "en": "Linked Discourses 42.11"
               },
               {
                 "scid": "sn42.11:0.2",
@@ -108,7 +108,7 @@
               {
                 "scid": "sn42.11:0.3",
                 "pli": "11. Bhadrakasutta ",
-                "en": "11. With Bhadraka "
+                "en": "With Bhadraka "
               }
             ],
             "type": "Section",
@@ -117,7 +117,7 @@
             "template": [],
             "expanded": false,
             "prop": "en",
-            "title": "Linked Discourses 42 ",
+            "title": "Linked Discourses 42.11",
             "expandable": false
           },
           {
@@ -401,12 +401,12 @@
         "blurb": "The chief Bhadraka asks the Buddha about the origin and ending of suffering, and the Buddha points out that a loss among Bhadraka’s own community would cause him suffering, due to his attachment."
       },
       "stats": {
-        "text": 3480,
+        "text": 3478,
         "lang": "en",
         "nSegments": 55,
         "nEmptySegments": 1,
         "nSections": 2,
-        "seconds": 340.96026484206675
+        "seconds": 340.75927603183607
       }
     },
     {
@@ -427,36 +427,36 @@
       },
       "suttaplex": {
         "acronym": "MN 105",
+        "volpages": " PTS 2.252, PTS 2.253, PTS 2.254, PTS 2.255, PTS 2.256, PTS 2.257, PTS 2.258, PTS 2.259, PTS 2.260, PTS 2.261",
         "alt_volpages": null,
-        "biblio": null,
+        "uid": "mn105",
         "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering.",
         "difficulty": {
-          "level": 2,
-          "name": "intermediate"
+          "name": "intermediate",
+          "level": 2
         },
         "original_title": "Sunakkhattasutta",
-        "parallel_count": 1,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
+        "type": "leaf",
         "translated_title": "With Sunakkhatta ",
         "translations": [
           {
+            "lang": "en",
+            "lang_name": "English",
+            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "sujato",
             "author_uid": "sujato",
-            "id": "mn105_translation-en-sujato",
-            "is_root": false,
-            "lang": "en",
-            "lang_name": "English",
             "publication_date": null,
+            "id": "mn105_translation-en-sujato",
             "segmented": true,
             "title": "With Sunakkhatta ",
             "volpage": null
           }
         ],
-        "type": "leaf",
-        "uid": "mn105",
-        "volpages": " PTS 2.252, PTS 2.253, PTS 2.254, PTS 2.255, PTS 2.256, PTS 2.257, PTS 2.258, PTS 2.259, PTS 2.260, PTS 2.261"
+        "parallel_count": 1,
+        "biblio": null
       },
       "sutta": {
         "sutta_uid": "mn105",
@@ -464,36 +464,36 @@
         "support": true,
         "suttaplex": {
           "acronym": "MN 105",
+          "volpages": " PTS 2.252, PTS 2.253, PTS 2.254, PTS 2.255, PTS 2.256, PTS 2.257, PTS 2.258, PTS 2.259, PTS 2.260, PTS 2.261",
           "alt_volpages": null,
-          "biblio": null,
+          "uid": "mn105",
           "blurb": "Not all of those who claim to be awakened are genuine. The Buddha teaches how true spiritual progress depends on an irreversible letting go of the forces that lead to suffering.",
           "difficulty": {
-            "level": 2,
-            "name": "intermediate"
+            "name": "intermediate",
+            "level": 2
           },
           "original_title": "Sunakkhattasutta",
-          "parallel_count": 1,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
+          "type": "leaf",
           "translated_title": "With Sunakkhatta ",
           "translations": [
             {
+              "lang": "en",
+              "lang_name": "English",
+              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "sujato",
               "author_uid": "sujato",
-              "id": "mn105_translation-en-sujato",
-              "is_root": false,
-              "lang": "en",
-              "lang_name": "English",
               "publication_date": null,
+              "id": "mn105_translation-en-sujato",
               "segmented": true,
               "title": "With Sunakkhatta ",
               "volpage": null
             }
           ],
-          "type": "leaf",
-          "uid": "mn105",
-          "volpages": " PTS 2.252, PTS 2.253, PTS 2.254, PTS 2.255, PTS 2.256, PTS 2.257, PTS 2.258, PTS 2.259, PTS 2.260, PTS 2.261"
+          "parallel_count": 1,
+          "biblio": null
         },
         "translation": {
           "author_uid": "sujato",
@@ -1503,36 +1503,36 @@
       },
       "suttaplex": {
         "acronym": "MN 1",
+        "volpages": " PTS 1.1, PTS 1.2, PTS 1.3, PTS 1.4, PTS 1.5, PTS 1.6",
         "alt_volpages": null,
-        "biblio": null,
+        "uid": "mn1",
         "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
         "difficulty": {
-          "level": 3,
-          "name": "advanced"
+          "name": "advanced",
+          "level": 3
         },
         "original_title": "Mūlapariyāyasutta",
-        "parallel_count": 4,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
+        "type": "leaf",
         "translated_title": "The Root of All Things ",
         "translations": [
           {
+            "lang": "en",
+            "lang_name": "English",
+            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "sujato",
             "author_uid": "sujato",
-            "id": "mn1_translation-en-sujato",
-            "is_root": false,
-            "lang": "en",
-            "lang_name": "English",
             "publication_date": null,
+            "id": "mn1_translation-en-sujato",
             "segmented": true,
             "title": "The Root of All Things ",
             "volpage": null
           }
         ],
-        "type": "leaf",
-        "uid": "mn1",
-        "volpages": " PTS 1.1, PTS 1.2, PTS 1.3, PTS 1.4, PTS 1.5, PTS 1.6"
+        "parallel_count": 4,
+        "biblio": null
       },
       "sutta": {
         "sutta_uid": "mn1",
@@ -1540,36 +1540,36 @@
         "support": true,
         "suttaplex": {
           "acronym": "MN 1",
+          "volpages": " PTS 1.1, PTS 1.2, PTS 1.3, PTS 1.4, PTS 1.5, PTS 1.6",
           "alt_volpages": null,
-          "biblio": null,
+          "uid": "mn1",
           "blurb": "The Buddha examines how the notion of a permanent self emerges from the process of perception. A wide range of phenomena are considered, embracing both naturalistic and cosmological dimensions. An unawakened person interprets experience in terms of a self, while those more advanced have the same experiences without attachment.",
           "difficulty": {
-            "level": 3,
-            "name": "advanced"
+            "name": "advanced",
+            "level": 3
           },
           "original_title": "Mūlapariyāyasutta",
-          "parallel_count": 4,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
+          "type": "leaf",
           "translated_title": "The Root of All Things ",
           "translations": [
             {
+              "lang": "en",
+              "lang_name": "English",
+              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "sujato",
               "author_uid": "sujato",
-              "id": "mn1_translation-en-sujato",
-              "is_root": false,
-              "lang": "en",
-              "lang_name": "English",
               "publication_date": null,
+              "id": "mn1_translation-en-sujato",
               "segmented": true,
               "title": "The Root of All Things ",
               "volpage": null
             }
           ],
-          "type": "leaf",
-          "uid": "mn1",
-          "volpages": " PTS 1.1, PTS 1.2, PTS 1.3, PTS 1.4, PTS 1.5, PTS 1.6"
+          "parallel_count": 4,
+          "biblio": null
         },
         "translation": {
           "author_uid": "sujato",
@@ -3308,36 +3308,36 @@
       },
       "suttaplex": {
         "acronym": "MN 66",
+        "volpages": " PTS 1.448, PTS 1.449, PTS 1.450, PTS 1.451, PTS 1.452, PTS 1.453, PTS 1.454, PTS 1.455, PTS 1.456",
         "alt_volpages": null,
-        "biblio": null,
+        "uid": "mn66",
         "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous.",
         "difficulty": {
-          "level": 2,
-          "name": "intermediate"
+          "name": "intermediate",
+          "level": 2
         },
         "original_title": "Laṭukikopamasutta",
-        "parallel_count": 5,
         "root_lang": "pli",
         "root_lang_name": "Pāli",
+        "type": "leaf",
         "translated_title": "The Simile of the Quail ",
         "translations": [
           {
+            "lang": "en",
+            "lang_name": "English",
+            "is_root": false,
             "author": "Bhikkhu Sujato",
             "author_short": "sujato",
             "author_uid": "sujato",
-            "id": "mn66_translation-en-sujato",
-            "is_root": false,
-            "lang": "en",
-            "lang_name": "English",
             "publication_date": null,
+            "id": "mn66_translation-en-sujato",
             "segmented": true,
             "title": "The Simile of the Quail ",
             "volpage": null
           }
         ],
-        "type": "leaf",
-        "uid": "mn66",
-        "volpages": " PTS 1.448, PTS 1.449, PTS 1.450, PTS 1.451, PTS 1.452, PTS 1.453, PTS 1.454, PTS 1.455, PTS 1.456"
+        "parallel_count": 5,
+        "biblio": null
       },
       "sutta": {
         "sutta_uid": "mn66",
@@ -3345,36 +3345,36 @@
         "support": true,
         "suttaplex": {
           "acronym": "MN 66",
+          "volpages": " PTS 1.448, PTS 1.449, PTS 1.450, PTS 1.451, PTS 1.452, PTS 1.453, PTS 1.454, PTS 1.455, PTS 1.456",
           "alt_volpages": null,
-          "biblio": null,
+          "uid": "mn66",
           "blurb": "Again raising the rule regarding eating, but this time as a reflection of gratitude for the Buddha in eliminating things that cause complexity and stress. The Buddha emphasizes how attachment even to little things can be dangerous.",
           "difficulty": {
-            "level": 2,
-            "name": "intermediate"
+            "name": "intermediate",
+            "level": 2
           },
           "original_title": "Laṭukikopamasutta",
-          "parallel_count": 5,
           "root_lang": "pli",
           "root_lang_name": "Pāli",
+          "type": "leaf",
           "translated_title": "The Simile of the Quail ",
           "translations": [
             {
+              "lang": "en",
+              "lang_name": "English",
+              "is_root": false,
               "author": "Bhikkhu Sujato",
               "author_short": "sujato",
               "author_uid": "sujato",
-              "id": "mn66_translation-en-sujato",
-              "is_root": false,
-              "lang": "en",
-              "lang_name": "English",
               "publication_date": null,
+              "id": "mn66_translation-en-sujato",
               "segmented": true,
               "title": "The Simile of the Quail ",
               "volpage": null
             }
           ],
-          "type": "leaf",
-          "uid": "mn66",
-          "volpages": " PTS 1.448, PTS 1.449, PTS 1.450, PTS 1.451, PTS 1.452, PTS 1.453, PTS 1.454, PTS 1.455, PTS 1.456"
+          "parallel_count": 5,
+          "biblio": null
         },
         "translation": {
           "author_uid": "sujato",

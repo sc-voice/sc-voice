@@ -703,7 +703,7 @@
                 .map(l => LANG_MAP[l] || l);
             var language = langs.filter(l=>l!=='pli')[0];
             var language = language || 
-                LANG_MAP[req.query.lang] || reg.query.lang || 
+                LANG_MAP[req.query.lang] || req.query.lang || 
                 'en';
             var vname = (req.params.voice || 'Amy').toLowerCase();
             var pattern = req.params.pattern;
@@ -771,7 +771,7 @@
                 .map(l => LANG_MAP[l] || l);
             var language = langs.filter(l=>l!=='pli')[0];
             var language = language || 
-                LANG_MAP[req.query.lang] || reg.query.lang || 
+                LANG_MAP[req.query.lang] || req.query.lang || 
                 'en';
             var vname = (req.params.voice || 'Amy').toLowerCase();
             var pattern = req.params.pattern;

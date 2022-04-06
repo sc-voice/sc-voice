@@ -106,13 +106,13 @@
         should(sutta.author_uid).equal('sujato');
         should.deepEqual(sutta.segments[0],{
             matched: true,
-            en: 'Verses of the Senior Nuns',
+            en: 'Verses of the Senior Nuns 16.1',
             pli: 'Therīgāthā',
             scid: 'thig16.1:0.1',
         });
         var sections = sutta.sections;
         should.deepEqual(sections[0].segments[0],{
-            en: 'Verses of the Senior Nuns',
+            en: 'Verses of the Senior Nuns 16.1',
             matched: true,
             pli: 'Therīgāthā',
             scid: 'thig16.1:0.1',
@@ -183,14 +183,14 @@
         should(sutta.author_uid).equal('sujato');
         should.deepEqual(sutta.segments[0],{
             matched: true,
-            en: 'Verses of the Senior Nuns',
+            en: 'Verses of the Senior Nuns 1.1',
             pli: 'Therīgāthā',
             scid: 'thig1.1:0.1',
         });
         var sections = sutta.sections;
         should.deepEqual(sections[0].segments[0],{
             matched: true,
-            en: 'Verses of the Senior Nuns',
+            en: 'Verses of the Senior Nuns 1.1',
             pli: 'Therīgāthā',
             scid: 'thig1.1:0.1',
         });
@@ -266,7 +266,7 @@
         should(method).equal('sutta_uid');
         should.deepEqual(results.map(r=>r.uid), ['dn7']);
     });
-    it("search(pattern) => regular expression results", async()=>{
+    it("TESTTESTsearch(pattern) => regular expression results", async()=>{
         var voice = Voice.createVoice({
             name: 'raveena',
             localeIPA: 'pli',
@@ -596,7 +596,7 @@
             should.deepEqual(playlist.stats(), {
                 tracks: 4,
                 chars: {
-                    en: 3124,
+                    en: 3120,
                     pli: 2410,
                 },
                 duration: 490,
@@ -800,7 +800,7 @@
             should.deepEqual(sutta.segments[0],{
                 matched: true,
                 de: 'Verbundene Lehrreden 12',
-                en: 'Linked Discourses 12 ',
+                en: 'Linked Discourses 12.3',
                 pli: 'Saṁyutta Nikāya 12 ',
                 scid: 'sn12.3:0.1',
             });
@@ -809,7 +809,7 @@
             should.deepEqual(sections[0].segments[0],{
                 matched: true,
                 de: 'Verbundene Lehrreden 12',
-                en: 'Linked Discourses 12 ',
+                en: 'Linked Discourses 12.3',
                 pli: 'Saṁyutta Nikāya 12 ',
                 scid: 'sn12.3:0.1',
             });
