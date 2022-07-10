@@ -1,6 +1,6 @@
 {
   "name": "sc-voice",
-  "version": "2.22.284",
+  "version": "2.22.285",
   "description": "SuttaCentral Voice",
   "main": "index.js",
   "private": false,
